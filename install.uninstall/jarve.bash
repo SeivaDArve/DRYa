@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 # Title: install jarve at your home folder (~/.jarve)
 # Description: Installing means copy files to ~/.bashrc. In the future you can run it on windows, android and ios
 # Mothod: Prompting a menu to choose
