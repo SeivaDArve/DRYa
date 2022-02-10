@@ -1,0 +1,34 @@
+# Title: cheatsheet to Install Arch Linux
+
+#Teclado:
+$loadkeys pt-latin1
+
+# $rfkill list all
+$rfkill unblock all
+
+$ip link set wlan0 up
+$iwctl
+$station wlan0 scan
+$station wlan0 get-networks
+$station wlan0 connect "NOS_Hotspot_E57c"
+#Espera um tempo para ele connectar, e ao fim do tempo em que achas que deu para connectar, podes sair do iwctl com Ctrl+D
+#(para ser se tens um IP de wlan0 à frente de inet):
+$ip a 
+
+#ping DNS do google pra ver se há net com count se 5:
+$ping -c 5 8.8.8.8
+
+#altera a palavra pass de root:
+#(actually you need this otherwise you will have to run the .iso again in order to be able to login in the normal user account. Don't skip this step)
+$passwd
+
+$#para usar archfi script:
+$curl -L archfi.sf.net/archfi > archfi
+$sh archfi
+
+(Deixar este documento junto ao .iso do arch que é habitualmente instalado e fornecer info de como acessar este documento. Ou então deixar este ficheiro numa distro pessoal do Dv com este .txt dentro da pasta boot)
+(Mete este .txt num tty à parte para ires acompanhando a instalação live com o .txt live
+
+Add (IRC) - internet relay chat - I think it is an Arch Chat..... if this does not work, find better
+
+#After reebot, Login and add user account
