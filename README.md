@@ -1,5 +1,5 @@
 # DRYa
-Do not - Repeat - Yourself - Application = Similar to Alexa, Cortana, Siri, jarvis... but to keep your personal config files and tools.
+"Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config manager. Keep your tools and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/noob proof.
 
 # Description
 This is the result of a Linux newbie studying and creating a cross platform app from scratch. I don't think there is no better exercise to practice Linux other than developing my own cross platform util. Drya is a git repository that after downloading, gives you the choice to depoy into your system, a software buttler. The bash buttler (the main one so far) is called Jarve.
