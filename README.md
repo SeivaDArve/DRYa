@@ -1,4 +1,6 @@
 # DRYa
+This script is an incentive to always tweak your machine by the command line OR to automate all GUI tasks, so that you don't have to rrpeat them
+# DRYa
 "Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config manager. Keep your tools and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/noob proof.
 
 # Description
