@@ -1,5 +1,7 @@
 # DRYa
-Do not - Repeat - Yourself - Application = Similar to Alexa, Cortana, Siri, jarvis... but to keep your personal config files and tools.
+This script is an incentive to always tweak your machine by the command line OR to automate all GUI tasks, so that you don't have to rrpeat them
+# DRYa
+"Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config manager. Keep your tools and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/noob proof.
 
 # Description
 This is the result of a Linux newbie studying and creating a cross platform app from scratch. I don't think there is no better exercise to practice Linux other than developing my own cross platform util. Drya is a git repository that after downloading, gives you the choice to depoy into your system, a software buttler. The bash buttler (the main one so far) is called Jarve.
@@ -10,8 +12,7 @@ This is the result of a Linux newbie studying and creating a cross platform app 
 + Bion (for windows batch)
 + ... 
 
-### Do not repeat yourself!
-Install one of these utilities to backup your config files and this way, after a fresh format, all your settings will be there. You may use this software to improve your tasks, making your computer (machine) work for you instead of you working for the machine. You should simply automate your tasks once and save them at your choosen Butler.
+### Do not repeat yourself!  Install one of these utilities to backup your config files and this way, after a fresh format, all your settings will be there. You may use this software to improve your tasks, making your computer (machine) work for you instead of you working for the machine. You should simply automate your tasks once and save them at your choosen Butler.
 
 ### Software under development
 Jarve is the main focus so far because you can find Bash everywhere, even in a Termux terminal (Androi app)
