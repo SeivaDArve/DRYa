@@ -19,3 +19,7 @@ Jarve is the main focus so far because you can find Bash everywhere, even in a T
 
 ### Jarve in termux
 Do you need to format your machine? jarve may help you while your machine is offline, guiding your steps through the installation. You should also save your configs during the installation into jarve so that the nest time you remember. By remembering your previous user nickname (for example), jarve may restore all your config files into the fresh install without them breaking (if your saved configs have another user name, they will not correspond with the new user name, right?)
+
+# GitHub - "Seiva D'Arve"
+Overview: 	https://github.com/SeivaDArve
+Repositories:	https://github.com/SeivaDArve?tab=repositories 
