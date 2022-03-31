@@ -6,6 +6,9 @@ This script is an incentive to always tweak your machine by the command line OR 
 # Description
 This is the result of a Linux newbie studying and creating a cross platform app from scratch. I don't think there is no better exercise to practice Linux other than developing my own cross platform util. Drya is a git repository that after downloading, gives you the choice to depoy into your system, a software buttler. The bash buttler (the main one so far) is called Jarve.
 
+# Brainstorming
+This is a list of all ideas to be put into the project before starting coding
+- drya should be the first program installed as soon as you touch any new machine and then can deploy your personal butler, just like a Bash butler called Jarve or a python butler called Mia
 ## Drya can deploy these buttlers:
 + jarve (for bash)
 + Mel (for python)

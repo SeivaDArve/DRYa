@@ -18,8 +18,8 @@ echo "Second line. read replaced."
 }
 function mainmenu {
 tput clear
-tput rev
-tput home; horizline
+tput rev # To undo "tput sgr0"
+tput home; horizline; 
 
 tput cup 0 2
 echo --- Menu DRYa ---
