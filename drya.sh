@@ -16,6 +16,19 @@ for i in $(seq $_count); do
 done
 }
 
+function f_readKeystroke {
+	# "read -rsn1 input": Expect only one letter (and don't wait for submitting) and be silent (don't write that letter back).
+	while true; do
+		read -rsn1 input
+		if [ "$input" = "a" ]; then
+    			echo "key pressed: a"
+		fi
+
+		if [ "$input" = "b" ]; then
+    			echo "key pressed: b"
+		fi
+	done
+}
 function f_replaceRead {
 echo "First line..."
 tput sc
@@ -52,5 +65,6 @@ echo $_slide
 f_slide
 echo $_slide
 f_slide
+f_readKeystroke
 }
 f_exec
