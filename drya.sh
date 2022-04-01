@@ -98,6 +98,13 @@ function f_entry2 {
 	tput sgr0
 }
 
+function f_detectOS {
+	echo "whoami: 	$(whoami)"
+	echo "OS type: 	${OSTYPE}"
+	echo "uname:		$(uname)"
+	echo "uname -a: 	$(uname -a)"
+}
+
 function f_footer {
 
 	tput cup 23 2
@@ -123,7 +130,8 @@ function f_mainmenu {
 
 
 function f_exec {
-	f_readKeystroke
-	f_mainmenu
+	f_detectOS
+	#f_readKeystroke
+	#f_mainmenu
 }
 f_exec
