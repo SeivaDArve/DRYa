@@ -6,13 +6,23 @@
 _V=0
 _H=0
 	
-function f_slideV {
+function f_slideVup {
 	((_V=_V+1))
 	#echo $_V
 }
 		
-function f_slideH {
+function f_slideHup {
 	((_H=_H+1))
+	#echo $_H
+}
+
+function f_slideVdw {
+	((_V=_V-1))
+	#echo $_V
+}
+		
+function f_slideHdw {
+	((_H=_H-1))
 	#echo $_H
 }
 
@@ -21,6 +31,31 @@ function f_horizline {
 	for i in $(seq $_count); do
    	echo -ne "-" 
 	done
+}
+
+function f_replaceRead {
+	echo "First line..."
+	tput sc
+	read -p "Press any key to overwrite this line... " -n1 -s
+	tput rc 1; tput el
+	echo "Second line. read replaced."
+}
+
+function f_wiki {
+	cat << heredoc
+info:
+To undo "tput rev" use "tput sgr0"
+
+info:
+"read -rsn1 input": Expect only one letter (and don't wait for submitting) and be silent (don't write that letter back).
+heredoc
+}
+
+function f_detectOS {
+	echo "whoami: 	$(whoami)"
+	echo "OS type: 	${OSTYPE}"
+	echo "uname:		$(uname)"
+	echo "uname -a: 	$(uname -a)"
 }
 
 function f_readKeystroke {
@@ -60,23 +95,7 @@ function f_readKeystroke {
 	done
 }
 
-function f_replaceRead {
-	echo "First line..."
-	tput sc
-	read -p "Press any key to overwrite this line... " -n1 -s
-	tput rc 1; tput el
-	echo "Second line. read replaced."
-}
-
-function f_wiki {
-	cat << heredoc
-To undo "tput rev" use "tput sgr0"
-
-"read -rsn1 input": Expect only one letter (and don't wait for submitting) and be silent (don't write that letter back).
-heredoc
-}
-
-function f_entry1 {
+function f_entryA1 {
 	# Reverse colors for this entry if it matches cursor
 	if [ ${_V} = 1 ]; then tput rev; fi
 
@@ -87,7 +106,7 @@ function f_entry1 {
 	tput sgr0
 }
 
-function f_entry2 {
+function f_entryA2 {
 	# Reverse colors for this entry if it matches cursor
 	if [ ${_V} = 2 ]; then tput rev; fi
 
@@ -98,20 +117,40 @@ function f_entry2 {
 	tput sgr0
 }
 
-function f_detectOS {
-	echo "whoami: 	$(whoami)"
-	echo "OS type: 	${OSTYPE}"
-	echo "uname:		$(uname)"
-	echo "uname -a: 	$(uname -a)"
-}
-
 function f_footer {
 
-	tput cup 23 2
 	tput rev
+
+	tput cup 23 2
 	echo Stop: S
+
+	tput cup 23 11
+	echo Detect OS: D
+
+	tput cup 23 25
+	echo Detect OS: D
+
+	read
+
+	tput cup 22 11
+	echo Detect OS: D
+
+
 	tput sgr0
 }
+
+function f_menu1 {
+	f_entryA1
+	f_entryA2
+	#f_entryA3
+}
+
+#function f_menu2 {
+#	#f_entryB1
+#	#f_entryB2
+#	#f_entryB3
+#}
+
 function f_mainmenu {
 	tput clear
 	tput home; f_horizline; 
@@ -119,9 +158,8 @@ function f_mainmenu {
 	tput cup 0 3
 	echo " Menu DRYa "
 
-	f_entry1
-	f_entry2
-	#f_entry3
+	f_menu1
+	#f_menu2
 	f_footer
 
 	tput cup 25 0; f_horizline
@@ -130,8 +168,10 @@ function f_mainmenu {
 
 
 function f_exec {
-	f_detectOS
+	#f_detectOS
 	#f_readKeystroke
 	#f_mainmenu
+	#f_wiki
+	f_menu1
 }
 f_exec
