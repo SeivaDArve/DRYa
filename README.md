@@ -8,10 +8,19 @@ This is the result of a Linux newbie studying and creating a cross platform app 
 
 # Brainstorming
 This is a list of all ideas to be put into the project before starting coding
+- "If you don't have good friends, program one".
 - drya should be the first program installed as soon as you touch any new machine and then can deploy your personal butler, just like a Bash butler called Jarve or a python butler called Mia
+- When you open drya app, it should work like a browser where your installed apps may be bookmarked to appear at the main page (gitMenu, jarve, combyene, mia, etc...)
+- drya is supposed to be a "software bender". It means that the user may be able to do every single thing in real life with the help of drya nust by givinh simple commands. "If you don't have good friends, program one".
+
+
+
+
+
+
 ## Drya can deploy these buttlers:
 + jarve (for bash)
-+ Mel (for python)
++ Mia (for python)
 + Bion (for windows batch)
 + ... 
 

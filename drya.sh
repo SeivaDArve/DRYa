@@ -74,7 +74,7 @@ function f_readKeystroke {
 		if [ "$input" = "s" ]; then
     			#echo "key pressed: s"
 			#echo $_V
-			f_slideV
+			f_slideVdw
 			
 		fi
 
@@ -91,7 +91,7 @@ function f_readKeystroke {
 		# -Arrow Keys
 		# -Enter
 
-		f_mainmenu
+		f_menu1
 	done
 }
 
@@ -117,24 +117,27 @@ function f_entryA2 {
 	tput sgr0
 }
 
+function f_reset_PS1 {
+	# Add bottom horizontal line again
+	tput cup 25 0; f_horizline
+	# Just change position
+	tput cup 23 0
+}
+
 function f_footer {
 
 	tput rev
 
-	tput cup 23 2
-	echo Stop: S
-
 	tput cup 23 11
-	echo Detect OS: D
+	echo Stop: S
 
 	tput cup 23 25
 	echo Detect OS: D
 
-	read
-
-	tput cup 22 11
+	tput cup 23 35
 	echo Detect OS: D
 
+	f_arrows
 
 	tput sgr0
 }
@@ -154,24 +157,58 @@ function f_menu1 {
 function f_mainmenu {
 	tput clear
 	tput home; f_horizline; 
+	tput cup 25 0; f_horizline
 	
 	tput cup 0 3
 	echo " Menu DRYa "
 
-	f_menu1
-	#f_menu2
 	f_footer
+	#f_menu1
+	#f_menu2
 
-	tput cup 25 0; f_horizline
-	f_readKeystroke
+	#f_readKeystroke
+	f_reset_PS1
+}
+
+function f_arrows {
+	tput cup 22 2
+	echo "< ^ v >"
+	tput cup 23 2
+	echo "a w s d"
+}
+
+function f_detect_dir {
+	
+	# To check if a directory exists in a shell script, you can use the following:
+	_DIR_NAME=../jarve
+	if [ -d $_DIR_NAME ]; then
+		echo jk
+		# Control will enter here if $DIRECTORY exists.
+	fi
+}
+	
+function f_get_script_current_abs_path {
+
+	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
+	_SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+	echo $_SCRIPT_DIR;
+	
+	function f_test1 {
+		# This does not work, it is subjective to change. it depends from where you ryn the script
+		_drya_pwd=$(pwd)
+		echo $_drya_pwd
+	}
 }
 
 
 function f_exec {
 	#f_detectOS
+	f_mainmenu
 	#f_readKeystroke
-	#f_mainmenu
 	#f_wiki
-	f_menu1
+	#f_menu1
+		#f_install_vimrc
+	#f_get_script_current_abs_path
+	f_detect_dir
 }
 f_exec
