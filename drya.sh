@@ -177,20 +177,70 @@ function f_arrows {
 	echo "a w s d"
 }
 
-function f_detect_dir {
-	
-	# To check if a directory exists in a shell script, you can use the following:
-	_DIR_NAME=../jarve
-	if [ -d $_DIR_NAME ]; then
-		echo jk
-		# Control will enter here if $DIRECTORY exists.
+function f_detect_dir_or_file {
+	# To check if a directory exists side by side with DRYa repo:
+
+	f_get_script_current_abs_path
+	cd $_SCRIPT_DIR
+	echo pwd: $(pwd)
+
+	echo "What are you looking for?"
+	echo "(1) jarve repo?"
+	echo "(2) upK repo?"
+	echo -e "(3) .vimrc file?\n"
+
+	read _ans
+
+	function f_detect_dir {
+		if [ -d $_DIR_NAME ]; then
+			echo $_DIR_NAME exists
+			# Control will enter here if $DIRECTORY exists.
+		else
+			echo not found
+		fi
+	}
+
+	function f_detect_file {
+		if [ -f $_FILE_NAME ]; then
+			echo $_FILE_NAME exists
+			# Control will enter here if $DIRECTORY exists.
+		else
+			echo not found
+		fi
+	}
+
+	if [ $_ans -eq 1 ]; then
+		_DIR_NAME=../jarve
+		f_detect_dir 
+	elif [ $_ans -eq 2 ]; then
+		_DIR_NAME=../upK
+		f_detect_dir 
+	elif [ $_ans -eq 3 ]; then
+		_FILE_NAME=../jarve/jrv/etc/.vimrc
+		f_detect_file
+
+		echo -e "\ndo you want that file to replace the current ~/.vimrc? (y/n)\n"
+		read _ans
+
+		if [ $_ans == "y" ]; then
+			cp $_FILE_NAME ~
+			echo ".vimrc copied to ~"
+		elif [ $_ans == "n" ]; then
+			echo it was not copied
+		else
+			echo your input did nothing
+		fi
+	else
+		"Please enter one of the options below"
 	fi
+
 }
 	
 function f_get_script_current_abs_path {
 
 	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
 	_SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+	echo This script is located as:
 	echo $_SCRIPT_DIR;
 	
 	function f_test1 {
@@ -203,12 +253,12 @@ function f_get_script_current_abs_path {
 
 function f_exec {
 	#f_detectOS
-	f_mainmenu
+	#f_mainmenu
 	#f_readKeystroke
 	#f_wiki
 	#f_menu1
 		#f_install_vimrc
 	#f_get_script_current_abs_path
-	f_detect_dir
+	f_detect_dir_or_file
 }
 f_exec
