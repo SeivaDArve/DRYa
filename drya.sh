@@ -1,11 +1,40 @@
 #!/bin/bash
 
+clear
+
 # Max Cols: 56; Max lines: 28 (to aprox match smartphone screen)
 
 # Decide 2 sliders, one Horizontal and one Vertical
 _V=0
 _H=0
 	
+function f_ascii_icon {
+
+	function f_center_to_screen {
+		tput cols
+		tput lines
+	}
+	echo -e "     ||\`				"
+	echo "     ||				"
+	echo -e " .|''||  '||''| '||  ||\`  '''|.	"
+	echo -e " ||  ||   ||     \`|..||  .|''||	"
+	echo -e " \`|..||. .||.        ||  \`|..||.	"
+	echo "                  ,  |'		"
+	echo "                    ''		"
+
+	sleep 1
+	tput sc 
+	echo -n "3"
+	sleep 1
+	tput rc
+	echo -n "2"
+	sleep 1
+	tput rc
+	echo -n	 "1"
+	sleep 1
+	clear
+}
+
 function f_slideVup {
 	((_V=_V+1))
 	#echo $_V
@@ -26,6 +55,20 @@ function f_slideHdw {
 	#echo $_H
 }
 
+function f_setafA {
+	# This function is to be used when something is ASKED
+	tput setaf 4
+}
+
+function f_setafD {
+	# This function is to be used when something is DECLAIRED
+	tput setaf 3
+}
+
+function f_setafC {
+	# This function is to be used when styles are to be CLEARED
+	tput sgr0
+}
 function f_horizline {
 	_count=$(tput cols)
 	for i in $(seq $_count); do
@@ -181,13 +224,17 @@ function f_detect_dir_or_file {
 	# To check if a directory exists side by side with DRYa repo:
 
 	f_get_script_current_abs_path
-	cd $_SCRIPT_DIR
-	echo pwd: $(pwd)
 
-	echo "What are you looking for?"
-	echo "(1) jarve repo?"
-	echo "(2) upK repo?"
-	echo -e "(3) .vimrc file?\n"
+	cd $_SCRIPT_DIR
+	f_setafD; echo Current pwd:
+	f_setafC
+		  echo -e "$(pwd)\n"
+
+	f_setafA; echo "What are you looking for?"
+	f_setafC
+		  echo "(1) jarve repo?"
+		  echo "(2) upK repo?"
+		  echo -e "(3) .vimrc file?\n"
 
 	read _ans
 
@@ -209,17 +256,21 @@ function f_detect_dir_or_file {
 		fi
 	}
 
-	if [ $_ans -eq 1 ]; then
+	#if [ $_ans = * ]; then
+	#	echo "you just hit enter, right?"
+	if [ $_ans = "1" ]; then
 		_DIR_NAME=../jarve
 		f_detect_dir 
-	elif [ $_ans -eq 2 ]; then
+	elif [ $_ans = "2" ]; then
 		_DIR_NAME=../upK
 		f_detect_dir 
-	elif [ $_ans -eq 3 ]; then
+	elif [ $_ans = "3" ]; then
 		_FILE_NAME=../jarve/jrv/etc/.vimrc
 		f_detect_file
 
-		echo -e "\ndo you want that file to replace the current ~/.vimrc? (y/n)\n"
+		f_setafA; echo -ne "\nDo you want that .vimrc file to replace the current ~/.vimrc? (y/n) "
+		f_setafC
+
 		read _ans
 
 		if [ $_ans == "y" ]; then
@@ -231,7 +282,10 @@ function f_detect_dir_or_file {
 			echo your input did nothing
 		fi
 	else
-		"Please enter one of the options below"
+		echo "Please enter one of the options below"
+		read
+		clear
+		f_detect_dir_or_file
 	fi
 
 }
@@ -240,7 +294,8 @@ function f_get_script_current_abs_path {
 
 	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
 	_SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-	echo This script is located as:
+	f_setafD; echo "This script is located at:"; 
+	f_setafC
 	echo $_SCRIPT_DIR;
 	
 	function f_test1 {
@@ -252,6 +307,7 @@ function f_get_script_current_abs_path {
 
 
 function f_exec {
+	f_ascii_icon
 	#f_detectOS
 	#f_mainmenu
 	#f_readKeystroke
