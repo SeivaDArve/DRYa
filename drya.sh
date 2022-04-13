@@ -8,6 +8,19 @@ function f_info {
 	# Version: 00000000000001
 	# Max Cols: 56; Max lines: 28 (to aprox match smartphone screen)
 	echo "info"
+
+	function f_showRepos {
+		https://github.com/SeivaDArve/SeivaDArve
+		https://github.com/SeivaDArve?tab=repositories
+		https://github.com/SeivaDArve/DRYa
+		https://github.com/SeivaDArve/jarve
+		https://github.com/SeivaDArve/autoPay
+		https://github.com/SeivaDArve/ezGIT
+		https://github.com/SeivaDArve/upK
+		https://github.com/SeivaDArve/yogaBashApp
+		https://github.com/SeivaDArve/Dv-website-cv
+		https://github.com/SeivaDArve/Dv-Indratena
+	}
 }
 
 
