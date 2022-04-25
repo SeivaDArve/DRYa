@@ -1,4 +1,38 @@
-#/bin/bash
+#!/bin/bash
+
+function f_install_configDir {
+	# Installing dot files (configurations) at ~/.config/seivaDArve for drya and for other repos under drya
+
+	# Do you want it verbose?
+	f_setafA; echo -n "Do you want verbose output? [y/n] "; read _ans
+	f_setafC
+
+	if [ $_ans == "y" ]; then _verbose=yes
+	elif [ $_ans == "n" ]; then _verbose=no
+	else 
+		f_setafD; echo "please choose either y ou n"; 
+		f_setafC
+			  f_install_configDir
+	fi
+
+	echo "verbose = $_verbose"; _vb=$_verbose # For readability, above _verbose was defined for debugging, now for faster coding, _vb will take it's place
+	sleep 2
+	f_setafD
+	echo "All Repos from Seiva D'Arve default location:"
+	f_setafC
+	echo "~/.config/h.h/"
+	echo "Location of .dryarc (Seiva's package manager):"
+	echo "~/.config/h.h/.dryarc"
+	echo "Location of repos under drya:"
+	echo "~/.config/h.h/all/ examples: .../all/jarve||ezGIT||upK"
+	echo "README.md:"
+	echo -e "\n@ ~/.config/h.h/README.md there is an explanation that \"drya\" is a package manager"
+	read
+	echo -e "\n\nNow we see if this directory exists:\n~/.config/h.h"
+	read
+	if [ -d ~/.config/h.h ]; then echo Yes; fi
+	read
+}
 
 clear
 #trap clear EXIT
@@ -220,6 +254,7 @@ function f_ascii_icon {
 	#f_countDown
 	sleep 2
 }
+
 
 function f_tableOfContents {
 	tput rev
@@ -682,6 +717,8 @@ function f_get_script_current_abs_path {
 
 
 function f_exec {
+	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
+	f_install_configDir
 	f_default_vars
 
 	#f_cursorON
