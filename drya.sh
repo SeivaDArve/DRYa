@@ -1,11 +1,14 @@
 #!/bin/bash
 
+# At ~/Repositories/DRYa you will find drya.sh which is the uncompiled under development DRY App
+
+# At ~/Repositories/DRYa/install.uninstall/drya.installer you will find a compiler that puts DRY App inside /bin
+
 function f_install_configDir {
 	# Installing dot files (configurations) at ~/.config/seivaDArve for drya and for other repos under drya
 
 	# Do you want it verbose?
-	f_setafA; echo -n "Do you want verbose output? [y/n] "; read _ans
-	f_setafC
+	f_setafA; echo -n "Do you want verbose output? [y/n] "; f_setafC; read _ans
 
 	if [ $_ans == "y" ]; then _verbose=yes
 	elif [ $_ans == "n" ]; then _verbose=no
@@ -16,21 +19,38 @@ function f_install_configDir {
 	fi
 
 	echo "verbose = $_verbose"; _vb=$_verbose # For readability, above _verbose was defined for debugging, now for faster coding, _vb will take it's place
-	sleep 2
+
 	f_setafD
-	echo "All Repos from Seiva D'Arve default location:"
-	f_setafC
-	echo "~/.config/h.h/"
-	echo "Location of .dryarc (Seiva's package manager):"
-	echo "~/.config/h.h/.dryarc"
-	echo "Location of repos under drya:"
-	echo "~/.config/h.h/all/ examples: .../all/jarve||ezGIT||upK"
-	echo "README.md:"
-	echo -e "\n@ ~/.config/h.h/README.md there is an explanation that \"drya\" is a package manager"
-	read
-	echo -e "\n\nNow we see if this directory exists:\n~/.config/h.h"
-	read
-	if [ -d ~/.config/h.h ]; then echo Yes; fi
+		echo "All Repos from Seiva D'Arve default location:"
+	f_setafD2
+		echo "~/.config/h.h/"
+	f_setafD
+		echo "Location of .dryarc (Seiva's package manager):"
+	f_setafD2
+		echo "~/.config/h.h/.dryarc"
+	f_setafD
+		echo "Location of repos under drya:"
+	f_setafD2
+		echo "~/.config/h.h/all/ examples: .../all/jarve||ezGIT||upK"
+	f_setafD
+		echo "README.md:"
+	f_setafD2
+		echo -e "@ ~/.config/h.h/README.md there is an explanation that \"drya\" is a package manager"
+	f_setafA
+		echo -e "\nNow we see if this directory exists:"
+	f_setafD2
+		echo "~/.config/h.h"
+
+	_config="~/.config/h.h" # In the future there will be a dinamic way to set this variable instead of this static one
+
+	if [ -d $(_config) ]; then 
+		f_setafD; echo Yes it exists
+		f_setafC
+	else 
+		f_setafD; echo 	No it does not exist
+		f_setafC
+	fi
+
 	read
 }
 
@@ -330,6 +350,11 @@ function f_setafA {
 function f_setafD {
 	# This function is to be used when something is DECLAIRED
 	tput setaf 3
+}
+
+function f_setafD2 {
+	# This function is to be used when something is DECLAIRED
+	tput setaf 2
 }
 
 function f_setafS {
@@ -736,4 +761,10 @@ function f_exec {
 	#f_master_dryaRC
 	f_readKeystroke
 }
+
+case $1 in
+	bios) echo "It works like if you are calling for bios" ;;
+	*) echo -n "";;
+esac
+
 f_exec
