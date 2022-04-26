@@ -4,6 +4,8 @@
 
 # At ~/Repositories/DRYa/install.uninstall/drya.installer you will find a compiler that puts DRY App inside /bin
 
+_placeHolder="Bla Bla Blaah"  # An alternative to "Hello World" and it is often used to code step-by-step instead of falling into the need of debugging process
+
 function f_install_configDir {
 	# Installing dot files (configurations) at ~/.config/seivaDArve for drya and for other repos under drya
 
