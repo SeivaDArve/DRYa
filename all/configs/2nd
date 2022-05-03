@@ -1,0 +1,8 @@
+# Title: 2nd (secondary apps installed by the user)
+# Description: This script compares a fresh installed OS's list of software (apt --list) and saves in this file all other secondary apps installed manually by the user. This is meant for backup pourposes
+
+function f_pkgInstallExpect {
+	# This function compares a previouslist of apps installed with the list beeing used right now. If right now there is any new software, it add this software to the list of possible apps to install
+}
+
+f_pkgInstallExpect
