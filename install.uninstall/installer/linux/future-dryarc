@@ -1,0 +1,23 @@
+#!/bin/bash
+# To load upk Repo at .bashrc with .dryarc:
+#cat upk.sh then search only for a function of greetings, then echo that out
+
+echo "File being read: .dryarc"
+alias drya="bash ~/Repositories/DRYa/drya.sh"
+alias catMe="cat ~/.config/h.h/.dryarc "
+alias editMe="vim ~/Repositories/DRYa/install.uninstall/drya.installer/future-dryarc"
+alias updateMeLocally="bash ~/Repositories/DRYa/install.uninstall/drya.installer/installer"
+alias updateMeGlobally="echo 'ezGIT must be installed'"
+
+alias ..="cd .."
+alias hi="echo hello"
+
+alias sourceAll="source ~/.bashrc"
+alias v="echo sk"
+
+# Source all other repos if they exist:
+# Source jarve
+# Source upK
+# Source ezGIT
+# Source ... 
+
