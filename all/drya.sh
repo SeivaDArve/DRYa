@@ -1,5 +1,15 @@
 #!/bin/bash
 
+function f_hi {
+	echo "Hi"
+	echo "Which device are you talking from?"
+	echo "I can talk evenly to everyone (and that is called being truthfull) but I assume you don't expect that from me"
+	echo "I assume you want me to respond to you diferently if you are Linux, Windows, Android... right?"
+	echo "Don't you want to be distinguished?"
+	echo "That is what I would like you to specify to me... don't tell me who you are (that can be anonymous), tell me how you would like to be treated"
+	echo "are you Android? Linux? Python in windows?"
+	read
+}
 function f_install_configDIR {
 
 	if [ -d "$_config" ]; then 
@@ -701,6 +711,7 @@ function f_get_script_current_abs_path {
 
 
 function f_exec {
+	f_hi
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	f_install_configDir
 	f_default_vars
