@@ -10,15 +10,33 @@ function f_hi {
 	echo "are you Android? Linux? Python in windows?"
 	read
 }
+
 function f_install_configDIR {
 
-	if [ -d "$_config" ]; then 
-		f_setafD; echo Yes it exists
-		f_setafC
-	else 
-		f_setafD; echo 	No it does not exist
-		f_setafC
-	fi
+	#if [ -d "$_config" ]; then 
+	#	f_setafD; echo Yes it exists
+	#	f_setafC
+	#else 
+	#	f_setafD; echo 	No it does not exist
+	#	f_setafC
+	#fi
+
+	# Create a directory to store all configs from Seiva D'Arve (author):
+	mkdir -p ~/.config/seiva 
+	echo " > Directory ~/.config/seiva created"
+	
+
+	# Check if there is any file called .DRYA
+	#if [ -d "$_config" ]; then 
+	#	f_setafD; echo Yes it exists
+	#	f_setafC
+	#else 
+	#	f_setafD; echo 	No it does not exist
+	#	f_setafC
+	#fi
+	# Create an empty file for drya.sh:
+	touch ~/.config/seiva/.DRYA
+	echo "   > File .DRYA created"
 
 	read
 }
@@ -713,7 +731,7 @@ function f_get_script_current_abs_path {
 function f_exec {
 	f_hi
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
-	f_install_configDir
+	#f_install_configDir
 	f_default_vars
 
 	#f_cursorON
