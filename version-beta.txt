@@ -1,0 +1,18 @@
+# Title: Version of the software
+# Description: This branch of the software is at a certain version and this file at its root directory indicates which version
+# Version: The name of the file should mention th  1
+	example: "version-beta.txt" (Not yet rele  2
+# Other existing branches so far: None
+
+# ToDo list to transcend to the next version:
+# +
+# +
+# +
+
+Version Log (contents of each version) {
+	Version 1 {
+		- added: Termux auto configuration and terminal alias working
+	}
+}
+
+
