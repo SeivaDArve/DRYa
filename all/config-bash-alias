@@ -5,3 +5,6 @@
 
 # List of all alias
 alias ..="cd .."
+alias .="ls"
+alias ,="cd"
+alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
