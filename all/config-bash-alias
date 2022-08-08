@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Title: Dv Bash Alias (for Linux)
+# Use: This file is meant to be sourced from "~/.bashrc"
+
+# List of all alias
+alias ..="cd .."
