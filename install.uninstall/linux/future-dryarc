@@ -3,11 +3,11 @@
 #cat upk.sh then search only for a function of greetings, then echo that out
 
 echo "File being read: .dryarc"
-alias drya="bash ~/Repositories/DRYa/drya.sh"
-alias catMe="cat ~/.config/h.h/.dryarc "
-alias editMe="vim ~/Repositories/DRYa/install.uninstall/drya.installer/future-dryarc"
-alias updateMeLocally="bash ~/Repositories/DRYa/install.uninstall/drya.installer/installer"
-alias updateMeGlobally="echo 'ezGIT must be installed'"
+alias drya-run="bash ~/Repositories/DRYa/drya.sh"
+alias drya-catMe="cat ~/.config/h.h/.dryarc "
+alias drya-editMe="vim ~/Repositories/DRYa/install.uninstall/drya.installer/future-dryarc"
+alias drya-updateMeLocally="bash ~/Repositories/DRYa/install.uninstall/drya.installer/installer"
+alias drya-updateMeGlobally="echo 'ezGIT must be installed'"
 
 alias ..="cd .."
 alias hi="echo hello"
