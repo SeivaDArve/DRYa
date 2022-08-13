@@ -4,6 +4,9 @@ pkg install figlet git vim man
 # Allow Termux to acess local storage:
 termux-setup-storage
 
+# Allow Termux fo open external apps
+sed -i 's/# allow-external-apps = true/allow-external-apps = true/g' ~/.termux/termux.properties
+
 # Configure Git
 git config --global user.name "upk - Seiva"
 git config --global user.email "flowreshe.seiva.d.arve@gmail.com"
