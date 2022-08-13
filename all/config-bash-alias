@@ -1,10 +1,93 @@
 #!/bin/bash
 
-# Title: Dv Bash Alias (for Linux)
+# Title: Dv Bash Alias (for Linux terminal)
+# Name of File: config-bash-alias
 # Use: This file is meant to be sourced from "~/.bashrc"
+
+# Degug function: use it when you need to re-open this file over and over again for debug.
+function f_debug {
+	read
+	vim ~/Repositories/DRYa/all/config-bash-alias
+	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
+}
+
+alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 # List of all alias
 alias ..="cd .."
 alias .="ls"
 alias ,="cd"
-alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
+alias ,,="clear"
+
+# Edit dotFiles
+function ., {
+	clear
+	echo "Change the alias ., to adit:"
+	echo ""
+	echo "1 - Edit \".bashrc\""
+	echo "2 - Edit \".vimrc\""
+	echo "3 - Edit \".dryarc\""
+	echo "4 - Edit \"config-bash-alias\" from DRYa"
+	read v_ans
+	
+
+}
+
+# Multiple ways to upload this file
+	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
+	alias ,.="vim ~/Repositories/DRYa/all/config-bash-alias"
+
+#function ... {
+#	clear
+#	echo -e "Do you need any of these apps?\n"
+#	echo " 1. history-manager"
+#	echo " 2. do nothing"
+#	read v_ans
+#	case 1 in $v_ans
+#}
+
+# historyi-recall app
+	function ... {
+		mkdir -p ~/tmp
+		history > ~/tmp/fileA.txt
+		history
+
+		echo -e "\n > Type Ctrl+C to cancel \n > Type a number to navigate: "
+		echo -n " > "
+		read v_ans
+
+		#echo "grep results:"
+
+		grep "$v_ans" ~/tmp/fileA.txt > ~/tmp/fileB.txt
+
+		# Remove 2 character to the begining of the text
+		sed -i 's/^..//g' ~/tmp/fileB.txt
+
+		# Debugging process
+		#echo "Sed results:"
+		#echo "cat fileB"
+		#cat ~/tmp/fileB.txt
+
+		# Search patter of the beggining of the line
+		grep ^$v_ans ~/tmp/fileB.txt > ~/tmp/fileA.txt
+
+		# Debugging process
+		#echo "cat fileA"
+		#cat ~/tmp/fileA.txt
+		sed -i 's/^\w*\ *//' ~/tmp/fileA.txt
+
+		# Now, cutting the command
+		cut -d ' ' -f2- ~/tmp/fileA.txt
+		
+		# Debugging process
+		#echo "fileA after cut"
+		#cat ~/tmp/fileA.txt
+		#echo "trying to eval:"
+		#read
+
+		# Creating a variable called v_eval to store the content of the file as text
+		v_eval=$(cat ~/tmp/fileA.txt)
+
+		# Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
+		eval $v_eval
+	}
