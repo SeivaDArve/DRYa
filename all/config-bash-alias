@@ -3,6 +3,15 @@
 # Title: Dv Bash Alias (for Linux terminal)
 # Name of File: config-bash-alias
 # Use: This file is meant to be sourced from "~/.bashrc"
+# Describe_file: 
+	echo "File being read: config-bash-alias"
+# Figlet_Title:
+	figlet Dv
+# Install this file
+# 1. open ~/.bashrc
+# 2. paste: "source ~/Repositories/DRYa/all/config-bash-alias"
+
+neofetch
 
 # Degug function: use it when you need to re-open this file over and over again for debug.
 function f_debug {
@@ -14,10 +23,44 @@ function f_debug {
 alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 # List of all alias
+alias op="xdg-open"
+#alias mkdir="mkdir ...; "add .gitkeep to it? (use xargs)"
 alias ..="cd .."
 alias .="ls"
+alias la="ls -a"
+alias ll="ls -l"
+
+# function ls {
+# case !$ in 
+#	l) 
+		#It means "ls l" insteas of ls -l
+#	;;
+#	a) 
+		#It means "ls a" insteas of ls -a
+#	;;
+#	*)
+#	;;
+# esac
 alias ,="cd"
 alias ,,="clear"
+alias ,,,="cd -"
+
+# Acessing omni-log-Dv files
+alias v-omni="vim ~/Repositories/omni-log-Dv/multiplex.org"
+alias e-omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
+alias omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
+alias omni-n-push-n-exit="vim ~/Repositories/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
+alias test="tree /; exit 0"
+
+# Acessing emacs-wiki.org
+alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/tmp/messages.txt
+
+# Acessing emacs init.el file
+alias emacs-init="emacs ~/.emacs.d/init.el"
+
+# Using Num Pad numbers as shortcuts
+alias 24685="shutdown now"
+alias 246854="shutdown -r now"
 
 # Edit dotFiles
 function ., {
@@ -30,10 +73,12 @@ function ., {
 	echo "4 - Edit \"config-bash-alias\" from DRYa"
 	read v_ans
 	
+	alias bashrc="vim ~/.bashrc"
+	alias vimrc="vim ~/.vimrc"
 
 }
 
-# Multiple ways to upload this file
+# Multiple ways to edit this file
 	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
 	alias ,.="vim ~/Repositories/DRYa/all/config-bash-alias"
 
@@ -91,3 +136,9 @@ function ., {
 		# Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
 		eval $v_eval
 	}
+
+# Alias morse-code-style
+# Dot="."
+# Dash=","
+# word="..., ,.., .,,"
+# alias .,
