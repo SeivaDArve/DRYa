@@ -1,0 +1,5 @@
+* Man page for DRYa
+we know that org-mode exports durectly to file format of man pages.
+This files tells how it is done (exporting) and tells the help document for srya also
+
+Emacs can export to the correct place
