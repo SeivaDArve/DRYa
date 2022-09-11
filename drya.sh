@@ -64,6 +64,34 @@ function f_info {
 	}
 }
 
+function f_make_file_dryarc {
+   # DRYa has a temporary config file at ~/.config/h.h/drya/.dryarc
+   # It is meant to store configs that will be discarded at other distros for sure
+   # This function creates that file
+
+   # Create a directory (if it does not already exist)
+   mkdir -p ~/.config/h.h/drya # && echo "dir was created"
+
+   # Test if directory already exists
+   [ -d ~/.config/h.h/drya ] # && echo "dir exists"
+
+   # Test if file already exists. If yes: print out. If Not: Create new
+   if [ -f ~/.config/h.h/drya/.dryarc]
+   then
+      echo "file exists"
+   else
+      # Create file .dryarc with content
+      echo -e "#!/bin/bash\n" >> ~/.config/h.h/drya/.dryarc
+      echo "# Title: .dryarc" >> ~/.config/h.h/drya/.dryarc
+      echo "# Description: File added automatically for you to input your temporary configs for drya"
+      echo "# Use: Add to this file all tmp configs you want to add to drya. Type the command drya-updateMe-locally to append the content of this file to drya's repository (offline) and type drya-updateMe-globally to push to github (ezGIT must be installed). After drya-updateMe-locally this file is deleted and created again empty" >> ~/.config/h.h/drya/.dryarc
+      echo "" >> ~/.config/h.h/drya/.dryarc
+      echo "# Temporary configs:" >> ~/.config/h.h/drya/.dryarc
+
+      echo -e "\nFile: .dryarc created from scratch\n"
+   fi
+
+}
 
 function f_master_dryaRC {
 	clear
@@ -732,14 +760,14 @@ function f_exec {
 	f_hi
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
-	f_default_vars
+$f_default_vars
 
 	#f_cursorON
 	#f_cursorOFF
-
-	f_ascii_icon
+f_make_file_dryarc 
+#f_ascii_icon
 	#f_tableOfContents
-	f_mainmenu
+#f_mainmenu
 	#f_wiki
 	#f_install_vimrc
 	#f_get_script_current_abs_path
@@ -747,11 +775,11 @@ function f_exec {
 	#f_detect_these
 	#f_fillscreenE
 	#f_master_dryaRC
-	f_readKeystroke
+#f_readKeystroke
 }
 
 case $1 in
-	bios) echo "It works like if you are calling for bios" ;;
+	bios) echo "It works like if you are calling for bios setup" ;;
 	edit)
 		case $2 in
 				me) vim ~/Repositories/DRYa/install.uninstall/drya.installer/dryarc ;;

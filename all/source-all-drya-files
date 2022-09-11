@@ -1,0 +1,10 @@
+#!/bin/bash
+# Title: Source all DRYa files
+# Place in this file all script you need ~/.bashrc to recognize
+# Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
+
+# Source and Cat list
+source ~/Repositories/ezGIT/G.sh 1>/dev/null && clear ## uDev: it should search to see if such file exists first
+cat ~/Repositories/DRYa/all/config-termux/welcome-screen # uDev: must test first if terminal is termux
+[ -f ~/.config/h.h/drya/.dryarc ] && source ~/Repositories/DRYa/all/config-bash-alias ##Test if file exists then sources it if it does exist. ## To add/source the permanent alias
+#source ~/.config/h.h/.dryarc ##This line of text is to source the temporary alias therefore must be added after the line where permanent alias are sourced
