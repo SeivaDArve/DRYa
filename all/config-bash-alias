@@ -32,6 +32,9 @@ alias la="ls -A"
 alias ll="ls -l"
 #alias cl="cd ; ls "
 
+alias 24685="shutdown now"
+alias 246854="shutdown -r now"
+
 # function ls {
 # case !$ in 
 #	l) 
