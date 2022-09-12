@@ -54,6 +54,8 @@ alias omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
 alias omni-n-push-n-exit="vim ~/Repositories/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
 alias test="tree /; exit 0"
 
+alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
+
 # Acessing emacs-wiki.org
 alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/tmp/messages.txt
 
