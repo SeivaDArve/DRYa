@@ -30,6 +30,7 @@ alias ..="cd .."
 alias .="ls"
 alias la="ls -A"
 alias ll="ls -l"
+#alias cl="cd ; ls "
 
 # function ls {
 # case !$ in 
