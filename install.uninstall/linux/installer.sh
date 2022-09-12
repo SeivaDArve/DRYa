@@ -11,8 +11,8 @@ function f_greet {
 
 function f_export_updated_dryarc {
 	# Replace ~/.config/h.h/.dryarc for this updated file: ./dryarc
-	mkdir -p ~/.config/h.h/
-	cp ./future-dryarc ~/.config/h.h/.dryarc
+	mkdir -p ~/.config/h.h/drya
+	cp ./future-dryarc ~/.config/h.h/.dryarcdrya
 }
 
 # Add .dryarc to .bashrc
@@ -63,11 +63,12 @@ f_exec
 # README:
 # This installer does several things:
 # 1. Creates a directory at ~/.config/h.h if it does not exist already
-# 2. copies and renames the file future-dryarc to .dryarc at ~/.config/h.h
+# 2. Creates a file .dryarc ~/.config/h.h/drya (for temporary DRYa configs
 # 3. Reads the file ~/.bashrc to see it it has a shebang
 #	3.1. If if doesn't than adds it
-# 4. Reads the file ~/.bashrc again to see if it recognizes and reads the new file ~/.config/h.h
+# 4. Reads the file ~/.bashrc again to see if it recognizes ~/Repositories/DRYa/all/source-all-drya-files 
 # 	4.1 If it doesn't than adds it
 # 5. Sources ~/.bashrc to apply the changes done manually
-# 6. Adds icon .desktop to it's correct place according to the distro
+# 6. Ask if user want to add the GUI layer to DRYa
+#	6.1 if yes: add icon .desktop to it's correct place according to the distro
 # 7. Copies drya man page to it's destination

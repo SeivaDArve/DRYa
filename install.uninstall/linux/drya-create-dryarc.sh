@@ -9,3 +9,5 @@
 # Create new .dryarc
 # rm      ## uDev: this function already exist at drya.sh (you should copy it here. delete there. And there, call this function )
 
+# README:
+# 1. Everytime it is called it creates the file 
