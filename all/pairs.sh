@@ -10,7 +10,9 @@ declare d-dF-ph="~/Repositories/DRYa/.."  #Declared 2x to create an abreviation
 function f_emacs {
    vanila_emacs () {
       lvl=1
-      sudo apt install emacs
+      # At Ubuntu: sudo snap install --classic
+
+      # At Termux: pkg install emacs
    }
 
    doom_emacs () {
