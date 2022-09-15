@@ -8,7 +8,6 @@ function f_hi {
 	echo "Don't you want to be distinguished?"
 	echo "That is what I would like you to specify to me... don't tell me who you are (that can be anonymous), tell me how you would like to be treated"
 	echo "are you Android? Linux? Python in windows?"
-	read
 }
 
 function f_install_configDIR {
@@ -757,14 +756,14 @@ function f_get_script_current_abs_path {
 
 
 function f_exec {
-	f_hi
+				f_hi
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
 $f_default_vars
 
 	#f_cursorON
 	#f_cursorOFF
-f_make_file_dryarc 
+				#f_make_file_dryarc 
 #f_ascii_icon
 	#f_tableOfContents
 #f_mainmenu
@@ -778,14 +777,39 @@ f_make_file_dryarc
 #f_readKeystroke
 }
 
+# Set $ON variable to defaut to zero, in order for drya to go throgh case statements first
+	# and allow the programmer to set one f_exec for each user
+declare ON=0
+
 case $1 in
 	bios) echo "It works like if you are calling for bios setup" ;;
 	edit)
 		case $2 in
-				me) vim ~/Repositories/DRYa/install.uninstall/drya.installer/dryarc ;;
+			me) vim ~/Repositories/DRYa/install.uninstall/drya.installer/dryarc ;;
+			*) echo "Right now you can only edit \"me\" because there is only one account installed" ;;
 		esac
 	;;
-	*) echo -n "";;
+	standby) 
+		case $2 in
+			on) 
+				ON=1 
+				clear
+				echo "Standby = $ON"
+			;;
+		       	off) 
+				ON=0 
+				clear
+				echo "Standby = $ON"
+			;;	
+			*) 
+				echo " > Use: drya standby on" 
+				echo " > Use: drya standby off" 
+			;;
+		esac
+	;;
+	*) echo "DRYa is installed; These are some options for DRYa... uDev: List functions"
+	   echo "Standby = $ON"
+	;;
 esac
 
-f_exec
+if [ $ON == 1 ]; then f_exec; fi
