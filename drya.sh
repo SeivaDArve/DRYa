@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function f_hi {
-	echo "Hi"
-	echo "Which device are you talking from?"
-	echo "I can talk evenly to everyone (and that is called being truthfull) but I assume you don't expect that from me"
-	echo "I assume you want me to respond to you diferently if you are Linux, Windows, Android... right?"
-	echo "Don't you want to be distinguished?"
-	echo "That is what I would like you to specify to me... don't tell me who you are (that can be anonymous), tell me how you would like to be treated"
-	echo "are you Android? Linux? Python in windows?"
+	echo "Hi user 1"
+#	echo "Which device are you talking from?"
+#	echo "I can talk evenly to everyone (and that is called being truthfull) but I assume you don't expect that from me"
+#	echo "I assume you want me to respond to you diferently if you are Linux, Windows, Android... right?"
+#	echo "Don't you want to be distinguished?"
+#	echo "That is what I would like you to specify to me... don't tell me who you are (that can be anonymous), tell me how you would like to be treated"
+#	echo "are you Android? Linux? Python in windows?"
 }
 
 function f_install_configDIR {
@@ -754,8 +754,8 @@ function f_get_script_current_abs_path {
 	}
 }
 
-
-function f_exec {
+# Behaviour profile 1  ##Add one f_exec for each user
+function f_exec_1 {
 				f_hi
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
@@ -775,11 +775,18 @@ $f_default_vars
 	#f_fillscreenE
 	#f_master_dryaRC
 #f_readKeystroke
+echo stupid
 }
 
-# Set $ON variable to defaut to zero, in order for drya to go throgh case statements first
-	# and allow the programmer to set one f_exec for each user
-declare ON=0
+
+
+
+
+
+
+
+# Behaviour profile 0  ##Meant to use drya with carefull
+function f_exec_0 {
 
 case $1 in
 	bios) echo "It works like if you are calling for bios setup" ;;
@@ -789,27 +796,36 @@ case $1 in
 			*) echo "Right now you can only edit \"me\" because there is only one account installed" ;;
 		esac
 	;;
+	*) echo "hi, you are here in bios-like state" ;;
+esac
+}
+
+
+
+
+
+
+
+[[ -z "$ON" ]] && echo "Empty var; " && export ON=0 && echo $ON
+
+case $1 in
 	standby) 
 		case $2 in
-			on) 
-				ON=1 
-				clear
-				echo "Standby = $ON"
-			;;
-		       	off) 
-				ON=0 
-				clear
-				echo "Standby = $ON"
-			;;	
+		       	off) unset ON; clear; echo "Standby = Unset" ;;  ##For no user: Proceed carefully
+			on ) export ON="variable set"; clear; echo "Standby = Set" ;;  ##For Default user
+			#on-user-2 ) ON=1; clear; echo "Standby = $ON" ;;  ##For Next user  ##uDev: Sugestion: Add 1x BIOS and 1x USER to this file and then for any other user, make drya search for a file and a function outside (for f_exec_2, f_exec_3 etc)
+			state) echo "Standby = $ON" ;;
 			*) 
+				echo "	You must specify a valid option"
 				echo " > Use: drya standby on" 
 				echo " > Use: drya standby off" 
+				echo " > Use: drya standby state" 
 			;;
 		esac
 	;;
-	*) echo "DRYa is installed; These are some options for DRYa... uDev: List functions"
-	   echo "Standby = $ON"
+	*) echo -e "DRYa is installed" #\nThese are some options for DRYa... uDev: List functions" 
 	;;
 esac
 
-if [ $ON == 1 ]; then f_exec; fi
+# Tell bash, if $ON variable is NOT EMPTY then execute 1... Otherwise IF EMPTY execute 0
+[[ ! -z "$ON" ]] && f_exec_0 || f_exec_1
