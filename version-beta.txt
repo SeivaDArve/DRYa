@@ -23,4 +23,4 @@ Version Log (contents of each version) {
 	5. There should be at ~/tmp/messages.txt ... this way, at every .sh file you can tell it te echo out a file "THIS file was read" without filling the entire screen. DRYa wants to tell each file that it is being run for debugging process (at ~/tmp/messages like emacs does) but does not want to fill the entire screen of the terminal at startup
 	6. clear ~/tmp/ at .bash_logout intead of .bashrc
    7. when installed, DRYa.sh must have a flag --help because there is no in-built man page for DRYa. Instead, man page for DRYa can be installed by downloading a part of dWiki. So, there should be a command "drya --install man"
-	
+	7. At a fresh Linux format, must set gnome-terminal to autorun at startup and install neofetch to put it into ~/.bashrc
