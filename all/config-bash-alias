@@ -35,6 +35,15 @@ alias ll="ls -l"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
 
+function go {
+	# If arg $2 is true (is empty), then, read argument $1 and run it on a separate process (a second process). After that, close the terminal
+	[ -z "$2" ] && setsid $1 && exit 0
+
+	#uDev: use xargs instead to open as many arguments as possible with go function
+	#	xargs -f  setsisd 
+	#	exit 0
+}
+
 # function ls {
 # case !$ in 
 #	l) 
