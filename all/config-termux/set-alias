@@ -1,3 +1,0 @@
-#!/bin/bash
-
-# This script is supposed to go look at "~/.bashrc" to see if all my alias are sourced (loadd). They live at DRY/all/config-bash-alias
