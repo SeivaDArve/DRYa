@@ -96,7 +96,7 @@ function ., {
 
 # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
 	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
-	alias ,.="vim ~/Repositories/DRYa/all/config-bash-alias"
+	alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
 
 #function ... {
 #	clear
