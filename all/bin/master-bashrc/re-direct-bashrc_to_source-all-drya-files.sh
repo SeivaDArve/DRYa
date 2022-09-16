@@ -11,5 +11,4 @@ bash ./delete-drya_from_bashrc
 # Pasting a new entry inside ~/.bashrc
 echo ""
 echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
-echo 'bash ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
- 
+echo 'source ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
