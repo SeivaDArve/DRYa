@@ -1,16 +1,17 @@
 #!/bin/bash
 
-# Title: Dv Bash Alias (for Linux terminal)
+# Title: Dv Bash Alias and Functions (for Linux terminal)
 # Name of File: config-bash-alias
-# Use: This file is meant to be sourced from "~/.bashrc"
+# Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 # Version: beta
-# Describe_file: 
-	echo "File being read: config-bash-alias"
-# Figlet_Title:
-	figlet Dv
+#
+echo "File being read: config-bash-alias" ## File Description
+figlet Dv ## Figlet Title
+#
+
 # Install this file
 # 1. open ~/.bashrc
-# 2. paste: "source ~/Repositories/DRYa/all/config-bash-alias"
+# 2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
 
 neofetch
 
@@ -21,16 +22,18 @@ function f_debug {
 	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
 }
 
+# joke:
 alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 # List of all alias
 alias op="xdg-open"
 #alias mkdir="mkdir ...; "add .gitkeep to it? (use xargs)"
-alias ..="cd .."
-alias .="ls"
 alias la="ls -A"
 alias ll="ls -l"
 #alias cl="cd ; ls "
+
+# This command is same as: "source ~/.bashrc" (but needs the function: go)
+alias src="go gnome-terminal; exit"
 
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
@@ -39,7 +42,7 @@ function go {
 	# This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
 	for v_arg in $@
 	do
-		setsid $v_arg
+		setsid $v_arg &>/dev/null
 	done
 }
 
@@ -55,6 +58,8 @@ function go {
 #	;;
 # esac
 
+alias .="ls"
+alias ..="cd .."
 alias ,="cd"
 alias ,,="clear"
 alias ,,,="cd -"
