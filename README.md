@@ -2,7 +2,7 @@
 
 # DRYa acronym
 ### Do not repeat yourself!  Install one of these utilities to backup your config files and this way, after a fresh format, all your settings will be there. You may use this software to improve your tasks, making your computer (machine) work for you instead of you working for the machine. You should simply automate your tasks once and save them at your choosen Butler.
-"Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config manager. Keep your tools and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/noob proof.
+"Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config and a content manager. Keep your tools, stuff and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/Noob proof.
 
 # Description
 - This script is an incentive to always tweak your machine by the command line OR to automate all GUI tasks, so that you don't have to repeat them
