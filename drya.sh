@@ -1,4 +1,6 @@
 #!/bin/bash
+# Title: Main menu for the 2 default users of DRYa.sh
+# Description: File that contains bash for 2 settings: a default user to serve as an example of what it can do  and a careful mode of usage compared to bios
 
 function f_hi {
 	echo "Hi user 1"
