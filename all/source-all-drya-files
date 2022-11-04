@@ -21,4 +21,7 @@ function f_start {
       # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
       source ~/.config/h.h/drya/.dryarc 2>/dev/null && clear  alias drya="bash ~/Repositories/DRYa/drya.sh"
 
+# Source QR-walking-stick (inside dWiki/TODO-apps)
+   alias qr="bash /data/data/com.termux/files/home/Repositories/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
+
 f_start  ##Comment/Uncomment this line to toggle on or off

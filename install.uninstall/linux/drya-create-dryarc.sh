@@ -11,3 +11,10 @@
 
 # README:
 # 1. Everytime it is called it creates the file 
+#
+#
+#
+#
+#
+#
+# THIS .dryarc file IS USED TO STORE THE CURRENT OS NAME etc...
