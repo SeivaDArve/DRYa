@@ -3,6 +3,10 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
+function f_start {
+   echo "DRYa: source-all-drya-files"
+}
+
 # Source: Repo: ezGIT
    alias G="bash ~/Repositories/ezGIT/G.sh"
    
@@ -16,3 +20,5 @@
    source ~/Repositories/DRYa/all/etc/config-bash-alias
       # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
       source ~/.config/h.h/drya/.dryarc 2>/dev/null && clear  alias drya="bash ~/Repositories/DRYa/drya.sh"
+
+f_start  ##Comment/Uncomment this line to toggle on or off
