@@ -44,6 +44,7 @@ alias ll="ls -l"
 # This command is same as: "source ~/.bashrc" (but needs the function: go)
 alias src="go gnome-terminal; exit"
 
+alias 2468="exit"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
 
@@ -53,6 +54,30 @@ function go {
 	do
 		setsid $v_arg &>/dev/null
 	done
+
+      # Detecting if any of the arguments given has the word "terminal" to replace for "gnome-terminal"
+      if [[ $@ =~ "terminal" ]]; then setsid gnome-terminal &>/dev/null; fi
+
+
+      # Detect if LAST argument is "bye" to make the current terminal "exit"
+         # Store all arguments inside a variable
+         v_allArguments=$*
+         
+         # Using awk to detect only the last argument
+         v_lastArg=$(echo $v_allArguments | awk '{ print $NF }')
+         if [ ${v_lastArg} == "bye" ]; then 
+            #echo "bye was said. Press enter to exit"    #Exit message
+            #read                                        #Pause before exit
+            exit
+         fi
+
+      # If there is an app called "bye" that you want to open with the command "go" then just put something else in from of it to prevent "exit" command to happen
+         # Use: $ go bye ...
+
+      # If you simply want to restart the terminal
+         if [ $1 == "again" ]; then gnome-terminal && exit; fi
+
+   # If you want to export just this "go" script for an entire repository, the name sugested is: bash-open-app-at-external-window
 }
 
 # function ls {
