@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Title: Dv Bash Alias and Functions (for Linux terminal)
+# Title: Dv List of all alias and Functions (for Linux terminal)
 # Name of File: config-bash-alias
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 # Version: beta
@@ -15,6 +15,16 @@ figlet Dv ## Figlet Title
 
 neofetch
 
+# See battery status:
+function bt {
+case $1 in 
+	-a) upower -i `upower -e | grep 'BAT'` ;;
+	-p) echo -n "Battery percentage = " && cat /sys/class/power_supply/BAT0/capacity ;;
+	*) upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage" 
+	;;
+esac
+}
+
 # Degug function: use it when you need to re-open this file over and over again for debug.
 function f_debug {
 	read
@@ -25,7 +35,6 @@ function f_debug {
 # joke:
 alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
-# List of all alias
 alias op="xdg-open"
 #alias mkdir="mkdir ...; "add .gitkeep to it? (use xargs)"
 alias la="ls -A"

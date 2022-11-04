@@ -3,10 +3,14 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
-# Source and Cat: external apps
+# Source and Cat: Repo: ezGIT
 source ~/Repositories/ezGIT/G.sh &>/dev/null && clear 
 cat ~/Repositories/dWiki/termux/default-welcome-screen-text # uDev: must test first if terminal is termux
 
-# Source and Cat: internal files
+# Source and config: Repo: oedaz
+source ~/Repositories/moedaz/moedaz.sh &>/dev/null && clear 
+alias mo="bash ~/Repositories/moedaz/moedaz.sh"
+
+# Source and Cat: DRYa internal files
 source ~/Repositories/DRYa/all/etc/config-bash-alias
 source ~/.config/h.h/drya/.dryarc 2>/dev/null && clear  ##Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null))
