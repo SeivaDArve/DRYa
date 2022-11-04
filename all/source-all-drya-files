@@ -3,14 +3,16 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
-# Source and Cat: Repo: ezGIT
-source ~/Repositories/ezGIT/G.sh &>/dev/null && clear 
-cat ~/Repositories/dWiki/termux/default-welcome-screen-text # uDev: must test first if terminal is termux
+# Source: Repo: ezGIT
+   alias G="bash ~/Repositories/ezGIT/G.sh"
+   
+# Source and config: Repo: moedaz
+   alias mo="bash ~/Repositories/moedaz/moedaz.sh"
 
-# Source and config: Repo: oedaz
-source ~/Repositories/moedaz/moedaz.sh &>/dev/null && clear 
-alias mo="bash ~/Repositories/moedaz/moedaz.sh"
+# Display the standard welcome termux message
+   cat ~/Repositories/dWiki/termux/default-welcome-screen-text # uDev: must test first if terminal is termux
 
 # Source and Cat: DRYa internal files
-source ~/Repositories/DRYa/all/etc/config-bash-alias
-source ~/.config/h.h/drya/.dryarc 2>/dev/null && clear  ##Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null))
+   source ~/Repositories/DRYa/all/etc/config-bash-alias
+      # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
+      source ~/.config/h.h/drya/.dryarc 2>/dev/null && clear  alias drya="bash ~/Repositories/DRYa/drya.sh"
