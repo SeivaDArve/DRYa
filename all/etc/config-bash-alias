@@ -89,6 +89,7 @@ alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Ad
 alias emacs-init="emacs ~/.emacs.d/init.el"
 
 # Using Num Pad numbers as shortcuts
+alias 2468="exit"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
 
