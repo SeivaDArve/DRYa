@@ -24,4 +24,7 @@ function f_start {
 # Source QR-walking-stick (inside dWiki/TODO-apps)
    alias qr="bash /data/data/com.termux/files/home/Repositories/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
 
+# Source scripts from repo: upK
+   source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh
+
 f_start  ##Comment/Uncomment this line to toggle on or off

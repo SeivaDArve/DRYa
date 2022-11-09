@@ -42,11 +42,12 @@ alias ll="ls -l"
 #alias cl="cd ; ls "
 
 # This command is same as: "source ~/.bashrc" (but needs the function: go)
-alias src="go gnome-terminal; exit"
 
 alias 2468="exit"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
+
+alias src="go gnome-terminal; exit"
 
 function go {
 	# This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
