@@ -1,51 +1,109 @@
-#!/bin/bash
+#!bin/bash
 
-# Title: Dv List of all alias and Functions (for Linux terminal)
-# Name of File: config-bash-alias
+# Title: config-bash-alias
+# Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 # Version: beta
-#
-echo "File being read: config-bash-alias" ## File Description
-figlet Dv ## Figlet Title
-#
-
+# 
 # Install this file
-# 1. open ~/.bashrc
-# 2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
+#   1. open ~/.bashrc
+#   2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
+#
 
-neofetch
+function f_verbose_start {
+   echo "DRYa: File running: config-bash-alias" ## File Description
+   figlet Dv ## Figlet Title
+}
+f_verbose_start
 
-# See battery status:
+
+function f_OS_detect {
+   #Detect Terminal and OS to create compatibility 
+      OS=$(uname -o)
+      echo "OS Detected: $OS" > ~/.config/h.h/drya/drya-detections.txt
+
+   # Neofetch is not needed... It is just for fun
+      neofetch 2>/dev/null
+}
+f_OS_detect
+
 function bt {
-case $1 in 
-	-a) upower -i `upower -e | grep 'BAT'` ;;
-	-p) echo -n "Battery percentage = " && cat /sys/class/power_supply/BAT0/capacity ;;
-	*) upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage" 
-	;;
-esac
+   # See battery status
+   
+   if [ $(uname -o) == "Android" ]; then
+      termux-battery-status
+   else
+      case $1 in 
+         -a) upower -i `upower -e | grep 'BAT'` ;;
+         -p) echo -n "Battery percentage = " && cat /sys/class/power_supply/BAT0/capacity ;;
+         *) upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage" 
+         ;;
+      esac
+   fi
 }
 
-# Degug function: use it when you need to re-open this file over and over again for debug.
 function f_debug {
+   # Degug function: use it when you need to re-open this file over and over again for debug.
 	read
 	vim ~/Repositories/DRYa/all/config-bash-alias
 	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
 }
 
+function f_drya-messages {
+   # All Seiva's software (including DRYa)
+      # will have at the start of the file,
+      # a line that
+      # will tell ~/tmp/drya-messages.txt
+      # that that specific file was read.
+      # This is for debugging process.
+      # You can add a line to ~/.bashrc to delete
+      # ~/tmp everytime you open the terminal
+      # and that way, everything is refreshed everytime
+
+      alias drya-messages="less ~/tmp/drya-messages.txt" #uDev: change to .dryarc
+}
+
+
+
 # joke:
 alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 alias op="xdg-open"
-#alias mkdir="mkdir ...; "add .gitkeep to it? (use xargs)"
 alias la="ls -A"
 alias ll="ls -l"
-#alias cl="cd ; ls "
+alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
-# This command is same as: "source ~/.bashrc" (but needs the function: go)
 
 alias 2468="exit"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
+
+function shebang {
+   # It creates a bash script (if no args are input)
+      # Or gives a shebang to the file you input as argument 1)
+      # It also changes the permissions of tbe file to executable
+
+   # If called with no args:
+   if [[ -z $1 ]]; then
+      echo -n " > File name? "
+      read v_ans
+      touch $v_ans
+      echo "#!/bin/bash" > ./${v_ans}
+      chmod +x ./${v_ans}
+      tput setaf 3
+      echo -n " > File "
+      tput setaf 4
+      echo -n $v_ans
+      tput setaf 3
+      echo " created!"
+      tput sgr0
+      #uDev: needs to change permissions
+   fi
+
+   # When a file name is given:
+   #uDev: firsr it must check if it is not a dir
+}
+
 
 alias src="go gnome-terminal; exit"
 
@@ -95,9 +153,10 @@ function go {
 
 alias .="ls"
 alias ..="cd .."
+alias ...="cd -"
 alias ,="cd"
 alias ,,="clear"
-alias ,,,="cd -"
+alias ,,,="pwd"
 
 # Acessing omni-log-Dv files
 alias v-omni="vim ~/Repositories/omni-log-Dv/multiplex.org"
@@ -119,25 +178,74 @@ alias 2468="exit"
 alias 24685="shutdown now"
 alias 246854="shutdown -r now"
 
-# Edit dotFiles
-function ., {
-	clear
-	echo "Change the alias ., to adit:"
-	echo ""
-	echo "1 - Edit \".bashrc\""
-	echo "2 - Edit \".vimrc\""
-	echo "3 - Edit \".dryarc\""
-	echo "4 - Edit \"config-bash-alias\" from DRYa"
-	read v_ans
-	
-	alias bashrc="vim ~/.bashrc"
-	alias vimrc="vim ~/.vimrc"
 
-}
+alias bashrc="vim ~/.bashrc"
+alias vimrc="vim ~/.vimrc"
 
-# Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
-	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
-	alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+
+# <drya ,.... menu>
+   # DRYa sub-files are usually called by ,..... alias:
+      # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
+         alias edit-alias="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+
+      # Edit source-all-drya-files:
+      alias edit-sources="vim ~/Repositories/DRYa/all/source-all-drya-files"
+      alias ,..="vim ~/Repositories/DRYa/all/source-all-drya-files"
+
+      # Edit dotFiles
+      function ,... {
+
+         clear
+
+         echo SELECT file to edit by Title
+         echo
+
+         # Change the prompt message:
+         PS3="\nSelect a file to edit: "
+
+         select opt in config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE quit; do
+            case $opt in
+               config-bash-alias)
+                  ,.
+                  break
+                  ;;
+               source-all-drya-files)
+                ,..
+               ;;
+             .bashrc)
+               vim ~/.bashrc
+               break
+               ;;
+             source-all-moedaz-files)
+               
+               ;;
+            com.list-econ-items.txt)
+               vim ~/Repositories/moedaz/all/var/com.list-econ-items.txt
+               ;;
+            com.associative-array)
+               vim ~/Repositories/moedaz/all/var/com.associative-array
+               ;;
+             .vimrc)
+                  vim ~/.vimrc
+               ;;
+            SOURCE)
+               clear
+               source ~/.bashrc
+               break
+               ;;
+            quit)
+               break
+               ;;
+             *) 
+               echo "Invalid option $REPLY"
+               ;;
+           esac
+         done
+
+      }
+         alias edit-dotFiles=",..."
+# </drya ,.... menu>
 
 #function ... {
 #	clear
@@ -149,7 +257,7 @@ function ., {
 #}
 
 # historyi-recall app
-	function ... {
+	function hist {
 		mkdir -p ~/tmp
 		history > ~/tmp/fileA.txt
 		history
@@ -215,44 +323,99 @@ alias ..="cd .."
 alias hi="echo hello"
 
 alias sourceAll="source ~/.bashrc"
-alias v="echo sk"
 
-# Source all other repos if they exist:
-# Source jarve
-# Source upK
-# Source ezGIT
-# Source ... 
+# function drya {
+#   PS3="Select the operation: "
+#   select opt in Configurations installations edit-files quit
+#   do
+#      case $opt in
+#         Configurations)
+#            read -p "Enter the first number: " n1
+#            read -p "Enter the second number: " n2
+#            echo "$n1 + $n2 = $(($n1+$n2))"
+#            ;;
+#         installations)
+#            read -p "Enter the first number: " n1
+#            read -p "Enter the second number: " n2
+#            echo "$n1 - $n2 = $(($n1-$n2))"
+#            ;;
+#         edit-files)
+#            read -p "Enter the first number: " n1
+#            read -p "Enter the second number: " n2
+#            echo "$n1 * $n2 = $(($n1*$n2))"
+#            ;;
+#         quit)
+#            break
+#            ;;
+#         *)
+#            echo "Invalid option $REPLY"
+#            ;;
+#      esac
+#      # It works as a while loop too
+#   done
+#}
+
+# Name options: goto, cdl, cl...
+function goto {
+   # Use 1: '$ goto '
+   # Use 2: '$ goto dir'
+   # Use 3: '$ goto rm'
+   # Use 4: '$ goto rm last'
+   # Use 5: '$ goto drya'
 
 
-function drya {
-   PS3="Select the operation: "
-   select opt in Configurations installations edit-files quit
-   do
-      case $opt in
-         Configurations)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 + $n2 = $(($n1+$n2))"
-            ;;
-         installations)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 - $n2 = $(($n1-$n2))"
-            ;;
-         edit-files)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 * $n2 = $(($n1*$n2))"
-            ;;
-         quit)
-            break
-            ;;
-         *)
-            echo "Invalid option $REPLY"
-            ;;
-      esac
-      # It works as a while loop too
-   done
+   # Implementation of Use 1:
+   if [ -z $1 ]; then echo " > No arguments"; fi
+
+   # Implementation of Use 2:
+   
+   # Implementation of Use 4:
+   if [ $1 == "rm" ] && [ $2 == "last" ]; then
+      
+      # uDev: detect current dir name as $cur_dir
+
+      echo -n "are yoy sure? "; read v_ans
+      if [ $v_ans == "y" ] || [ $v_ans == "Y" ]; then
+         cd ..
+         rm -rf $cur_dir 
+      fi
+      
+      echo "Done!"
+   fi
 }
 
+function hkllhcf {
+   # If if you invoke "cdl" and no dir exists
+   if [ ! -d "./$1" ]; then
+      
+      # A function that is needed to be prepared in case later on the code it is called:
+      function f_cdl_mkdir {
+         # Generate a random number to be used as a key to delete our previous directory if it was  reated by mistake
+         declare v_random=$RANDOM
 
+         # If a new directory is to be created, verbose descriptions will happen
+         echo -n " > That directory "
+         tput setaf 4
+         echo -n $1
+         tput sgr0
+         echo " was not existent"
+         echo "  > Therefore was created"
+         echo -n "  > Delete it by executing "
+         tput setaf 4
+         echo $v_random
+         tput sgr0
+      }
+
+      declare cur_dir=$1
+      mkdir -p $1 
+      f_cdl_mkdir
+      cd $1
+      ls
+
+   else
+      # If you invoke "cdl" and dir exists
+      cd $1
+      ls
+      echo "normal run"
+   fi
+}
