@@ -7,9 +7,16 @@
 # uDev: First determine where to install
 
 # Using the brother script to search and reset ~/.bashrc
-bash ./delete-drya_from_bashrc
+   bash ./delete-drya_from_bashrc
 
 # Pasting a new entry inside ~/.bashrc
-echo ""
-echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
-echo 'source ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
+   #uDev: at the root of this repo
+      # There will be a dir called "install.uninstall"
+      # path: $DRYa/install.uninstall/linux/instaler.sh
+      # that contains a function f_export_DRYa_repo-location
+      # that exports the location where the user wants drya to settle
+      # and that variable $REPOS is what this file will
+      # send to ~/.bashrc
+   echo ""
+   echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
+   echo 'source ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
