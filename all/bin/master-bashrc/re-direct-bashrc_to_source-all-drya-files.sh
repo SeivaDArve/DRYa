@@ -4,6 +4,7 @@
 # Description: In order for ~/.bashrc not to have duplicate entries, this script relies on the brother script (brother in terms of directory location) to delete any previous entries and only then it pastes a new entry into ~/.bashrc
 # Use: Decide in this file the path for "souce-all-drya-files"
 
+# uDev: First determine where to install
 
 # Using the brother script to search and reset ~/.bashrc
 bash ./delete-drya_from_bashrc
