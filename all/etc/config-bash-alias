@@ -10,11 +10,13 @@
 #   2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
 #
 
-function f_verbose_start {
-   echo "DRYa: File running: config-bash-alias" ## File Description
-   figlet Dv ## Figlet Title
+function f_verbose_start-2 {
+   # File Description
+      echo "DRYa: File running: config-bash-alias" 
+   # Use Figlet app to write a Title
+      figlet Dv 
 }
-f_verbose_start
+f_verbose_start-2
 
 
 function f_OS_detect {
@@ -26,6 +28,9 @@ function f_OS_detect {
       neofetch 2>/dev/null
 }
 f_OS_detect
+
+alias rec="termux-microphone-record -d"
+alias cer="termux-microphone-record -q"
 
 function bt {
    # See battery status
@@ -73,6 +78,10 @@ alias la="ls -A"
 alias ll="ls -l"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
+function stroken {
+   echo "seivadarve"
+   echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+}
 
 alias 2468="exit"
 alias 24685="shutdown now"
@@ -158,6 +167,23 @@ alias ,="cd"
 alias ,,="clear"
 alias ,,,="pwd"
 
+# Pandoc app to create man pages
+
+function nPpN-dir-looper {
+   # (looper app) Save a loop of directories:
+      alias P="Positive dir"  #uDev: Adds current dir to loop
+      alias N="Negative dir"  #uDev: Removes current dir from loop
+      alias p="previous dir"  #uDev: Swap to previous dir present in the loop 
+      alias n="next dir"      #uDev: Swap to next dir present in the loop
+      # np | pn | Np | Pn) list all dirs and current one
+      function P {
+         mkdir -p ~/.config/h.h/nPpN-dir-looper
+         pwd >> ~/.config/h.h/nPpN-dir-looper/nPpN-list.txt
+          
+      }
+}
+nPpN-dir-looper
+
 # Acessing omni-log-Dv files
 alias v-omni="vim ~/Repositories/omni-log-Dv/multiplex.org"
 alias e-omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
@@ -187,7 +213,7 @@ alias vimrc="vim ~/.vimrc"
    # DRYa sub-files are usually called by ,..... alias:
       # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
          alias edit-alias="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
-alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+         #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
 
       # Edit source-all-drya-files:
       alias edit-sources="vim ~/Repositories/DRYa/all/source-all-drya-files"
@@ -355,34 +381,7 @@ alias sourceAll="source ~/.bashrc"
 #   done
 #}
 
-# Name options: goto, cdl, cl...
-function goto {
-   # Use 1: '$ goto '
-   # Use 2: '$ goto dir'
-   # Use 3: '$ goto rm'
-   # Use 4: '$ goto rm last'
-   # Use 5: '$ goto drya'
 
-
-   # Implementation of Use 1:
-   if [ -z $1 ]; then echo " > No arguments"; fi
-
-   # Implementation of Use 2:
-   
-   # Implementation of Use 4:
-   if [ $1 == "rm" ] && [ $2 == "last" ]; then
-      
-      # uDev: detect current dir name as $cur_dir
-
-      echo -n "are yoy sure? "; read v_ans
-      if [ $v_ans == "y" ] || [ $v_ans == "Y" ]; then
-         cd ..
-         rm -rf $cur_dir 
-      fi
-      
-      echo "Done!"
-   fi
-}
 
 function hkllhcf {
    # If if you invoke "cdl" and no dir exists
@@ -417,5 +416,66 @@ function hkllhcf {
       cd $1
       ls
       echo "normal run"
+   fi
+}
+
+
+function lc {
+   # Name options: lc
+
+   # Dependencies: figlet, file
+      # Install it by typing:
+      # '$ pkg install figlet'
+      # '$ pkg install file'
+
+   # Use 1: '$ lc          # Complains that there is no destination specified
+   # Use 2: '$ lc drya     # Travels to alias
+   # Use 3: '$ lc -p <dir>   # Create new dir and travel to it
+   # Use 4: '$ lc -r <dir>   # Removes dir
+   # Use 5: '$ lc ..      # Go to parent dir and ls
+   # Use 6: '$ lc <dir>      # Go to existent dir
+
+
+   # Implementation of Use 1:
+   if [ -z $1 ]; then 
+      figlet "lc = ls + cd"
+      echo " > No arguments. Choose some place to go to"
+
+   # Implementation of Use 2:
+   elif [ $1 == "drya" ]; then
+      cd ~/Repositories/DRYa && ls
+   
+   # Implementation of Use 2:
+   elif [ $1 == "moedaz" ]; then
+      cd ~/Repositories/moedaz && ls
+   
+   # Implementation of Use 3:
+   elif [ $1 == "-p" ]; then
+      mkdir -p $2
+      cd $2
+      ls
+
+   # Implementation of Use 4:
+   elif [ $1 == "-r" ]; then
+      rm -rf $2
+      ls
+      
+      # uDev: privide more safety
+
+   # Implementation of Use 5:
+   elif [ $1 == ".." ]; then
+      cd ..
+      ls
+
+      # uDev: add a $2 to insert a number. That number is thr number of time '$ cd ..' will be executed
+
+   # Implementation of Use 6:
+   else 
+      v_found=$(ls | grep $1)
+      echo Found: $v_found
+      cd $v_found && ls
+
+      #uDev: use to command '$ file' to exclude all non directories
+      #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
 }

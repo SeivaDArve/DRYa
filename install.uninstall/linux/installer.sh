@@ -7,22 +7,37 @@
 #uDev: All these functions will be merged in the future with drya.sh
 
 function f_greet {
+<<<<<<< Updated upstream
 	figlet "DRYa" 2>/dev/null || echo "DRYa: greetings ;)" 
 }
 
 funtion f_export_variables {
 	# uDev: Ask where the user wants drya to be installed and export the variable $drya-REPOS-dir
+=======
+   #uDev: Because f_greet starts before the question "do you want to install dependencies?"
+      # then copy the ascii art from it at least tmfor this time
+
+   echo "Hi, this is DRYa;)"
+   echo " > Don't Repeat Yourself (app)"
+	echo "This sotware will run smoothly by only invoking .../DRYa/all/drya.sh"
+	echo "This installer is an extra to add .desktop entries and all that"
+>>>>>>> Stashed changes
 }
 
 function f_export_updated_dryarc {
 	# Replace ~/.config/h.h/.dryarc for this updated file: ./dryarc
-	mkdir -p ~/.config/h.h/drya
-	cp ./future-dryarc ~/.config/h.h/.dryarcdrya
+	   mkdir -p ~/.config/h.h/drya
+	   cp ./future-dryarc ~/.config/h.h/.dryarcdrya
 }
 
-function f_add_dryarc_to_bashrc {
-   # Add .dryarc to .bashrc
-   bash ~/Repositories/DRYa/all/bin/re-direct-drya-to-bashrc
+function f_add_drya_to_bashrc {
+   #Add file "source-all-drya-files" to ~/.bashrc
+      # which is the first file and only file
+      # inside ~/.bashrc that re-directs to all others
+
+      # uDev: Ask permission to continue first
+      bash ~/Repositories/DRYa/all/bin/re-direct-bashrc_to_source-all-drya-files.sh
+
 }
 
 # Copy drya.desktop to...
@@ -32,11 +47,20 @@ function f_add_dryarc_to_bashrc {
 # Export a variable to acess the possibility of editing drya
 # Fix: it is included at .dryarc sourced by .bashrc
 
+function f_export_DRYa_repo-location {
+   #uDev: this function simply finds where the user wants DRYa's repo to settle
+      # Then finds its '$ pwd' and then exports it.
+      # that Variable $REPOS will be the variable
+      # used by the master-bashrc.
+      # The binary that masters .bashrc will send to ~/.bashrc the correct
+      # DRYa location
+
+}
 
 function f_exec {
 	f_greet
-	f_export_updated_dryarc
-	f_add_dryarc_to_bashrc
+	#f_export_updated_dryarc
+	#f_add_drya_to_bashrc
    #f_drya-to-desktop ##uDev: must be created
 	source ~/.bashrc && echo "sourced"
 }
