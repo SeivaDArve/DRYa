@@ -4,9 +4,14 @@
 # This script is not supposed to be destructive or to uninstall anything.
 # README at the bottom of the page to describe the process and the logic
 
+#uDev: All these functions will be merged in the future with drya.sh
+
 function f_greet {
-	echo "This sotware will run smoothly by only invoking .../DRYa/all/drya.sh"
-	echo "This installer is an extra to add .desktop entries and all that"
+	figlet "DRYa" 2>/dev/null || echo "DRYa: greetings ;)" 
+}
+
+funtion f_export_variables {
+	# uDev: Ask where the user wants drya to be installed and export the variable $drya-REPOS-dir
 }
 
 function f_export_updated_dryarc {
