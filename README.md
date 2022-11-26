@@ -42,3 +42,6 @@ Do you need to format your machine? jarve may help you while your machine is off
 # GitHub - "Seiva D'Arve"
 Overview: 	https://github.com/SeivaDArve
 Repositories:	https://github.com/SeivaDArve?tab=repositories 
+
+# Clone DRYa directly:
+git clone https://github.com/SeivaDArve/DRYa.git
