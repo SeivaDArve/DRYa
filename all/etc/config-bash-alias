@@ -181,6 +181,13 @@ function nPpN-dir-looper {
          pwd >> ~/.config/h.h/nPpN-dir-looper/nPpN-list.txt
           
       }
+
+      # Curiosity: by typing '$ man termux' you can see that by coincidence and also by luck, termux uses the volume key <Up> to perform control over the terminal and over the smartphone.
+         # Two of those Volume Up shorcut control are:
+         # 'Volume key Up + P': Page Up
+         # 'Volume key Up + N': Page Down
+         # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
+            # These 3 commands allow you to see before, after and around your current line in the current file
 }
 nPpN-dir-looper
 
@@ -449,6 +456,10 @@ function lc {
    elif [ $1 == "moedaz" ]; then
       cd ~/Repositories/moedaz && ls
    
+   # Implementation of Use 2:
+   elif [ $1 == "ezGIT" ] || [ $1 == "G" ]; then
+      cd ~/Repositories/ezGIT && ls
+      
    # Implementation of Use 3:
    elif [ $1 == "-p" ]; then
       mkdir -p $2

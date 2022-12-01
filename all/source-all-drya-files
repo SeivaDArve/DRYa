@@ -8,7 +8,7 @@ function f_verbose_start-1 {
 }
 
 # Source: Repo: ezGIT
-   alias G="bash ~/Repositories/ezGIT/G.sh"
+   alias G="bash ~/Repositories/ezGIT/ezGIT.sh"
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
    
