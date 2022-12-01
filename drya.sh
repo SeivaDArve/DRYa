@@ -1,5 +1,9 @@
 #!/bin/bash 
 
+function f_greet {
+   figlet DRYa || echo "DRYa: Hi there;)"
+}
+
 function f_master_dryaRC {
 	clear
 	f_setafD; echo "Menu to master .dryarc file"
@@ -30,14 +34,10 @@ function f_trap {
     	# previous screen contents (if possible).
 
     	trap 'tput sgr0; tput cnorm; tput rmcup || clear; exit 0' SIGINT
-}
-#f_trap
 
-function f_trap1 {
 	# Tutorial:
 	https://www.linuxjournal.com/content/bash-trap-command
 }
-
 
 function f_default_vars {
 	
@@ -662,19 +662,18 @@ function f_get_script_current_abs_path {
 	}
 }
 
-# Behaviour profile 1  ##Add one f_exec for each user
 function f_exec_1 {
-				f_hi
+	f_greet
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
-$f_default_vars
+   $f_default_vars
 
 	#f_cursorON
 	#f_cursorOFF
-				#f_make_file_dryarc 
-#f_ascii_icon
+	#f_make_file_dryarc 
+   #f_ascii_icon
 	#f_tableOfContents
-#f_mainmenu
+   #f_mainmenu
 	#f_wiki
 	#f_install_vimrc
 	#f_get_script_current_abs_path
@@ -682,8 +681,8 @@ $f_default_vars
 	#f_detect_these
 	#f_fillscreenE
 	#f_master_dryaRC
-#f_readKeystroke
-echo stupid
+   #f_readKeystroke
+   echo stupid
 }
 
 
@@ -693,47 +692,3 @@ echo stupid
 
 
 
-# Behaviour profile 0  ##Meant to use drya with carefull
-# function f_exec_0 {
-
-#case $1 in
-#	bios) echo "It works like if you are calling for bios setup" ;;
-#	edit)
-#		case $2 in
-#			me) vim ~/Repositories/DRYa/install.uninstall/drya.installer/dryarc ;;
-#			*) echo "Right now you can only edit \"me\" because there is only one account installed" ;;
-#		esac
-#	;;
-#	*) echo "hi, you are here in bios-like state" ;;
-#esac
-#}
-
-
-
-
-
-
-
-#[[ -z "$ON" ]] && echo "Empty var; " && export ON=0 && echo $ON
-
-#case $1 in
-#	standby) 
-#		case $2 in
-#		       	off) unset ON; clear; echo "Standby = Unset" ;;  ##For no user: Proceed carefully
-#			on ) export ON="variable set"; clear; echo "Standby = Set" ;;  ##For Default user
-#			#on-user-2 ) ON=1; clear; echo "Standby = $ON" ;;  ##For Next user  ##uDev: Sugestion: Add 1x BIOS and 1x USER to this file and then for any other user, make drya search for a file and a function outside (for f_exec_2, f_exec_3 etc)
-#			state) echo "Standby = $ON" ;;
-#			*) 
-#				echo "	You must specify a valid option"
-#				echo " > Use: drya standby on" 
-#				echo " > Use: drya standby off" 
-#				echo " > Use: drya standby state" 
-#			;;
-#		esac
-#	;;
-#	*) echo -e "DRYa is installed" #\nThese are some options for DRYa... uDev: List functions" 
-#	;;
-#esac
-
-# Tell bash, if $ON variable is NOT EMPTY then execute 1... Otherwise IF EMPTY execute 0
-# [[ ! -z "$ON" ]] && f_exec_0 || f_exec_1
