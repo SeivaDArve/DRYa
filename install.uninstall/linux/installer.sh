@@ -10,7 +10,8 @@ function f_greet {
 	figlet "DRYa" 2>/dev/null || echo "DRYa: greetings ;)" 
 }
 
-function f_find_source-all-drya-files {
+function f_find_source-all-drya-files 
+{
 	# uDev: Process of instalation:
 		# 1. Must know the full location from where this script is running from (script installer.sh)
 		# 2. Must Ask where the user wants the script to be installed
@@ -98,6 +99,20 @@ function f_add_drya_to_bashrc {
 
 }
 
+function f_list_github_public_repositories {
+   # This function is a web scraper
+      clear
+      curl https://github.com/SeivaDArve?tab=repositories | grep codeReposi > ~/.tmp_file
+      sed -i 's#<a href="/SeivaDArve/##g' ~/.tmp_file 
+      sed -i 's/" itemprop="name codeRepository" >//g' ~/.tmp_file
+      sed -i 's/ //g' ~/.tmp_file
+      cat ~/.tmp_file
+      #rm ~/.tmp_file
+      vim ~/.tmp_file
+
+   # uDev: create a '$ select' menu to enable the user to install any repo available
+}
+
 # Copy drya.desktop to...
 
 # Copy the man page to...
@@ -116,8 +131,9 @@ function f_export_DRYa_repo-location {
 }
 
 function f_exec {
-	f_greet
-	f_find_source-all-drya-files	
+	#f_greet
+f_list_github_public_repositories
+	#f_find_source-all-drya-files	
 	#f_export_variables
 	#f_export_updated_dryarc
 	#f_add_drya_to_bashrc
