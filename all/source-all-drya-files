@@ -5,6 +5,7 @@
 
 function f_verbose_start-1 {
    echo "DRYa: file running: ${REPOS}/DRYa/all/source-all-drya-files"
+   # echo "Installed at.."
 }
 
 # Source: Repo: ezGIT
@@ -27,8 +28,11 @@ function f_verbose_start-1 {
    source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh
 
 # Source and Cat: DRYa internal files
+   # Remove temporary dir created by DRYa's other scripts
+      rm -rf ~/.tmp/
+
    # Allow/disable verbose output for DRYa:
-      declare REPOS="~/Repositories"
+      declare REPOS="~/Repositories"  # uDev: this must be decided by the installer.sh
       f_verbose_start-1  ##Comment/Uncomment this line to toggle on or off
 
    # Sourcing DRYa's own configs
