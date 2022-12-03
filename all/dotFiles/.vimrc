@@ -13,3 +13,6 @@ set shiftwidth=3
 set expandtab
 
 "uDev: add macro to inserv Shebang '#!/bin/bash'
+
+"Enable Mouse scrolling and selecting
+set mouse=a
