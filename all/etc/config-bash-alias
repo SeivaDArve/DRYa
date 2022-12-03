@@ -10,6 +10,20 @@
 #   2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
 #
 
+function f_cor1 { 
+   tput setaf 5
+}
+
+function f_cor2 { 
+   tput setaf 6 
+}
+function f_cor3 { 
+   tput setaf 8 
+}
+function f_resetCor { 
+   tput sgr0 
+}
+
 function f_verbose_start-2 {
    # File Description
       echo "DRYa: File running: config-bash-alias" 
@@ -31,6 +45,8 @@ f_OS_detect
 
 alias rec="termux-microphone-record -d"
 alias cer="termux-microphone-record -q"
+
+alias grep="grep --color=auto"
 
 function bt {
    # See battery status
@@ -58,14 +74,14 @@ function f_drya-messages {
    # All Seiva's software (including DRYa)
       # will have at the start of the file,
       # a line that
-      # will tell ~/tmp/drya-messages.txt
+      # will tell ~/.tmp/drya-messages.txt
       # that that specific file was read.
       # This is for debugging process.
       # You can add a line to ~/.bashrc to delete
-      # ~/tmp everytime you open the terminal
+      # ~/.tmp/ everytime you open the terminal
       # and that way, everything is refreshed everytime
 
-      alias drya-messages="less ~/tmp/drya-messages.txt" #uDev: change to .dryarc
+      alias drya-messages="less ~/.tmp/drya-messages.txt" #uDev: change to .dryarc
 }
 
 
@@ -76,6 +92,7 @@ alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;t
 alias op="xdg-open"
 alias la="ls -A"
 alias ll="ls -l"
+alias mk="mkdir"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
 function stroken {
@@ -201,7 +218,7 @@ alias test="tree /; exit 0"
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
 # Acessing emacs-wiki.org
-alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/tmp/messages.txt
+alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
 
 # Acessing emacs init.el file
 alias emacs-init="emacs ~/.emacs.d/init.el"
@@ -235,9 +252,9 @@ alias vimrc="vim ~/.vimrc"
          echo
 
          # Change the prompt message:
-         PS3="\nSelect a file to edit: "
+         PS3="Select a file to edit: "
 
-         select opt in config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE quit; do
+         select opt in config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st quit; do
             case $opt in
                config-bash-alias)
                   ,.
@@ -267,6 +284,12 @@ alias vimrc="vim ~/.vimrc"
                source ~/.bashrc
                break
                ;;
+            1st)
+               clear
+               echo "Editing the list of 1st apps to install"
+               read -s -t 2
+               vim ~/Repositories/DRYa/all/etc/1st/1st
+               ;;
             quit)
                break
                ;;
@@ -291,8 +314,8 @@ alias vimrc="vim ~/.vimrc"
 
 # historyi-recall app
 	function hist {
-		mkdir -p ~/tmp
-		history > ~/tmp/fileA.txt
+		mkdir -p ~/.tmp/
+		history > ~/.tmp/fileA.txt
 		history
 
 		echo -e "\n > Type Ctrl+C to cancel \n > Type a number to navigate: "
@@ -301,35 +324,35 @@ alias vimrc="vim ~/.vimrc"
 
 		#echo "grep results:"
 
-		grep "$v_ans" ~/tmp/fileA.txt > ~/tmp/fileB.txt
+		grep "$v_ans" ~/.tmp/fileA.txt > ~/.tmp/fileB.txt
 
 		# Remove 2 character to the begining of the text
-		sed -i 's/^..//g' ~/tmp/fileB.txt
+		sed -i 's/^..//g' ~/.tmp/fileB.txt
 
 		# Debugging process
 		#echo "Sed results:"
 		#echo "cat fileB"
-		#cat ~/tmp/fileB.txt
+		#cat ~/.tmp/fileB.txt
 
 		# Search patter of the beggining of the line
-		grep ^$v_ans ~/tmp/fileB.txt > ~/tmp/fileA.txt
+		grep ^$v_ans ~/.tmp/fileB.txt > ~/.tmp/fileA.txt
 
 		# Debugging process
 		#echo "cat fileA"
-		#cat ~/tmp/fileA.txt
-		sed -i 's/^\w*\ *//' ~/tmp/fileA.txt
+		#cat ~/.tmp/fileA.txt
+		sed -i 's/^\w*\ *//' ~/.tmp/fileA.txt
 
 		# Now, cutting the command
-		cut -d ' ' -f2- ~/tmp/fileA.txt
+		cut -d ' ' -f2- ~/.tmp/fileA.txt
 		
 		# Debugging process
 		#echo "fileA after cut"
-		#cat ~/tmp/fileA.txt
+		#cat ~/.tmp/fileA.txt
 		#echo "trying to eval:"
 		#read
 
 		# Creating a variable called v_eval to store the content of the file as text
-		v_eval=$(cat ~/tmp/fileA.txt)
+		v_eval=$(cat ~/.tmp/fileA.txt)
 
 		# Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
 		eval $v_eval
@@ -427,39 +450,79 @@ function hkllhcf {
 }
 
 
-function lc {
-   # Name options: lc
+function d {
+   # This function is a combination of:
+      # '$ cd'
+      # '$ ls'
+      # + alias
+      # It finds directories
+      # uDev: to find and edite files, function f needes to be created and needs to ask for the default text editor
 
    # Dependencies: figlet, file
       # Install it by typing:
       # '$ pkg install figlet'
       # '$ pkg install file'
 
-   # Use 1: '$ lc          # Complains that there is no destination specified
-   # Use 2: '$ lc drya     # Travels to alias
-   # Use 3: '$ lc -p <dir>   # Create new dir and travel to it
-   # Use 4: '$ lc -r <dir>   # Removes dir
-   # Use 5: '$ lc ..      # Go to parent dir and ls
-   # Use 6: '$ lc <dir>      # Go to existent dir
+   # Usage:
+      # Use 1: '$ lc             # Complains that there is no destination specified
+      # Use 2: '$ lc drya        # Travels to alias
+      # Use 3: '$ lc -p <dir>    # Create new dir and travel to it
+      # Use 4: '$ lc -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
+      # Use 5: '$ lc -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+      # Use 6: '$ lc ..          # Go to parent dir and ls
+      # Use 7: '$ lc <dir>       # Go to existent dir
 
+   function f_create-file {
+      echo
+   }
 
    # Implementation of Use 1:
    if [ -z $1 ]; then 
-      figlet "lc = ls + cd"
+      f_cor1
+      figlet "Z"
+      f_resetCor
       echo " > No arguments. Choose some place to go to"
 
    # Implementation of Use 2:
-   elif [ $1 == "drya" ]; then
+   elif [ $1 == "drya" ] || [ $1 == "dry" ]; then
       cd ~/Repositories/DRYa && ls
    
    # Implementation of Use 2:
-   elif [ $1 == "moedaz" ]; then
+   elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
       cd ~/Repositories/moedaz && ls
    
    # Implementation of Use 2:
    elif [ $1 == "ezGIT" ] || [ $1 == "G" ]; then
       cd ~/Repositories/ezGIT && ls
       
+   # Implementation of Use 2:
+   elif [ $1 == "tmp" ]; then
+      mkdir -p ~/.tmp
+      cd ~/.tmp/ && ls
+
+   # Implementation of Use 2:
+   elif [ $1 == "-m" ]; then
+
+      case $2 in
+         0) # Travel to Internal storage
+            # uDev: clear; pwd; echo "you are in X dir"
+            cd /sdcard && ls
+         ;;
+         1) # Travel to SD Card storage
+            cd /storage/0094-8210 && ls || cd /storage && ls
+
+         ;;
+         2) # Travel to USB storage
+            cd /storage/83DB-10EA && ls || cd /storage && ls
+         ;;
+         3) # Travel to the dir where many USB storages are mounted
+            cd /storage && ls
+         ;;
+         *)
+            echo "uDev: Needs to print how to use"
+         ;;
+      esac
+
    # Implementation of Use 3:
    elif [ $1 == "-p" ]; then
       mkdir -p $2
@@ -468,20 +531,29 @@ function lc {
 
    # Implementation of Use 4:
    elif [ $1 == "-r" ]; then
+      ls $2
+
+   # Implementation of Use 5:
+   elif [ $1 == "-R" ]; then
       rm -rf $2
       ls
       
       # uDev: privide more safety
 
-   # Implementation of Use 5:
+   # Implementation of Use 6:
    elif [ $1 == ".." ]; then
       cd ..
       ls
 
       # uDev: add a $2 to insert a number. That number is thr number of time '$ cd ..' will be executed
 
-   # Implementation of Use 6:
+   # Implementation of Use 7:
    else 
+      # mkdir -p ~/.tmp
+      # ls > ~/.tmp/found.txt
+      # grep -n "$1" ~/.tmp/found
+      # wc -l ~/.tmp/found
+
       v_found=$(ls | grep $1)
       echo Found: $v_found
       cd $v_found && ls
