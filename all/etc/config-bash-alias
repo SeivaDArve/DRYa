@@ -90,11 +90,35 @@ function f_drya-messages {
 alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 alias ls="ls -p"
-alias op="xdg-open"
 alias la="ls -pA"
 alias ll="ls -pl"
 alias mk="mkdir"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
+
+
+function op {
+   # Function to open all files and directories given as arguments ($*)
+
+   # Test in which OS this script is running:
+      v_uname=$(uname -a)
+
+   # Try to find the file opener at each OS:
+      if [[ $v_uname =~ "Microsoft" ]]; then 
+         # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
+            /mnt/c/windows/explorer.exe $*
+
+      elif [[ $v_uname =~ "Android" ]]; then
+         # If it finds "Android" then it should be working at Termux terminal
+            xdg-open $*
+
+      elif [[ $v_uname =~ "Android" ]]; then
+         # If it is Any kind of Linux, try to open as standard
+            xdg-open $*
+      else
+         echo "DRYa: op: Attempt to open that argument failed"
+      fi
+}
+
 
 function stroken {
    echo "seivadarve"
