@@ -19,4 +19,11 @@
       # send to ~/.bashrc
    echo ""
    echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
-   echo 'source ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
+   echo '   source ~/Repositories/DRYa/all/source-all-drya-files' >> ~/.bashrc
+
+
+ 
+# uDev: At ~/.bashrc this is what needs to appear:
+#      # Run DRYa files (one file that loads all others)
+#         DRYa_PATH="/mnt/c/Repositories/"; export DRYa_PATH
+#         source ${DRYa_PATH}DRYa/all/source-all-drya-files
