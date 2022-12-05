@@ -692,3 +692,38 @@ function f_exec_1 {
 
 
 
+#     # Function drya
+#        # There is an alias for this function inside "source-all-moedaz-files"
+#        # Use: The programming structure '$ case / esac' 
+#           # is best to be the last part of this file
+#           # in order to have an interactive '$ drya' in
+#           # the terminal
+#           # and if you give no arguments to '$ drya'
+#           # like '$ drya + do something' then '$ drya' will still
+#           # open the f_greet and f_quick_menu through f_exec
+#     
+#        case $1 in
+#           +)
+               echo
+#           ;;
+#           --communicate)
+#               # An end-to-end communication between any of my devices with drya installed. Like a messenger. Encripted
+#           ;;
+#           --menu)
+#           ;;
+#           -i)
+#           ;;
+#           -h | --help)
+#              clear
+#              f_greet
+#              f_cor1; echo -n "moedaz: "; f_resetCor
+#              echo -n "Para sair da pagina de instruções pressione: "
+#              f_cor1; echo "Q"; f_resetCor
+#              sleep 3
+#              less ~/Repositories/moedaz/README.md
+#           ;;
+#           *) 
+#              f_exec
+#           ;;
+#     
+#        esac
