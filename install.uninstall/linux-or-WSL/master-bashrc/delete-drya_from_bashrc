@@ -1,9 +1,0 @@
-#!/bin/bash
-# Title: Search and delete the entry for DRYa inside ~/.bashrc
-	
-# Finding the comment "# Run DRYa files (one file that loads all others)"
-   # and deleting also the next line which is the actuall script
-   sed -i '/# Run DRYa files (one file that loads all others)/,+1d' ~/.bashrc
-
-# uDev: It may contain a command to backup first
-# uDev: May find empty line that are at the end of the document and then delete them

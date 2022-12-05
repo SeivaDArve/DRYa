@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# Title: Insert an entry at ~/.bashrc to load DRYa
+# Description: In order for ~/.bashrc not to have duplicate entries, this script relies on the brother script (brother in terms of directory location) to delete any previous entries and only then it pastes a new entry into ~/.bashrc
+# Use:
+
+# Not-a-function on purpouse f_greet (in order not to be sourced)
+   clear 
+   figlet DRYa
+
+# Not-a-function on purpouse f_explain (in order not to be sourced)
+   # First determine where to install
+      echo "Welcome to DRYa"
+      echo " > Don't Repeat Yoursel (app)"
+      sleep 0.5
+      echo 
+      echo "This script running is meant to install DRYa"
+      echo " > Please choose one centralized directory"
+      echo "   where DRYa and all other Seiva's Software"
+      echo "   can be installed (e.g. /home/Repositories)"
+      #echo " > You should prefer absolute paths instead of relative paths"
+      #echo " > In order go cross platform"
+      echo
+      sleep 0.5
+      echo "Instalation - Step 1 - by sourcing this file:"
+      echo " > Issue the command '$ source <name-of-this-file>' and then"
+      echo "   travel to the directory you want the software to be installed in"
+      echo "   and from there, invoke this script with the command '$ DRYa-install-me-here' " 
+      echo 
+      sleep 0.5
+      echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
+      echo " > If you were able to source this file, you must have a copy of DRYa"
+      echo "   and that copy (this copy) should be moved into the directory in which"
+      echo "   you did invoke DRYa-install-me-here"
+      echo "   uDev: create a function that automatically moves the directory"
+      echo 
+      sleep 0.5
+      echo "After instalation:"
+      echo " > You cat unload the function that was sourced for instalation"
+      echo "   you loaded: DRYa-install-me-here that exports the variable \$DRYa_PATH"
+      echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
+      echo "   by invoking: unset-DRYa-installer"
+      echo
+
+function delete-previous-DRYa-installation {
+   # Search and delete the entry for DRYa inside ~/.bashrc
+      
+   # Finding the comment "# Run DRYa files (one file that loads all others)"
+      # and deleting also the next line which is the actuall script
+      sed -i '/# Run DRYa files (one file that loads all others)/,+1d' ~/.bashrc
+
+   # uDev: It may contain a command to backup first
+   # uDev: May find empty line that are at the end of the document and then delete them
+}
+
+function DRYa-install-me-here {
+   # Asking if the user wants the previous DRYa instalation to be removed (if any)
+      # This deletes only the 2 lines of code inside ~/.bashrc
+      # uDev: Find first if there is any entry at ~/.bashrc to avoid this speach
+      echo "DRYa: Do you want this script"
+      echo " > to remove the 2 lines of code maybe present inside"
+      echo "   ~/.bashrc from a possible previous DRYa instalation?"
+      echo "   (ignore if you never installed DRYa before)"
+      read -s -n 1 -p " > Remove? (y/n)" v_ans
+      
+      case $v_ans in
+         y | Y)
+            delete-previous-DRYa-installation
+            echo 
+            echo "DRYa: entry removed from ~/.bashrc"
+         ;;
+         n | N)
+            echo
+            echo "DRYa: you choose N"
+            echo " > Continuing..."
+         ;; 
+      esac
+      
+   # Defining the environment variable:
+      DRYa_PATH=$(pwd)
+      export DRYa_PATH
+      echo " > DRYa: Installing at: $DRYa_PATH"
+   
+
+   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
+      echo "" >> ~/.bashrc
+      echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
+      echo "   source ${DRYa_PATH}/DRYa/all/source-all-drya-files" >> ~/.bashrc
+
+   # Time to move the DRYa directory
+      echo 
+      echo "DRYa: 2 Lines of code where send from DRYa to ~/.bashrc"
+      echo "   > This directory is ready to receive any Seiva's Software"
+      echo "   > Now, move DRYa directory to this directory in which you are right now"
+
+   # Remember to unset
+      echo 
+      echo "You can even unset the installer"
+      echo " > Type: unset-DRYa-installer"
+}
+
+function unset-DRYa-installer {
+   unset DRYa-install-me-here
+   echo " > DRYa: environment variable \$DRYa_PATH was unset"
+}
+

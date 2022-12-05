@@ -1,0 +1,5 @@
+First allow bash to know where DRYa is located
+
+only after that you should source the other script
+That other script will tell ~/.bashrc where the directory will be installed and will move DRYa there
+(it will only move it if first this script is ran and finds out where DRYa is)
