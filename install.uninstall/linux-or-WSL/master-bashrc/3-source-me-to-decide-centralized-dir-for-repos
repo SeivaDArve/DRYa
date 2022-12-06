@@ -42,7 +42,6 @@
       echo "   by invoking: unset-DRYa-installer"
       echo
 
-      read
 function delete-previous-DRYa-installation {
    # Search and delete the entry for DRYa inside ~/.bashrc
       
@@ -106,6 +105,8 @@ function delete-previous-DRYa-installation {
 	       last_line=$(tail -n 1 ~/.bashrc )
             done
 
+	    echo "Done removing empty lines"
+	    read
 
 
       # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
@@ -162,6 +163,7 @@ function DRYa-install-me-here {
       echo "You can even unset the installer"
       echo " > Type: unset-DRYa-installer"
 }
+DRYa-install-me-here
 
 function unset-DRYa-installer {
    unset DRYa-install-me-here
