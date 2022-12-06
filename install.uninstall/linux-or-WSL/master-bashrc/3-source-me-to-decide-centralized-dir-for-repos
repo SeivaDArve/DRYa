@@ -42,16 +42,78 @@
       echo "   by invoking: unset-DRYa-installer"
       echo
 
+      read
 function delete-previous-DRYa-installation {
    # Search and delete the entry for DRYa inside ~/.bashrc
       
-   # Finding the comment "# Run DRYa files (one file that loads all others)"
-      # and deleting also the next line which is the actuall script
-      sed -i '/# Run DRYa files (one file that loads all others)/,+1d' ~/.bashrc
+      # Asking if the user want to create a backup first
+         while true
+           do
+              echo -n " > Do you want a backup to be created from your ~/.bashrc? (y/n) "
+              read -n 1 -s v_ans
+	      echo
 
-   # uDev: It may contain a command to backup first
-   # uDev: May find empty line that are at the end of the document and then delete them
+           case $v_ans in
+              y | Y)
+		 cp ~/.bashrc ~/.bashrc.bak
+		 echo "   > file ~/.bashrc copied to ~/.bashrc.bak (ENTER to continue)"
+		 read -s -n 1
+		 break
+	      ;;
+              n | N)
+	         echo "   > You are choosing not to create a backup"
+	         echo "   > Ctrl + C:  to CANCEL, or"
+	         echo "   > 3 x ENTER: to CONTINUE"
+		 read -s -n 1
+		 read -s -n 1
+		 read -s -n 1
+		 break
+	      ;;
+              *)
+		      echo " > Please choose a valid Option (ENTER to continue)"
+		 read -s -n 1
+		 echo
+	      ;;
+	   esac
+	done
+
+
+	
+      # Deleting empty lines found only at the bottom of the file 
+         # It deletes one by one with a while loop (while the last line is found empty)
+         
+	 # Using TAIL to print only the last line inside a variable called: last_line
+	    last_line=$(tail -n 1 ~/.bashrc )
+
+	 # Creating am empty dir and an empty file for our process to take place
+	    mkdir -p ~/.tmp/
+	    touch ~/.tmp/tmp
+  
+	 # If the last function found an empty line, then the next while loop will run until something is found
+	    # The meaning of -z is "empty". Therefore is $last_line = -z (empty), then do something
+	    while [ -z $last_line ]; do 
+
+	       # Copying the entire file to the file 'tmp' except the last 1 line
+               head -n -1 ~/.bashrc > ~/.tmp/tmp
+
+	       # Deleting ~/.bashrc with empty space before restpring it WITHOUT empty space
+	       rm ~/.bashrc
+
+	       # Renaming tmp file (with .bashrc contents) to it's real name
+	       mv ~/.tmp/tmp ~/.bashrc
+
+	       # Evaluate the file againg to check if there is more empty lines needed to be removed the next loop
+	       last_line=$(tail -n 1 ~/.bashrc )
+            done
+
+
+
+      # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
+         # and deleting also the next 2 lines which are the actual code
+         sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+2d" ~/.bashrc
+   
 }
+delete-previous-DRYa-installation
 
 function DRYa-install-me-here {
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
@@ -83,9 +145,11 @@ function DRYa-install-me-here {
    
 
    # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
-      echo "" >> ~/.bashrc
-      echo '# Run DRYa files (one file that loads all others)' >> ~/.bashrc
-      echo "   source ${DRYa_PATH}/DRYa/all/source-all-drya-files" >> ~/.bashrc
+      # Pasting 1 empty line + 3 lines of code:
+      echo ""                                                          >> ~/.bashrc
+      echo "# Load Seiva's main repo (one file that wakes all others)" >> ~/.bashrc
+      echo "   DRYa_PATH=$DRYa_PATH; export $DRYa_PATH"                >> ~/.bashrc
+      echo "   source ${DRYa_PATH}/DRYa/all/source-all-drya-files"     >> ~/.bashrc
 
    # Time to move the DRYa directory
       echo 
