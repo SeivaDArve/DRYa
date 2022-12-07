@@ -1,0 +1,426 @@
+#!/bin/bash
+
+function f_greet_alternative {
+   clear 
+
+   echo ' ____  ______   __    '
+   echo '|  _ \|  _ \ \ / /_ _ '
+   echo '| | | | |_) \ V / _` |'
+   echo '| |_| |  _ < | | (_| |'
+   echo '|____/|_| \_\|_|\__,_|'
+   echo '                      '
+}
+
+function f_greet {
+   clear 
+
+   # This script could also ensure the standard.flf font is correctly installed.
+      # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
+   figlet DRYa -f standard.flf 2>/dev/null
+}
+
+function f_initial_statement {
+   # Initial Statement (for the following code, no delay is recommended)
+      echo "DRYa: In order to properly source this file,"
+      echo " > you must navigate to the directory in which"
+      echo " > this file is located."
+      echo 
+      echo "DRYa: Are you there? (At the terminal you could "
+      echo " > be sourcing or running this script from anywhere"
+      echo " > and that would not work)"
+
+      # Prompting the question 
+         echo
+         echo -ne " > Are you at the correct place? (y/n) "
+         read -n 1 -s v_ans
+
+            case $v_ans in
+               y | Y)
+                  echo $v_ans
+                  echo "The remaining of this file will be sourced;)"
+                  declare v_unload=0
+                  #export v_unload ## Aparently scripts cannot export variables while being sorced
+               ;;
+               n | N)
+                  echo $v_ans
+                  echo
+                  echo " > For a correct instalation, you be at the correct place (aborting)"
+
+                  # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
+                     # If the answer given by the user was NO, then we will allow all the remaining
+                     # functions of this file to be loaded and we will also create a function
+                     # Discard them in the end. To do that, we will store in a variable our 
+                     # decicion of keeping the functions or discard the in the end in a variable
+
+                     declare v_unload=1
+                     #export v_unload ## Aparently scripts cannot export variables while being sorced
+                     #exit 1  
+               ;;
+               *)
+                  echo 
+                  echo " > When running this script, please select either Yes or No (aborting)"
+               ;;
+             esac
+}
+
+function f_discard_every_unused_function {
+   echo "Debug: f_discard_every_unused_function"
+
+   # Evaluate the answer given by the user
+      if [[ $v_unload == "1" ]]; then
+
+            echo 
+            echo " WILL NOT RUN"
+            read
+            read
+
+         # Discard every function if the instalation is to be aborted
+            unset f_cut_3_fields_relative_path
+            unset f_DRYa_instalation_state
+            unset f_explain
+            unset f_create_backup
+            unset f_delete_empty_lines
+            unset f_delete-previous-DRYa-installation
+            unset f_DRYa-install-me-here
+            unset f_unset-DRYa-installer
+            unset f_source_bashrc
+      fi
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function f_cut_3_fields_relative_path {
+   echo "Debug: f_cut_3_fields_relative_path"
+
+	# Description: to remove last 3 fields of the path of the dir where the DRYa installer is located
+
+	# v_pwd is used to store current dir
+	   v_pwd=$(pwd)
+
+	# v_pwd2 is used to store current dir but reversed by characters
+	   # REV is needed to make sure we find the last fields
+	      v_pwd2=$(echo $v_pwd | rev)
+
+	# Cut everything from the string except selected fields
+	   # Cut last field
+	     v_1=$(echo $v_pwd2 | cut -d / -f 1)
+
+	   # Cut second last field
+	     v_2=$(echo $v_pwd2 | cut -d / -f 2)
+
+	   # Cut third last field
+	     v_3=$(echo $v_pwd2 | cut -d / -f 3)
+
+
+	# Last 3 variables, when they were cut, their text was reversed by characters
+	   # Re-reversing (correcting) variable 1:
+	     v_1=$(echo $v_1 | rev)
+
+	   # Re-reversing (correcting) variable 2:
+	     v_2=$(echo $v_2 | rev)
+
+	   # Re-reversing (correcting) variable 3:
+	     v_3=$(echo $v_3 | rev)
+
+	# Using SED to find our 3 variables inside our saved v_pwd variable
+	   # sed needs to replace the text of our variable with 'nothing' along with a slash '/'
+	      # sed expression is usually: sed 's/pattern/replacement/g'
+	      # To replace the pattern with 'nothing' we use: sed 's/pattern//g'
+	      # But we need to find a '/' and that would create conflicts
+	      # To avoid conflicts, we will use the supported syntax: sed 's,pattern,replacement,g'
+	      # The pattern we need to search is a slash and a variable: '/' + $v_1
+		 # Therefore the pattern for the first field is:  "/$v_1"
+		 # Therefore the pattern for the second field is: "/$v_2"
+		 # Therefore the pattern for the third field is:  "/$v_3"
+		 # sed needs variables to be surrounded like: '"$var"' to be recognized.
+
+	   # From the original path, remove the last 3 fields and storing inside a temporary file 
+	      # (To avoid conflicts it is stored inside a file instead of a variable)
+
+	      # Making the hidden directory where the tmp file will be stored
+		 mkdir -p ~/.tmp/
+
+	      # Creating an empty file
+		 touch ~/.tmp/v_pwd3
+
+	      # Transporting the text found into the empty file
+		 echo $v_pwd | sed 's,'"/$v_1"',,g' | sed 's,'"/$v_2"',,g' | sed 's,'"/$v_3"',,g' > ~/.tmp/v_pwd3
+
+	# Retrieving the text from the file into a variable we can use
+	   declare found_DRYa_at=$(cat ~/.tmp/v_pwd3)
+
+	# An environment variable may be needed (in case all this process is a stand-alone file)
+	   export found_DRYa_at
+
+	# Deleting the unnecessray temporary file (the dir is automaticaaly deleted by DRYa at startup)
+	   rm ~/.tmp/v_pwd3
+
+	# Display the entire result of this script:
+	   echo $found_DRYa_at
+
+}
+
+function f_DRYa_instalation_state {
+   echo "Debug: f_DRYa_instalation_state"
+
+	# This variable will decide which menu 'select' will present to the user 
+	   # Before any change to the installation
+	   declare DRYa-instalation-state=0
+}
+
+
+
+
+function f_explain {
+   echo "Debug: f_explain"
+
+   # First determine where to install
+      echo "Welcome to DRYa"
+      echo " > Don't Repeat Yoursel (app)"
+      sleep 0.5
+      echo 
+      echo "This script running is meant to install DRYa"
+      echo " > Please choose one centralized directory"
+      echo "   where DRYa and all other Seiva's Software"
+      echo "   can be installed (e.g. /home/Repositories)"
+      #echo " > You should prefer absolute paths instead of relative paths"
+      #echo " > In order go cross platform"
+      echo
+      sleep 0.5
+      echo "Instalation - Step 1 - by sourcing this file:"
+      echo " > Issue the command '$ source <name-of-this-file>' and then"
+      echo "   travel to the directory you want the software to be installed in"
+      echo "   and from there, invoke this script with the command '$ DRYa-install-me-here' " 
+      echo 
+      sleep 0.5
+      echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
+      echo " > If you were able to source this file, you must have a copy of DRYa"
+      echo "   and that copy (this copy) should be moved into the directory in which"
+      echo "   you did invoke DRYa-install-me-here"
+      echo "   uDev: create a function that automatically moves the directory"
+      echo 
+      sleep 0.5
+      echo "After instalation:"
+      echo " > You cat unload the function that was sourced for instalation"
+      echo "   you loaded: f_DRYa-install-me-here that exports the variable \$DRYa_PATH"
+      echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
+      echo "   by invoking: unset-DRYa-installer"
+      echo
+}
+
+function f_create_backup {
+   echo "Debug: f_create_backup"
+
+   # Search and delete the entry for DRYa inside ~/.bashrc
+      
+      # Asking if the user want to create a backup first
+         while true
+           do
+              echo -n " > Do you want a backup to be created from your ~/.bashrc? (y/n) "
+              read -n 1 -s v_ans
+	      echo
+
+           case $v_ans in
+              y | Y)
+		 cp ~/.bashrc ~/.bashrc.bak
+		 echo "   > file ~/.bashrc copied to ~/.bashrc.bak (ENTER to continue)"
+		 read -s -n 1
+		 break
+	      ;;
+              n | N)
+	         echo "   > You are choosing not to create a backup"
+	         echo "   > Ctrl + C:  to CANCEL, or"
+	         echo "   > 3 x ENTER: to CONTINUE"
+		 read -s -n 1
+		 read -s -n 1
+		 read -s -n 1
+		 break
+	      ;;
+              *)
+		      echo " > Please choose a valid Option (ENTER to continue)"
+		 read -s -n 1
+		 echo
+	      ;;
+	   esac
+	done
+}
+
+function f_delete_empty_lines {
+   echo "Debug: f_delete_empty_lines"
+
+      # Deleting empty lines found only at the bottom of the file 
+         # It deletes one by one with a while loop (while the last line is found empty)
+         
+	 # Using TAIL to print only the last line inside a variable called: last_line
+	    last_line=$(tail -n 1 ~/.bashrc )
+
+	 # Creating am empty dir and an empty file for our process to take place
+	    mkdir -p ~/.tmp/
+	    touch ~/.tmp/tmp
+  
+	 # If the last function found an empty line, then the next while loop will run until something is found
+	    # The meaning of -z is "empty". Therefore is $last_line = -z (empty), then do something
+	    while [ -z $last_line ]; do 
+
+	       # Copying the entire file to the file 'tmp' except the last 1 line
+               head -n -1 ~/.bashrc > ~/.tmp/tmp
+
+	       # Deleting ~/.bashrc with empty space before restpring it WITHOUT empty space
+	       rm ~/.bashrc
+
+	       # Renaming tmp file (with .bashrc contents) to it's real name
+	       mv ~/.tmp/tmp ~/.bashrc
+
+	       # Evaluate the file againg to check if there is more empty lines needed to be removed the next loop
+	       last_line=$(tail -n 1 ~/.bashrc )
+            done
+
+	    echo "Done removing empty lines"
+	    read
+}
+
+function f_delete-previous-DRYa-installation {
+   echo "Debug: f_delete-previous-DRYa-installation"
+
+
+      # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
+         # and deleting also the next 2 lines which are the actual code
+         sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+2d" ~/.bashrc
+   
+}
+
+function f_DRYa-install-me-here {
+   echo "Debug: f_DRYa-install-me-here"
+
+   # Asking if the user wants the previous DRYa instalation to be removed (if any)
+      # This deletes only the 2 lines of code inside ~/.bashrc
+      # uDev: Find first if there is any entry at ~/.bashrc to avoid this speach
+      echo "DRYa: Do you want this script"
+      echo " > to remove the 2 lines of code maybe present inside"
+      echo "   ~/.bashrc from a possible previous DRYa instalation?"
+      echo "   (ignore if you never installed DRYa before)"
+      read -s -n 1 -p " > Remove? (y/n)" v_ans
+      
+      case $v_ans in
+         y | Y)
+            f_delete-previous-DRYa-installation
+            echo 
+            echo "DRYa: entry removed from ~/.bashrc"
+         ;;
+         n | N)
+            echo
+            echo "DRYa: you choose N"
+            echo " > Continuing..."
+         ;; 
+      esac
+      
+   # Defining the environment variable:
+      DRYa_PATH=$(pwd)
+      export DRYa_PATH
+      echo " > DRYa: Installing at: $DRYa_PATH"
+   
+
+   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
+      # Pasting 1 empty line + 3 lines of code:
+      echo ""                                                          >> ~/.bashrc
+      echo "# Load Seiva's main repo (one file that wakes all others)" >> ~/.bashrc
+      echo "   DRYa_PATH=$DRYa_PATH; export $DRYa_PATH"                >> ~/.bashrc
+      echo "   source ${DRYa_PATH}/DRYa/all/source-all-drya-files"     >> ~/.bashrc
+
+   # Time to move the DRYa directory
+      echo 
+      echo "DRYa: 2 Lines of code where send from DRYa to ~/.bashrc"
+      echo "   > This directory is ready to receive any Seiva's Software"
+      echo "   > Now, move DRYa directory to this directory in which you are right now"
+
+   # Remember to unset
+      echo 
+      echo "You can even unset the installer"
+      echo " > Type: unset-DRYa-installer"
+}
+
+function f_unset-DRYa-installer {
+   echo "Debug: f_unset-DRYa-installer"
+
+   unset DRYa-install-me-here
+   echo " > DRYa: environment variable \$DRYa_PATH was unset"
+}
+
+
+function f_source_bashrc {
+   echo "Debug: f_source_bashrc"
+
+	# Execute this file simply to source (reset) ~/.bashrc
+	# description: This file contains 2 ways of sourcing ~/.bashrc (one correct and one wrong)
+
+	# Wrong way (because if the script that calles this file is listed under ~/.bashrc than that shell will enter in a loop):
+	#alias src="source ~/.bashrc"
+
+	# CORRECT WAY (you can paste these following functions inside ~/.bashrc or inside a side script called by ~/.bashrc):
+	alias src="go gnome-terminal; exit" ## This command is same as: "source ~/.bashrc" (but needs the function: go)
+
+	function go {
+		# This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
+		for v_arg in $@
+		do
+			setsid $v_arg &>/dev/null
+		done
+	}
+}
+
+function f_run_every_used_function {
+   echo "Debug: f_run_every_used_function"
+
+   # Evaluate the answer given by the user
+      if [[ -z $v_unload ]]; then echo VARIABLE EMPTY; fi
+
+      if [[ $v_unload == "0" ]]; then
+         # If f_initial_statement returns Apreciative, the following functions are to be ran
+
+            echo 
+            echo " WILL RUN"
+            read
+            read
+
+            f_cut_3_fields_relative_path
+            f_DRYa_instalation_state
+            f_explain
+            f_create_backup
+            f_delete_empty_lines
+            f_delete-previous-DRYa-installation
+            f_DRYa-install-me-here
+            f_unset-DRYa-installer
+            f_source_bashrc
+   fi
+}
+
+function f_exec {
+   echo "Debug: f_exec"
+
+   f_greet || f_greet_alternative
+   f_initial_statement
+
+   # There is a variable in the following functions that will decide wich one to run
+      # This function is given by f_initial_statement
+
+      f_run_every_used_function
+      f_discard_every_unused_function
+}
+f_exec

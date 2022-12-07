@@ -1,0 +1,11 @@
+read v_ans
+case $v_ans in
+y)
+echo hi
+declare var=lol
+echo $var
+;;
+n)
+echo no
+;;
+esac
