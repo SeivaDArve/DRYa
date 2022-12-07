@@ -175,6 +175,15 @@ function f_cut_3_fields_relative_path {
 	# Display the entire result of this script:
 	   echo $found_DRYa_at
 
+   # Mention the location of the file 'source-all-drya-files'
+      # usually located at DRYa/all/source-all-drya-files
+      
+      declare DRYa_HEART="all/source-all-drya-files"
+      declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
+
+      echo "The Heart of DRYa is located at:"
+      echo " > $DRYa_HEART"
+      
 }
 
 function f_DRYa_instalation_state {

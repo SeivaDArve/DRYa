@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# The best way to run this script, is by sourcing  variables from the brother script
+   source ./to-use-as-source
+
+f_greet
+
+f_cut_3_fields_relative_path 
+
+# Merge f_cut_3_fields_relative_path + /all/source-all-drya-files
+   # uDev: not ready
+
+   v=$f_cut_3_fields_relative_path
+echo $v$v
