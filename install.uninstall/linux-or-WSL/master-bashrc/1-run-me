@@ -1,14 +1,27 @@
 #!/bin/bash
-
+echo $a
+# 1st things 1st
+   echo " First Create a dedicated directory for all your repositories like ~/Repositories"
+      read
+   echo " Second, move DRYa repository into that place (or git clone it)"
+      read
+   echo " Third, navigate to this directory AND from THERE ONLY, run this script"
+   echo "   (if you are running this script some some other directory, cancel it with Ctrl + C)"
+      read
+   echo " Are you at the correct place? (Press ENTER and see magic happening... DRYa will be installed"
+      read
+      read
+      read
 # The best way to run this script, is by sourcing  variables from the brother script
    source ./to-use-as-source
 
-f_greet
+#f_greet
 
-f_cut_3_fields_relative_path 
+#f_cut_3_fields_relative_path 
 
+echo "You are at 1-run-me"
 # Merge f_cut_3_fields_relative_path + /all/source-all-drya-files
    # uDev: not ready
 
-   v=$f_cut_3_fields_relative_path
-echo $v$v
+   #v=$f_cut_3_fields_relative_path
+#echo $v$v
