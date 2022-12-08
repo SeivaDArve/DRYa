@@ -16,3 +16,6 @@ set expandtab
 
 "Enable Mouse scrolling and selecting
 set mouse=a
+
+"Display indentation
+":set noexpandtab | retab! 4
