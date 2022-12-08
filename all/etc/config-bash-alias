@@ -95,7 +95,6 @@ alias ll="ls -pl"
 alias mk="mkdir"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
-
 function op {
    # Function to open all files and directories given as arguments ($*)
 
@@ -156,6 +155,7 @@ function shebang {
 }
 
 
+# This command is same as: "source ~/.bashrc" (but needs the function: go)
 alias src="go gnome-terminal; exit"
 
 function go {
@@ -327,6 +327,11 @@ alias vimrc="vim ~/.vimrc"
       }
          alias edit-dotFiles=",..."
 # </drya ,.... menu>
+# Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
+	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
+	alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+# Edit file source-all-drya-files
+	alias ,..="vim ~/Repositories/DRYa/all/source-all-drya-files"
 
 #function ... {
 #	clear
@@ -392,8 +397,22 @@ alias vimrc="vim ~/.vimrc"
 # To load upk Repo at .bashrc with .dryarc:
 #cat upk.sh then search only for a function of greetings, then echo that out
 
-alias drya="bash ~/Repositories/DRYa/drya.sh"
-alias drya-catMe-tmp="cat ~/.config/h.h/.dryarc "
+function drya {
+   if [ -z $1 ];
+      # If drya is called with no arguments: 
+      then 
+         echo "no args"
+         bash ~/Repositories/DRYa/drya.sh
+   elif [ $1 == "catMe-dryarc" ];
+      # If terminal: "$ drya catMe-dryarc":
+      then
+         echo "arg: catMe-dryarc"
+         cat ~/.config/h.h/.dryarc
+   else
+      echo "need something?"
+   fi
+}
+
 alias drya-editMe-permanently="vim ~/Repositories/DRYa/all/config-bash-alias"
 alias drya-editMe-temporarily="vim ~/Repositories/DRYa/install.uninstall/drya.installer/future-dryarc"
 #alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ~/Repositories/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
@@ -472,6 +491,44 @@ function hkllhcf {
       ls
       echo "normal run"
    fi
+alias v="echo sk"
+
+# Source all other repos if they exist:
+# Source jarve
+# Source upK
+# Source ezGIT
+# Source ... 
+
+
+function drya-test {
+   PS3="Select the operation: "
+   select opt in Configurations installations edit-files quit
+   do
+      case $opt in
+         Configurations)
+            read -p "Enter the first number: " n1
+            read -p "Enter the second number: " n2
+            echo "$n1 + $n2 = $(($n1+$n2))"
+            ;;
+         installations)
+            read -p "Enter the first number: " n1
+            read -p "Enter the second number: " n2
+            echo "$n1 - $n2 = $(($n1-$n2))"
+            ;;
+         edit-files)
+            read -p "Enter the first number: " n1
+            read -p "Enter the second number: " n2
+            echo "$n1 * $n2 = $(($n1*$n2))"
+            ;;
+         quit)
+            break
+            ;;
+         *)
+            echo "Invalid option $REPLY"
+            ;;
+      esac
+      # It works as a while loop too
+   done
 }
 
 
