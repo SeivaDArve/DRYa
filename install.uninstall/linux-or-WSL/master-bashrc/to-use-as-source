@@ -32,15 +32,6 @@ echo "Debug: f_initial_statement"
 echo "-------------------------------------------------------------------"
 
 
-#--------------------------------------------------------------------------
-#			 echo " Are you at the correct place? (Press ENTER and see magic happening... DRYa will be installed"
-#				read
-#				read
-#				read
-#--------------------------------------------------------------------------
-#--------------------------------------------------------------------------
-
-
    # Initial Statements (prompting the questions):
 	   # First Question:
          echo -e " (Step 1 of 4) - Checking if instalation is possible\n"
@@ -265,6 +256,10 @@ echo "-------------------------------------------------------------------"
 			unset f_unset-DRYa-installer
 			unset f_source_bashrc
 #	   fi
+   
+
+   # Uninstalling: 
+      f_remove_DRYA_desktop_icon
 }
 
 function f_cut_3_fields_relative_path {
@@ -568,6 +563,14 @@ echo "-------------------------------------------------------------------"
    echo " > DRYa: environment variable \$DRYa_PATH was unset"
 }
 
+function f_remove_DRYA_desktop_icon {
+   echo "# uDev: removing drya.desktop is not ready yet"
+}
+
+function f_install_DRYA_desktop_icon {
+   echo "# uDev: installing drya.desktop is not ready yet"
+}
+
 
 function f_source_bashrc {
 echo "-------------------------------------------------------------------"
@@ -609,6 +612,7 @@ read
 #			 read
 #			 read
 #
+         f_install_DRYA_desktop_icon
 			f_cut_3_fields_relative_path
 			f_DRYa_instalation_state
 			f_explain
@@ -633,13 +637,16 @@ echo "-------------------------------------------------------------------"
 	  if [ -z $load_remaining_functions ]; then
 		 echo "You are not cooperating!"
 		 v=0
+
 	  elif [ $load_remaining_functions == "yes" ]; then
 		 echo "Yep"
 		 read
 		 f_run_every_used_function
+
 	  elif [ $load_remaining_functions == "no" ]; then
 		 echo "nope"
 		 #f_discard_every_unused_function
+
 	  fi
 
 }
