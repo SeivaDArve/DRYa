@@ -1,5 +1,5 @@
 #!/bin/bash
-# Title: Source all DRYa files
+# Title: source-all-drya-files
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
