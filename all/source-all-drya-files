@@ -8,6 +8,10 @@ function f_verbose_start-1 {
    # echo "Installed at.."
 }
 
+# Dependency: figlet
+   # Not every instalation of figlet comes witht the same standard font, lets corret that
+   alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
+
 # Repository: ezGIT
    alias G="bash ~/Repositories/ezGIT/ezGIT.sh"
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.

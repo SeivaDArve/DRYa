@@ -595,6 +595,13 @@ echo "-------------------------------------------------------------------"
    }
 }
 
+
+function f_install_figlet_font {
+   # Not every instalation of figlet comes with my favourite figlet font, lets correct that
+   echo "# uDev: Not ready yet"
+}
+
+
 function f_run_every_used_function {
 echo "-------------------------------------------------------------------"
    echo "Debug: f_run_every_used_function"
@@ -613,6 +620,7 @@ read
 #			 read
 #
          f_install_DRYA_desktop_icon
+         f_install_figlet_font
 			f_cut_3_fields_relative_path
 			f_DRYa_instalation_state
 			f_explain

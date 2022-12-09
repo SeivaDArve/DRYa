@@ -36,6 +36,7 @@ f_verbose_start-2
 function f_OS_detect {
    #Detect Terminal and OS to create compatibility 
       OS=$(uname -o)
+      mkdir -p ~/.config/h.h/drya/
       echo "OS Detected: $OS" > ~/.config/h.h/drya/drya-detections.txt
 
    # Neofetch is not needed... It is just for fun
