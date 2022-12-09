@@ -8,26 +8,28 @@ function f_verbose_start-1 {
    # echo "Installed at.."
 }
 
-# Source: Repo: ezGIT
+# Repository: ezGIT
    alias G="bash ~/Repositories/ezGIT/ezGIT.sh"
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
    
-# Source and config: Repo: moedaz
+# Repository: moedaz
    #alias mo="bash ~/Repositories/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    source ~/Repositories/moedaz/all/source-all-moedaz-files
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
 
 # Display the standard welcome termux message
-   cat ~/Repositories/dWiki/termux/default-welcome-screen-text # uDev: must test first if terminal is termux
+   # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
+   # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
+   if [ $(uname -o) == "Android" ]; then cat ~/Repositories/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
 
-# Source QR-walking-stick (inside dWiki/TODO-apps)
+# Repository: QR-walking-stick (inside dWiki/TODO-apps)
    alias qr="bash ~/Repositories/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
 
-# Source scripts from repo: upK
-   source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh
+# Repository: upK
+   source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
 
-# Source and Cat: DRYa internal files
+# Repository: DRYa (internal files)
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
 
