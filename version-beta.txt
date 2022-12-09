@@ -15,6 +15,7 @@ Version Log (contents of each version) {
 	}
 }
 
+
 # To upgrade to the next software version you need:
 	1. about-bookmarks (when automating the process of importing or experting bookmarks, don't forget to add the usefull bookmarks stored in the smartphones)
 	2. This app must update (by "git push") other repos automatically every 1h (for example "omni-log-Dv" which is a repo maintained by the creator and is used to keep the master up-to-date on the "cloud". Or else it can set ezGIT to do it. Or else it can set ezGIT to do it). Due to the fact this automatic update is random (commits everything even if it is trash) then it may git push it to a different branch
