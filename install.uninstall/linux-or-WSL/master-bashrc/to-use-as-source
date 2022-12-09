@@ -26,7 +26,7 @@ echo "-------------------------------------------------------------------"
    figlet DRYa -f standard.flf 2>/dev/null
 }
 
-function f_initial_statement {
+function f_initial_instalation_statement {
 echo "-------------------------------------------------------------------"
 echo "Debug: f_initial_statement"
 echo "-------------------------------------------------------------------"
@@ -665,7 +665,7 @@ echo "-------------------------------------------------------------------"
 echo "-------------------------------------------------------------------"
 
    f_greet || f_greet_alternative
-   f_initial_statement
+   f_initial_instalation_statement
 
    # The previous function f_initial_statement brings a variable that allows 
 	  # the next function to decide wether to run the remaining of the code or not

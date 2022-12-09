@@ -1,0 +1,235 @@
+#!/bin/bash
+
+function f_greet {
+echo "-------------------------------------------------------------------"
+echo "Debug: f_greet"
+echo "-------------------------------------------------------------------"
+   #clear 
+
+   # This script could also ensure the standard.flf font is correctly installed.
+	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
+   figlet DRYa -f standard.flf 2>/dev/null
+}
+
+function f_initial_instalation_statement {
+echo "-------------------------------------------------------------------"
+echo "Debug: f_initial_statement"
+echo "-------------------------------------------------------------------"
+
+
+   # Initial Statements (prompting the questions):
+	   # First Question:
+         clear; f_greet
+         echo -e " (Step 1 of 4) - Checking if instalation is possible\n"
+		   echo " First Create a dedicated directory for all your repositories like ~/Repositories"
+			echo "   > Does it exist?"
+         echo -ne "\n > (y) yes to continue...\n > (n) no to abort...\n > (h) help to explain\n > "
+			read v_ans; echo
+
+		 case $v_ans in
+			y | Y)
+			   echo " First question answered YES"
+
+
+
+
+
+
+
+
+
+
+			   # Reset the screen for the second question
+				  sleep 2
+				  clear
+				  f_greet
+
+			   # Second question:
+				  echo " Second, move DRYa repository into that place (or git clone it)"
+					 echo -ne " > Was it cloned or moved? (y/n) - Help (h) > "
+					 read -n 1 -s v_ans; echo
+				  
+				  case $v_ans in 
+					 y | Y)
+						echo " Second question answered YES"
+
+
+
+
+
+
+
+
+
+
+
+
+						# Reset the screen for the third question
+						   sleep 2
+						   clear
+						   f_greet
+		  
+						   # Third question:
+							  echo " Third, navigate to this directory and there, run this script"
+								 echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
+								 read -n 1 -s v_ans; echo
+				  
+							  case $v_ans in 
+								 y | Y)
+									echo " Third question answered YES"
+
+
+
+
+
+									# Reset the screen for the Fourth question
+									   sleep 2
+									   clear; f_greet
+
+									# Fourth question:
+									   echo " All last questions were AFFIRMATIVE!"
+										  echo -ne " > Shall we start the magic?  (y/n) > "
+										  read -n 1 -s v_ans; echo
+									   
+									   case $v_ans in 
+										  y | Y)
+											 echo " Forth question answered YES"
+
+										  	# Last, allow to script to flow
+												echo " All questions answered... Continuing the script"
+												   sleep 2
+
+												echo "The remaining of this file will be sourced;)"
+												load_remaining_functions="yes"
+												#export v_unload ## Aparently scripts cannot export variables while being sorced
+										  ;;
+
+										  n | N)
+											 echo " Not ready to see magic... I see..."
+										  ;;
+										  h) 
+											 clear; f_greet
+												echo " Asked for help at Forth question"
+
+											 # Explanation
+												echo " Magic is the instalation of such usefull software"
+										  ;;
+                              esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								 ;;
+								 n | N)
+									echo " Third question answered NO"
+								 ;;
+								 h) 
+									clear; f_greet
+									   echo " Asked for help at Third question"
+
+									# Explanation
+									   echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
+								 	   echo "In order to properly source this file,"
+								 	   echo "you must navigate to the directory in which"
+								 	   echo "this file is located."
+								 	   echo 
+								 	   echo "Are you there? (At the terminal you could "
+								 	   echo "be sourcing or running this script from anywhere"
+								 	   echo "and that would not work)"
+								 ;;
+                        esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					 ;;
+					 n | N)
+						echo " Second question answered NO"
+					 ;;
+					 h) 
+						echo " Asked for help at Second question"
+
+						# Explain what a centralized directory is
+						   echo "Move the DRYa repo into the dir you choose"
+						   echo " > If you were run this file, you must have a copy of DRYa"
+						   echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
+						   echo
+					 ;;
+				  esac
+			;;
+			n | N)
+			   echo " First question answered NO"
+			   echo
+			   echo " > For a correct instalation, you must be at the correct place (aborting)"
+
+			   # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
+				  # If the answer given by the user was NO, then we will allow all the remaining
+				  # functions of this file to be loaded and we will also create a function
+				  # Discard them in the end. To do that, we will store in a variable our 
+				  # decicion of keeping the functions or discard the in the end in a variable
+
+				  load_remaining_functions="no"
+				  #export v_unload ## Aparently scripts cannot export variables while being sorced
+				  #exit 1  
+			;;
+			h) 
+			   echo " Asked for help at First question"
+				  # Explain what a centralized directory is
+				  echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
+				  echo 
+				  echo "This script running is meant to install DRYa"
+				  echo " > Please choose one centralized directory"
+				  echo "   where DRYa and all other Seiva's Software"
+				  echo "   can be installed (e.g. /home/Repositories)"
+				  echo
+			;;
+			*)
+			   echo " > When running this script, please select either Yes or No (aborting)"
+			;;
+		  esac
+}
+
+function f_menu {
+   # What do you want to do?
+   
+   clear; f_greet
+   PS3=" Menu > "
+   select i in "drya install" "drya uninstall" options "exit"
+      do
+         case $i in
+            install-drya) echo "installing..."; f_initial_instalation_statement ;;
+            uninstall-drya) echo "uninstalling" ;;
+            options) echo "options not ready yet" ;;
+            exit) break ;;
+         esac
+      done
+}
