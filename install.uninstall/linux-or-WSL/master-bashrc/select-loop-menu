@@ -82,39 +82,71 @@ echo "-------------------------------------------------------------------"
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 									# Reset the screen for the Fourth question
-									   sleep 2
 									   clear; f_greet
 
 									# Fourth question:
-									   echo " All last questions were AFFIRMATIVE!"
-										  echo -ne " > Shall we start the magic?  (y/n) > "
-										  read -n 1 -s v_ans; echo
-									   
-									   case $v_ans in 
-										  y | Y)
-											 echo " Forth question answered YES"
+                              function f_4th {
+                                 echo -e " (Step 4 of 4) - Everything seems ok. Shall we start the magic?\n"
+                              } 
+                              f_4th
+                              select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(exit)"
+									      do
+                                    case $i in 
+                                      "(yes) to continue")
+                                        echo " Forth question answered YES"
+                                          read
+                                          read
+                                          read
+                                          read
+                                          read
 
-										  	# Last, allow to script to flow
-												echo " All questions answered... Continuing the script"
-												   sleep 2
 
-												echo "The remaining of this file will be sourced;)"
-												load_remaining_functions="yes"
-												#export v_unload ## Aparently scripts cannot export variables while being sorced
-										  ;;
+                                       # Last, allow to script to flow
+                                          echo " All questions answered... Continuing the script"
+                                             sleep 2
 
-										  n | N)
-											 echo " Not ready to see magic... I see..."
-										  ;;
-										  h) 
-											 clear; f_greet
-												echo " Asked for help at Forth question"
+                                          echo "The remaining of this file will be sourced;)"
+                                          load_remaining_functions="yes"
+                                          #export v_unload ## Aparently scripts cannot export variables while being sorced
+                                      ;;
 
-											 # Explanation
-												echo " Magic is the instalation of such usefull software"
-										  ;;
-                              esac
+                                      "(no) to abort")
+                                        echo " Not ready to see magic... I see..."
+                                      ;;
+                                      "(help) to explain") 
+                                        clear; f_greet
+                                          echo " Asked for help at Forth question"
+
+                                        # Explanation
+                                          echo " Magic is the instalation of such usefull software"
+                                      ;;
+                                      "(exit)") break ;;
+                                      *) echo " That option is invalid. Press ENTER 2x"; read; clear; f_greet; f_4th ;;
+                                    esac
+                                 done
 
 
 
@@ -218,18 +250,24 @@ echo "-------------------------------------------------------------------"
 		  esac
 }
 
+function f_initial_uninstalation_statement {
+   echo "Uninstalling Done!"
+   echo "Finished"
+}
+
 function f_menu {
    # What do you want to do?
    
    clear; f_greet
-   PS3=" Menu > "
+   PS3=" ----- Menu ---- > "
    select i in "drya install" "drya uninstall" options "exit"
       do
          case $i in
-            install-drya) echo "installing..."; f_initial_instalation_statement ;;
-            uninstall-drya) echo "uninstalling" ;;
+            "drya install") echo "installing..."; f_initial_instalation_statement ;;
+            "drya uninstall") echo "uninstalling"; f_initial_uninstalation_statement; break;;
             options) echo "options not ready yet" ;;
-            exit) break ;;
+            exit) echo "Bye"; break ;;
          esac
       done
 }
+f_menu
