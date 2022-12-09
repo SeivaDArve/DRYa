@@ -279,6 +279,7 @@ alias vimrc="vim ~/.vimrc"
          # Change the prompt message:
          PS3="Select a file to edit: "
 
+         COLUMNS=0
          select opt in config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st quit; do
             case $opt in
                config-bash-alias)
@@ -325,7 +326,7 @@ alias vimrc="vim ~/.vimrc"
          done
 
       }
-         alias edit-dotFiles=",..."
+alias edit-dotFiles=",..."
 # </drya ,.... menu>
 # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
 	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
@@ -492,6 +493,7 @@ function hkllhcf {
       echo "normal run"
    fi
 alias v="echo sk"
+}
 
 # Source all other repos if they exist:
 # Source jarve
