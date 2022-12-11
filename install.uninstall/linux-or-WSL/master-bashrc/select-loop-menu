@@ -11,275 +11,198 @@ function f_greet {
    figlet DRYa # -f standard.flf 2>/dev/null
 }
 
-
-
-
-
-
-
-
-
 function f_1st {
    # This function belongs to the First Question
-   echo -e " (Step 1 of 4) - Checking if instalation is possible\n"
-
+   echo -e " (Step 1 of 4) - Checklist for instalation"
+   echo -e "              [ ] Do you have any dedicated dir for  repos?\n"
 } 
 
+function f_2nd {
+   # This function belongs to the Second Question
+   echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)\n"
+} 
 
+function f_3rd {
+   # This function belongs to the Third Question
+   echo -e " (Step 3 of 4) - Run script only side-by-side?\n"
+} 
 
+function f_4th {
+   # This function belongs to the Forth Question
+   echo -e " (Step 4 of 4) - Everything seems ok. Shall we start the magic?\n"
+} 
 
-
-
-function f_initial_instalation_statement {
-echo "-------------------------------------------------------------------"
-echo "Debug: f_initial_statement"
-echo "-------------------------------------------------------------------"
-
-
+function f_1st_select {
    # Initial Statements (prompting the questions):
 	   # First Question:
          clear; f_greet; f_1st
 
-         select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
-            do
-                case $i in
-                  "(yes) to continue")
-                     read -p " First question answered YES [ENTER]"
-
-                     # Second question:
-                        clear; f_greet
-                        function f_2nd {
-                           echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)\n"
-                        } 
-                        f_2nd
-                     
-                     select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
-                       
-                     do
-                       case $i in 
-                          "(yes) to continue")
-                           read -p " Second question answered YES [ENTER]"
-
-
-
-
-
-
-
-
-
-
-
-
-                           # Third question:
-                              clear; f_greet
-
-                              function f_3rd {
-                                 echo -e " (Step 3 of 4) - Run script only side-by-side?\n"
-                              } 
-                              f_3rd
-                              
-                              select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
-                                 do 
-                          
-                                   case $i in 
-                                     "(yes) to continue")
-                                       echo " Third question answered YES"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                       # Fourth question:
-                                          clear; f_greet
-
-                                          function f_4th {
-                                             echo -e " (Step 4 of 4) - Everything seems ok. Shall we start the magic?\n"
-                                          } 
-                                          f_4th
-                                          select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
-                                             do
-                                                case $i in 
-                                                  "(yes) to continue")
-                                                    echo " Forth question answered YES"
-                                                      read
-                                                      read
-                                                      read
-                                                      read
-                                                      read
-
-
-                                                   # Last, allow to script to flow
-                                                      echo " All questions answered... Continuing the script"
-                                                         sleep 2
-
-                                                      echo "The remaining of this file will be sourced;)"
-                                                      load_remaining_functions="yes"
-                                                      #export v_unload ## Aparently scripts cannot export variables while being sorced
-                                                  ;;
-
-                                                  "(no) to abort")
-                                                    echo " Not ready to see magic... I see..."
-                                                    exit 1
-                                                  ;;
-                                                  "(help) to explain") 
-                                                    clear; f_greet
-                                                      echo " Asked for help at Forth question"
-
-                                                    # Explanation
-                                                      echo " Magic is the instalation of such usefull software"
-                                                  ;;
-                                                 "(back)") clear; f_greet; f_3rd; break
-                                                 ;;
-                                                  *) echo " That option is invalid. Press ENTER 2x"; read; clear; f_greet; f_4th ;;
-                                                esac
-                                             done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                     ;;
-                                     "(no) to abort")
-                                       echo " Third question answered NO"
-                                     ;;
-                                     "(help) to explain") 
-                                       clear; f_greet
-                                          echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
-                                          echo " Asked for help at Third question"
-                                          echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
-
-                                       # Explanation
-                                          echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
-                                          echo "In order to properly source this file,"
-                                          echo "you must navigate to the directory in which"
-                                          echo "this file is located."
-                                          echo 
-                                          echo "Are you there? (At the terminal you could "
-                                          echo "be sourcing or running this script from anywhere"
-                                          echo "and that would not work)"
-                                     ;;
-                                     "(back)") clear; f_greet; f_2nd; break
-                                     ;;
-                                     *) echo " That option is invalid. Press ENTER 2x"; read; clear; f_greet; f_4th ;;
-                                    esac
-                                 done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                         ;;
-                         "(no) to abort")
-                           echo " Second question answered NO"
-                         ;;
-                         h) 
-                           echo " Asked for help at Second question"
-                              echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
-
-                           # Explain what a centralized directory is
-                              echo "Move the DRYa repo into the dir you choose"
-                              echo " > If you were run this file, you must have a copy of DRYa"
-                              echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
-                              echo
-                        ;;
-                        "(back)")
-                           clear; f_greet; f_1st; break
-                        ;;
-                       esac
-                     done
-                  ;;
-                  "(no) to abort")
-                     echo " First question answered NO"
-                     echo
-                     echo " > For a correct instalation, you must be at the correct place (aborting)"
-
-                     # The back command cannot be used while sourcing, otherwise the entire terminal shuts down
-                       # If the answer given by the user was NO, then we will allow all the remaining
-                       # functions of this file to be loaded and we will also create a function
-                       # Discard them in the end. To do that, we will store in a variable our 
-                       # decicion of keeping the functions or discard the in the end in a variable
-
-                       load_remaining_functions="no"
-                       #export v_unload ## Aparently scripts cannot export variables while being sorced
-                       #back 1  
-                       exit 1
-                  ;;
-                  h) 
-                     echo " Asked for help at First question"
-                       # Explain what a centralized directory is
-                     echo " First Create a dedicated directory for all your repositories like ~/Repositories"
-                     echo "   > Does it exist?"
-                       echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
-                       echo 
-                       echo "This script running is meant to install DRYa"
-                       echo " > Please choose one centralized directory"
-                       echo "   where DRYa and all other Seiva's Software"
-                       echo "   can be installed (e.g. /home/Repositories)"
-                       echo
-                  ;;
-                  "(back)")
-                     clear; f_greet; f_title; break
-                  ;;
-                  *)
-                     echo " > When running this script, please select either Yes or No (aborting)"
-                  ;;
-                 esac
+         select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)" "exit"
+         do
+            case $i in
+               "(yes) to continue")
+                  read -p " First question answered YES [ENTER]"
+                  f_2nd_select
+               ;;
+               "(no) to abort")
+                  echo " First question answered NO"
+                  echo
+                  echo " > For a correct instalation, you must be at the correct place (aborting)"
+
+                  # The back command cannot be used while sourcing, otherwise the entire terminal shuts down
+                    # If the answer given by the user was NO, then we will allow all the remaining
+                    # functions of this file to be loaded and we will also create a function
+                    # Discard them in the end. To do that, we will store in a variable our 
+                    # decicion of keeping the functions or discard the in the end in a variable
+
+                    load_remaining_functions="no"
+                    #export v_unload ## Aparently scripts cannot export variables while being sorced
+                    #back 1  
+                    exit 1
+               ;;
+               "(help) to explain") 
+                  echo " Asked for help at First question"
+                    # Explain what a centralized directory is
+                  echo " First Create a dedicated directory for all your repositories like ~/Repositories"
+                  echo "   > Does it exist?"
+                    echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
+                    echo 
+                    echo "This script running is meant to install DRYa"
+                    echo " > Please choose one centralized directory"
+                    echo "   where DRYa and all other Seiva's Software"
+                    echo "   can be installed (e.g. /home/Repositories)"
+                    echo
+                    read -s -n 1
+                    clear; f_greet ; f_1st
+               ;;
+               "(back)")
+                  clear; f_greet; f_title; break
+               ;;
+               "exit") echo "Bye"; exit 0 ;;
+               *)
+                  echo " > When running this script, please select either Yes or No (aborting)"
+               ;;
+              esac
          done
 }
 
-function f_initial_uninstalation_statement {
+function f_2nd_select {
+   # Second question:
+      clear; f_greet; f_2nd
+
+      select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
+      do
+         case $i in 
+            "(yes) to continue")
+               read -p " Second question answered YES [ENTER]"
+
+               f_3rd_select
+
+          ;;
+          "(no) to abort")
+            echo " Second question answered NO"
+          ;;
+          h) 
+            echo " Asked for help at Second question"
+               echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
+
+            # Explain what a centralized directory is
+               echo "Move the DRYa repo into the dir you choose"
+               echo " > If you were run this file, you must have a copy of DRYa"
+               echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
+               echo
+         ;;
+         "(back)")
+            clear; f_greet; f_1st; break
+         ;;
+        esac
+      done
+
+}
+
+function f_3rd_select {
+   # Third question:
+      clear; f_greet; f_3rd
+
+      select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
+      do 
+        case $i in 
+          "(yes) to continue")
+            echo " Third question answered YES"
+
+            f_4rd_select
+          ;;
+          "(no) to abort")
+            echo " Third question answered NO"
+          ;;
+          "(help) to explain") 
+            clear; f_greet
+               echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
+               echo " Asked for help at Third question"
+               echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
+
+            # Explanation
+               echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
+               echo "In order to properly source this file,"
+               echo "you must navigate to the directory in which"
+               echo "this file is located."
+               echo 
+               echo "Are you there? (At the terminal you could "
+               echo "be sourcing or running this script from anywhere"
+               echo "and that would not work)"
+          ;;
+          "(back)") clear; f_greet; f_2nd; break
+          ;;
+          *) echo " That option is invalid. Press ENTER 2x"; read; clear; f_greet; f_4th ;;
+         esac
+      done
+}
+
+function f_4rd_select {
+   # Fourth question:
+      clear; f_greet; f_4th
+
+      select i in "(yes) to continue" "(no) to abort" "(help) to explain" "(back)"
+      do
+         case $i in 
+            "(yes) to continue")
+               echo " Forth question answered YES"
+               read
+               read
+               read
+               read
+               read
+
+
+               # Last, allow to script to flow
+                  echo " All questions answered... Continuing the script"
+                  echo "The remaining of this file will be sourced;)"
+                  load_remaining_functions="yes"
+                  #export v_unload ## Aparently scripts cannot export variables while being sourced
+            ;;
+           "(no) to abort")
+             echo " Not ready to see magic... I see..."
+             exit 1
+           ;;
+           "(help) to explain") 
+             clear; f_greet
+               echo " Asked for help at Forth question"
+
+             # Explanation
+               echo " Magic is the instalation of such usefull software"
+           ;;
+          "(back)") clear; f_greet; f_3rd; break ;;
+          *) echo " That option is invalid. Press ENTER 2x"; read; clear; f_greet; f_4th ;;
+         esac
+      done
+}
+
+
+function f_uninstall_1st {
+   # First question when uninstalling DRYa
    echo "Uninstalling Done!"
 }
+
 
 function f_menu {
    # What do you want to do?
@@ -290,13 +213,20 @@ function f_menu {
 
    clear; f_greet; f_title
    PS3=" ----- Menu ---- > "
-   select i in "drya install" "drya uninstall" options "exit"
+   select i in "drya install" "drya uninstall" "" "CLEAR SCREEN" options "exit"
       do
          case $i in
-            "drya install") echo "installing..."; f_initial_instalation_statement ;;
-            "drya uninstall") echo "uninstalling"; f_initial_uninstalation_statement; break;;
+            "drya install") echo "installing..."; f_1st_select ;;
+            "drya uninstall") echo "uninstalling"; f_uninstall_1st; break;;
             options) echo "options not ready yet"; read; clear; f_greet; f_title;;
             exit) echo "Bye"; break ;;
+            "CLEAR SCREEN") 
+               clear; f_greet; 
+               echo "In this bash menu, you can clear the screen if unwanted output in displayed"
+               echo "By entering any unexpected input and pressing enter 2x"
+               read
+               clear; f_greet; 
+            ;;
             *) clear; f_greet; f_title ;;
          esac
       done
