@@ -13,8 +13,9 @@ function f_greet {
 
 function f_1st {
    # This function belongs to the First Question
-   echo -e " (Step 1 of 4) - Checklist for instalation"
-   echo -e "              [ ] Do you have any dedicated dir for  repos?\n"
+   echo -e "               (Step 1 of 4) \n"
+   echo -e "      --- Checklist for instalation --- "
+   echo -e " [ ] Do you have any dedicated dir for  repos?\n"
 } 
 
 function f_2nd {
