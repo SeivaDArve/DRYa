@@ -1,5 +1,7 @@
 # DRYa
 
+[ DRYa icon ](install.uninstall/linux-or-WSL/GUI-features/icon-drya.png)
+
 ## DRYa acronym
 Don't Repeat Yourself (app) 
 
