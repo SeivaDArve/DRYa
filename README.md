@@ -49,6 +49,8 @@ Install one of these utilities to backup your config files and this way, after a
 
 3 - run the install.sh script and the script will plave 3 lines of code inside your ~/.bashrc file that loads DRYa on terminal startup
 
+4 - This repository can install every other repositories from the same author. The majority of software options already come inside DRYa like the phone finder by GPS, car finder by GPS, directory looper etc... (this README.md is under development also)
+
 ## Learning Bash On-the-Go
 ### #uDev: Something under develpment listed to be done soon: List... List... List
 If you read the source code you will find many many comments of my own code (Learning bash by practice)
@@ -60,6 +62,7 @@ If you wish to co-op then you may find these comments and try to script yourself
 + nan-D (a special kind of file to be left on the smartphone. At specific times, DRYa scans the entire phone in search of these inteligent files)
 + Every other seiva's software can be invoked and instantly configured by DRYa
 + ... 
+
 
 #### DRYa, termux and Formting your pc
 Do you need to format your machine? DRYa may help you while your machine is offline, guiding your steps through the installation. You should also save your configs during the installation into DRYa so that the nest time you remember. By remembering your previous user nickname (for example), DRYa may restore all your config files into the fresh install without them breaking (if your saved configs have another user name, they will not correspond with the new user name, right?)
