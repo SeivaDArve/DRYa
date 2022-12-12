@@ -256,10 +256,7 @@ function f_uninstall_1st {
    echo "Uninstalling Done!"
 }
 
-
-function f_menu {
-   # The first menu of the Installer/Uninstaller
-
+function f_underscore_creator {
    # I want the last line of the menu to be all dashes
       # That forces the menu to be vertical always
       # For that, I will count hoe many lines does the
@@ -278,39 +275,46 @@ function f_menu {
          echo "var is $v_underscore2"
          read
          v_cols=$v_underscore2
+}
 
+function f_menu {
+   # The first menu of the Installer/Uninstaller
 
-   clear; f_greet; f_title
-   PS3=" ----- Menu ---- > "
-   select i in "$v_cols" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_cols"
-      do
-         case $i in
-            "DRYa install") 
+   # The following function gives the variable v_cols
+      f_underscore_creator
 
-               # Start the first of a few questions in a row
-                  f_1st_select 
+   # Display a menu, using the 'select' in-built bash loop function
+      clear; f_greet; f_title
+      PS3=" ----- Menu ---- > "
+      select i in "$v_cols" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_cols"
+         do
+            case $i in
+               "DRYa install") 
 
-               # If the answers were all answered, allow to script to flow by breaking all 'select loops'
-                  f_break_select_loops; eval $_break
-            ;;
-            "DRYa uninstall") echo "uninstalling"; f_uninstall_1st; break;;
-            options) echo "options not ready yet"; read; clear; f_greet; f_title;;
-            exit) echo "Bye"; break ;;
-            "CLEAR SCREEN") 
-               clear; f_greet; 
-               echo "In this bash menu, you can clear the screen if unwanted output in displayed"
-               echo "By entering any unexpected input and pressing enter 2x"
-               read -s -n 1
-               clear; f_greet; 
-            ;;
-            Instructions) 
-               echo "For instalation instructions, please open th README.md file"
-               read -s -n 1
-               clear; f_greet; 
-            ;;
-            *) clear; f_greet; f_title ;;
-         esac
-      done
+                  # Start the first of a few questions in a row
+                     f_1st_select 
+
+                  # If the answers were all answered, allow to script to flow by breaking all 'select loops'
+                     f_break_select_loops; eval $_break
+               ;;
+               "DRYa uninstall") echo "uninstalling"; f_uninstall_1st; break;;
+               options) echo "options not ready yet"; read; clear; f_greet; f_title;;
+               exit) echo "Bye"; break ;;
+               "CLEAR SCREEN") 
+                  clear; f_greet; 
+                  echo "In this bash menu, you can clear the screen if unwanted output in displayed"
+                  echo "By entering any unexpected input and pressing enter 2x"
+                  read -s -n 1
+                  clear; f_greet; 
+               ;;
+               Instructions) 
+                  echo "For instalation instructions, please open th README.md file"
+                  read -s -n 1
+                  clear; f_greet; 
+               ;;
+               *) clear; f_greet; f_title ;;
+            esac
+         done
 
    echo "Last line of menu"
 }
