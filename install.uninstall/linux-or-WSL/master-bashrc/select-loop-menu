@@ -13,14 +13,17 @@ function f_greet {
 
 function f_1st {
    # This function belongs to the First Question
-   echo -e "               (Step 1 of 4) \n"
-   echo -e "      --- Checklist for instalation --- "
-   echo -e " [ ] Do you have any dedicated dir for  repos?\n"
+   echo -e "                 (Step 1 of 4)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
 } 
 
 function f_2nd {
    # This function belongs to the Second Question
-   echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)\n"
+   echo -e "                 (Step 2 of 4)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [X] Do you have any dedicated dir for  repositories?"
+   echo -e " [ ] Move DRYa repository into that place (or git clone it)\n"
 } 
 
 function f_3rd {
@@ -95,7 +98,6 @@ function f_2nd_select {
       do
          case $i in 
             "(yes) to continue")
-               read -p " Second question answered YES [ENTER]"
 
                f_3rd_select
 
