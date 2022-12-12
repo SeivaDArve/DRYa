@@ -23,7 +23,7 @@ function f_greet {
 
    # This script could also ensure the standard.flf font is correctly installed.
 	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
-   figlet DRYa -f standard.flf 2>/dev/null
+   figlet -f standard.flf DRYa 2>/dev/null
 }
 
 function f_title {
@@ -85,7 +85,7 @@ function f_1st_select {
 	   # First Question:
          clear; f_greet; f_1st
 
-         select i in "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit"
+         select i in "$v_cols" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_cols"
          do
             case $i in
                "(yes) to continue")
@@ -260,12 +260,32 @@ function f_uninstall_1st {
 function f_menu {
    # The first menu of the Installer/Uninstaller
 
+   # I want the last line of the menu to be all dashes
+      # That forces the menu to be vertical always
+      # For that, I will count hoe many lines does the
+      # terminal has, store that into a variable v_cols
+      # and insert it into the menu
+         v_cols="$COLUMNS"
+         let "v_count = $v_cols - 5"
+            echo "var ajakis $v_count"
+         read
+
+         v_underscore="-"
+         v_underscore2=""
+         for i in $(seq $v_count); do 
+            v_underscore2="$v_underscore2$v_underscore"
+         done
+         echo "var is $v_underscore2"
+         read
+         v_cols=$v_underscore2
+
+
    clear; f_greet; f_title
    PS3=" ----- Menu ---- > "
-   select i in "drya install" "drya uninstall" "" "CLEAR SCREEN" options "exit"
+   select i in "$v_cols" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_cols"
       do
          case $i in
-            "drya install") 
+            "DRYa install") 
 
                # Start the first of a few questions in a row
                   f_1st_select 
@@ -273,14 +293,19 @@ function f_menu {
                # If the answers were all answered, allow to script to flow by breaking all 'select loops'
                   f_break_select_loops; eval $_break
             ;;
-            "drya uninstall") echo "uninstalling"; f_uninstall_1st; break;;
+            "DRYa uninstall") echo "uninstalling"; f_uninstall_1st; break;;
             options) echo "options not ready yet"; read; clear; f_greet; f_title;;
             exit) echo "Bye"; break ;;
             "CLEAR SCREEN") 
                clear; f_greet; 
                echo "In this bash menu, you can clear the screen if unwanted output in displayed"
                echo "By entering any unexpected input and pressing enter 2x"
-               read
+               read -s -n 1
+               clear; f_greet; 
+            ;;
+            Instructions) 
+               echo "For instalation instructions, please open th README.md file"
+               read -s -n 1
                clear; f_greet; 
             ;;
             *) clear; f_greet; f_title ;;
