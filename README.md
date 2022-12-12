@@ -44,7 +44,9 @@ Install one of these utilities to backup your config files and this way, after a
 
 ## Instalation
 1 - If you are using any distro of linux (or even termux with bash) create a directory dedicated for repositories (for example: ~/Repositories)
+
 2 - Change directory to get inside the choosen directory and clone DRYa into it (if you already did clone DRYa somewhere else, just move the directory into that place)
+
 3 - run the install.sh script and the script will plave 3 lines of code inside your ~/.bashrc file that loads DRYa on terminal startup
 
 ## Learning Bash On-the-Go
