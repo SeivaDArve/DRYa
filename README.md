@@ -1,6 +1,6 @@
 # DRYa
 
-[ DRYa icon ](install.uninstall/linux-or-WSL/GUI-features/icon-drya.png)
+[DRYa icon](./install.uninstall/linux-or-WSL/GUI-features/icon-drya.png)
 
 ## DRYa acronym
 Don't Repeat Yourself (app) 
@@ -39,13 +39,13 @@ This is a list of all ideas to be put into the project before starting coding
 - This script is an incentive to always tweak your machine by the command line OR to automate all GUI tasks, so that you don't have to repeat them
 - This is the result of a Linux newbie studying and creating a cross platform app from scratch. I don't think there is no better exercise to practice Linux other than developing my own cross platform util. Drya is a git repository that after downloading, gives you the choice to depoy into your system, a software buttler. The bash buttler (the main one so far) is called Jarve.
 
- Install one of these utilities to backup your config files and this way, after a fresh format, all your settings will be there. You may use this software to improve your tasks, making your computer (machine) work for you instead of you working for the machine. You should simply automate your tasks once and save them at your choosen Butler.
+Install one of these utilities to backup your config files and this way, after a fresh format, all your settings will be there. You may use this software to improve your tasks, making your computer (machine) work for you instead of you working for the machine. You should simply automate your tasks once and save them at your choosen Butler.
 "Don't + Repeat + Yourself + Application": Your personal assistant. Similar to Alexa, Cortana, Siri, jarvis... but as a config and a content manager. Keep your tools, stuff and workflow always up to date in all your devices. Later domotics will be added to the project with proper documentation until it becomes Fool/Noob proof.
 
 ## Instalation
- 1 - If you are using any distro of linux (or even termux with bash) create a directory dedicated for repositories (for example: ~/Repositories)
- 2 - Change directory to get inside the choosen directory and clone DRYa into it (if you already did clone DRYa somewhere else, just move the directory into that place)
- 3 - run the install.sh script and the script will plave 3 lines of code inside your ~/.bashrc file that loads DRYa on terminal startup
+1 - If you are using any distro of linux (or even termux with bash) create a directory dedicated for repositories (for example: ~/Repositories)
+2 - Change directory to get inside the choosen directory and clone DRYa into it (if you already did clone DRYa somewhere else, just move the directory into that place)
+3 - run the install.sh script and the script will plave 3 lines of code inside your ~/.bashrc file that loads DRYa on terminal startup
 
 ## Learning Bash On-the-Go
 ### #uDev: Something under develpment listed to be done soon: List... List... List
