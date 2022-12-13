@@ -257,6 +257,12 @@ function f_uninstall_1st {
 }
 
 function f_underscore_creator {
+   # At every 'select' menu, I want the first 
+      # and last option of the menu to be an
+      # horizontal split.
+      # If there was no nested loops, there was no need
+      # for these. Another reasob to create these horizontal
+      # split lines, is force the menu to be vertical 
    # I want the last line of the menu to be all dashes
       # That forces the menu to be vertical always
       # For that, I will count hoe many lines does the
@@ -759,9 +765,9 @@ echo "-------------------------------------------------------------------"
 }
 
 function f_exec {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_exec"
-echo "-------------------------------------------------------------------"
+#echo "-------------------------------------------------------------------"
+#   echo "Debug: f_exec"
+#echo "-------------------------------------------------------------------"
 
    f_greet || f_greet_alternative
    f_menu
