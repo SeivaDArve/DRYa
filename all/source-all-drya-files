@@ -4,7 +4,7 @@
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
 function f_verbose_start-1 {
-   echo "DRYa: file running: ${REPOS}/DRYa/all/source-all-drya-files"
+   echo "DRYa: file running: ${DRYa_HEART}"
    # echo "Installed at.."
 }
 
@@ -13,13 +13,13 @@ function f_verbose_start-1 {
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
 
 # Repository: ezGIT
-   alias G="bash ~/Repositories/ezGIT/ezGIT.sh"
+   alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
    
 # Repository: moedaz
    #alias mo="bash ~/Repositories/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
-   source ~/Repositories/moedaz/all/source-all-moedaz-files
+   source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
 
 # Display the standard welcome termux message
@@ -42,11 +42,11 @@ function f_verbose_start-1 {
       f_verbose_start-1  ##Comment/Uncomment this line to toggle on or off
 
    # Sourcing DRYa's own configs
-      source ~/Repositories/DRYa/all/etc/config-bash-alias
-      alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+      source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+      alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
 
    # DRYa executable
-      alias drya="bash ~/Repositories/DRYa/drya.sh"
+      alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
    
    # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
