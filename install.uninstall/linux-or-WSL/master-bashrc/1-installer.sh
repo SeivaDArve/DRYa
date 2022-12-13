@@ -339,7 +339,7 @@ echo "-------------------------------------------------------------------"
 			unset f_create_backup
 			unset f_delete_empty_lines
 			unset f_delete-previous-DRYa-installation
-			unset f_DRYa-install-me-here
+			unset f_DRYa-install-me-at-bashrc
 			unset f_unset-DRYa-installer
 			unset f_source_bashrc
 #	   fi
@@ -354,7 +354,7 @@ echo "-------------------------------------------------------------------"
    echo "Debug: f_cut_3_fields_relative_path"
 echo "-------------------------------------------------------------------"
 
-   # Description: to remove last 3 fields of the path of the dir where the DRYa installer is located
+   # Description: to remove last 4 fields of the path of the dir where the DRYa installer is located
 
    # v_pwd is used to store current dir
 	  v_pwd=$(pwd)
@@ -373,6 +373,9 @@ echo "-------------------------------------------------------------------"
 	  # Cut third last field
 		v_3=$(echo $v_pwd2 | cut -d / -f 3)
 
+	  # Cut forth last field
+		v_4=$(echo $v_pwd2 | cut -d / -f 4)
+
 
    # Last 3 variables, when they were cut, their text was reversed by characters
 	  # Re-reversing (correcting) variable 1:
@@ -383,6 +386,9 @@ echo "-------------------------------------------------------------------"
 
 	  # Re-reversing (correcting) variable 3:
 		v_3=$(echo $v_3 | rev)
+
+	  # Re-reversing (correcting) variable 4:
+		v_4=$(echo $v_4 | rev)
 
    # Using SED to find our 3 variables inside our saved v_pwd variable
 	  # sed needs to replace the text of our variable with 'nothing' along with a slash '/'
@@ -396,29 +402,37 @@ echo "-------------------------------------------------------------------"
 	   # Therefore the pattern for the third field is:	"/$v_3"
 	   # sed needs variables to be surrounded like: '"$var"' to be recognized.
 
-	  # From the original path, remove the last 3 fields and storing inside a temporary file 
-		 # (To avoid conflicts it is stored inside a file instead of a variable)
+	# From the original path, remove the last 3 fields and storing inside a temporary file 
+		# (To avoid conflicts it is stored inside a file instead of a variable)
 
-		 # Making the hidden directory where the tmp file will be stored
+	# Making the hidden directory where the tmp file will be stored
 	   mkdir -p ~/.tmp/
 
-		 # Creating an empty file
+	# Creating an empty file
 	   touch ~/.tmp/v_pwd3
 
-		 # Transporting the text found into the empty file
+   # Transporting the text found into the empty file (to remove 3 fields) 
 	   echo $v_pwd | sed 's,'"/$v_1"',,g' | sed 's,'"/$v_2"',,g' | sed 's,'"/$v_3"',,g' > ~/.tmp/v_pwd3
 
    # Retrieving the text from the file into a variable we can use
-	  declare found_DRYa_at=$(cat ~/.tmp/v_pwd3)
+      # This variable may look like "/home/user/Repositories/DRYa" and it's purpose is to mention DRYa specificly
+	   found_DRYa_at=$(cat ~/.tmp/v_pwd3)
+
+   # Transporting the text found into the empty file (to remove 4 fields) 
+	   echo $v_pwd | sed 's,'"/$v_1"',,g' | sed 's,'"/$v_2"',,g' | sed 's,'"/$v_3"',,g' | sed 's,'"/$v_4"',,g' > ~/.tmp/v_pwd3
+
+   # Retrieving the text from the file into a variable we can use
+      # This variable may look like "/home/user/Repositories" and it's purpouse is to mention where every foreign repo will be cloned into
+	   v_REPOS_CENTER=$(cat ~/.tmp/v_pwd3)
 
    # An environment variable may be needed (in case all this process is a stand-alone file)
-	  export found_DRYa_at
+	  #export found_DRYa_at
 
    # Deleting the unnecessray temporary file (the dir is automaticaaly deleted by DRYa at startup)
 	  rm ~/.tmp/v_pwd3
 
    # Display the entire result of this script:
-	  echo $found_DRYa_at
+	  #echo $found_DRYa_at
 }
 
 function f_define_env_vars {
@@ -473,19 +487,19 @@ echo "-------------------------------------------------------------------"
 	  echo "Instalation - Step 1 - by sourcing this file:"
 	  echo " > Issue the command '$ source <name-of-this-file>' and then"
 	  echo "   travel to the directory you want the software to be installed in"
-	  echo "   and from there, invoke this script with the command '$ DRYa-install-me-here' " 
+	  echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
 	  echo 
 	  sleep 0.5
 	  echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
 	  echo " > If you were able to source this file, you must have a copy of DRYa"
 	  echo "   and that copy (this copy) should be moved into the directory in which"
-	  echo "   you did invoke DRYa-install-me-here"
+	  echo "   you did invoke DRYa-install-me-at_bashrc"
 	  echo "   uDev: create a function that automatically moves the directory"
 	  echo 
 	  sleep 0.5
 	  echo "After instalation:"
 	  echo " > You cat unload the function that was sourced for instalation"
-	  echo "   you loaded: f_DRYa-install-me-here that exports the variable \$DRYa_PATH"
+	  echo "   you loaded: f_DRYa-install-me-at-bashrc that exports the variable \$DRYa_PATH"
 	  echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
 	  echo "   by invoking: unset-DRYa-installer"
 	  echo
@@ -541,7 +555,7 @@ echo "-------------------------------------------------------------------"
 	# Using TAIL to print only the last line inside a variable called: last_line
 	   last_line=$(tail -n 1 ~/.bashrc )
 
-	# Creating am empty dir and an empty file for our process to take place
+	# Creating an empty dir and an empty file for our process to take place
 	   mkdir -p ~/.tmp/
 	   touch ~/.tmp/tmp_file
   
@@ -571,10 +585,10 @@ echo "-------------------------------------------------------------------"
 			 last_line=$(tail -n 1 ~/.bashrc )
 		  done
 
-		  echo "Done removing empty lines"
+		  echo "Done removing empty lines. PRESS any key"
+	      read -s -n 1
 
 		fi
-	   read
 }
 
 function f_delete-previous-DRYa-installation {
@@ -582,31 +596,23 @@ echo "-------------------------------------------------------------------"
    echo "Debug: f_delete-previous-DRYa-installation"
 echo "-------------------------------------------------------------------"
 
-
-	  # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
-		 # and deleting also the next 2 lines which are the actual code
-		 sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+2d" ~/.bashrc
-   
-}
-
-function f_DRYa-install-me-here {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_DRYa-install-me-here"
-echo "-------------------------------------------------------------------"
-
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
 	  # uDev: Find first if there is any entry at ~/.bashrc to avoid this speach
 	  echo "DRYa: Do you want this script"
-	  echo " > to remove the 2 lines of code maybe present inside"
+	  echo " > to remove the 4 lines of code maybe present inside"
 	  echo "   ~/.bashrc from a possible previous DRYa instalation?"
 	  echo "   (ignore if you never installed DRYa before)"
 	  read -s -n 1 -p " > Remove? (y/n)" v_ans
 	  
 	  case $v_ans in
 		 y | Y)
-			f_delete-previous-DRYa-installation
-			echo 
+           read -s -n 1 -p " Press ENTER to proceed to delete previous DRYa instalation"
+           # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
+             # and deleting also the next 4 lines which are the actual code
+             sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
+
+
 			echo "DRYa: entry removed from ~/.bashrc"
 		 ;;
 		 n | N)
@@ -615,39 +621,45 @@ echo "-------------------------------------------------------------------"
 			echo " > Continuing..."
 		 ;; 
 	  esac
-	  
-   # Defining the environment variable:
-	  DRYa_PATH=$(pwd)
-	  export DRYa_PATH
-	  echo " > DRYa: Installing at: $DRYa_PATH"
+
    
-
-   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
-	  # Pasting 1 empty line + 3 lines of code:
-	  echo ""														   >> ~/.bashrc
-	  echo "# Load Seiva's main repo (one file that wakes all others)" >> ~/.bashrc
-	  echo "   DRYa_PATH=$DRYa_PATH; export $DRYa_PATH"				   >> ~/.bashrc
-	  echo "   source ${DRYa_PATH}/DRYa/all/source-all-drya-files"	   >> ~/.bashrc
-
-   # Time to move the DRYa directory
-	  echo 
-	  echo "DRYa: 2 Lines of code where send from DRYa to ~/.bashrc"
-	  echo "   > This directory is ready to receive any Seiva's Software"
-	  echo "   > Now, move DRYa directory to this directory in which you are right now"
-
-   # Remember to unset
-	  echo 
-	  echo "You can even unset the installer"
-	  echo " > Type: unset-DRYa-installer"
 }
 
-function f_unset-DRYa-installer {
+function f_DRYa-install-me-at-bashrc {
 echo "-------------------------------------------------------------------"
-   echo "Debug: f_unset-DRYa-installer"
+   echo "Debug: f_DRYa-install-me-at-bashrc"
 echo "-------------------------------------------------------------------"
 
-   unset DRYa-install-me-here
-   echo " > DRYa: environment variable \$DRYa_PATH was unset"
+   # From the previous function, DRYa repo is located at:
+	   #echo $found_DRYa_at
+      #read -s -n 1
+	  
+   # Defining the environment variable:
+	  DRYa_HEART="${found_DRYa_at}/all/source-all-drya-files"
+	  export DRYa_HEART
+	  echo " > DRYa: My file that awakes all others is located at: $DRYa_HEART"
+   
+   # This variable comes from the function that cuts the string
+      echo "You have chosen $v_REPOS_CENTER to be a dedicated directory to receive every kind of repositories"
+	   #$v_REPOS_CENTER
+   
+   echo "If you agree with this, press any key to concat this info into ~/.bashrc"
+   read -s -n 1
+
+   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
+	  # Pasting 1 empty line + 4 lines of code:
+	  echo ""														                                                   >> ~/.bashrc
+	  echo "# Load Seiva's main repo (one file that wakes all others)"                                    >> ~/.bashrc
+     echo "   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER #Dedicated dir for repos"        >> ~/.bashrc
+	  echo "   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART"			                                    >> ~/.bashrc
+	  echo "   source ${DRYa_HEART}"                              	                                       >> ~/.bashrc
+
+   # Process Finished
+	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
+
+   # If the script was sorced instead of run, remember to unset
+	  #echo "You can even unset the installer"
+	  #echo " > Type: unset-DRYa-installer"
 }
 
 function f_remove_DRYA_desktop_icon {
@@ -712,9 +724,9 @@ read
 			#f_DRYa_instalation_state
 			#f_explain
 			f_create_backup
-			f_delete_empty_lines
 			f_delete-previous-DRYa-installation
-			f_DRYa-install-me-here
+			f_delete_empty_lines
+			f_DRYa-install-me-at-bashrc
 			#f_unset-DRYa-installer
 			#f_source_bashrc
 #	fi
