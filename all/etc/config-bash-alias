@@ -34,6 +34,7 @@ f_verbose_start-2
 
 
 function f_OS_detect {
+   # uDev: move this into the installer
    #Detect Terminal and OS to create compatibility 
       OS=$(uname -o)
       mkdir -p ~/.config/h.h/drya/
@@ -67,7 +68,7 @@ function bt {
 function f_debug {
    # Degug function: use it when you need to re-open this file over and over again for debug.
 	read
-	vim ~/Repositories/DRYa/all/config-bash-alias
+	vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias
 	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
 }
 
@@ -235,16 +236,16 @@ function nPpN-dir-looper {
 nPpN-dir-looper
 
 # Acessing omni-log-Dv files
-alias v-omni="vim ~/Repositories/omni-log-Dv/multiplex.org"
-alias e-omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
-alias omni="emacs ~/Repositories/omni-log-Dv/multiplex.org"
-alias omni-n-push-n-exit="vim ~/Repositories/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
+alias v-omni="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+alias e-omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+alias omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+alias omni-n-push-n-exit="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
 alias test="tree /; exit 0"
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
 # Acessing emacs-wiki.org
-alias emacs-wiki="emacs ~/Repositories/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
+alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
 
 # Acessing emacs init.el file
 alias emacs-init="emacs ~/.emacs.d/init.el"
@@ -262,12 +263,12 @@ alias vimrc="vim ~/.vimrc"
 # <drya ,.... menu>
    # DRYa sub-files are usually called by ,..... alias:
       # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
-         alias edit-alias="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+         alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
          #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
 
       # Edit source-all-drya-files:
-      alias edit-sources="vim ~/Repositories/DRYa/all/source-all-drya-files"
-      alias ,..="vim ~/Repositories/DRYa/all/source-all-drya-files"
+      alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
 
       # Edit dotFiles
       function ,... {
@@ -298,10 +299,10 @@ alias vimrc="vim ~/.vimrc"
                
                ;;
             com.list-econ-items.txt)
-               vim ~/Repositories/moedaz/all/var/com.list-econ-items.txt
+               vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
                ;;
             com.associative-array)
-               vim ~/Repositories/moedaz/all/var/com.associative-array
+               vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
                ;;
              .vimrc)
                   vim ~/.vimrc
@@ -315,7 +316,7 @@ alias vimrc="vim ~/.vimrc"
                clear
                echo "Editing the list of 1st apps to install"
                read -s -t 2
-               vim ~/Repositories/DRYa/all/etc/1st/1st
+               vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
                ;;
             quit)
                break
@@ -330,10 +331,10 @@ alias vimrc="vim ~/.vimrc"
 alias edit-dotFiles=",..."
 # </drya ,.... menu>
 # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
-	alias update-alias="cd ~/Repositories/DRYa/all/ && vim config-bash-alias"
-	alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias"
+	alias update-alias="cd ${v_REPOS_CENTER}/DRYa/all/ && vim config-bash-alias"
+	alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
 # Edit file source-all-drya-files
-	alias ,..="vim ~/Repositories/DRYa/all/source-all-drya-files"
+	alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
 
 #function ... {
 #	clear
@@ -415,9 +416,9 @@ function drya {
    fi
 }
 
-alias drya-editMe-permanently="vim ~/Repositories/DRYa/all/config-bash-alias"
-alias drya-editMe-temporarily="vim ~/Repositories/DRYa/install.uninstall/drya.installer/future-dryarc"
-#alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ~/Repositories/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
+alias drya-editMe-permanently="vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias"
+alias drya-editMe-temporarily="vim ${v_REPOS_CENTER}/DRYa/install.uninstall/drya.installer/future-dryarc"
+#alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ${v_REPOS_CENTER}/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
 alias drya-updateMe-globally="echo 'ezGIT must be installed'"
 #alias drya-make-dryarc # uDev: function exists inside drya.sh
 
@@ -584,6 +585,10 @@ function d {
    elif [ $1 == "tmp" ]; then
       mkdir -p ~/.tmp
       cd ~/.tmp/ && ls
+
+   # Implementation of Use 2:
+   elif [ $1 == "center" ]; then
+      cd ${v_REPOS_CENTER} && ls
 
    # Implementation of Use 2:
    elif [ $1 == "-m" ]; then
