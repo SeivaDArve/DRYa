@@ -570,7 +570,7 @@ function d {
 
    # Implementation of Use 2:
    elif [ $1 == "drya" ] || [ $1 == "dry" ]; then
-      cd ~/Repositories/DRYa && ls
+      cd ${v_REPOS_CENTER}/DRYa && ls
    
    # Implementation of Use 2:
    elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
