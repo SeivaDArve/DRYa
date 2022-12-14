@@ -13,7 +13,12 @@ function f_verbose_start-1 {
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
 
 # Repository: ezGIT
-   alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+   # Define a key to call the entire program
+      alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+
+   # Load all alternative git alias:
+      source ${v_REPOS_CENTER}/ezGIT/alias
+
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
    
