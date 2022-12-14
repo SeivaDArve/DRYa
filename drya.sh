@@ -662,7 +662,7 @@ function f_get_script_current_abs_path {
 	}
 }
 
-function f_exec_1 {
+function f_exec {
 	f_greet
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
