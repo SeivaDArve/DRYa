@@ -575,11 +575,15 @@ function d {
    
    # Implementation of Use 2:
    elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
-      cd ~/Repositories/moedaz && ls
+      cd ${v_REPOS_CENTER}/moedaz && ls
    
    # Implementation of Use 2:
    elif [ $1 == "ezGIT" ] || [ $1 == "G" ]; then
-      cd ~/Repositories/ezGIT && ls
+      cd ${v_REPOS_CENTER}/ezGIT && ls
+      
+   # Implementation of Use 2:
+   elif [ $1 == "dwiki" ] || [ $1 == "wiki" ]; then
+      cd ${v_REPOS_CENTER}/dWiki && ls
       
    # Implementation of Use 2:
    elif [ $1 == "tmp" ]; then
