@@ -2,10 +2,6 @@
 clear
 
 function f_greet_alternative {
-#echo "-------------------------------------------------------------------"
-#echo "Debug: f_greet_alternative"
-#echo "-------------------------------------------------------------------"
-   #clear 
 
    echo ' ____	______	 __    '
    echo '|	_ \|  _ \ \ / /_ _ '
@@ -16,10 +12,6 @@ function f_greet_alternative {
 }
 
 function f_greet {
-#echo "-------------------------------------------------------------------"
-#echo "Debug: f_greet"
-#echo "-------------------------------------------------------------------"
-   #clear 
 
    # This script could also ensure the standard.flf font is correctly installed.
 	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
@@ -85,7 +77,7 @@ function f_1st_select {
 	   # First Question:
          clear; f_greet; f_1st
 
-         select i in "$v_cols" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_cols"
+         select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
          do
             case $i in
                "(yes) to continue")
@@ -132,7 +124,7 @@ function f_2nd_select {
    # Second question:
       clear; f_greet; f_2nd
 
-      select i in "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)"
+      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
       do
          case $i in 
             "(yes) to continue")
@@ -171,7 +163,7 @@ function f_3rd_select {
    # Third question:
       clear; f_greet; f_3rd
 
-      select i in "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q2)"
+      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q2)" "$v_line"  
       do 
         case $i in 
           "(yes) to continue")
@@ -215,7 +207,7 @@ function f_4rd_select {
    # Fourth question:
       clear; f_greet; f_4th
 
-      select i in "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q3)"
+      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q3)" "$v_line"  
       do
          case $i in 
             "(yes) to continue")
@@ -268,19 +260,26 @@ function f_underscore_creator {
       # For that, I will count hoe many lines does the
       # terminal has, store that into a variable v_cols
       # and insert it into the menu
+
          v_cols="$COLUMNS"
          let "v_count = $v_cols - 5"
-            echo "var ajakis $v_count"
-         read
+            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+            #read
 
-         v_underscore="-"
-         v_underscore2=""
-         for i in $(seq $v_count); do 
-            v_underscore2="$v_underscore2$v_underscore"
-         done
-         echo "var is $v_underscore2"
-         read
-         v_cols=$v_underscore2
+         # You may choose the apropriate symbol here
+            v_underscore="+"
+
+         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+            v_underscoreCount=""
+
+            for i in $(seq $v_count); do 
+               v_underscoreCount="$v_underscoreCount$v_underscore"
+            done
+
+         # The result is an horizontal line
+            #echo "var is $v_underscoreCount"
+            #read
+            v_line=$v_underscoreCount
 }
 
 function f_menu {
@@ -292,7 +291,7 @@ function f_menu {
    # Display a menu, using the 'select' in-built bash loop function
       clear; f_greet; f_title
       PS3=" ----- Menu ---- > "
-      select i in "$v_cols" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_cols"
+      select i in "$v_line" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_line"
          do
             case $i in
                "DRYa install") 
@@ -339,7 +338,7 @@ echo "-------------------------------------------------------------------"
 #			 read
 
 		 # Discard every function if the instalation is to be aborted
-			unset f_cut_3_fields_relative_path
+			unset f_cut_4_fields_relative_path
 			unset f_DRYa_instalation_state
 			unset f_explain
 			unset f_create_backup
@@ -355,10 +354,7 @@ echo "-------------------------------------------------------------------"
       f_remove_DRYA_desktop_icon
 }
 
-function f_cut_3_fields_relative_path {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_cut_3_fields_relative_path"
-echo "-------------------------------------------------------------------"
+function f_cut_4_fields_relative_path {
 
    # Description: to remove last 4 fields of the path of the dir where the DRYa installer is located
 
@@ -442,79 +438,62 @@ echo "-------------------------------------------------------------------"
 }
 
 function f_define_env_vars {
-   # AFTER running the function f_cut_3_fields_relative_path and finding $found_DRYa_at, only then 
+   # AFTER running the function f_cut_4_fields_relative_path and finding $found_DRYa_at, only then 
 	  # The remaining of this script comes. This function is based on that previous function
 
    # Printing Environment variables based on $found_DRYa_at
 	  # List of variables to be created:
-	  #  DEFAULT_SEIVAs_REPOs_PATH="~/Repositories"
-	  #  CUSTUM_SEIVAs_REPOs_PATH="..."
+	  #  v_REPOS_CENTER="/home/user/Repositories"
 	  #  DRYa_HEART
-   # Mention the location of the file 'source-all-drya-files'
-	  # usually located at DRYa/all/source-all-drya-files
 	  
-   # Finding path to 'source-all-drya-files'
+   # Finding path to 'source-all-drya-files' (the file that contains reference for all other seiva's repositories when downloaded
 	  declare DRYa_HEART="all/source-all-drya-files"
 		 declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
 
 	  echo "The Heart of DRYa is located at:"
 	  echo " > $DRYa_HEART"
-	  echo ' > Will be an environment variable called: ${DRYa_HEART}'
-}
-
-function f_DRYa_instalation_state {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_DRYa_instalation_state"
-echo "-------------------------------------------------------------------"
-
-   # This variable will decide which menu 'select' will present to the user 
-	  # Before any change to the installation
-	  declare DRYa_instalation_state=0
 }
 
 function f_explain {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_explain"
-echo "-------------------------------------------------------------------"
+   # uDev: this explanation is to delete, and the content to absorved by the menu
 
-   # First determine where to install
-	  echo "Welcome to DRYa"
-	  echo " > Don't Repeat Yoursel (app)"
-	  sleep 0.5
-	  echo 
-	  echo "This script running is meant to install DRYa"
-	  echo " > Please choose one centralized directory"
-	  echo "   where DRYa and all other Seiva's Software"
-	  echo "   can be installed (e.g. /home/Repositories)"
-	  #echo " > You should prefer absolute paths instead of relative paths"
-	  #echo " > In order go cross platform"
-	  echo
-	  sleep 0.5
-	  echo "Instalation - Step 1 - by sourcing this file:"
-	  echo " > Issue the command '$ source <name-of-this-file>' and then"
-	  echo "   travel to the directory you want the software to be installed in"
-	  echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
-	  echo 
-	  sleep 0.5
-	  echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
-	  echo " > If you were able to source this file, you must have a copy of DRYa"
-	  echo "   and that copy (this copy) should be moved into the directory in which"
-	  echo "   you did invoke DRYa-install-me-at_bashrc"
-	  echo "   uDev: create a function that automatically moves the directory"
-	  echo 
-	  sleep 0.5
-	  echo "After instalation:"
-	  echo " > You cat unload the function that was sourced for instalation"
-	  echo "   you loaded: f_DRYa-install-me-at-bashrc that exports the variable \$DRYa_PATH"
-	  echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
-	  echo "   by invoking: unset-DRYa-installer"
-	  echo
+      # First determine where to install
+        echo "Welcome to DRYa"
+        echo " > Don't Repeat Yoursel (app)"
+        sleep 0.5
+        echo 
+        echo "This script running is meant to install DRYa"
+        echo " > Please choose one centralized directory"
+        echo "   where DRYa and all other Seiva's Software"
+        echo "   can be installed (e.g. /home/Repositories)"
+        #echo " > You should prefer absolute paths instead of relative paths"
+        #echo " > In order go cross platform"
+        echo
+        sleep 0.5
+        echo "Instalation - Step 1 - by sourcing this file:"
+        echo " > Issue the command '$ source <name-of-this-file>' and then"
+        echo "   travel to the directory you want the software to be installed in"
+        echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
+        echo 
+        sleep 0.5
+        echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
+        echo " > If you were able to source this file, you must have a copy of DRYa"
+        echo "   and that copy (this copy) should be moved into the directory in which"
+        echo "   you did invoke DRYa-install-me-at_bashrc"
+        echo "   uDev: create a function that automatically moves the directory"
+        echo 
+        sleep 0.5
+        echo "After instalation:"
+        echo " > You cat unload the function that was sourced for instalation"
+        echo "   you loaded: f_DRYa-install-me-at-bashrc that exports the variable \$DRYa_PATH"
+        echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
+        echo "   by invoking: unset-DRYa-installer"
+        echo
 }
 
 function f_create_backup {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_create_backup"
-echo "-------------------------------------------------------------------"
+   echo "Press enter to start the backup sequence"
+   read -s -n 1
 
    # Search and delete the entry for DRYa inside ~/.bashrc
 	  
@@ -551,12 +530,11 @@ echo "-------------------------------------------------------------------"
 }
 
 function f_delete_empty_lines {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_delete_empty_lines"
-echo "-------------------------------------------------------------------"
+   echo "Press enter to start the backup removal of empty lines sequence"
+   read -s -n 1
 
-	  # Deleting empty lines found only at the bottom of the file 
-		 # It deletes one by one with a while loop (while the last line is found empty)
+   # Deleting empty lines found only at the bottom of the file 
+      # It deletes one by one with a while loop (while the last line is found empty)
 		 
 	# Using TAIL to print only the last line inside a variable called: last_line
 	   last_line=$(tail -n 1 ~/.bashrc )
@@ -708,25 +686,14 @@ function f_install_figlet_font {
 
 
 function f_run_every_used_function {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_run_every_used_function"
-echo "-------------------------------------------------------------------"
-read
+   # Installer sequence
+   
+   echo "Press enter to start the installation sequence"
+   read -s -n 1
 
-#	# Evaluate the answer given by the user
-#	   if [[ -z $v_unload ]]; then echo VARIABLE EMPTY; fi
-#
-#	   if [[ $v_unload == "0" ]]; then
-#		  # If f_initial_statement returns Apreciative, the following functions are to be ran
-#
-#			 echo 
-#			 echo " WILL RUN"
-#			 read
-#			 read
-#
          #f_install_DRYA_desktop_icon
          #f_install_figlet_font
-			f_cut_3_fields_relative_path
+			f_cut_4_fields_relative_path
 			#f_DRYa_instalation_state
 			#f_explain
 			f_create_backup
@@ -739,10 +706,6 @@ read
 }
 
 function f_decide_to_run {
-echo "-------------------------------------------------------------------"
-echo "Debug: f_decide_to_run"
-echo "-------------------------------------------------------------------"
-
    # Mention to the user what the previous varible was:
 	  #echo "variable load_remaining_functions = $load_remaining_functions"
 
@@ -752,12 +715,13 @@ echo "-------------------------------------------------------------------"
 		 v=0
 
 	  elif [ $load_remaining_functions == "yes" ]; then
-		 echo "Yep"
+		 echo "permission to run installer: Yep"
 		 read
 		 f_run_every_used_function
 
 	  elif [ $load_remaining_functions == "no" ]; then
-		 echo "nope"
+		 echo "permission to run installer: nope"
+		 read
 		 #f_discard_every_unused_function
 
 	  fi
