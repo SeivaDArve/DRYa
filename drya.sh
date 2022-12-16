@@ -723,11 +723,17 @@ function f_exec {
 #         less ~/Repositories/moedaz/README.md
 #      ;;
       clone)
+         # Defore doing any cloning, change to the correct place for cloning
+            # any repo under from Seiva's github clone to the correct place is automatically installed
+            # Because DRYa already is configured for all those repositories even if they do not exist.
+            v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
+            cd $v_REPOS_CENTER
+
          case $2 in
-            ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git ;;
+            ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
             moedaz) echo "ezGIT" ;;
-            dWiki) echo "ezGIT" ;;
-            upk) echo "ezGIT" ;;
+            dWiki) echo "ezGIT";;
+            upk) echo "ezGIT";;
             *) 
                echo "DRYa: Must specify a repository to clone"
                echo " Press ENTER to visit a page will all repositories:"
@@ -736,6 +742,10 @@ function f_exec {
                echo
                echo "# uDev: No browser is ready to open, and no function is set to scrape"
          esac
+         
+         # At the end of cloning, returning to the previous directory and discarding the variable
+            cd $v_pwd  
+            unset v_pwd
       ;;
       *) 
          f_exec
