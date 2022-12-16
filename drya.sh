@@ -731,9 +731,10 @@ function f_exec {
 
          case $2 in
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
-            moedaz) echo "ezGIT" ;;
-            dWiki) echo "ezGIT";;
-            upk) echo "ezGIT";;
+            moedaz) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/moedaz.git;;
+            dWiki) echo "not ready";;
+            upk) echo "not ready";;
+            try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
             *) 
                echo "DRYa: Must specify a repository to clone"
                echo " Press ENTER to visit a page will all repositories:"
