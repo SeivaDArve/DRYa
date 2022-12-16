@@ -15,6 +15,7 @@ function f_verbose_start-1 {
 # Repository: ezGIT
    # Define a key to call the entire program
       alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      # uDev: for some repos, must run a script that searches for updates at terminal startup
 
    # Load all alternative git alias:
       source ${v_REPOS_CENTER}/ezGIT/alias
