@@ -203,8 +203,6 @@ function go {
 #	;;
 # esac
 
-#alias .="ls"  ## Replaced by the 'function . { }' and the 'function d { }'
-
 function . {
    # Navigate through the file system stupidly ez
    
@@ -212,7 +210,7 @@ function . {
 
       if [ -z $1 ]; then 
          # If no argument is given, lists storage (ls command)
-         ls
+         ls 
 
       elif [ $1 == "." ]; then 
          # If arg 1 is '.' then navigate to the center of seiva's repos
@@ -224,11 +222,13 @@ function . {
       fi
 }
 
+#alias .="ls"  ## Replaced by the 'function . { }' and the 'function d { }'
 alias ..="cd .."
 alias ...="cd -"
 alias ,="cd"
 alias ,,="clear"
 alias ,,,="pwd"
+alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 
 # Pandoc app to create man pages
 
