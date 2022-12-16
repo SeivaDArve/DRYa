@@ -97,7 +97,8 @@ function f_1st_select {
                     exit 1
                ;;
                "(help) to explain") 
-                  echo " Asked for help at First question"
+                  clear; f_greet
+                  echo " Explanation of the First question"
                     # Explain what a centralized directory is
                   echo " First Create a dedicated directory for all your repositories like ~/Repositories"
                   echo "   > Does it exist?"
@@ -140,8 +141,9 @@ function f_2nd_select {
             echo " Second question answered NO"
                     exit 1
           ;;
-          h) 
-            echo " Asked for help at Second question"
+          "(help) to explain") 
+               clear; f_greet
+               echo "Explanation for the Second Question"
                echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
 
             # Explain what a centralized directory is
@@ -181,6 +183,7 @@ function f_3rd_select {
           ;;
           "(help) to explain") 
             clear; f_greet
+            echo "Explanation for the Third Question"
                echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
                echo " Asked for help at Third question"
                echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
@@ -231,7 +234,7 @@ function f_4rd_select {
            ;;
            "(help) to explain") 
              clear; f_greet
-               echo " Asked for help at Forth question"
+               echo "Explanation for the Forth Question"
 
              # Explanation
                echo " Magic is the instalation of such usefull software"
