@@ -46,6 +46,7 @@ f_OS_detect
 
 alias rec="termux-microphone-record -d"
 alias cer="termux-microphone-record -q"
+alias paste="termux-clipboard-get"
 
 alias grep="grep --color=auto"
 
@@ -93,7 +94,7 @@ alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;t
 alias ls="ls -p"
 alias la="ls -pA"
 alias ll="ls -pl"
-alias mk="mkdir"
+alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
 function op {
