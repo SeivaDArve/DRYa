@@ -204,7 +204,20 @@ function go {
 #	;;
 # esac
 
-alias .="ls"
+#alias .="ls"  ## Replaced by the 'function . { }' and the 'function d { }'
+
+function . {
+   # Navigate through the file system stupidly ez
+   
+   # uDev: Include 'function d' to give 'favs' if directory is not found
+
+   # If no argument is given, lists storage (ls command)
+      if [ -z $1 ]; then ls; fi
+   
+   # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
+      if [ ! -z $1 ]; then cd $1 || vim $1; fi
+}
+
 alias ..="cd .."
 alias ...="cd -"
 alias ,="cd"
@@ -551,7 +564,7 @@ function d {
 
    # Usage:
       # Use 1: '$ lc             # Complains that there is no destination specified
-      # Use 2: '$ lc drya        # Travels to alias
+      # Use 2: '$ lc drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
       # Use 3: '$ lc -p <dir>    # Create new dir and travel to it
       # Use 4: '$ lc -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
       # Use 5: '$ lc -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
