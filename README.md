@@ -57,6 +57,11 @@ If you read the source code you will find many many comments of my own code (Lea
 And you will also find another kind of comment "# uDev: Under Development" which are a message to my future self, some idea to remember
 If you wish to co-op then you may find these comments and try to script yourself
 
+### Self documented script
+Usually when people have doubts about the usage of the program/app/script, they search for the manual page. 
+in case of linux you can type at the terminal '$ man <app-name-here>'
+But this app/script does something better. This app IS NOT COMPILED, therefore the user can see the source code always. It may lose some speed (CPU speed) but you (the user) can read the source code the same way the programmer did (knowing EVERYTHING about the app and learning Bash on-the-go)
+
 ## Drya can deploy these buttlers:
 + jarve (for domotics, home keeping and remote assistance - an automated linux account on raspberry pi)
 + nan-D (a special kind of file to be left on the smartphone. At specific times, DRYa scans the entire phone in search of these inteligent files)
