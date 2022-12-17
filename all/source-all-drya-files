@@ -39,6 +39,9 @@ function f_verbose_start-1 {
 # Repository: upK
    source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
 
+# Repository 112-Shiva-Sutras
+   alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
+
 # Repository: DRYa (internal files)
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
