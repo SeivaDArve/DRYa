@@ -735,6 +735,7 @@ function f_exec {
             dWiki) echo "not ready";;
             upk) echo "not ready";;
             try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
+            setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
             *) 
                echo "DRYa: Must specify a repository to clone"
                echo " Press ENTER to visit a page will all repositories:"
