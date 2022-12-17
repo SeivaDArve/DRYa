@@ -555,7 +555,6 @@ function drya-test {
    done
 }
 
-
 function d {
    # This function is a combination of:
       # '$ cd'
@@ -620,17 +619,57 @@ function d {
       case $2 in
          0) # Travel to Internal storage
             # uDev: clear; pwd; echo "you are in X dir"
+            echo "Internal storage"
+            pwd
+            echo
             cd /sdcard && ls
          ;;
          1) # Travel to SD Card storage
+            echo "SD card storage"
+            pwd
+            echo
+            echo "Termux cannot WRITE to SD card,"
+            echo "but can READ and RUN bash scripts from it"
+            echo "If you have a huge database to store into SD external"
+            echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+            echo "file explorer, MOVE it to the SD card"
+            echo
             cd /storage/0094-8210 && ls || cd /storage && ls
 
          ;;
          2) # Travel to USB storage
+            echo "USB Storage"
+            pwd
+            echo
             cd /storage/83DB-10EA && ls || cd /storage && ls
          ;;
          3) # Travel to the dir where many USB storages are mounted
+            echo "List of options for: USB storage"
+            pwd
+            echo
             cd /storage && ls
+         ;;
+         4) # Travel to the dir where many USB storages are mounted
+            clear
+            echo "Termux cannot WRITE to SD card,"
+            echo "but can READ and RUN bash scripts from it"
+            echo "If you have a huge database to store into SD external"
+            echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+            echo "file explorer, MOVE it to the SD card"
+            echo
+            echo "Do you need directories to be created in order to MOVE"
+            echo "internal things to external SD?"
+            echo 
+            echo "If you want a directory called \"Repositories\" in both"
+            echo "External and Internal storage, press ENTER 3x"
+            echo "(or cancel with CTRL + C)"
+            echo
+            echo "#uDev: create an option to ask for custom dir name"
+            echo "(default is /storage/Repositories"
+            read
+            read
+            read
+
          ;;
          *)
             echo "uDev: Needs to print how to use"
