@@ -38,11 +38,26 @@ function f_OS_detect {
       OS=$(uname -o)
       mkdir -p ~/.config/h.h/drya/
       echo "OS Detected: $OS" > ~/.config/h.h/drya/drya-detections.txt
-
-   # Neofetch is not needed... It is just for fun
-      neofetch 2>/dev/null
 }
 f_OS_detect
+
+
+# Set the keybindings to vi/vim mode:
+   #set -o vi
+
+function e {
+   select i in Nano Vim; do 
+      case $i in 
+         Nano)
+	         if [ $_ans == "1" ]; then alias r="nano"; fi
+         ;;
+         Vim)
+            if [ $_ans == "2" ]; then alias r="vim"; fi
+         ;;
+      esac
+      done
+	
+}
 
 alias miau="bash ${v_REPOS_CENTER}/sender.sh"
 alias rec="termux-microphone-record -d"
