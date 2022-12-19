@@ -3,6 +3,14 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
+# Display the standard welcome termux message
+   # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
+   # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
+   if [ $(uname -o) == "Android" ]; then cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
+
+# Neofetch is not needed... It is just for fun
+   neofetch 2>/dev/null
+
 function f_verbose_start-1 {
    echo "DRYa: file running: ${DRYa_HEART}"
    # echo "Installed at.."
@@ -27,11 +35,6 @@ function f_verbose_start-1 {
    #alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
-
-# Display the standard welcome termux message
-   # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
-   # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
-   if [ $(uname -o) == "Android" ]; then cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
 
 # Repository: QR-walking-stick (inside dWiki/TODO-apps)
    alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
