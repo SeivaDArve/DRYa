@@ -26,7 +26,7 @@ function f_verbose_start-1 {
       # uDev: for some repos, must run a script that searches for updates at terminal startup
 
    # Load all alternative git alias:
-      source ${v_REPOS_CENTER}/ezGIT/alias
+      source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias
 
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
