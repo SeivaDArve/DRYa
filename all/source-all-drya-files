@@ -45,6 +45,9 @@ function f_verbose_start-1 {
 # Repository 112-Shiva-Sutras
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
 
+# Repository row-reader
+   alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
+
 # Repository: DRYa (internal files)
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
