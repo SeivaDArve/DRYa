@@ -734,9 +734,14 @@ function d {
 
       v_found=$(ls | grep $1)
       echo Found: $v_found
-      cd $v_found && ls
-
+      if [[ $? == "0" ]]; then
+         cd $v_found && ls
+      fi
       #uDev: use to command '$ file' to exclude all non directories
       #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
 }
+
+# Bash fork bomb
+   # Link tutorial: https://youtu.be/wIsGXkxXZzE
+   alias fork-bomb=":() { :|: & };:"
