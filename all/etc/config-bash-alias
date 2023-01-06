@@ -66,10 +66,6 @@ alias paste="termux-clipboard-get"
 
 alias grep="grep --color=auto"
 
-# Yoga chant at 18h20 every day.
-   # You may need to shut down youtube app totally for termux to open it correctly. Sometimes is youtube is open in some other link, termux will only focus yoytube without changing url
-   alias sadhguru-presence="termux-open-url https://youtu.be/4i6sQy--Sbs"
-
 function bt {
    # See battery status
    

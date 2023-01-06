@@ -45,7 +45,17 @@ function f_verbose_start-1 {
 # Repository 112-Shiva-Sutras
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
 
+# Repository yogaBashApp
+   # Making use of Sadhguru Presence features
+      alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
+      alias termux-stop="termux-media-player stop"
+
+   # Making use of Shambavi features
+      alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
+
 # Repository: DRYa (internal files)
+   # uDev: Read DRYa messages (file where all repos deposit their welcomw logs)
+
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
 
