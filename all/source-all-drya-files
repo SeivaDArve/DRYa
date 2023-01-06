@@ -53,6 +53,9 @@ function f_verbose_start-1 {
    # Making use of Shambavi features
       alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
 
+# Repository row-reader
+   alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
+
 # Repository: DRYa (internal files)
    # uDev: Read DRYa messages (file where all repos deposit their welcomw logs)
 
