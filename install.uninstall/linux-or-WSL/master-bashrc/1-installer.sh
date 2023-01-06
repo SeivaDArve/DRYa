@@ -245,6 +245,10 @@ function f_4rd_select {
       done
 }
 
+function f_options_menu {
+   clear; f_greet; echo "Options not ready yet"
+}
+
 
 function f_uninstall_1st {
    # First question when uninstalling DRYa
@@ -306,7 +310,9 @@ function f_menu {
                      f_break_select_loops; eval $_break
                ;;
                "DRYa uninstall") echo "uninstalling"; f_uninstall_1st; break;;
-               options) echo "options not ready yet"; read; clear; f_greet; f_title;;
+               options) 
+                  f_options_menu
+               ;;
                exit) echo "Bye"; break ;;
                "CLEAR SCREEN") 
                   clear; f_greet; 
@@ -437,7 +443,8 @@ function f_cut_4_fields_relative_path {
 	  rm ~/.tmp/v_pwd3
 
    # Display the entire result of this script:
-	  #echo $found_DRYa_at
+	  echo "found DRYa at: $found_DRYa_at"
+     read -s -n 1 -t 4
 }
 
 function f_define_env_vars {
