@@ -1,9 +1,25 @@
 # List of usefull apps
 
-figlet
-exiftool
-file
-tree
-vim
-linx
-emacs
+   figlet
+   exiftool
+   file
+   tree
+   vim
+   linx
+   emacs
+
+# List of usefull apps (python)
+
+   youtube-dl {
+      # (may need ffmpeg)
+      pkg install python
+      pip install youtube-dl
+
+      # Quick tutorial how to use {
+      #  # Find formats before download
+      #     '$ youtube-dl -F <video-url-here>'
+      #
+      #  # Decide to download format 18
+      #     '$ youtube-dl -f 18 <video-url-here>'
+      # }
+   }
