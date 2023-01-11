@@ -151,30 +151,102 @@ function shebang {
       # Or gives a shebang to the file you input as argument 1)
       # It also changes the permissions of tbe file to executable
 
-   # If called with no args:
-   if [[ -z $1 ]]; then
-      echo -n " > File name? "
-      read v_ans
-      touch $v_ans
-      echo "#!/bin/bash" > ./${v_ans}
-      chmod +x ./${v_ans}
-      tput setaf 3
-      echo -n " > File "
-      tput setaf 4
-      echo -n $v_ans
-      tput setaf 3
-      echo " created!"
-      tput sgr0
-      #uDev: needs to change permissions
-   fi
+   function f_inform_creation_noArgs {
+      # Informing the user that the process is ready
+      
+      # Using command 'ls' to test existence
+         ls $v_ans 1>/dev/null # Delete all output
+         if [[ $? == 0 ]]; then
 
-   # When a file name is given:
-   #uDev: firsr it must check if it is not a dir
+            tput setaf 3
+               echo -n " > File "
+            tput setaf 4
+               echo -n $v_ans
+            tput setaf 3
+               echo " created!"
+            tput sgr0
+         else 
+            echo File not created
+         fi
+   }
+
+   function f_inform_creation {
+      # Informing the user that the process is ready
+
+      
+      # Using command 'ls' to test existence
+         ls $i 1>/dev/null # Delete all output
+         if [[ $? == 0 ]]; then
+
+            tput setaf 3
+               echo -n " > File "
+            tput setaf 4
+               echo -n $i
+            tput setaf 3
+               echo " created!"
+            tput sgr0
+         else 
+            echo File not created
+         fi
+   }
+
+   function f_test_existence_noArgs {
+      # Test existence of file named as argument given
+
+      if [[ -f $v_ans ]]; then
+         # Test if file exists to avoid overwriting it
+         echo -n "File "
+         tput setaf 4
+         echo -n "$v_ans "
+         tput sgr0
+         echo "already exists, please choose another name"
+      else 
+         # If file does not exist, run:
+         touch $v_ans
+         echo "#!/bin/bash" > ./${v_ans}
+         chmod +x ./${v_ans}
+
+         f_inform_creation_noArgs
+
+      fi
+   }
+
+   function f_test_existence {
+      # Test existence of file named as argument given
+
+      if [[ -f $i ]]; then
+         # Test if file exists to avoid overwriting it
+         echo -n "File "
+         tput setaf 4
+         echo -n "$i "
+         tput sgr0
+         echo "already exists, please choose another name"
+      else 
+         # If file does not exist, run:
+         touch $i
+         echo "#!/bin/bash" > ./${i}
+         chmod +x ./${i}
+         
+         f_inform_creation 
+
+      fi
+   }
+
+   if [[ -z $1 ]]; then
+      # If no arg is given
+         echo -n " > File name? "
+         read v_ans
+
+         f_test_existence_noArgs
+
+   else 
+      # If there are arguments, test each one for exuatence:
+         for i in $@; do 
+            f_test_existence
+         done
+   fi
 }
 
-
-# This command is same as: "source ~/.bashrc" (but needs the function: go)
-alias src="go gnome-terminal; exit"
 
 function go {
 	# This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
@@ -207,6 +279,10 @@ function go {
 
    # If you want to export just this "go" script for an entire repository, the name sugested is: bash-open-app-at-external-window
 }
+
+# This command is same as: "source ~/.bashrc" (but needs the function: go)
+alias src="go gnome-terminal; exit"
+
 
 # function ls {
 # case !$ in 
