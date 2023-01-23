@@ -292,7 +292,7 @@ function f_underscore_creator {
 function f_menu {
    # The first menu of the Installer/Uninstaller
 
-   # The following function gives the variable v_cols
+   # The following function gives the variable v_line (vertical line to use as an option inside 'select' menu)
       f_underscore_creator
 
    # Display a menu, using the 'select' in-built bash loop function
@@ -647,6 +647,7 @@ echo "-------------------------------------------------------------------"
      echo "   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER #Dedicated dir for repos"        >> ~/.bashrc
 	  echo "   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART"			                                    >> ~/.bashrc
 	  echo "   source ${DRYa_HEART}"                              	                                       >> ~/.bashrc
+     #uDev: Decide a name for a variable to point at a file called DRYa-messages. And export it too
 
    # Process Finished
 	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
