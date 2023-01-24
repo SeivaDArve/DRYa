@@ -59,10 +59,10 @@ function e {
 	
 }
 
-alias miau="bash ${v_REPOS_CENTER}/sender.sh"
-alias rec="termux-microphone-record -d"
-alias cer="termux-microphone-record -q"
-alias paste="termux-clipboard-get"
+# Termux alias
+   alias rec="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)
+   alias cer="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
+   alias paste="termux-clipboard-get"
 
 alias grep="grep --color=auto"
 
@@ -99,13 +99,11 @@ function f_drya-messages {
       # ~/.tmp/ everytime you open the terminal
       # and that way, everything is refreshed everytime
 
-      alias drya-messages="less ~/.tmp/drya-messages.txt" #uDev: change to .dryarc
+      alias drya-messages="less ~/.tmp/drya-messages.txt" #uDev: change to .dryarc  ## uDev: to be sent to drya.sh
 }
 
-
-
 # joke:
-alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
+   alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
 alias ls="ls -p"
 alias la="ls -pA"
@@ -145,9 +143,12 @@ function stroken {
    echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
 }
 
-alias 2468="exit"
-alias 24685="shutdown now"
-alias 246854="shutdown -r now"
+# Fast dial:
+   alias 2468="exit"
+   alias 24685="shutdown now"
+   alias 246854="shutdown -r now"
+   alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
+   alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
 
 function shebang {
    # It creates a bash script (if no args are input)
