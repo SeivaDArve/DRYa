@@ -1,4 +1,12 @@
 #!/bin/bash 
+# Title: DRYa
+# Description: Don't Repeat Yourself (app)
+# Use: You may use this app in many way. One of those is a package manager for a few specific repositories (until you change it)
+
+# This script was intended to be called at the terminal by the alias 'drya'. 
+   # If the package manager that installes this script does not set this alias, lets set this alias here (from within)
+   alias drya="${v_REPOS_CENTER}/DRYa/drya.sh"
+
 
 function f_greet {
    figlet DRYa || echo "DRYa: Hi there;)"
