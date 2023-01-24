@@ -115,6 +115,7 @@ alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a 
 
 function op {
    # Function to open all files and directories given as arguments ($*)
+      # Similar apps: termux-open; termux-open-url; wslview
 
    # Test in which OS this script is running:
       v_uname=$(uname -a)
@@ -134,6 +135,8 @@ function op {
       else
          echo "DRYa: op: Attempt to open that argument failed"
       fi
+      
+      # uDev: Add 'termux-open $* --chooser' as an option
 }
 
 

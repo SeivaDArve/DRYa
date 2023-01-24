@@ -11,7 +11,9 @@
 # List of usefull apps (python)
 
    youtube-dl {
+      # Software to use at terminal (termux for example) to download from youtube
       # (may need ffmpeg)
+
       pkg install python
       pip install youtube-dl
 
@@ -22,4 +24,15 @@
       #  # Decide to download format 18
       #     '$ youtube-dl -f 18 <video-url-here>'
       # }
+   }
+
+# List of usefull apps (at WSL2)
+   
+   wslview {
+      # Binary to open files directly from WSL (windows terminal) like .jpg or .xlsx
+      
+      sudo apt install wlsu
+
+      # Example: 
+         wslview /mnt/c/Repositories/Software-resources/all/icon.png 
    }
