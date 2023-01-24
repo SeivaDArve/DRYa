@@ -739,12 +739,15 @@ function f_exec {
             ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
             -p | --public-list) 
                # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
+
+               echo "List of public repositories from Seiva D'Arve from GitHub.com:"
                   curl -s https://github.com/SeivaDArve?tab=repositories \
                   | grep "codeRepository" \
                   | sed 's,        <a href="/SeivaDArve/,,g' \
                   | sed 's," itemprop="name codeRepository" >,,g'
             ;;
             -P | --private-list) 
+               echo "# uDev: listing of all repositories including private ones is not ready yet"
                : '
                  Multi comment example
                  :D
