@@ -711,6 +711,21 @@ function f_exec {
       # open the f_greet and f_quick_menu through f_exec
 
    case $1 in
+      -l | --location-network)
+         # Displays current GPS location using network as provider
+         termux-location -p network
+      ;;
+      -L | --location-GPS)
+         # Displays current GPS location using GPS as provider
+         termux-location -p GPS
+      ;;
+      --save-location-network)
+         # Displays current GPS location using network as provider and saves it
+         # Directory for saved text
+         #  ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
+
+         termux-location -p network
+      ;;
 #      +)
 #         echo
 #      ;;

@@ -150,6 +150,11 @@ function stroken {
    alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
 
+alias play="termux-media-player play"
+alias pause="termux-media-player pause"
+alias stop="termux-media-player stop"
+alias info="termux-media-player info"
+
 function shebang {
    # It creates a bash script (if no args are input)
       # Or gives a shebang to the file you input as argument 1)
@@ -312,6 +317,7 @@ function . {
       elif [ $1 == "." ]; then 
          # If arg 1 is '.' then navigate to the center of seiva's repos
          cd $v_REPOS_CENTER
+         # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
    
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
@@ -701,6 +707,10 @@ function d {
       cd ${v_REPOS_CENTER}/dWiki && ls
       
    # Implementation of Use 2:
+   elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
+      cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
+      
+   # Implementation of Use 2:
    elif [ $1 == "tmp" ]; then
       mkdir -p ~/.tmp
       cd ~/.tmp/ && ls
@@ -771,6 +781,10 @@ function d {
             read
             read
 
+         ;;
+         b) 
+            # Travel to dir at Internal storage called Termux-bridge-Android
+            cd /sdcard/Termux-bridge-Android && ls
          ;;
          *)
             echo "uDev: Needs to print how to use"
