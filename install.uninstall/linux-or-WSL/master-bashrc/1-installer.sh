@@ -693,6 +693,12 @@ echo "-------------------------------------------------------------------"
 function f_install_figlet_font {
    # Not every instalation of figlet comes with my favourite figlet font, lets correct that
    echo "# uDev: Not ready yet"
+   
+   # Command to invoke at the terminal to display where figlet stores all fonts
+       #figlet -I2
+
+   # Directoty where Seiva stored his favourit figlet font
+      #cd ${REPOS_CENTER}/DRYa/all/dotFiles/figlet-fonts
 }
 
 
