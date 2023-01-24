@@ -737,9 +737,33 @@ function f_exec {
             try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
             setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
             ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
+            -p | --public-list) 
+               # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
+                  curl -s https://github.com/SeivaDArve?tab=repositories \
+                  | grep "codeRepository" \
+                  | sed 's,        <a href="/SeivaDArve/,,g' \
+                  | sed 's," itemprop="name codeRepository" >,,g'
+            ;;
+            -P | --private-list) 
+               : '
+                 Multi comment example
+                 :D
+               '
 
+               : '
+               # Example on: How to curl a list of private repositories at github if they are invisible and you need to login:
+                 curl \
+                     -u "username:password" \
+                     -X GET \
+                     https://mygithuburl.com/user/repos?visibility=private
+               '
+            ;;
             *) 
                echo "DRYa: Must specify a repository to clone"
+               echo
+               echo " You can use: '$ drya clone --list-public' or '$ drya clone -p' to list all public repositories"
+               echo " You can use: '$ drya clone --list-private' or '$ drya clone -P' to list all private repositories"
+               echo
                echo " Press ENTER to visit a page will all repositories:"
                echo " > https://github.com/SeivaDArve?tab=repositories"
                read
