@@ -20,6 +20,9 @@ function f_verbose_start-1 {
    # Not every instalation of figlet comes witht the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
 
+# Repository: CBorg
+      alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
+      
 # Repository: ezGIT
    # Define a key to call the entire program
       alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
