@@ -22,6 +22,9 @@ function f_verbose_start-1 {
 
 # Repository: CBorg
       alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
+
+# Repository: dWiki
+      alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
       
 # Repository: ezGIT
    # Define a key to call the entire program
