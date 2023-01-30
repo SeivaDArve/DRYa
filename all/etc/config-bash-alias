@@ -61,8 +61,9 @@ function e {
 
 # Termux alias
    alias rec="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)
-   alias cer="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
+   alias "rec."="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
    alias paste="termux-clipboard-get"
+   alias sms="termux-sms-send -n" 
 
 alias grep="grep --color=auto"
 
