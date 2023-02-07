@@ -65,6 +65,23 @@ function e {
    alias paste="termux-clipboard-get"
    alias sms="termux-sms-send -n" 
 
+# Termux sms script
+   function sms {
+      case $1 in
+         send)
+            v_1="-n $2"
+            v_2=$3
+            echo "termux-sms-.. $v_1 $v_2" 
+         ;;
+         in)
+         ;;
+         out)
+         ;;
+         *)
+         ;;
+      esac
+}
+
 alias grep="grep --color=auto"
 
 function bt {
@@ -708,6 +725,10 @@ function d {
       cd ${v_REPOS_CENTER}/dWiki && ls
       
    # Implementation of Use 2:
+   elif [ $1 == "upk" ]; then
+      cd ${v_REPOS_CENTER}/upK && ls
+      
+   # Implementation of Use 2:
    elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
       cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
       
@@ -788,7 +809,14 @@ function d {
             cd /sdcard/Termux-bridge-Android && ls
          ;;
          *)
-            echo "uDev: Needs to print how to use"
+            echo "How to use:"
+            echo "$ d -m"
+            echo '0) # Travel to Internal storage'
+            echo '1) # Travel to SD Card storage'
+            echo '2) # Travel to USB storage'
+            echo '3) # Travel to the dir where many USB storages are mounted'
+            echo '4) # Travel to the dir where many USB storages are mounted'
+            echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
          ;;
       esac
 
