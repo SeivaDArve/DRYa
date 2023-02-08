@@ -3,6 +3,15 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 
+# Repository: DRYa (internal files - part 1)
+   # Defining a place for all drya messages
+      touch ~/.config/h.h/drya/.dryaMessages
+      DRYa_MESSAGES="~/.config/h.h/drya/.dryaMessages"
+      export $DRYa_MESSAGES
+      echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
+      echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
+
+
 # Display the standard welcome termux message
    # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
    # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
@@ -24,7 +33,7 @@ function f_verbose_start-1 {
       alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
 
 # Repository: dWiki
-      alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
+      alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dWiki.sh"
       
 # Repository: ezGIT
    # Define a key to call the entire program
@@ -45,8 +54,11 @@ function f_verbose_start-1 {
 # Repository: QR-walking-stick (inside dWiki/TODO-apps)
    alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
 
-# Repository: upK
+# Repository: upK and upK-diario-Dv
    source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
+   alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
+   alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh"
+   # uDev: alias "upk dia"="...upk-diario-Dv"
 
 # Repository 112-Shiva-Sutras
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
@@ -62,9 +74,7 @@ function f_verbose_start-1 {
 # Repository row-reader
    alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
 
-# Repository: DRYa (internal files)
-   # uDev: Read DRYa messages (file where all repos deposit their welcomw logs)
-
+# Repository: DRYa (internal files - part 2)
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
 
@@ -78,6 +88,13 @@ function f_verbose_start-1 {
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
    
+   # Drya bin files
+      # Sourcing all stand-alone scripts
+         source ${v_REPOS_CENTER}/DRYa/all/bin/bin/*
+
+      # Sourcing a specific list of scripts
+         alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"
+
    # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
