@@ -8,6 +8,10 @@
    linx
    emacs
 
+# Dependencies for: ezGIT {
+	pkg install file
+}
+
 # List of usefull apps (python)
 
    youtube-dl {
