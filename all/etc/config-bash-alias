@@ -675,13 +675,15 @@ function drya-test {
    done
 }
 
-function d {
-   # This function is a combination of:
-      # '$ cd'
-      # '$ ls'
-      # + alias
-      # It finds directories
-      # uDev: to find and edite files, function f needes to be created and needs to ask for the default text editor
+function D {
+   # Title: Function "Destination"
+   # Description: 
+      # This function is a combination of:
+         # '$ cd'
+         # '$ ls'
+         # + alias
+         # It finds directories
+         # uDev: to find and edite files, function f needes to be created and needs to ask for the default text editor
 
    # Dependencies: figlet, file
       # Install it by typing:
@@ -727,6 +729,10 @@ function d {
    # Implementation of Use 2:
    elif [ $1 == "upk" ]; then
       cd ${v_REPOS_CENTER}/upK && ls
+      
+   # Implementation of Use 2:
+   elif [ $1 == "upkd" ]; then
+      cd ${v_REPOS_CENTER}/upK-diario-Dv && ls
       
    # Implementation of Use 2:
    elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
