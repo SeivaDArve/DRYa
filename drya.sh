@@ -801,6 +801,11 @@ function f_exec {
             cd $v_pwd  
             unset v_pwd
       ;;
+      msgs)
+         # Option to read the $DRYa_MESSAGES file
+            # They are stored at: ~/.config/h.h/drya/.dryaMessages
+            vim ~/.config/h.h/drya/.dryaMessages
+      ;;
       *) 
          f_exec
       ;;
