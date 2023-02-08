@@ -7,6 +7,8 @@
    vim
    linx
    emacs
+   espeak # Text to speach
+   termimage # Terminal images
 
 # Dependencies for: ezGIT {
 	pkg install file
