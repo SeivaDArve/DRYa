@@ -45,6 +45,36 @@ f_OS_detect
 # Set the keybindings to vi/vim mode:
    #set -o vi
 
+function f_horizontal_line {
+   # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
+
+         v_count="$COLUMNS"
+            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+            #read
+
+         # You may choose the apropriate symbol here
+            v_underscore="-"
+
+         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+            v_underscoreCount=""
+
+            for e in $(seq $v_count); do 
+               v_underscoreCount="$v_underscoreCount$v_underscore"
+            done
+
+         
+
+         # The result is an horizontal line
+            #echo "var is $v_underscoreCount"
+            #read
+            v_line=$v_underscoreCount
+
+            # removing last 4 characters from v_line. This way it can be used in SELECT menus
+               v_line2=${v_line::-4}
+
+            echo $v_underscoreCount
+}
+
 function e {
    select i in Nano Vim; do 
       case $i in 
@@ -413,6 +443,7 @@ alias vimrc="vim ~/.vimrc"
       # Edit dotFiles
       function ,... {
 
+         f_horizontal_line #If variable v_line is needed, this function must run before to create it
          clear
 
          echo SELECT file to edit by Title
@@ -422,7 +453,7 @@ alias vimrc="vim ~/.vimrc"
          PS3="Select a file to edit: "
 
          COLUMNS=0
-         select opt in config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st quit; do
+         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st quit $v_line2; do
             case $opt in
                config-bash-alias)
                   ,.
