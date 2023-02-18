@@ -159,6 +159,8 @@ alias ll="ls -pl"
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
+alias A="cd; clear; figlet 'New Screen'"
+
 function op {
    # Function to open all files and directories given as arguments ($*)
       # Similar apps: termux-open; termux-open-url; wslview
@@ -213,7 +215,7 @@ function shebang {
       
       # Using command 'ls' to test existence
          ls $v_ans 1>/dev/null # Delete all output
-         if [[ $? == 0 ]]; then
+         if [[ $? == 0 ]]; then # If last '$ ls' command was sucessfull, then:
 
             tput setaf 3
                echo -n " > File "
@@ -264,6 +266,7 @@ function shebang {
          chmod +x ./${v_ans}
 
          f_inform_creation_noArgs
+         vim $v_ans
 
       fi
    }
@@ -901,6 +904,8 @@ function D {
       #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
 }
+
+alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
 
 # Bash fork bomb
    # Link tutorial: https://youtu.be/wIsGXkxXZzE
