@@ -806,6 +806,9 @@ function f_exec {
             # They are stored at: ~/.config/h.h/drya/.dryaMessages
             vim ~/.config/h.h/drya/.dryaMessages
       ;;
+      seiva-upTime)
+         # uDev: Tells how long the Linux experience started for Seiva
+      ;;
       *) 
          f_exec
       ;;
