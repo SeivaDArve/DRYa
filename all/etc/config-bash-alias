@@ -131,6 +131,8 @@ alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a 
 
 alias A="cd; clear; figlet 'New Screen'"
 
+alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+
 function op {
    # Function to open all files and directories given as arguments ($*)
       # Similar apps: termux-open; termux-open-url; wslview
@@ -174,6 +176,8 @@ alias play="termux-media-player play"
 alias pause="termux-media-player pause"
 alias stop="termux-media-player stop"
 alias info="termux-media-player info"
+
+alias tufnar="echo '# uDev: Tufnar Isaura 91..." 
 
 function shebang {
    # It creates a bash script (if no args are input)
