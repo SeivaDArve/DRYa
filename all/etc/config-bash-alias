@@ -795,7 +795,7 @@ function D {
       cd ${v_REPOS_CENTER} && ls
 
    # Implementation of Use 2:
-   elif [ $1 == "-m" ]; then
+   elif [ $1 == "m" ]; then
 
       case $2 in
          0) # Travel to Internal storage
