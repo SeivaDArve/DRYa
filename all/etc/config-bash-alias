@@ -159,9 +159,9 @@ alias ll="ls -pl"
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
-alias A="cd; clear; figlet 'New Screen'"
-
-alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+# Instagram tools:
+   alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+   alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
 
 function op {
    # Function to open all files and directories given as arguments ($*)
@@ -387,6 +387,7 @@ alias ,="cd"
 alias ,,="clear"
 alias ,,,="pwd"
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
+alias A="cd; clear; figlet 'New Screen'"
 
 # Pandoc app to create man pages
 
