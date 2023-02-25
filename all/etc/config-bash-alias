@@ -749,7 +749,7 @@ function D {
       echo " > No arguments. Choose some place to go to"
 
    # Implementation of Use 2:
-   elif [ $1 == "drya" ] || [ $1 == "dry" ]; then
+   elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ]; then
       cd ${v_REPOS_CENTER}/DRYa && ls
    
    # Implementation of Use 2:
@@ -793,6 +793,10 @@ function D {
    # Implementation of Use 2:
    elif [ $1 == "center" ]; then
       cd ${v_REPOS_CENTER} && ls
+
+   # Implementation of Use 2:
+   elif [[ $1 == "scratch" ]] || [ $1 == "paper" ]; then
+      cd ${v_REPOS_CENTER}/scratch-paper && ls
 
    # Implementation of Use 2:
    elif [ $1 == "-m" ]; then
