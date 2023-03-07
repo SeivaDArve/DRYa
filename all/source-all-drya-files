@@ -2,6 +2,7 @@
 # Title: source-all-drya-files
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
+# Message: echo "xyz" >> DRYa_MESSAGES
 
 # Repository: DRYa (internal files - part 1)
    # Defining a place for all drya messages
@@ -11,6 +12,11 @@
       export DRYa_MESSAGES
       echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
+      echo "DRYa:"
+      echo " > all verbose output for apps under DRYa can be seen with: 'drya msgs'"
+      echo " > You can send too some output to: \$DRYa_MESSAGES"
+      echo " > example: '$ echo \"Hi there\" >> \$DRYa_MESSAGES'"
+      echo
 
 
 # Display the standard welcome termux message
@@ -20,11 +26,6 @@
 
 # Neofetch is not needed... It is just for fun
    neofetch 2>/dev/null
-
-function f_verbose_start-1 {
-   echo "DRYa: file running: ${DRYa_HEART}"
-   # echo "Installed at.."
-}
 
 # Dependency: figlet
    # Not every instalation of figlet comes witht the same standard font, lets corret that
@@ -80,8 +81,14 @@ function f_verbose_start-1 {
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
 
-   # Allow/disable verbose output for DRYa:
-      f_verbose_start-1  ##Comment/Uncomment this line to toggle on or off
+   # Enable/Disable verbose output for this file:
+      # Define the function first:
+         function f_verbose_start-1 {
+            echo "DRYa: file running: ${DRYa_HEART}" >> $DRYa_MESSAGES
+            # echo "Installed at.."
+         }
+
+      f_verbose_start-1  ##Comment/Uncomment this line to toggle ON or OFF
 
    # Sourcing DRYa's own configs
       source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
