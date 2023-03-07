@@ -384,10 +384,11 @@ function . {
 alias ..="cd .."
 alias ...="cd -"
 alias ,="cd"
-alias ,,="clear"
+alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias ,,,="pwd"
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
-alias A="cd; clear; figlet 'New Screen'"
+alias A="cd; clear; figlet 'New Screen'; tput cnorm" # Also resets the blinking cursor if it was hidden
+
 
 # Pandoc app to create man pages
 
