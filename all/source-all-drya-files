@@ -5,9 +5,10 @@
 
 # Repository: DRYa (internal files - part 1)
    # Defining a place for all drya messages
-      touch ~/.config/h.h/drya/.dryaMessages
-      DRYa_MESSAGES="~/.config/h.h/drya/.dryaMessages"
-      export $DRYa_MESSAGES
+      mkdir -p ~/.config/h.h/drya/
+
+      DRYa_MESSAGES="$HOME/.config/h.h/drya/.dryaMessages"
+      export DRYa_MESSAGES
       echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
 
@@ -62,6 +63,7 @@ function f_verbose_start-1 {
 
 # Repository 112-Shiva-Sutras
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
+   alias SS="ss all | less"
 
 # Repository yogaBashApp
    # Making use of Sadhguru Presence features
