@@ -2,6 +2,7 @@
 # Title: source-all-drya-files
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
+# Use: Initiate all other apps and initiate persistent functions
 # Message: echo "xyz" >> DRYa_MESSAGES
 
 # Repository: DRYa (internal files - part 1)
@@ -12,12 +13,15 @@
       export DRYa_MESSAGES
       echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
-      echo "DRYa:"
-      echo " > all verbose output for apps under DRYa can be seen with: 'drya msgs'"
-      echo " > You can send too some output to: \$DRYa_MESSAGES"
-      echo " > example: '$ echo \"Hi there\" >> \$DRYa_MESSAGES'"
+      figlet DRYa; echo "DRYa (app manager) is online"
+      echo " > Find verbose output (apps included) at:"
+      echo " >   variable: '\$DRYa_MESSAGES' (that stores the file name):"
+      echo " >   $DRYa_MESSAGES"
+      echo " > You can also send text to: '\$DRYa_MESSAGES' example:"
+      echo " >   $ echo \"Example-App: Hi there\" >> \$DRYa_MESSAGES"
+      echo " > Read the messages with:"
+      echo " >   $ drya msgs"
       echo
-
 
 # Display the standard welcome termux message
    # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
