@@ -112,6 +112,7 @@ function e {
       esac
 }
 
+
 alias grep="grep --color=auto"
 
 function bt {
@@ -920,3 +921,12 @@ alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
 # Bash fork bomb
    # Link tutorial: https://youtu.be/wIsGXkxXZzE
    alias fork-bomb=":() { :|: & };:"
+
+
+# Defining the favourite Terminal PS1 variable:
+   # PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+   function DvPS1 {
+      PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+      echo "PS1 defined as per the user Dv"
+      # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
+   }
