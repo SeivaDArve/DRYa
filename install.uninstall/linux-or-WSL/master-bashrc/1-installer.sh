@@ -1,6 +1,12 @@
 #!/bin/bash
 clear
 
+# uDev: due to bug which was foun, the next line will fix it
+	touch ~/.bashrc  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did nit exist
+	echo "file created ~/.bashrc"
+	echo " " >> ~/.bashrc  ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
+	read -s -n 1
+
 function f_greet_alternative {
 
    echo ' ____	______	 __    '
