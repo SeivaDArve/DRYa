@@ -3,16 +3,19 @@
 # Place in this file all script you need ~/.bashrc to recognize
 # Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
 # Use: Initiate all other apps and initiate persistent functions
-# Message: echo "xyz" >> DRYa_MESSAGES
+# drya-message: 
+   ## (cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
 
 # Repository: DRYa (internal files - part 1)
-   # Defining a place for all drya messages
+   # Configuring variable for DRYa messages
       mkdir -p ~/.config/h.h/drya/
 
       DRYa_MESSAGES="$HOME/.config/h.h/drya/.dryaMessages"
       export DRYa_MESSAGES
       echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
+
+   # Display info about it at the screen when DRYa is loaded by the terminal
       figlet DRYa; echo "DRYa (app manager) is online"
       echo " > Find verbose output (apps included) at:"
       echo " >   variable: '\$DRYa_MESSAGES' (that stores the file name):"
@@ -112,3 +115,5 @@
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
 
+# drya-message: 
+   echo "file: source-all-drya-files: last line" >> $DRYa_MESSAGES
