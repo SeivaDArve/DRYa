@@ -784,6 +784,10 @@ function D {
       cd ${v_REPOS_CENTER}/yogaBashApp && ls
       
    # Implementation of Use 2:
+   elif [[ $1 == "shamb" ]]; then
+      cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
+      
+   # Implementation of Use 2:
    elif [ $1 == "tmp" ]; then
       mkdir -p ~/.tmp
       cd ~/.tmp/ && ls
