@@ -604,6 +604,7 @@ alias drya-updateMe-globally="echo 'ezGIT must be installed'"
 #alias drya-make-dryarc # uDev: function exists inside drya.sh
 
 alias ..="cd .."
+alias all="cd all && ls"
 alias hi="echo hello"
 
 alias sourceAll="source ~/.bashrc"
