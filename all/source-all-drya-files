@@ -44,6 +44,9 @@
 # Repository: dWiki
       alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dWiki.sh"
       
+# Repository: scratch-paper
+      alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
+
 # Repository: ezGIT
    # Define a key to call the entire program
       alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
