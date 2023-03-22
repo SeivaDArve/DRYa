@@ -15,6 +15,9 @@
       echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
 
+   # Add script drya.sh to PATH variable (try: echo $PATH) 
+      export PATH=$PATH:${v_REPOS_CENTER}/DRYa/drya.sh
+
    # Display info about it at the screen when DRYa is loaded by the terminal
       figlet DRYa; echo "DRYa (app manager) is online"
       echo " > Find verbose output (apps included) at:"
