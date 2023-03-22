@@ -757,7 +757,13 @@ function f_exec {
             moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
             dWiki | wiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
             upk) echo "cloning upK-diario-Dv"; git clone https://github.com/SeivaDArve/upK.git;;
-            upkd) echo "cloning upK-diario-Dv"; git clone https://github.com/SeivaDArve/upK-diario-Dv.git;;
+            upkd) 
+               echo "cloning upK-diario-Dv"; 
+               echo "Link for download is:"; 
+               echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
+               echo " > uDev: Include stroken"
+               echo 
+               git clone https://github.com/SeivaDArve/upK-diario-Dv.git;;
             try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
             setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
             ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
