@@ -42,7 +42,7 @@
       alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
 
 # Repository: dWiki
-      alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dWiki.sh"
+      alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
       
 # Repository: scratch-paper
       alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
