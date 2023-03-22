@@ -463,7 +463,7 @@ alias vimrc="vim ~/.vimrc"
          PS3="Select a file to edit: "
 
          COLUMNS=0
-         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st emacs-init quit $v_line2; do
+         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" quit $v_line2; do
             case $opt in
                config-bash-alias)
                   ,.
@@ -499,8 +499,11 @@ alias vimrc="vim ~/.vimrc"
                read -s -t 2
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
                ;;
-            emacs-init)
+            "emacs-init (emacs)")
                emacs ~/.emacs.d/init.el
+               ;;
+            "emacs-init (vim)")
+               vim ~/.emacs.d/init.el
                ;;
             quit)
                break
