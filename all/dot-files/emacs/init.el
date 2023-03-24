@@ -1,3 +1,4 @@
+bla
 (setq echo-keystrokes .1
    ;; Set keystrokes to be displayed in the echo area almost imediatly
    )
@@ -11,6 +12,7 @@
 ;;    
 ;;    ;; Set a keybinding
 ;;    (global-set-key (kbd "M-p") 'dired-hide-details-mode)
+
 
 (defun zz ()
   (interactive)
