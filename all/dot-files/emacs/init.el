@@ -44,6 +44,9 @@
 ;;  ;; This checks for the buffer scratch. If there's such a thing, kill it. If not, do nothing at all.
 ;;  )
 
+(defun dv-info-init-file-location ()
+  (interactive)
+  (message "To find init filw in emacs: C-h v user-init-file"))
 
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
