@@ -16,13 +16,13 @@
 (defun zz ()
   (interactive)
   (save-buffer)
-  (message "Buffer saved")
+  (message "Dv: Buffer saved")
   (sleep-for 2)
   (kill-emacs))
 
 (defun w ()
   (interactive)
-  (message "Buffer Saved")
+  (message "Dv: Buffer Saved")
   (save-buffer))
 
 (defun view ()
@@ -31,14 +31,15 @@
  
 (defun wrap ()
   (interactive)
-  (message "Toggle text wrap")
+  (message "Dv: Toggle text wrap")
   (visual-line-mode))
   
 (defun dv-a ()
     (interactive)
     (org-overview)
     (end-of-buffer)
-    (org-reveal))
+    (org-reveal)
+    (visual-line-mode))
 
 
 ;; (when (get-buffer "*scratch*")
