@@ -39,7 +39,9 @@
     (org-overview)
     (end-of-buffer)
     (org-reveal)
-    (visual-line-mode))
+    (visual-line-mode)
+    ;;(global-set-key "\C-x\C-a .")
+    )
 
 
 ;; (when (get-buffer "*scratch*")
@@ -53,7 +55,7 @@
 
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
-  (interactive)
+  (interactive )
   (end-of-line)
   (insert "\n")
   (insert "- [ ] () New-entry\n")
