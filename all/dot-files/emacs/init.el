@@ -1,4 +1,3 @@
-bla
 (setq echo-keystrokes .1
    ;; Set keystrokes to be displayed in the echo area almost imediatly
    )
