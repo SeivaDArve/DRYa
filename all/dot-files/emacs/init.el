@@ -55,7 +55,7 @@
 
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
-  (interactive )
+  (interactive)
   (end-of-line)
   (insert "\n")
   (insert "- [ ] () New-entry\n")
@@ -64,6 +64,17 @@
   (previous-line)(previous-line)
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Text inserted into current buffer and current cursor position"))
+
+(defun dv-insert-new-day-upk ()
+  (interactive)
+  (insert "\n")
+  (insert "* Dia")
+  (execute-kbd-macro (read-kbd-macro "\C-c ."))
+  (insert "\n")
+  (insert "- [ ] Inicio \n")
+  (insert ":PROPERTIES: \n- [ ] Assinar folhas de entrada no Nascente"))
+
+
 
 ;; (global-display-line-numbers-mode)
 
