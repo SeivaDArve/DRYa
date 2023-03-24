@@ -34,9 +34,11 @@
   (message "Toggle text wrap")
   (visual-line-mode))
   
-(defun dv-A ()
+(defun dv-a ()
     (interactive)
-    (org-overview))
+    (org-overview)
+    (end-of-buffer)
+    (org-reveal))
 
 
 ;; (when (get-buffer "*scratch*")
