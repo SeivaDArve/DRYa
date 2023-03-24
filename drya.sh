@@ -756,7 +756,7 @@ function f_exec {
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
             moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
             dWiki | wiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
-            upk) echo "cloning upK-diario-Dv"; git clone https://github.com/SeivaDArve/upK.git;;
+            upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
             upkd) 
                echo "cloning upK-diario-Dv"; 
                echo "Link for download is:"; 
