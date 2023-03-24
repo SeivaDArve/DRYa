@@ -500,10 +500,16 @@ alias vimrc="vim ~/.vimrc"
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
                ;;
             "emacs-init (emacs)")
-               emacs ~/.emacs.d/init.el
+               # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+                  # This way we know we can easily upload the file
+                  emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
                ;;
             "emacs-init (vim)")
-               vim ~/.emacs.d/init.el
+               # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+                  # This way we know we can easily upload the file
+                  vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
                ;;
             quit)
                break
