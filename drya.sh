@@ -816,6 +816,8 @@ function f_exec {
          
          v_hostname=$(hostname); echo "Hostname is: $v_hostname"
          v_whoami=$(whoami); echo "whoami is: $v_whoami"
+         echo
+         echo "uDev: This info must be environment variables for other apps"
       ;;
       msgs)
          # Option to read the $DRYa_MESSAGES file
