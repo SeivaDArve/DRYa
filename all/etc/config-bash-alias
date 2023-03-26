@@ -504,6 +504,7 @@ alias vimrc="vim ~/.vimrc"
                   # This way we know we can easily upload the file
                   emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  rm ~/.emacs
                   break
                ;;
             "emacs-init (vim)")
@@ -511,6 +512,7 @@ alias vimrc="vim ~/.vimrc"
                   # This way we know we can easily upload the file
                   vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  rm ~/.emacs
                   break
                ;;
             quit)
