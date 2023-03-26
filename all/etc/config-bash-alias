@@ -775,7 +775,7 @@ function D {
       cd ${v_REPOS_CENTER}/moedaz && ls
    
    # Implementation of Use 2:
-   elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ]; then
+   elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
       cd ${v_REPOS_CENTER}/ezGIT && ls
       
    # Implementation of Use 2:
