@@ -41,15 +41,15 @@
    # Not every instalation of figlet comes witht the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
 
-# Script: satisfaz
-   alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
-
 # Repository: CBorg
    alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
 
 # Repository: dWiki
    alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
       
+   # App under TODO-apps:
+      alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
+         
 # Repository: scratch-paper
    alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
 
