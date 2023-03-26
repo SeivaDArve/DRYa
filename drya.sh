@@ -808,6 +808,15 @@ function f_exec {
             cd $v_pwd  
             unset v_pwd
       ;;
+      config)
+         uname -a | grep "Microsoft" 1>/dev/null
+         if [ $? == 0 ]; then echo "This is microsoft"; fi
+         uname -a | grep "Android" 1>/dev/null
+         if [ $? == 0 ]; then echo "This is Android"; fi
+         
+         v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+         v_whoami=$(whoami); echo "whoami is: $v_whoami"
+      ;;
       msgs)
          # Option to read the $DRYa_MESSAGES file
             # They are stored at: ~/.config/h.h/drya/.dryaMessages
