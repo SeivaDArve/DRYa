@@ -504,6 +504,15 @@ alias vimrc="vim ~/.vimrc"
                   # This way we know we can easily upload the file
                   emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  rm ~/.emacs; echo "drya: file removed: ~/.emacs"
+
+                  # If we are on windows, the init file will be somewhere at %appdata%
+                     if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
+                        echo "Windows adjustment: %AppData% exists: copying init file there"
+                        rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
+                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+                     fi
+                     
                   break
                ;;
             "emacs-init (vim)")
@@ -511,6 +520,15 @@ alias vimrc="vim ~/.vimrc"
                   # This way we know we can easily upload the file
                   vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  rm ~/.emacs; echo "drya: file removed: ~/.emacs"
+
+                  # If we are on windows, the init file will be somewhere at %appdata%
+                     if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
+                        echo "Windows adjustment: %AppData% exists: copying init file there"
+                        rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
+                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+                     fi
+                  
                   break
                ;;
             quit)
@@ -775,7 +793,7 @@ function D {
       cd ${v_REPOS_CENTER}/moedaz && ls
    
    # Implementation of Use 2:
-   elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ]; then
+   elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
       cd ${v_REPOS_CENTER}/ezGIT && ls
       
    # Implementation of Use 2:

@@ -49,7 +49,9 @@
     ;;(global-set-key "\C-x\C-a .")
     )
 
-
+(defun init ()
+  (interactive)
+  (switch-to-buffer (find-file-text ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el)))
 ;; (when (get-buffer "*scratch*")
 ;;   (kill-buffer "*scratch*")
 ;;  ;; This checks for the buffer scratch. If there's such a thing, kill it. If not, do nothing at all.

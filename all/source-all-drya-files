@@ -71,8 +71,8 @@
 
 # Repository: upK and upK-diario-Dv
    source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
-   alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
-   alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh"
+   alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh && echo 'At ~/.bash_logout an automatic git push will happen'"
+   alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh && echo 'At ~/.bash_logout an automatic git push will happen'"
    # uDev: alias "upk dia"="...upk-diario-Dv"
    
    # NOTE: reporiory "upk" when called on the terminal without argument, it will call "upK-diario-Dv" if existent
