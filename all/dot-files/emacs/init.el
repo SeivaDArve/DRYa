@@ -49,6 +49,14 @@
     ;;(global-set-key "\C-x\C-a .")
     )
 
+(defun insew ()
+  (interactive)
+  ;; Prompting user for 2 values
+  (setq v_tex1 (read-string "Texto 1: "))
+  (setq v_text2 (read-string "Texto 2: "))
+  (insert v_tex1)
+  (message v_text2))
+
 (defun init ()
   (interactive)
   (switch-to-buffer (find-file-text ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el)))
