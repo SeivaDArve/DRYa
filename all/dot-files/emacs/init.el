@@ -34,7 +34,13 @@
   (message "Dv: Toggle text wrap")
   (visual-line-mode))
   
-(defun dv-a ()
+(defun numbers ()
+  (interactive)
+  (global-display-line-numbers-mode)
+  (message "Dv: toggled line numbers mode globaly"))
+
+;; When opening dailyLog for UPK, prepare visialization
+ (defun upk ()
     (interactive)
     (org-overview)
     (end-of-buffer)
@@ -69,10 +75,12 @@
   (interactive)
   (insert "\n")
   (insert "* Dia")
-  (execute-kbd-macro (read-kbd-macro "\C-c ."))
+  ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
   (insert "\n")
   (insert "- [ ] Inicio \n")
-  (insert ":PROPERTIES: \n- [ ] Assinar folhas de entrada no Nascente"))
+  (insert ":PROPERTIES: \n- [ ] Assinar folhas de entrada no Nascente"\n)
+  (insert ":END:"))
+
 
 
 
