@@ -1,3 +1,6 @@
+;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
+;;(load-theme 'dracula t)
+
 (setq echo-keystrokes .1
    ;; Set keystrokes to be displayed in the echo area almost imediatly
    )
@@ -79,7 +82,11 @@
   (insert "- Total Horas:\n")
   (insert ":END:\n\n")
   (message v_text2)
-  (upk))
+  (upk)
+  ;;(if (= v_turno "N")
+  ;;  (message "É turno de noite"))
+  )
+
 
 (defun init ()
   (interactive)
