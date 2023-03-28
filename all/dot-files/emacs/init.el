@@ -86,6 +86,7 @@
   (insert "- [ ] Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+  (insert "- Colega do turno anterior: ")
   ;; Se for turno N: "- [ ] Entregar folhas de ocorrencias do turno anterior"
   ;; Se for turno N: "- [ ] Colocar baterias a carregar"
   (insert ":END:\n\n")
