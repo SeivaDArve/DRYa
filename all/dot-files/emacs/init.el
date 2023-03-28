@@ -43,7 +43,7 @@
   (message "Dv: toggled line numbers mode globaly"))
 
 ;; When opening dailyLog for UPK, prepare visialization
- (defun upk ()
+ (defun u ()
     (interactive)
     (org-overview)
     (end-of-buffer)
@@ -52,7 +52,7 @@
     ;;(global-set-key "\C-x\C-a .")
     )
 
-(defun insew ()
+(defun insew-test ()
   (interactive)
   ;; Prompting user for 2 values
   (setq v_tex1 (read-string "Texto 1: "))
@@ -60,28 +60,44 @@
   (insert v_tex1)
   (message v_text2))
 
-(defun dv-new-day ()
+(defun dv-insert-text-with-checkbox ()
+  (interactive)
+  ;; Prompting user for 2 values
+  (setq v_checkbox_text (read-string "- [ ] "))
+  (insert "- [ ] ")
+  (insert v_checkbox_text))
+
+(defun dv-insert-checkbox-prefixing-text ()
+  (interactive)
+  ;; Prompting user for 2 values
+  (beginning-of-line)
+  (insert "- [ ] "))
+
+(defun dv-insert-new-day-upk ()
   (interactive)
   ;; Prompting user for 2 values
   (setq v_turno (read-string "Turno do dia de hoje: "))
-  (setq v_text2 (read-string "Nova tarefa? "))
+  ;;(setq v_text2 (read-string "Nova tarefa? "))
   (insert "\n")
   (insert "* Dia ")
-  (insert "(Turno: ") (insert v_turno) (insert ")")
   ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
+  (insert "(Turno: ") (insert v_turno) (insert ")")
   (insert "\n\n")
-  (insert "- [ ] Rotina de Inicio de turno \n")
+  (insert "- [ ] Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+  ;; Se for turno N: "- [ ] Entregar folhas de ocorrencias do turno anterior"
+  ;; Se for turno N: "- [ ] Colocar baterias a carregar"
   (insert ":END:\n\n")
-  (insert "- [ ] Passado ao turno seguinte\n")
+  (insert "- [ ] Pos-Requisitos \n")
   (insert ":PROPERTIES: \n\n")
+  (insert "- [ ] Escrever folha de ocorrencias")
   (insert ":END:\n\n")
   (insert "- Resumo\n")
   (insert ":PROPERTIES: \n")
-  (insert "- Total Horas:\n")
+  (insert "- Total Horas:\n\n")
   (insert ":END:\n\n")
-  (message v_text2)
+  ;;(message v_text2)
   (upk)
   ;;(if (= v_turno "N")
   ;;  (message "É turno de noite"))
@@ -96,31 +112,29 @@
 ;;  ;; This checks for the buffer scratch. If there's such a thing, kill it. If not, do nothing at all.
 ;;  )
 
-(defun dv-info-init-file-location ()
+(defun dv-location-init-file-info ()
   (interactive)
   (message "To find init filw in emacs: C-h v user-init-file"))
 
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
   (interactive)
+  (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
+  (setq v_time (read-string "Quanto tempo demorou? "))
   (end-of-line)
   (insert "\n")
-  (insert "- [ ] () New-entry\n")
-  (insert ":PROPERTIES:\n\n")
-  (insert ":END:")
-  (previous-line)(previous-line)
+  (insert "- [ ] (")
+  (insert v_time)
+  (insert ") ")
+  (insert v_tarefa)
+  (insert "\n")
+  (insert ":PROPERTIES:\nDescricao --- > \n\nNotas --- > \n\n< --- Notas\n\n")
+  (insert ":END:\n")
+  (previous-line)(previous-line)(previous-line)(previous-line)
+  (previous-line)(previous-line)(previous-line)(end-of-line)
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
-  (message "Text inserted into current buffer and current cursor position"))
+  (message "Dv: Text inserted into current buffer and current cursor position"))
 
-(defun dv-insert-new-day-upk ()
-  (interactive)
-  (insert "\n")
-  (insert "* Dia")
-  ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
-  (insert "\n")
-  (insert "- [ ] Inicio \n")
-  (insert ":PROPERTIES: \n- [ ] Assinar folhas de entrada no Nascente"\n)
-  (insert ":END:"))
 
 
 
