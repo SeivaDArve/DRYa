@@ -508,7 +508,7 @@ alias vimrc="vim ~/.vimrc"
 
                   # If we are on windows, the init file will be somewhere at %appdata%
                      if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
-                        echo "Windows adjustment: %AppData% exists: copying init file there"
+                        echo "Windows adjustment: %AppData% exists: copying init.el file there"
                         rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
                         cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
                      fi
