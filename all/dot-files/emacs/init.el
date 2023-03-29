@@ -86,13 +86,14 @@
   (insert "- [ ] Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
-  (insert "- Colega do turno anterior: ")
+  (insert "- Colega do turno anterior:\n") 
   ;; Se for turno N: "- [ ] Entregar folhas de ocorrencias do turno anterior"
   ;; Se for turno N: "- [ ] Colocar baterias a carregar"
   (insert ":END:\n\n")
   (insert "- [ ] Pos-Requisitos \n")
   (insert ":PROPERTIES: \n\n")
   (insert "- [ ] Escrever folha de ocorrencias")
+  ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
   (insert ":END:\n\n")
   (insert "- Resumo\n")
   (insert ":PROPERTIES: \n")
@@ -103,6 +104,22 @@
   ;;(if (= v_turno "N")
   ;;  (message "É turno de noite"))
   )
+
+
+
+
+;; This is a comment 
+(defun my-hello-world-function ()
+  (interactive)
+  (setq var_name (read-string "What is your name? "))
+  (insert "Hello World\n")
+  (insert "and Hello to you ")(insert var_name)
+  ;; adding a smile at the end of "world" word:
+  (previous-line)(end-of-line)(insert ";)")
+  (message "Script finished:)"))
+
+
+
 
 
 (defun init ()
