@@ -118,9 +118,13 @@
   (previous-line)(end-of-line)(insert ";)")
   (message "Script finished:)"))
 
+(defun dv-search-undone-checkbox ()
+  (interactive)
+  (search-backward "- [ ]"))
 
-
-
+(defun dv-search-previous-doc ()
+  (interactive)
+  (search-backward "- [Doc]"))
 
 (defun init ()
   (interactive)
