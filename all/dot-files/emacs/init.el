@@ -78,6 +78,7 @@
   ;; Prompting user for 2 values
   (setq v_turno (read-string "Turno do dia de hoje: "))
   ;;(setq v_text2 (read-string "Nova tarefa? "))
+  ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
   (insert "\n")
   (insert "* Dia ")
   ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
