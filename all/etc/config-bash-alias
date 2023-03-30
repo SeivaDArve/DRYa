@@ -797,7 +797,7 @@ function D {
       cd ${v_REPOS_CENTER}/ezGIT && ls
       
    # Implementation of Use 2:
-   elif [ $1 == "dwiki" ] || [ $1 == "wiki" ]; then
+   elif [ $1 == "dwiki" ] || [ $1 == "wiki" ] || [ $1 == "w" ]; then
       cd ${v_REPOS_CENTER}/dWiki && ls
       
    # Implementation of Use 2:
