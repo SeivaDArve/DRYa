@@ -79,6 +79,7 @@
   (setq v_turno (read-string "Turno do dia de hoje: "))
   ;;(setq v_text2 (read-string "Nova tarefa? "))
   ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
+  ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
   (insert "\n")
   (insert "* Dia ")
   ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
@@ -94,6 +95,7 @@
   (insert "- [ ] Pos-Requisitos \n")
   (insert ":PROPERTIES: \n\n")
   (insert "- [ ] Escrever folha de ocorrencias")
+  (insert "  - [ ] Tirar foto ã folha de ocorrencias")
   ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
   (insert ":END:\n\n")
   (insert "- Resumo\n")
