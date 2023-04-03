@@ -1,3 +1,30 @@
+;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
+
+;; Just testing if init filw loads:
+   ;; (set-background-color "grey")
+
+
+
+
+;; Installing dracula-theme (From: https://draculatheme.com/emacs)
+   ;; Add these to the init file:
+      (require 'package)
+      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+      ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+      ;; and `package-pinned-packages`. Most users will not need or want to do this.
+      ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+      (package-initialize)
+      ;; Note that you'll need to run M-x package-refresh-contents or M-x package-list-packages to ensure that Emacs has fetched the MELPA package list before you can install packages with M-x package-install or similar.
+
+   ;; To install dracula-theme:
+      ;; M-x package-install <RET> dracula-theme
+
+      ;;To load a theme add the following to your init.el
+      (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+      (load-theme 'dracula t)
+
+
+
 ;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
 ;;(load-theme 'dracula t)
 
@@ -73,6 +100,16 @@
   (beginning-of-line)
   (insert "- [ ] "))
 
+(defun dv-focus-mode ()
+  (interactive)
+  ;; Disablind and enabling a few bars
+  (menu-bar-mode)
+  (tool-bar-mode)
+  (scroll-bar-mode)
+  (message "Dv: focus mode enabled"))
+
+
+  
 (defun dv-insert-new-day-upk ()
   (interactive)
   ;; Prompting user for 2 values
@@ -160,6 +197,20 @@
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
+(defun dv-insert-new-doc-upk ()
+  (interactive)
+  (setq v_tarefa (read-string "Introduz o Titulo do novo documento: "))
+  (end-of-line)
+  (insert "\n")
+  (insert "- [Doc]  ")
+  (insert v_tarefa)
+  (insert "\n")
+  (insert ":PROPERTIES:\n")
+  (insert "- [ ] Concluido\n\n")
+  (insert ":END:\n")
+  (previous-line)(previous-line)(previous-line)(end-of-line)
+  ;; After navigating 2 lines above, then: uDev: press TAB to close properties
+  (message "Dv: Text inserted into current buffer and current cursor position"))
 
 
 
