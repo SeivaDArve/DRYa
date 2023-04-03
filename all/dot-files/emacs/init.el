@@ -101,13 +101,23 @@
   (insert "- [ ] "))
 
 (defun dv-focus-mode ()
-  (interactive)
-  ;; Disablind and enabling a few bars
-  (menu-bar-mode)
-  (tool-bar-mode)
-  (scroll-bar-mode)
-  (message "Dv: focus mode enabled"))
+   (interactive)
+   ;; Disablind and enabling a few bars
+   ;;(delete-other-windows)
+   (menu-bar-mode -1)
+   (tool-bar-mode -1)
+   (scroll-bar-mode -1)
+   (message "Dv: focus mode enabled"))
 
+
+(defun dv-tools ()
+   (interactive)
+   ;; Disablind and enabling a few bars
+   ;;(delete-other-windows)
+   (menu-bar-mode +1)
+   (tool-bar-mode +1)
+   (scroll-bar-mode +1)
+   (message "Dv: focus mode disabled"))
 
   
 (defun dv-insert-new-day-upk ()
@@ -224,11 +234,11 @@
 ;;     erc-nick "DArve"     ; Our IRC nick
 ;;     erc-user-full-name "Seiva D'Arve") ; Our /whois name
 ;;    
-;; Define a function to connect to a server
-;;    (defun some-serv ()
-;;      (interactive)
-;;      (erc :server "irc.libera.chat"
-;;           :port   "6667"))
+Define a function to connect to a server
+    (defun some-serv ()
+      (interactive)
+      (erc :server "irc.libera.chat"
+           :port   "6667"))
 
 ;; Or assign it to a keybinding
 ;; This example is also using erc's TLS capabilities:
@@ -288,12 +298,12 @@
 ;;       ;; Zoom
 ;;       (set-face-attribute 'default nil :height 128)
 ;;       
-;;       ;; Save History
-;;       (savehist-mode +1)
-;;       (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+       ;; Save History
+       (savehist-mode +1)
+       (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 ;;       
 ;;       ;; Startup
-;;       (setq inhibit-startup-screen t)
+       (setq inhibit-startup-screen t)
 ;;       ;;(setq initial-scratch-message
 ;;       ;;      ";; Hello world.\n")
 ;;       
