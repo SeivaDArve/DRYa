@@ -827,17 +827,23 @@ function f_exec {
       seiva-upTime)
          # uDev: Tells how long the Linux experience started for Seiva
       ;;
-      dot-files)
+      install)
          case $2 in
-            apply)
-            ;;
-            save)
-            ;;
-            *)
+            dot-files)
                echo "drya: drya dot-files apply"
                echo " > copy from drya repo to default locations"
+            ;;
+            *)
+            ;;
+         esac
+      ;;
+      remove)
+         case $2 in
+            dot-files)
                echo "drya: drya dot-files save"
                echo " > copy from default locations to drya repo"
+            ;;
+            *)
             ;;
          esac
       ;;
