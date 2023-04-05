@@ -250,6 +250,14 @@ function f_tput_tutorial {
    setaf ColorNumber## set foreground color
    setab ColorNumber ##Set background color
 heredoc
+
+cat << heredoc
+info:
+To undo "tput rev" use "tput sgr0"
+
+info:
+"read -rsn1 input": Expect only one letter (and don't wait for submitting) and be silent (don't write that letter back).
+heredoc
 }
 
 function f_slideVup {
@@ -349,15 +357,6 @@ function f_replaceRead {
 	echo "Second line. read replaced."
 }
 
-function f_wiki {
-	cat << heredoc
-info:
-To undo "tput rev" use "tput sgr0"
-
-info:
-"read -rsn1 input": Expect only one letter (and don't wait for submitting) and be silent (don't write that letter back).
-heredoc
-}
 
 function f_detectOS {
 	clear
