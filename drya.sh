@@ -830,20 +830,33 @@ function f_exec {
       install)
          case $2 in
             dot-files)
-               echo "drya: drya dot-files apply"
+               echo "drya: drya dot-files install"
                echo " > copy from drya repo to default locations"
             ;;
             *)
+               echo "drya: What do you want to install?"
             ;;
          esac
       ;;
       remove)
          case $2 in
             dot-files)
+               echo "drya: drya dot-files remove"
+               echo " > remove files from default locations and do not touch files inside drya repo"
+            ;;
+            *)
+               echo "drya: What do you want to remove?"
+            ;;
+         esac
+      ;;
+      save)
+         case $2 in
+            dot-files)
                echo "drya: drya dot-files save"
                echo " > copy from default locations to drya repo"
             ;;
             *)
+               echo "drya: What do you want to save?"
             ;;
          esac
       ;;
