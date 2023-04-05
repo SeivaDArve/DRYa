@@ -21,7 +21,7 @@
 
       ;;To load a theme add the following to your init.el
       (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-      (load-theme 'dracula t)
+      ;;(load-theme 'dracula t)
 
 
 
@@ -129,6 +129,7 @@
   ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
   ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
   ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia
+  (end-of-buffer)
   (insert "\n")
   (insert "* Dia ")
   ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
@@ -144,7 +145,7 @@
   (insert "- [ ] Pos-Requisitos \n")
   (insert ":PROPERTIES: \n\n")
   (insert "- [ ] Escrever folha de ocorrencias\n")
-  (insert "  - [ ] Tirar foto ã folha de ocorrencias")
+  (insert "  - [ ] Tirar foto ã folha de ocorrencias\n")
   ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
   (insert ":END:\n\n")
   (insert "- Resumo\n")
@@ -152,7 +153,7 @@
   (insert "- Total Horas:\n\n")
   (insert ":END:\n\n")
   ;;(message v_text2)
-  (upk)
+  (u)
   ;;(if (= v_turno "N")
   ;;  (message "É turno de noite"))
   )
@@ -202,7 +203,8 @@
   (insert ") ")
   (insert v_tarefa)
   (insert "\n")
-  (insert ":PROPERTIES:\nDescricao --- > \n\nNotas --- > \n\n< --- Notas\n\n")
+  (insert ":PROPERTIES:\nDescricao ")
+  (insert "\{ \n\}\n\nNotas \{ \n\}\n\n")
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
   (previous-line)(previous-line)(previous-line)(end-of-line)
@@ -235,7 +237,7 @@
 ;;     erc-nick "DArve"     ; Our IRC nick
 ;;     erc-user-full-name "Seiva D'Arve") ; Our /whois name
 ;;    
-Define a function to connect to a server
+;;Define a function to connect to a server
     (defun some-serv ()
       (interactive)
       (erc :server "irc.libera.chat"
