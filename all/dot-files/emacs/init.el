@@ -136,7 +136,7 @@
   (insert (format-time-string "<%Y-%m-%d %a> "))
   (insert "(Turno: ") (insert v_turno) (insert ")")
   (insert "\n\n")
-  (insert "- [ ] Pre-Requisitos \n")
+  (insert "- [ ] () Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
   (insert "- Colega do turno anterior:\n") 
