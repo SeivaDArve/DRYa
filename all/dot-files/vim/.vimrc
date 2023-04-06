@@ -19,3 +19,14 @@ set mouse=a
 
 "Display indentation
 ":set noexpandtab | retab! 4
+
+"Set syntax highlighting
+filetype plugin on
+syntax on
+
+"Making .sh thr defaulf filetype for bash
+let g:is_bash=1
+
+"With the vim open, type this to know wich syntax is the one found to
+"highlight
+":windo echo b:current_syntax
