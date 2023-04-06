@@ -89,7 +89,22 @@ function e {
 	
 }
 
-alias siigo="termux-open-url https://siigo-maintenance.com/#/calendar"
+function siigo {
+   # Using termux 
+      function f_termux_siigo {
+         termux-open-url https://siigo-maintenance.com/#/calendar
+      }
+      
+   # Using chrome   
+      function f_chrome_siigo {
+         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar
+      }
+
+   # Calling siigo webpage using one of the above options:
+      f_chrome_siigo || f_termux_siigo
+      
+}
+
 
 # Termux alias
    alias rec="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)

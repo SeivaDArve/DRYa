@@ -21,7 +21,7 @@
 
       ;;To load a theme add the following to your init.el
       (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-      ;;(load-theme 'dracula t)
+      (load-theme 'dracula t)
 
 
 
@@ -129,13 +129,14 @@
   ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
   ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
   ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia
+  ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X horas
   (end-of-buffer)
   (insert "\n")
   (insert "* Dia ")
-  ;;(execute-kbd-macro (read-kbd-macro "\C-c ."))
+  (insert (format-time-string "<%Y-%m-%d %a> "))
   (insert "(Turno: ") (insert v_turno) (insert ")")
   (insert "\n\n")
-  (insert "- [ ] Pre-Requisitos \n")
+  (insert "- [ ] () Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
   (insert "- Colega do turno anterior:\n") 
@@ -419,3 +420,51 @@
 ;;       ;;(global-goto-address-mode +1) ;; Requires Emacs 28
 ;;       
 ;;       ;; FINIS
+
+
+      ;; Indent like vim << >>
+      ;; Found at link: https://stackoverflow.com/questions/9706684/emacs-indent-unindent-current-line
+
+      ;; (defun rofrol/indent-region(numSpaces)
+      ;;    (progn 
+      ;;        ; default to start and end of current line
+      ;;        (setq regionStart (line-beginning-position))
+      ;;        (setq regionEnd (line-end-position))
+      ;;
+      ;;        ; if there's a selection, use that instead of the current line
+      ;;        (when (use-region-p)
+      ;;            (setq regionStart (region-beginning))
+      ;;            (setq regionEnd (region-end))
+      ;;        )
+      ;;
+      ;;        (save-excursion ; restore the position afterwards            
+      ;;            (goto-char regionStart) ; go to the start of region
+      ;;            (setq start (line-beginning-position)) ; save the start of the line
+      ;;            (goto-char regionEnd) ; go to the end of region
+      ;;            (setq end (line-end-position)) ; save the end of the line
+      ;;
+      ;;            (indent-rigidly start end numSpaces) ; indent between start and end
+      ;;            (setq deactivate-mark nil) ; restore the selected region
+      ;;        )
+      ;;    )
+      ;;)
+      ;;
+      ;;(defun rofrol/indent-lines(&optional N)
+      ;;    (interactive "p")
+      ;;    (indent-rigidly (line-beginning-position)
+      ;;                    (line-end-position)
+      ;;                    (* (or N 1) tab-width)))
+      ;;
+      ;;(defun rofrol/untab-region (&optional N)
+      ;;    (interactive "p")
+      ;;    (rofrol/indent-region (* (* (or N 1) tab-width)-1)))
+      ;;
+      ;;(defun  rofrol/tab-region (N)
+      ;;    (interactive "p")
+      ;;    (if (use-region-p)
+      ;;        (rofrol/indent-region (* (or N 1) tab-width)) ; region was selected, call indent-region
+      ;;        (rofrol/indent-lines N); else insert spaces as expected
+      ;;    ))
+      ;;
+      ;;(global-set-key (kbd "C->") 'rofrol/tab-region)
+      ;;(global-set-key (kbd "C-<") 'rofrol/untab-region)
