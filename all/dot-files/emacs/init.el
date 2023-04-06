@@ -164,6 +164,7 @@
 
 ;; This is a comment 
 (defun my-hello-world-function ()
+"This is an example of self documentation"
   (interactive)
   (setq var_name (read-string "What is your name? "))
   (insert "Hello World\n")
@@ -212,7 +213,7 @@
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
-(defun dv-insert-new-doc-upk ()
+(defun dv-insert-new-doc-or-similar-upk ()
   (interactive)
   (setq v_tarefa (read-string "Introduz o Titulo do novo documento: "))
   (end-of-line)
@@ -226,6 +227,22 @@
   (previous-line)(previous-line)(previous-line)(end-of-line)
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
+
+
+
+;; This function copies the text of the entire current line of
+;; the current buffer and pastes it to another buffer called *scratch*
+;; Notice that it does matter where you place your
+;; cursor in that scratch buffer
+(defun dv-copy-line-to-scratch-buffer ()
+  (interactive)
+  (beginning-of-line)(setq v-1 (point))
+  (end-of-line)(setq v-2 (point))
+  (append-to-buffer "*scratch*" v-1 v-2))
+
+
+
+
 
 
 
