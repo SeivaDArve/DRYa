@@ -140,7 +140,7 @@
   (insert "- [ ] () Pre-Requisitos \n")
   (insert ":PROPERTIES: \n")
   (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
-  (insert "- Colega do turno anterior:\n") 
+  (insert "- Colega do turno anterior: \n") 
   ;; Se for turno N: "- [ ] Entregar folhas de ocorrencias do turno anterior"
   ;; Se for turno N: "- [ ] Colocar baterias a carregar"
   (insert ":END:\n\n")
@@ -216,10 +216,11 @@
 
 (defun dv-insert-new-doc-or-similar-upk ()
   (interactive)
+  (setq v_tipo (read-string "Introduz o tipo do documento ([Doc] || [elisp] etc.): "))
   (setq v_tarefa (read-string "Introduz o Titulo do novo documento: "))
   (end-of-line)
   (insert "\n")
-  (insert "- [Doc]  ")
+  (insert "- [" v_tipo "]  ")
   (insert v_tarefa)
   (insert "\n")
   (insert ":PROPERTIES:\n")
