@@ -147,12 +147,15 @@
   (insert "- [ ] Pos-Requisitos \n")
   (insert ":PROPERTIES: \n\n")
   (insert "- [ ] Escrever folha de ocorrencias\n")
-  (insert "  - [ ] Tirar foto ã folha de ocorrencias\n")
+  (insert "  - [ ] Tirar foto à folha de ocorrencias\n")
+  (insert "- [ ] Passagem de Serviço ")
+  (insert (format-time-string "<%Y-%m-%d %a> "))
+  (insert "{ \n\nAo: \n  -\n}\n")
   ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
   (insert ":END:\n\n")
   (insert "- Resumo\n")
   (insert ":PROPERTIES: \n")
-  (insert "- Total Horas:\n\n")
+  (insert "- Total Horas: \n")
   (insert ":END:\n\n")
   ;;(message v_text2)
   (u)
@@ -238,11 +241,22 @@
 ;; cursor in that scratch buffer
 (defun dv-copy-line-to-scratch-buffer ()
   (interactive)
+  "It does something"
+  ;; lets copy our current line from the beginning saving its cursor position as a variable v-1
   (beginning-of-line)(setq v-1 (point))
-  (end-of-line)(setq v-2 (point))
-  (append-to-buffer "*scratch*" v-1 v-2))
-
-
+  ;; Before storing the end position of the line, lets add a new line to it, so that we give a new line to the next buffer
+  (end-of-line)(insert ?\n) ;; You could also use (next-line) if you were not at the bottom of the buffer already
+  ;; Now let's delete the unwanted new line
+  (delete-forward-char 1)
+  ;; Store the last point as the end of the new line we made
+  (setq v-2 (point))
+  ;; Sending to new buffer the whole line we choose + \n
+  (append-to-buffer "*scratch*" v-1 v-2)
+  ;; Restore cursor position at the original buffer
+  (previous-line)
+  ;; Defining a shortcut (smaller name for this function)
+  (defun copy ()
+    (dv-copy-line-to-scratch-buffer))) 
 
 
 
