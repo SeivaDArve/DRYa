@@ -130,6 +130,7 @@
   ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
   ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia
   ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X horas
+  ;; Se for turno C ou N, inserir checkbox para entregar as folhas de ocorrencias
   (end-of-buffer)
   (insert "\n")
   (insert "* Dia ")
