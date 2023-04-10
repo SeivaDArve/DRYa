@@ -111,6 +111,7 @@ function siigo {
    alias cer="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
    alias paste="termux-clipboard-get"
    alias sms="termux-sms-send -n" 
+   alias REC="termux-microphone-record -l 0"
 
 # Termux sms script
    function sms {
