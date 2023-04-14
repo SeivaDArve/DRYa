@@ -399,7 +399,7 @@ function . {
       fi
 }
 
-#alias .="ls"  ## Replaced by the 'function . { }' and the 'function d { }'
+#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
 alias ..="cd .."
 alias ...="cd -"
 alias ....="pwd"
@@ -407,6 +407,9 @@ alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
+
+alias all="cd all && ls"
+alias hi="echo hello"
 
 
 # Pandoc app to create man pages
@@ -432,13 +435,6 @@ function nPpN-dir-looper {
             # These 3 commands allow you to see before, after and around your current line in the current file
 }
 nPpN-dir-looper
-
-# Acessing omni-log-Dv files
-alias v-omni="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-alias e-omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-alias omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-alias omni-n-push-n-exit="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
-alias test="tree /; exit 0"
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
@@ -623,39 +619,36 @@ alias edit-dotFiles=",..."
 	}
 
 # Alias morse-code-style
-# Dot="."
-# Dash=","
-# word="..., ,.., .,,"
-# alias .,
+   # Dot="."
+   # Dash=","
+   # word="..., ,.., .,,"
+   # alias .,
 
 # To load upk Repo at .bashrc with .dryarc:
-#cat upk.sh then search only for a function of greetings, then echo that out
+   #cat upk.sh then search only for a function of greetings, then echo that out
 
-function drya {
-   if [ -z $1 ];
-      # If drya is called with no arguments: 
-      then 
-         echo "no args"
-         bash ~/Repositories/DRYa/drya.sh
-   elif [ $1 == "catMe-dryarc" ];
-      # If terminal: "$ drya catMe-dryarc":
-      then
-         echo "arg: catMe-dryarc"
-         cat ~/.config/h.h/.dryarc
-   else
-      echo "need something?"
-   fi
-}
+#     function drya {
+#        if [ -z $1 ];
+#           # If drya is called with no arguments: 
+#           then 
+#              echo "no args"
+#              bash ~/Repositories/DRYa/drya.sh
+#        elif [ $1 == "catMe-dryarc" ];
+#           # If terminal: "$ drya catMe-dryarc":
+#           then
+#              echo "arg: catMe-dryarc"
+#              cat ~/.config/h.h/.dryarc
+#        else
+#           echo "need something?"
+#        fi
+#     }
+#     
+#     alias drya-editMe-permanently="vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias"
+#     alias drya-editMe-temporarily="vim ${v_REPOS_CENTER}/DRYa/install.uninstall/drya.installer/future-dryarc"
+#     #alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ${v_REPOS_CENTER}/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
+#     alias drya-updateMe-globally="echo 'ezGIT must be installed'"
+#     #alias drya-make-dryarc # uDev: function exists inside drya.sh
 
-alias drya-editMe-permanently="vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias"
-alias drya-editMe-temporarily="vim ${v_REPOS_CENTER}/DRYa/install.uninstall/drya.installer/future-dryarc"
-#alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ${v_REPOS_CENTER}/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
-alias drya-updateMe-globally="echo 'ezGIT must be installed'"
-#alias drya-make-dryarc # uDev: function exists inside drya.sh
-
-alias ..="cd .."
-alias all="cd all && ls"
-alias hi="echo hello"
 
 alias sourceAll="source ~/.bashrc"
 
@@ -768,7 +761,7 @@ function drya-test {
 }
 
 function D {
-   # Title: Function "Destination"
+   # Title: Function "File and Destination"
    # Description: 
       # This function is a combination of:
          # '$ cd'
