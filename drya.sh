@@ -673,7 +673,7 @@ function f_exec {
 	f_greet
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
 	#f_install_configDir
-   $f_default_vars
+   #f_default_vars
 
 	#f_cursorON
 	#f_cursorOFF
