@@ -75,6 +75,7 @@
 # Repository: upK and upK-diario-Dv
    source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
    alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
+   alias Upk="bash ${v_REPOS_CENTER}/upK/upk.sh" # Same as previous alias but with capital letter for fast call at termux startup
    alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" # It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
    # uDev: alias "upk dia"="...upk-diario-Dv"
    
@@ -94,6 +95,12 @@
 
 # Repository row-reader
    alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
+
+# Repository: omni-log-Dv
+   alias v-omni="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+   alias e-omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+   alias omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
+   alias omni-n-push-n-exit="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
 
 # Repository: DRYa (internal files - part 2)
    # Remove temporary dir created by DRYa's other scripts
