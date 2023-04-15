@@ -6,6 +6,7 @@
 
 
 
+
 ;; Installing dracula-theme (From: https://draculatheme.com/emacs)
    ;; Add these to the init file:
       (require 'package)
@@ -24,38 +25,40 @@
       (load-theme 'dracula t)
 
 
-
-;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
-;;(load-theme 'dracula t)
-
-(setq echo-keystrokes .1
-   ;; Set keystrokes to be displayed in the echo area almost imediatly
-   )
-
-
-;; (dired-hide-details-mode)
-(add-hook
- ;; Config 'dired' to always hide details mode
- 'dired-mode-hook #'dired-hide-details-mode)
-
 ;;    
-;;    ;; Set a keybinding
-;;    (global-set-key (kbd "M-p") 'dired-hide-details-mode)
+;;    ;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
+;;    ;;(load-theme 'dracula t)
+;;    
+;;    ;;This variable sets every keystroke to be displayed almost immediatly in the echo area"
+;;       (setq echo-keystrokes .1
+;;          "This variable sets every keystroke to be displayed almost immediatly in the echo area"
+;;       )
+;;    
+;;    
+;;    ;; Config 'dired' to always hide details mode
+;;       (add-hook
+;;        "This function dired-hide-details-mode alows navigation in dired to be alwasy like 'ls' insteado of 'ls -A'"
+;;        'dired-mode-hook #'dired-hide-details-mode)
+;;    
+;;    ;;    ;; Set a keybinding
+;;    ;;    (global-set-key (kbd "M-p") 'dired-hide-details-mode)
 
 
-(defun zz ()
-  (interactive)
-  (save-buffer)
-  (message "Dv: Buffer saved")
-  (sleep-for 2)
-  (kill-emacs))
+;; Functions like vim (but needs always to call M-x)
+   (defun zz ()
+     (interactive)
+     (save-buffer)
+     (message "Dv: Buffer saved")
+     (sleep-for 2)
+     (kill-emacs))
 
-(defun w ()
-  (interactive)
-  (message "Dv: Buffer Saved")
-  (save-buffer))
+   (defun w ()
+     (interactive)
+     (message "Dv: Buffer Saved")
+     (save-buffer))
 
 (defun view ()
+  "Shortcut for (org-overview)"
   (interactive)
   (org-overview))
  
@@ -63,61 +66,61 @@
   (interactive)
   (message "Dv: Toggle text wrap")
   (visual-line-mode))
-  
+     
 (defun numbers ()
   (interactive)
   (global-display-line-numbers-mode)
   (message "Dv: toggled line numbers mode globaly"))
-
+    
 ;; When opening dailyLog for UPK, prepare visialization
- (defun u ()
+(defun u ()
+   (interactive)
+   (org-overview)
+   (end-of-buffer)
+   (org-reveal)
+   (visual-line-mode)
+   ;;(global-set-key "\C-x\C-a .")
+   )
+;;    
+;;    (defun insew-test ()
+;;      (interactive)
+;;      ;; Prompting user for 2 values
+;;      (setq v_tex1 (read-string "Texto 1: "))
+;;      (setq v_text2 (read-string "Texto 2: "))
+;;      (insert v_tex1)
+;;      (message v_text2))
+;;    
+  (defun dv-insert-text-with-checkbox ()
     (interactive)
-    (org-overview)
-    (end-of-buffer)
-    (org-reveal)
-    (visual-line-mode)
-    ;;(global-set-key "\C-x\C-a .")
-    )
-
-(defun insew-test ()
-  (interactive)
-  ;; Prompting user for 2 values
-  (setq v_tex1 (read-string "Texto 1: "))
-  (setq v_text2 (read-string "Texto 2: "))
-  (insert v_tex1)
-  (message v_text2))
-
-(defun dv-insert-text-with-checkbox ()
-  (interactive)
-  ;; Prompting user for 2 values
-  (setq v_checkbox_text (read-string "- [ ] "))
-  (insert "- [ ] ")
-  (insert v_checkbox_text))
-
-(defun dv-insert-checkbox-prefixing-text ()
-  (interactive)
-  ;; Prompting user for 2 values
-  (beginning-of-line)
-  (insert "- [ ] "))
-
-(defun dv-focus-mode ()
-   (interactive)
-   ;; Disablind and enabling a few bars
-   ;;(delete-other-windows)
-   (menu-bar-mode -1)
-   (tool-bar-mode -1)
-   (scroll-bar-mode -1)
-   (message "Dv: focus mode enabled"))
-
-
-(defun dv-tools ()
-   (interactive)
-   ;; Disablind and enabling a few bars
-   ;;(delete-other-windows)
-   (menu-bar-mode +1)
-   (tool-bar-mode +1)
-   (scroll-bar-mode +1)
-   (message "Dv: focus mode disabled"))
+    ;; Prompting user for 2 values
+    (setq v_checkbox_text (read-string "- [ ] "))
+    (insert "- [ ] ")
+    (insert v_checkbox_text))
+;;    
+;;    (defun dv-insert-checkbox-prefixing-text ()
+;;      (interactive)
+;;      ;; Prompting user for 2 values
+;;      (beginning-of-line)
+;;      (insert "- [ ] "))
+;;    
+;;    (defun dv-focus-mode ()
+;;       (interactive)
+;;       ;; Disablind and enabling a few bars
+;;       ;;(delete-other-windows)
+;;       (menu-bar-mode -1)
+;;       (tool-bar-mode -1)
+;;       (scroll-bar-mode -1)
+;;       (message "Dv: focus mode enabled"))
+;;    
+;;    
+;;    (defun dv-tools ()
+;;       (interactive)
+;;       ;; Disablind and enabling a few bars
+;;       ;;(delete-other-windows)
+;;       (menu-bar-mode +1)
+;;       (tool-bar-mode +1)
+;;       (scroll-bar-mode +1)
+;;          (message "Dv: focus mode disabled"))
 
   
 (defun dv-insert-new-day-upk ()
@@ -130,40 +133,49 @@
   ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
   ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia
   ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X horas
-  ;; Se for turno C ou N, inserir checkbox para entregar as folhas de ocorrencias
   (end-of-buffer)
   (insert "\n")
   (insert "* Dia ")
   (insert (format-time-string "<%Y-%m-%d %a> "))
-  (insert "(Turno: ") (insert v_turno) (insert ")")
-  (insert "\n\n")
-  (insert "- [ ] () Pre-Requisitos \n")
-  (insert ":PROPERTIES: \n")
-  (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
-  (insert "- Colega do turno anterior: \n") 
-  ;; Se for turno N: "- [ ] Entregar folhas de ocorrencias do turno anterior"
-  ;; Se for turno N: "- [ ] Colocar baterias a carregar"
-  (insert ":END:\n\n")
-  (insert "- [ ] Pos-Requisitos \n")
-  (insert ":PROPERTIES: \n\n")
-  (insert "- [ ] Escrever folha de ocorrencias\n")
-  (insert "  - [ ] Tirar foto à folha de ocorrencias\n")
-  (insert "- [ ] Passagem de Serviço ")
-  (insert (format-time-string "<%Y-%m-%d %a> "))
-  (insert "{ \n\nAo: \n  -\n}\n")
-  ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
-  (insert ":END:\n\n")
-  (insert "- Resumo\n")
-  (insert ":PROPERTIES: \n")
-  (insert "- Total Horas: \n")
-  (insert ":END:\n\n")
-  ;;(message v_text2)
-  (u)
-  ;;(if (= v_turno "N")
-  ;;  (message "É turno de noite"))
+  (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
+  (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
+        (insert "\n\n- [ ] () Pre-Requisitos \n")
+        (insert ":PROPERTIES: \n")
+        (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+        (when (string-equal v_turno "N")(insert "- [ ] Entregar a folha de ocorrencias do turno anterior\n"))
+        (insert "- Colega do turno anterior: \n") 
+        ;; Se for turno N: "- [ ] Colocar baterias a carregar"
+        (insert ":END:\n\n")
+        (insert "- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
+        (insert "- [ ] Escrever folha de ocorrencias\n")
+        (insert "- [ ] Tirar foto à folha de ocorrencias\n")
+        (when (string-equal v_turno "C")(insert "- [ ] Entregar a folha de ocorrencias"))
+        (insert "- [ ] Passagem de Serviço ")
+        (insert (format-time-string "<%Y-%m-%d %a> "))
+        (insert "{ \n\nAo: \n  -\n}\n")
+        ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
+        (insert ":END:\n\n")
+        (insert "- Resumo\n" ":PROPERTIES: \n")
+        (insert "- Total Horas: \n")
+        (insert ":END:\n\n"))
+  (when (string-equal v_turno "Fg")(message "Dv: Não esquecer de verificar a data deste dia de folga"))
+        ;;(u)
   )
 
 
+
+
+
+
+
+
+
+(defun dwiki ()
+   (interactive)
+(setq v_page (read-string "Do que precisa de saber? "))
+(when (string-equal v_page "location")(message "Showing cheat sheet about emacs: ")  
+   ;; If this condition if found true, open file in other window ;; (switch-to-buffer) is also possible to open in same window
+   (switch-to-buffer-other-window (find-file-noselect "~/location-test"))))
 
 
 ;; This is a comment 
@@ -223,7 +235,7 @@
   (setq v_tarefa (read-string "Introduz o Titulo do novo documento: "))
   (end-of-line)
   (insert "\n")
-  (insert "- [" v_tipo "]  ")
+  (insert "- [" v_tipo "] ")
   (insert v_tarefa)
   (insert "\n")
   (insert ":PROPERTIES:\n")
@@ -241,7 +253,7 @@
 ;; cursor in that scratch buffer
 (defun dv-copy-line-to-scratch-buffer ()
   (interactive)
-  "It does something"
+  "Copy current line to scratch buffer without focusing that buffer. Don't forget that you can use 'C-x z' to repeat last command"
   ;; lets copy our current line from the beginning saving its cursor position as a variable v-1
   (beginning-of-line)(setq v-1 (point))
   ;; Before storing the end position of the line, lets add a new line to it, so that we give a new line to the next buffer
@@ -259,7 +271,11 @@
     (dv-copy-line-to-scratch-buffer))) 
 
 
-
+;; Junt mentioning at the echo area the path to WSL home dir
+;; uDev: something is wrong when the text is displayed
+(defun dv-wsl-home-list ()
+   (interactive)
+   (message \\wsl$\Ubuntu-22.04\home\dv-wsl-ubuntu\.tmp))
 
 
 
@@ -501,3 +517,8 @@
       ;;
       ;;(global-set-key (kbd "C->") 'rofrol/tab-region)
       ;;(global-set-key (kbd "C-<") 'rofrol/untab-region)
+
+
+
+;; You can use a load command to evaluate a complete file and thereby install all the functions and variables in the file into Emacs. For example:
+;; (load "~/emacs/upk.el")
