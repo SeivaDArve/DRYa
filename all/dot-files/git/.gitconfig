@@ -1,0 +1,15 @@
+[user]
+	name = seivaDArve
+	email = flowreshe.seiva.d.arve@gmail.com
+[safe]
+	directory = /mnt/c/Repositories/moedaz
+	directory = /mnt/c/Repositories/DRYa
+	directory = /mnt/c/Repositories/dWiki
+	directory = /mnt/c/Repositories/ezGIT
+	directory = /mnt/c/Repositories/112-Shiva-Sutras
+	directory = /mnt/c/Repositories/scratch-paper
+	directory = /mnt/c/Repositories/yogaBashApp
+	directory = /mnt/c/Repositories/upK-diario-Dv
+	directory = /mnt/c/Repositories/upK
+[core]
+	editor = vim
