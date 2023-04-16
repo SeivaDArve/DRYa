@@ -105,6 +105,7 @@ function siigo {
       
 }
 
+alias appdata="udev: must be completed"
 
 # Termux alias
    alias rec="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)
@@ -517,14 +518,14 @@ alias vimrc="vim ~/.vimrc"
                # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
                   # This way we know we can easily upload the file
                   emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
                   rm ~/.emacs; echo "drya: file removed: ~/.emacs"
 
                   # If we are on windows, the init file will be somewhere at %appdata%
                      if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
                         echo "Windows adjustment: %AppData% exists: copying init.el file there"
                         rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
-                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/
                      fi
                      
                   break
@@ -533,14 +534,14 @@ alias vimrc="vim ~/.vimrc"
                # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
                   # This way we know we can easily upload the file
                   vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el ~/.emacs.d/init.el
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
                   rm ~/.emacs; echo "drya: file removed: ~/.emacs"
 
                   # If we are on windows, the init file will be somewhere at %appdata%
                      if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
                         echo "Windows adjustment: %AppData% exists: copying init file there"
                         rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
-                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/init.el
+                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/
                      fi
                   
                   break
