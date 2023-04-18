@@ -410,6 +410,7 @@ alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking curso
 alias all="cd all && ls"
 alias hi="echo hello"
 
+alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
 
 # Pandoc app to create man pages
 
