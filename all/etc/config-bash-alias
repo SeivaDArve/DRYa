@@ -62,8 +62,6 @@ function f_horizontal_line {
                v_underscoreCount="$v_underscoreCount$v_underscore"
             done
 
-         
-
          # The result is an horizontal line
             #echo "var is $v_underscoreCount"
             #read
