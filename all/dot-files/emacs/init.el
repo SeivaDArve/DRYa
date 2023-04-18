@@ -255,20 +255,20 @@
   (interactive)
   "Copy current line to scratch buffer without focusing that buffer. Don't forget that you can use 'C-x z' to repeat last command"
   ;; lets copy our current line from the beginning saving its cursor position as a variable v-1
-  (beginning-of-line)(setq v-1 (point))
+     (beginning-of-line)(setq v-1 (point))
   ;; Before storing the end position of the line, lets add a new line to it, so that we give a new line to the next buffer
-  (end-of-line)(insert ?\n) ;; You could also use (next-line) if you were not at the bottom of the buffer already
-  ;; Now let's delete the unwanted new line
-  (delete-forward-char 1)
-  ;; Store the last point as the end of the new line we made
-  (setq v-2 (point))
+     (end-of-line)(insert ?\n) ;; You could also use (next-line) if you were not at the bottom of the buffer already
+  ;; Now let's delete the unwanted new line (it means that our cursor is at the beggining of the second line close to any text of the second line, if text exists)
+     (delete-forward-char 1)
+  ;; Store the second (and last) point as the end of the new line we made
+     (setq v-2 (point))
   ;; Sending to new buffer the whole line we choose + \n
-  (append-to-buffer "*scratch*" v-1 v-2)
-  ;; Restore cursor position at the original buffer
-  (previous-line)
+     (append-to-buffer "*scratch*" v-1 v-2)
+  ;; Restore cursor position at the original buffer at the first line where we decided to copy
+     (previous-line)
   ;; Defining a shortcut (smaller name for this function)
-  (defun copy ()
-    (dv-copy-line-to-scratch-buffer))) 
+     (defun copy ()
+       (dv-copy-line-to-scratch-buffer))) 
 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
