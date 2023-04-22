@@ -84,6 +84,8 @@
 # Repository 112-Shiva-Sutras
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias SS="ss all | less"
+   alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
+   alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/exp112.txt"
 
 # Repository yogaBashApp
    # Making use of Sadhguru Presence features
