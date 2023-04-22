@@ -9,6 +9,7 @@
    emacs
    espeak # Text to speach
    termimage # Terminal images
+   openssl # Encryption
 
 # Dependencies for: ezGIT {
 	pkg install file
