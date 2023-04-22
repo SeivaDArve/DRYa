@@ -122,6 +122,12 @@
 ;;       (scroll-bar-mode +1)
 ;;          (message "Dv: focus mode disabled"))
 
+
+;; Funtion to allow TAB to print n empty spaces
+(defun tab-inserting-text ()
+   (interactive)
+   (insert "   "))
+   (global-set-key (kbd "C-<tab>") 'tab-inserting-text)
   
 (defun dv-insert-new-day-upk ()
   (interactive)
