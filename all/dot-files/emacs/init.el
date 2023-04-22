@@ -217,6 +217,7 @@
 
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
+   ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
   (interactive)
   (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
   (setq v_time (read-string "Quanto tempo demorou? "))
