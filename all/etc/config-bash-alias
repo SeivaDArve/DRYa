@@ -403,6 +403,8 @@ alias ..="cd .."
 alias ...="cd -"
 alias ....="pwd"
 function ..... {
+   # Saves current directory location 
+   # uDev: If script npNP gets finished, this one function gets useless. Finish that
    h=$(pwd)
    echo 'Current location $(pwd) saved as variable $h'
    echo " > $(pwd)"
@@ -413,6 +415,7 @@ function ...... {
       # 2 - Move to the origin of the files in one command using absolute path (where they are currently)
       # 3 - press: .....
       # Use command: mv <file1> <file2> <file3> $v
+   # uDev: If script npNP gets finished, this one function gets useless. Finish that
    cd -   1>/dev/null   
    v=$(pwd)
    cd -   1>/dev/null   
