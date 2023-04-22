@@ -403,6 +403,16 @@ alias ..="cd .."
 alias ...="cd -"
 alias ....="pwd"
 function ..... {
+   h=$(pwd)
+   echo 'Current location $(pwd) saved as variable $h'
+   echo " > $(pwd)"
+}
+function ...... {
+   # This function is usefulle when you want to move files to the previous directory
+      # 1 - Move to the destination you want to past the files
+      # 2 - Move to the origin of the files in one command using absolute path (where they are currently)
+      # 3 - press: .....
+      # Use command: mv <file1> <file2> <file3> $v
    cd -   1>/dev/null   
    v=$(pwd)
    cd -   1>/dev/null   
