@@ -402,6 +402,13 @@ function . {
 alias ..="cd .."
 alias ...="cd -"
 alias ....="pwd"
+function ..... {
+   cd -   1>/dev/null   
+   v=$(pwd)
+   cd -   1>/dev/null   
+   echo 'Last directory $(pwd) saved as variable: $v'
+   echo " > $v"
+}
 alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
@@ -414,12 +421,19 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 # Pandoc app to create man pages
 
-function nPpN-dir-looper {
+function npNP-dir-looper {
+   # Title: next-previous-Negative-Positive
    # (looper app) Save a loop of directories:
       alias P="Positive dir"  #uDev: Adds current dir to loop
       alias N="Negative dir"  #uDev: Removes current dir from loop
       alias p="previous dir"  #uDev: Swap to previous dir present in the loop 
       alias n="next dir"      #uDev: Swap to next dir present in the loop
+      alias PP="list all stored locations as other apps list buffers"
+      alias NN="Prompt the user if he wants to delete the entire list of locations"
+      # when adding arguments:
+         # Using a number as an argument like: '$ np 1' makes you travel the the location listed first
+         # Using - or + to swap priority of the location listed in the list (example: '$ np +' and '$ np -)
+
       # np | pn | Np | Pn) list all dirs and current one
       function P {
          mkdir -p ~/.config/h.h/nPpN-dir-looper
@@ -434,7 +448,7 @@ function nPpN-dir-looper {
          # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
             # These 3 commands allow you to see before, after and around your current line in the current file
 }
-nPpN-dir-looper
+#npNP-dir-looper
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
