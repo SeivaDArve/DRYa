@@ -161,8 +161,8 @@
         (insert "- [ ] Tirar foto à folha de ocorrencias\n")
         (when (string-equal v_turno "C")(insert "- [ ] Entregar a folha de ocorrencias\n\n"))
         (insert "- [ ] Passagem de Serviço ")
-        (insert (format-time-string "<%Y-%m-%d %a> "))
-        (insert "{ \n\nAo: \n  -\n}\n")
+        (insert (format-time-string "<%Y-%m-%d %a>"))
+        (insert "{ \nAo: \n  -\n}\n")
         ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
         (insert ":END:\n\n")
         (insert "- Resumo\n" ":PROPERTIES: \n")
