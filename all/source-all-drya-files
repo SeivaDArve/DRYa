@@ -86,6 +86,7 @@
    alias SS="ss all | less"
    alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/exp112.txt"
+   alias links="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/links-compilation.txt; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
 # Repository yogaBashApp
    # Making use of Sadhguru Presence features
