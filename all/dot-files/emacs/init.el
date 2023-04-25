@@ -57,6 +57,10 @@
      (message "Dv: Buffer Saved")
      (save-buffer))
 
+   (defun yy ()
+     (interactive)
+     (message "Dv: uDev: The entire line was copied"))
+
 (defun view ()
   "Shortcut for (org-overview)"
   (interactive)
@@ -155,7 +159,7 @@
         (insert "- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
         (insert "- [ ] Escrever folha de ocorrencias\n")
         (insert "- [ ] Tirar foto à folha de ocorrencias\n")
-        (when (string-equal v_turno "C")(insert "- [ ] Entregar a folha de ocorrencias"))
+        (when (string-equal v_turno "C")(insert "- [ ] Entregar a folha de ocorrencias\n\n"))
         (insert "- [ ] Passagem de Serviço ")
         (insert (format-time-string "<%Y-%m-%d %a> "))
         (insert "{ \n\nAo: \n  -\n}\n")
