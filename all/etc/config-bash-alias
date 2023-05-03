@@ -400,6 +400,7 @@ function . {
          echo "....  Means: pwd"
          echo ".....  Means: save this dir location in var \$h"
          echo "......  Means: save previous dir location in var \$v"
+         echo ".......  Means: remember last 2 variables set as \$h and \$v"
 
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
@@ -429,6 +430,14 @@ function ...... {
    v=$(pwd)
    cd -   1>/dev/null   
    echo 'Last directory $(pwd) saved as variable: $v'
+   echo " > $v"
+}
+function ....... {
+
+   echo 'Variable $h saved as:'
+   echo " > $h"
+   echo
+   echo 'Variable $v saved as:'
    echo " > $v"
 }
 alias ,="cd"
