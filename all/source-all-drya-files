@@ -12,7 +12,7 @@
 
       DRYa_MESSAGES="$HOME/.config/h.h/drya/.dryaMessages"
       export DRYa_MESSAGES
-      echo -e "# Title: DRYa Messages (verbose output for apps)" > ~/.config/h.h/drya/.dryaMessages
+      echo -e "# Title: DRYa Messages (verbose output for apps under DRYa)" > ~/.config/h.h/drya/.dryaMessages
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/.dryaMessages
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
