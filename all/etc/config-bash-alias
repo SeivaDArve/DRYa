@@ -177,9 +177,10 @@ alias ll="ls -pl"
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
-# Instagram tools:
+# Media tools:
    alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
    alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
+   alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
 
 function op {
    # Function to open all files and directories given as arguments ($*)
