@@ -240,7 +240,7 @@
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
-(defun dv-insert-new-doc-or-similar-upk ()
+(defun dv-insert-new-doc-elisp-or-similar-upk ()
   (interactive)
   (setq v_tipo (read-string "Introduz o tipo do documento ([Doc] || [elisp] etc.): "))
   (setq v_tarefa (read-string "Introduz o Titulo do novo documento: "))
@@ -264,22 +264,30 @@
 ;; cursor in that scratch buffer
 (defun dv-copy-line-to-scratch-buffer ()
   (interactive)
-  "Copy current line to scratch buffer without focusing that buffer. Don't forget that you can use 'C-x z' to repeat last command"
-  ;; lets copy our current line from the beginning saving its cursor position as a variable v-1
+  "Copies current line to scratch buffer without focusing that buffer. Don't forget that you can use 'C-x z' to repeat last command"
+  ;; We will use 2 points to define where to start copying and stop copying. Lets define first point:
+  ;; Saving cursor position as a variable v-1 (in the beggining of the line)
      (beginning-of-line)(setq v-1 (point))
-  ;; Before storing the end position of the line, lets add a new line to it, so that we give a new line to the next buffer
-     (end-of-line)(insert ?\n) ;; You could also use (next-line) if you were not at the bottom of the buffer already
-  ;; Now let's delete the unwanted new line (it means that our cursor is at the beggining of the second line close to any text of the second line, if text exists)
-     (delete-forward-char 1)
+  
+  ;; Before storing the end position of the line, lets add 2 new lines to it, so that we give new lines to the next buffer
+     (end-of-line)(insert ?\n ?\n) ;; You could also use (next-line) if you were not at the bottom of the buffer already
+
   ;; Store the second (and last) point as the end of the new line we made
      (setq v-2 (point))
-  ;; Sending to new buffer the whole line we choose + \n
+   
+  ;; Sending to new buffer the whole line we choose (from starting point to ending point)
      (append-to-buffer "*scratch*" v-1 v-2)
-  ;; Restore cursor position at the original buffer at the first line where we decided to copy
-     (previous-line)
+     
+  ;; Restore cursor position at the original buffer at the first line where we decided to copy 
+     (previous-line)(previous-line)(end-of-line)
+
+  ;; Now let's delete the unwanted 2 new lines
+     (delete-forward-char 2)
+     
   ;; Defining a shortcut (smaller name for this function)
      (defun copy ()
-       (dv-copy-line-to-scratch-buffer))) 
+       (dv-copy-line-to-scratch-buffer)))
+
 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
@@ -345,6 +353,47 @@
      
      
      
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun dv-1st-save-line-for-siigo-update ()
+  (interactive)
+  "Copies an entry from original place to the same file a few lines below, but adding more info to it automatically
+
+1st - Save the destination place where you want to start pasting your stuff
+    (using: dv-1st-save-line-for-siigo-update) (it will set the variable v_destination_point)
+
+2nd - Navigate to the line of the entry that you want to copy
+    n - using: dv-2nd-save-line-for-siigo-update
+
+    n - Travel to the beggining of the line
+      n - save the cursor point (as the variable v_text_point)
+      n - copy That entire entry line (as a variable v_text)
+
+    n - An automatic backward search will find '* Dia';
+      n - then travel to the beggining of the line and save the cursor point (as v_day_point)
+      n - Then save the text (the entire line)
+      n - From the line, extract the date (and place into variable v_copied_date)
+      n - Add text 'Entry veio do dia v_copied_date' and save as variable v_copied_date (ovewriting previous variable with the same name)
+
+    n - Travel again to v_text_point (entry we want to copy)
+      n - An automatic search will find the next '\:END\:'
+      n - Add 1 line before it
+      n - find out what today is (and store in a variable v_today)
+      n - Add text 'OT inserida no dia v_today' overwriing the previous variable with the same name
+
+    n - Travel to the variable v_destination_point (given by the function: dv-1st-save-entry-for-siigo-update)
+      n - Paste the text there
+      n - paste v_copied_date in front of it
+
+    n - Travel again to v_text_point
+      n - toggle the checkbox in it
+
+    Done
+"
+  (read-string "Place cursor where entries will be pasted")
+  (setq v_destination_point (point))
+  (message v_destination_point))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (put 'dired-find-alternate-file 'disabled nil)
 
