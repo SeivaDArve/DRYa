@@ -447,6 +447,7 @@ alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or
 alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 
 
+alias em="emacs"
 alias all="cd all && ls"
 alias hi="echo hello"
 
