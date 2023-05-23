@@ -89,12 +89,10 @@
    alias links="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/links-compilation.txt; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
 # Repository yogaBashApp
-   # Making use of Sadhguru Presence features
-      alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
-      alias termux-stop="termux-media-player stop"
-
-   # Making use of Shambavi features
-      alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
+   alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
+   alias termux-stop="termux-media-player stop"
+   alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
+   source ${v_REPOS_CENTER}/yogaBashApp/all/source-all-yoga-files 2>/dev/null
 
 # Repository row-reader
    alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
