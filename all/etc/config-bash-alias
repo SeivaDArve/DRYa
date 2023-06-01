@@ -83,7 +83,7 @@ function e {
             if [ $_ans == "2" ]; then alias r="vim"; fi
          ;;
       esac
-      done
+   done
 	
 }
 
@@ -874,7 +874,7 @@ function D {
       cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
       
    # Implementation of Use 2:
-   elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ]; then
+   elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
       cd ${v_REPOS_CENTER}/yogaBashApp && ls
       
    # Implementation of Use 2:
