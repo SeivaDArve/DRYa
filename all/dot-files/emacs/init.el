@@ -183,7 +183,22 @@
 
 
 
-
+(defun oj ()
+  (interactive)
+  (beginning-of-line)(insert "OT inserida dia ")
+  ;;
+  ;;
+  ;; Replaced:
+  ;;  (insert "<2023-06-02 sex>"))
+  ;;
+  ;; for:
+  ;;  (insert "<")
+  ;;  (format-time-string "%Y-%m-%d %a")
+  ;;  (insert ">"))
+  ;;
+  (insert "<")
+  (insert (format-time-string "%Y-%m-%d %a"))
+  (insert ">"))
 
 
 
