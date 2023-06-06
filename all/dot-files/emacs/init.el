@@ -5,6 +5,11 @@
 
 
 
+;; Load python language into org-mode
+   ;; source: https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
+   (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((python . t)))
 
 
 ;; Installing dracula-theme (From: https://draculatheme.com/emacs)
