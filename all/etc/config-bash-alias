@@ -228,6 +228,7 @@ alias info="termux-media-player info"
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91..." 
 
+alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 function shebang {
    # It creates a bash script (if no args are input)
       # Or gives a shebang to the file you input as argument 1)
