@@ -5,6 +5,11 @@
 
 
 
+;; Load python language into org-mode
+   ;; source: https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
+   (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((python . t)))
 
 
 ;; Installing dracula-theme (From: https://draculatheme.com/emacs)
@@ -44,6 +49,32 @@
 ;;    ;;    (global-set-key (kbd "M-p") 'dired-hide-details-mode)
 
 
+;; Search Forward
+   (defun f ()
+     (interactive)
+     (setq v_search (read-string "Qual é o texto para a FRENTE a procurar? "))
+     (search-forward v_search)
+     (message "Repete o comando com: 'C-x z'"))
+
+;; Search Forward + org-cycle
+   (defun ff ()
+     (interactive)
+     (setq v_search (read-string "Qual é o texto para a FRENTE a procurar? "))
+     (search-forward v_search)
+     (org-show-entry) ;; Uses TAB to open header, enabling better 'C-x z'
+     (message "Repete o comando com: 'C-x z'"))
+
+;; Search for upK ID entry
+   ;; f-id     (next place where ID is mentioned)
+   ;; f-id-o   (ID origin)
+
+;; Search Backward
+   (defun F ()
+     (interactive)
+     (setq v_search (read-string "Qual é o texto para TRAS a procurar? "))
+     (search-backward v_search)
+     (message "Repete o comando com: 'C-x z'"))
+
 ;; Functions like vim (but needs always to call M-x)
    (defun zz ()
      (interactive)
@@ -59,7 +90,9 @@
 
    (defun yy ()
      (interactive)
-     (message "Dv: uDev: The entire line was copied"))
+     (beginning-of-line)
+     (org-kill-line)(org-yank)
+     (message "yy: The entire line was copied"))
 
 (defun view ()
   "Shortcut for (org-overview)"
