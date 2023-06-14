@@ -1,0 +1,4 @@
+# Title: Lista de coisas a melhorar (foram avistadas mas na altura não estava nem perto de se conseguir resolver)
+
+Lista:
+- O magit (plugin do emacs) foi instalado manualmente dentro do proprio emacs usando o melpa package manager. Mas eu quero que a drya já instale o 'Magir' automaticamente assim que se instala os dotfiles do emacs (init.el). Ou seja, é preciso editar o init.el para a dicionar ao emacs as palavras chave 'requie-package magit' e instalar o magir automatiamente automaticamente assim que se instala os dotfiles do emacs (init.el). Ou seja, é preciso editar o init.el para a dicionar ao emacs as palavras chave 'requie-package magit' e instalar o magir automatiamente
