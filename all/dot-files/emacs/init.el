@@ -172,6 +172,9 @@
    (interactive)
    (insert "   "))
    (global-set-key (kbd "C-<tab>") 'tab-inserting-text)
+   ;; Alternative, set the var to n number of spaces:
+      ;; Source: https://www.emacswiki.org/emacs/IndentationBasics
+      ;; (setq tab-width 3) ; or any other preferred value
   
 (defun dv-insert-new-day-upk ()
   (interactive)
@@ -448,6 +451,22 @@
   (read-string "Place cursor where entries will be pasted")
   (setq v_destination_point (point))
   (message v_destination_point))
+
+
+;; Emacs CUA mode 
+   ;; This, changes the behaviour of Cut, Copy, Paste (from 'C-w', 'M-w', 'C-y') to: 'C-x', 'C-c', 'C-v'
+   ;; source: https://www.emacswiki.org/emacs/CuaMode
+   ;; 
+   ;; Select the CUA style from the Options menu and save the Options.
+   ;; Or add this to ~/.emacs(the last three are optional):
+   ;; 
+      (cua-mode t)
+   ;; (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
+   ;; (transient-mark-mode 1) ;; No region when it is not highlighted
+   ;; (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (put 'dired-find-alternate-file 'disabled nil)
