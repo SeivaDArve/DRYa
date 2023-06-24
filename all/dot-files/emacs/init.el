@@ -280,6 +280,7 @@
 ;; Inserts text on current buffer at current cursor position
 (defun dv-insert-new-entry-upk ()
    ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
+   "This function creates an entry where your cursor is placed" 
   (interactive)
   (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
   (setq v_time (read-string "Quanto tempo demorou? "))
@@ -298,6 +299,29 @@
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
+(defun dv-insert-new-Entry-upk ()
+   ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
+   "This function creates an entry not anywhere, but in the bottom of the file"
+  (interactive)
+  (u)
+  (search-backward "Pos-Requisitos")
+  (previous-line)
+  (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
+  (setq v_time (read-string "Quanto tempo demorou? "))
+  (end-of-line)
+  (insert "\n")
+  (insert "- [ ] (")
+  (insert v_time)
+  (insert ") ")
+  (insert v_tarefa)
+  (insert "\n")
+  (insert ":PROPERTIES:\nDescricao ")
+  (insert "\{ \n\}\n\nNotas \{ \n\}\n\n")
+  (insert ":END:\n")
+  (previous-line)(previous-line)(previous-line)(previous-line)
+  (previous-line)(previous-line)(previous-line)(end-of-line)
+  ;; After navigating 2 lines above, then: uDev: press TAB to close properties
+  (message "Dv: Text inserted into current buffer and current cursor position"))
 (defun dv-insert-new-doc-elisp-or-similar-upk ()
   (interactive)
   (setq v_tipo (read-string "Introduz o tipo do documento ([Doc] || [elisp] etc.): "))
@@ -466,6 +490,11 @@
    ;; (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
 
 
+;; Set better hotkeys to shink and enlarge the window frame
+    (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+    (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+    (global-set-key (kbd "S-C-<down>") 'shrink-window)
+    (global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
