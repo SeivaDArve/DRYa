@@ -125,6 +125,11 @@
    (visual-line-mode)
    ;;(global-set-key "\C-x\C-a .")
    )
+
+(defun upk-mode ()
+  (interactive)
+  "Faz o mesmo que a função 'u' que costuma ser chamada com M-x u"
+  (u))
 ;;    
 ;;    (defun insew-test ()
 ;;      (interactive)
@@ -236,7 +241,62 @@
   (insert (format-time-string "%Y-%m-%d %a"))
   (insert ">"))
 
+(defun dv-transfer-ot ()
+   "Usa as funçoes 'oj' "
+   (interactive)
 
+   ;; Adicionar texto (OT inserida dia X)
+      (search-forward ":END:")
+      (beginning-of-line)(insert "\n\n")
+      (previous-line)
+         ;; Adicionar dia de hoje correto (equivalente a 'C-c .')
+         (oj)
+
+   ;; Alterar temporariamente o titulo da OT
+      ;; (para ganhar o formato necessario para ser usado na segunda janela)
+      (search-backward ":PROPERTIES:")(previous-line)
+
+   ;; Buscar e filtrar o dia em que esta OT foi escrita
+      ;; (Vai deixar temporariamente o titulo original da OT com a data do seu dia)
+      (end-of-line)
+      (insert "(marked place)")  ;; Para ajudar no debug
+      (search-backward "* Dia <")
+      (beginning-of-line)
+      (org-kill-line)(org-yank)
+      (search-forward "(marked place)")
+      (end-of-line)
+      (org-yank)
+      (search-backward "(marked place)")
+      (delete-char 20)
+      (insert " (dia ")
+      (beginning-of-line)
+      (search-forward "> (")
+      (backward-char 2)
+      (org-kill-line)
+      (insert ")")
+
+   ;; Enviar titulo temporario (ja completo) para a segunda janela
+      ;; O ideal é o cursor na segunda janela ja estar posicionado corretamente
+      (beginning-of-line)
+      (org-kill-line)(org-yank)
+      (other-window 1)
+      (org-yank)
+      (insert "\n")
+      (beginning-of-line)
+	    
+
+   ;; Removing extra data added to: Window 1 > TITLE > date
+      (other-window 1) (beginning-of-line)
+
+      ;; Marcar [ ] com um X ficando [X]
+         (org-ctrl-c-ctrl-c)
+
+      ;; Buscar texto para remover
+         (search-forward " (dia")
+         (backward-char 5)
+         (org-kill-line)
+	 (beginning-of-line)
+	 (next-line))  ;; end-of-el-function: dv-transfer-ot
 
 (defun dwiki ()
    (interactive)
