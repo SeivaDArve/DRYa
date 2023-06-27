@@ -94,6 +94,18 @@
      (org-kill-line)(org-yank)
      (message "yy: The entire line was copied"))
 
+   (defun dd ()
+     (interactive)
+     (beginning-of-line)(kill-line)(delete-char 1))
+
+   (defun p ()
+     (interactive)
+     (end-of-line)(insert "\n")(yank))
+
+   (defun P ()
+     (interactive)
+     (beginning-of-line)(insert "\n")(previous-line)(yank))
+
 (defun view ()
   "Shortcut for (org-overview)"
   (interactive)
@@ -430,6 +442,18 @@
      (defun copy ()
        (dv-copy-line-to-scratch-buffer)))
 
+(defun dv-add-ot-number ()
+  (interactive)
+  (setq v_ot_num (read-string "Qual é a ordem numérica desta OT? "))
+  (insert "\n- [ ] << OT >> Grupo de tempos >> SIIGO >> ")(insert v_ot_num)(insert " <<\n")
+  (insert ":PROPERTIES:\n")
+  (insert "Tipo: \n")
+  (insert "Titulo (inserido na OT nr.): \n\n")
+  (insert "Descriçao { \n}\n\n")
+  (insert "Tempos { \n\n\n\n}\n\n") 
+  (insert "Notas { \n}\n\n")
+  (insert "Materiais { \n}\n\n")
+  (insert ":END:\n"))
 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
