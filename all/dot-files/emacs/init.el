@@ -234,6 +234,15 @@
 
 
 
+(defun dv-add-properties ()
+  (interactive)
+  "Creates a new empty line below and adds the text: :PROPERTIES:"
+  (end-of-line)(insert "\n:PROPERTIES:"))
+
+(defun dv-add-end ()
+  (interactive)
+  "Creates a new empty line below and adds the text: :END:"
+  (end-of-line)(insert "\n:END:"))
 
 
 (defun oj ()
