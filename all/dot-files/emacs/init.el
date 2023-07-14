@@ -235,6 +235,15 @@
 
 
 
+(defun dv-add-properties ()
+  (interactive)
+  "Creates a new empty line below and adds the text: :PROPERTIES:"
+  (end-of-line)(insert "\n:PROPERTIES:"))
+
+(defun dv-add-end ()
+  (interactive)
+  "Creates a new empty line below and adds the text: :END:"
+  (end-of-line)(insert "\n:END:"))
 
 
 (defun oj ()
@@ -445,6 +454,7 @@
 
 (defun dv-add-ot-number ()
   (interactive)
+  "Serve para juntar varios tempos de varias entries numa só OT"
   (setq v_ot_num (read-string "Qual é a ordem numérica desta OT? "))
   (insert "\n- [ ] << OT >> Grupo de tempos >> SIIGO >> ")(insert v_ot_num)(insert " <<\n")
   (insert ":PROPERTIES:\n")
@@ -456,6 +466,11 @@
   (insert "Materiais { \n}\n\n")
   (insert ":END:\n"))
 
+  
+(defun dv-add-ot-just-text ()
+  (interactive)
+  "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
+  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n}\n"))
 
 ;; Junt mentioning at the echo area the path to WSL home dir
 ;; uDev: something is wrong when the text is displayed
