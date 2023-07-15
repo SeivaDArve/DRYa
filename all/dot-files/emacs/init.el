@@ -465,11 +465,10 @@
   (insert "Materiais { \n}\n\n")
   (insert ":END:\n"))
 
-  
 (defun dv-add-ot-just-text ()
   (interactive)
-  "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n}\n"))
+   "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
+  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")) 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
 ;; uDev: something is wrong when the text is displayed
