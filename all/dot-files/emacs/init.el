@@ -85,13 +85,12 @@
 
    (defun w ()
      (interactive)
-     (message "Dv: Buffer Saved")
-     (save-buffer))
+     (save-buffer)
+     (message "Dv: Buffer Saved"))
 
    (defun yy ()
      (interactive)
-     (beginning-of-line)
-     (org-kill-line)(org-yank)
+     (beginning-of-line)(kill-line)(yank)
      (message "yy: The entire line was copied"))
 
    (defun dd ()
@@ -100,11 +99,13 @@
 
    (defun p ()
      (interactive)
-     (end-of-line)(insert "\n")(yank))
+     (end-of-line)(insert "\n")(yank)
+     (message "p: Pasted one line below"))
 
    (defun P ()
      (interactive)
-     (beginning-of-line)(insert "\n")(previous-line)(yank))
+     (beginning-of-line)(insert "\n")(previous-line)(yank)
+     (message "p: Pasted one line above"))
 
 (defun view ()
   "Shortcut for (org-overview)"
