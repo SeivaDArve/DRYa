@@ -464,7 +464,8 @@
   (insert "Tempos { \n\n\n\n}\n\n") 
   (insert "Notas { \n}\n\n")
   (insert "Materiais { \n}\n\n")
-  (insert ":END:\n"))
+  (insert ":END:\n")
+  (search-backward ":PROPERTIES:")(beginning-of-line))
 
 (defun dv-add-ot-just-text ()
   (interactive)
