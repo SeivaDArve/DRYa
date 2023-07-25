@@ -90,8 +90,16 @@
 
    (defun yy ()
      (interactive)
+     "Copies the entire line in 2 ways: to kill-ring and to variable: myVar
+
+      Source: http://xahlee.info/emacs/emacs/elisp_all_about_lines.html"
+     (setq myLine
+            (buffer-substring-no-properties
+            (line-beginning-position)
+            (line-end-position)
+            ))
      (beginning-of-line)(kill-line)(yank)
-     (message "yy: The entire line was copied"))
+     (message "yy: The entire line was copied (to var: myLine and to kill-ring)"))
 
    (defun dd ()
      (interactive)
@@ -464,6 +472,7 @@
   (insert "Tempos { \n\n\n\n}\n\n") 
   (insert "Notas { \n}\n\n")
   (insert "Materiais { \n}\n\n")
+  (insert "Fotos (s/n): \n\n")
   (insert ":END:\n")
   (search-backward ":PROPERTIES:")(beginning-of-line))
 
@@ -576,6 +585,17 @@
   (setq v_destination_point (point))
   (message v_destination_point))
 
+;; Calculadoras: 
+   (defun dv-calculate-hipoclorito ()
+     (interactive)
+     "Para 1 copo de hipoclorito, 9 de agua"
+     (message "Para 1 Litro de Hipoclorito, 9 Litros de agua"))
+
+
+   (defun dv-calculate-from-Lmin-M3h ()
+     (interactive)
+     "Calcular de Litros por minuto (L/min) para Metros Cubicos por hora (m3/h)"
+     (message "uDev: Ainda não esta pronto"))
 
 ;; Emacs CUA mode 
    ;; This, changes the behaviour of Cut, Copy, Paste (from 'C-w', 'M-w', 'C-y') to: 'C-x', 'C-c', 'C-v'
