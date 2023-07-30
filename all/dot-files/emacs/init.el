@@ -3,7 +3,8 @@
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
 
-
+;; Atempt to load upk init file into emacs
+(add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
 
 ;; Load python language into org-mode
    ;; source: https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html

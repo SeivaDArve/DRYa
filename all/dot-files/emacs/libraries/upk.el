@@ -1,6 +1,6 @@
 ;; Title: File to store elisp functions for the org-mode files from upk users
 
-(defun upk-init-test ()
+(defun test28 ()
    (interactive)
    (message "file found"))
 
