@@ -87,6 +87,44 @@ function e {
 	
 }
 
+function f_manage_init_and_libraries_after_mod {
+   # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
+
+   # This is for Linux:
+
+      # Copy recursively all files about emacs to the localized machine-specific directory:
+         echo "DRYa: copying recursively: <centralized emacs files> into ~/.emacs.d"
+            cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
+         echo " > done!"
+      
+      # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
+         echo "DRYa: removing: ~/.emacs (avoiding bugs)"
+            rm ~/.emacs 2>/dev/null; 
+         echo " > done!"
+
+   # If we are on windows, the init file should also be somewhere at: %appdata%
+
+      v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
+      v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
+
+      if [ -d $v_correct_win_dir  ]; then
+         # If the v_correct_win_dir exists, set it up too:
+            echo "DRYa: Windows detected, adjusting: "
+
+         # Copy files and directories recursively for the directory that emacs prefers on windows
+            echo " > %AppData% exists, copying emacs files there too recursively"
+               cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* $v_correct_win_dir
+            echo " > done!"
+         
+         # Removing the extra file/directory that can create initialization issues
+            echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
+               rm $v_bugged_win_dir_to_del 2>/dev/null
+            echo " > done!"
+
+      fi
+                     
+}
+
 function siigo {
    # Using termux 
       function f_termux_siigo {
@@ -534,72 +572,68 @@ alias vimrc="vim ~/.vimrc"
                   ;;
                source-all-drya-files)
                 ,..
-               ;;
-             .bashrc)
+            ;;
+            .bashrc)
                vim ~/.bashrc
                break
-               ;;
-             source-all-moedaz-files)
+            ;;
+            source-all-moedaz-files)
                
-               ;;
+            ;;
             com.list-econ-items.txt)
                vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
-               ;;
+            ;;
             com.associative-array)
                vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
-               ;;
+            ;;
              .vimrc)
                   vim ~/.vimrc
-               ;;
+            ;;
             SOURCE)
                clear
                source ~/.bashrc
                break
-               ;;
+            ;;
             1st)
                clear
                echo "Editing the list of 1st apps to install"
                read -s -t 2
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
-               ;;
+            ;;
             "emacs-init (emacs)")
                # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-                  # This way we know we can easily upload the file
-                  emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
-                  rm ~/.emacs; echo "drya: file removed: ~/.emacs"
+               # This way we know we can easily upload the file
+                  
+                  # First we edit the original/centralized file with our favourite text editor
+                     emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
 
-                  # If we are on windows, the init file will be somewhere at %appdata%
-                     if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
-                        echo "Windows adjustment: %AppData% exists: copying init.el file there"
-                        rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
-                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/
-                     fi
-                     
-                  break
-               ;;
+                  # After edition, independently of the text editor, some changes are same. Therefore, to
+                  # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+                     f_manage_init_and_libraries_after_mod
+
+               break
+            ;;
             "emacs-init (vim)")
                # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-                  # This way we know we can easily upload the file
-                  vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
-                  rm ~/.emacs; echo "drya: file removed: ~/.emacs"
+               # This way we know we can easily upload the file
 
-                  # If we are on windows, the init file will be somewhere at %appdata%
-                     if [ -d /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d ]; then
-                        echo "Windows adjustment: %AppData% exists: copying init file there"
-                        rm /mnt/c/Users/Dv-User/AppData/Roaming/.emacs 2>/dev/null
-                        cp ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* /mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/
-                     fi
-                  
-                  break
-               ;;
-            quit)
+                  # First we edit the original/centralized file with our favourite text editor
+                     vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
+
+                  # After edition, independently of the text editor, some changes are same. Therefore, to
+                  # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+                     f_manage_init_and_libraries_after_mod
+
                break
-               ;;
-             *) 
-               echo "Invalid option $REPLY"
-               ;;
+            ;;
+
+            quit) 
+               break  
+            ;;
+            *)    
+               echo "Invalid option $REPLY"  
+            ;;
+
            esac
          done
 
