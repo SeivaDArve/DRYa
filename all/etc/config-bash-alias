@@ -90,17 +90,23 @@ function e {
 function f_manage_init_and_libraries_after_mod {
    # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
 
+   # Addind a little better presentation for our M menu:
+      clear; 
+      figlet "M"
+      echo -e "File closed: $v_init_file \n"
+
    # This is for Linux:
 
       # Copy recursively all files about emacs to the localized machine-specific directory:
-         echo "DRYa: copying recursively: <centralized emacs files> into ~/.emacs.d"
+         echo "DRYa: copying recursively: "
+         echo " > \"centralized emacs files\" into \"~/.emacs.d\""
             cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
-         echo " > done!"
+         echo "   > done!"
       
       # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
-         echo "DRYa: removing: ~/.emacs (avoiding bugs)"
+         echo " > removing: ~/.emacs (avoiding bugs)"
             rm ~/.emacs 2>/dev/null; 
-         echo " > done!"
+         echo "   > done!"
 
    # If we are on windows, the init file should also be somewhere at: %appdata%
 
@@ -109,17 +115,18 @@ function f_manage_init_and_libraries_after_mod {
 
       if [ -d $v_correct_win_dir  ]; then
          # If the v_correct_win_dir exists, set it up too:
-            echo "DRYa: Windows detected, adjusting: "
+            echo -e "\nDRYa: Windows detected, adjusting: "
 
          # Copy files and directories recursively for the directory that emacs prefers on windows
             echo " > %AppData% exists, copying emacs files there too recursively"
                cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* $v_correct_win_dir
-            echo " > done!"
+            echo "   > copied to: \"$v_correct_win_dir\""
+            echo -e "   > done! \n"
          
          # Removing the extra file/directory that can create initialization issues
             echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
                rm $v_bugged_win_dir_to_del 2>/dev/null
-            echo " > done!"
+            echo "   > done!"
 
       fi
                      
@@ -605,7 +612,8 @@ alias vimrc="vim ~/.vimrc"
                # This way we know we can easily upload the file
                   
                   # First we edit the original/centralized file with our favourite text editor
-                     emacs ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
+                     v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
+                     emacs $v_init_file 
 
                   # After edition, independently of the text editor, some changes are same. Therefore, to
                   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
@@ -618,7 +626,8 @@ alias vimrc="vim ~/.vimrc"
                # This way we know we can easily upload the file
 
                   # First we edit the original/centralized file with our favourite text editor
-                     vim ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el
+                     v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
+                     vim $v_init_file 
 
                   # After edition, independently of the text editor, some changes are same. Therefore, to
                   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
