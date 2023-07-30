@@ -1,0 +1,87 @@
+# Titulo: Todos os tipos de OT no SIIGO e suas abreviaturas 
+
+--- AVAC ---
+ > (gt)        > Comando de iluminação/AVAC através da GTC  - Técnico
+ > (piso 0)    > Intervenções em VCs das lojas - piso 0 - Técnico
+ > (piso 1)    > Intervenções em VCs das lojas - piso 1 - Técnico
+ > (s de av)   > Trabalhos diversos de AVAC - Técnico
+
+
+--- Acompanhaments, Testes & Contagens ---
+ > (os ex)     > Apoio a empreiteiros exteriores
+ > (as ex)     > Apoio de empresas exteriores
+ > (fl)        > Contagem de Energia e Fluidos - Técnico
+ > (a em L)    > Contagem de energia em lojas - Técnico
+ > (che)       > Verificação de cheiros (gás, esgotos, etc) - Produto
+
+--- Apoio ao Marketing ---
+ > (temp)      > Apoio a stands temporários - Produto
+ > (mar)       > Apoio ao Marketing/Eventos - Produto
+
+--- Construção Civil ---
+ > (calc)      > Reparação/Substituição de pedras da calçada - Produto
+ > (pin)       > Trabalhos de pintura no centro e parques - Produto
+ > (cons)      > Trabalhos diversos de construção civil - Produto
+
+--- Eletricidade ---
+ > (bl)        > Intervenções em blocos autónomos - Técnico
+ > (lig)       > Ligar/Desligar Iluminação Exterior - Técnico
+ > (os em l)   > Pequenos trabalhos eléctricos em lojas - Técnico
+ > (atm)       > Rearme e pequenos trabalhos em ATM - Produto
+ > (res - c)   > Rearme/Desarme de disjuntores - Centro e Parques - Técnico
+ > (res e)     > Rearme/Desarme de disjuntores em lojas - Técnico
+ > (of)        > Reparações eléctricas em oficina - Técnico
+ > (eme)       > Subst. Lâmpadas/Outros Trab - Ilum. Emergência - Produto
+ > (nor)       > Subst. Lâmpadas/Outros Trab - Ilum. Normal - Produto
+ > (os no)     > Trabalhos eléctricos no centro e parques - Técnico
+
+--- Gás ---
+ > (gas e)     > Fecho/abertura de gás em lojas - Técnico
+
+--- Infiltrações ---
+ > (oes em l)  > Infiltrações em lojas - Técnico
+
+--- Meios Eletromecânicos de Transporte ---
+ > (vad)       > Intervenções Várias - Elevadores - Produto
+ > (tap)       > Intervenções Várias - Escadas/Tapetes - Produto
+
+--- Outros ---
+ > (sh)        > Intervenções em Shop Spots - Produto
+ > (ins)       > Intervenções várias - Instalações Sanitárias - Produto
+ > (exti)      > Intervenções várias em equipamentos de extinção de incêndios - Técnico
+ > (za d)      > Limpeza de áreas Técnicas - Técnico
+ > (loji)      > Outro Tipo de Apoio a Lojistas - Técnico
+ > (reu)       > Preparação trabalhos, reuniões de manutenção, etc - Técnico
+ > (vig)       > Reparações de equipamentos da Segurança/Vigilância - Técnico
+ > (resi)      > Reparações de equipamentos de tratamento de resíduos
+ > (ser)       > Trabalhos de Serralharia - Técnico
+
+--- Parque de Estacionamento ---
+ > (oes no)    > Infiltrações no Centro/Parque - Técnico
+
+--- Portas e Portões ---
+ > (tica)      > Intervenções em portas automáticas - Produto
+ > (cort)      > Intervenções em portas corta-fogo - Técnico
+ > (alu)       > Intervenções em portas de aluminio e de vidro entrada - Produto
+ > (ger)       > Intervenções em portas gerais - Produto
+ > (vai)       > Intervenções em portas vai-vem - Técnico
+ > (gr)        > Intervenções em portas/gradeamentos das lojas - Técnico
+
+--- Transporte de Materiais Diversos ---
+ > (ais d)     > Transporte de Materiais Diversos
+ > (pl)        > Transporte de plataformas elevatórias
+
+--- Águas ---
+ > (valv)       > Abertura/Fecho de válvulas da rede de incêndios - Técnico
+ > (ho de agua) > Abertura/Fecho de água  - Técnico
+ > (tanq)       > Desentupimento de tanques dos corredores técnicos - Técnico
+ > (dom)        > Intervenções na bombagem de esgotos domésticos - Técnico
+ > (plu)        > Intervenções na bombagem de esgotos pluviais - Técnico
+ > (reg)        > Intervenções na central de bombagem-Rede de água da rega - Técnico
+ > (a de av)    > Intervenções na central de bombagem-Rede de água de avac - Técnico
+ > (a de i)     > Intervenções na central de bombagem-Rede de água de incêndios - Técnico
+ > (pota)       > Intervenções na central de bombagem-Rede de água potável - Técnico
+ > (spr)        > Intervenções na rede de sprinklers das lojas - Técnico
+ > (leit)       > Leituras/Pequenas reparações do sistema de tratamento de águas - Técnico
+ > (leir)       > Limpeza/Desentupimento de esgotos/ralos/caleiras - Técnico
+ > (sos n)    > Trabalhos diversos na rede de incêndios - Técnico"
