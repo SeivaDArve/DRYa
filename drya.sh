@@ -793,14 +793,28 @@ function f_exec {
             *) 
                echo "DRYa: Must specify a repository to clone"
                echo
-               echo " You can use: '$ drya clone --list-public' or '$ drya clone -p' to list all public repositories"
-               echo " You can use: '$ drya clone --list-private' or '$ drya clone -P' to list all private repositories"
+               echo " You can use:"
+               echo " > '$ drya clone --list-public' or "
+               echo " > '$ drya clone -p' "
+               echo "    to list all public repositories"
+               echo 
+               echo " You can use: "
+               echo " > '$ drya clone --list-private' or"
+               echo " > '$ drya clone -P'"
+               echo "   to list all private repositories"
                echo
                echo " Press ENTER to visit a page will all repositories:"
                echo " > https://github.com/SeivaDArve?tab=repositories"
-               read
                echo
-               echo "# uDev: No browser is ready to open, and no function is set to scrape"
+               echo " Press Ctrl-C to abort"
+               read -s
+               echo
+               f_horizline
+               echo " Note: So far, drya can open this link only with Termux"
+               echo " > uDev: No other browser found"
+               echo
+               echo "Opening URL with Termux (terminal)"
+               termux-open-url https://github.com/SeivaDArve?tab=repositories
          esac
          
          # At the end of cloning, returning to the previous directory and discarding the variable
