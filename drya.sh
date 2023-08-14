@@ -689,7 +689,7 @@ function f_exec {
 	#f_fillscreenE
 	#f_master_dryaRC
    #f_readKeystroke
-   echo stupid
+   echo stupid, try adding some arguments, alright?
 }
 
 
