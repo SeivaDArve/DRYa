@@ -9,9 +9,8 @@
 
 # About the file: current-stroken
   > A file that contains a github's access token but with a bug for safety, only the user know how to correct it. The token should not be written in plain text
-  > You can edit this file manually or with the command '$ edit-stroken'
+  > You can edit this file manually or with the command '$ drya edit stroken' (edits the file: .../DRYa/all/dot-files/git-github/current-stroken)
     > The new edition should be copied to .../DRYa/install.uninstall/stroken for new users who are not aware of the directory tree
-  > uDev: In the future you will be able to edit it with the command: '$ drya edit stroken'
 
 # About the file: .gitconfig
   > A file you can edit manually and make it to use by copyung it to ~
@@ -31,12 +30,11 @@
      1 > Copy ./.netrc to ~/.netrc
      2 > Open the file ~/.netrc
      3 > Edit it's place_holders with correct info
-     4 > Save the file and use git normaly (won't prompt for autentication anymore)
+     4 > Save the file and use git normally (won't prompt for autentication anymore)
 
   # Automatically:
      1 > open directory: ./bin/
-     2 > run: '$ bash create-netrc-from-stroken.sh
-         or
-	 run: '$ edit-stroken'
+     2 > run: '$ bash bin/create-netrc-from-stroken.sh
+         or:  '$ drya install stroken'
 
 # Enjoy!

@@ -845,26 +845,26 @@ function f_exec {
             dot-files)
                echo "DRYa: drya install dot-files"
                echo " > copying from drya repo to default locations"
-                   echo " > uDev"
-                   echo 
-                   echo "It can config:"
-                   echo " > emacs (init file + libraries)"
-                   echo " > git-github"
-                   echo " > termux"
-                   echo " > vim"
-                   echo " uDev"
-                   echo
-                   echo "attempting Vim"
-                   echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
-                   echo " to"
-                   echo " > ~"
-                   read
-                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
-                   echo "Done!"
-               ;;
-               stroken)
-                  bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
-               ;;
+               echo " > uDev"
+               echo 
+               echo "It can config:"
+               echo " > emacs (init file + libraries)"
+               echo " > git-github"
+               echo " > termux"
+               echo " > vim"
+               echo " uDev"
+               echo
+               echo "attempting Vim"
+               echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
+               echo " to"
+               echo " > ~"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+               echo "Done!"
+            ;;
+            stroken)
+               bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+            ;;
             *)
                echo "drya: What do you want to install?"
             ;;
@@ -875,11 +875,11 @@ function f_exec {
             stroken)
                # Editing stroken globally
                vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken
-                  echo "File edited at: .../git-github/current-stroken"
+                  echo "File edited at: ...DRYa/all/dot-files/git-github/current-stroken"
                   echo
 
                cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-                  echo "Copied also too: .../install.uninstall/stroken"
+                  echo "Copied also too: ...DRYa/install.uninstall/stroken"
                   echo
                
                   # Adding info for the new user:

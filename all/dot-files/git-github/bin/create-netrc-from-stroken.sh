@@ -5,10 +5,10 @@
 clear
 figlet DRYa
 
-echo "Installing Stroken"
+echo "Installing Stroken at ~"
 echo
 echo "Job to be done:"
-echo " > echo \$stroken > ~/.netrc"
+echo " > echo \$stroken > ~/.netrc && edit the file..."
 echo
 echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
 echo
