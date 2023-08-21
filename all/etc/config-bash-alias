@@ -254,9 +254,34 @@ function op {
 }
 
 
-function stroken {
-   echo "seivadarve"
-   echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+function f_stroken {
+   # Ask the terminal to print the stroken
+      alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken"
+      # or
+      #alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken
+
+   # Install stroken automatically
+      # '$ drya install stroken'
+}
+f_stroken
+
+function edit-stroken {
+   # Editing stroken globally
+   vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken
+      echo "File edited at: .../git-github/current-stroken"
+      echo
+
+   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+      echo "Copied also too: .../install.uninstall/stroken"
+      echo
+   
+      # Adding info for the new user:
+         echo -e "\n(note \"info exists also at: .../DRYa/all/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+
+   # Verbose output
+      echo "You may install stroken as ~/.netrc file with the command:"
+      echo " > drya install stroken"
+      # uDev: to be sent to: drya.sh edit stroken
 }
 
 # Fast dial:
@@ -548,7 +573,7 @@ alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
 
-# <drya ,.... menu>
+# '$ drya ,.... ' (menu M)
    # DRYa sub-files are usually called by ,..... alias:
       # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
          alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
@@ -571,7 +596,7 @@ alias vimrc="vim ~/.vimrc"
          PS3="Select a file to edit: "
 
          COLUMNS=0
-         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" quit $v_line2; do
+         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files quit $v_line2; do
             case $opt in
                config-bash-alias)
                   ,.
@@ -635,6 +660,12 @@ alias vimrc="vim ~/.vimrc"
 
                break
             ;;
+	    secundary-files)
+	       clear
+	       figlet M
+	       echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
+	       break
+	    ;;
 
             quit) 
                break  
@@ -665,7 +696,7 @@ alias M=",..." # Alias for Menu
 #	case 1 in $v_ans
 #}
 
-# historyi-recall app
+# history-recall app
 	function hist {
 		mkdir -p ~/.tmp/
 		history > ~/.tmp/fileA.txt
@@ -712,10 +743,9 @@ alias M=",..." # Alias for Menu
 	}
 
 # Alias morse-code-style
-   # Dot="."
-   # Dash=","
-   # word="..., ,.., .,,"
-   # alias .,
+   # Dot="morse ."
+   # Dash="morse ,"
+   # word="morse ..., ,.., .,,"
 
 # To load upk Repo at .bashrc with .dryarc:
    #cat upk.sh then search only for a function of greetings, then echo that out
@@ -815,12 +845,13 @@ function hkllhcf {
 alias v="echo sk"
 }
 
-# Source all other repos if they exist:
-# Source jarve
-# Source upK
-# Source ezGIT
-# Source ... 
-
+# '$ drya populate main-apps'
+  # Source all other repos if they exist:
+  # Source jarve
+  # Source upK
+  # Source ezGIT
+  # Source ... 
+  
 
 function drya-test {
    PS3="Select the operation: "
@@ -870,13 +901,13 @@ function D {
       # '$ pkg install file'
 
    # Usage:
-      # Use 1: '$ lc             # Complains that there is no destination specified
-      # Use 2: '$ lc drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
-      # Use 3: '$ lc -p <dir>    # Create new dir and travel to it
-      # Use 4: '$ lc -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
-      # Use 5: '$ lc -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
-      # Use 6: '$ lc ..          # Go to parent dir and ls
-      # Use 7: '$ lc <dir>       # Go to existent dir
+      # Use 1: '$ D             # Complains that there is no destination specified
+      # Use 2: '$ D drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
+      # Use 3: '$ D -p <dir>    # Create new dir and travel to it
+      # Use 4: '$ D -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
+      # Use 5: '$ D -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+      # Use 6: '$ D ..          # Go to parent dir and ls
+      # Use 7: '$ D <dir>       # Go to existent dir
 
    function f_create-file {
       echo
@@ -890,7 +921,7 @@ function D {
       echo " > No arguments. Choose some place to go to"
 
    # Implementation of Use 2:
-   elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ]; then
+   elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
       cd ${v_REPOS_CENTER}/DRYa && ls
    
    # Implementation of Use 2:
@@ -1018,6 +1049,7 @@ function D {
             echo '3) # Travel to the dir where many USB storages are mounted'
             echo '4) # Travel to the dir where many USB storages are mounted'
             echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
+	    #uDev: May be needed termux-setup-storage to access some directories
          ;;
       esac
 
