@@ -754,6 +754,7 @@ function f_exec {
          case $2 in
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
             moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
+            yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
             dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
             upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
             upkd) 
