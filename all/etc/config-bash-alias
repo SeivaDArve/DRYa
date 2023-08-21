@@ -254,35 +254,11 @@ function op {
 }
 
 
-function f_stroken {
-   # Ask the terminal to print the stroken
-      alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken"
-      # or
-      #alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken
-
-   # Install stroken automatically
-      # '$ drya install stroken'
-}
-f_stroken
-
-function edit-stroken {
-   # Editing stroken globally
-   vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken
-      echo "File edited at: .../git-github/current-stroken"
-      echo
-
-   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-      echo "Copied also too: .../install.uninstall/stroken"
-      echo
-   
-      # Adding info for the new user:
-         echo -e "\n(note \"info exists also at: .../DRYa/all/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-
-   # Verbose output
-      echo "You may install stroken as ~/.netrc file with the command:"
-      echo " > drya install stroken"
-      # uDev: to be sent to: drya.sh edit stroken
-}
+# Ask the terminal to print the stroken
+   alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken"
+   # Notes:
+      # At ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
+      # We can install stroken automatically with: '$ drya install stroken'
 
 # Fast dial:
    alias 2468="exit"
@@ -299,6 +275,7 @@ alias info="termux-media-player info"
 alias tufnar="echo '# uDev: Tufnar Isaura 91..." 
 
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
+
 function shebang {
    # It creates a bash script (if no args are input)
       # Or gives a shebang to the file you input as argument 1)
@@ -552,7 +529,7 @@ function npNP-dir-looper {
          # 'Volume key Up + N': Page Down
          # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
             # These 3 commands allow you to see before, after and around your current line in the current file
-}
+}  ## end of function: npNP-dir-looper
 #npNP-dir-looper
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
@@ -573,37 +550,35 @@ alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
 
-# '$ drya ,.... ' (menu M)
-   # DRYa sub-files are usually called by ,..... alias:
-      # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
-         alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
-         #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
+# Edit THIS file (config-bash-alias) ## PERMANENT CHANGES if "git push" is used
+   alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias" #uDev: To be used as: '$ drya edit <file>'
+   #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
 
-      # Edit source-all-drya-files:
-      alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+# Edit file: source-all-drya-files:
+   alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files" #uDev: To be used as: '$ drya edit <file>'
+   alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
 
-      # Edit dotFiles
-      function ,... {
+# List fav files for edition (as a menu M)
+   function M {
 
-         f_horizontal_line #If variable v_line is needed, this function must run before to create it
-         clear
+      f_horizontal_line #If variable v_line is needed, this function must run before to create it
+      clear
 
-         echo SELECT file to edit by Title
-         echo
+      echo SELECT file to edit by Title
+      echo
 
-         # Change the prompt message:
-         PS3="Select a file to edit: "
+      # Change the prompt message:
+      PS3="Select a file to edit: "
 
-         COLUMNS=0
-         select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files quit $v_line2; do
-            case $opt in
-               config-bash-alias)
-                  ,.
-                  break
-                  ;;
-               source-all-drya-files)
-                ,..
+      COLUMNS=0
+      select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files quit $v_line2; do
+         case $opt in
+            config-bash-alias)
+               ,.
+               break
+            ;;
+            source-all-drya-files)
+               ,..
             ;;
             .bashrc)
                vim ~/.bashrc
@@ -660,32 +635,23 @@ alias vimrc="vim ~/.vimrc"
 
                break
             ;;
-	    secundary-files)
-	       clear
-	       figlet M
-	       echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
-	       break
-	    ;;
-
+            secundary-files)
+               clear
+               figlet M
+               echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
+               break
+            ;;
             quit) 
                break  
             ;;
             *)    
                echo "Invalid option $REPLY"  
             ;;
+         esac
+      done
+   }   ## End of function M
 
-           esac
-         done
-
-      }
-alias edit-dotFiles=",..."
-alias M=",..." # Alias for Menu
-# </drya ,.... menu>
-# Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
-	alias update-alias="cd ${v_REPOS_CENTER}/DRYa/all/ && vim config-bash-alias"
-	alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
-# Edit file source-all-drya-files
-	alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+alias ,...="M" # Alias for Menu
 
 #function ... {
 #	clear
