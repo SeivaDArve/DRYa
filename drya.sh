@@ -846,6 +846,9 @@ function f_exec {
                echo "drya: drya dot-files install"
                echo " > copy from drya repo to default locations"
             ;;
+	    stroken)
+	       bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+	    ;;
             *)
                echo "drya: What do you want to install?"
             ;;
