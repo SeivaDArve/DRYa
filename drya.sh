@@ -689,7 +689,7 @@ function f_exec {
 	#f_fillscreenE
 	#f_master_dryaRC
    #f_readKeystroke
-   echo stupid
+   echo stupid, try adding some arguments, alright?
 }
 
 
@@ -754,7 +754,8 @@ function f_exec {
          case $2 in
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
             moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
-            dWiki | wiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
+            yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
+            dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
             upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
             upkd) 
                echo "cloning upK-diario-Dv"; 
@@ -793,14 +794,28 @@ function f_exec {
             *) 
                echo "DRYa: Must specify a repository to clone"
                echo
-               echo " You can use: '$ drya clone --list-public' or '$ drya clone -p' to list all public repositories"
-               echo " You can use: '$ drya clone --list-private' or '$ drya clone -P' to list all private repositories"
+               echo " You can use:"
+               echo " > '$ drya clone --list-public' or "
+               echo " > '$ drya clone -p' "
+               echo "    to list all public repositories"
+               echo 
+               echo " You can use: "
+               echo " > '$ drya clone --list-private' or"
+               echo " > '$ drya clone -P'"
+               echo "   to list all private repositories"
                echo
                echo " Press ENTER to visit a page will all repositories:"
                echo " > https://github.com/SeivaDArve?tab=repositories"
-               read
                echo
-               echo "# uDev: No browser is ready to open, and no function is set to scrape"
+               echo " Press Ctrl-C to abort"
+               read -s
+               echo
+               f_horizline
+               echo " Note: So far, drya can open this link only with Termux"
+               echo " > uDev: No other browser found"
+               echo
+               echo "Opening URL with Termux (terminal)"
+               termux-open-url https://github.com/SeivaDArve?tab=repositories
          esac
          
          # At the end of cloning, returning to the previous directory and discarding the variable
@@ -829,11 +844,60 @@ function f_exec {
       install)
          case $2 in
             dot-files)
-               echo "drya: drya dot-files install"
-               echo " > copy from drya repo to default locations"
+               echo "DRYa: drya install dot-files"
+               echo " > copying from drya repo to default locations"
+               echo " > uDev"
+               echo 
+               echo "It can config:"
+               echo " > emacs (init file + libraries)"
+               echo " > git-github"
+               echo " > termux"
+               echo " > vim"
+               echo " uDev"
+               echo
+               echo "attempting Vim"
+               echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
+               echo " to"
+               echo " > ~"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+               echo "Done!"
+            ;;
+            stroken)
+               bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
             ;;
             *)
                echo "drya: What do you want to install?"
+            ;;
+         esac
+      ;;
+      edit)
+         case $2 in
+            stroken)
+               # Editing stroken globally
+               vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken
+                  echo "File edited at: ...DRYa/all/dot-files/git-github/current-stroken"
+                  echo
+
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+                  echo "Copied also too: ...DRYa/install.uninstall/stroken"
+                  echo
+               
+                  # Adding info for the new user:
+                     echo -e "\n(note \"info exists also at: .../DRYa/all/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+
+               # Verbose output
+                  echo "You may install stroken as ~/.netrc file with the command:"
+                  echo " > drya install stroken"
+                  # uDev: to be sent to: drya.sh edit stroken
+            ;;
+            *)
+               echo "drya: What do you want to edit?"
+               echo 
+               echo "Notes:"
+               echo " > you can call '$ M' for the Menu with favourite files for edition"
+               echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
+
             ;;
          esac
       ;;
@@ -844,7 +908,7 @@ function f_exec {
                echo " > remove files from default locations and do not touch files inside drya repo"
             ;;
             *)
-               echo "drya: What do you want to remove?"
+               echo "drya: What do you want to remove? (uDev)"
             ;;
          esac
       ;;
@@ -855,7 +919,7 @@ function f_exec {
                echo " > copy from default locations to drya repo"
             ;;
             *)
-               echo "drya: What do you want to save?"
+               echo "drya: What do you want to save? (uDev)"
             ;;
          esac
       ;;
