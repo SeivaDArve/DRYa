@@ -548,17 +548,21 @@ alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
 
-# <drya ,.... menu>
+# Beginning of function: 'drya ,.... ' which is a menu. Call it also with command: '$ M'
    # DRYa sub-files are usually called by ,..... alias:
       # Multiple ways to edit this file # PERMANENT CHANGES if "git push" is used
          alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
          #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
 
       # Edit source-all-drya-files:
-      alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+         alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+         alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
 
-      # Edit dotFiles
+   # Function to remind the user about needed changes (uDev)
+      function f_uDev_1 {
+         echo -e "\n\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+      }
+   # Edit dotFiles
       function ,... {
 
          f_horizontal_line #If variable v_line is needed, this function must run before to create it
@@ -568,9 +572,9 @@ alias vimrc="vim ~/.vimrc"
          echo
 
          # Change the prompt message:
-         PS3="Select a file to edit: "
+            PS3="Select a file to edit: "
+            COLUMNS=0
 
-         COLUMNS=0
          select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" quit $v_line2; do
             case $opt in
                config-bash-alias)
@@ -578,27 +582,35 @@ alias vimrc="vim ~/.vimrc"
                   break
                   ;;
                source-all-drya-files)
-                ,..
+                  ,..
+                  break
             ;;
             .bashrc)
                vim ~/.bashrc
+               f_uDev_1
                break
             ;;
             source-all-moedaz-files)
-               
+               echo "uDev" 
+               f_uDev_1
             ;;
             com.list-econ-items.txt)
                vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
+               break
             ;;
             com.associative-array)
                vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
+               break
             ;;
-             .vimrc)
-                  vim ~/.vimrc
+            .vimrc)
+               vim ~/.vimrc
+               f_uDev_1
+               break
             ;;
             SOURCE)
                clear
                source ~/.bashrc
+               f_uDev_1
                break
             ;;
             1st)
@@ -606,6 +618,8 @@ alias vimrc="vim ~/.vimrc"
                echo "Editing the list of 1st apps to install"
                read -s -t 2
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
+               f_uDev_1
+               break
             ;;
             "emacs-init (emacs)")
                # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
@@ -615,9 +629,12 @@ alias vimrc="vim ~/.vimrc"
                      v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
                      emacs $v_init_file 
 
-                  # After edition, independently of the text editor, some changes are same. Therefore, to
+                  # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
                   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
                      f_manage_init_and_libraries_after_mod
+
+                     # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+                     #         to call the same function "f_manage_init_and_libraries_after_mod"
 
                break
             ;;
@@ -629,9 +646,13 @@ alias vimrc="vim ~/.vimrc"
                      v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
                      vim $v_init_file 
 
-                  # After edition, independently of the text editor, some changes are same. Therefore, to
+                  # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
                   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
                      f_manage_init_and_libraries_after_mod
+
+                     # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+                     #         to call the same function "f_manage_init_and_libraries_after_mod"
+
 
                break
             ;;
