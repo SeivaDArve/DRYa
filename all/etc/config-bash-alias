@@ -560,7 +560,7 @@ alias vimrc="vim ~/.vimrc"
 
    # Function to remind the user about needed changes (uDev)
       function f_uDev_1 {
-         echo -e "\n\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
       }
    # Edit dotFiles
       function ,... {
@@ -579,15 +579,23 @@ alias vimrc="vim ~/.vimrc"
             case $opt in
                config-bash-alias)
                   ,.
+                  clear
+                  figlet M
+                  echo "edited: config-bash-alias"
                   break
                   ;;
                source-all-drya-files)
                   ,..
+                  clear
+                  figlet M
+                  echo "edited: source-all-drya-files"
                   break
             ;;
             .bashrc)
                vim ~/.bashrc
-               f_uDev_1
+               clear
+               figlet M
+               echo "edited: ~/.bashrc"; f_uDev_1
                break
             ;;
             source-all-moedaz-files)
@@ -604,21 +612,28 @@ alias vimrc="vim ~/.vimrc"
             ;;
             .vimrc)
                vim ~/.vimrc
-               f_uDev_1
+               clear
+               figlet M
+               echo "edited: ~/.vimrc"; f_uDev_1
                break
             ;;
             SOURCE)
                clear
                source ~/.bashrc
-               f_uDev_1
+               clear
+               figlet M
+               echo "Reload done to: ~/.bashrc"
                break
             ;;
             1st)
                clear
+               figlet M
                echo "Editing the list of 1st apps to install"
                read -s -t 2
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
-               f_uDev_1
+               clear
+               figlet M
+               echo "edited: 1st"
                break
             ;;
             "emacs-init (emacs)")
