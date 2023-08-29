@@ -46,6 +46,7 @@
 
 # Repository: dWiki
    alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
+      alias dw="dwiki"
       
    # App under TODO-apps:
       alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
@@ -74,12 +75,18 @@
    alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
 
 # Repository: upK and upK-diario-Dv
-   source /data/data/com.termux/files/home/Repositories/upK/all/bin/bash/time.sh 2>/dev/null
+   source ${v_REPOS_CENTER}/upK/all/bin/bash/time.sh 2>/dev/null
+
+   # Open with github sync
    alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
-   alias Upk="bash ${v_REPOS_CENTER}/upK/upk.sh" # Same as previous alias but with capital letter for fast call at termux startup
-   alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" # It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
+      alias Upk="upk" # Same as previous alias but with capital letter for fast call at termux startup
+      alias UPK="upk" # Same as previous alias but with capital letter for fast call at termux startup
+
+   # Open without github sync
+      # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
+      alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
+
    # uDev: alias "upk dia"="...upk-diario-Dv"
-   
    # NOTE: reporiory "upk" when called on the terminal without argument, it will call "upK-diario-Dv" if existent
 
 # Repository 112-Shiva-Sutras
