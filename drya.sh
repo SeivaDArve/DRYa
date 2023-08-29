@@ -833,6 +833,12 @@ function f_exec {
          echo
          echo "uDev: This info must be environment variables for other apps"
       ;;
+      backup)
+         echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
+         echo 
+         echo "DRYa backup options:"
+         echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
+      ;;
       msgs)
          # Option to read the $DRYa_MESSAGES file
             # They are stored at: ~/.config/h.h/drya/.dryaMessages
