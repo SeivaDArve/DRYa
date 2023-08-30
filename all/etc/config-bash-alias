@@ -947,8 +947,8 @@ function D {
       cd ${v_REPOS_CENTER}/upK && ls
       
    # Implementation of Use 2:
-   elif [ $1 == "upk-dv" ]; then
-      cd ${v_REPOS_CENTER}/upK-diario-Dv && ls
+   elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
+      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet Menu D && echo -e "Command used: upk-dv\n" && ls
       
    # Implementation of Use 2:
    elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
