@@ -868,6 +868,15 @@ function f_exec {
                read -s -n 1
                cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
                echo "Done!"
+               echo
+               echo "attempting termux colors"
+               echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
+               echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
+               echo "   to      ~/.termux"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
+               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
+               echo "Done! (Restart thr terminal is needed)"
             ;;
             stroken)
                bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
