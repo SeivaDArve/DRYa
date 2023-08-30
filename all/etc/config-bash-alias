@@ -947,7 +947,7 @@ function D {
       cd ${v_REPOS_CENTER}/upK && ls
       
    # Implementation of Use 2:
-   elif [ $1 == "upkd" ]; then
+   elif [ $1 == "upk-dv" ]; then
       cd ${v_REPOS_CENTER}/upK-diario-Dv && ls
       
    # Implementation of Use 2:

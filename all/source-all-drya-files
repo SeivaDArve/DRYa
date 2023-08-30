@@ -84,7 +84,7 @@
 
    # Open without github sync
       # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
-      alias upkd="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
+      alias upk-dv="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
 
    # uDev: alias "upk dia"="...upk-diario-Dv"
    # NOTE: reporiory "upk" when called on the terminal without argument, it will call "upK-diario-Dv" if existent

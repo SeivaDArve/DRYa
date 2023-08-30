@@ -757,7 +757,7 @@ function f_exec {
             yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
             dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
             upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
-            upkd) 
+            upk-dv) 
                echo "cloning upK-diario-Dv"; 
                echo "Link for download is:"; 
                echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
