@@ -964,6 +964,10 @@ function D {
       cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
       
    # Implementation of Use 2:
+   elif [[ $1 == "log" ]]; then
+      cd ${v_REPOS_CENTER}/omni-log && ls
+      
+   # Implementation of Use 2:
    elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
       cd ${v_REPOS_CENTER}/yogaBashApp && ls
       
