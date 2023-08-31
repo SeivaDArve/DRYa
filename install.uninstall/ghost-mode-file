@@ -1,0 +1,1 @@
+If we want drya to enter and exit a system quietly and without messing it up, leving behind everything as it was, then, for every config that drya changes in the system, there must be a register of what the previous value for those variables was and then re-set the value for the value it was before drya was there 
