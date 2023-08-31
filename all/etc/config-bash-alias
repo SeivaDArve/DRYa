@@ -73,7 +73,7 @@ function f_horizontal_line {
             echo $v_underscoreCount
 }
 
-function e {
+function E {
    select i in Nano Vim; do 
       case $i in 
          Nano)
@@ -147,6 +147,10 @@ function siigo {
       f_chrome_siigo || f_termux_siigo
       
 }
+
+# Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
+   # More info at: '$ man bash'
+   HISTCONTROL=ignoreboth
 
 alias appdata="udev: must be completed"
 
