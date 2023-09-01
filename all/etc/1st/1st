@@ -10,6 +10,10 @@
    espeak # Text to speach
    termimage # Terminal images
    openssl # Encryption
+   python3
+   selenium
+   android-tools
+   irssi # IRC client for termux
 
 # Dependencies for: ezGIT {
 	pkg install file
