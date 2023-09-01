@@ -1,0 +1,3 @@
+# wifi-name: example-wifi-name
+# Password: <password here>
+# Found at: <GPS coordinates if found>
