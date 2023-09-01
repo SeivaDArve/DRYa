@@ -744,6 +744,9 @@ function f_exec {
 #         sleep 3
 #         less ~/Repositories/moedaz/README.md
 #      ;;
+      update) 
+         echo "uDev: Similar to: DD; G v; M; 9"
+      ;;
       clone)
          # Defore doing any cloning, change to the correct place for cloning
             # any repo under from Seiva's github clone to the correct place is automatically installed
