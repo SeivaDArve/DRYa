@@ -498,6 +498,7 @@ function ....... {
 }
 alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
+alias ,,,=", ; ,," # Same as both 2 previous commands put together
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 
@@ -545,13 +546,19 @@ alias R='echo "List Repositories by number and jumpt to them. uDev: Not availabl
 alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
 
 # Acessing emacs init.el file
-alias emacs-init="emacs ~/.emacs.d/init.el"
+   alias emacs-init="emacs ~/.emacs.d/init.el"
 
 # Using Num Pad numbers as shortcuts
-alias 2468="exit"
-alias 24685="shutdown now"
-alias 246854="shutdown -r now"
+   alias 2468="exit"
+   alias 24685="shutdown now"
+   alias 246854="shutdown -r now"
 
+   function win-hibernate {
+      cd ${v_REPOS_CENTER}/DRYa/all/dot-files/batch/shut-restart-hibernate-sleep/ && 
+      mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
+   }
+
+   alias exe="mnt/c/Windows/System32/cmd.exe /c"
 
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
