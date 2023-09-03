@@ -14,6 +14,7 @@
    selenium
    android-tools
    irssi # IRC client for termux
+   cmatrix
 
 # Dependencies for: ezGIT {
 	pkg install file
