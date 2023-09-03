@@ -7,6 +7,9 @@
 # Defining time between presentations
    v_presenting_time=6
 
+# uDev: Downloading single files from github as a cloud storage, instead of downloading full repos
+   # Tutorial: https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/
+
 function f_horizontal_line {
    # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
 
