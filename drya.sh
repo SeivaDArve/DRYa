@@ -943,6 +943,13 @@ function f_exec {
             ;;
          esac
       ;;
+      news)
+         # Runs a script inside DRYa directories that continuously rolls information
+         ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+      ;;
+      edit-news)
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+      ;;
       *) 
          f_exec
       ;;
