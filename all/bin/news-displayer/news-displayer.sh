@@ -50,7 +50,7 @@ echo " > [ Any key ] to Pause/Play"
 echo " > [ Ctrl-C  ] to Stop"
 echo 
 echo " Time set for each page: $v_presenting_time"
-echo " Type: '$ drya edit-news' on the terminal to edit this script"
+echo " Type: '$ drya edit news' on the terminal to edit this script"
 f_horizontal_line
 echo
 read -s -n 1 -t $v_presenting_time v_play_pause
