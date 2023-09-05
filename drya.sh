@@ -911,6 +911,9 @@ function f_exec {
                   echo " > drya install stroken"
                   # uDev: to be sent to: drya.sh edit stroken
             ;;
+            news)
+               vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+            ;;
             *)
                echo "drya: What do you want to edit?"
                echo 
@@ -946,9 +949,6 @@ function f_exec {
       news)
          # Runs a script inside DRYa directories that continuously rolls information
          ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
-      ;;
-      edit-news)
-         vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
       ;;
       *) 
          f_exec
