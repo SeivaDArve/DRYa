@@ -89,47 +89,76 @@ function E {
 
 function f_manage_init_and_libraries_after_mod {
    # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
+   # Has a function of presentation
+   # Has a function of prompting the user wether or not to apply the last changes
 
-   # Addind a little better presentation for our M menu:
-      clear; 
-      figlet "M"
-      echo -e "File closed: $v_init_file \n"
+   function f_presenting_M {
+      # presenting the file for our M menu:
+         clear; 
+         figlet "M"
+         echo -e "File closed (after editions):\n > $v_init_file \n"
+   }
 
-   # This is for Linux:
-
-      # Copy recursively all files about emacs to the localized machine-specific directory:
-         echo "DRYa: copying recursively: "
-         echo " > \"centralized emacs files\" into \"~/.emacs.d\""
-            cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
-         echo "   > done!"
-      
-      # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
-         echo " > removing: ~/.emacs (avoiding bugs)"
-            rm ~/.emacs 2>/dev/null; 
-         echo "   > done!"
-
-   # If we are on windows, the init file should also be somewhere at: %appdata%
-
-      v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
-      v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
-
-      if [ -d $v_correct_win_dir  ]; then
-         # If the v_correct_win_dir exists, set it up too:
-            echo -e "\nDRYa: Windows detected, adjusting: "
-
-         # Copy files and directories recursively for the directory that emacs prefers on windows
-            echo " > %AppData% exists, copying emacs files there too recursively"
-               cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* $v_correct_win_dir
-            echo "   > copied to: \"$v_correct_win_dir\""
-            echo -e "   > done! \n"
+   function f_asking_to_apply_init {
+      # Ask if the user wants the changes to apply to this machine imediatly
+         # If not, the user has to use this command again afterwards
+         # unless the user want to do it manually
          
-         # Removing the extra file/directory that can create initialization issues
-            echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
-               rm $v_bugged_win_dir_to_del 2>/dev/null
+         echo "Do you want to apply these changes NOW?"
+         echo " > If not, you may run this command againg later"
+         echo " > Unless you want to aplly changes manually"
+         echo 
+         read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
+   }   
+   
+   function f_applying_changes_init {
+      # This is for Linux:
+
+         # Copy recursively all files about emacs to the localized machine-specific directory:
+            echo "DRYa: copying recursively: "
+            echo " > \"centralized emacs files\" into \"~/.emacs.d\""
+               cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
+            echo "   > done!"
+         
+         # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
+            echo " > removing: ~/.emacs (avoiding bugs)"
+               rm ~/.emacs 2>/dev/null; 
             echo "   > done!"
 
-      fi
+      # If we are on windows, the init file should also be somewhere at: %appdata%
+
+         v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
+         v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
+
+         if [ -d $v_correct_win_dir  ]; then
+            # If the v_correct_win_dir exists, set it up too:
+               echo -e "\nDRYa: Windows detected, adjusting: "
+
+            # Copy files and directories recursively for the directory that emacs prefers on windows
+               echo " > %AppData% exists, copying emacs files there too recursively"
+                  cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* $v_correct_win_dir
+               echo "   > copied to: \"$v_correct_win_dir\""
+               echo -e "   > done! \n"
+            
+            # Removing the extra file/directory that can create initialization issues
+               echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
+                  rm $v_bugged_win_dir_to_del 2>/dev/null
+               echo "   > done!"
+
+         fi
+   }
                      
+   # After defining all 3 last function, let's assemble them:
+      # Presenting M
+         f_presenting_M
+
+      # Asking if the user really want apply changes (with: f_applying_changes_init)
+         f_asking_to_apply_init
+      
+         if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "Your choice was: Do apply\n\n"; f_applying_changes_init; 
+         elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "Your choise was: Do not apply"; 
+         else echo "Answers do not match, doing nothing for now. You can run the command again later";
+         fi
 }
 
 function siigo {

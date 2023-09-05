@@ -15,6 +15,7 @@
    android-tools
    irssi # IRC client for termux
    youtube-dl
+   cmatrix
 
 # Dependencies for: ezGIT {
 	pkg install file
