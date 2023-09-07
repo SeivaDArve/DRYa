@@ -9,7 +9,8 @@
 
 
 function f_greet {
-   figlet DRYa || echo "DRYa: Hi there;)"
+   clear
+   figlet DRYa || echo -e "drya:\vrunning drya.sh\n"
 }
 
 function f_master_dryaRC {
@@ -883,13 +884,22 @@ function f_exec {
                cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
                echo "Done! (Restart thr terminal is needed)"
             ;;
-            stroken)
+            netrc)
+               # Installing the file that allows the user to bypass entering user and password at every git push
                bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
             ;;
             upk)
                # Makes all dependencies for upk repo available
-               # install: upk; upkd; emacs; install init.el; source bashrc; figlet
-               echo "drya: udev: inssall all dependencies for upk repo to run"
+               # This might be used most likely at in-job phone
+               #    install: upk repo
+               #             upk-dv
+               #             emacs
+               #             emacs for windows
+               #             install init.el
+               #             source bashrc file
+               #             figlet
+               #             netrc
+               echo "drya: udev: instal all dependencies for upk repo to run"
             ;;
             *)
                echo "drya: What do you want to install?"
@@ -934,6 +944,19 @@ function f_exec {
             dot-files)
                echo "drya: drya dot-files remove"
                echo " > remove files from default locations and do not touch files inside drya repo"
+            ;;
+            upk)
+               # Makes all dependencies for upk repo disapear
+               # This might be used most likely at in-job phone
+               #    remove:  upk repo
+               #             upk-dv
+               #             !emacs
+               #             !emacs for windows
+               #             !install init.el
+               #             source bashrc file
+               #             !figlet
+               #             netrc
+               echo "drya: udev: remove all dependencies for upk repo to run"
             ;;
             *)
                echo "drya: What do you want to remove? (uDev)"
