@@ -87,15 +87,16 @@ function E {
 	
 }
 
+# uDev: Menu M should be moved to F (F-and-D or F-D)
 function f_manage_init_and_libraries_after_mod {
    # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
    # Has a function of presentation
    # Has a function of prompting the user wether or not to apply the last changes
 
-   function f_presenting_M {
+   function f_presenting_DF {
       # presenting the file for our M menu:
          clear; 
-         figlet "M"
+         figlet "D.F"
          echo -e "File closed (after editions):\n > $v_init_file \n"
    }
 
@@ -150,7 +151,7 @@ function f_manage_init_and_libraries_after_mod {
                      
    # After defining all 3 last function, let's assemble them:
       # Presenting M
-         f_presenting_M
+         f_presenting_DF
 
       # Asking if the user really want apply changes (with: f_applying_changes_init)
          f_asking_to_apply_init
@@ -610,8 +611,14 @@ alias vimrc="vim ~/.vimrc"
    # Edit dotFiles
 
 # List fav files for edition (as a menu M)
-   function M {
+   function F {
 
+      function f_greet_df { 
+         clear
+         figlet D.F
+      }
+      
+      
       f_horizontal_line #If variable v_line is needed, this function must run before to create it
       clear
 
@@ -626,22 +633,19 @@ alias vimrc="vim ~/.vimrc"
          case $opt in
             config-bash-alias)
                ,.
-               clear
-               figlet M
+               f_greet_df
                echo "edited: config-bash-alias"
                break
                ;;
             source-all-drya-files)
-               ,..
-               clear
-               figlet M
+               vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+               f_greet_df
                echo "edited: source-all-drya-files"
                break
             ;;
             .bashrc)
                vim ~/.bashrc
-               clear
-               figlet M
+               f_greet_df
                echo "edited: ~/.bashrc"; f_uDev_1
                break
             ;;
@@ -651,6 +655,8 @@ alias vimrc="vim ~/.vimrc"
             ;;
             com.list-econ-items.txt)
                vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
+               f_greet_df
+               echo "edited: com.list-econ-items.txt"
                break
             ;;
             com.associative-array)
@@ -659,27 +665,23 @@ alias vimrc="vim ~/.vimrc"
             ;;
             .vimrc)
                vim ~/.vimrc
-               clear
-               figlet M
+               f_greet_df
                echo "edited: ~/.vimrc"; f_uDev_1
                break
             ;;
             SOURCE)
                clear
                source ~/.bashrc
-               clear
-               figlet M
+               f_greet_df
                echo "Reload done to: ~/.bashrc"
                break
             ;;
             1st)
-               clear
-               figlet M
+               f_greet_df
                echo "Editing the list of 1st apps to install"
                read -s -t 2
                vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
-               clear
-               figlet M
+               f_greet_df
                echo "edited: 1st"
                break
             ;;
@@ -719,31 +721,29 @@ alias vimrc="vim ~/.vimrc"
                break
             ;;
             secundary-files)
-               clear
-               figlet M
+               f_greet_df
                echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
                break
             ;;
             quit) 
                break  
             ;;
-            help) 
-               clear
-               figlet M
-               echo "Menu M"
+            ? | help | -h | h) 
+               f_greet_df
+               echo "Menu D.F"
                echo " > Edits files inside 'DRYa repository' then copies those files across the system"
                echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
                echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
                break  
             ;;
             *)    
-               echo "Invalid option $REPLY"  
+               echo "Menu D.F: Invalid option $REPLY"  
             ;;
          esac
       done
    }   ## End of function M
 
-alias ,...="M" # Alias for Menu
+alias ,...="F" # Alias for Menu D.F (files part)
 
 #function ... {
 #	clear
@@ -974,7 +974,7 @@ function D {
    # Implementation of Use 1:
    if [ -z $1 ]; then 
       f_cor1
-      figlet "F-and-D"
+      figlet "D.F"
       f_resetCor
       echo " > No arguments. Choose some place to go to"
 
