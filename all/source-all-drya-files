@@ -105,11 +105,34 @@
 # Repository row-reader
    alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
 
-# Repository: omni-log-Dv
-   alias v-omni="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-   alias e-omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-   alias omni="emacs ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org"
-   alias omni-n-push-n-exit="vim ${v_REPOS_CENTER}/omni-log-Dv/multiplex.org; echo 'git add -A + git push (will be added soon)'; exit"
+# Repository: omni-log
+   # If windows with graphical interface is available, we will prefer that to the terminal version
+
+   # Using command 'log' to open our file
+   function log {
+      
+      # Defining the name of the file as a variable
+         v_choosen_file="${v_REPOS_CENTER}/omni-log/multiplex.org "
+
+      if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then
+         # if .exe is found, open GUI emacs on windows:
+            echo "Opening file (in GUI windows):"
+            echo " >  $v_choosen_file"
+            echo
+
+            /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_choosen_file 
+               echo -e "File closed\n" 
+
+      else
+         # Otherwise, open emacs in terminal:
+            echo "Opening file (in Terminal Linux):"
+            echo " > omni-log/$v_choosen_file"
+            echo
+
+            emacs $v_choosen_file 
+               echo -e "File closed\n" && f_cr && f_file_closed #\
+      fi
+   }
 
 # Repository: DRYa (internal files - part 2)
    # Remove temporary dir created by DRYa's other scripts
@@ -135,7 +158,7 @@
    
    # Drya bin files
       # Sourcing all stand-alone scripts
-         source ${v_REPOS_CENTER}/DRYa/all/bin/bin/*
+         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/*
 
       # Sourcing a specific list of scripts
          alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"
