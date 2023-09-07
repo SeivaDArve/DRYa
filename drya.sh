@@ -886,6 +886,11 @@ function f_exec {
             stroken)
                bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
             ;;
+            upk)
+               # Makes all dependencies for upk repo available
+               # install: upk; upkd; emacs; install init.el; source bashrc; figlet
+               echo "drya: udev: inssall all dependencies for upk repo to run"
+            ;;
             *)
                echo "drya: What do you want to install?"
             ;;
