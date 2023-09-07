@@ -594,26 +594,17 @@ alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
 
-# Beginning of function: 'drya ,.... ' which is a menu. Call it also with command: '$ M'
-   # DRYa sub-files are usually called by ,..... alias:
-      # Edit THIS file (config-bash-alias) ## PERMANENT CHANGES if "git push" is used
-         alias edit-alias="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
-         #alias ,.="vim ~/Repositories/DRYa/all/etc/config-bash-alias" ## This line is already set at 'source-all-drya-files'
 
-      # Edit source-all-drya-files:
-         alias edit-sources="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-         alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-
-   # Function to remind the user about needed changes (uDev)
-      function f_uDev_1 {
-         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
-      }
-   # Edit dotFiles
-
-# List fav files for edition (as a menu M)
+# List fav files for edition (menu F)
    function F {
 
+      function f_uDev_1 {
+         # Function to remind the user about needed changes (uDev)
+         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+      }
+
       function f_greet_df { 
+         # Avoiding repetition
          clear
          figlet D.F
       }
@@ -632,7 +623,7 @@ alias vimrc="vim ~/.vimrc"
       select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc com.list-econ-items.txt com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files help quit $v_line2; do
          case $opt in
             config-bash-alias)
-               ,.
+               vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
                f_greet_df
                echo "edited: config-bash-alias"
                break
@@ -728,7 +719,7 @@ alias vimrc="vim ~/.vimrc"
             quit) 
                break  
             ;;
-            ? | help | -h | h) 
+            ? | help | --help | -h | h) 
                f_greet_df
                echo "Menu D.F"
                echo " > Edits files inside 'DRYa repository' then copies those files across the system"
@@ -741,9 +732,7 @@ alias vimrc="vim ~/.vimrc"
             ;;
          esac
       done
-   }   ## End of function M
-
-alias ,...="F" # Alias for Menu D.F (files part)
+   }   ## End of function F
 
 #function ... {
 #	clear

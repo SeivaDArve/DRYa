@@ -929,6 +929,27 @@ function f_exec {
             news)
                vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
             ;;
+            alias | config-bash-alias)
+               ## PERMANENT CHANGES if "git push" is used
+               vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+               
+               # Other ways to open the same file: 
+                  # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+                     # '$ F'
+
+                  # Using the alias set on 'source-all-drya-files'
+                     # '$ ,.' 
+            ;;
+            source | source-drya | source-all-drya-files) 
+               vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+
+               # Other ways to open the same file: 
+                  # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+                     # '$ F'
+
+                  # Using the alias set on 'source-all-drya-files'
+                     # '$ ,..' 
+            ;;
             *)
                echo "drya: What do you want to edit?"
                echo 

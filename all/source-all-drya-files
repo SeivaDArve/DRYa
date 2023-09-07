@@ -127,6 +127,8 @@
    # Sourcing DRYa's own configs
       source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
       alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
+      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      alias ,...="F" # Alias for Menu D.F (files part)
 
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
