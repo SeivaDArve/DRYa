@@ -40,27 +40,33 @@ function f_horizontal_line {
 
 
 
-while true; do
-# source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+while true
+   do
+      
+   # Lists:
+   # moedaz: burocratic toDos; 
+   #         shopping list
+   # source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
 
-clear
-figlet News
-echo "drya: currently displaying NEWS"
-echo " > [ Any key ] to Pause/Play"
-echo " > [ Ctrl-C  ] to Stop"
-echo 
-echo " Time set for each page: $v_presenting_time"
-echo " Type: '$ drya edit news' on the terminal to edit this script"
-f_horizontal_line
-echo
-read -s -n 1 -t $v_presenting_time v_play_pause
+   clear
+   figlet News
+   echo "drya: currently displaying NEWS"
+   echo " > [ Any key ] to Pause/Play"
+   echo " > [ Ctrl-C  ] to Stop"
+   echo " > [ ${v_presenting_time}s ] time set for each page"
+   echo " > [ $ drya edit news ] to edit this script"
+   f_horizontal_line
+   echo
+   read -s -n 1 -t $v_presenting_time v_play_pause
 
-if [ -z $v_play_pause ]; then 
-   echo "var empty, proceed"; sleep 0.5;
+   v_play_pause=$(echo $v_play_pause || sed -i 's/ /a/g')
 
-else 
-   echo "var not empty, pause"; sleep 0.5; 
-   read -s -n 1
-fi
+   if [ -z $v_play_pause ]; then
+      echo "var empty, proceed"; sleep 0.5;
+
+   else 
+      echo "var not empty, pause"; sleep 0.5; 
+      read -s -n 1
+  fi
 
 done
