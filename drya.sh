@@ -215,9 +215,14 @@ function f_tableOfContents {
 	echo ""
 	echo "Menu D (drya)"
 	echo "Menu J (jarve)"
-	echo "Menu G (easyGit)"
+	echo "Menu G (ezGIT)"
 	echo "Menu Y (yogaBashApp)"
 	f_setafC
+}
+
+function f_question {
+   echo "uDev: Ask the question properly:"
+   read -s -n 1 -p "are you sure you want to remove the file?" v_question
 }
 
 function f_tput_tutorial {
@@ -979,6 +984,14 @@ function f_exec {
                #             netrc
                echo "drya: udev: remove all dependencies for upk repo to run"
             ;;
+            netrc)
+               v_file=".netrc"
+               v_message="Are you sure you want to remove $v_file?"
+               f_question
+               if [ $v_question == "y" || "Y" ]; then
+                  echo "drya: removing the dot file ~/$v_file"
+               fi
+            ;;
             *)
                echo "drya: What do you want to remove? (uDev)"
             ;;
@@ -997,7 +1010,7 @@ function f_exec {
       ;;
       news)
          # Runs a script inside DRYa directories that continuously rolls information
-         ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
       ;;
       *) 
          f_exec
