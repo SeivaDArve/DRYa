@@ -178,6 +178,8 @@ function siigo {
       
 }
 
+alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
    # More info at: '$ man bash'
    HISTCONTROL=ignoreboth
