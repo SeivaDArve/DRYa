@@ -1,4 +1,5 @@
-clear; 
+#!/bin/bash
+clear
 figlet "DRYa"; 
 tput cup 4 23; 
 echo "Don't Repeat Yourself (app)"; 
