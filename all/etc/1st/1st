@@ -16,6 +16,7 @@
    irssi # IRC client for termux
    youtube-dl
    cmatrix
+   tput 
 
 # Dependencies for: ezGIT {
 	pkg install file
