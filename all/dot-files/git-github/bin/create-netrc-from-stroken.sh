@@ -5,10 +5,11 @@
 clear
 figlet DRYa
 
-echo "Installing Stroken at ~"
+echo "Installing Stroken as ~/.netrc"
 echo
 echo "Job to be done:"
-echo " > echo \$stroken > ~/.netrc && edit the file..."
+echo " > echo \$stroken > ~/.netrc"
+echo " > edit ~/.netrc"
 echo
 echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
 echo
@@ -28,14 +29,16 @@ echo
     v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | tail -n 1)
 
 # Creating a file ~/.netrc with our new stroken info
-  echo "machine github.com login $v_username password $v_token" > ~/.netrc
-  echo "File created "
-  echo " > with stroken instead of a token (still contains a bug)"
-  echo " > Press [Any key] to continue..."
-  read -s -n 1
+   echo "machine github.com login $v_username password $v_token" > ~/.netrc
+   echo "File created "
+   echo " > with stroken instead of a token (still contains a bug)"
+   echo " > Press [Any key] to continue and to edit..."
+   read -s -n 1
+   echo
 
-clear
-figlet DRYa
-echo "Opening the file ~/.netrc"
-  read -s -n 1 -t 3
-  vim ~/.netrc
+# Opening the file to edit
+   echo "Opening the file ~/.netrc"
+   echo " > (3 seconds to cancel with Ctrl-C)"
+   read -s -n 1 -t 3
+   vim ~/.netrc
+   echo "Done!"
