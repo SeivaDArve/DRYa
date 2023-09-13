@@ -220,11 +220,6 @@ function f_tableOfContents {
 	f_setafC
 }
 
-function f_question {
-   echo "uDev: Ask the question properly:"
-   read -s -n 1 -p "are you sure you want to remove the file?" v_question
-}
-
 function f_tput_tutorial {
 	cat << heredoc
 (1)String output parameter settings
@@ -955,6 +950,10 @@ function f_exec {
                   # Using the alias set on 'source-all-drya-files'
                      # '$ ,..' 
             ;;
+            termux)
+               # Will edit termux.properties file at ~/.termux/termux.properties
+               echo uDev
+            ;;
             *)
                echo "drya: What do you want to edit?"
                echo 
@@ -985,12 +984,13 @@ function f_exec {
                echo "drya: udev: remove all dependencies for upk repo to run"
             ;;
             netrc)
-               v_file=".netrc"
-               v_message="Are you sure you want to remove $v_file?"
-               f_question
-               if [ $v_question == "y" || "Y" ]; then
-                  echo "drya: removing the dot file ~/$v_file"
-               fi
+               f_greet
+               echo "drya: removing the dot file ~/.netrc"
+               echo -e "\nAre you sure you want to remove ~/.netrc? \n > [ Ctrl-C ] to Cancel\n > [ Any key ] to accept"
+               read -s -n 1
+               echo
+               rm ~/.netrc && echo "Done!"
+
             ;;
             *)
                echo "drya: What do you want to remove? (uDev)"
@@ -1011,6 +1011,21 @@ function f_exec {
       news)
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+      ;;
+      vlm)
+         # Works on termux only
+            # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
+
+         echo uDev
+
+         #echo "volume keys on Termux toggled. Now they act as X instead of Y"
+         # volume-keys=volume
+         # volume-keys=virtual
+      ;;
+      present)
+         # Presenting DRYa
+
+         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: app available"  # In case figlet or tput are not installed, echo only "DRYa" instead
       ;;
       *) 
          f_exec
