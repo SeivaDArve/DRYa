@@ -21,7 +21,7 @@
    # Display info about it at the screen when DRYa is loaded by the terminal
    
       # Presenting DRYa
-         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: app available"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
       echo "DRYa (app manager) is online"
       echo " > Find verbose output (apps included) at:"
