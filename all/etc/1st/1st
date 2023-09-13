@@ -17,6 +17,7 @@
    youtube-dl
    cmatrix
    tput 
+   neofetch
 
 # Dependencies for: ezGIT {
 	pkg install file
