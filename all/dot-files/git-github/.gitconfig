@@ -13,3 +13,5 @@
 	directory = /mnt/c/Repositories/upK
 [core]
 	editor = vim
+[alias]
+   please = push --force-with-lease
