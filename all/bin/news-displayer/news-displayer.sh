@@ -57,6 +57,36 @@ function f_horizontal_line {
          echo $v_underscoreCount
 }
 
+function f_horizontal_line_red {
+   # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
+
+      v_count="$COLUMNS"
+         #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+         #read
+
+      # You may choose the apropriate symbol here
+         v_underscore="-"
+
+      # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+         v_underscoreCount=""
+
+         for e in $(seq $v_count); do 
+            v_underscoreCount="$v_underscoreCount$v_underscore"
+         done
+
+      # The result is an horizontal line
+         #echo "var is $v_underscoreCount"
+         #read
+         v_line=$v_underscoreCount
+
+         # removing last 4 characters from v_line. This way it can be used in SELECT menus
+            v_line2=${v_line::-4}
+
+         tput setaf 1
+         echo $v_underscoreCount
+         tput sgr0
+}
+
 
 
 while true
@@ -67,24 +97,24 @@ while true
    #         shopping list
    # source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
 
-   clear
-
-   f_cor; figlet News; tput sgr0
-
-   echo "DRYa: currently displaying NEWS, ToDo lists and REMINDERs"
-   echo " > [ Any key ] to Pause/Play"
-   echo " > [ Ctrl-C  ] to Stop"
-   echo " > [ ${v_presenting_time}s ] time set for each page"
-   echo " > [ $ drya edit news ] to edit this script"
-
-   f_cor; f_horizontal_line; tput sgr0
-
-   echo
+   # Standard message
+      clear
+      f_cor; figlet Reminders; tput sgr0
+      echo "DRYa: currently displaying NEWS, ToDo lists and REMINDERs"
+      echo " > [ Any key ] to Pause/Play"
+      echo " > [ Ctrl-C  ] to Stop"
+      echo " > [ ${v_presenting_time}s ] time set for each page"
+      echo " > [ $ drya edit news ] to edit this script"
+      f_horizontal_line_red
+      echo
 
    # Alternation between frames
       v_frame_n=$(($v_frame_n+1))
+      echo "######### $v_frame_n (number of v_frame_n)"
       #[ $v_frame_n == "1" ]; cat ${v_REPOS_CENTER}/moedaz/all/var/com.todo-lista-de-tarefas.org
+      echo "######### $v_frame_n (number of v_frame_n)"
       [ $v_frame_n == "2" ]; bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh -R
+      #echo "######### $v_frame_n (number of v_frame_n)"
       [ $v_frame_n == "3" ]; v_frame_n=0 
 
 
