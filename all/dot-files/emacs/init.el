@@ -3,6 +3,9 @@
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
 
+;; test for android browsers
+   (setq browse-url-browser-function 'browse-url-xdg-open)
+
 ;; Atempt to load upk init file into emacs
 (add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
 
