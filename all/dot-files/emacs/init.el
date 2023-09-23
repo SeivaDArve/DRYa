@@ -7,7 +7,7 @@
    (setq browse-url-browser-function 'browse-url-xdg-open)
 
 ;; Atempt to load upk init file into emacs
-(add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
+   (add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
 
 (defun dv-test-23 ()
   (interactive)
@@ -647,9 +647,11 @@
        (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 ;;       
 ;;       ;; Startup
-       (setq inhibit-startup-screen t)
-;;       ;;(setq initial-scratch-message
-;;       ;;      ";; Hello world.\n")
+         (setq inhibit-startup-screen t)
+
+;;       ;;(setq initial-scratch-message 
+;;               ";; Scratch-buffer\n\n")
+               
 ;;       
 ;;       ;; Size of the starting Window
 ;;       (setq initial-frame-alist '((top . 1)
