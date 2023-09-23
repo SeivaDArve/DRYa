@@ -11,6 +11,7 @@
 	directory = /mnt/c/Repositories/yogaBashApp
 	directory = /mnt/c/Repositories/upK-diario-Dv
 	directory = /mnt/c/Repositories/upK
+   directory = /mnt/c/Repositories/Dota-2-guide
 [core]
 	editor = vim
 [alias]
