@@ -3,16 +3,16 @@
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
 
-;; test for android browsers
+;; Configure which browser is set to defaulf on startup (according to OS)
    ;; If windows is found
-   (when (eq system-type' windows-nt)
-         (message "dv: running on windows"))
+      (when (eq system-type' windows-nt)
+            (message "dv: running on windows"))
 
    ;; If windows is not found (must be either android or linux)
-   (when (not (eq system-type' windows-nt))
-         (message "dv: windows not detected")
-         (setq browse-url-browser-function 'browse-url-xdg-open)
-         (message "dv: default browser now is determined by either android or linux"))
+      (when (not (eq system-type' windows-nt))
+            (message "dv: (1/2) windows not detected")
+            (setq browse-url-browser-function 'browse-url-xdg-open)
+            (message "dv: (2/2) default browser now is determined by either android or linux"))
 
 ;; Atempt to load upk init file into emacs
    (add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
