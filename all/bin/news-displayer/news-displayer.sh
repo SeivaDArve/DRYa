@@ -103,7 +103,8 @@ while true
       echo "DRYa: currently displaying NEWS, ToDo lists and REMINDERs"
       echo " > [ Any key ] to Pause/Play"
       echo " > [ Ctrl-C  ] to Stop"
-      echo " > [ ${v_presenting_time}s ] time set for each page"
+      echo " > [ H ] for configurations, options and help"
+               # echo " > [ ${v_presenting_time}s ] time set for each page"
       echo " > [ $ drya edit news ] to edit this script"
       f_horizontal_line_red
       echo
