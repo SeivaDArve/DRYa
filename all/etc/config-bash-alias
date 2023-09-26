@@ -670,8 +670,10 @@ alias vimrc="vim ~/.vimrc"
                      break
                   ;;
                   source-all-moedaz-files)
-                     echo "uDev" 
-                     f_uDev_1
+                     f_greet_df
+                     vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+                     echo "edited: source-all-moedaz-files"
+                     break
                   ;;
                   com.list-econ-items.txt)
                      vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
