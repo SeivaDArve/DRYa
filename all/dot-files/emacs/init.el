@@ -25,6 +25,9 @@
       (add-to-list 'load-path "~/libraries/upk/upk.el")
       ;;(load "~/libraries/upk/upk.el")
 
+;; Creating a keybinding for org-agenda
+   (global-set-key (kbd "C-x a") #'org-agenda)
+
 (defun td ()
   (interactive)
   (beginning-of-line)(insert "- [ ] "))
