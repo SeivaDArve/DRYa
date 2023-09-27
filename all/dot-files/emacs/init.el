@@ -5,17 +5,25 @@
 
 ;; Configure which browser is set to defaulf on startup (according to OS)
    ;; If windows is found
-      (when (eq system-type' windows-nt)
+      (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
             (message "dv: running on windows"))
 
-   ;; If windows is not found (must be either android or linux)
+   ;; If windows is not found (it must be either android or linux) the default web browser is changed
+      ;; Now any link will be open with Linux based (or Android based) web browser
       (when (not (eq system-type' windows-nt))
             (message "dv: (1/2) windows not detected")
             (setq browse-url-browser-function 'browse-url-xdg-open)
             (message "dv: (2/2) default browser now is determined by either android or linux"))
 
 ;; Atempt to load upk init file into emacs
-   (add-to-list 'load-path "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/libraries")
+   ;; changing variable: startup--xdg-config-home-emacs
+      ;; If it is windows
+      (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+      (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+
+   ;; Attempting to load upk.el
+      (add-to-list 'load-path "~/libraries/upk/upk.el")
+      ;;(load "~/libraries/upk/upk.el")
 
 (defun dv-test-23 ()
   (interactive)
@@ -220,40 +228,66 @@
   
 (defun dv-insert-new-day-upk ()
   (interactive)
-  ;; Prompting user for 2 values
-  (setq v_turno (read-string "Turno do dia de hoje: "))
-  ;;(setq v_text2 (read-string "Nova tarefa? "))
-  ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
-  ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
-  ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
-  ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia
-  ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X horas
-  (end-of-buffer)
-  (insert "\n")
-  (insert "* Dia ")
-  (insert (format-time-string "<%Y-%m-%d %a> "))
-  (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
-  (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
-        (insert "\n\n- [ ] () Pre-Requisitos \n")
-        (insert ":PROPERTIES: \n")
-        (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
-        (when (string-equal v_turno "N")(insert "- [ ] Entregar a folha de ocorrencias do turno anterior\n"))
-        (insert "- Colega do turno anterior: \n") 
-        ;; Se for turno N: "- [ ] Colocar baterias a carregar"
-        (insert ":END:\n\n")
-        (insert "- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
-        (insert "- [ ] Escrever folha de ocorrencias\n")
-        (insert "- [ ] Tirar foto à folha de ocorrencias\n")
-        (when (string-equal v_turno "C")(insert "- [ ] Entregar a folha de ocorrencias\n\n"))
-        (insert "- [ ] Passagem de Serviço ")
-        (insert (format-time-string "<%Y-%m-%d %a>"))
-        (insert "{ \nAo: \n  -\n}\n")
-        ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
-        (insert ":END:\n\n")
-        (insert "- Resumo\n" ":PROPERTIES: \n")
-        (insert "- Total Horas: \n")
-        (insert ":END:\n\n"))
-  (when (string-equal v_turno "Fg")(message "Dv: Não esquecer de verificar a data deste dia de folga"))
+
+  ;; Prompting user for values
+     (setq v_turno (read-string "Turno do dia de hoje: "))
+     ;;(setq v_text2 (read-string "Nova tarefa? "))
+
+  ;; uDev:
+     ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
+     ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
+     ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
+     ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia, rotina de avac, rotina de legionela
+     ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X hora
+
+  ;; Introdução de Header, independentemente se é Folga ou Turno
+     (end-of-buffer)
+     (insert "\n")
+     (insert "* Dia ")
+     (insert (format-time-string "<%Y-%m-%d %a> "))
+     (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
+
+  ;; Quando é dia de turno (B, C, N):
+     (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
+         
+         ;; Pre-Requisitos + PROPERTIES 
+           (insert "\n\n- [ ] () Pre-Requisitos \n")
+           (insert ":PROPERTIES: \n")
+           (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+
+        ;; Quando o turno é especificamente "N", adicionar: 
+           (when (string-equal v_turno "N")
+               (insert "- [ ] Entregar a folha de ocorrencias do turno anterior\n")
+               (insert "- [ ] Colocar baterias a carregar\n"))
+
+        ;; Adicionar mais texto neutro (Inserir END dos Pre-requisitos):
+               (insert "- Colega do turno anterior: \n") 
+               (insert ":END:\n")
+
+        ;; Se o turno for "B", inserir rotinas:
+           (when (string-equal v_turno "B")
+               (rotina-manha))
+             
+        ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
+               (insert "\n- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
+               (insert "- [ ] Escrever folha de ocorrencias\n")
+               (insert "- [ ] Tirar foto à folha de ocorrencias\n")
+
+        ;; Se o turno for "C" (adicionar texto aos Pos-Requisitos)
+           (when (string-equal v_turno "C")
+               (insert "- [ ] Entregar a folha de ocorrencias\n\n"))
+               (insert "- [ ] Passagem de Serviço ")
+               (insert (format-time-string "<%Y-%m-%d %a>"))
+               (insert "{ \nAo: \n  -\n}\n")
+               ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
+               (insert ":END:\n\n")
+               (insert "- Resumo\n" ":PROPERTIES: \n")
+               (insert "- Total Horas: \n")
+               (insert ":END:\n\n"))
+
+  ;; Quando é dia de folga
+  (when (or (string-equal v_turno "Fg")(string-equal v_turno "fg"))
+        (message "Dv: Não esquecer de verificar a data deste dia de folga"))
         ;;(u)
   )
 
@@ -286,6 +320,18 @@
   (insert "<")
   (insert (format-time-string "%Y-%m-%d %a"))
   (insert ">"))
+
+(defun rotina-manha ()
+   (interactive)
+   (insert "\n- [ ] () Rotina Diária do Turno da Manhã
+:PROPERTIES:
+Descricao { 
+}
+
+Notas { 
+}
+
+:END:\n"))
 
 (defun dv-transfer-ot ()
    "Usa as funçoes 'oj' "
@@ -362,6 +408,35 @@
   ;; adding a smile at the end of "world" word:
   (previous-line)(end-of-line)(insert ";)")
   (message "Script finished:)"))
+
+
+;;-----------------------------------------
+;; linhas sobre o siigo
+
+(defun gt ()
+    "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
+  (interactive)
+  (search-backward "Tipo: ")(end-of-line)
+  (insert "Comando de iluminação/AVAC através da GTC  - Técnico"))
+
+
+(defun reu ()
+  (interactive)
+    "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
+  (search-backward "Tipo: ")(end-of-line)
+  (insert "Preparação trabalhos, reuniões de manutenção, etc - Técnico"))
+
+(defun e-em ()
+  (interactive)
+    "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
+  (search-backward "Tipo: ")(end-of-line)
+  (insert "Apoio de empresas exteriores"))
+
+
+;; fim das linhas sobre o siigo
+;;-------------------------------------------------------------------
+
+
 
 (defun dv-search-undone-checkbox ()
   (interactive)
@@ -482,7 +557,12 @@
   (setq v_ot_num (read-string "Qual é a ordem numérica desta OT? "))
   (insert "\n- [ ] << OT >> Grupo de tempos >> SIIGO >> ")(insert v_ot_num)(insert " <<\n")
   (insert ":PROPERTIES:\n")
-  (insert "Tipo: \n")
+  (insert "Tipo: \n\n")
+
+      ;; Inserting links where their destinations are elisp functions
+      (insert"[[elisp:(gt)][CMD ilum/avac GTC (gt)]] | [[elisp:(reu)][Reuniões (reu)]] | [[elisp:(e-em)][Empresas Exteriores (e em)]]")
+
+  (insert "\n\n")
   (insert "Titulo (inserido na OT nr.): \n\n")
   (insert "Descriçao { \n}\n\n")
   (insert "Tempos { \n\n\n\n}\n\n") 
