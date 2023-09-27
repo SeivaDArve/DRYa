@@ -25,6 +25,10 @@
       (add-to-list 'load-path "~/libraries/upk/upk.el")
       ;;(load "~/libraries/upk/upk.el")
 
+(defun td ()
+  (interactive)
+  (beginning-of-line)(insert "- [ ] "))
+
 (defun dv-test-23 ()
   (interactive)
   (message "teste 23 done"))
