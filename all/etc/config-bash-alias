@@ -178,7 +178,6 @@ function siigo {
       
 }
 
-alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
    # More info at: '$ man bash'
@@ -539,8 +538,10 @@ alias ,,,=", ; ,," # Same as both 2 previous commands put together
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 
-
 alias em="emacs"
+alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+
 alias all="cd all && ls"
 alias hi="echo hello"
 
