@@ -888,17 +888,38 @@ function f_exec {
                # Installing the file that allows the user to bypass entering user and password at every git push
                bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
             ;;
-            upk)
+            upk-at-work)
                # Makes all dependencies for upk repo available
                # This might be used most likely at in-job phone
-               #    install: upk repo
-               #             upk-dv
-               #             emacs
+                  cd ${v_REPOS_CENTER}
+
+               # Install emacs
+                  pkg install emacs
+                  # uDev: Test if it is windows and install GUI version also
+
+               # Install figlet
+                  pkg install figlet
+
+               # Install vim
+                  pkg install vim
+
+               # Repo: upk
+                  echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
+
+               # Installing .netrc
+                  bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+                  vim ~/.netrc
+                  
+               # Repo: upk-diario-dv
+                  echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+         
+
+               # Refresh the terminal
+                  #source ~/.bashrc
+
+               #    install: 
                #             emacs for windows
-               #             install init.el
-               #             source bashrc file
-               #             figlet
-               #             netrc
+               #             instal init.el
                echo "drya: udev: instal all dependencies for upk repo to run"
             ;;
             *)

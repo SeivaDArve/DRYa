@@ -499,7 +499,12 @@ function . {
 #alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
 alias ..="cd .."
 alias ...="cd -"
-alias ....="pwd"
+
+function .... {
+   echo 'Current location $(pwd)'
+   echo " > $(pwd)"
+}
+
 function ..... {
    # Saves current directory location 
    # uDev: If script npNP gets finished, this one function gets useless. Finish that
@@ -665,8 +670,10 @@ alias vimrc="vim ~/.vimrc"
                      break
                   ;;
                   source-all-moedaz-files)
-                     echo "uDev" 
-                     f_uDev_1
+                     f_greet_df
+                     vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+                     echo "edited: source-all-moedaz-files"
+                     break
                   ;;
                   com.list-econ-items.txt)
                      vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
