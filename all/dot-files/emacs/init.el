@@ -424,20 +424,20 @@ Notas {
     "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
   (interactive)
   (search-backward "Tipo: ")(end-of-line)
-  (insert "Comando de iluminação/AVAC através da GTC  - Técnico"))
+  (insert "(gt) Comando de iluminação/AVAC através da GTC  - Técnico"))
 
 
 (defun reu ()
   (interactive)
     "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
   (search-backward "Tipo: ")(end-of-line)
-  (insert "Preparação trabalhos, reuniões de manutenção, etc - Técnico"))
+  (insert "(reu) Preparação trabalhos, reuniões de manutenção, etc - Técnico"))
 
 (defun e-em ()
   (interactive)
     "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
   (search-backward "Tipo: ")(end-of-line)
-  (insert "Apoio de empresas exteriores"))
+  (insert "(e-em) Apoio de empresas exteriores"))
 
 
 ;; fim das linhas sobre o siigo
