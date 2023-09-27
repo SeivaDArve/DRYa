@@ -1,8 +1,8 @@
 ;; Title: File to store elisp functions for the org-mode files from upk users
 
-;;(defun test28 ()
-;;   (interactive)
-;;   (message "file found"))
+(defun dv-test ()
+   (interactive)
+   (message "file found"))
 
 (message "file upk.el found")
 
