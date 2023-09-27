@@ -70,10 +70,9 @@
    
 # Repository: moedaz
    alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
+   alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
-   alias pri="clear; figlet moedaz; sleep 1; emacs ${v_REPOS_CENTER}/moedaz/all/var/com.todo-lista-de-tarefas.org 2>/dev/null"
-   alias todo="emacs ${v_REPOS_CENTER}/moedaz/all/todo.org"
 
 # Repository: QR-walking-stick (inside dWiki/TODO-apps)
    alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
