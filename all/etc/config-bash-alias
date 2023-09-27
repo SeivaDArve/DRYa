@@ -697,6 +697,7 @@ alias vimrc="vim ~/.vimrc"
                      source ~/.bashrc
                      f_greet_df
                      echo "Reload done to: ~/.bashrc"
+                     # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
                   1st)
