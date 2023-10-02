@@ -939,6 +939,10 @@ function f_exec {
                   #             instal init.el
                   echo "drya: udev: instal all dependencies for upk repo to run"
                ;;
+               doom-emacs-windows)
+                  echo "uDev: Tutorial here:"
+                  echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
+               ;;
                *)
                   echo "drya: What do you want to install? invalid arg"
                ;;
