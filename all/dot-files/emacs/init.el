@@ -1,5 +1,12 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+
+;; testing buttons:
+   (defun wh/help-hello-world ()
+     (interactive)
+     (with-help-window (help-buffer)
+     (princ "foo_bar is a function.\n\nIt does stuff.")))
+
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
 
