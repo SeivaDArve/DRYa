@@ -1,20 +1,32 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
-<<<<<<< HEAD
+
+
+;; Defining variable inside emacs es per variables on bash
+   (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
 ;; testing buttons:
    (defun wh/help-hello-world ()
      (interactive)
      (with-help-window (help-buffer)
      (princ "foo_bar is a function.\n\nIt does stuff.")))
-=======
+
 ;; Note: How to Tangle init.org into init.el (from the terminal... to automate via bash
    ;; source: https://emacs.stackexchange.com/questions/27126/is-it-possible-to-org-bable-tangle-an-org-file-from-the-command-line 
    ;; emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "file-to-tangle.org")'
->>>>>>> d6578d0c12ddac2448a055d9b04658698f4131a7
 
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
+
+
+;; Attempting to config org-agenda
+   (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
+         (setq org-agenda-files '("c:/Repositories/moedaz/all/")))
+
+   ;;(when (not (eq system-type' windows-nt))  ;; If OS is Linux or Android
+   ;;      (setq org-agenda-files '(concat v-repos-center "/moedaz/all/")))
+
+
 
 ;; Configure which browser is set to defaulf on startup (according to OS)
    ;; If windows is found
@@ -42,6 +54,13 @@
 ;; Creating a keybinding for org-agenda
    (global-set-key (kbd "C-x a") #'org-agenda)
 
+
+(defun dv-f5 ()
+  "Reloads the init.el file and the current buffer with command: M-x eval-buffer"
+  (interactive)
+  (message "dv: eval-buffer: configs reloaded")
+  (eval-buffer))
+  
 (defun td ()
   (interactive)
   (beginning-of-line)(insert "- [ ] "))
