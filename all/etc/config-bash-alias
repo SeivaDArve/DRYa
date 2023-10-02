@@ -601,15 +601,15 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
+function f_notes {
+   echo "uDev: Will handle user notes and anotations in the future"
+   echo "alias << 1 >> set to:"
+   echo " > omni-log" && alias 1="echo uDev: will be omni-log"
+}
 
 
 # List fav files for edition (menu F)
    function F {
-
-      function f_uDev_1 {
-         # Function to remind the user about needed changes (uDev)
-         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
-      }
 
       function f_greet_df { 
          # Avoiding repetition
@@ -617,39 +617,66 @@ alias vimrc="vim ~/.vimrc"
          figlet D.F
       }
       
-      # For clean code, set the variables before 'select' menu
-         f_horizontal_line #If variable v_line is needed, this function must run before to create it
-         v_select_example="Testing\ file\ name"  # Variables with spaces do not work on 'select' menu
-         v_2="config-bash-alias"
-         v_3="source-all-drya-files"
-         v_4="source-all-moedaz-files"
-         v_5=".bashrc"
-         v_6=".vimrc"
-         v_7="com.list-econ-items.txt"
-         v_8="com.associative-array"
-         v_9="SOURCE"
-         v_10="1st"
-         v_11="emacs-init (emacs)"
-         v_12="emacs-init (vim)"
-         v_13="secundary-files"
-         v_14="termux.properties"
-         v_15="help"
-         #uDev: Turn these variables into usable arguments for F menu
+      function f_uDev_1 {
+         # Function to remind the user about needed changes (uDev)
+         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+      }
+
+      # Note: each function in this app will define new values for example to "alias 1", "alias 2", "alias 3"...
+         alias 1="echo Default alias 1"
+
+      function f_unalias_all {
+         # Each time we run function 'F' unset all previous alias that may be set again by 'F'
+            unalias 1
+            unalias 2
+            unalias 3
+            unalias 4
+            unalias 5
+            unalias 6
+            unalias 7
+            unalias 8
+            unalias 9
+            unalias 10
+            unalias 11
+            unalias 12
+      }
+      #f_unalias_all
+            
+      #uDev: Turn these variables into usable arguments for F menu
+         #   Play with alias
+         #   F 4 2 1
+            # If !-z then for i in $@; do bash $i
+            # a cada 'bash $i' novos alias sao RE-definidos
+            # function 1 { 
+            #    alias 1="do something"
+            # }
+
+         alias F1="uDev: will be used to list of cheat sheets (from Dwiki)"
+         #alias F2
+         #alias F3
+         #alias F4="f_F4"
+         #alias F5="source ~/.bashrc and init.el (refresh)"
+         #alias F6
+
+         #function f_F4 {
+         #   alias 4="f_F4_4"
+         #}
+         
 
       # If there are no arguments, present the menu
          if [ -z $* ]; then
 
-            figlet D.F
             clear
+            figlet D.F
 
-            echo SELECT file to edit by Title
+            echo "SELECT file to edit by Title"
             echo
 
             # Change the prompt message:
                PS3="Select a file to edit: "
                COLUMNS=0
 
-               select opt in $v_line2 config-bash-alias source-all-drya-files source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array SOURCE 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
+               select opt in $v_line2 config-bash-alias notes source-all-drya-files SOURCE source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
 
                case $opt in
                   config-bash-alias)
@@ -657,7 +684,12 @@ alias vimrc="vim ~/.vimrc"
                      f_greet_df
                      echo "edited: config-bash-alias"
                      break
-                     ;;
+                  ;;
+                  notes)
+                     f_greet_df
+                     f_notes
+                     break
+                  ;;
                   source-all-drya-files)
                      vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
                      f_greet_df
@@ -769,6 +801,10 @@ alias vimrc="vim ~/.vimrc"
 
          # When function F is presented with arguments (using elif):
             elif [ $1 == "T" ]; then echo "Test is working"
+            elif [ $1 == "1" ]; then echo "Test is working for 1"
+            elif [ $1 == "5" ]; then echo "Test is working for 5"
+            #elif [ $1 == "9" ]; f_F_9"
+
 
          # If arguments are given but they are wrong
             else echo "Menu D.F: Please choose a valid arg"

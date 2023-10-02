@@ -1,11 +1,17 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+<<<<<<< HEAD
 
 ;; testing buttons:
    (defun wh/help-hello-world ()
      (interactive)
      (with-help-window (help-buffer)
      (princ "foo_bar is a function.\n\nIt does stuff.")))
+=======
+;; Note: How to Tangle init.org into init.el (from the terminal... to automate via bash
+   ;; source: https://emacs.stackexchange.com/questions/27126/is-it-possible-to-org-bable-tangle-an-org-file-from-the-command-line 
+   ;; emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "file-to-tangle.org")'
+>>>>>>> d6578d0c12ddac2448a055d9b04658698f4131a7
 
 ;; Just testing if init filw loads:
    ;; (set-background-color "grey")
@@ -29,8 +35,9 @@
       (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
 
    ;; Attempting to load upk.el
-      (add-to-list 'load-path "~/libraries/upk/upk.el")
+      ;;(add-to-list 'load-path "~/libraries/upk/upk.el")
       ;;(load "~/libraries/upk/upk.el")
+      ;; We can load files from the terminal using 'emacs -l ../place-holder.el'
 
 ;; Creating a keybinding for org-agenda
    (global-set-key (kbd "C-x a") #'org-agenda)
