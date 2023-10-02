@@ -4,7 +4,7 @@
 # Use: You may use this app in many way. One of those is a package manager for a few specific repositories (until you change it)
 
 # This script was intended to be called at the terminal by the alias 'drya'. 
-   # If the package manager that installes this script does not set this alias, lets set this alias here (from within)
+   # If the package manager that installs this script does not set this alias, lets set this alias here (from within)
    alias drya="${v_REPOS_CENTER}/DRYa/drya.sh"
 
 
@@ -854,78 +854,96 @@ function f_exec {
          # uDev: Tells how long the Linux experience started for Seiva
       ;;
       install)
-         case $2 in
-            dot-files)
-               echo "DRYa: drya install dot-files"
-               echo " > copying from drya repo to default locations"
-               echo " > uDev"
-               echo 
-               echo "It can config:"
-               echo " > emacs (init file + libraries)"
-               echo " > git-github"
-               echo " > termux"
-               echo " > vim"
-               echo " uDev"
-               echo
-               echo "attempting Vim"
-               echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
-               echo " to"
-               echo " > ~"
-               read -s -n 1
-               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
-               echo "Done!"
-               echo
-               echo "attempting termux colors"
-               echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
-               echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
-               echo "   to      ~/.termux"
-               read -s -n 1
-               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
-               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
-               echo "Done! (Restart thr terminal is needed)"
-            ;;
-            netrc)
-               # Installing the file that allows the user to bypass entering user and password at every git push
-               bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
-            ;;
-            upk-at-work)
-               # Makes all dependencies for upk repo available
-               # This might be used most likely at in-job phone
-                  cd ${v_REPOS_CENTER}
+         # Install DRYa and more stuff
 
-               # Install emacs
-                  pkg install emacs
-                  # uDev: Test if it is windows and install GUI version also
+         if [[ -z $2 ]]; then 
+            # If there are no args:
+            echo "drya: Please specify what to install"
+            echo
+            echo "If you want to install drya itself, 3 ways:"
+            echo "  1. Download and run: github.com/drya/ghost-in.sh"
+            echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+            echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
 
-               # Install figlet
-                  pkg install figlet
-
-               # Install vim
-                  pkg install vim
-
-               # Repo: upk
-                  echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
-
-               # Installing .netrc
+         else
+            # Install extra stuff
+            case $2 in
+               --me)
+                  echo "uDev: Are you sure you want to install DRYa?"; 
+                  # Install DRYa itself
+               ;;
+               dot-files)
+                  echo "DRYa: drya install dot-files"
+                  echo " > copying from drya repo to default locations"
+                  echo " > uDev"
+                  echo 
+                  echo "It can config:"
+                  echo " > emacs (init file + libraries)"
+                  echo " > git-github"
+                  echo " > termux"
+                  echo " > vim"
+                  echo " uDev"
+                  echo
+                  echo "attempting Vim"
+                  echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
+                  echo " to"
+                  echo " > ~"
+                  read -s -n 1
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+                  echo "Done!"
+                  echo
+                  echo "attempting termux colors"
+                  echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
+                  echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
+                  echo "   to      ~/.termux"
+                  read -s -n 1
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
+                  echo "Done! (Restart thr terminal is needed)"
+               ;;
+               netrc)
+                  # Installing the file that allows the user to bypass entering user and password at every git push
                   bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
-                  vim ~/.netrc
-                  
-               # Repo: upk-diario-dv
-                  echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-         
+               ;;
+               upk-at-work)
+                  # Makes all dependencies for upk repo available
+                  # This might be used most likely at in-job phone
+                     cd ${v_REPOS_CENTER}
 
-               # Refresh the terminal
-                  #source ~/.bashrc
+                  # Install emacs
+                     pkg install emacs
+                     # uDev: Test if it is windows and install GUI version also
 
-               #    install: 
-               #             emacs for windows
-               #             instal init.el
-               echo "drya: udev: instal all dependencies for upk repo to run"
-            ;;
-            *)
-               echo "drya: What do you want to install?"
-            ;;
-         esac
+                  # Install figlet
+                     pkg install figlet
+
+                  # Install vim
+                     pkg install vim
+
+                  # Repo: upk
+                     echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
+
+                  # Installing .netrc
+                     bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+                     vim ~/.netrc
+                     
+                  # Repo: upk-diario-dv
+                     echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+            
+
+                  # Refresh the terminal
+                     #source ~/.bashrc
+
+                  #    install: 
+                  #             emacs for windows
+                  #             instal init.el
+                  echo "drya: udev: instal all dependencies for upk repo to run"
+               ;;
+               *)
+                  echo "drya: What do you want to install? invalid arg"
+               ;;
+            esac
+         fi
       ;;
       edit)
          case $2 in
