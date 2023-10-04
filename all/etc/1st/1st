@@ -1,6 +1,8 @@
-# List of usefull apps
-
+# List of DRYa dependencies (to be installed by DRYa installer)
    figlet
+   tput 
+
+# List of usefull apps 
    exiftool
    file
    tree
@@ -16,7 +18,6 @@
    irssi # IRC client for termux
    youtube-dl
    cmatrix
-   tput 
    neofetch
 
 # Dependencies for: ezGIT {

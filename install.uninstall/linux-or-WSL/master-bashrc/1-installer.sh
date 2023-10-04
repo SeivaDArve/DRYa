@@ -1,6 +1,8 @@
 #!/bin/bash
 clear
 
+# uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
+
 # uDev: due to bug which was foun, the next line will fix it
 	touch ~/.bashrc  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did nit exist
 	echo "file created ~/.bashrc"
