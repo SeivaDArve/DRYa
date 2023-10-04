@@ -370,6 +370,8 @@ Descricao {
 Notas { 
 }
 
+[[REL-Rotina-da-manha][[REL]]]
+
 :END:\n"))
 
 (defun dv-transfer-ot ()
