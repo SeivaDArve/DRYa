@@ -877,6 +877,8 @@ function f_exec {
                   echo " > copying from drya repo to default locations"
                   echo " > uDev"
                   echo 
+
+		  # Versobe notes
                   echo "It can config:"
                   echo " > emacs (init file + libraries)"
                   echo " > git-github"
@@ -884,6 +886,8 @@ function f_exec {
                   echo " > vim"
                   echo " uDev"
                   echo
+
+		  # For vim
                   echo "attempting Vim"
                   echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
                   echo " to"
@@ -892,6 +896,8 @@ function f_exec {
                   cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
                   echo "Done!"
                   echo
+
+		  # Colors and properties for Termux
                   echo "attempting termux colors"
                   echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
                   echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
