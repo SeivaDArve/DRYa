@@ -1,7 +1,5 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
-
-
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
@@ -104,14 +102,15 @@
 ;;       )
 ;;    
 ;;    
-;;    ;; Config 'dired' to always hide details mode
-;;       (add-hook
-;;        "This function dired-hide-details-mode alows navigation in dired to be alwasy like 'ls' insteado of 'ls -A'"
-;;        'dired-mode-hook #'dired-hide-details-mode)
-;;    
-;;    ;;    ;; Set a keybinding
-;;    ;;    (global-set-key (kbd "M-p") 'dired-hide-details-mode)
-
+   ;; Config 'dired' to always hide details mode
+;;      (use-package dired
+;;        :hook (dired-mode . dired-hide-details-mode)
+;;        :config
+;;        ;; Colourful columns.
+;;        (use-package diredfl
+;;          :ensure t
+;;          :config
+;;          (diredfl-global-mode 1)))
 
 ;; Search Forward
    (defun f ()
