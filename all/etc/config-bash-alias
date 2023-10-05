@@ -1011,6 +1011,7 @@ function drya-test {
 
 alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
 alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+alias d="cd"
 function D {
    # Title: Function "File and Destination"
    # Description: 
