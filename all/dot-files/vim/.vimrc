@@ -30,3 +30,9 @@ let g:is_bash=1
 "With the vim open, type this to know wich syntax is the one found to
 "highlight
 ":windo echo b:current_syntax
+
+"Return to last cursor position when opening files you edited and closed before
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
