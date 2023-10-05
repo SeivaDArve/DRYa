@@ -13,9 +13,8 @@
    ;; source: https://emacs.stackexchange.com/questions/27126/is-it-possible-to-org-bable-tangle-an-org-file-from-the-command-line 
    ;; emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "file-to-tangle.org")'
 
-;; Just testing if init filw loads:
+;; Just testing if init file loads:
    ;; (set-background-color "grey")
-
 
 ;; Attempting to config org-agenda
    (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
@@ -38,16 +37,18 @@
             (setq browse-url-browser-function 'browse-url-xdg-open)
             (message "dv: (2/2) default browser now is determined by either android or linux"))
 
-;; Atempt to load upk init file into emacs
+;; Loading other lisp.el files into emacs
+   ;; Note: We can load files from the terminal using 'emacs -l ../place-holder.el'
+
+   ;; Loading upk.el
+      ;; For Android
+      (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
+
    ;; changing variable: startup--xdg-config-home-emacs
       ;; If it is windows
       (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
       (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
 
-   ;; Attempting to load upk.el
-      ;;(add-to-list 'load-path "~/libraries/upk/upk.el")
-      ;;(load "~/libraries/upk/upk.el")
-      ;; We can load files from the terminal using 'emacs -l ../place-holder.el'
 
 ;; Creating a keybinding for org-agenda
    (global-set-key (kbd "C-x a") #'org-agenda)
