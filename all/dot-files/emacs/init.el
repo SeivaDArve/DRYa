@@ -1,5 +1,23 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
+   ;; Otherwise, it's default is: "~/.config/emacs/"
+   ;; Note: You can check the variable system-type with: C-h v system-type
+
+   ;; If running on windows
+   (when (eq system-type 'windows-nt)
+         (message "Dv: Defining 3 home vars for: Windows")
+         (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+         (setq v-home "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+         (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/."))
+
+   ;; If running on Android
+   (when (eq system-type 'gnu/linux)
+         (message "Dv: Defining 3 home vars for: Linux")
+         (setq startup--xdg-config-home-emacs "/data/data/com.termux/files/home/.emacs.d")
+         (setq ~ "/data/data/com.termux/files/home/.emacs.d")
+         (setq v-home "/data/data/com.termux/files/home/.emacs.d"))
+
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
@@ -42,12 +60,9 @@
 
    ;; Loading upk.el
       ;; For Android
-      (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
-
-   ;; changing variable: startup--xdg-config-home-emacs
-      ;; If it is windows
-      (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
-      (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+      (if (eq system-type 'gnu/linux)
+          (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
+          (message "Dv: Loaded upk.el on GNU/Linux"))
 
 
 ;; Creating a keybinding for org-agenda
