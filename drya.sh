@@ -13,6 +13,42 @@ function f_greet {
    figlet DRYa || echo -e "drya:\vrunning drya.sh\n"
 }
 
+# Functions for text colors
+   # Copied from ezGIT
+   function f_cor1 {	
+      # For figlet titles
+      tput setaf 5 
+   }
+   function f_cor2 { 
+      tput setaf 2 
+   }
+   function f_cor3 { 
+      # Mentioning user input or valiable input
+      tput setaf 3
+   }
+   function f_cor4 { 
+      # Similar to Bold
+      tput setaf 4
+   }
+   function f_resetCor { 
+      tput sgr0
+   }
+function f_git_status {
+   # Copied from: ezGIT
+   echo
+   f_cor4; echo -n "DRYa/ezGIT: "
+   f_resetCor; echo "git status"
+   git status
+}
+
+function f_git_pull {
+   # Copied from: ezGIT
+   echo
+   f_cor4; echo -n "DRYa/ezGIT: "
+   f_resetCor; echo "git pull"
+   git pull
+}
+
 function f_master_dryaRC {
 	clear
 	f_setafD; echo "Menu to master .dryarc file"
@@ -746,14 +782,39 @@ function f_exec {
 #         less ~/Repositories/moedaz/README.md
 #      ;;
       update) 
-         echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
+          echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
+
+	 f_greet
+	 f_cor4; echo -n "DRYa: "
+	 f_resetCor; echo "Downloading updates and applying them"
+         cd ${v_REPOS_CENTER}/DRYa
+	 f_git_status
+	 f_git_pull
+	 echo
+
+	 # Reload .bashrc
+	 f_cor4; echo -n "DRYa: "
+	 f_resetCor; echo "reloading functions, variables, alias at:"
+	 echo " > ~/.bashrc"
+	 source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
+
+	 # Aplly each dot-file in their correct places across the system
+	 f_cor4; echo -n "DRYa: "
+	 f_resetCor; echo "applying dot-files:"
+	 echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+	 echo " > termux: colors + properties (uDev)"
+	 echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+	 echo " > init.el (uDev)" 
+	 
       ;;
       clone)
          # Defore doing any cloning, change to the correct place for cloning
             # any repo under from Seiva's github clone to the correct place is automatically installed
             # Because DRYa already is configured for all those repositories even if they do not exist.
             v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
+	    f_greet
             cd $v_REPOS_CENTER
+	    f_git_status
 
          case $2 in
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
@@ -878,7 +939,7 @@ function f_exec {
                   echo " > uDev"
                   echo 
 
-		  # Versobe notes
+		  # Verbose notes
                   echo "It can config:"
                   echo " > emacs (init file + libraries)"
                   echo " > git-github"
@@ -1081,4 +1142,5 @@ function f_exec {
       ;;
 
    esac
+
 
