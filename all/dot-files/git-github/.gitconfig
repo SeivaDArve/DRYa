@@ -14,6 +14,7 @@
    directory = /mnt/c/Repositories/Dota-2-guide
    directory = /mnt/c/Repositories/CBorg
    directory = /mnt/c/Repositories/omni-log
+   directory = /mnt/c/Repositories/mastering-GPS
 [core]
 	editor = vim
 [alias]
