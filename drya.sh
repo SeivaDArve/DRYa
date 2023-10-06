@@ -746,7 +746,7 @@ function f_exec {
 #         less ~/Repositories/moedaz/README.md
 #      ;;
       update) 
-         echo "uDev: Similar to: DD; G v; M; 9"
+         echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
       ;;
       clone)
          # Defore doing any cloning, change to the correct place for cloning
