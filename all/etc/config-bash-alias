@@ -1080,6 +1080,10 @@ function D {
       cd ${v_REPOS_CENTER}/omni-log && ls
       
    # Implementation of Use 2:
+   elif [[ $1 == "gps" ]]; then
+      cd ${v_REPOS_CENTER}/mastering-GPS && ls
+      
+   # Implementation of Use 2:
    elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
       cd ${v_REPOS_CENTER}/yogaBashApp && ls
       
