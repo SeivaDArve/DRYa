@@ -726,7 +726,10 @@ function f_exec {
 	#f_fillscreenE
 	#f_master_dryaRC
    #f_readKeystroke
-   echo stupid, try adding some arguments, alright?
+
+   ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+   echo DRYa: I feel READY!
+   echo " > for help: drya -h"
 }
 
 
@@ -1135,7 +1138,11 @@ function f_exec {
       present)
          # Presenting DRYa
 
-         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: app available"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      ;;
+      -h)
+         f_greet
+         echo "help menu is uDev"
       ;;
       *) 
          f_exec

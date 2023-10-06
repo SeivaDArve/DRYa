@@ -640,6 +640,8 @@ function f_notes {
             unalias 11
             unalias 12
       }
+      alias 0="f_unalias_all"
+
       #f_unalias_all
             
       #uDev: Turn these variables into usable arguments for F menu
