@@ -12,6 +12,8 @@
 	directory = /mnt/c/Repositories/upK-diario-Dv
 	directory = /mnt/c/Repositories/upK
    directory = /mnt/c/Repositories/Dota-2-guide
+   directory = /mnt/c/Repositories/CBorg
+   directory = /mnt/c/Repositories/omni-log
 [core]
 	editor = vim
 [alias]
