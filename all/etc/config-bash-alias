@@ -721,9 +721,11 @@ function f_notes {
                      break
                   ;;
                   .vimrc)
-                     vim ~/.vimrc
+                     vim ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc
                      f_greet_df
-                     echo "edited: ~/.vimrc"; f_uDev_1
+                     echo "edited: .vimrc on DRYa"
+                     cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+                     echo "copied: from DRYa to ~"
                      break
                   ;;
                   SOURCE)
