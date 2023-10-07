@@ -1143,6 +1143,7 @@ function f_exec {
       -h)
          f_greet
          echo "help menu is uDev"
+         echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
       ;;
       *) 
          f_exec
