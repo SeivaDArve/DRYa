@@ -405,6 +405,7 @@ Descricao {
 Notas { 
 }
 
+(Mike 1 faz rotinas da manhã so aos dias: Ter, Qui, Sab, Dom)
 [[REL-Rotina-da-manha][[REL]]]
 
 :END:\n"))
