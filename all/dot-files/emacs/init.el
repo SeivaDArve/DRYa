@@ -79,9 +79,11 @@
   (interactive)
   (beginning-of-line)(insert "- [ ] "))
 
-(defun dv-test-23 ()
+;; uDev: Quando houver links de imagens para abrir e so haja emacs para terminal no Termux, criar uma defun para fazer download da imagem para uma pasta tmp em abrir. Nao sera preciso apagar as imagens porque a DRYa ja apaga essa pasta temporario ao sair.
+
+(defun dv-test-1 ()
   (interactive)
-  (message "teste 23 done"))
+  (message "teste 1 done"))
 
 ;; Load python language into org-mode
    ;; source: https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
@@ -168,6 +170,7 @@
      (message "Dv: Buffer Saved"))
 
    (defun yy ()
+     ;; C-x y
      (interactive)
      "Copies the entire line in 2 ways: to kill-ring and to variable: myVar
 
@@ -175,10 +178,12 @@
      (setq myLine
             (buffer-substring-no-properties
             (line-beginning-position)
-            (line-end-position)
-            ))
+            (line-end-position)))
+
      (beginning-of-line)(kill-line)(yank)
      (message "yy: The entire line was copied (to var: myLine and to kill-ring)"))
+
+         (global-set-key "\C-xy" 'yy)
 
    (defun dd ()
      (interactive)
@@ -201,9 +206,14 @@
  
 (defun wrap ()
   (interactive)
-  (message "Dv: Toggle text wrap")
-  (visual-line-mode))
+  (message "Dv: Toggle text wrap on")
+  (visual-line-mode t))
      
+(defun nowrap ()
+  (interactive)
+  (message "Dv: Toggle text wrap off")
+  (visual-line-mode -1))
+
 (defun numbers ()
   (interactive)
   (global-display-line-numbers-mode)
