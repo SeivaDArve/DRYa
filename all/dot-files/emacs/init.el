@@ -34,6 +34,15 @@
 ;; Just testing if init file loads:
    ;; (set-background-color "grey")
 
+;; Apply hiding of extra asteriscs '*' in all org-mode files
+   (setq org-hide-leading-stars t)
+
+   ;; Values for org-hide-leading-stars can be t or nil
+
+   ;; If you want to apply a diferent setting for each individual file, you can paste on the document:
+      ;; #+STARTUP: showstars
+      ;; #+STARTUP: hidestars
+
 ;; Attempting to config org-agenda
    (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
          (setq org-agenda-files '("c:/Repositories/moedaz/all/")))
