@@ -787,28 +787,28 @@ function f_exec {
       update) 
           echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
 
-	 f_greet
-	 f_cor4; echo -n "DRYa: "
-	 f_resetCor; echo "Downloading updates and applying them"
-         cd ${v_REPOS_CENTER}/DRYa
-	 f_git_status
-	 f_git_pull
-	 echo
+          f_greet
+          f_cor4; echo -n "DRYa: "
+          f_resetCor; echo "Downloading updates and applying them"
+               cd ${v_REPOS_CENTER}/DRYa
+          f_git_status
+          f_git_pull
+          echo
 
-	 # Aplly each dot-file in their correct places across the system
-	 f_cor4; echo -n "DRYa: "
-	 f_resetCor; echo "applying dot-files:"
-	 echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
-	 echo " > termux: colors + properties (uDev)"
-	 echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
-	 echo " > init.el (uDev)"
-	 echo
+          # Aplly each dot-file in their correct places across the system
+          f_cor4; echo -n "DRYa: "
+          f_resetCor; echo "applying dot-files:"
+          echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+          echo " > termux: colors + properties (uDev)"
+          echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+          echo " > init.el (uDev)"
+          echo
 
-	 # Reload .bashrc
-	 f_cor4; echo -n "DRYa: "
-	 f_resetCor; echo "reloading functions, variables, alias at:"
-	 echo " > ~/.bashrc"
-	 source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
+          # Reload .bashrc
+          f_cor4; echo -n "DRYa: "
+          f_resetCor; echo "reloading functions, variables, alias at:"
+          echo " > ~/.bashrc"
+          source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
       ;;
       clone)
          # Defore doing any cloning, change to the correct place for cloning
