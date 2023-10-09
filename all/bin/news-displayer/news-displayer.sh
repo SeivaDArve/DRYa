@@ -25,6 +25,8 @@
          v_frame_moedaz_avaria_car=1
       # Frame: shiva-sutras --random ----------------------
          v_frame_SS_random=1
+      # Frame: web-scrape-diario-republica
+         #v_frame...
 
 # uDev: Downloading single files from github as a cloud storage, instead of downloading full repos
    # Tutorial: https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/
