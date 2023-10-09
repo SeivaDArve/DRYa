@@ -607,6 +607,22 @@ function f_notes {
    echo " > omni-log" && alias 1="echo uDev: will be omni-log"
 }
 
+function f_emacs_init_vim {
+   # Important: Menu F depends on this function
+   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+   # This way we know we can easily upload the file
+
+      # First we edit the original/centralized file with our favourite text editor
+         v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
+         vim $v_init_file 
+
+      # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+      # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+         f_manage_init_and_libraries_after_mod
+
+         # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+         #         to call the same function "f_manage_init_and_libraries_after_mod"
+}
 
 # List fav files for edition (menu F)
    function F {
@@ -621,6 +637,7 @@ function f_notes {
          # Function to remind the user about needed changes (uDev)
          echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
       }
+
 
       # Note: each function in this app will define new values for example to "alias 1", "alias 2", "alias 3"...
          alias 1="echo Default alias 1"
@@ -678,7 +695,7 @@ function f_notes {
                PS3="Select a file to edit: "
                COLUMNS=0
 
-               select opt in $v_line2 config-bash-alias notes source-all-drya-files SOURCE source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
+               select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
 
                case $opt in
                   config-bash-alias)
@@ -728,11 +745,12 @@ function f_notes {
                      echo "copied: from DRYa to ~"
                      break
                   ;;
-                  SOURCE)
-                     clear
+                  Refresh-Reload-Source)
+                     #clear
                      source ~/.bashrc
                      f_greet_df
-                     echo "Reload done to: ~/.bashrc"
+                     drya update
+                     echo "Reload done to: ~/.bashrc by Menu F"
                      # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
@@ -763,21 +781,7 @@ function f_notes {
                      break
                   ;;
                   "emacs-init (vim)")
-                     # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-                     # This way we know we can easily upload the file
-
-                        # First we edit the original/centralized file with our favourite text editor
-                           v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
-                           vim $v_init_file 
-
-                        # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-                        # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-                           f_manage_init_and_libraries_after_mod
-
-                           # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
-                           #         to call the same function "f_manage_init_and_libraries_after_mod"
-
-
+                     f_emacs_init_vim
                      break
                   ;;
                   secundary-files)
@@ -806,7 +810,8 @@ function f_notes {
          # When function F is presented with arguments (using elif):
             elif [ $1 == "T" ]; then echo "Test is working"
             elif [ $1 == "1" ]; then echo "Test is working for 1"
-            elif [ $1 == "5" ]; then echo "Test is working for 5"
+            elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
+            elif [ $1 == "12" ]; then f_emacs_init_vim
             #elif [ $1 == "9" ]; f_F_9"
 
 
