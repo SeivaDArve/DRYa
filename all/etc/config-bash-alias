@@ -77,10 +77,13 @@ function E {
    select i in Nano Vim; do 
       case $i in 
          Nano)
-	         if [ $_ans == "1" ]; then alias r="nano"; fi
+	         if [ $i == "1" ]; then alias r="nano"; fi
          ;;
          Vim)
-            if [ $_ans == "2" ]; then alias r="vim"; fi
+            if [ $i == "2" ]; then alias r="vim"; fi
+         ;;
+         *)
+            echo lol
          ;;
       esac
    done
