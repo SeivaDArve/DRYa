@@ -1,12 +1,13 @@
 # List of DRYa dependencies (to be installed by DRYa installer)
    figlet
    tput 
+   less  # Dependency for ezGIT
+   vim
+   file  # Dependency for ezGIT
 
 # List of usefull apps 
    exiftool
-   file
    tree
-   vim
    linx
    emacs
    espeak # Text to speach
@@ -20,9 +21,6 @@
    cmatrix
    neofetch
 
-# Dependencies for: ezGIT {
-	pkg install file
-}
 
 # List of usefull apps (python)
 
