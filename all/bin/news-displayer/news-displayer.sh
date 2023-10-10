@@ -27,6 +27,8 @@
          v_frame_SS_random=1
       # Frame: web-scrape-diario-republica
          #v_frame...
+      # Frame: drya-irc-client
+      # To tell all other users that one user created a dedicated irc chat room for drya users to comunicate
 
 # uDev: Downloading single files from github as a cloud storage, instead of downloading full repos
    # Tutorial: https://www.howtogeek.com/devops/how-to-download-single-files-from-a-github-repository/
