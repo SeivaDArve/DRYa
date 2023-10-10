@@ -77,10 +77,13 @@ function E {
    select i in Nano Vim; do 
       case $i in 
          Nano)
-	         if [ $_ans == "1" ]; then alias r="nano"; fi
+	         if [ $i == "1" ]; then alias r="nano"; fi
          ;;
          Vim)
-            if [ $_ans == "2" ]; then alias r="vim"; fi
+            if [ $i == "2" ]; then alias r="vim"; fi
+         ;;
+         *)
+            echo lol
          ;;
       esac
    done
@@ -96,7 +99,7 @@ function f_manage_init_and_libraries_after_mod {
    function f_presenting_DF {
       # presenting the file for our M menu:
          clear; 
-         figlet "D.F"
+         figlet "MenuDF"
          echo -e "File closed (after editions):\n > $v_init_file \n"
    }
 
@@ -630,7 +633,7 @@ function f_emacs_init_vim {
       function f_greet_df { 
          # Avoiding repetition
          clear
-         figlet D.F
+         figlet MenuDF
       }
       
       function f_uDev_1 {
@@ -686,7 +689,7 @@ function f_emacs_init_vim {
          if [ -z $* ]; then
 
             clear
-            figlet D.F
+            figlet MenuDF
 
             echo "SELECT file to edit by Title"
             echo
@@ -794,14 +797,14 @@ function f_emacs_init_vim {
                   ;;
                   ? | help | --help | -h | h) 
                      f_greet_df
-                     echo "Menu D.F"
+                     echo "MenuDF"
                      echo " > Edits files inside 'DRYa repository' then copies those files across the system"
                      echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
                      echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
                      break  
                   ;;
                   *)    
-                     echo "Menu D.F: Invalid option $REPLY"  
+                     echo "MenuDF: Invalid option $REPLY"  
                   ;;
                esac
             done
@@ -816,7 +819,7 @@ function f_emacs_init_vim {
 
 
          # If arguments are given but they are wrong
-            else echo "Menu D.F: Please choose a valid arg"
+            else echo "MenuDF: Please choose a valid arg"
          fi
    }   ## End of function F
 
@@ -1052,7 +1055,7 @@ function D {
    # Implementation of Use 1:
    if [ -z $1 ]; then 
       f_cor1
-      figlet "D.F"
+      figlet "MenuDF"
       f_resetCor
       echo " > No arguments. Choose some place to go to"
 
