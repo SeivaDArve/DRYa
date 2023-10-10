@@ -932,6 +932,43 @@ function f_exec {
          else
             # Install extra stuff
             case $2 in
+               doom-emacs)
+                  echo "Installing doom emacs for linux "
+                  read -p " > Do you want to continue?"
+
+                  # Dependencies
+                     sudo apt install git emacs ripgrep fd find
+                  
+                  # Now, doom itself
+                     git clone --depth 1 http://github.com/hlissner/doom-emacs ~/.emacs.d
+                  
+                  # Installing doom
+                     cd ~
+                     bash .emacs.d/bin/doom install
+                  
+                  # Utilities found in bin/doom
+                     #bash .emacs.d/bin/doom sync
+                     #bash .emacs.d/bin/doom upgrade
+                     #bash .emacs.d/bin/doom doctor
+                     #bash .emacs.d/bin/doom purge
+                     #bash .emacs.d/bin/doom help
+                     
+                  # Instead of giving the full path to the command, we can add the dir to ou PATH variable
+                     export PATH="$HOME/.emacs.d/bin:$PATH"
+
+                  # The standard emacs dir is ~/.emacs.d
+                     # DistroTube (DT) says to never play in this directory
+                     # Play in the directory ~/.doom.d instead
+                     # An alternative, instead of using ~/.doom.d you can use ~/.config/.doom.d (you move the dir, you do not duplicate it)
+                     
+                     # Let's move our dir
+                        mv ~/.doom.d ~/.config/.doom.d
+
+                  # Now just launch
+                     echo "Now run emacs like you normally would"
+                     echo "Done!"
+ 
+               ;;
                --me)
                   echo "uDev: Are you sure you want to install DRYa?"; 
                   # Install DRYa itself
