@@ -35,7 +35,9 @@ function f_drya_plus {
 
       else
          echo "DRYa: Running on: NOT DETECTED"
-      fi  
+      fi 
+
+      # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
 }
 
 
