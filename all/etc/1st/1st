@@ -1,5 +1,5 @@
 # List of DRYa dependencies (to be installed by DRYa installer)
-   figlet
+   figlet  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
    tput 
    less  # Dependency for ezGIT
    vim
