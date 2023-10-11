@@ -51,9 +51,11 @@ function f_drya_plus {
 
       # Create a script at DRYa/all/bin/ for drya-neofetch
          # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+         # uDev: Detecte personal/safe device from job/public/unsafe device
          # uDev: Create the same for package manager: apt, pacman, dnf, pkg
          # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
          # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
+         # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
          # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
 }
 
@@ -89,7 +91,7 @@ f_test_0
 
 
 
-
+# uDev: if doom emacs is installed, export it's PATH
 
 
 # Repository: DRYa (internal files - part 1)

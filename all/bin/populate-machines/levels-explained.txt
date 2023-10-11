@@ -1,0 +1,13 @@
+# Title: levels-explained
+
+# States of a machine:
+  > State -1th : Before the BASIC Operative system is installed. It is a machine with BIOS only 
+               : Software at this level must be installed by hand
+
+  > State  0th : A machine with a fresh install: Recommended only to do a recovery point
+
+  > State  1st : After installing the 1st DRYa set of softwares, most repetive tasks now are taken care of by DRYa
+
+  > State  2nd : Apps and software that needs to be installed but DRYa does not include that yet.
+               : Software at this level must be installed by hand
+
