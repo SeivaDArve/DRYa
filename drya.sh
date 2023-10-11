@@ -33,6 +33,14 @@ function f_greet {
    function f_resetCor { 
       tput sgr0
    }
+      
+function f_talk {
+   # Copied from: ezGIT
+   echo
+   f_cor4; echo -n "DRYa/ezGIT: "
+   f_resetCor
+}
+
 function f_git_status {
    # Copied from: ezGIT
    echo
@@ -891,6 +899,12 @@ function f_exec {
          # At the end of cloning, returning to the previous directory and discarding the variable
             cd $v_pwd  
             unset v_pwd
+      ;;
+      +)
+         # Function found at: source-all-drya-files which is the first file on DRYa repository to run
+         # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
+         echo "uDev"
+         f_drya_plus
       ;;
       config)
          uname -a | grep "Microsoft" 1>/dev/null
