@@ -939,6 +939,7 @@ function f_exec {
       ;;
       seiva-upTime)
          # uDev: Tells how long the Linux experience started for Seiva
+         echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
       ;;
       install)
          # Install DRYa and more stuff
@@ -1035,9 +1036,6 @@ function f_exec {
                   # Installing the file that allows the user to bypass entering user and password at every git push
                   bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
                ;;
-               # linux-time-experience)
-               #    # Lists Seiva's Linux experience
-               # ;;
                upk-at-work)
                   # Makes all dependencies for upk repo available
                   # This might be used most likely at in-job phone

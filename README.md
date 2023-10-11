@@ -65,12 +65,9 @@ Usually when people have doubts about the usage of the program/app/script, they 
 in case of linux you can type at the terminal '$ man <app-name-here>'
 But this app/script does something better. This app IS NOT COMPILED, therefore the user can see the source code always. It may lose some speed (CPU speed) but you (the user) can read the source code the same way the programmer did (knowing EVERYTHING about the app and learning Bash on-the-go)
 
-## Drya can deploy these buttlers:
-+ jarve (for domotics, home keeping and remote assistance - an automated linux account on raspberry pi)
-+ nan-D (a special kind of file to be left on the smartphone. At specific times, DRYa scans the entire phone in search of these inteligent files)
-+ Every other seiva's software can be invoked and instantly configured by DRYa
-+ ... 
-
+## Drya vs. Jarve
+DRYa attempts to be cross platform first, grows from inside-out. Starts small and swallows bug on it's current OS. In the end we get a menu called DRYa where we command "install me this software" and this menu recognizes the system and accordingly pleases the user. If uses software first
+Jarve attempts to populate far away machines first, grows from the outside-in. It is the aplication on domotics, eletronics, cheat sheets, gadgets for the user that may connect with DRYa. Examples are: Automation of the door bell. Automation of a car. Automation of a washing machine. It uses hardware first. A DIY project
 
 #### DRYa, termux and Formting your pc
 Do you need to format your machine? DRYa may help you while your machine is offline, guiding your steps through the installation. You should also save your configs during the installation into DRYa so that the nest time you remember. By remembering your previous user nickname (for example), DRYa may restore all your config files into the fresh install without them breaking (if your saved configs have another user name, they will not correspond with the new user name, right?)
