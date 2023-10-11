@@ -819,12 +819,18 @@ function f_exec {
           source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
       ;;
       clone)
-         # Defore doing any cloning, change to the correct place for cloning
-            # any repo under from Seiva's github clone to the correct place is automatically installed
-            # Because DRYa already is configured for all those repositories even if they do not exist.
+         # Gets repositories from Github.com and tells how to clone DRYa itself
+         # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
+
+         # uDev: Some repositorys have files to be sources (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
+
+         # Saving current location (To come back to this directory after cloning)
             v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
-	    f_greet
+
+         # Before doing any cloning, change to the correct place for cloning
             cd $v_REPOS_CENTER
+
+	    f_greet
 	    f_git_status
 
          case $2 in
