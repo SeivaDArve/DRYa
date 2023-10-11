@@ -272,6 +272,8 @@ function op {
    # Function to open all files and directories given as arguments ($*)
       # Similar apps: termux-open; termux-open-url; wslview
 
+   # uDev: Since DRYa is developing drya-neofetch, then in the future we will get our OS from an environment variable made by DRYa
+
    # Test in which OS this script is running:
       v_uname=$(uname -a)
 
@@ -284,7 +286,7 @@ function op {
          # If it finds "Android" then it should be working at Termux terminal
             xdg-open $*
 
-      elif [[ $v_uname =~ "Android" ]]; then
+      elif [[ $v_uname =~ "Linux" ]]; then
          # If it is Any kind of Linux, try to open as standard
             xdg-open $*
       else
@@ -1248,10 +1250,3 @@ alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
    alias fork-bomb=":() { :|: & };:"
 
 
-# Defining the favourite Terminal PS1 variable:
-   # PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-   function DvPS1 {
-      PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-      echo "PS1 defined as per the user Dv"
-      # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
-   }

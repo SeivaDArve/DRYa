@@ -22,7 +22,10 @@ function f_drya_plus {
    # In order to uncluter the welcome screen, we use this function
       # Building '$ drya +' command used on the welcome screen
       # uDev: send to drya-info too
-      # uDev: set variable: drya --os
+      # uDev: send to drya-messages too
+      # uDev: set function: drya --os
+      # uDev: set environment variable: drya-os to be used by other functions like '$ op'
+      
 
    # Gitting info about the machine
       v_uname=$(uname -a)
@@ -33,6 +36,10 @@ function f_drya_plus {
 
       elif  [[ $v_uname =~ "Microsoft" ]]; then 
          echo "DRYa: Running on: Windows"
+
+      elif [[ $v_uname =~ "raspberrypi" ]]; then 
+         # Linux has to be the last one, because it means Windows and Android are not present
+         echo "DRYa: Running on: Linux (Raspberry Pi)"
 
       elif [[ $v_uname =~ "Linux" ]]; then 
          # Linux has to be the last one, because it means Windows and Android are not present
@@ -49,10 +56,25 @@ function f_drya_plus {
 
 
 
-function f_000 {
-   alias 000="echo test sucess"
+
+
+function f_dv_PS1 {
+   # Defining the favourite Terminal PS1 variable:
+
+   PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+   echo "PS1 defined as per the user Dv"
+   # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
 }
-f_000
+   f_dv_PS1
+
+
+
+
+
+function f_test_0 {
+   alias 000="echo test about sourcing inside functions also wiork"
+}
+f_test_0
 
 
 
