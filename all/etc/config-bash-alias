@@ -26,7 +26,7 @@ function f_resetCor {
 
 function f_verbose_start-2 {
    # File Description
-      echo "DRYa: File running: config-bash-alias" 
+      echo "DRYa: File running: DRYa/all/etc/config-bash-alias" 
    # Use Figlet app to write a Title
       figlet Dv 
 }
