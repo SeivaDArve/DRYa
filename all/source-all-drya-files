@@ -13,6 +13,11 @@
 # drya-info      | 1. It's Neofetch-like info retrieved by DRYa
 #                | 2. It sets variables too like: 'drya --os' (for operative system)
 
+
+
+# uDev: Function f_talk should be sourced here to enable it to be used across the system
+
+
 function f_drya_plus {
    # In order to uncluter the welcome screen, we use this function
       # Building '$ drya +' command used on the welcome screen
