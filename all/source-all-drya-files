@@ -89,6 +89,7 @@ f_drya_plus
       echo
 
 # Display the standard welcome termux message
+   # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
    # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
    # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
    if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
