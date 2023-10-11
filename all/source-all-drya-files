@@ -43,6 +43,8 @@ function f_drya_plus {
       fi 
 
       # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+      # uDev: Create the same for package manager: apt, pacman, dnf, pkg
+      # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
 }
 
 
