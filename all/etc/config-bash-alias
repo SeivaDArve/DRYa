@@ -272,6 +272,8 @@ function op {
    # Function to open all files and directories given as arguments ($*)
       # Similar apps: termux-open; termux-open-url; wslview
 
+   # uDev: Since DRYa is developing drya-neofetch, then in the future we will get our OS from an environment variable made by DRYa
+
    # Test in which OS this script is running:
       v_uname=$(uname -a)
 
@@ -284,7 +286,7 @@ function op {
          # If it finds "Android" then it should be working at Termux terminal
             xdg-open $*
 
-      elif [[ $v_uname =~ "Android" ]]; then
+      elif [[ $v_uname =~ "Linux" ]]; then
          # If it is Any kind of Linux, try to open as standard
             xdg-open $*
       else

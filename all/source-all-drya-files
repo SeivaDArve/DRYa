@@ -22,7 +22,10 @@ function f_drya_plus {
    # In order to uncluter the welcome screen, we use this function
       # Building '$ drya +' command used on the welcome screen
       # uDev: send to drya-info too
-      # uDev: set variable: drya --os
+      # uDev: send to drya-messages too
+      # uDev: set function: drya --os
+      # uDev: set environment variable: drya-os to be used by other functions like '$ op'
+      
 
    # Gitting info about the machine
       v_uname=$(uname -a)
