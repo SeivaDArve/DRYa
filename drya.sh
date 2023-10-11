@@ -1035,6 +1035,9 @@ function f_exec {
                   # Installing the file that allows the user to bypass entering user and password at every git push
                   bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
                ;;
+               # linux-time-experience)
+               #    # Lists Seiva's Linux experience
+               # ;;
                upk-at-work)
                   # Makes all dependencies for upk repo available
                   # This might be used most likely at in-job phone
