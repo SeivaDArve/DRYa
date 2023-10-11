@@ -1009,6 +1009,7 @@ function f_exec {
                   echo " > git-github"
                   echo " > termux"
                   echo " > vim"
+                  echo " > man page"
                   echo " uDev"
                   echo
 
