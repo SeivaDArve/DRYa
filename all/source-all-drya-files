@@ -1,10 +1,60 @@
 #!/bin/bash
 # Title: source-all-drya-files
-# Place in this file all script you need ~/.bashrc to recognize
-# Description: At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
-# Use: Initiate all other apps and initiate persistent functions
-# drya-message: 
-   ## (cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
+# Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
+
+# drya-messages: | 1. A file like neofetch for DRYa
+# > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
+#                     At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
+#                | 3. We cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
+
+# drya-plus:     | 1. Instead of printing a lot of text on the Termux welcoke screen, lets hide under the function: drya +
+#  > drya +      | 2. It has: DRYa welcome message, termux welcome message (if running on Android). Neofetch. More info
+
+# drya-info      | 1. It's Neofetch-like info retrieved by DRYa
+#                | 2. It sets variables too like: 'drya --os' (for operative system)
+
+function f_drya_plus {
+   # In order to uncluter the welcome screen, we use this function
+      # Building '$ drya +' command used on the welcome screen
+      # uDev: send to drya-info too
+      # uDev: set variable: drya --os
+
+   # Gitting info about the machine
+      v_uname=$(uname -a)
+
+   # Filter the info to Detect OS
+      if [[ $v_uname =~ "Android" ]]; then 
+         echo "DRYa: Running on: Android"
+
+      elif  [[ $v_uname =~ "Microsoft" ]]; then 
+         echo "DRYa: Running on: Windows"
+
+      elif [[ $v_uname =~ "Linux" ]]; then 
+         # Linux has to be the last one, because it means Windows and Android are not present
+         echo "DRYa: Running on: Linux"
+
+      else
+         echo "DRYa: Running on: NOT DETECTED"
+      fi  
+}
+
+
+
+function f_000 {
+   alias 000="echo test sucess"
+}
+f_000
+
+
+
+# ---------------------------------------
+# -- Functions above -- Sequence Below 
+# ---------------------------------------
+
+
+
+
+
 
 # Repository: DRYa (internal files - part 1)
    # Configuring variable for DRYa messages
@@ -23,6 +73,10 @@
       # Presenting it with figlet (which is a dependency) or just echo it's name:
          bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
+echo
+f_drya_plus
+
+      echo "DRYa: Note"
       echo " > Find verbose output (apps included) at:"
       echo " >   variable: '\$DRYa_MESSAGES' (that stores the file name):"
       echo " >   $DRYa_MESSAGES"
@@ -35,7 +89,7 @@
 # Display the standard welcome termux message
    # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
    # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
-   if [ $(uname -o) == "Android" ]; then cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
+   if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
 
 # Neofetch is not needed... It is just for fun
    neofetch 2>/dev/null
@@ -170,5 +224,8 @@
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
 
-# drya-message: 
+# drya-messages: 
    echo "file: source-all-drya-files: last line" >> $DRYa_MESSAGES
+
+
+
