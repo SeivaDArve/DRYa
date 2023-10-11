@@ -888,6 +888,9 @@ function f_exec {
                echo " > '$ drya clone -P'"
                echo "   to list all private repositories"
                echo
+               echo "To clone DRYa:  "
+               echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+               echo
                echo " Press ENTER to visit a webpage with all repositories:"
                echo " > https://github.com/SeivaDArve?tab=repositories"
                echo

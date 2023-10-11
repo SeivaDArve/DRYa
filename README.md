@@ -86,4 +86,4 @@ Overview: 	https://github.com/SeivaDArve
 Repositories:	https://github.com/SeivaDArve?tab=repositories 
 
 ## Clone DRYa directly:
-git clone https://github.com/SeivaDArve/DRYa.git
+git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa
