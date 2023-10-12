@@ -21,6 +21,9 @@
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
+;; IRC configs
+   (setq erc-nick "Miau")
+
 ;; testing buttons:
    (defun wh/help-hello-world ()
      (interactive)
