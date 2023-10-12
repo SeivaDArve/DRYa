@@ -4,6 +4,7 @@
    less  # Dependency for ezGIT
    vim
    file  # Dependency for ezGIT
+   gpg   # Encryption/Decryption
 
 # List of usefull apps 
    exiftool

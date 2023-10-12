@@ -755,7 +755,7 @@ function f_emacs_init_vim {
                      f_greet_df
                      echo "Editing the list of 1st apps to install"
                      read -s -t 2
-                     vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
+                     vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
                      f_greet_df
                      echo "edited: 1st"
                      break
