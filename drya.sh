@@ -1010,6 +1010,7 @@ function f_exec {
                   echo " > termux"
                   echo " > vim"
                   echo " > man page"
+                  echo " > ezGIT automatic encryption"
                   echo " uDev"
                   echo
 
