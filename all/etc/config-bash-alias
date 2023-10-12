@@ -539,7 +539,7 @@ alias em="emacs"
 alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 
-alias all="cd all && ls"
+alias a="cd all && ls"
 alias hi="echo hello"
 
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
