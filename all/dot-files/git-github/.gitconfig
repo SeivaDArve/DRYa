@@ -19,3 +19,5 @@
 	editor = vim
 [alias]
    please = push --force-with-lease
+[pull]
+   rebase = false
