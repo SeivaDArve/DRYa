@@ -309,15 +309,19 @@ function op {
    alias 246854="shutdown -r now"
    alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+   alias reboot="shutdown -r now"
+
+# uDev: alias web="open default browser"
+alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
+
 
 alias play="termux-media-player play"
 alias pause="termux-media-player pause"
 alias stop="termux-media-player stop"
 alias info="termux-media-player info"
 
-alias tufnar="echo '# uDev: Tufnar Isaura 91..." 
+alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
-alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
 function shebang {
    # It creates a bash script (if no args are input)
@@ -457,18 +461,6 @@ function go {
 # This command is same as: "source ~/.bashrc" (but needs the function: go)
 alias src="go gnome-terminal; exit"
 
-
-# function ls {
-# case !$ in 
-#	l) 
-		#It means "ls l" insteas of ls -l
-#	;;
-#	a) 
-		#It means "ls a" insteas of ls -a
-#	;;
-#	*)
-#	;;
-# esac
 
 function . {
    # Navigate through the file system stupidly ez
