@@ -21,6 +21,9 @@
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
+;; Loading rotr files.el and directories ecursively
+   ;; source: https://www.emacswiki.org/emacs/LoadPath
+
 ;; testing buttons:
    (defun wh/help-hello-world ()
      (interactive)
