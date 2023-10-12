@@ -61,6 +61,7 @@ function f_drya_plus {
 
 
 
+# uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
 
 
 function f_dv_PS1 {
