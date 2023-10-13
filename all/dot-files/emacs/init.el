@@ -337,45 +337,49 @@
      (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
          
          ;; Pre-Requisitos + PROPERTIES 
-           (insert "\n\n- [ ] () Pre-Requisitos \n")
-           (insert ":PROPERTIES: \n")
-           (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+            (insert "\n\n- [ ] () Pre-Requisitos \n")
+            (insert ":PROPERTIES: \n")
+            (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
 
-        ;; Quando o turno é especificamente "N", adicionar: 
-           (when (string-equal v_turno "N")
-               (insert "- [ ] Entregar a folha de ocorrencias do turno anterior\n")
-               (insert "- [ ] Colocar baterias a carregar\n"))
+         ;; Quando o turno é especificamente "N", adicionar: 
+            (when (string-equal v_turno "N")
+                  (insert "- [ ] Entregar a folha de ocorrencias do turno anterior\n")
+                  (insert "- [ ] Colocar baterias a carregar\n"))
 
-        ;; Adicionar mais texto neutro (Inserir END dos Pre-requisitos):
-               (insert "- Colega do turno anterior: \n") 
-               (insert ":END:\n")
+         ;; Adicionar mais texto neutro (Inserir END dos Pre-requisitos):
+            (insert "- Colega do turno anterior: \n") 
+            (insert ":END:\n")
 
-        ;; Se o turno for "B", inserir rotinas:
-           (when (string-equal v_turno "B")
-               (rotina-manha))
+         ;; Se o turno for "B", inserir rotinas:
+            (when (string-equal v_turno "B")
+                  (rotina-manha))
              
-        ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
-               (insert "\n- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
-               (insert "- [ ] Escrever folha de ocorrencias\n")
-               (insert "- [ ] Tirar foto à folha de ocorrencias\n")
-               (insert "- [ ] Assinar folhas de saida no C.Nascente\n")
+         ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
+            (insert "\n- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
+            (insert "- [ ] Escrever folha de ocorrencias\n")
+            (insert "- [ ] Tirar foto à folha de ocorrencias\n")
 
-        ;; Se o turno for "C" (adicionar texto aos Pos-Requisitos)
-           (when (string-equal v_turno "C")
-               (insert "- [ ] Entregar a folha de ocorrencias\n\n"))
-               (insert "- [ ] Passagem de Serviço ")
-               (insert (format-time-string "<%Y-%m-%d %a>"))
-               (insert "{ \nAo: \n  -\n}\n")
-               ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
+         ;; Se o turno for "C" (adicionar texto aos Pos-Requisitos)
+            (when (string-equal v_turno "C")
+                  (insert "- [ ] Entregar a folha de ocorrencias\n"))
+
+         ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
+            (insert "- [ ] Assinar folhas de saida no C.Nascente\n\n")
+            (insert "- [ ] Passagem de Serviço ")
+            (insert (format-time-string "<%Y-%m-%d %a>"))
+            (insert "{ \nAo: \n  -\n}\n")
+
+            ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
                (insert ":END:\n\n")
                (insert "- Resumo\n" ":PROPERTIES: \n")
                (insert "- Total Horas: \n")
                (insert ":END:\n\n"))
 
-  ;; Quando é dia de folga
-  (when (or (string-equal v_turno "Fg")(string-equal v_turno "fg"))
-        (message "Dv: Não esquecer de verificar a data deste dia de folga"))
-        ;;(u)
+   ;; Quando é dia de folga
+      (when (or (string-equal v_turno "Fg")
+                (string-equal v_turno "fg"))
+                (message "Dv: Não esquecer de verificar a data deste dia de folga"))
+      ;; (u)
   )
 
 
