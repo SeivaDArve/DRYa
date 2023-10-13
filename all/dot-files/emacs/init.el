@@ -21,8 +21,8 @@
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
 
-;; IRC configs
-   (setq erc-nick "Miau")
+;; Loading rotr files.el and directories ecursively
+   ;; source: https://www.emacswiki.org/emacs/LoadPath
 
 ;; testing buttons:
    (defun wh/help-hello-world ()
@@ -668,17 +668,28 @@ Notas {
 
 ;; (global-display-line-numbers-mode)
 
-;; IRC configs {
-;; Set our nickname & real-name as constant variables
-;;    (setq
-;;     erc-nick "DArve"     ; Our IRC nick
-;;     erc-user-full-name "Seiva D'Arve") ; Our /whois name
-;;    
-;;Define a function to connect to a server
-    (defun some-serv ()
-      (interactive)
-      (erc :server "irc.libera.chat"
-           :port   "6667"))
+;; IRC config
+   ;; uDev: setup a notification sound for ERC whenever a message arives
+   ;; uDev: Create a new chatroom, make it private if possible
+   ;; uDev: absorb this info: source: https://www.youtube.com/watch?v=UCIp2mY5Qyk&t=423s (at 7:00)
+       (defun dv-erc ()
+         (interactive)
+         ;; Set our nickname & real-name as constant variables
+            (setq erc-nick "Darve"    
+                  erc-user-full-name "Seiva D'Arve") ; Our /whois name
+
+         ;; Define a function to connect to a server
+            (erc :server "irc.libera.chat"
+                 :port   "6667"))
+
+   ;; Another usefull function:
+      (defun my-irc ()
+         "Start to waste time on IRC with ERC."
+         (interactive)
+         (select-frame (make-frame '((name . "Emacs IRC")
+                       (minibuffer . t))))
+         (call-interactively 'erc)))
+
 
 ;; Or assign it to a keybinding
 ;; This example is also using erc's TLS capabilities:
