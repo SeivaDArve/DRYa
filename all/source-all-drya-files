@@ -63,6 +63,8 @@ function f_drya_plus {
 
 # uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
 
+# uDev: Set windows time and date automaticaly with batch scripts
+        # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
 function f_dv_PS1 {
    # Defining the favourite Terminal PS1 variable:
