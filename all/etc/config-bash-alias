@@ -309,15 +309,19 @@ function op {
    alias 246854="shutdown -r now"
    alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+   alias reboot="shutdown -r now"
+
+# uDev: alias web="open default browser"
+alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
+
 
 alias play="termux-media-player play"
 alias pause="termux-media-player pause"
 alias stop="termux-media-player stop"
 alias info="termux-media-player info"
 
-alias tufnar="echo '# uDev: Tufnar Isaura 91..." 
+alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
-alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
 function shebang {
    # It creates a bash script (if no args are input)
@@ -458,18 +462,6 @@ function go {
 alias src="go gnome-terminal; exit"
 
 
-# function ls {
-# case !$ in 
-#	l) 
-		#It means "ls l" insteas of ls -l
-#	;;
-#	a) 
-		#It means "ls a" insteas of ls -a
-#	;;
-#	*)
-#	;;
-# esac
-
 function . {
    # Navigate through the file system stupidly ez
    
@@ -547,7 +539,7 @@ alias em="emacs"
 alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 
-alias all="cd all && ls"
+alias a="cd all && ls"
 alias hi="echo hello"
 
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
@@ -763,7 +755,7 @@ function f_emacs_init_vim {
                      f_greet_df
                      echo "Editing the list of 1st apps to install"
                      read -s -t 2
-                     vim ${v_REPOS_CENTER}/DRYa/all/etc/1st/1st
+                     vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
                      f_greet_df
                      echo "edited: 1st"
                      break
