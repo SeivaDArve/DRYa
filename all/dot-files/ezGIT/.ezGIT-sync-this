@@ -1,0 +1,6 @@
+# File to paste inside each root dir of a repository with variables to be sourced. 
+   # This variables to be sourced are going to allow a verbose output for ezGIT to sync such repository
+
+# v_repo="Repositories/example-repo/"
+# v_user="Seiva"
+# v_file_to_open_automatically="dailyLog.org"

@@ -1,7 +1,7 @@
 # Title: list-ewcript-repos
 # Description: List of repositories that ezGIT read whenever it pushes and pulls private repositories from github.com
 # Use: Inside any repo, place a file .git-ewcript to tell ezGIT that that directory needs to be encrypted before pushing and needs to be decripted everytime we pull. Note. This file is removed automatically from the root of the repo because it would indicate ezGIT to place .git/ inside it's encryption. So, if no .git/ is visible, that is not considered a git repository.
-#      This file is to be placed under ~/.config/h.h/ezGIT to be read multiple times by ezGIT
+#      This file is to be placed under ~/.config/h.h/ezGIT/ to be read multiple times by ezGIT
 
 # List of repos to encrypt/decript every time:
 ${v_REPOS_CENTER}/omni-log/all/private-stuff/.git-ewcrypt
