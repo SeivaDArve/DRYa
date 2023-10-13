@@ -18,8 +18,16 @@
          (setq ~ "/data/data/com.termux/files/home/.emacs.d")
          (setq v-home "/data/data/com.termux/files/home/.emacs.d"))
 
+
+
+
 ;; Defining variable inside emacs es per variables on bash
    (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
+      
+   ;; (getenv "HOME") ;; Gets the environment variable $HOME
+
+
+
 
 ;; Loading rotr files.el and directories ecursively
    ;; source: https://www.emacswiki.org/emacs/LoadPath
