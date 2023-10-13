@@ -688,7 +688,7 @@ Notas {
          (interactive)
          (select-frame (make-frame '((name . "Emacs IRC")
                        (minibuffer . t))))
-         (call-interactively 'erc)))
+         (call-interactively 'erc))
 
 
 ;; Or assign it to a keybinding
