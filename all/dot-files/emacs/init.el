@@ -358,6 +358,7 @@
                (insert "\n- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
                (insert "- [ ] Escrever folha de ocorrencias\n")
                (insert "- [ ] Tirar foto à folha de ocorrencias\n")
+               (insert "- [ ] Assinar folhas de saida no C.Nascente\n")
 
         ;; Se o turno for "C" (adicionar texto aos Pos-Requisitos)
            (when (string-equal v_turno "C")
