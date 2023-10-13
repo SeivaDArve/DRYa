@@ -257,7 +257,7 @@ function f_tableOfContents {
 	tput sgr0
 	f_setafA
 	echo ""
-	echo "Menu D (drya)"
+	echo "Menu D (Drya)"
 	echo "Menu J (jarve)"
 	echo "Menu G (ezGIT)"
 	echo "Menu Y (yogaBashApp)"
@@ -736,8 +736,10 @@ function f_exec {
    #f_readKeystroke
 
    ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   echo DRYa: I feel READY!
+   echo "DRYa: I'm Installed and Ready"
    echo " > for help: drya -h"
+
+   bash f_traits_id
 }
 
 
@@ -834,13 +836,15 @@ function f_exec {
 	    f_git_status
 
          case $2 in
-            ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
+            ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
+                   #uDev: Install its dependencies too
+            ;;
             moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
             yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
             dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
             log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
             upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
-            upk-dv) 
+            upk-dv | upkd) 
                echo "cloning upK-diario-Dv"; 
                echo "Link for download is:"; 
                echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
@@ -996,6 +1000,9 @@ function f_exec {
                --me)
                   echo "uDev: Are you sure you want to install DRYa?"; 
                   # Install DRYa itself
+                  # termux-setup-storage
+                  # install '1st' here 
+                  # pkg install termux-api
                ;;
                dot-files)
                   echo "DRYa: drya install dot-files"
@@ -1007,11 +1014,22 @@ function f_exec {
                   echo "It can config:"
                   echo " > emacs (init file + libraries)"
                   echo " > git-github"
-                  echo " > termux"
-                  echo " > vim"
                   echo " > man page"
                   echo " > ezGIT automatic encryption"
                   echo " uDev"
+                  echo
+
+		  # For .netrc
+           # uDev: if file exists, probably it is configured alread. So, ask the user if wants to copy it again or leave it
+           
+		  # For git
+                  echo "attempting git"
+                  echo " > Copying .../DRYa/all/dot-files/git-github/.gitconfig"
+                  echo " to"
+                  echo " > ~"
+                  read -s -n 1
+                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+                  echo "Done!"
                   echo
 
 		  # For vim

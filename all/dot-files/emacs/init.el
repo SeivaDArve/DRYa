@@ -49,6 +49,7 @@
 ;; Attempting to config org-agenda
    (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
          (setq org-agenda-files '("c:/Repositories/moedaz/all/")))
+         ;; omni-log/all/org-agenda
 
    ;;(when (not (eq system-type' windows-nt))  ;; If OS is Linux or Android
    ;;      (setq org-agenda-files '(concat v-repos-center "/moedaz/all/")))
