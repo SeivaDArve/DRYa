@@ -21,6 +21,7 @@
    youtube-dl
    cmatrix
    neofetch
+   syncthing # To sync files across machines (does not need a cloud, it is decentralized)
 
 
 # List of usefull apps (python)
