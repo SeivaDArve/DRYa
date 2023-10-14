@@ -5,6 +5,8 @@
    vim
    file  # Dependency for ezGIT
    gpg   # Encryption/Decryption
+   ssh   # Need to connect to raspberry Pi
+   sshfs # Mout ssh as a file system 
 
 # List of usefull apps 
    exiftool
