@@ -19,6 +19,10 @@
          (setq v-home "/data/data/com.termux/files/home/.emacs.d"))
 
 
+;; Attempting to play sound
+;;   (defun dv-sound-test ()
+;;      (interactive)
+;;      (play-sound-file ...
 
 
 ;; Defining variable inside emacs es per variables on bash
