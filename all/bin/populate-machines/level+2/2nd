@@ -1,0 +1,7 @@
+# Title: 2nd
+# Description: Configs we still have to do manually
+
+On Android File Explorer:
+ > Add to quick acess: "upk-sync-t" (directory dedicated to sync upk/job photos with syncthing app to ally other devices)
+ > Add to quick acess: "Camera" (directory from where I go pick and choose what files/photos I want to sync across devices)
+ > uDev: attempt to script this, in order for this task to move from file 2nd to 1st
