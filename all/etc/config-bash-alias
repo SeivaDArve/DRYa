@@ -319,6 +319,7 @@ alias play="termux-media-player play"
 alias pause="termux-media-player pause"
 alias stop="termux-media-player stop"
 alias info="termux-media-player info"
+alias sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/example-sound.wav" ## example sound
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
