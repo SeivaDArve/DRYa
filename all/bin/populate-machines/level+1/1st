@@ -7,6 +7,9 @@
    gpg   # Encryption/Decryption
    ssh   # Need to connect to raspberry Pi
    sshfs # Mout ssh as a file system 
+   whiptail # Tool to give GUI menus on Bash
+   dialog # Tool to give GUI menus on Bash (like whiptail but with more options
+   man
 
 # List of usefull apps 
    exiftool
@@ -24,6 +27,7 @@
    cmatrix
    neofetch
    syncthing # To sync files across machines (does not need a cloud, it is decentralized)
+   zenity # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
 
 
 # List of usefull apps (python)
