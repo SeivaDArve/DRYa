@@ -304,11 +304,13 @@ function op {
       # We can install stroken automatically with: '$ drya install stroken'
 
 # Fast dial:
+   # uDev: for WSL2, shutdown and reboot must be done by batch scripts
    alias 2468="exit"
    alias 24685="shutdown now"
    alias 246854="shutdown -r now"
    alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+   alias 453="upk"
    alias reboot="shutdown -r now"
 
 # uDev: alias web="open default browser"
@@ -878,7 +880,6 @@ function f_emacs_init_vim {
    # Dash="morse ,"
    # word="morse ..., ,.., .,,"
 
-alias 453="upk"
 # To load upk Repo at .bashrc with .dryarc:
    #cat upk.sh then search only for a function of greetings, then echo that out
 
