@@ -119,6 +119,8 @@ f_test_0
    echo
    f_drya_plus
    # uDev: Ask if the user want to see more than just the OS that is running
+   # uDev: Make ezGIT ask if the user wants: G v all
+
 
 # Calling for custom PS1 variable
    echo
