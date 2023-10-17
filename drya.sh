@@ -1003,6 +1003,10 @@ function f_exec {
                   # install '1st' here 
                   # pkg install termux-api
                ;;
+               xrandr) 
+                  echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
+                  echo " > 1360x768 "
+               ;;  
                dot-files)
                   echo "DRYa: drya install dot-files"
                   echo " > copying from drya repo to default locations"
