@@ -70,10 +70,9 @@ function f_dv_PS1 {
    # Defining the favourite Terminal PS1 variable:
 
    PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-   echo "PS1 defined as per the user Dv"
+   echo "DRYa: PS1 defined as per the user Dv"
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
 }
-   f_dv_PS1
 
 
 
@@ -112,10 +111,19 @@ f_test_0
    # Display info about it at the screen when DRYa is loaded by the terminal
 
       # Presenting it with figlet (which is a dependency) or just echo it's name:
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      
+         echo "( DRYa ): trying to catch WSL2 welcome message"
+         #bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
-echo
-f_drya_plus
+# Re-directing too much output at the welcome screen for the choice of the user either to see it or not
+   echo
+   f_drya_plus
+   # uDev: Ask if the user want to see more than just the OS that is running
+
+# Calling for custom PS1 variable
+   echo
+   f_dv_PS1
+   echo
 
       echo "DRYa: Note"
       echo " > Find verbose output (apps included) at:"
