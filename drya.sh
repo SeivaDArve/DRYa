@@ -10,7 +10,7 @@
 
 function f_greet {
    clear
-   figlet DRYa || echo -e "drya:\vrunning drya.sh\n"
+   figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
 }
 
 # Functions for text colors
@@ -265,6 +265,7 @@ function f_tableOfContents {
 }
 
 function f_tput_tutorial {
+   # uDev: Send this to Dwiki or wikiD
 	cat << heredoc
 (1)String output parameter settings
 　　bel       Alarm bell
