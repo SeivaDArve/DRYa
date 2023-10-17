@@ -833,7 +833,6 @@ function f_exec {
             cd $v_REPOS_CENTER
 
 	    f_greet
-	    f_git_status
 
          case $2 in
             ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
@@ -1004,6 +1003,10 @@ function f_exec {
                   # install '1st' here 
                   # pkg install termux-api
                ;;
+               xrandr) 
+                  echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
+                  echo " > 1360x768 "
+               ;;  
                dot-files)
                   echo "DRYa: drya install dot-files"
                   echo " > copying from drya repo to default locations"
@@ -1262,6 +1265,12 @@ function f_exec {
          # Presenting DRYa
 
          ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      ;;
+      gui)
+         TERM=ansi \
+            whiptail --title "Example Dialog" \
+                     --infobox "This is an example of an info box" 8 78 \
+                     --yesno "yea" 8 8
       ;;
       -h)
          f_greet
