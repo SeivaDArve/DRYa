@@ -189,8 +189,11 @@ function siigo {
 alias appdata="udev: must be completed"
 
 # Termux alias
-   alias rec="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)
+   alias rec="termux-microphone-record -d; clear" # Starts voice recording (There should be a fast dial for this option)
+   alias a="termux-microphone-record -d" # Starts voice recording (There should be a fast dial for this option)
+   alias b="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
    alias cer="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
+   alias recs="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
    alias paste="termux-clipboard-get"
    alias sms="termux-sms-send -n" 
    alias REC="termux-microphone-record -l 0"
