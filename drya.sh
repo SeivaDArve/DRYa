@@ -37,7 +37,7 @@ function f_greet {
 function f_talk {
    # Copied from: ezGIT
    echo
-   f_cor4; echo -n "DRYa/ezGIT: "
+   f_cor4; echo -n "DRYa: "
    f_resetCor
 }
 
@@ -748,6 +748,12 @@ function f_exec {
 
 
 
+# ---------------------------------------
+# -- Functions above -- Arguments Below
+# ---------------------------------------
+
+
+
 
 
 # Function drya
@@ -760,68 +766,74 @@ function f_exec {
       # like '$ drya + do something' then '$ drya' will still
       # open the f_greet and f_quick_menu through f_exec
 
-   case $1 in
-      -l | --location-network)
-         # Displays current GPS location using network as provider
-         termux-location -p network
-      ;;
-      -L | --location-GPS)
-         # Displays current GPS location using GPS as provider
-         termux-location -p GPS
-      ;;
-      --save-location-network)
-         # Displays current GPS location using network as provider and saves it
-         # Directory for saved text
-         #  ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
+if [ -z "$*" ]; then
+  # Do something else if there are no arguments
+     clear
+     f_greet
+     f_talk; echo "No arguments were given"
 
-         termux-location -p network
-      ;;
-#      +)
-#         echo
-#      ;;
-#      --communicate)
-#          # An end-to-end communication between any of my devices with drya installed. Like a messenger. Encripted
-#      ;;
-#      --menu)
-#      ;;
-#      -i)
-#      ;;
-#      -h | --help)
-#         clear
-#         f_greet
-#         f_cor1; echo -n "drya: "; f_resetCor
-#         echo -n "Para sair da pagina de instruções pressione: "
-#         f_cor1; echo "Q"; f_resetCor
-#         sleep 3
-#         less ~/Repositories/moedaz/README.md
-#      ;;
-      update) 
-          echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
+elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
+   # Help menu
+   f_talk; echo "Help options: man page; cat instructions; README file (uDev)"
 
-          f_greet
-          f_cor4; echo -n "DRYa: "
-          f_resetCor; echo "Downloading updates and applying them"
-               cd ${v_REPOS_CENTER}/DRYa
-          f_git_status
-          f_git_pull
-          echo
+         echo "help menu is uDev"
+         echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
 
-          # Aplly each dot-file in their correct places across the system
-          f_cor4; echo -n "DRYa: "
-          f_resetCor; echo "applying dot-files:"
-          echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
-          echo " > termux: colors + properties (uDev)"
-          echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
-          echo " > init.el (uDev)"
-          echo
+elif [ $1 == "l" ]; then 
+   # Save GPS locations
+   # uDev: this function needs to go to the repo: master-GPS
 
-          # Reload .bashrc
-          f_cor4; echo -n "DRYa: "
-          f_resetCor; echo "reloading functions, variables, alias at:"
-          echo " > ~/.bashrc"
+   if [ $2 == "location-network" ]; then 
+      # Displays current GPS location using network as provider
+      termux-location -p network
+
+   elif [ $2 == "location-gps" ]; then 
+      # Displays current GPS location using GPS as provider
+      termux-location -p GPS
+
+   elif [ $2 == "save-location-network" ]; then 
+      # Displays current GPS location using network as provider and saves it
+      # Directory for saved text
+      # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
+      termux-location -p network
+   fi
+
+
+elif [ $1 == "+" ]; then 
+   # Function found at: source-all-drya-files which is the first file on DRYa repository to run
+   # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
+   echo "uDev"
+   f_drya_plus
+
+
+elif [ $1 == "update" ]; then 
+    echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
+
+    f_greet
+    f_cor4; echo -n "DRYa: "
+    f_resetCor; echo "Downloading updates and applying them"
+         cd ${v_REPOS_CENTER}/DRYa
+    f_git_status
+    f_git_pull
+    echo
+
+    # Aplly each dot-file in their correct places across the system
+    f_cor4; echo -n "DRYa: "
+    f_resetCor; echo "applying dot-files:"
+    echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+    echo " > termux: colors + properties (uDev)"
+    echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+    echo " > init.el (uDev)"
+    echo
+
+    # Reload .bashrc
+    f_cor4; echo -n "DRYa: "
+    f_resetCor; echo "reloading functions, variables, alias at:"
+    echo " > ~/.bashrc"
           source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
-      ;;
-      clone)
+
+
+elif [ $1 == "clone" ]; then 
          # Gets repositories from Github.com and tells how to clone DRYa itself
          # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
@@ -912,14 +924,8 @@ function f_exec {
          # At the end of cloning, returning to the previous directory and discarding the variable
             cd $v_pwd  
             unset v_pwd
-      ;;
-      +)
-         # Function found at: source-all-drya-files which is the first file on DRYa repository to run
-         # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
-         echo "uDev"
-         f_drya_plus
-      ;;
-      config)
+
+elif [ $1 == "config" ]; then 
          uname -a | grep "Microsoft" 1>/dev/null
          if [ $? == 0 ]; then echo "This is microsoft"; fi
          uname -a | grep "Android" 1>/dev/null
@@ -929,23 +935,24 @@ function f_exec {
          v_whoami=$(whoami); echo "whoami is: $v_whoami"
          echo
          echo "uDev: This info must be environment variables for other apps"
-      ;;
-      backup)
+
+elif [ $1 == "backup" ]; then 
          echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
          echo 
          echo "DRYa backup options:"
          echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
-      ;;
-      msgs)
+
+elif [ $1 == "msgs" ]; then 
          # Option to read the $DRYa_MESSAGES file
             # They are stored at: ~/.config/h.h/drya/.dryaMessages
             vim ~/.config/h.h/drya/.dryaMessages
-      ;;
-      seiva-upTime)
+
+elif [ $1 == "msgs" ]; then 
          # uDev: Tells how long the Linux experience started for Seiva
          echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
-      ;;
-      install)
+
+
+elif [ $1 == "install" ]; then 
          # Install DRYa and more stuff
 
          if [[ -z $2 ]]; then 
@@ -1145,8 +1152,8 @@ function f_exec {
                ;;
             esac
          fi
-      ;;
-      edit)
+
+elif [ $1 == "edit" ]; then 
          case $2 in
             stroken)
                # Editing stroken globally
@@ -1202,9 +1209,12 @@ function f_exec {
                echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
 
             ;;
+
          esac
-      ;;
-      remove)
+
+
+
+elif [ $1 == "remove" ]; then 
          case $2 in
             dot-files)
                echo "drya: drya dot-files remove"
@@ -1236,8 +1246,8 @@ function f_exec {
                echo "drya: What do you want to remove? (uDev)"
             ;;
          esac
-      ;;
-      save)
+
+elif [ $1 == "save" ]; then 
          case $2 in
             dot-files)
                echo "drya: drya dot-files save"
@@ -1247,12 +1257,13 @@ function f_exec {
                echo "drya: What do you want to save? (uDev)"
             ;;
          esac
-      ;;
-      news)
+
+elif [ $1 == "news" ]; then 
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
-      ;;
-      vlm)
+
+
+elif [ $1 == "vlm" ]; then 
          # Works on termux only
             # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
 
@@ -1261,27 +1272,20 @@ function f_exec {
          #echo "volume keys on Termux toggled. Now they act as X instead of Y"
          # volume-keys=volume
          # volume-keys=virtual
-      ;;
-      present)
-         # Presenting DRYa
 
+elif [ $1 == "logo" ]; then 
+         # Presenting DRYa
          ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-      ;;
-      gui)
+
+elif [ $1 == "gui" ]; then 
          TERM=ansi \
             whiptail --title "Example Dialog" \
                      --infobox "This is an example of an info box" 8 78 \
                      --yesno "yea" 8 8
-      ;;
-      -h)
-         f_greet
-         echo "help menu is uDev"
-         echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
-      ;;
-      *) 
-         f_exec
-      ;;
+else 
 
-   esac
+         f_exec
+
+fi
 
 
