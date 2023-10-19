@@ -649,6 +649,17 @@ Notas {
      (defun copy ()
        (dv-copy-line-to-scratch-buffer)))
 
+
+
+
+(defun dv-just-crawl ()
+  (interactive)
+  (end-of-line)(insert "\n\n#+BEGIN_SRC python\n\n")
+  (insert "v_titulo = \"\"")
+  (insert "\nv_desc = \"\"")
+  (insert "\n\n#+END_SRC"))
+
+
 (defun dv-add-ot-number ()
   (interactive)
   "Serve para juntar varios tempos de varias entries numa só OT"
@@ -673,7 +684,9 @@ Notas {
 (defun dv-add-ot-just-text ()
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")) 
+  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")
+  (insert "[[elisp:(dv-just-crawl)][click me to: Print python webcrawler]] \n\n")
+  ) 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
 ;; uDev: something is wrong when the text is displayed
