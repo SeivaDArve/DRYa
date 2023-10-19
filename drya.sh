@@ -9,8 +9,14 @@
 
 
 function f_greet {
-   clear
-   figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
+   # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
+      clear
+      figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
+}
+
+function f_greet2 {
+   # Prints a more verbose output of the ascii text "DRYa"
+      ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
 # Functions for text colors
@@ -714,6 +720,102 @@ function f_get_script_current_abs_path {
 		echo $_drya_pwd
 	}
 }
+function f_drya_plus {
+   clear
+   echo "uDev: will cat a file under ~/.config/h.h/drya/"
+}
+
+function f_clone_info {
+   # Info given:
+   # > Tell how to clone DRYa
+   # > List Repositories (public and private)
+   # > Automatically redirects Termux to github.com
+      echo "DRYa: Must specify a repository to clone"
+      echo
+      echo " You can use:"
+      echo " > '$ drya clone --list-public' or "
+      echo " > '$ drya clone -p' "
+      echo "    to list all public repositories"
+      echo 
+      echo " You can use: "
+      echo " > '$ drya clone --list-private' or"
+      echo " > '$ drya clone -P'"
+      echo "   to list all private repositories"
+      echo
+      echo "To clone DRYa:  "
+      echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+      echo
+      echo " Press ENTER to visit a webpage with all repositories:"
+      echo " > https://github.com/SeivaDArve?tab=repositories"
+      echo
+      echo " Press Ctrl-C to abort"
+      read -s
+      echo
+      f_horizline
+      echo " Note: So far, drya can open this link only with Termux"
+      echo " > uDev: No other browser found"
+      echo
+      echo "Opening URL with Termux (terminal)"
+      termux-open-url https://github.com/SeivaDArve?tab=repositories
+}
+
+function f_clone_repos {
+   # Saving current location (To come back to this directory after cloning)
+      v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
+
+   # Before doing any cloning, change to the correct place for cloning
+      cd $v_REPOS_CENTER
+
+   case $2 in
+      ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
+             #uDev: Install its dependencies too
+      ;;
+      moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
+      yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
+      dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
+      log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
+      upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
+      upk-dv | upkd) 
+         echo "cloning upK-diario-Dv"; 
+         echo "Link for download is:"; 
+         echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
+         echo " > uDev: Include stroken"
+         echo 
+         git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+      ;;
+      try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
+      setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
+      ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
+      -p | --public-list) 
+         # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
+
+         echo "List of public repositories from Seiva D'Arve from GitHub.com:"
+            curl -s https://github.com/SeivaDArve?tab=repositories \
+            | grep "codeRepository" \
+            | sed 's,        <a href="/SeivaDArve/,,g' \
+            | sed 's," itemprop="name codeRepository" >,,g'
+      ;;
+      -P | --private-list) 
+         echo "# uDev: listing of all repositories including private ones is not ready yet"
+         : '
+           Multi comment example
+           :D
+         '
+
+         : '
+         # Example on: How to curl a list of private repositories at github if they are invisible and you need to login:
+           curl \
+               -u "username:password" \
+               -X GET \
+               https://mygithuburl.com/user/repos?visibility=private
+         '
+      ;;
+   esac
+
+   # At the end of cloning, returning to the previous directory and discarding the variable
+      cd $v_pwd  
+      unset v_pwd
+}
 
 function f_exec {
 	f_greet
@@ -748,6 +850,7 @@ function f_exec {
 
 
 
+
 # ---------------------------------------
 # -- Functions above -- Arguments Below
 # ---------------------------------------
@@ -774,10 +877,14 @@ if [ -z "$*" ]; then
 
 elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
    # Help menu
-   f_talk; echo "Help options: man page; cat instructions; README file (uDev)"
+   
+   clear; f_greet
 
-         echo "help menu is uDev"
-         echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
+   f_talk; echo "Help options will have:"
+           echo -e " > man page \n > Terminal printed instructions \n > README file \n > (uDev)"
+
+   echo
+   echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
 
 elif [ $1 == "l" ]; then 
    # Save GPS locations
@@ -802,9 +909,16 @@ elif [ $1 == "l" ]; then
 elif [ $1 == "+" ]; then 
    # Function found at: source-all-drya-files which is the first file on DRYa repository to run
    # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
-   echo "uDev"
-   f_drya_plus
+   
+   if [ -z "$2" ]; then
+      echo "uDev"
+      f_drya_plus
 
+   elif [ $2 == "msgs" ]; then 
+      # Option to read the $DRYa_MESSAGES file
+         # They are stored at: ~/.config/h.h/drya/.dryaMessages
+         less ~/.config/h.h/drya/.dryaMessages
+   fi
 
 elif [ $1 == "update" ]; then 
     echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
@@ -834,120 +948,42 @@ elif [ $1 == "update" ]; then
 
 
 elif [ $1 == "clone" ]; then 
-         # Gets repositories from Github.com and tells how to clone DRYa itself
-         # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
+   # Gets repositories from Github.com and tells how to clone DRYa itself
+   # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
-         # uDev: Some repositorys have files to be sources (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
+   # uDev: Some repositories have files to be sourcer (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
 
-         # Saving current location (To come back to this directory after cloning)
-            v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
+   clear
+   f_greet
 
-         # Before doing any cloning, change to the correct place for cloning
-            cd $v_REPOS_CENTER
-
-	    f_greet
-
-         case $2 in
-            ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
-                   #uDev: Install its dependencies too
-            ;;
-            moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
-            yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
-            dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
-            log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
-            upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
-            upk-dv | upkd) 
-               echo "cloning upK-diario-Dv"; 
-               echo "Link for download is:"; 
-               echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
-               echo " > uDev: Include stroken"
-               echo 
-               git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-            ;;
-            try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
-            setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
-            ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
-            -p | --public-list) 
-               # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
-
-               echo "List of public repositories from Seiva D'Arve from GitHub.com:"
-                  curl -s https://github.com/SeivaDArve?tab=repositories \
-                  | grep "codeRepository" \
-                  | sed 's,        <a href="/SeivaDArve/,,g' \
-                  | sed 's," itemprop="name codeRepository" >,,g'
-            ;;
-            -P | --private-list) 
-               echo "# uDev: listing of all repositories including private ones is not ready yet"
-               : '
-                 Multi comment example
-                 :D
-               '
-
-               : '
-               # Example on: How to curl a list of private repositories at github if they are invisible and you need to login:
-                 curl \
-                     -u "username:password" \
-                     -X GET \
-                     https://mygithuburl.com/user/repos?visibility=private
-               '
-            ;;
-            *) 
-               echo "DRYa: Must specify a repository to clone"
-               echo
-               echo " You can use:"
-               echo " > '$ drya clone --list-public' or "
-               echo " > '$ drya clone -p' "
-               echo "    to list all public repositories"
-               echo 
-               echo " You can use: "
-               echo " > '$ drya clone --list-private' or"
-               echo " > '$ drya clone -P'"
-               echo "   to list all private repositories"
-               echo
-               echo "To clone DRYa:  "
-               echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
-               echo
-               echo " Press ENTER to visit a webpage with all repositories:"
-               echo " > https://github.com/SeivaDArve?tab=repositories"
-               echo
-               echo " Press Ctrl-C to abort"
-               read -s
-               echo
-               f_horizline
-               echo " Note: So far, drya can open this link only with Termux"
-               echo " > uDev: No other browser found"
-               echo
-               echo "Opening URL with Termux (terminal)"
-               termux-open-url https://github.com/SeivaDArve?tab=repositories
-         esac
-         
-         # At the end of cloning, returning to the previous directory and discarding the variable
-            cd $v_pwd  
-            unset v_pwd
+   if [ -z "$2" ]; then
+      # If nothing was specified to clone
+         f_clone_info
+   else
+      # If an argument was given, clone will be attemoted
+         f_clone_repos
+   fi
 
 elif [ $1 == "config" ]; then 
-         uname -a | grep "Microsoft" 1>/dev/null
-         if [ $? == 0 ]; then echo "This is microsoft"; fi
-         uname -a | grep "Android" 1>/dev/null
-         if [ $? == 0 ]; then echo "This is Android"; fi
-         
-         v_hostname=$(hostname); echo "Hostname is: $v_hostname"
-         v_whoami=$(whoami); echo "whoami is: $v_whoami"
-         echo
-         echo "uDev: This info must be environment variables for other apps"
+   # uDev: at source-all-drya-files one function called traitsID will have these options
+      uname -a | grep "Microsoft" 1>/dev/null
+      if [ $? == 0 ]; then echo "This is microsoft"; fi
+      uname -a | grep "Android" 1>/dev/null
+      if [ $? == 0 ]; then echo "This is Android"; fi
+      
+      v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+      v_whoami=$(whoami); echo "whoami is: $v_whoami"
+      echo
+      echo "uDev: This info must be environment variables for other apps"
 
 elif [ $1 == "backup" ]; then 
-         echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
-         echo 
-         echo "DRYa backup options:"
-         echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
+   # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
+      echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
+      echo 
+      echo "DRYa backup options:"
+      echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
 
-elif [ $1 == "msgs" ]; then 
-         # Option to read the $DRYa_MESSAGES file
-            # They are stored at: ~/.config/h.h/drya/.dryaMessages
-            vim ~/.config/h.h/drya/.dryaMessages
-
-elif [ $1 == "msgs" ]; then 
+elif [ $1 == "seiva-up-time" ]; then 
          # uDev: Tells how long the Linux experience started for Seiva
          echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
 
