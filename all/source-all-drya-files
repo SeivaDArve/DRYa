@@ -121,7 +121,6 @@ function f_test_1 {
 function f_drya_plus {
    # In order to uncluter the welcome screen, we use this function
       # Building '$ drya +' command used on the welcome screen
-      # uDev: send to drya-info too
       # uDev: send to drya-messages too
       # uDev: set function: drya --os (traitsID info)
       # uDev: set environment variable: drya-os to be used by other functions like '$ op'
@@ -294,6 +293,10 @@ function f_drya_plus {
 
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+      alias D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+
+      alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
+      alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
    
    # Drya bin files
       # Sourcing all stand-alone scripts
