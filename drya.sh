@@ -917,7 +917,7 @@ elif [ $1 == "+" ]; then
    elif [ $2 == "msgs" ]; then 
       # Option to read the $DRYa_MESSAGES file
          # They are stored at: ~/.config/h.h/drya/.dryaMessages
-         less ~/.config/h.h/drya/.dryaMessages
+         less ~/.config/h.h/drya/drya-msgs
    fi
 
 elif [ $1 == "update" ]; then 
