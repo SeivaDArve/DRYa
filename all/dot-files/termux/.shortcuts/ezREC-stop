@@ -1,0 +1,6 @@
+#!/bin/bash
+# Title: Stop voice recordings
+# Use: This is meant to be used as a widget on Android home screen
+
+# Stoping the recording
+   termux-microphone-record -q

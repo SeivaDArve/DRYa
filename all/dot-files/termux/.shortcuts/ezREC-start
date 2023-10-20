@@ -1,0 +1,6 @@
+#!/bin/bash
+# Title: Start voice recordings
+# Use: This is meant to be used as a widget on Android home screen
+
+# Starting voice record with unlimited time (-l is for time limit where 0 is 'unlimited')
+   termux-microphone-record -l 0
