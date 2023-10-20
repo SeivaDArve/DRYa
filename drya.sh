@@ -722,7 +722,7 @@ function f_get_script_current_abs_path {
 }
 function f_drya_plus {
    clear
-   echo "uDev: will cat a file under ~/.config/h.h/drya/"
+   echo "uDev: will cat a file under ~/.config/h.h/drya/drya-welcome"
 }
 
 function f_clone_info {
