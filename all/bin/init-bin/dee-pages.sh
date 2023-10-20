@@ -4,8 +4,8 @@
 # Use: Whenever you develop a script with flags like: --flag-example, White at the line right below it, what that flag means. This way, this script allows you to avoid unecessary time writting and installing a specific man page for each script
 
 # Setup at terminal startup:
-echo "DRYa: Loaded: dee-Pages (man pages you find by reading the source files)"
-   alias bully="echo hi"
+echo "DRYa: Loaded: dee-pages (man pages you find by reading the source files)"
+   alias dee="dee-pages: Choose a source file to extract instructiona (uDev)"
 
 # Ask for a script to be filtered:
    # ... read v_file
