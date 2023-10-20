@@ -252,6 +252,7 @@ alias ls="ls -p"
 alias la="ls -pA"
 alias ll="ls -pl"
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
+alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
 # Media tools:
@@ -1010,11 +1011,12 @@ function drya-test {
 }
 
 
-alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
-alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
-alias d="cd"
-function D {
+function Fd {
    # Title: Function "File and Destination"
+   
+   # uDev: why is it that D is not reserved for 'alias D="drya"'? 
+      # sugestion: Menu D will be under F so that D gets to be reserved for drya
+
    # Description: 
       # This function is a combination of:
          # '$ cd'
