@@ -1,0 +1,3 @@
+# Title: Termux Hush Login
+# Description: Place this file at ~/.hushlogin to turn off Termux welcome messages (no written text is needed inside that file)
+# Use: Copy this file to $HOME to disable termux welcome message whennopening a new terminal
