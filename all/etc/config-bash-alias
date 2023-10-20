@@ -1,9 +1,9 @@
 #!bin/bash
 
 # Title: config-bash-alias
+  v_title="config-bash-alias"
 # Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
-# Version: beta
 # 
 # Install this file
 #   1. open ~/.bashrc
@@ -26,21 +26,9 @@ function f_resetCor {
 
 function f_verbose_start-2 {
    # File Description
-      echo "DRYa: File running: DRYa/all/etc/config-bash-alias" 
-   # Use Figlet app to write a Title
-      figlet Dv 
+      echo "DRYa: File running: DRYa $v_title"  
 }
 f_verbose_start-2
-
-function f_OS_detect {
-   # uDev: move this into the installer
-   #Detect Terminal and OS to create compatibility 
-      OS=$(uname -o)
-      mkdir -p ~/.config/h.h/drya/
-      echo "OS Detected: $OS" > ~/.config/h.h/drya/drya-detections.txt
-}
-f_OS_detect
-
 
 # Set the keybindings to vi/vim mode:
    #set -o vi
@@ -815,6 +803,7 @@ function f_emacs_init_vim {
             elif [ $1 == "1" ]; then echo "Test is working for 1"
             elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
             elif [ $1 == "12" ]; then f_emacs_init_vim
+            elif [ $1 == "13" ]; then vim ${v_REPOS_CENTER}/DRYa/drya.sh
             #elif [ $1 == "9" ]; f_F_9"
 
 
