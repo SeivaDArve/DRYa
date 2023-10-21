@@ -11,6 +11,7 @@
 # Verbose file (variables and outputs)
    v_title="config-bash-alias"  # Name of this file
    echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
+   echo "      > $v_title after internal software is loaded, I load the alias and extras" >> $v_MSGS
 
 
 function f_cor1 { 

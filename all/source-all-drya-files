@@ -1,7 +1,15 @@
 #!/bin/bash
 # Title: source-all-drya-files
-  v_title="source-all-drya-files"
 # Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
+  v_title_drya="source-all-drya-files"  # Name of this file
+
+function f_drya_msgs_init {
+   # drya-messages: Verbose file (variables and outputs)
+      echo "DRYa: File started loading: DRYa's $v_title_drya" >> $v_MSGS
+      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection" >> $v_MSGS
+      echo "      > running from: ${DRYa_HEART}" >> $v_MSGS
+      # udev: echo "Installed at.."
+}
 
 # drya-messages: | 1. A file like neofetch for DRYa
 # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
@@ -81,6 +89,9 @@ function f_drya_msgs {
       echo -e "# Title: DRYa Messages (verbose output for apps under DRYa)" > ~/.config/h.h/drya/drya-msgs
       echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/drya-msgs
 
+      # First file to load:
+         f_drya_msgs_init
+
       echo "DRYa: Note about verbose outputs"
       echo " 1: Find verbose output (all seiva apps included) at:"
       echo "    > $v_MSGS"
@@ -108,11 +119,6 @@ function f_neofetch {
 }
    
 
-function f_verbose_start-1 {
-   # Enable/Disable verbose output for this file:
-   echo "DRYa: file running: ${DRYa_HEART}" >> $v_MSGS
-   # echo "Installed at.."
-}
 
 function f_test_1 {
    alias test1="echo test about sourcing alias inside functions also work"
@@ -136,7 +142,6 @@ function f_drya_plus {
       f_termux_welcome
       f_neofetch
       f_test_1
-      f_verbose_start-1  ##Comment/Uncomment this line to toggle ON or OFF
    
 }
 
@@ -169,10 +174,10 @@ function f_drya_plus {
       # Presenting it with figlet (which is a dependency) or just echo it's name:
       
          echo "( DRYa ): trying to catch WSL2 welcome message"
-         #bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
    # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
-      #f_drya_plus  ## Turno ON/OFF for verbose welcome screen output
+      f_drya_plus  ## Turno ON/OFF for verbose welcome screen output
 
 
 
@@ -309,8 +314,8 @@ function f_drya_plus {
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
 
-# drya-messages: 
-   echo "file: $v_title: last line" >> $v_MSGS
 
 
 
+# drya-messages: Verbose file (variables and outputs)
+   echo "DRYa: File ended loading: DRYa's $v_title_drya" >> $v_MSGS
