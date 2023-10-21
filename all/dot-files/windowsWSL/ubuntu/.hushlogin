@@ -1,0 +1,1 @@
+Place this file at: $HOME/$USER/.hushlogin to disable ubuntu welcome messages at the start of the terminal (Used for example on WSL2)
