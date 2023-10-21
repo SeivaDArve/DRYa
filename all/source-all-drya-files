@@ -80,19 +80,9 @@ function f_dv_PS1 {
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
 }
 
-function f_drya_msgs {
-   # Configuring variable for DRYa messages
-      mkdir -p ~/.config/h.h/drya/
-
-      v_MSGS="$HOME/.config/h.h/drya/drya-msgs"
-      export v_MSGS
-      echo -e "# Title: DRYa Messages (verbose output for apps under DRYa)" > ~/.config/h.h/drya/drya-msgs
-      echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/drya-msgs
-
-      # First file to load:
-         f_drya_msgs_init
-
-      echo "DRYa: Note about verbose outputs"
+function f_drya_msgs_welcome {
+      echo
+      echo "DRYa: Note about verbose outputs (welcome screen helper)"
       echo " 1: Find verbose output (all seiva apps included) at:"
       echo "    > $v_MSGS"
       echo "      > path stored as variable: '\$v_MSGS'"
@@ -103,7 +93,26 @@ function f_drya_msgs {
       echo " 3: Read the messages with command:"
       echo "    > drya + msgs"
       echo
+} >> $v_MSGS 
+
+function f_drya_msgs {
+   # Configuring variable for DRYa messages
+      mkdir -p ~/.config/h.h/drya/
+
+      v_MSGS="$HOME/.config/h.h/drya/drya-msgs"
+      export v_MSGS
+      echo -e "# Title: DRYa Messages (verbose output for apps under DRYa)" > ~/.config/h.h/drya/drya-msgs
+      echo -e "# Messages started at: $(date) \n" >> ~/.config/h.h/drya/drya-msgs
+
+      # Message "First file to load":
+         f_drya_msgs_init
+
+      # Message to be sent to the welcome screen (optional)
+         f_drya_msgs_welcome
+
 }
+
+
 
 function f_termux_welcome {
    # Display the standard welcome termux message
