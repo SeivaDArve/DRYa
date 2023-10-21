@@ -1,14 +1,18 @@
 #!bin/bash
 
 # Title: config-bash-alias
-  v_title="config-bash-alias"
 # Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 # 
 # Install this file
 #   1. open ~/.bashrc
 #   2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
-#
+
+# Verbose file (variables and outputs)
+   v_title="config-bash-alias"  # Name of this file
+   echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
+   echo "      > $v_title after internal software is loaded, I load the alias and extras" >> $v_MSGS
+
 
 function f_cor1 { 
    tput setaf 5
@@ -24,11 +28,6 @@ function f_resetCor {
    tput sgr0 
 }
 
-function f_verbose_start-2 {
-   # File Description
-      echo "DRYa: File running: DRYa $v_title"  
-}
-f_verbose_start-2
 
 # Set the keybindings to vi/vim mode:
    #set -o vi
@@ -1238,4 +1237,5 @@ alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
    # Link tutorial: https://youtu.be/wIsGXkxXZzE
    alias fork-bomb=":() { :|: & };:"
 
-
+# Verbose file (variables and outputs)
+   echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
