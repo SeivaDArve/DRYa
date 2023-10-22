@@ -74,15 +74,16 @@ function f_dv_PS1 {
    # Defining the favourite Terminal PS1 variable:
 
    PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-   echo
+   #echo
    echo "DRYa: PS1 defined as per the user Dv"
    echo
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
-}
+   # uDev: Create alias to define diferent PS1's
+} >> $v_MSGS
 
 function f_drya_msgs_welcome {
       echo
-      echo "DRYa: Note about verbose outputs (welcome screen helper)"
+      echo "DRYa: Note about verbose outputs (welcome screen helper):"
       echo " 1: Find verbose output (all seiva apps included) at:"
       echo "    > $v_MSGS"
       echo "      > path stored as variable: '\$v_MSGS'"
@@ -119,7 +120,7 @@ function f_termux_welcome {
       # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
       # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
       # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
-      if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
+      if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux welcome message:"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
 }
 
 function f_neofetch {
@@ -146,9 +147,9 @@ function f_drya_plus {
    # List and execution of function under drya_plus:
       echo
       f_traits
-      f_dv_PS1
       f_drya_msgs
-      f_termux_welcome
+      f_dv_PS1
+      #f_termux_welcome
       f_neofetch
       f_test_1
    
