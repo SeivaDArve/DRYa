@@ -5,11 +5,11 @@
 
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
-      echo "DRYa: File started loading: DRYa's $v_title_drya" >> $v_MSGS
-      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection" >> $v_MSGS
-      echo "      > running from: ${DRYa_HEART}" >> $v_MSGS
+      echo "DRYa: File started loading: DRYa's $v_title_drya"
+      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection"
+      echo "      > running from: ${DRYa_HEART}"
       # udev: echo "Installed at.."
-}
+} >> $v_MSGS 2>/dev/null
 
 # drya-messages: | 1. A file like neofetch for DRYa
 # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
@@ -93,7 +93,7 @@ function f_drya_msgs_welcome {
       echo " 3: Read the messages with command:"
       echo "    > drya + msgs"
       echo
-} >> $v_MSGS 
+} >> $v_MSGS 2>/dev/null
 
 function f_drya_msgs {
    # Configuring variable for DRYa messages
@@ -328,3 +328,6 @@ function f_drya_plus {
 
 # drya-messages: Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title_drya" >> $v_MSGS
+
+   # Read messages file before normal tasks
+      less $v_MSGS
