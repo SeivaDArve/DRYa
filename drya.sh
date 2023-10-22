@@ -909,6 +909,11 @@ elif [ $1 == "l" ]; then
 elif [ $1 == "+" ]; then 
    # Function found at: source-all-drya-files which is the first file on DRYa repository to run
    # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
+
+   # uDev: drya +    # First Level of help
+   # uDev: drya ++   # Second level of help
+   # uDev: drya +++  # Third level of help
+   # uDev: drya ++++ # Forth level of help ... instead of "msgs"
    
    if [ -z "$2" ]; then
       echo "uDev"
