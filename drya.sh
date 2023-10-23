@@ -783,7 +783,6 @@ function f_clone_repos {
          echo 
          git clone https://github.com/SeivaDArve/upK-diario-Dv.git
       ;;
-      try) echo -e "trying to clone: $3 \n"; git clone https://github.com/SeivaDArve/$3.git;;
       setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
       ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
       -p | --public-list) 
@@ -964,6 +963,10 @@ elif [ $1 == "clone" ]; then
    if [ -z "$2" ]; then
       # If nothing was specified to clone
          f_clone_info
+   elif [ $2 == "try" ]; then
+      echo -e "trying to clone: $3 \n"; 
+      git clone https://github.com/SeivaDArve/$3.git
+
    else
       # If an argument was given, clone will be attemoted
          f_clone_repos
