@@ -23,6 +23,7 @@ function f_drya_msgs_init {
 #                | 2. It sets variables too like: 'drya --os' (for operative system)
 
 
+# uDev: $HOME on WSL2 must go to $HOME on windows
 
 # uDev: Function f_talk should be sourced here to enable it to be used across the system
 # uDev: also source f_horizontal_line
