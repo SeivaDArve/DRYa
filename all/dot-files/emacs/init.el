@@ -5,6 +5,7 @@
    ;; Note: You can check the variable system-type with: C-h v system-type
 
    ;; If running on windows
+      ;; uDev: Roaming is not a good HOME dir
    (when (eq system-type 'windows-nt)
          (message "Dv: Defining 3 home vars for: Windows")
          (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
