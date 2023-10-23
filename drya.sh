@@ -1311,8 +1311,13 @@ elif [ $1 == "vlm" ]; then
          echo uDev
 
          #echo "volume keys on Termux toggled. Now they act as X instead of Y"
-         # volume-keys=volume
-         # volume-keys=virtual
+         # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
+         # volume-keys = volume
+         # volume-keys = virtual
+         # Default is virtual
+
+         # As per termux instructions, we can reload the configs: 
+            #termux-reload-settings
 
 elif [ $1 == "logo" ]; then 
          # Presenting DRYa
