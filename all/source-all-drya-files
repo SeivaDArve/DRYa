@@ -273,21 +273,21 @@ function f_drya_plus {
 
       if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then
          # if .exe is found, open GUI emacs on windows:
-            echo "Opening file (in GUI windows):"
-            echo " >  $v_choosen_file"
+            echo "DRYa: Opening file (in GUI windows):"
+            echo " > $v_choosen_file"
             echo
 
             /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_choosen_file 
-               echo -e "File closed\n" 
+               echo -e "... File closed\n" 
 
       else
          # Otherwise, open emacs in terminal:
-            echo "Opening file (in Terminal Linux):"
-            echo " > omni-log/$v_choosen_file"
+            echo "Drya: Opening file (in Terminal Linux):"
+            echo " > $v_choosen_file"
             echo
 
             emacs $v_choosen_file 
-               echo -e "File closed\n" && f_cr && f_file_closed #\
+               echo -e "... File closed\n"  
       fi
    }
 
