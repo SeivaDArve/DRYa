@@ -1016,6 +1016,8 @@ function Fd {
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
       # sugestion: Menu D will be under F so that D gets to be reserved for drya
 
+   # uDev: Se for WSL3, detetar endereços: "C:\Users\$USER\Documents"
+
    # Description: 
       # This function is a combination of:
          # '$ cd'
