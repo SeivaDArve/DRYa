@@ -5,6 +5,22 @@ function A {
 }
 
 
+function f_emacs_init_vim {
+   # Important: Menu F depends on this function
+   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+   # This way we know we can easily upload the file
+
+      # First we edit the original/centralized file with our favourite text editor
+         v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+         vim $v_init_file 
+
+      # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+      # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+         f_manage_init_and_libraries_after_mod
+
+         # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+         #         to call the same function "f_manage_init_and_libraries_after_mod"
+}
 
 function M {
    # Title: Function "File and Destination"
