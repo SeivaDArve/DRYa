@@ -1073,8 +1073,10 @@ elif [ $1 == "install" ]; then
                                 ".bash_logout" \
                                 ".netrc" \
                                 ".vimrc" \
-                                "emacs:init.el" 
-                                "emacs:lib" 
+                                "emacs:init.el" \ 
+                                "emacs:lib" \
+                                "emacs:lib:upk" \
+                                "emacs:lib:omni-log" \ 
                                 ".gitconfig" \
                                 "xrandr" \
                                 "keyboard:layout" 
@@ -1111,6 +1113,11 @@ elif [ $1 == "install" ]; then
      
             # For browser bookmarks
                # Private bookmarks can be found at omni-log, they should not be at DRYa
+
+            # Libraries for emacs like:
+              #  "emacs:lib:upk" \
+              #  "emacs:lib:omni-log" \ 
+              # both files must be place inside their own repos because it is sensitive data
 
             # For git
             echo "attempting git"
