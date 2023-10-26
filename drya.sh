@@ -1069,7 +1069,7 @@ elif [ $1 == "install" ]; then
             echo " > copying from drya repo to Default locations"
 
             # List all files in one array variable
-               v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" "emacs:lib" ".gitconfig" "xrandr" "keyboard:layout" "manpages" "termux:storage" "termux:repos" "termux:properties" "termux:colors") 
+               v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" "emacs:lib" ".gitconfig" "xrandr" "keyboard:layout" "manpages" "termux:storage" "termux:repos" "termux:properties" "termux:colors" ".dryarc")  
 
                # ECHO variable horizontally:
                   #echo "Array is: ${v_all_dot_files[@]}"
@@ -1124,6 +1124,9 @@ elif [ $1 == "install" ]; then
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
             echo "Done! (Restart thr terminal is needed)"
+         ;;
+         dryarc)
+            echo "DRYa: source .dryarc if any exists (uDev)"
          ;;
          netrc)
             # Installing the file that allows the user to bypass entering user and password at every git push
@@ -1237,6 +1240,9 @@ elif [ $1 == "edit" ]; then
             ;;
             news)
                vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+            ;;
+            dryarc)
+               echo "edit the file to program this machine without saving inside original DRYa (uDev)"
             ;;
             alias | config-bash-alias)
                ## PERMANENT CHANGES if "git push" is used
