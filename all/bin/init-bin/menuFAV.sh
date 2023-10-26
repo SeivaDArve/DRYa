@@ -327,6 +327,7 @@ function f_manage_init_and_libraries_after_mod {
 
       function f_unalias_all {
          # Each time we run function 'F' unset all previous alias that may be set again by 'F'
+            #unalias 0  ## Will be used to unalias all
             unalias 1
             unalias 2
             unalias 3
@@ -491,7 +492,7 @@ function f_manage_init_and_libraries_after_mod {
 
 
          # When function F is presented with arguments (using elif):
-            elif [ $1 == "T" ]; then echo "Test is working"
+            elif [ $1 == "." ]; then vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/menuFAV.sh ## Edit this file itself
             elif [ $1 == "1" ]; then echo "Test is working for 1"
             elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
             elif [ $1 == "12" ]; then f_emacs_init_vim
