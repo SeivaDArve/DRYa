@@ -16,7 +16,7 @@ function f_greet {
 
 function f_greet2 {
    # Prints a more verbose output of the ascii text "DRYa"
-      ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
 # Functions for text colors
@@ -34,6 +34,7 @@ function f_greet2 {
    }
    function f_cor4 { 
       # Similar to Bold
+      # f_talk
       tput setaf 4
    }
    function f_resetCor { 
@@ -837,7 +838,7 @@ function f_exec {
 	#f_master_dryaRC
    #f_readKeystroke
 
-   ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
    echo "DRYa: I'm Installed and Ready"
    echo " > for help: drya -h"
 
@@ -997,205 +998,222 @@ elif [ $1 == "seiva-up-time" ]; then
 
 
 elif [ $1 == "install" ]; then 
-         # Install DRYa and more stuff
+   # Install DRYa and more stuff
 
-         if [[ -z $2 ]]; then 
-            # If there are no args:
-            echo "drya: Please specify what to install"
-            echo
-            echo "If you want to install drya itself, 3 ways:"
-            echo "  1. Download and run: github.com/drya/ghost-in.sh"
-            echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
-            echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
+   if [[ -z $2 ]]; then 
+      # If there are no args:
+      echo "drya: Please specify what to install"
+      echo
+      echo "If you want to install drya itself, 3 ways:"
+      echo "  1. Download and run: github.com/drya/ghost-in.sh"
+      echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+      echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
 
-         else
-            # Install extra stuff
-            case $2 in
-               doom-emacs)
-                  echo "Installing doom emacs for linux "
-                  read -p " > Do you want to continue?"
+   else
+      # Install extra stuff
+      case $2 in
+         doom-emacs)
+            echo "Installing doom emacs for linux "
+            read -p " > Do you want to continue?"
 
-                  # Dependencies
-                     sudo apt install git emacs ripgrep fd find
-                  
-                  # Now, doom itself
-                     git clone --depth 1 http://github.com/hlissner/doom-emacs ~/.emacs.d
-                  
-                  # Installing doom
-                     cd ~
-                     bash .emacs.d/bin/doom install
-                  
-                  # Utilities found in bin/doom
-                     #bash .emacs.d/bin/doom sync
-                     #bash .emacs.d/bin/doom upgrade
-                     #bash .emacs.d/bin/doom doctor
-                     #bash .emacs.d/bin/doom purge
-                     #bash .emacs.d/bin/doom help
-                     
-                  # Instead of giving the full path to the command, we can add the dir to ou PATH variable
-                     export PATH="$HOME/.emacs.d/bin:$PATH"
-
-                  # The standard emacs dir is ~/.emacs.d
-                     # DistroTube (DT) says to never play in this directory
-                     # Play in the directory ~/.doom.d instead
-                     # An alternative, instead of using ~/.doom.d you can use ~/.config/.doom.d (you move the dir, you do not duplicate it)
-                     
-                     # Let's move our dir
-                        mv ~/.doom.d ~/.config/.doom.d
-
-                  # Now just launch
-                     echo "Now run emacs like you normally would"
-                     echo "Done!"
- 
-               ;;
-               --me)
-                  echo "uDev: Are you sure you want to install DRYa?"; 
-                  # Install DRYa itself
-                  # termux-setup-storage
-                  # install '1st' here 
-                  # pkg install termux-api
-               ;;
-               xrandr) 
-                  echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
-                  echo " > 1360x768 "
-               ;;  
-               dot-files)
-                  echo "DRYa: drya install dot-files"
-                  echo " > copying from drya repo to default locations"
-                  echo " > uDev"
-                  echo 
-
-		  # Verbose notes
-                  echo "It can config:"
-                  echo " > emacs (init file + libraries)"
-                  echo " > git-github"
-                  echo " > man page"
-                  echo " > ezGIT automatic encryption"
-                  echo " uDev"
-                  echo
-
-		  # For .netrc
-           # uDev: if file exists, probably it is configured alread. So, ask the user if wants to copy it again or leave it
-           
-		  # For git
-                  echo "attempting git"
-                  echo " > Copying .../DRYa/all/dot-files/git-github/.gitconfig"
-                  echo " to"
-                  echo " > ~"
-                  read -s -n 1
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
-                  echo "Done!"
-                  echo
-
-		  # For vim
-                  echo "attempting Vim"
-                  echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
-                  echo " to"
-                  echo " > ~"
-                  read -s -n 1
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
-                  echo "Done!"
-                  echo
-
-		  # Colors and properties for Termux
-                  echo "attempting termux colors"
-                  echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
-                  echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
-                  echo "   to      ~/.termux"
-                  read -s -n 1
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
-                  cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
-                  echo "Done! (Restart thr terminal is needed)"
-               ;;
-               netrc)
-                  # Installing the file that allows the user to bypass entering user and password at every git push
-                  # Automatic setup for file: .netrc
-                  # Description: We can avoid repetitive manual autentication for git by using a file .netrc at ~ and at this file, a token must be written. This sript sends the current stroken (token with a mispelled bug) to the correct file. Afterwards prompts the user to correct the bug
-
-                  clear
-                  figlet DRYa
-
-                  echo "Installing Stroken as ~/.netrc"
-                  echo
-                  echo "Job to be done:"
-                  echo " > echo \$stroken > ~/.netrc"
-                  echo " > edit ~/.netrc"
-                  echo
-                  echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
-                  echo
-                  echo "Do you want to continue?"
-                  echo " > Press [Any key] to continue"
-                  echo " > Press Ctrl-C to exit"
-                  read -s -n 1
-                  echo
-
-
-                  # If DRYa is installed on ~/.bashrc then:
-                    # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
-                    # Set an alias "stroken" to read such file
-
-                    # We need that stroken message in these 2 variables: 
-                      v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | head -n 1)
-                      v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | tail -n 1)
-
-                  # Creating a file ~/.netrc with our new stroken info
-                     echo "machine github.com login $v_username password $v_token" > ~/.netrc
-                     echo "File created "
-                     echo " > with stroken instead of a token (still contains a bug)"
-                     echo " > Press [Any key] to continue and to edit..."
-                     read -s -n 1
-                     echo
-
-                  # Opening the file to edit
-                     echo "Opening the file ~/.netrc"
-                     echo " > (3 seconds to cancel with Ctrl-C)"
-                     read -s -n 1 -t 3
-                     vim ~/.netrc
-                     echo "Done!"
-               ;;
-               upk-at-work)
-                  # Makes all dependencies for upk repo available
-                  # This might be used most likely at in-job phone
-                     cd ${v_REPOS_CENTER}
-
-                  # Install emacs
-                     pkg install emacs
-                     # uDev: Test if it is windows and install GUI version also
-
-                  # Install figlet
-                     pkg install figlet
-
-                  # Install vim
-                     pkg install vim
-
-                  # Repo: upk
-                     echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
-
-                  # Installing .netrc
-                     bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
-                     vim ~/.netrc
-                     
-                  # Repo: upk-diario-dv
-                     echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+            # Dependencies
+               sudo apt install git emacs ripgrep fd find
             
+            # Now, doom itself
+               git clone --depth 1 http://github.com/hlissner/doom-emacs ~/.emacs.d
+            
+            # Installing doom
+               cd ~
+               bash .emacs.d/bin/doom install
+            
+            # Utilities found in bin/doom
+               #bash .emacs.d/bin/doom sync
+               #bash .emacs.d/bin/doom upgrade
+               #bash .emacs.d/bin/doom doctor
+               #bash .emacs.d/bin/doom purge
+               #bash .emacs.d/bin/doom help
+               
+            # Instead of giving the full path to the command, we can add the dir to ou PATH variable
+               export PATH="$HOME/.emacs.d/bin:$PATH"
 
-                  # Refresh the terminal
-                     #source ~/.bashrc
+            # The standard emacs dir is ~/.emacs.d
+               # DistroTube (DT) says to never play in this directory
+               # Play in the directory ~/.doom.d instead
+               # An alternative, instead of using ~/.doom.d you can use ~/.config/.doom.d (you move the dir, you do not duplicate it)
+               
+               # Let's move our dir
+                  mv ~/.doom.d ~/.config/.doom.d
 
-                  #    install: 
-                  #             emacs for windows
-                  #             instal init.el
-                  echo "drya: udev: instal all dependencies for upk repo to run"
-               ;;
-               doom-emacs-windows)
-                  echo "uDev: Tutorial here:"
-                  echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
-               ;;
-               *)
-                  echo "drya: What do you want to install? invalid arg"
-               ;;
-            esac
-         fi
+            # Now just launch
+               echo "Now run emacs like you normally would"
+               echo "Done!"
+
+         ;;
+         --me)
+            echo "uDev: Are you sure you want to install DRYa?"; 
+            # Install DRYa itself
+            # termux-setup-storage
+            # install '1st' here 
+            # pkg install termux-api
+         ;;
+         xrandr) 
+            echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
+            echo " > 1360x768 "
+         ;;  
+         dot-files)
+
+            clear
+            f_greet
+
+            f_talk; echo "drya install dot-files"
+            echo " > copying from drya repo to Default locations"
+
+            # List all files in one array variable
+               v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" "emacs:lib" ".gitconfig" "xrandr" "keyboard:layout" "manpages" "termux:storage" "termux:repos" "termux:properties" "termux:colors") 
+
+               # ECHO variable horizontally:
+                  #echo "Array is: ${v_all_dot_files[@]}"
+
+               # ECHO variable veryically:
+                  echo -e "\nList of dot files to handle:"
+                  for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
+            read
+            # Verbose notes
+            echo 
+            echo "It can config:"
+            echo " > emacs (init file + libraries)"
+            echo " > git and github with .netrc"
+            echo " > man pages"
+            echo " > ezGIT automatic encryption"
+            echo " > .vimrc"
+            echo " > termux.properties"
+            echo " > termux widgets"
+            echo " uDev"
+            echo
+
+            # For .netrc
+              # uDev: if file exists, probably it is configured alread. So, ask the user if wants to copy it again or leave it
+     
+            # For git
+            echo "attempting git"
+            echo " Copying "
+            echo " > .../DRYa/all/dot-files/git-github/.gitconfig"
+            echo " to"
+            echo -e" > \$HOME"
+            read -s -n 1
+            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+            echo "Done!"
+            echo
+
+            # For vim
+            echo "attempting Vim"
+            echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
+            echo " to"
+            echo " > ~"
+            read -s -n 1
+            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+            echo "Done!"
+            echo
+
+            # Colors and properties for Termux
+            echo "attempting termux colors"
+            echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
+            echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
+            echo "   to      ~/.termux"
+            read -s -n 1
+            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
+            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
+            echo "Done! (Restart thr terminal is needed)"
+         ;;
+         netrc)
+            # Installing the file that allows the user to bypass entering user and password at every git push
+            # Automatic setup for file: .netrc
+            # Description: We can avoid repetitive manual autentication for git by using a file .netrc at ~ and at this file, a token must be written. This sript sends the current stroken (token with a mispelled bug) to the correct file. Afterwards prompts the user to correct the bug
+
+            clear
+            figlet DRYa
+
+            echo "Installing Stroken as ~/.netrc"
+            echo
+            echo "Job to be done:"
+            echo " > echo \$stroken > ~/.netrc"
+            echo " > edit ~/.netrc"
+            echo
+            echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
+            echo
+            echo "Do you want to continue?"
+            echo " > Press [Any key] to continue"
+            echo " > Press Ctrl-C to exit"
+            read -s -n 1
+            echo
+
+
+            # If DRYa is installed on ~/.bashrc then:
+              # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
+              # Set an alias "stroken" to read such file
+
+              # We need that stroken message in these 2 variables: 
+                v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | head -n 1)
+                v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | tail -n 1)
+
+            # Creating a file ~/.netrc with our new stroken info
+               echo "machine github.com login $v_username password $v_token" > ~/.netrc
+               echo "File created "
+               echo " > with stroken instead of a token (still contains a bug)"
+               echo " > Press [Any key] to continue and to edit..."
+               read -s -n 1
+               echo
+
+            # Opening the file to edit
+               echo "Opening the file ~/.netrc"
+               echo " > (3 seconds to cancel with Ctrl-C)"
+               read -s -n 1 -t 3
+               vim ~/.netrc
+               echo "Done!"
+         ;;
+         upk-at-work)
+            # Makes all dependencies for upk repo available
+            # This might be used most likely at in-job phone
+               cd ${v_REPOS_CENTER}
+
+            # Install emacs
+               pkg install emacs
+               # uDev: Test if it is windows and install GUI version also
+
+            # Install figlet
+               pkg install figlet
+
+            # Install vim
+               pkg install vim
+
+            # Repo: upk
+               echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
+
+            # Installing .netrc
+               bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+               vim ~/.netrc
+               
+            # Repo: upk-diario-dv
+               echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+      
+
+            # Refresh the terminal
+               #source ~/.bashrc
+
+            #    install: 
+            #             emacs for windows
+            #             instal init.el
+            echo "drya: udev: instal all dependencies for upk repo to run"
+         ;;
+         doom-emacs-windows)
+            echo "uDev: Tutorial here:"
+            echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
+         ;;
+         *)
+            echo "drya: What do you want to install? invalid arg"
+         ;;
+      esac
+   fi
 
 elif [ $1 == "edit" ]; then 
          case $2 in
@@ -1324,7 +1342,7 @@ elif [ $1 == "vlm" ]; then
 
 elif [ $1 == "logo" ]; then 
          # Presenting DRYa
-         ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
 elif [ $1 == "gui" ]; then 
          TERM=ansi \

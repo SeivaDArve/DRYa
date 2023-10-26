@@ -56,10 +56,11 @@ function f_traits {
          elif [[ $v_uname =~ "Linux" ]]; then 
             # Linux has to be the last one, because it means Windows and Android are not present
             echo "DRYa: Running on: Linux"
-
          else
             echo "DRYa: Running on: NOT DETECTED"
          fi 
+
+            echo "      > traitsID: Use command: tid (udev)"
 
          # Create a script at DRYa/all/bin/ for drya-neofetch
             # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
@@ -68,6 +69,10 @@ function f_traits {
             # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
             # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
             # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
+            # uDev: Versao do Linux (para config do teclado)
+               #which yum >/dev/null && { echo Fedora flavour; exit 0; }
+               #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
+               #which apt-get >/dev/null && { echo Debian based;  }
          # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
 }
 
@@ -157,6 +162,29 @@ function f_drya_plus {
 }
 
 
+function f_pre_help {
+   # Count number of lines in the terminal:
+      v_tLines=$(stty size | cut -d ' ' -f 1)
+      echo "current number of lines in the terminal is: $v_tLines"
+
+   # Dividing that number into 2
+      v_half_tLines=$(expr $v_tLines / 2)
+      echo "Half of that is (rounded number): $v_half_tLines"
+
+   # And the into 2
+      v_half_half_tLines=$(expr $v_half_tLines / 2)
+
+   # Creating a message at the center of the screen
+      v_preMSGS="$HOME/.config/h.h/drya/drya-pre-msgs"
+      echo " " > $v_preMSGS
+
+      for i in $(seq 1 $v_half_half_tLines)
+      do
+         echo -e "\n" >> $v_preMSGS
+      done
+
+      echo -e "DRYa messages will be presented \n > Press Q to quit these menus" >> $v_preMSGS
+}
 
 
 
@@ -183,9 +211,7 @@ function f_drya_plus {
 
    # Display info about it at the screen when DRYa is loaded by the terminal
       # Presenting it with figlet (which is a dependency) or just echo it's name:
-      
-         echo "( DRYa ): trying to catch WSL2 welcome message"
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
    # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
       f_drya_plus  ## Turno ON/OFF for verbose welcome screen output
@@ -197,9 +223,6 @@ function f_drya_plus {
 # Dependency: figlet
    # Not every instalation of figlet comes witht the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
-
-# Repository: CBorg
-   alias C="bash ${v_REPOS_CENTER}/CBorg/CB.sh"
 
 # Repository: dWiki
    alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
@@ -279,6 +302,7 @@ function f_drya_plus {
 
             /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_choosen_file 
                echo -e "... File closed\n" 
+               cd ${v_REPOS_CENTER}/omni-log
 
       else
          # Otherwise, open emacs in terminal:
@@ -288,6 +312,7 @@ function f_drya_plus {
 
             emacs $v_choosen_file 
                echo -e "... File closed\n"  
+               cd ${v_REPOS_CENTER}/omni-log
       fi
    }
 
@@ -316,7 +341,14 @@ function f_drya_plus {
    
    # Drya bin files
       # Sourcing all stand-alone scripts
-         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/*
+         # uDev: tell $v_MSGS the 'ls' found at 'bin/init-bin/"
+         v_list_of_scripts=$(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
+         echo -e "\nDRYa: List of scripts found in: \n > .../DRYa/all/bin/init-bin/ \n$v_list_of_scripts \n > Let's try to source all of them... \n" >> $v_MSGS
+
+         for i in $(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
+         do 
+            source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/$i && echo "Sorced $i" >> $v_MSGS
+         done 
 
       # Sourcing a specific list of scripts
          alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"
@@ -332,4 +364,8 @@ function f_drya_plus {
    echo "DRYa: File ended loading: DRYa's $v_title_drya" >> $v_MSGS
 
    # Read messages file before normal tasks
-      less $v_MSGS
+      # Creating a pre waning and reading it
+         f_pre_help; less $v_preMSGS
+
+      # Reading the actuall messages
+         less $v_MSGS

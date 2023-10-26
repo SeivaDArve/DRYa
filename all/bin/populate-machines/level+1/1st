@@ -10,6 +10,7 @@
    whiptail # Tool to give GUI menus on Bash
    dialog # Tool to give GUI menus on Bash (like whiptail but with more options
    man
+   which  # Used to detect the path of installed scripts
    #pkg install termux-api
 
 # List of usefull apps 

@@ -1,3 +1,5 @@
+source: https://github.com/termux/termux-widget/blob/master/README.md#Setup-Instructions
+
 Place in this directory an icon .png (uDev: tell max dimentions) where it's name must match the script name in the parent directory. The extention .png must be added
 
 Example:

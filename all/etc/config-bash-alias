@@ -526,8 +526,8 @@ function ....... {
 alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias ,,,=", ; ,," # Same as both 2 previous commands put together
+alias CLEAR="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
-alias A="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 
 alias em="emacs"
 alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
@@ -1010,7 +1010,7 @@ function drya-test {
 }
 
 
-function Fd {
+function C {
    # Title: Function "File and Destination"
    
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
