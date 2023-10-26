@@ -939,9 +939,9 @@ elif [ $1 == "update" ]; then
     # Aplly each dot-file in their correct places across the system
     f_cor4; echo -n "DRYa: "
     f_resetCor; echo "applying dot-files:"
-    echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+    echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
     echo " > termux: colors + properties (uDev)"
-    echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+    echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
     echo " > init.el (uDev)"
     echo
 
@@ -1097,32 +1097,32 @@ elif [ $1 == "install" ]; then
             # For git
             echo "attempting git"
             echo " Copying "
-            echo " > .../DRYa/all/dot-files/git-github/.gitconfig"
+            echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
             echo " to"
             echo -e" > \$HOME"
             read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/.gitconfig ~
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
             echo "Done!"
             echo
 
             # For vim
             echo "attempting Vim"
-            echo " > Copying .../DRYa/all/dot-files/vim/.vimrc"
+            echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
             echo " to"
             echo " > ~"
             read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
             echo "Done!"
             echo
 
             # Colors and properties for Termux
             echo "attempting termux colors"
-            echo " > Copying .../DRYa/all/dot-files/termux/colors.properties"
-            echo "   and     .../DRYa/all/dot-files/termux/termux.properties"
+            echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
+            echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
             echo "   to      ~/.termux"
             read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/colors.properties ~/.termux/
-            cp ${v_REPOS_CENTER}/DRYa/all/dot-files/termux/termux.properties ~/.termux/
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
             echo "Done! (Restart thr terminal is needed)"
          ;;
          netrc)
@@ -1153,8 +1153,8 @@ elif [ $1 == "install" ]; then
               # Set an alias "stroken" to read such file
 
               # We need that stroken message in these 2 variables: 
-                v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | head -n 1)
-                v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken | tail -n 1)
+                v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
+                v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
 
             # Creating a file ~/.netrc with our new stroken info
                echo "machine github.com login $v_username password $v_token" > ~/.netrc
@@ -1190,7 +1190,7 @@ elif [ $1 == "install" ]; then
                echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
 
             # Installing .netrc
-               bash ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/bin/create-netrc-from-stroken.sh
+               bash ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/bin/create-netrc-from-stroken.sh
                vim ~/.netrc
                
             # Repo: upk-diario-dv
@@ -1219,16 +1219,16 @@ elif [ $1 == "edit" ]; then
          case $2 in
             stroken)
                # Editing stroken globally
-               vim ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken
-                  echo "File edited at: ...DRYa/all/dot-files/git-github/current-stroken"
+               vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
+                  echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
                   echo
 
-               cp ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
                   echo "Copied also too: ...DRYa/install.uninstall/stroken"
                   echo
                
                   # Adding info for the new user:
-                     echo -e "\n(note \"info exists also at: .../DRYa/all/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+                     echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
 
                # Verbose output
                   echo "You may install stroken as ~/.netrc file with the command:"

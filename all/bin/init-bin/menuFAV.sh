@@ -263,7 +263,7 @@ function f_manage_init_and_libraries_after_mod {
          # Copy recursively all files about emacs to the localized machine-specific directory:
             echo "DRYa: copying recursively: "
             echo " > \"centralized emacs files\" into \"~/.emacs.d\""
-               cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* ~/.emacs.d/
+               cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/
             echo "   > done!"
          
          # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
@@ -282,7 +282,7 @@ function f_manage_init_and_libraries_after_mod {
 
             # Copy files and directories recursively for the directory that emacs prefers on windows
                echo " > %AppData% exists, copying emacs files there too recursively"
-                  cp -r ${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/* $v_correct_win_dir
+                  cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
                echo "   > copied to: \"$v_correct_win_dir\""
                echo -e "   > done! \n"
             
@@ -421,10 +421,10 @@ function f_manage_init_and_libraries_after_mod {
                      break
                   ;;
                   .vimrc)
-                     vim ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc
+                     vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
                      f_greet_df
                      echo "edited: .vimrc on DRYa"
-                     cp ${v_REPOS_CENTER}/DRYa/all/dot-files/vim/.vimrc ~
+                     cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
                      echo "copied: from DRYa to ~"
                      break
                   ;;
@@ -451,7 +451,7 @@ function f_manage_init_and_libraries_after_mod {
                      # This way we know we can easily upload the file
                         
                         # First we edit the original/centralized file with our favourite text editor
-                           v_init_file="${v_REPOS_CENTER}/DRYa/all/dot-files/emacs/init.el"
+                           v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
                            emacs $v_init_file 
 
                         # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
