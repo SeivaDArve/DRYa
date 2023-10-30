@@ -1,10 +1,18 @@
 #!/bin/bash
-alias B="echo Future menu D"
-function A {
-   echo "echo bl bla"
+
+# Testing
+   alias B="echo Future menu D"
+
+   function A {
+      echo "echo bl bla"
+   }
+
+
+function f_greet { 
+   # Avoiding repetition
+   clear
+   figlet menuFAV 
 }
-
-
 
 function M {
    # Title: Function "File and Destination"
@@ -310,11 +318,6 @@ function f_manage_init_and_libraries_after_mod {
 # List fav files for edition (menu F)
    function F {
 
-      function f_greet_df { 
-         # Avoiding repetition
-         clear
-         figlet MenuDF 
-      }
       
       function f_uDev_1 {
          # Function to remind the user about needed changes (uDev)
@@ -367,7 +370,7 @@ function f_manage_init_and_libraries_after_mod {
          
 
       # If there are no arguments, present the menu
-         if [ -z $* ]; then
+         if [ -z $1 ]; then
 
             clear
             figlet MenuDF
@@ -384,36 +387,36 @@ function f_manage_init_and_libraries_after_mod {
                case $opt in
                   config-bash-alias)
                      vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-                     f_greet_df
+                     f_greet
                      echo "edited: config-bash-alias"
                      break
                   ;;
                   notes)
-                     f_greet_df
+                     f_greet
                      f_notes
                      break
                   ;;
                   source-all-drya-files)
                      vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
-                     f_greet_df
+                     f_greet
                      echo "edited: source-all-drya-files"
                      break
                   ;;
                   .bashrc)
                      vim ~/.bashrc
-                     f_greet_df
+                     f_greet  
                      echo "edited: ~/.bashrc"; f_uDev_1
                      break
                   ;;
                   source-all-moedaz-files)
-                     f_greet_df
+                     f_greet
                      vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
                      echo "edited: source-all-moedaz-files"
                      break
                   ;;
                   com.list-econ-items.txt)
                      vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
-                     f_greet_df
+                     f_greet
                      echo "edited: com.list-econ-items.txt"
                      break
                   ;;
@@ -423,7 +426,7 @@ function f_manage_init_and_libraries_after_mod {
                   ;;
                   .vimrc)
                      vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
-                     f_greet_df
+                     f_greet
                      echo "edited: .vimrc on DRYa"
                      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
                      echo "copied: from DRYa to ~"
@@ -432,18 +435,18 @@ function f_manage_init_and_libraries_after_mod {
                   Refresh-Reload-Source)
                      #clear
                      source ~/.bashrc
-                     f_greet_df
+                     f_greet
                      drya update
                      echo "Reload done to: ~/.bashrc by Menu F"
                      # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
                   1st)
-                     f_greet_df
+                     f_greet
                      echo "Editing the list of 1st apps to install"
                      read -s -t 2
                      vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-                     f_greet_df
+                     f_greet
                      echo "edited: 1st"
                      break
                   ;;
@@ -469,7 +472,7 @@ function f_manage_init_and_libraries_after_mod {
                      break
                   ;;
                   secundary-files)
-                     f_greet_df
+                     f_greet
                      echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
                      break
                   ;;
@@ -477,7 +480,7 @@ function f_manage_init_and_libraries_after_mod {
                      break  
                   ;;
                   ? | help | --help | -h | h) 
-                     f_greet_df
+                     f_greet
                      echo "MenuDF"
                      echo " > Edits files inside 'DRYa repository' then copies those files across the system"
                      echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
@@ -492,6 +495,8 @@ function f_manage_init_and_libraries_after_mod {
 
 
          # When function F is presented with arguments (using elif):
+      
+            elif [ $1 == "0" ]; then f_unalias_all
             elif [ $1 == "." ]; then vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/menuFAV.sh ## Edit this file itself
             elif [ $1 == "1" ]; then echo "Test is working for 1"
             elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
