@@ -1060,7 +1060,7 @@ elif [ $1 == "install" ]; then
             echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
             echo " > 1360x768 "
          ;;  
-         dot-files)
+         dot-files | dot)
 
             clear
             f_greet
@@ -1069,13 +1069,30 @@ elif [ $1 == "install" ]; then
             echo " > copying from drya repo to Default locations"
 
             # List all files in one array variable
-               v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" "emacs:lib" ".gitconfig" "xrandr" "keyboard:layout" "manpages" "termux:storage" "termux:repos" "termux:properties" "termux:colors" ".dryarc")  
+               v_all_dot_files=(".bashrc" \
+                                ".bash_logout" \
+                                ".netrc" \
+                                ".vimrc" \
+                                "emacs:init.el" \ 
+                                "emacs:lib" \
+                                "emacs:lib:upk" \
+                                "emacs:lib:omni-log" \ 
+                                ".gitconfig" \
+                                "xrandr" \
+                                "keyboard:layout" 
+                                "manpages" \
+                                "termux:storage" \
+                                "termux:repos" \
+                                "termux:properties" \
+                                "termux:colors" \
+                                ".dryarc" \
+                                "browser:bookmarks")  
 
                # ECHO variable horizontally:
                   #echo "Array is: ${v_all_dot_files[@]}"
 
                # ECHO variable veryically:
-                  echo -e "\nList of dot files to handle:"
+                  echo -e "\nListing all dot files to handle:"
                   for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
             read
             # Verbose notes
@@ -1094,6 +1111,14 @@ elif [ $1 == "install" ]; then
             # For .netrc
               # uDev: if file exists, probably it is configured alread. So, ask the user if wants to copy it again or leave it
      
+            # For browser bookmarks
+               # Private bookmarks can be found at omni-log, they should not be at DRYa
+
+            # Libraries for emacs like:
+              #  "emacs:lib:upk" \
+              #  "emacs:lib:omni-log" \ 
+              # both files must be place inside their own repos because it is sensitive data
+
             # For git
             echo "attempting git"
             echo " Copying "
