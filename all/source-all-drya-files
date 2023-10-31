@@ -289,7 +289,7 @@ function f_pre_help {
    # If windows with graphical interface is available, we will prefer that to the terminal version
 
    # Using command 'log' to open our file
-   function log {
+   function om {
       
       # Defining the name of the file as a variable
          v_choosen_file="${v_REPOS_CENTER}/omni-log/multiplex.org "
