@@ -296,6 +296,9 @@ function f_pre_help {
 
       if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then
          # if .exe is found, open GUI emacs on windows:
+            clear
+            figlet "omni-log"
+
             echo "DRYa: Opening file (in GUI windows):"
             echo " > $v_choosen_file"
             echo
