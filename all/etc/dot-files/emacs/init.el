@@ -307,6 +307,39 @@
 ;;       (scroll-bar-mode +1)
 ;;          (message "Dv: focus mode disabled"))
 
+(defun dv-translate ()
+  "Serve para traduzir od nomes dos dias da semana de EN para PT
+Utilizado por exemplo na Fx: dv-insert-new-day-upk"
+  ;;interactive
+  (beginning-of-line)
+  (cond (search-forward "ter")
+        (progn (delete-char -3)
+	            (insert "merda"))
+
+         (search-forward "Tue")
+         (progn (delete-char -3)
+	             (insert "Ter"))
+
+      (search-forward "Wed")
+      (progn (delete-char -3)
+	          (insert "qua"))
+
+      (search-forward "Thu")
+      (progn (delete-char -3)
+	          (insert "qui"))
+
+      (search-forward "Fri")
+      (progn (delete-char -3)
+	          (insert "sex"))
+
+      (search-forward "Fri")
+      (progn (delete-char -3)
+	          (insert "sab"))
+
+      (search-forward "Sun")
+      (progn (delete-char -3)
+	          (insert "dom")))
+  (end-of-line))
 
 ;; Funtion to allow TAB to print n empty spaces
 (defun tab-inserting-text ()
@@ -336,6 +369,10 @@
      (insert "\n")
      (insert "* Dia ")
      (insert (format-time-string "<%Y-%m-%d %a> "))
+     
+      ;; Traduzir de EN para PT os nomes dos dias da semana
+         ;;(dv-translate) ;; uDev: esta função só ainda não funciona porque (search-forward) quando não encontra nada, pára o script
+
      (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
 
   ;; Quando é dia de turno (B, C, N):
@@ -843,6 +880,9 @@ Notas {
 
 
 
+
+
+
 ;;       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;       ;; Configs from video: https://www.youtube.com/watch?v=eRHLGWajcTk
 ;;       ;; Emacs Elements
@@ -1026,3 +1066,15 @@ Notas {
 
 ;; You can use a load command to evaluate a complete file and thereby install all the functions and variables in the file into Emacs. For example:
 ;; (load "~/emacs/upk.el")
+
+
+
+;; For omni-log:
+(defun om-gazol ()
+   (interactive)
+   (setq v_litros (read-string "Quantos litros de combustivel colocou?: "))
+   (setq v_posto  (read-string "Posto? Cepsa 'C' /  BP 'B' / Prio 'P' / Galp 'G' : "))
+   (setq v_preco  (read-string "Qual foi o preço?: "))
+   (setq v_km     (read-string "Quantos KM marcava o painel?: "))
+   (setq v_dia    (read-string "Foi hoje?: "))
+   (insert v_litros " " v_posto " " v_preco " " v_km " " v_dia))
