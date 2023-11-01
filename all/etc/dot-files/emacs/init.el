@@ -312,34 +312,49 @@
 Utilizado por exemplo na Fx: dv-insert-new-day-upk"
   ;;interactive
   (beginning-of-line)
-  (cond (search-forward "ter")
+  (cond (search-forward "ter"
         (progn (delete-char -3)
-	            (insert "merda"))
+	            (insert "merda")))
 
-         (search-forward "Tue")
-         (progn (delete-char -3)
-	             (insert "Ter"))
+        (search-forward "Tue"
+        (progn (delete-char -3)
+	            (insert "Ter")))
 
-      (search-forward "Wed")
+        (search-forward "Wed"
+        (progn (delete-char -3)
+	            (insert "qua")))
+
+      (search-forward "Thu"
       (progn (delete-char -3)
-	          (insert "qua"))
+	          (insert "qui")))
 
-      (search-forward "Thu")
+      (search-forward "Fri"
       (progn (delete-char -3)
-	          (insert "qui"))
+	          (insert "sex")))
 
-      (search-forward "Fri")
+      (search-forward "Fri"
       (progn (delete-char -3)
-	          (insert "sex"))
+	          (insert "sab")))
 
-      (search-forward "Fri")
+      (search-forward "Sun"
       (progn (delete-char -3)
-	          (insert "sab"))
-
-      (search-forward "Sun")
-      (progn (delete-char -3)
-	          (insert "dom")))
+	          (insert "dom"))))
   (end-of-line))
+
+
+;; Toggle stuff for focus
+   (defun dv-focus-mode-t ()
+      ;; uDev: falta a funcao toggle... se a variavel estiver t passa a -1 e vice-versa
+      (interactive)
+      (tool-bar-mode -1)  ;; complementar com (tool-bar-mode t)
+      (menu-bar-mode -1)) ;; complementar com (menu-bar-mode t)
+
+   (defun dv-focus-mode-nil ()
+      ;; uDev: falta a funcao toggle... se a variavel estiver t passa a -1 e vice-versa
+      (interactive)
+      (tool-bar-mode t)  
+      (menu-bar-mode t)) 
+
 
 ;; Funtion to allow TAB to print n empty spaces
 (defun tab-inserting-text ()
