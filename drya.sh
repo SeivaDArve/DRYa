@@ -48,6 +48,25 @@ function f_talk {
    f_resetCor
 }
 
+function f_stroken {
+   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # While the app is in beta, this is usefull
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         #echo "netrc exists"
+         echo "it exists" 1>/dev/null
+      else
+         f_talk; echo "stroken"
+                 echo " > Inside the ezGIT app I found this: "
+         f_cor4; echo -n "seivadarve";
+         f_resetCor; echo " and this:";
+         f_cor4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_resetCor
+         echo
+      fi
+}
+
 function f_git_status {
    # Copied from: ezGIT
    echo
@@ -767,25 +786,26 @@ function f_clone_repos {
    # Before doing any cloning, change to the correct place for cloning
       cd $v_REPOS_CENTER
 
-   case $2 in
-      ezGIT) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
-             #uDev: Install its dependencies too
-      ;;
-      moedaz) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
-      yoga) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
+      f_stroken
+
+   case $v_arg2 in
+      # uDev: Search for dependencies file if any
+      # uDev: Print their webpage link
+      
+      ezGIT | ezgit | ez) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
+      moedaz | mo) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
+      yoga | yg) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
       dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
-      log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
+      omni-log | omni | log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
+      shiva-sutras | shiva | ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
       upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
       upk-dv | upkd) 
          echo "cloning upK-diario-Dv"; 
          echo "Link for download is:"; 
          echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
-         echo " > uDev: Include stroken"
-         echo 
          git clone https://github.com/SeivaDArve/upK-diario-Dv.git
       ;;
       setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
-      ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
       -p | --public-list) 
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
@@ -809,6 +829,9 @@ function f_clone_repos {
                -X GET \
                https://mygithuburl.com/user/repos?visibility=private
          '
+      ;;
+      *)
+         f_talk; echo "Repository not recognized"
       ;;
    esac
 
@@ -886,23 +909,28 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
    echo
    echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
 
-elif [ $1 == "l" ]; then 
+elif [ $1 == "location" ]; then 
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
 
-   if [ $2 == "location-network" ]; then 
+   if [ $2 == "network" ]; then 
       # Displays current GPS location using network as provider
       termux-location -p network
 
-   elif [ $2 == "location-gps" ]; then 
+   elif [ $2 == "gps" ]; then 
       # Displays current GPS location using GPS as provider
       termux-location -p GPS
 
-   elif [ $2 == "save-location-network" ]; then 
-      # Displays current GPS location using network as provider and saves it
-      # Directory for saved text
+   elif [ $2 == "network-save" ]; then 
+      # Displays current GPS location using network and saves in a file
       # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
       termux-location -p network
+
+   elif [ $2 == "gps-save" ]; then 
+      # Displays current GPS location using GPS and saves in a file
+      # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
+      termux-location -p GPS
+
    fi
 
 
@@ -958,19 +986,25 @@ elif [ $1 == "clone" ]; then
 
    # uDev: Some repositories have files to be sourcer (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
 
+   #uDev: Install repo dependencies too
+
    clear
    f_greet
 
    if [ -z "$2" ]; then
       # If nothing was specified to clone
          f_clone_info
+
    elif [ $2 == "try" ]; then
-      echo -e "trying to clone: $3 \n"; 
+      f_talk; echo -e "trying to clone: $3 \n"; 
+
+      f_stroken
+
       git clone https://github.com/SeivaDArve/$3.git
 
-   else
-      # If an argument was given, clone will be attemoted
-         f_clone_repos
+   else  
+      v_arg2=$2
+      f_clone_repos 
    fi
 
 elif [ $1 == "config" ]; then 
@@ -986,11 +1020,31 @@ elif [ $1 == "config" ]; then
       echo "uDev: This info must be environment variables for other apps"
 
 elif [ $1 == "backup" ]; then 
-   # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
+
+   if [ -z $2 ]; then 
+      # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
+      # Pode ser usado o SyncThing
       echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
       echo 
       echo "DRYa backup options:"
       echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
+      echo
+      echo "DRYa: type 'drya backup list' to be listed a sugestion of files to backup"
+
+   elif [ $2 == "list" ]; then 
+      echo "Backup on Smartphone (sugestions):"
+      echo " > Contacts"
+      echo " > Gmail accounts and passwords"
+      echo " > Social media login credentials"
+      echo " > Snapshot all installed apps"
+      echo " > Browser bookmarks"
+      echo " > Update all Repositories on termux"
+      echo " > All SD CARD and Internal Storage content"
+      echo " > ..."
+      echo
+      echo "Backup on Computer (suhestions):"
+      echo " > ..."
+   fi
 
 elif [ $1 == "seiva-up-time" ]; then 
          # uDev: Tells how long the Linux experience started for Seiva
