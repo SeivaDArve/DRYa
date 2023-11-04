@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Testing
-   alias B="echo Future menu D"
+   alias B="echo Future menuFAV"
 
    function A {
       echo "echo bl bla"
@@ -16,7 +16,7 @@ function f_greet {
 
 
 function f_emacs_init_vim {
-   # Important: Menu F depends on this function
+   # Important: menuFAV depends on this function
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
    # This way we know we can easily upload the file
 
@@ -28,7 +28,7 @@ function f_emacs_init_vim {
       # avoid duplication, we create a function to keep it simple and avoid spaghetti code
          f_manage_init_and_libraries_after_mod
 
-         # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+         # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
          #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
 
@@ -36,7 +36,7 @@ function M {
    # Title: Function "File and Destination"
    
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
-      # sugestion: Menu D will be under F so that D gets to be reserved for drya
+      # sugestion: menuFAV will be under F so that D gets to be reserved for drya
 
    # uDev: Se for WSL3, detetar endereços: "C:\Users\$USER\Documents"
 
@@ -69,7 +69,7 @@ function M {
    # Implementation of Use 1:
    if [ -z $1 ]; then 
       f_cor1
-      figlet "MenuDF"
+      figlet "menuFAV"
       f_resetCor
       echo " > No arguments. Choose some place to go to"
 
@@ -95,7 +95,7 @@ function M {
       
    # Implementation of Use 2:
    elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet Menu D && echo -e "Command used: upk-dv\n" && ls
+      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet menuFAV && echo -e "Command used: upk-dv\n" && ls
       
    # Implementation of Use 2:
    elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -257,17 +257,15 @@ function M {
 
 
 
-
-# uDev: Menu M should be moved to F (F-and-D or F-D)
 function f_manage_init_and_libraries_after_mod {
    # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
    # Has a function of presentation
    # Has a function of prompting the user wether or not to apply the last changes
 
    function f_presenting_DF {
-      # presenting the file for our M menu:
+      # presenting the file for our M menuFAV:
          clear; 
-         figlet "MenuDF"
+         figlet "menuFAV"
          echo -e "File closed (after editions):\n > $v_init_file \n"
    }
 
@@ -333,7 +331,7 @@ function f_manage_init_and_libraries_after_mod {
          fi
 }
 
-# List fav files for edition (menu F)
+# List fav files for edition (menuFAV)
    function F {
 
       
@@ -366,7 +364,7 @@ function f_manage_init_and_libraries_after_mod {
 
       #f_unalias_all
             
-      #uDev: Turn these variables into usable arguments for F menu
+      #uDev: Turn these variables into usable arguments for menuFAV
          #   Play with alias
          #   F 4 2 1
             # If !-z then for i in $@; do bash $i
@@ -387,11 +385,11 @@ function f_manage_init_and_libraries_after_mod {
          #}
          
 
-      # If there are no arguments, present the menu
+      # If there are no arguments, present the menuFAV
          if [ -z $1 ]; then
 
             clear
-            figlet MenuDF
+            figlet menuFAV
 
             echo "SELECT file to edit by Title"
             echo
@@ -455,7 +453,7 @@ function f_manage_init_and_libraries_after_mod {
                      source ~/.bashrc
                      f_greet
                      drya update
-                     echo "Reload done to: ~/.bashrc by Menu F"
+                     echo "Reload done to: ~/.bashrc by menuFAV"
                      # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
@@ -480,7 +478,7 @@ function f_manage_init_and_libraries_after_mod {
                         # avoid duplication, we create a function to keep it simple and avoid spaghetti code
                            f_manage_init_and_libraries_after_mod
 
-                           # Note*1: In this menu there are 2 options that choose 2 text editors (vim and emacs) 
+                           # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
                            #         to call the same function "f_manage_init_and_libraries_after_mod"
 
                      break
@@ -491,7 +489,7 @@ function f_manage_init_and_libraries_after_mod {
                   ;;
                   secundary-files)
                      f_greet
-                     echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menu"
+                     echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menuFAV"
                      break
                   ;;
                   quit) 
@@ -499,14 +497,14 @@ function f_manage_init_and_libraries_after_mod {
                   ;;
                   ? | help | --help | -h | h) 
                      f_greet
-                     echo "MenuDF"
+                     echo "menuFAV"
                      echo " > Edits files inside 'DRYa repository' then copies those files across the system"
                      echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
                      echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
                      break  
                   ;;
                   *)    
-                     echo "MenuDF: Invalid option $REPLY"  
+                     echo "menuFAV: Invalid option $REPLY"  
                   ;;
                esac
             done
@@ -524,6 +522,6 @@ function f_manage_init_and_libraries_after_mod {
 
 
          # If arguments are given but they are wrong
-            else echo "MenuDF: Please choose a valid arg"
+            else echo "menuFAV: Please choose a valid arg"
          fi
    }   ## End of function F
