@@ -370,6 +370,7 @@ Utilizado por exemplo na Fx: dv-insert-new-day-upk"
 
   ;; Prompting user for values
      (setq v_turno (read-string "Turno do dia de hoje: "))
+     (setq v_rendi (read-string "Quem rendi: "))
      ;;(setq v_text2 (read-string "Nova tarefa? "))
 
   ;; uDev:
@@ -404,7 +405,7 @@ Utilizado por exemplo na Fx: dv-insert-new-day-upk"
                   (insert "- [ ] Colocar baterias a carregar\n"))
 
          ;; Adicionar mais texto neutro (Inserir END dos Pre-requisitos):
-            (insert "- Colega do turno anterior: \n") 
+            (insert "- Colega do turno anterior: ") (insert v_rendi) (insert "\n")
             (insert ":END:\n")
 
          ;; Se o turno for "B", inserir rotinas:
