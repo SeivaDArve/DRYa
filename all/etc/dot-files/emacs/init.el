@@ -231,11 +231,13 @@
   (org-overview))
  
 (defun wrap ()
+  ;; 'M-x toggle-truncate-lines' may also be usefull'
   (interactive)
   (message "Dv: Toggle text wrap on")
   (visual-line-mode t))
      
 (defun nowrap ()
+  ;; 'M-x toggle-truncate-lines' may also be usefull'
   (interactive)
   (message "Dv: Toggle text wrap off")
   (visual-line-mode -1))
@@ -565,6 +567,13 @@ Notas {
 ;;-----------------------------------------
 ;; linhas sobre o siigo
 
+
+(defun dv-print-siigo-ot-type ()
+  (interactive)
+  "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de ot do siigo. Esse documnto que é aberto tem também links de atalho programados em elisp que ao clicar, fazem preencher o buffer anterior com o texto desejado"
+  (switch-to-buffer-other-window (find-file-noselect "c:/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
+
+
 (defun gt ()
     "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
   (interactive)
@@ -738,8 +747,8 @@ Notas {
 (defun dv-add-ot-just-text ()
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (insert "\nOT {\n   Tipo:      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")
-  (insert "[[elisp:(dv-just-crawl)][click me to: Print python webcrawler]] \n\n")
+  (insert "\nOT {\n   [[elisp:(dv-print-siigo-ot-type)][Tipo:]]      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")
+  (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
   ) 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
