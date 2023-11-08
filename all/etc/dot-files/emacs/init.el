@@ -598,6 +598,9 @@ Notas {
 ;;-------------------------------------------------------------------
 
 
+;; Improving the Undo Redo hotkeys:
+   (global-set-key (kbd "C-x M-u") 'undo-redo)
+   (global-set-key (kbd "C-x u") 'undo)
 
 (defun dv-search-undone-checkbox ()
   (interactive)
@@ -634,7 +637,11 @@ Notas {
   (insert v_tarefa)
   (insert "\n")
   (insert ":PROPERTIES:\nDescricao ")
-  (insert "\{ \n\}\n\nNotas \{ \n\}\n\n")
+  (insert "\{ \n\}\n\n")
+    ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
+     ;;(insert "Notas")
+     (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
+  (insert " \{ \n\}\n\n")
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
   (previous-line)(previous-line)(previous-line)(end-of-line)
@@ -658,7 +665,11 @@ Notas {
   (insert v_tarefa)
   (insert "\n")
   (insert ":PROPERTIES:\nDescricao ")
-  (insert "\{ \n\}\n\nNotas \{ \n\}\n\n")
+  (insert "\{ \n\}\n\n")
+    ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
+     ;;(insert "Notas")
+     (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
+  (insert " \{ \n\}\n\n")
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
   (previous-line)(previous-line)(previous-line)(end-of-line)
@@ -748,6 +759,7 @@ Notas {
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
   (insert "\nOT {\n   [[elisp:(dv-print-siigo-ot-type)][Tipo:]]      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")
+  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line))][del:]] ")
   (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
   ) 
 
@@ -898,6 +910,15 @@ Notas {
     (global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun k ()
+  ;; uDev: Criar keybinding: C-M-k 
+  "Kills line from cursor position until the end of the line in order to store it in the clipboard and then paste the line again in the same place"
+  (interactive)
+  (org-kill-line)(yank))
+
+
+
 
 (put 'dired-find-alternate-file 'disabled nil)
 
@@ -1099,6 +1120,12 @@ Notas {
    (interactive)
    (setq v_litros (read-string "Quantos litros de combustivel colocou?: "))
    (setq v_posto  (read-string "Posto? Cepsa 'C' /  BP 'B' / Prio 'P' / Galp 'G' : "))
+                  (when (string-equal v_posto "C")
+                        (setq v_posto "Cepsa"))
+
+                  (when (string-equal v_posto "P")
+                        (setq v_posto "Prio"))
+
    (setq v_preco  (read-string "Qual foi o preço?: "))
    (setq v_km     (read-string "Quantos KM marcava o painel?: "))
    (setq v_dia    (read-string "Foi hoje?: "))
