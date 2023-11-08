@@ -12,6 +12,7 @@
    man
    which  # Used to detect the path of installed scripts
    #pkg install termux-api
+   tsu   # To grant sudo permissions, may be needed to enable phone screenshots
 
 # List of usefull apps 
    dos2unix  ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
@@ -61,3 +62,12 @@
       # Example: 
          wslview /mnt/c/Repositories/Software-resources/all/icon.png 
    }
+
+# For termux, may be needed:
+   - termux-change-repo
+   - termux-setup-storage
+   - termux-reload-settings
+
+# May also be very usefull:
+   - ROOT smartphone (and create a tutorial)
+     > For Samsung A6+ : https://youtu.be/Zm6vh2W4Hxs?si=OHEOzvSZbI0ZxVMU
