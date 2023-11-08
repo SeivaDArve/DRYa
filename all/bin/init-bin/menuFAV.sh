@@ -102,7 +102,7 @@ function M {
       cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
       
    # Implementation of Use 2:
-   elif [[ $1 == "omni" ]] || [[ $1 == "log" ]]; then
+   elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
       cd ${v_REPOS_CENTER}/omni-log && ls
       
    # Implementation of Use 2:
