@@ -32,34 +32,6 @@ function f_resetCor {
 # Set the keybindings to vi/vim mode:
    #set -o vi
 
-function f_horizontal_line {
-   # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
-
-         v_count="$COLUMNS"
-            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
-            #read
-
-         # You may choose the apropriate symbol here
-            v_underscore="-"
-
-         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
-            v_underscoreCount=""
-
-            for e in $(seq $v_count); do 
-               v_underscoreCount="$v_underscoreCount$v_underscore"
-            done
-
-         # The result is an horizontal line
-            #echo "var is $v_underscoreCount"
-            #read
-            v_line=$v_underscoreCount
-
-            # removing last 4 characters from v_line. This way it can be used in SELECT menus
-               v_line2=${v_line::-4}
-
-            echo $v_underscoreCount
-}
-
 function E {
    select i in Nano Vim; do 
       case $i in 
@@ -76,6 +48,44 @@ function E {
    done
 	
 }
+
+# DRYa-termux-omni-key (Bash keyboard bindings)
+   # Bind F7 keycode: "\e[18~"
+     v_default_omni_key="ॐ"
+   
+      # To print "Hi!" (just print)
+         #bind '"\e[18~":"Hi!"'
+
+      # To exec 'man cat' 
+         #bind -x '"\e[18~":"man cat"'
+
+      # To exec 'upk' 
+         function f-set-omni-key-upk {
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
+            sed -i "s/ॐ/⍾/g" ~/.termux/termux.properties
+            bind -x '"\e[18~":"upk"'
+            termux-reload-settings
+         }
+
+      # To open/exec the Android App: "Leitor QR"
+         function f-set-omni-key-qr {
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
+            sed -i "s/ॐ/⎆/g" ~/.termux/termux.properties
+            bind -x '"\e[18~":"am start --user 0 -a andrppoid.intent.action.MAIN -n com.teacapps.barcodescanner/net.qrbot.ui.main.MainActivity"'
+            termux-reload-settings
+         }
+      
+      #bind -x '"\e[18~":"f-set-omni-key-qr"'
+
+      # Reset omni-key {
+         function f-reset-omni-key {
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
+            #sed -i "s/⎆/ॐ/g" ~/.termux/termux.properties  ## Se o ficheiro em .../etc/dot-files/... for copiado diretamente para ~/.termux/termux.properties entao nao é preciso 'sed'
+            termux-reload-settings
+            bind -x '"\e[18~":"F"'
+
+         }
+         f-reset-omni-key
 
 
 function siigo {
@@ -215,7 +225,7 @@ function op {
 
 
 # Ask the terminal to print the stroken
-   alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/dot-files/git-github/current-stroken"
+   alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken"
    # Notes:
       # At ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
       # We can install stroken automatically with: '$ drya install stroken'
@@ -262,6 +272,9 @@ function shebang {
             tput setaf 3
                echo " created!"
             tput sgr0
+
+            read -s -n 1
+            vim $v_ans
          else 
             echo File not created
          fi
@@ -398,13 +411,14 @@ function . {
    
       elif [ $1 == "?" ]; then 
          # Describe all these navigation alias
-         echo ".  Means: ls"
-         echo "..  Means: cd .."
-         echo "...  Means: cd -"
-         echo "....  Means: pwd"
-         echo ".....  Means: save this dir location in var \$h"
-         echo "......  Means: save previous dir location in var \$v"
-         echo ".......  Means: remember last 2 variables set as \$h and \$v"
+         echo "'. ?' Shows this help menu" 
+         echo ".  1x Means: ls"
+         echo "..  2x Means: cd .."
+         echo "...  3x Means: cd -"
+         echo "....  4x Means: pwd"
+         echo ".....  5x Means: save this dir location in var \$h"
+         echo "......  6x Means: save previous dir location in var \$v"
+         echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
 
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
