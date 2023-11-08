@@ -779,7 +779,7 @@ function f_clone_info {
       termux-open-url https://github.com/SeivaDArve?tab=repositories
 }
 
-function f_clone_repos {
+function f_init_clone_repos {
    # Saving current location (To come back to this directory after cloning)
       v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
 
@@ -787,6 +787,12 @@ function f_clone_repos {
       cd $v_REPOS_CENTER
 
       f_stroken
+}
+
+
+function f_clone_repos {
+
+   f_talk 
 
    case $v_arg2 in
       # uDev: Search for dependencies file if any
@@ -998,12 +1004,15 @@ elif [ $1 == "clone" ]; then
    elif [ $2 == "try" ]; then
       f_talk; echo -e "trying to clone: $3 \n"; 
 
-      f_stroken
+      f_init_clone_repos  ## Commun functionality shared with: drya clone $2
 
       git clone https://github.com/SeivaDArve/$3.git
 
    else  
       v_arg2=$2
+
+      f_init_clone_repos  ## Commun functionality shared with: drya clone try $3
+
       f_clone_repos 
    fi
 
