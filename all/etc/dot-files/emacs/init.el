@@ -1142,6 +1142,8 @@ Notas {
 
 
 ;; For omni-log:
+     (setq v-time (format-time-string "<%Y-%m-%d %a> "))
+
 (defun om-gazol ()
    (interactive)
    (setq v_litros (read-string "Quantos litros de combustivel colocou?: "))
@@ -1155,4 +1157,4 @@ Notas {
    (setq v_preco  (read-string "Qual foi o preço?: "))
    (setq v_km     (read-string "Quantos KM marcava o painel?: "))
    (setq v_dia    (read-string "Foi hoje?: "))
-   (insert v_litros " " v_posto " " v_preco " " v_km " " v_dia))
+   (insert "Gazol: Dia: " v-time "Litros: " v_litros " " v_posto " " v_preco " " v_km " " v_dia))
