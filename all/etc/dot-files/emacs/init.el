@@ -1,5 +1,31 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+
+;; Usar as teclas do Termux
+   ;; Tentativa de criar horizontal scroll
+      ;; Pesquisa: 
+      ;; source: https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Commands.html
+      ;;(setq mouse-wheel-tilt-scroll t)
+
+      ;; Mouse para terminal
+         ;; source: https://www.reddit.com/r/emacs/comments/yj1wzd/mouse_mode_disables_scrolling/
+         ;;(xterm-mouse-mode t)
+         ;;(global-set-key (kbd "<mouse-4>") 'previous-line)
+         ;;(global-set-key (kbd "<mouse-5>") 'next-line)
+
+      ;; Usando C-b e C-f nas teclas do termux 
+         (global-set-key (kbd "C-f") (lambda () (interactive) (scroll-right 6)))
+         (global-set-key (kbd "C-b") (lambda () (interactive) (scroll-left 6)))
+            ;; uDev: em vez de usar um valor constante, usar uma variavel para se poder ajustar
+            ;; uDev: criar a funcao dv-scroll-help para ensinar a alterar dv-scroll-amount
+            ;; uDev: nessa funcao dv-scroll-help pode ser tambem inserida a instrucao de como installar uma tecla no termux pra fazer isso e qual a tecla de atalho do teclado para se usar tanto no termux quanto no PC
+
+   ;; Usar o F7 com o simbolo do Om
+      (global-set-key (kbd "<f7>") (lambda () (interactive)(save-buffer)(kill-emacs)))
+
+
+
+
 ;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
    ;; Otherwise, it's default is: "~/.config/emacs/"
    ;; Note: You can check the variable system-type with: C-h v system-type
