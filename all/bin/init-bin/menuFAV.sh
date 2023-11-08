@@ -14,7 +14,6 @@ function f_greet {
    figlet menuFAV 
 }
 
-
 function f_emacs_init_vim {
    # Important: menuFAV depends on this function
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
@@ -340,6 +339,8 @@ function f_manage_init_and_libraries_after_mod {
          echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
       }
 
+      # Reload the amount of '-' are needed to create an horizontal line
+         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
 
       # Note: each function in this app will define new values for example to "alias 1", "alias 2", "alias 3"...
          alias 1="echo Default alias 1"
@@ -393,6 +394,7 @@ function f_manage_init_and_libraries_after_mod {
 
             echo "SELECT file to edit by Title"
             echo
+
 
             # Change the prompt message:
                PS3="Select a file to edit: "
