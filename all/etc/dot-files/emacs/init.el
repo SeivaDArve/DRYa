@@ -58,7 +58,8 @@
 
 
 ;; Defining variable inside emacs es per variables on bash
-   (setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
+   ;;(setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
+     (setq v-repos-center (concat v-home "Repositories/"))
       
    ;; (getenv "HOME") ;; Gets the environment variable $HOME
 
