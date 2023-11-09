@@ -1,5 +1,11 @@
+;; Title: init.el
+;; Author: David Rodrigues (Seiva D'Arve)
+
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+;; Disable Dialog box when executing elisp code:
+   (setq org-confirm-elisp-link-function nil)
+   ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
 
 ;; Usar as teclas do Termux
    ;; Tentativa de criar horizontal scroll
