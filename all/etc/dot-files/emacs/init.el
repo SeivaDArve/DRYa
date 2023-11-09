@@ -772,10 +772,8 @@ Notas {
   (setq v_ot_num (read-string "Qual é a ordem numérica desta OT? "))
   (insert "\n- [ ] << OT >> Grupo de tempos >> SIIGO >> ")(insert v_ot_num)(insert " <<\n")
   (insert ":PROPERTIES:\n")
-  (insert "Tipo: \n\n")
 
-      ;; Inserting links where their destinations are elisp functions
-      (insert"[[elisp:(gt)][CMD ilum/avac GTC (gt)]] | [[elisp:(reu)][Reuniões (reu)]] | [[elisp:(e-em)][Empresas Exteriores (e em)]]")
+  (insert "[[elisp:(dv-print-siigo-ot-type)][Tipo:]]")
 
   (insert "\n\n")
   (insert "Titulo (inserido na OT nr.): \n\n")
