@@ -51,7 +51,6 @@
          (setq ~ "/data/data/com.termux/files/home/")
          (setq v-home "/data/data/com.termux/files/home/"))
 
-
 ;; Attempting to play sound
 ;;   (defun dv-sound-test ()
 ;;      (interactive)
@@ -603,7 +602,14 @@ Notas {
 (defun dv-print-siigo-ot-type ()
   (interactive)
   "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de ot do siigo. Esse documnto que é aberto tem também links de atalho programados em elisp que ao clicar, fazem preencher o buffer anterior com o texto desejado"
-  (switch-to-buffer-other-window (find-file-noselect "c:/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
+
+   ;; If running on windows
+   (when (eq system-type 'windows-nt)
+      (switch-to-buffer-other-window (find-file-noselect "c:/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
+
+   ;; If running on Android
+   (when (eq system-type 'gnu/linux)
+      (switch-to-buffer-other-window (find-file-noselect "~/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org"))))
 
 
 (defun gt ()
