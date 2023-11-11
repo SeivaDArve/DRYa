@@ -87,6 +87,22 @@ function E {
          }
          f-reset-omni-key
 
+function key {
+   # Menu para alternar drya-termux-omni-key icon e funcionalidade
+   figlet Omni Key
+   echo "Opcoes:"
+   echo " > om"
+   echo " > upk"
+   echo " > qr"
+
+   read -p "Qual a funcao que quer para omni-key? " v_ans
+
+   if [ $v_ans == "om" ]; then f-reset-omni-key
+   elif [ $v_ans == "qr" ]; then f-set-omni-key-qr
+   elif [ $v_ans == "upk" ]; then f-set-omni-key-upk
+   fi
+
+}
 
 function siigo {
    # Using termux 
