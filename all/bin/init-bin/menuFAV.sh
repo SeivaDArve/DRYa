@@ -4,7 +4,7 @@
    alias B="echo Future menuFAV"
 
    function A {
-      echo "echo bl bla"
+      echo "echo bla bla"
    }
 
 
