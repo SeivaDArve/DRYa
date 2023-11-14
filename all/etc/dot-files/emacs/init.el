@@ -131,7 +131,7 @@
   "Reloads the init.el file and the current buffer with command: M-x eval-buffer"
   (interactive)
   (message "dv: eval-buffer: configs reloaded")
-  (eval-buffer))
+  (eval-buffer (current-buffer)))
   
 (defun td ()
   (interactive)
@@ -795,7 +795,18 @@ Notas {
 (defun dv-add-ot-just-text ()
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (insert "\nOT {\n   [[elisp:(dv-print-siigo-ot-type)][Tipo:]]      | \n   Titulo:    | \n   Descrição: | \n   Notas:     | \n   Fotos (S/N)| \n   Materiais: | - \n}\n")
+  (insert "\nOT {\n")
+  (insert "   [[elisp:(dv-print-siigo-ot-type)][Tipo:]]      |       | \n")
+
+  ;; For the title, choose eitheir with or without links:
+     ;;(insert "   Titulo:    |       | \n")
+     (insert "   Titulo:    | [[elisp:(progn (search-forward \"|\")(search-forward \"|\")(forward-char 1)(kill-line)(yank))][cp]] [[elisp:(progn (search-forward \"|\")(insert \" \") (setq beg (point)) (end-of-line) (delete-region beg (point))][cl]] | \n")
+
+  (insert "   Descrição: |       | \n")
+  (insert "   Notas:     |       | \n")
+  (insert "   Fotos (S/N)|       | \n")
+  (insert "   Materiais: |       | - \n")
+  (insert "}\n")
   (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line))][del:]] ")
   (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
   ) 
@@ -949,12 +960,12 @@ Notas {
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun k ()
-  ;; uDev: Criar keybinding: C-M-k 
   "Kills line from cursor position until the end of the line in order to store it in the clipboard and then paste the line again in the same place"
   (interactive)
-  (org-kill-line)(yank))
-
-
+  (setq v-point (point))  ;; Save cursor position before any action
+  (org-kill-line)(yank)   ;; Cut line from cursor pos until the end of the line and paste it again (to put it on the clipboard)
+  (goto-char v-point))     ;; Restore cursor position
+  (global-set-key (kbd "C-M-k") 'k)  ;; Create a hotkey to repeat this easily
 
 
 (put 'dired-find-alternate-file 'disabled nil)
