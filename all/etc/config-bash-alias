@@ -534,16 +534,18 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    alias emacs-init="emacs ~/.emacs.d/init.el"
 
 # Using Num Pad numbers as shortcuts
+   function win-hibernate {
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
+      /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
+   }
+
+   alias exe="/mnt/c/Windows/System32/cmd.exe /c"
    alias 2468="exit"
    alias 24685="shutdown now"
    alias 246854="shutdown -r now"
+   alias 246856="win-hibernate"
 
-   function win-hibernate {
-      cd ${v_REPOS_CENTER}/DRYa/all/dot-files/batch/shut-restart-hibernate-sleep/ && 
-      mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
-   }
 
-   alias exe="mnt/c/Windows/System32/cmd.exe /c"
 
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
