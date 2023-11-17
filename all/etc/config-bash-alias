@@ -487,12 +487,15 @@ alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or
 
 alias em="emacs"
 alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+#alias EM= Opens the correct emacs version based on traitsID and .dryarc
 alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
 
 alias a="cd all && ls"
 alias hi="echo hello"
 
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
+
+alias cv="emacs ${v_REPOS_CENTER}/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org"
 
 # Pandoc app to create man pages
 
