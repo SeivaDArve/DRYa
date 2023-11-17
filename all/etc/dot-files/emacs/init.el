@@ -1,8 +1,14 @@
-;; Title: init.el
+;;; Title: init.el
 ;; Author: David Rodrigues (Seiva D'Arve)
+
+;;; Title navigation tutorial
+    ;; Press 'M-x occur ;;; ' (with a space after the 3 ;) to navigate this file by titles (using emacs). Or <click here>
+;; [[elisp:(message "working")][click here]]
+
 
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+;;; Test 
 ;; Disable Dialog box when executing elisp code:
    (setq org-confirm-elisp-link-function nil)
    ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
@@ -122,9 +128,11 @@
           (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
           (message "Dv: Loaded upk.el on GNU/Linux"))
 
+;;; Overriding 'C-c C-l' (org-insert-link) to include: termux-open-emacs-org-mode-images-on-android
+    ;; uDev
 
-;; Creating a keybinding for org-agenda
-   (global-set-key (kbd "C-x a") #'org-agenda)
+;;; Creating a keybinding for org-agenda
+    (global-set-key (kbd "C-x a") #'org-agenda)
 
 
 (defun dv-f5 ()
