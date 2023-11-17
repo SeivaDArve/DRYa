@@ -1,4 +1,11 @@
-# List of DRYa dependencies (to be installed by DRYa installer)
+#!/bin/bash
+# Title: Groups of softwares for each situation
+# Hint: Use "GETOPTS" in this file just as an exercise
+
+function f_gr_dependencies {
+   # List of DRYa dependencies (to be installed by DRYa installer)
+
+   pkg install \
    figlet  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
    tput 
    less  # Dependency for ezGIT
@@ -11,8 +18,9 @@
    dialog # Tool to give GUI menus on Bash (like whiptail but with more options
    man
    which  # Used to detect the path of installed scripts
-   #pkg install termux-api
+   termux-api
    tsu   # To grant sudo permissions, may be needed to enable phone screenshots
+}
 
 # List of usefull apps 
    dos2unix  ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
@@ -71,3 +79,20 @@
 # May also be very usefull:
    - ROOT smartphone (and create a tutorial)
      > For Samsung A6+ : https://youtu.be/Zm6vh2W4Hxs?si=OHEOzvSZbI0ZxVMU
+
+
+function f_exec {
+   echo "DRYa: file: 1st: Running groups of apps to install"
+
+   # Before format (before DRYa)
+      # uDev: Run tutorial how to format a machine
+      # uDev: Run tutorial how to create "Ponto de restauro"
+      # uDev: Run tutorial how to install WSL2
+      # uDev: Run tutorial how to install Windows Terminal
+      # uDev: Run tutorial how to install DRYa
+
+   # After DRYa
+      f_gr_dependencies
+}
+f_exec
+
