@@ -2,20 +2,20 @@
 ;; Author: David Rodrigues (Seiva D'Arve)
 
 ;;; Title navigation tutorial
-    ;; Press 'M-x occur ;;; ' (with a space after the 3 ;) to navigate this file by titles (using emacs). Or <click here>
-;; [[elisp:(message "working")][click here]]
-
+    ;; Press 'M-x occur ;;; ' (with a space after the 3 ; )
+    ;;   to navigate this file by titles (using emacs)
+    ;;   Otherwise, if you view this file as org-mode, just [[elisp:(funcall-interactively 'occur ";;; ")][click here]]
+    ;;   To activate org-mode, just type "Alt-x org-mode"
 
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
-;;; Test 
-;; Disable Dialog box when executing elisp code:
+;;; Disable Dialog box when executing elisp code:
    (setq org-confirm-elisp-link-function nil)
    ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
 
-;; Usar as teclas do Termux
-   ;; Tentativa de criar horizontal scroll
-      ;; Pesquisa: 
+;;; Making use of Termux "Touch Keyboard" keys
+   ;; Criar horizontal scroll
+      ;; Pesquisa: If your mouse’s wheel can be tilted, or if your touchpad supports it, then you can also enable horizontal scrolling by customizing the variable mouse-wheel-tilt-scroll to a non-nil value
       ;; source: https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Commands.html
       ;;(setq mouse-wheel-tilt-scroll t)
 
@@ -32,7 +32,7 @@
             ;; uDev: criar a funcao dv-scroll-help para ensinar a alterar dv-scroll-amount
             ;; uDev: nessa funcao dv-scroll-help pode ser tambem inserida a instrucao de como installar uma tecla no termux pra fazer isso e qual a tecla de atalho do teclado para se usar tanto no termux quanto no PC
 
-   ;; Usar o F7 com o simbolo do Om
+   ;; Usar o F7 como drya-termux-omni-key (com simbolo do Om)
       (global-set-key (kbd "<f7>") (lambda () (interactive)(save-buffer)(kill-emacs)))
 
 
@@ -269,15 +269,23 @@
   "Shortcut for (org-overview)"
   (interactive)
   (org-overview))
- 
+
+(defun dv-truncate-lines-on ()
+  (interactive)
+  (message "Dv: Set toggle-truncate-lines to on")
+  (toggle-truncate-lines 1))
+
+(defun dv-truncate-lines-off ()
+  (interactive)
+  (message "Dv: Set toggle-truncate-lines to off")
+  (toggle-truncate-lines -1))
+
 (defun wrap ()
-  ;; 'M-x toggle-truncate-lines' may also be usefull'
   (interactive)
   (message "Dv: Toggle text wrap on")
   (visual-line-mode t))
      
 (defun nowrap ()
-  ;; 'M-x toggle-truncate-lines' may also be usefull'
   (interactive)
   (message "Dv: Toggle text wrap off")
   (visual-line-mode -1))
@@ -287,42 +295,36 @@
   (global-display-line-numbers-mode)
   (message "Dv: toggled line numbers mode globaly"))
     
-;; Adds a line of text with a unique number in order to facilitate internal links
 (defun dv-add-id-line ()
-  "Adds a line of text with a mix of text with ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second"
+  "Adds a line of text with a unique number in order to facilitate internal links. Mix of text with: ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second"
   (interactive)
   (setq v_id_time (format-time-string "ID-%d%m%Y-%k%M%S-%N"))
   (insert "Entry ID \{" v_id_time "\} (origin)"))
 
-;; When opening dailyLog for UPK, prepare visialization
+;; uDev: add package elisp-bug-hunter (https://github.com/Malabarba/elisp-bug-hunter)
+
 (defun u ()
+   "When opening dailyLog for UPK, prepare visialization"
    (interactive)
    (org-overview)
    (end-of-buffer)
    (org-reveal)
    (visual-line-mode)
-   ;;(global-set-key "\C-x\C-a .")
+   ;;(global-set-key "\C-x\C-a ." 'u)
    )
 
 (defun upk-mode ()
-  (interactive)
   "Faz o mesmo que a função 'u' que costuma ser chamada com M-x u"
+  (interactive)
   (u))
-;;    
-;;    (defun insew-test ()
-;;      (interactive)
-;;      ;; Prompting user for 2 values
-;;      (setq v_tex1 (read-string "Texto 1: "))
-;;      (setq v_text2 (read-string "Texto 2: "))
-;;      (insert v_tex1)
-;;      (message v_text2))
-;;    
-  (defun dv-insert-text-with-checkbox ()
-    (interactive)
-    ;; Prompting user for 2 values
-    (setq v_checkbox_text (read-string "- [ ] "))
-    (insert "- [ ] ")
-    (insert v_checkbox_text))
+
+(defun dv-insert-text-with-checkbox ()
+  "Adding a checkbox to your next text"
+  (interactive)
+  (setq v_checkbox_text (read-string "- [ ] "))
+  (insert "- [ ] ")
+  (insert v_checkbox_text))
+
 ;;    
 ;;    (defun dv-insert-checkbox-prefixing-text ()
 ;;      (interactive)
@@ -667,13 +669,26 @@ Notas {
 
 (defun dv-location-init-file-info ()
   (interactive)
-  (message "To find init filw in emacs: C-h v user-init-file"))
+  (message "To find init file in emacs: C-h v user-init-file"))
 
-;; Inserts text on current buffer at current cursor position
-(defun dv-insert-new-entry-upk ()
-   ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
-   "This function creates an entry where your cursor is placed" 
-  (interactive)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(defun dv-new-ENTRY-general ()
+  "Both functions dv-insert-new-Entry-upk and dv-insert-new-entry-upk have lines of code in commun, to keep the code readable, this function gathers all that is general. This function does not need to be interactive"
   (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
   (setq v_time (read-string "Quanto tempo demorou? "))
   (end-of-line)
@@ -686,42 +701,45 @@ Notas {
   (insert ":PROPERTIES:\nDescricao ")
   (insert "\{ \n\}\n\n")
     ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
-     ;;(insert "Notas")
-     (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
+     (insert "Notas")
+     ;;(insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
   (insert " \{ \n\}\n\n")
+    ;; Adding a function to create a new dv-ot-just-text
+       (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
+       (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(dv-add-ot-just-text))][dv-add-ot-just-text]] \n")
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
   (previous-line)(previous-line)(previous-line)(end-of-line)
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
-(defun dv-insert-new-Entry-upk ()
+
+(defun dv-insert-new-entry-upk ()
    ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
-   "This function creates an entry not anywhere, but in the bottom of the file"
+   "This function creates an entry where your cursor is placed Inserts text on current buffer at current cursor position" 
+  (interactive)
+  (dv-new-ENTRY-general))
+
+
+(defun dv-insert-new-Entry-upk ()
+  "This function creates an entry not anywhere, but in the bottom of the file"
+  ;; uDev: Criar sempre um ID para se poder fazer links internos no ficheiro facilmente
   (interactive)
   (u)
   (search-backward "Pos-Requisitos")
   (previous-line)
-  (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
-  (setq v_time (read-string "Quanto tempo demorou? "))
-  (end-of-line)
-  (insert "\n")
-  (insert "- [ ] (")
-  (insert v_time)
-  (insert ") ")
-  (insert v_tarefa)
-  (insert "\n")
-  (insert ":PROPERTIES:\nDescricao ")
-  (insert "\{ \n\}\n\n")
-    ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
-     ;;(insert "Notas")
-     (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
-  (insert " \{ \n\}\n\n")
-  (insert ":END:\n")
-  (previous-line)(previous-line)(previous-line)(previous-line)
-  (previous-line)(previous-line)(previous-line)(end-of-line)
-  ;; After navigating 2 lines above, then: uDev: press TAB to close properties
-  (message "Dv: Text inserted into current buffer and current cursor position"))
+
+  (dv-new-ENTRY-general))
+
+
+
+
+
+
+
+
+
+
 (defun dv-insert-new-doc-elisp-or-similar-upk ()
   (interactive)
   (setq v_tipo (read-string "Introduz o tipo do documento ([Doc] || [elisp] etc.): "))
@@ -815,7 +833,7 @@ Notas {
   (insert "   Fotos (S/N)|       | \n")
   (insert "   Materiais: |       | - \n")
   (insert "}\n")
-  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line))][del:]] ")
+  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
   (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
   ) 
 
