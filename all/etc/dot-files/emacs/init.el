@@ -222,6 +222,9 @@
      (search-backward v_search)
      (message "Repete o comando com: 'C-x z'"))
 
+;;; Vim keybindings
+
+;; uDev: Create hotkey to mimic 'M-x' and then the vim key
 ;; Functions like vim (but needs always to call M-x)
    (defun zz ()
      (interactive)
