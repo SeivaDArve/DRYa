@@ -37,7 +37,9 @@ function f_traits {
       # uDev: Send this to .../DRYa/all/bin/init-bin/traitsID.sh
 
       # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
-         echo "" > ~/.config/h.h/drya/traitsID
+         #v_id_file="~/.config/h.h/drya/traitsID"
+         #touch $v_id-file
+         #echo "" > $v_id-file
 
       # Using command 'uname'
          v_uname=$(uname -a)
@@ -45,17 +47,22 @@ function f_traits {
       # Filter the info to Detect OS
          if [[ $v_uname =~ "Android" ]]; then 
             echo "DRYa: Running on: Android"
+            echo "v_OS=\"Android\"" >> $v_id_file
 
          elif  [[ $v_uname =~ "Microsoft" ]]; then 
             echo "DRYa: Running on: Windows"
+            echo "v_OS=\"Windows\"" >> $v_id_file
 
          elif [[ $v_uname =~ "raspberrypi" ]]; then 
             # Linux has to be the last one, because it means Windows and Android are not present
             echo "DRYa: Running on: Linux (Raspberry Pi)"
+            echo "v_OS=\"Linux-Rasp\"" >> $v_id_file
 
          elif [[ $v_uname =~ "Linux" ]]; then 
             # Linux has to be the last one, because it means Windows and Android are not present
             echo "DRYa: Running on: Linux"
+            echo "v_OS=\"Linux\"" >> $v_id_file
+
          else
             echo "DRYa: Running on: NOT DETECTED"
          fi 
@@ -246,6 +253,7 @@ function f_pre_help {
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
    
 # Repository: moedaz
+   # uDev: Put all files to be open under menuFAV F   
    alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
