@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# uDev: This app should have 3 prefixes: M F and D
+
 # Testing
    alias B="echo Future menuFAV"
 
@@ -12,6 +14,24 @@ function f_greet {
    # Avoiding repetition
    clear
    figlet menuFAV 
+}
+
+function f_mF { 
+   # Avoiding repetition
+   clear
+   figlet menuFAV File
+}
+
+function f_mD { 
+   # Avoiding repetition
+   clear
+   figlet menuFAV Dir
+}
+
+function f_mM { 
+   # Avoiding repetition
+   clear
+   figlet menuFAV Menu
 }
 
 function f_emacs_init_vim {
@@ -32,7 +52,7 @@ function f_emacs_init_vim {
 }
 
 function M {
-   # Title: Function "File and Destination"
+   # Function: "Directory"
    
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
       # sugestion: menuFAV will be under F so that D gets to be reserved for drya
@@ -189,7 +209,7 @@ function M {
             echo "External and Internal storage, press ENTER 3x"
             echo "(or cancel with CTRL + C)"
             echo
-            echo "#uDev: create an option to ask for custom dir name"
+    1        echo "#uDev: create an option to ask for custom dir name"
             echo "(default is /storage/Repositories"
             read
             read
@@ -201,7 +221,7 @@ function M {
             cd /sdcard/Termux-bridge-Android && ls
          ;;
          *)
-            echo "How to use:"
+     1       echo "How to use:"
             echo "$ d -m"
             echo '0) # Travel to Internal storage'
             echo '1) # Travel to SD Card storage'
@@ -511,15 +531,15 @@ function f_manage_init_and_libraries_after_mod {
                esac
             done
 
-
          # When function F is presented with arguments (using elif):
-      
             elif [ $1 == "0" ]; then f_unalias_all
             elif [ $1 == "." ]; then vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/menuFAV.sh ## Edit this file itself
             elif [ $1 == "1" ]; then echo "Test is working for 1"
             elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
             elif [ $1 == "12" ]; then f_emacs_init_vim
             elif [ $1 == "13" ]; then vim ${v_REPOS_CENTER}/DRYa/drya.sh
+            elif [ $1 == "cv" ]; then echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org
+            elif [ $1 == "links" ]; then echo "uDev: open shiva sutra links"
             #elif [ $1 == "9" ]; f_F_9"
 
 

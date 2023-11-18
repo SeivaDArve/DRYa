@@ -493,9 +493,9 @@ alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI
 alias a="cd all && ls"
 alias hi="echo hello"
 
+# uDev: to put under menuFAV F
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
 
-alias cv="emacs ${v_REPOS_CENTER}/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org"
 
 # Pandoc app to create man pages
 
