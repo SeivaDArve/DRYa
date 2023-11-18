@@ -588,10 +588,12 @@ Notas {
 
 (defun dwiki ()
    (interactive)
-(setq v_page (read-string "Do que precisa de saber? "))
-(when (string-equal v_page "location")(message "Showing cheat sheet about emacs: ")  
-   ;; If this condition if found true, open file in other window ;; (switch-to-buffer) is also possible to open in same window
-   (switch-to-buffer-other-window (find-file-noselect "~/location-test"))))
+   (setq v_page (read-string "Do que precisa de saber? "))
+   (when (string-equal v_page "location")
+         (message "Showing cheat sheet about emacs: ")  
+         
+          ;; If this condition if found true, open file in other window ;; (switch-to-buffer) is also possible to open in same window
+            (switch-to-buffer-other-window (find-file-noselect "~/location-test"))))
 
 
 ;; This is a comment 
@@ -613,6 +615,8 @@ Notas {
 (defun dv-print-siigo-ot-type ()
   (interactive)
   "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de ot do siigo. Esse documnto que é aberto tem também links de atalho programados em elisp que ao clicar, fazem preencher o buffer anterior com o texto desejado"
+
+   ;; uDev: use either (find-file-noselect) or (find-file-read-only)   
 
    ;; If running on windows
    (when (eq system-type 'windows-nt)
