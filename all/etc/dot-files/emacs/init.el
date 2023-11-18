@@ -1,5 +1,7 @@
 ;;; Title: init.el
+
 ;; Author: David Rodrigues (Seiva D'Arve)
+;; Description: First file of configurations loaded by emacs
 
 ;;; Title navigation tutorial
     ;; Press 'M-x occur ;;; ' (with a space after the 3 ; )
