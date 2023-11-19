@@ -808,6 +808,90 @@ Notas {
   (insert "\n\n#+END_SRC"))
 
 
+
+
+
+(defun paste-between-double-colon-and-double-colon ()
+   "Used to paste between :: and ::"
+   (setq v-original-clipboard (current-kill 0 t))
+   (setq v-point (point))
+   (search-forward "::")(forward-char 1)(setq v-beg (point))
+   (search-forward "::")(backward-char 6)(setq v-end (point))
+   (delete-region v-beg v-end) 
+   (insert v-original-clipboard)
+   (goto-char v-point))
+ 
+(defun copy-text-from-double-colon-to-double-colon ()
+   "Used to copy between :: and ::"
+   (setq v-point (point))
+   (search-forward "::")(forward-char 1)(setq v-beg (point))
+   (search-forward "::")(backward-char 6)(setq v-end (point))
+   (kill-ring-save v-beg v-end)
+   (setq v-result (current-kill 0 t))
+   (goto-char v-point))
+
+(defun paste-between-double-colon-and-closed-curly-bracket ()
+   "Used to paste between :: and }"
+   (setq v-original-clipboard (current-kill 0 t))
+   (setq v-point (point))
+   (search-forward "::")(forward-char 1)(setq v-beg (point))
+   (search-forward "}")(backward-char 2)(setq v-end (point))
+   (delete-region v-beg v-end) 
+   (insert v-original-clipboard)
+   ;;(goto-char v-point)
+   )
+ 
+(defun copy-text-from-double-colon-to-closed-curly-bracket ()
+   "Used to copy between :: and }"
+   (setq v-point (point))
+   (search-forward "::")(forward-char 1)(setq v-beg (point))
+   (search-forward "}")(backward-char 2)(setq v-end (point))
+   (kill-ring-save v-beg v-end)
+   (setq v-result (current-kill 0 t))
+   (goto-char v-point))
+
+(defun insert-literaly-tipo () 
+        (insert "[[elisp:(dv-print-siigo-ot-type)][Tipo:]]      | "))
+ 
+(defun 2-buttons-for-dv-add-ot-just-text ()
+  "Used to copy/paste between :: and ::"
+  (insert "[[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: \n"))
+
+(defun 4-buttons-for-dv-add-ot-just-text ()
+  "Used to copy/paste between :: and }"
+  (insert "[[elisp:(copy-text-from-double-colon-to-closed-curly-bracket)][cp]] [[elisp:(paste-between-double-colon-and-closed-curly-bracket)][cl]] :: \n"))
+
+
+
+
+
+(defun dv-add-ot-just-text ()
+  (interactive)
+   "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
+  (insert "\nOT {\n")
+  ;; Note: The folowing text has a prefix :: that is used for detection of the beginnig of next line
+     
+     
+     ;; For Tipo, choose either with or without links:
+        ;;(insert "   :: Tipo: | ")(2-buttons-for-dv-add-ot-just-text)
+        (insert "   :: ")(insert-literaly-tipo)(2-buttons-for-dv-add-ot-just-text)
+
+     ;; For the title, choose either with or without links:
+        ;;(insert "   :: Titulo:    | ")(2-buttons-for-dv-add-ot-just-text)
+        (insert "   :: Titulo:    | ")(2-buttons-for-dv-add-ot-just-text)
+
+     (insert "   :: Descrição: | ")(2-buttons-for-dv-add-ot-just-text)
+     (insert "   :: Notas:     | ")(2-buttons-for-dv-add-ot-just-text)
+     (insert "   :: Fotos (S/N)| ")(2-buttons-for-dv-add-ot-just-text)
+
+     ;; Detection for the next text must be } instead of -|
+     (insert "   :: Materiais: | ")(4-buttons-for-dv-add-ot-just-text)
+
+  (insert "}\n")
+  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
+  (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
+  ) 
+
 (defun dv-add-ot-number ()
   (interactive)
   "Serve para juntar varios tempos de varias entries numa só OT"
@@ -826,25 +910,6 @@ Notas {
   (insert "Fotos (s/n): \n\n")
   (insert ":END:\n")
   (search-backward ":PROPERTIES:")(beginning-of-line))
-
-(defun dv-add-ot-just-text ()
-  (interactive)
-   "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (insert "\nOT {\n")
-  (insert "   [[elisp:(dv-print-siigo-ot-type)][Tipo:]]      |       | \n")
-
-  ;; For the title, choose eitheir with or without links:
-     ;;(insert "   Titulo:    |       | \n")
-     (insert "   Titulo:    | [[elisp:(progn (search-forward \"|\")(search-forward \"|\")(forward-char 1)(kill-line)(yank))][cp]] [[elisp:(progn (search-forward \"|\")(insert \" \") (setq beg (point)) (end-of-line) (delete-region beg (point))][cl]] | \n")
-
-  (insert "   Descrição: |       | \n")
-  (insert "   Notas:     |       | \n")
-  (insert "   Fotos (S/N)|       | \n")
-  (insert "   Materiais: |       | - \n")
-  (insert "}\n")
-  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
-  (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
-  ) 
 
 ;; Junt mentioning at the echo area the path to WSL home dir
 ;; uDev: something is wrong when the text is displayed
