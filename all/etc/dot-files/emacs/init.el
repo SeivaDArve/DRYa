@@ -304,7 +304,7 @@
   "Adds a line of text with a unique number in order to facilitate internal links. Mix of text with: ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second"
   (interactive)
   (setq v_id_time (format-time-string "ID-%d%m%Y-%k%M%S-%N"))
-  (insert "Entry ID \{" v_id_time "\} (origin)"))
+  (insert "ID-with-emacs-target { <<" v_id_time ">> } (origin)"))
 
 ;; uDev: add package elisp-bug-hunter (https://github.com/Malabarba/elisp-bug-hunter)
 
