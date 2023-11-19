@@ -810,7 +810,7 @@ Notas {
 
 
 
-
+;;; Preparing functions for dv-add-ot-just-text
 (defun paste-between-double-colon-and-double-colon ()
    "Used to paste between :: and ::"
    (setq v-original-clipboard (current-kill 0 t))
@@ -860,10 +860,6 @@ Notas {
 (defun 4-buttons-for-dv-add-ot-just-text ()
   "Used to copy/paste between :: and }"
   (insert "[[elisp:(copy-text-from-double-colon-to-closed-curly-bracket)][cp]] [[elisp:(paste-between-double-colon-and-closed-curly-bracket)][cl]] :: \n"))
-
-
-
-
 
 (defun dv-add-ot-just-text ()
   (interactive)
