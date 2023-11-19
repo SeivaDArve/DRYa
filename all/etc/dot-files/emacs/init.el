@@ -852,6 +852,11 @@ Notas {
 
 (defun insert-literaly-tipo () 
         (insert "[[elisp:(dv-print-siigo-ot-type)][Tipo:]]      | "))
+
+(defun buttons-for-dv-add-ot-just-text-only-for-tipo ()
+  "Used to remove text after :: and to paste between :: and ::
+This is used only for \"tipo:\""
+  (insert "[[elisp:(progn (search-forward \":: \")(kill-line))][rm]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: \n"))
  
 (defun 2-buttons-for-dv-add-ot-just-text ()
   "Used to copy/paste between :: and ::"
@@ -861,16 +866,20 @@ Notas {
   "Used to copy/paste between :: and }"
   (insert "[[elisp:(copy-text-from-double-colon-to-closed-curly-bracket)][cp]] [[elisp:(paste-between-double-colon-and-closed-curly-bracket)][cl]] :: \n"))
 
+(defun f-more-options-dv-add-ot-just-text ()
+  (insert "[[elisp:(message \"More options are uDev\")][_+_]]"))
+
 (defun dv-add-ot-just-text ()
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
+  (f-more-options-dv-add-ot-just-text)
   (insert "\nOT {\n")
   ;; Note: The folowing text has a prefix :: that is used for detection of the beginnig of next line
      
      
      ;; For Tipo, choose either with or without links:
         ;;(insert "   :: Tipo: | ")(2-buttons-for-dv-add-ot-just-text)
-        (insert "   :: ")(insert-literaly-tipo)(2-buttons-for-dv-add-ot-just-text)
+        (insert "   :: ")(insert-literaly-tipo)(buttons-for-dv-add-ot-just-text-only-for-tipo )
 
      ;; For the title, choose either with or without links:
         ;;(insert "   :: Titulo:    | ")(2-buttons-for-dv-add-ot-just-text)
@@ -881,7 +890,10 @@ Notas {
      (insert "   :: Fotos (S/N)| ")(2-buttons-for-dv-add-ot-just-text)
 
      ;; Detection for the next text must be } instead of -|
-     (insert "   :: Materiais: | ")(4-buttons-for-dv-add-ot-just-text)
+     (insert "   :: Materiais: | ")
+     ;; For Materials we can choose a pair of buttons or a link for [REL]
+        ;;(4-buttons-for-dv-add-ot-just-text) ;; Option 1
+        (insert "[[target-materiais-do-shopping][[REL]​]] :: \n") ;; Option 2
 
   (insert "}\n")
   (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
