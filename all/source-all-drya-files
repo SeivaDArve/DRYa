@@ -37,7 +37,7 @@ function f_traits {
       # uDev: Send this to .../DRYa/all/bin/init-bin/traitsID.sh
 
       # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
-         v_dir="~/.config/h.h/drya/"
+         v_dir="\~/.config/h.h/drya/"
          mkdir -p $v_dir
 
          v_file="traitsID"
