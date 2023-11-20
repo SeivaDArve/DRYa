@@ -133,6 +133,11 @@
 ;;; Overriding 'C-c C-l' (org-insert-link) to include: termux-open-emacs-org-mode-images-on-android
     ;; uDev
 
+;;; Creating an interactive function to open omni-log
+    (defun om ()
+      (interactive)      
+      (switch-to-buffer (find-file-noselect "c:/Repositories/omni-log/multiplex.org")))
+      
 ;;; Creating a keybinding for org-agenda
     (global-set-key (kbd "C-x a") #'org-agenda)
 
