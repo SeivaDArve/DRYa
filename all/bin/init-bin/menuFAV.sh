@@ -1,14 +1,7 @@
 #!/bin/bash
+# Title: menuFAV
 
 # uDev: This app should have 3 prefixes: M F and D
-
-# Testing
-   alias B="echo Future menuFAV"
-
-   function A {
-      echo "echo bla bla"
-   }
-
 
 function f_greet { 
    # Avoiding repetition
@@ -34,21 +27,94 @@ function f_mM {
    figlet menuFAV Menu
 }
 
+function f_presenting_DF {
+   # presenting the file for our M menuFAV:
+      clear; 
+      figlet "menuFAV"
+      echo -e "File closed (after editions):\n > $v_init_file \n"
+}
+
+function f_asking_to_apply_init {
+   # Ask if the user wants the changes to apply to this machine imediatly
+      # If not, the user has to use this command again afterwards
+      # unless the user want to do it manually
+      
+      echo "Do you want to apply these changes NOW?"
+      echo " > If not, you may run this command againg later"
+      echo " > Unless you want to aplly changes manually"
+      echo 
+      read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
+}   
+
+function f_applying_changes_init {
+   # This is for Linux:
+
+      # Copy recursively all files about emacs to the localized machine-specific directory:
+         echo "DRYa: copying recursively: "
+         echo " > \"centralized emacs files\" into \"~/.emacs.d\""
+            cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/
+         echo "   > done!"
+      
+      # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
+         echo " > removing: ~/.emacs (avoiding bugs)"
+            rm ~/.emacs 2>/dev/null; 
+         echo "   > done!"
+
+   # If we are on windows, the init file should also be somewhere at: %appdata%
+
+      v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
+      v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
+
+      if [ -d $v_correct_win_dir  ]; then
+         # If the v_correct_win_dir exists, set it up too:
+            echo -e "\nDRYa: Windows detected, adjusting: "
+
+         # Copy files and directories recursively for the directory that emacs prefers on windows
+            echo " > %AppData% exists, copying emacs files there too recursively"
+               cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
+            echo "   > copied to: \"$v_correct_win_dir\""
+            echo -e "   > done! \n"
+         
+         # Removing the extra file/directory that can create initialization issues
+            echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
+               rm $v_bugged_win_dir_to_del 2>/dev/null
+            echo "   > done!"
+
+      fi
+}
+
+function f_manage_init_and_libraries_after_mod {
+   # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
+   # Has a function of presentation
+   # Has a function of prompting the user wether or not to apply the last changes
+
+   # After defining all 3 last functions (f_presenting_DF f_applying_changes_init f_asking_to_apply_init), let's assemble them:
+      f_presenting_DF
+
+   # Asking if the user really want apply changes (with: f_applying_changes_init)
+      f_asking_to_apply_init
+   
+      if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "Your choice was: Do apply\n\n"; f_applying_changes_init; 
+      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "Your choise was: Do not apply"; 
+      else echo "Answers do not match, doing nothing for now. You can run the command again later";
+      fi
+}
+
 function f_emacs_init_vim {
    # Important: menuFAV depends on this function
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
    # This way we know we can easily upload the file
 
-      # First we edit the original/centralized file with our favourite text editor
-         v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
-         vim $v_init_file 
+   # First we edit the original/centralized file with our favourite text editor
+      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+      vim $v_init_file 
 
-      # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-      # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-         f_manage_init_and_libraries_after_mod
+   # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+      f_manage_init_and_libraries_after_mod
 
-         # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
-         #         to call the same function "f_manage_init_and_libraries_after_mod"
+      # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
+      #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
 
 function M {
@@ -80,10 +146,6 @@ function M {
       # Use 5: '$ D -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
       # Use 6: '$ D ..          # Go to parent dir and ls
       # Use 7: '$ D <dir>       # Go to existent dir
-
-   function f_create-file {
-      echo
-   }
 
    # Implementation of Use 1:
    if [ -z $1 ]; then 
@@ -209,7 +271,7 @@ function M {
             echo "External and Internal storage, press ENTER 3x"
             echo "(or cancel with CTRL + C)"
             echo
-    1        echo "#uDev: create an option to ask for custom dir name"
+            echo "#uDev: create an option to ask for custom dir name"
             echo "(default is /storage/Repositories"
             read
             read
@@ -221,7 +283,7 @@ function M {
             cd /sdcard/Termux-bridge-Android && ls
          ;;
          *)
-     1       echo "How to use:"
+            echo "How to use:"
             echo "$ d -m"
             echo '0) # Travel to Internal storage'
             echo '1) # Travel to SD Card storage'
@@ -276,79 +338,6 @@ function M {
 
 
 
-function f_manage_init_and_libraries_after_mod {
-   # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
-   # Has a function of presentation
-   # Has a function of prompting the user wether or not to apply the last changes
-
-   function f_presenting_DF {
-      # presenting the file for our M menuFAV:
-         clear; 
-         figlet "menuFAV"
-         echo -e "File closed (after editions):\n > $v_init_file \n"
-   }
-
-   function f_asking_to_apply_init {
-      # Ask if the user wants the changes to apply to this machine imediatly
-         # If not, the user has to use this command again afterwards
-         # unless the user want to do it manually
-         
-         echo "Do you want to apply these changes NOW?"
-         echo " > If not, you may run this command againg later"
-         echo " > Unless you want to aplly changes manually"
-         echo 
-         read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
-   }   
-   
-   function f_applying_changes_init {
-      # This is for Linux:
-
-         # Copy recursively all files about emacs to the localized machine-specific directory:
-            echo "DRYa: copying recursively: "
-            echo " > \"centralized emacs files\" into \"~/.emacs.d\""
-               cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/
-            echo "   > done!"
-         
-         # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
-            echo " > removing: ~/.emacs (avoiding bugs)"
-               rm ~/.emacs 2>/dev/null; 
-            echo "   > done!"
-
-      # If we are on windows, the init file should also be somewhere at: %appdata%
-
-         v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
-         v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
-
-         if [ -d $v_correct_win_dir  ]; then
-            # If the v_correct_win_dir exists, set it up too:
-               echo -e "\nDRYa: Windows detected, adjusting: "
-
-            # Copy files and directories recursively for the directory that emacs prefers on windows
-               echo " > %AppData% exists, copying emacs files there too recursively"
-                  cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
-               echo "   > copied to: \"$v_correct_win_dir\""
-               echo -e "   > done! \n"
-            
-            # Removing the extra file/directory that can create initialization issues
-               echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
-                  rm $v_bugged_win_dir_to_del 2>/dev/null
-               echo "   > done!"
-
-         fi
-   }
-                     
-   # After defining all 3 last function, let's assemble them:
-      # Presenting M
-         f_presenting_DF
-
-      # Asking if the user really want apply changes (with: f_applying_changes_init)
-         f_asking_to_apply_init
-      
-         if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "Your choice was: Do apply\n\n"; f_applying_changes_init; 
-         elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "Your choise was: Do not apply"; 
-         else echo "Answers do not match, doing nothing for now. You can run the command again later";
-         fi
-}
 
 # List fav files for edition (menuFAV)
    function F {
@@ -360,7 +349,7 @@ function f_manage_init_and_libraries_after_mod {
       }
 
       # Reload the amount of '-' are needed to create an horizontal line
-         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
+         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh 1>/dev/null
 
       # Note: each function in this app will define new values for example to "alias 1", "alias 2", "alias 3"...
          alias 1="echo Default alias 1"
@@ -538,6 +527,7 @@ function f_manage_init_and_libraries_after_mod {
             elif [ $1 == "5" ]; then echo "Alias for: drya update. Do you want to continue?"
             elif [ $1 == "12" ]; then f_emacs_init_vim
             elif [ $1 == "13" ]; then vim ${v_REPOS_CENTER}/DRYa/drya.sh
+            elif [ $1 == "wd" ]; then EM ${v_REPOS_CENTER}/wikiD/wikiD.org
             elif [ $1 == "cv" ]; then echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org
             elif [ $1 == "links" ]; then echo "uDev: open shiva sutra links"
             #elif [ $1 == "9" ]; f_F_9"
