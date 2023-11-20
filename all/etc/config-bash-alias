@@ -482,16 +482,30 @@ function ....... {
 alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias ,,,=", ; ,," # Same as both 2 previous commands put together
-alias CLEAR="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
+alias CLEAR="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
 
-alias em="emacs"
-alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
-#alias EM= Opens the correct emacs version based on traitsID and .dryarc
-alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+function f_emacs {
+   # Attempt to untangle emacs alias (due to so many versions)
+   
+   alias em="emacs"
+   alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+   alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+
+   # Decide for alias EM which emacs corresponds best with the System
+      if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then 
+         # If emacs GUI exists (on windows), then
+         alias EM="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" 
+
+      else 
+         ## If emacs GUI does not exist, then set it for terminal emacs
+         alias EM="emacs"
+      fi
+}
+f_emacs
 
 alias a="cd all && ls"
-alias hi="echo hello"
+alias hi="hello!"
 
 # uDev: to put under menuFAV F
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
