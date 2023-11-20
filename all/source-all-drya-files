@@ -43,7 +43,7 @@ function f_traits {
          v_file="traitsID"
          v_id_file="$v_dir$v_file"
 
-         rm $v_id_file
+         rm $v_id_file 2>/dev/null
          touch $v_id_file
 
          alias tid="less $v_id_file"
@@ -75,7 +75,7 @@ function f_traits {
          fi 
 
          # Display a way to reach the info
-            echo "      > traitsID: Use command: tid (to list traits)"
+            echo "      > view traitsID with: tid "
 
          # Create a script at DRYa/all/bin/ for drya-neofetch
             # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
