@@ -229,6 +229,9 @@
      (search-backward v_search)
      (message "Repete o comando com: 'C-x z'"))
 
+;;; Sound sample: Testing sound
+ ;; uDev
+
 ;;; Vim keybindings
 
 ;; uDev: Create hotkey to mimic 'M-x' and then the vim key
