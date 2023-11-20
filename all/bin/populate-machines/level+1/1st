@@ -72,9 +72,11 @@ function f_gr_dependencies {
    }
 
 # For termux, may be needed:
+   # uDev: Put these on wikiD
    - termux-change-repo
    - termux-setup-storage
    - termux-reload-settings
+   - termux-wake-lock; termux-wake-unlock
 
 # May also be very usefull:
    - ROOT smartphone (and create a tutorial)
