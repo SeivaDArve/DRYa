@@ -616,6 +616,7 @@ Notas {
 ;;-----------------------------------------
 ;; linhas sobre o siigo
 
+;; uDev: Algumas abrev tem espcos, por esse motivo, talvez seja melhor criar so 1 funcao que peça interativamente o nome da funcao desejada. Pode incluir read-completion
 
 (defun dv-print-siigo-ot-type ()
   (interactive)
