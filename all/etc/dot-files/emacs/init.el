@@ -241,7 +241,7 @@
 
     ;; Open lines
        (global-set-key (kbd "C-o") (lambda () (interactive)(end-of-line)(insert "\n")))
-       (global-set-key (kbd "C-S-o") (lambda () (interactive)(beginning-of-line)(insert "\n")(previous-line)))
+       (global-set-key (kbd "C-M-o") (lambda () (interactive)(beginning-of-line)(insert "\n")(previous-line)))
 
 ;; uDev: Create hotkey to mimic 'M-x' and then the vim key
 ;; Functions like vim (but needs always to call M-x)
