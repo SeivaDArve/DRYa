@@ -25,9 +25,9 @@
          ;; source: https://www.reddit.com/r/emacs/comments/yj1wzd/mouse_mode_disables_scrolling/
          ;;(xterm-mouse-mode t)
 
-      ;; Tentativa de usar Ctrl + Mouse Wheel para horizontal scroll
-         ;;(global-set-key (kbd "C-<mouse-4>") (lambda () (interactive) (scroll-right 6)))
-         ;;(global-set-key (kbd "C-<mouse-5>") (lambda () (interactive) (scroll-left 7)))
+      ;; Usar Ctrl-Alt-MouseWheel para horizontal scroll
+         (global-set-key (kbd "C-M-<wheel-up>") (lambda () (interactive) (scroll-right 6)))
+         (global-set-key (kbd "C-M-<wheel-down>") (lambda () (interactive) (scroll-left 6)))
 
       ;; Usando C-b e C-f nas teclas do termux (uDev: Mudar para teclas mais rebuscadas) 
          (global-set-key (kbd "C-f") (lambda () (interactive) (scroll-right 6)))
@@ -232,7 +232,10 @@
      (message "Repete o comando com: 'C-x z'"))
 
 ;;; Sound sample: Testing sound
- ;; uDev
+    ;; uDev
+
+;;; Maximize window on startup
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;;; Vim keybindings
 
