@@ -202,6 +202,7 @@ function f_drya-messages {
 alias ls="ls -p"
 alias la="ls -pA"
 alias ll="ls -pl"
+#alias lll= pwd + file paths (uDev)
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
