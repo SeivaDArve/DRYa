@@ -30,8 +30,8 @@
          (global-set-key (kbd "C-M-<wheel-down>") (lambda () (interactive) (scroll-left 6)))
 
       ;; Usando C-b e C-f nas teclas do termux (uDev: Mudar para teclas mais rebuscadas) 
-         (global-set-key (kbd "C-f") (lambda () (interactive) (scroll-right 6)))
-         (global-set-key (kbd "C-b") (lambda () (interactive) (scroll-left 6)))
+         (global-set-key (kbd "<f8>") (lambda () (interactive) (scroll-right 6)))
+         (global-set-key (kbd "<f9>") (lambda () (interactive) (scroll-left 6)))
             ;; uDev: em vez de usar um valor constante, usar uma variavel para se poder ajustar
             ;; uDev: criar a funcao dv-scroll-help para ensinar a alterar dv-scroll-amount
             ;; uDev: nessa funcao dv-scroll-help pode ser tambem inserida a instrucao de como installar uma tecla no termux pra fazer isso e qual a tecla de atalho do teclado para se usar tanto no termux quanto no PC
