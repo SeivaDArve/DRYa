@@ -24,10 +24,12 @@
       ;; Mouse para terminal
          ;; source: https://www.reddit.com/r/emacs/comments/yj1wzd/mouse_mode_disables_scrolling/
          ;;(xterm-mouse-mode t)
-         ;;(global-set-key (kbd "<mouse-4>") 'previous-line)
-         ;;(global-set-key (kbd "<mouse-5>") 'next-line)
 
-      ;; Usando C-b e C-f nas teclas do termux 
+      ;; Tentativa de usar Ctrl + Mouse Wheel para horizontal scroll
+         ;;(global-set-key (kbd "C-<mouse-4>") (lambda () (interactive) (scroll-right 6)))
+         ;;(global-set-key (kbd "C-<mouse-5>") (lambda () (interactive) (scroll-left 7)))
+
+      ;; Usando C-b e C-f nas teclas do termux (uDev: Mudar para teclas mais rebuscadas) 
          (global-set-key (kbd "C-f") (lambda () (interactive) (scroll-right 6)))
          (global-set-key (kbd "C-b") (lambda () (interactive) (scroll-left 6)))
             ;; uDev: em vez de usar um valor constante, usar uma variavel para se poder ajustar
@@ -59,22 +61,22 @@
          (setq ~ "/data/data/com.termux/files/home/")
          (setq v-home "/data/data/com.termux/files/home/"))
 
-;; Attempting to play sound
-;;   (defun dv-sound-test ()
-;;      (interactive)
-;;      (play-sound-file ...
-
-
-;; Defining variable inside emacs es per variables on bash
-   ;;(setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
-     (setq v-repos-center (concat v-home "Repositories/"))
-      
-   ;; (getenv "HOME") ;; Gets the environment variable $HOME
+   ;; Defining variable inside emacs es per variables on bash
+      ;;(setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
+        (setq v-repos-center (concat v-home "Repositories/"))
+         
+      ;; (getenv "HOME") ;; Gets the environment variable $HOME
 
 
 
+;;; Attempting to play sound
+   (defun dv-sound-test ()
+      (interactive)
+      (play-sound-file (concat v-home Repositories/DRYa/all/etc/example-sound.wav)))
 
-;; Loading rotr files.el and directories ecursively
+
+
+;; Loading other files.el and directories recursively
    ;; source: https://www.emacswiki.org/emacs/LoadPath
 
 ;; testing buttons:
