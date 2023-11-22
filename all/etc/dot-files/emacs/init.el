@@ -89,7 +89,7 @@
    ;; source: https://emacs.stackexchange.com/questions/27126/is-it-possible-to-org-bable-tangle-an-org-file-from-the-command-line 
    ;; emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "file-to-tangle.org")'
 
-;; Just testing if init file loads:
+;;; Just testing if init file loads:
    ;; (set-background-color "grey")
 
 ;; Apply hiding of extra asteriscs '*' in all org-mode files
@@ -155,10 +155,6 @@
   (beginning-of-line)(insert "- [ ] "))
 
 ;; uDev: Quando houver links de imagens para abrir e so haja emacs para terminal no Termux, criar uma defun para fazer download da imagem para uma pasta tmp em abrir. Nao sera preciso apagar as imagens porque a DRYa ja apaga essa pasta temporario ao sair.
-
-(defun dv-test-1 ()
-  (interactive)
-  (message "teste 1 done"))
 
 ;; Load python language into org-mode
    ;; source: https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html
@@ -373,7 +369,7 @@
 ;;       (scroll-bar-mode +1)
 ;;          (message "Dv: focus mode disabled"))
 
-(defun dv-translate ()
+(defun dv-translate-weak-days ()
   "Serve para traduzir od nomes dos dias da semana de EN para PT
 Utilizado por exemplo na Fx: dv-insert-new-day-upk"
   ;;interactive
@@ -453,7 +449,17 @@ Utilizado por exemplo na Fx: dv-insert-new-day-upk"
      (insert (format-time-string "<%Y-%m-%d %a> "))
      
       ;; Traduzir de EN para PT os nomes dos dias da semana
-         ;;(dv-translate) ;; uDev: esta função só ainda não funciona porque (search-forward) quando não encontra nada, pára o script
+         ;;(dv-translate-weak-days) ;; uDev: esta função só ainda não funciona porque (search-forward) quando não encontra nada, pára o script
+
+      ;; Se esta fx dv-insert-new-day-upk for chamada entre as 22h e as 00h de um turno N (inicio do turno), entao esta fx deteta que tera de ser alterada a data do dia para +1 dia para a frente, porque os turnos N incluem 1 hora do dia anterior. Caso esta fx seja chamada no dia anterior, convem ser automaticamente corrigido
+      ;;   (defun xx ()
+      ;;     (interactive)
+      ;;     (setq v1 (format-time-string "%H"))
+      ;;     (setq v2 (concat "Current hour is: " v1))
+      ;;     (when (string-equal v1 "23")
+      ;;     (message v2)))
+      ;; 
+
 
      (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
 
@@ -507,17 +513,21 @@ Utilizado por exemplo na Fx: dv-insert-new-day-upk"
   )
 
 
+;;; dv- properties/end/properties-end
+   (defun dv-add-properties ()
+     (interactive)
+     "Creates a new empty line below and adds the text: :PROPERTIES:"
+     (end-of-line)(insert "\n:PROPERTIES:"))
 
-(defun dv-add-properties ()
-  (interactive)
-  "Creates a new empty line below and adds the text: :PROPERTIES:"
-  (end-of-line)(insert "\n:PROPERTIES:"))
+   (defun dv-add-end ()
+     (interactive)
+     "Creates a new empty line below and adds the text: :END:"
+     (end-of-line)(insert "\n:END:"))
 
-(defun dv-add-end ()
-  (interactive)
-  "Creates a new empty line below and adds the text: :END:"
-  (end-of-line)(insert "\n:END:"))
-
+   (defun dv-add-properties-with-end ()
+     (interactive)
+     "Escreve um titulo. Apos o titulo, sem mudar de linha, invoca esta funcao e ela abre :PROPERTIES: :END:"
+     (end-of-line)(insert "\n:PROPERTIES:\n\n:END:\n")(previous-line)(previous-line))
 
 (defun oj ()
   (interactive)
@@ -1290,19 +1300,23 @@ This is used only for \"tipo:\""
 
 
 ;; For omni-log:
-     (setq v-time (format-time-string "<%Y-%m-%d %a> "))
+     (setq v-time (concat "Dia: " (format-time-string "[%Y-%m-%d %a];")))
 
 (defun om-gazol ()
    (interactive)
-   (setq v_litros (read-string "Quantos litros de combustivel colocou?: "))
+
+   ;; uDev: Se o buffer se chamar multiplexer.org, saltar diretamente para o header correspondente com o (concat "Mes" "Ano")
+
+   (setq v_litros (concat (read-string "Foram quantos litros?: ") " Litros;"))
    (setq v_posto  (read-string "Posto? Cepsa 'C' /  BP 'B' / Prio 'P' / Galp 'G' : "))
-                  (when (string-equal v_posto "C")
-                        (setq v_posto "Cepsa"))
+                  (when (or (string-equal v_posto "c") (string-equal v_posto "C"))
+                        (setq v_posto "Cepsa;"))
 
-                  (when (string-equal v_posto "P")
-                        (setq v_posto "Prio"))
+                  (when (or (string-equal v_posto "p") (string-equal v_posto "P"))
+                        (setq v_posto "Prio;"))
 
-   (setq v_preco  (read-string "Qual foi o preço?: "))
-   (setq v_km     (read-string "Quantos KM marcava o painel?: "))
-   (setq v_dia    (read-string "Foi hoje?: "))
-   (insert "Gazol: Dia: " v-time "Litros: " v_litros " " v_posto " " v_preco " " v_km " " v_dia))
+   (setq v_preco  (concat (read-string "Qual foi o preço em €?: ") " €;"))
+                  
+   (setq v_km     (concat (read-string "Quantos KM marcava o painel?: ") " Km;"))
+   (setq v_dia    (read-string "Que dia foi? (Em Branco = Hoje): "))
+   (insert "Gazol: " v-time " " v_litros " " v_posto " " v_preco " " v_km " " v_dia))
