@@ -62,7 +62,7 @@ function E {
       # To exec 'upk' 
          function f-set-omni-key-upk {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-            sed -i "s/ॐ/⍾/g" ~/.termux/termux.properties
+            sed -i "s/ॐ/⏚/g" ~/.termux/termux.properties
             bind -x '"\e[18~":"upk"'
             termux-reload-settings
          }
@@ -82,23 +82,62 @@ function E {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
             #sed -i "s/⎆/ॐ/g" ~/.termux/termux.properties  ## Se o ficheiro em .../etc/dot-files/... for copiado diretamente para ~/.termux/termux.properties entao nao é preciso 'sed'
             termux-reload-settings
-            bind -x '"\e[18~":"F"'
+            bind -x '"\e[18~": f_my_reset_test'
 
          }
          f-reset-omni-key
 
+
+
+
+
+
+####################################
+# Bug fix to STDIN on interactive drya-omni-key using Bash 'bind -x'
+# source: https://stackoverflow.com/questions/65465973/bind-interactive-command-to-a-key-sequence
+
+stty_orig=$(stty -g)
+
+function f_my_reset_test {
+  local stty_bkup=$(stty -g)
+  stty "$stty_orig"
+
+  # Function WE want to run here:
+     key
+
+  stty "$stty_bkup"
+}
+
+bind -x '"\e[18~": f_my_reset_test'
+
+
+#####################################
+
+
+
+
+
+
+
+
+
+
+
 function key {
    # Menu para alternar drya-termux-omni-key icon e funcionalidade
+   #
+   # Bug: Quando em bash é usado o "F7 bind -x to key" entao encrava as funcoes bash que tiverem 'read -p "resposta? " v_ans'
    figlet Omni Key
    echo "Opcoes:"
    echo " > om"
    echo " > upk"
    echo " > qr"
+   #echo " > Reset (leave empty)"
 
    read -p "Qual a funcao que quer para omni-key? " v_ans
 
-   if [ $v_ans == "om" ]; then f-reset-omni-key
-   elif [ $v_ans == "qr" ]; then f-set-omni-key-qr
+   if   [ $v_ans == "om"  ]; then f-reset-omni-key
+   elif [ $v_ans == "qr"  ]; then f-set-omni-key-qr
    elif [ $v_ans == "upk" ]; then f-set-omni-key-upk
    fi
 
