@@ -459,7 +459,7 @@ Antigamente o turno N começava as 00h00 e cacabava as 09h00 do mesmo dia. Agora
 Para que as 23h00 seja possivel inserir a data correta correspondete ao dia seguite, será aplicado esta Fx.
 
 Caso o turno N algum dia volte ao normal das 00h00 as 09h00, entao toda esta Fx poder ser apagada e substituida por:
-  (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")
+  (insert (format-time-string \"<%Y-%m-%d \") v-dia \"> \")
 
 Por enquanto, se esta em vigor das 23h00 as 08h00, 
 sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necessario; +1 ao ano, se necessario"
@@ -470,7 +470,6 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
   (setq v-dia-num  (format-time-string "%d")) ;; Preencher a variavel v-hour-num com o dia atual:  %d
   (setq v-mes-num  (format-time-string "%m")) ;; Preencher a variavel v-hour-num com o mes atual:  %m
   (setq v-ano-num  (format-time-string "%Y")) ;; Preencher a variavel v-hour-num com o ano atual:  %Y
-
 
   ;; Quando a Fx do Turno N esta incorretamente a ser chamada antes das 24h:
      ;; uDev: Precisa detetar v-dia certo e subtrair v-hour-num
@@ -485,7 +484,9 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      (when (not (and (or (string-equal v-hour-num "22")
                          (string-equal v-hour-num "23"))
                      (string-equal v_turno "N")))
-           (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")) )
+           (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")) 
+
+  )
 
 
 
@@ -514,20 +515,20 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia, rotina de avac, rotina de legionela
      ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X hora
 
-  ;; Criar variaveis com a traducao de EN para PT dos dias da semana (antes de serem usados)
-     (dv-translate-weak-days) 
+  ;; Criacao do Header principal
+     ;; Criar variaveis com a traducao de EN para PT dos dias da semana (antes de serem usados)
+        (dv-translate-weak-days) 
 
-  ;; Introdução de Header, independentemente se é Folga ou Turno
-     (end-of-buffer) (insert "\n") (insert "* Dia ")
+     ;; Introdução de Header, independentemente se é Folga ou Turno
+        (end-of-buffer) (insert "\n") (insert "* Dia ")
 
-  ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
-     ;; Usar so 1 destas 2 linhas de codigo:
-     (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
-     ;;(dv-detetar-dia-correto-bo-inicio-de-turnos-N)
+     ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
+        ;; Usar apenas 1 destas 2 linhas de codigo (nunca as duas em simultaneo):
+           ;;(insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
+           (dv-detetar-dia-correto-bo-inicio-de-turnos-N)
 
-
-
-     (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
+     ;; Preenchero com o texto correspondente ao turno
+        (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
 
   ;; Quando é dia de turno (B, C, N):
      (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
