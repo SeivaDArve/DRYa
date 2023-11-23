@@ -1,21 +1,22 @@
-;;; Title: init.el
+;;;; Title: init.el
 
 ;; Author: David Rodrigues (Seiva D'Arve)
 ;; Description: First file of configurations loaded by emacs
 
-;;; Title navigation tutorial
+;;;; Title navigation tutorial
     ;; Press 'M-x occur ;;; ' (with a space after the 3 ; )
     ;;   to navigate this file by titles (using emacs)
-    ;;   Otherwise, if you view this file as org-mode, just [[elisp:(funcall-interactively 'occur ";;; ")][click here]]
+    ;;   Otherwise, if you view this file as org-mode, just [[elisp:(funcall-interactively 'occur ";;;; ")][click here]]
     ;;   To activate org-mode, just type "Alt-x org-mode"
+    ;; ';;; End'  Means the end of such title
 
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
-;;; Disable Dialog box when executing elisp code:
+;;;; Disable Dialog box when executing elisp code:
    (setq org-confirm-elisp-link-function nil)
    ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
 
-;;; Making use of Termux "Touch Keyboard" keys
+;;;; Making use of Termux "Touch Keyboard" keys
    ;; Criar horizontal scroll
       ;; Pesquisa: If your mouse’s wheel can be tilted, or if your touchpad supports it, then you can also enable horizontal scrolling by customizing the variable mouse-wheel-tilt-scroll to a non-nil value
       ;; source: https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Commands.html
@@ -76,8 +77,6 @@
 
 
 
-;; Loading other files.el and directories recursively
-   ;; source: https://www.emacswiki.org/emacs/LoadPath
 
 ;; testing buttons:
    (defun wh/help-hello-world ()
@@ -111,26 +110,29 @@
 
 
 
-;; Configure which browser is set to defaulf on startup (according to OS)
-   ;; If windows is found
-      (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
+;;;; Configure which browser is set to defaulf on startup (according to OS)
+     ;; If windows is found
+        (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
             (message "dv: running on windows"))
 
-   ;; If windows is not found (it must be either android or linux) the default web browser is changed
-      ;; Now any link will be open with Linux based (or Android based) web browser
-      (when (not (eq system-type' windows-nt))
-            (message "dv: (1/2) windows not detected")
-            (setq browse-url-browser-function 'browse-url-xdg-open)
-            (message "dv: (2/2) default browser now is determined by either android or linux"))
+     ;; If windows is not found (it must be either android or linux) the default web browser is changed
+        ;; Now any link will be open with Linux based (or Android based) web browser
+        (when (not (eq system-type' windows-nt))
+              (message "dv: (1/2) windows not detected")
+              (setq browse-url-browser-function 'browse-url-xdg-open)
+              (message "dv: (2/2) default browser now is determined by either android or linux"))
 
-;; Loading other lisp.el files into emacs
-   ;; Note: We can load files from the terminal using 'emacs -l ../place-holder.el'
+;;;; Loading other lisp.el files into emacs
+     ;; Note: We can load files from the terminal using 'emacs -l ../place-holder.el'
 
-   ;; Loading upk.el
-      ;; For Android
-      (if (eq system-type 'gnu/linux)
-          (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
-          (message "Dv: Loaded upk.el on GNU/Linux"))
+     ;; Loading other files.el and directories recursively
+        ;; source: https://www.emacswiki.org/emacs/LoadPath
+
+     ;; Loading upk.el
+        ;; For Android
+        (if (eq system-type 'gnu/linux)
+            (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
+            (message "Dv: Loaded upk.el on GNU/Linux"))
 
 ;;; Overriding 'C-c C-l' (org-insert-link) to include: termux-open-emacs-org-mode-images-on-android
     ;; uDev
@@ -393,15 +395,26 @@ Por fim, na Fx dv-insert-new-day-upk a variavel %a será substituida por %1
 
 Usado nas Fx:
  - dv-insert-new-day-upk"
-(setq v-day (message (format-time-string "%a")))
-(when (string-equal v-day "Mon")(setq v-dia "Seg"))
-(when (string-equal v-day "Tue")(setq v-dia "Ter"))
-(when (string-equal v-day "Wed")(setq v-dia "Qua"))
-(when (string-equal v-day "Thu")(setq v-dia "Qui"))
-(when (string-equal v-day "Fri")(setq v-dia "Sex"))
-(when (string-equal v-day "Sat")(setq v-dia "Sab"))
-(when (string-equal v-day "Sun")(setq v-dia "Dom")))
 
+(setq v-day (message (format-time-string "%a")))
+
+;; Quando é usado o Termux
+   (when (string-equal v-day "Mon")(setq v-dia "Seg"))
+   (when (string-equal v-day "Tue")(setq v-dia "Ter"))
+   (when (string-equal v-day "Wed")(setq v-dia "Qua"))
+   (when (string-equal v-day "Thu")(setq v-dia "Qui"))
+   (when (string-equal v-day "Fri")(setq v-dia "Sex"))
+   (when (string-equal v-day "Sat")(setq v-dia "Sab"))
+   (when (string-equal v-day "Sun")(setq v-dia "Dom"))
+
+;; Quando é usado o Emacs Gui no Windows
+   (when (string-equal v-day "seg")(setq v-dia "Seg"))
+   (when (string-equal v-day "ter")(setq v-dia "Ter"))
+   (when (string-equal v-day "qua")(setq v-dia "Qua"))
+   (when (string-equal v-day "qui")(setq v-dia "Qui"))
+   (when (string-equal v-day "sex")(setq v-dia "Sex"))
+   (when (string-equal v-day "sab")(setq v-dia "Sab"))
+   (when (string-equal v-day "dom")(setq v-dia "Dom")))
 
 
 
@@ -430,6 +443,63 @@ Usado nas Fx:
       ;; Source: https://www.emacswiki.org/emacs/IndentationBasics
       ;; (setq tab-width 3) ; or any other preferred value
   
+
+
+
+
+
+
+
+
+(defun dv-detetar-dia-correto-bo-inicio-de-turnos-N ()
+  "Esta Fx é parte fundamental da Fx dv-insert-new-day-upk e serve só para os turnos N.
+Quando está a imiciar mais um turno N que começa as 23h do dia anterior, é possivel chamar a Fx dv-insert-new-day-upk e essa Fx inserir a data incorretamente.
+
+Antigamente o turno N começava as 00h00 e cacabava as 09h00 do mesmo dia. Agora comeca uma hora antes as 23h00 e acaba as 08h00.
+Para que as 23h00 seja possivel inserir a data correta correspondete ao dia seguite, será aplicado esta Fx.
+
+Caso o turno N algum dia volte ao normal das 00h00 as 09h00, entao toda esta Fx poder ser apagada e substituida por:
+  (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")
+
+Por enquanto, se esta em vigor das 23h00 as 08h00, 
+sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necessario; +1 ao ano, se necessario"
+
+  ;; Fx Original: (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  ;; A variavel v-dia já substituir %a e contempla a tradução direta de EN > PT
+ 
+  (setq v-hour-num (format-time-string "%H")) ;; Preencher a variavel v-hour-num com a hora atual: %H
+  (setq v-dia-num  (format-time-string "%d")) ;; Preencher a variavel v-hour-num com o dia atual:  %d
+  (setq v-mes-num  (format-time-string "%m")) ;; Preencher a variavel v-hour-num com o mes atual:  %m
+  (setq v-ano-num  (format-time-string "%Y")) ;; Preencher a variavel v-hour-num com o ano atual:  %Y
+
+
+  ;; Quando a Fx do Turno N esta incorretamente a ser chamada antes das 24h:
+     ;; uDev: Precisa detetar v-dia certo e subtrair v-hour-num
+     ;;       Precisa tambem detetar se é fim do mes, para inserir corretamente que o turno será no prox mes
+     (when (and (or (string-equal v-hour-num "22")
+                    (string-equal v-hour-num "23"))
+                (string-equal v_turno "N"))
+           (progn (insert "uDev: Ainda n é o dia correto, inserir uma soma do dia atual +1")
+                  (message "Foi inserido uma data diferente, corrija se necessario")))
+
+  ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
+     (when (not (and (or (string-equal v-hour-num "22")
+                         (string-equal v-hour-num "23"))
+                     (string-equal v_turno "N")))
+           (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")) )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (defun dv-insert-new-day-upk ()
   (interactive)
 
@@ -444,35 +514,16 @@ Usado nas Fx:
      ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia, rotina de avac, rotina de legionela
      ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X hora
 
-  ;; Traduzir de EN para PT os nomes dos dias da semana
+  ;; Criar variaveis com a traducao de EN para PT dos dias da semana (antes de serem usados)
      (dv-translate-weak-days) 
 
   ;; Introdução de Header, independentemente se é Folga ou Turno
-     (end-of-buffer)
-     (insert "\n")
-     (insert "* Dia ")
+     (end-of-buffer) (insert "\n") (insert "* Dia ")
 
   ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
-     (setq v-hour (format-time-string "%H")) ;; Preencher a variavel v-hour com a hora atual %H
-
-     ;; Original: (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")
-
-     ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
-        ;; uDev: Precisa detetar v-dia certo e subtrair v-hour
-        ;;       Precisa tambem detetar se é fim do mes, para inserir corretamente que o turno será no prox mes
-        (when (and 
-                  (or (string-equal v-hour "22")
-                      (string-equal v-hour "23"))
-                  (string-equal v_turno "N"))
-              (message "uDev: Ainda n é o dia correto, inserir uma soma do dia atual +1"))
-
-     ;; Quando a Fx do Turno N esta incorretamente a ser chamada antes das 24h:
-        (when (not 
-                (and 
-                  (or (string-equal v-hour "22")
-                      (string-equal v-hour "23"))
-                  (string-equal v_turno "N")))
-              (insert (format-time-string "<%Y-%m-%d ") v-dia "> "))
+     ;; Usar so 1 destas 2 linhas de codigo:
+     (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
+     ;;(dv-detetar-dia-correto-bo-inicio-de-turnos-N)
 
 
 
@@ -1115,7 +1166,7 @@ This is used only for \"tipo:\""
   (interactive)
   (setq v-point (point))  ;; Save cursor position before any action
   (org-kill-line)(yank)   ;; Cut line from cursor pos until the end of the line and paste it again (to put it on the clipboard)
-  (goto-char v-point))     ;; Restore cursor position
+  (goto-char v-point))    ;; Restore cursor position
   (global-set-key (kbd "C-M-k") 'k)  ;; Create a hotkey to repeat this easily
 
 
