@@ -471,6 +471,21 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
   (setq v-mes-num  (format-time-string "%m")) ;; Preencher a variavel v-hour-num com o mes atual:  %m
   (setq v-ano-num  (format-time-string "%Y")) ;; Preencher a variavel v-hour-num com o ano atual:  %Y
 
+  ;; Set same variable 2x for readable code
+     ;; First time: 
+        ;;(setq v-next-dia-num  (atual + 1)) 
+        ;;(setq v-next-dia-text (v-dia + 1))    
+        ;;(setq v-next-mes-num  (atual + 1))   
+        ;;(setq v-next-ano-num  (atual + 1))  
+
+     ;; Second time: 
+        ;;(setq dd      v-next-dia-num  )
+        ;;(setq v-dia-2 v-next-dia-text )
+        ;;(setq mm      v-next-mes-num  )
+        ;;(setq YY      v-next-ano-num  )
+
+
+
   ;; Quando a Fx do Turno N esta incorretamente a ser chamada antes das 24h:
      ;; uDev: Precisa detetar v-dia certo e subtrair v-hour-num
      ;;       Precisa tambem detetar se é fim do mes, para inserir corretamente que o turno será no prox mes
@@ -481,6 +496,7 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
                   (message "Foi inserido uma data diferente, corrija se necessario")))
 
   ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
+     ;; Ou quando é chamada em turnos B e C
      (when (not (and (or (string-equal v-hour-num "22")
                          (string-equal v-hour-num "23"))
                      (string-equal v_turno "N")))
