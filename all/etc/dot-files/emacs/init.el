@@ -324,8 +324,11 @@
 
 (defun date ()
   (interactive)
-  (setq v_id_time (format-time-string "(Dia %d %a)(Mês %m %b)(Ano %Y)(%kh:%Mmin:%Ss)"))
-  (message (concat "Data atual: " v_id_time)))
+  (setq v-time-1 (format-time-string "(Dia %d "))  ;; -------------------------------------- Part 1 of the time string to be printed
+  (dv-translate-weak-days) ;; -------‐---‐-------------------------------------------------- Part 2 of the time string to be printed
+  (setq v-time-3 (format-time-string ")(Mês %m %b)(Ano %Y)(%kh:%Mmin:%Ss)")) ;; ------------ Part 3 of the time string to be printed
+  ;;(setq v_id_time (format-time-string "(Dia %d %a)(Mês %m %b)(Ano %Y)(%kh:%Mmin:%Ss)")) ;; Usada se nao houver traducao
+  (message (concat "Data atual: " v-time-1 v-dia v-time-3)))
    
 ;; uDev: add package elisp-bug-hunter (https://github.com/Malabarba/elisp-bug-hunter)
 
@@ -520,6 +523,9 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
 
 
 (defun dv-insert-new-day-upk ()
+  "Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
+
+uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
   (interactive)
 
   ;; Prompting user for values
@@ -548,7 +554,7 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      ;; Preenchero com o texto correspondente ao turno
         (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
 
-  ;; Quando é dia de turno (B, C, N):
+  ;; Quando é dia de turno (B, C, N) excluindo (Fg):
      (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
          
          ;; Pre-Requisitos + PROPERTIES 
