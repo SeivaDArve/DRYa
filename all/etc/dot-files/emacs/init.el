@@ -451,7 +451,7 @@ Usado nas Fx:
 
 
 
-(defun dv-detetar-dia-correto-bo-inicio-de-turnos-N ()
+(defun dv-detetar-dia-correto-no-inicio-de-turnos-N ()
   "Esta Fx é parte fundamental da Fx dv-insert-new-day-upk e serve só para os turnos N.
 Quando está a imiciar mais um turno N que começa as 23h do dia anterior, é possivel chamar a Fx dv-insert-new-day-upk e essa Fx inserir a data incorretamente.
 
@@ -525,7 +525,7 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
         ;; Usar apenas 1 destas 2 linhas de codigo (nunca as duas em simultaneo):
            ;;(insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
-           (dv-detetar-dia-correto-bo-inicio-de-turnos-N)
+           (dv-detetar-dia-correto-no-inicio-de-turnos-N)
 
      ;; Preenchero com o texto correspondente ao turno
         (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
