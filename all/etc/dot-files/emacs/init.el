@@ -314,11 +314,17 @@
   (message "Dv: toggled line numbers mode globaly"))
     
 (defun dv-add-id-line ()
-  "Adds a line of text with a unique number in order to facilitate internal links. Mix of text with: ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second"
+  "Adds a line of text with a unique number in order to facilitate internal links. Mix of text with: ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second
+  See format possibilities here: https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html"
   (interactive)
   (setq v_id_time (format-time-string "ID-%d%m%Y-%k%M%S-%N"))
   (insert "ID-with-emacs-target { <<" v_id_time ">> } (origin)"))
 
+(defun date ()
+  (interactive)
+  (setq v_id_time (format-time-string "(Dia %d %a)(Mês %m %b)(Ano %Y)(%kh:%Mmin:%Ss)"))
+  (message (concat "Data atual: " v_id_time)))
+   
 ;; uDev: add package elisp-bug-hunter (https://github.com/Malabarba/elisp-bug-hunter)
 
 (defun u ()
@@ -369,39 +375,36 @@
 ;;       (scroll-bar-mode +1)
 ;;          (message "Dv: focus mode disabled"))
 
+
+
+
+
+
 (defun dv-translate-weak-days ()
   "Serve para traduzir od nomes dos dias da semana de EN para PT
-Utilizado por exemplo na Fx: dv-insert-new-day-upk"
-  ;;interactive
-  (beginning-of-line)
-  (cond (search-forward "ter"
-        (progn (delete-char -3)
-	            (insert "merda")))
+Utilizado por exemplo na Fx: dv-insert-new-day-upk. 
 
-        (search-forward "Tue"
-        (progn (delete-char -3)
-	            (insert "Ter")))
+No termux os nomes da semana costumam estar em EN e esta é a config que traduz para PT mais facil
 
-        (search-forward "Wed"
-        (progn (delete-char -3)
-	            (insert "qua")))
+Esta Fx lê o dia da semsna em EN e coloca na variavel %0
+Depois, se %0 for igual a Mon, entao a variavel %1 sera definida como Seg
 
-      (search-forward "Thu"
-      (progn (delete-char -3)
-	          (insert "qui")))
+Por fim, na Fx dv-insert-new-day-upk a variavel %a será substituida por %1
 
-      (search-forward "Fri"
-      (progn (delete-char -3)
-	          (insert "sex")))
+Usado nas Fx:
+ - dv-insert-new-day-upk"
+(setq v-day (message (format-time-string "%a")))
+(when (string-equal v-day "Mon")(setq v-dia "Seg"))
+(when (string-equal v-day "Tue")(setq v-dia "Ter"))
+(when (string-equal v-day "Wed")(setq v-dia "Qua"))
+(when (string-equal v-day "Thu")(setq v-dia "Qui"))
+(when (string-equal v-day "Fri")(setq v-dia "Sex"))
+(when (string-equal v-day "Sat")(setq v-dia "Sab"))
+(when (string-equal v-day "Sun")(setq v-dia "Dom")))
 
-      (search-forward "Fri"
-      (progn (delete-char -3)
-	          (insert "sab")))
 
-      (search-forward "Sun"
-      (progn (delete-char -3)
-	          (insert "dom"))))
-  (end-of-line))
+
+
 
 
 ;; Toggle stuff for focus
@@ -437,28 +440,40 @@ Utilizado por exemplo na Fx: dv-insert-new-day-upk"
 
   ;; uDev:
      ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
-     ;; Se o turno for B: ao adicionar automaticamente Rotina do turno da manha, adicionar tambem um link para um ficheiro interno que lista todas as anomalias encontradas no turno anterior. Assim nao ha nenhuma OT de rotina que nao tenha listado os problemas que persistem. Assim é feito copy/paste aos problemas que persistem
      ;; Se for o ultimo dia do mes, pedir pra tirar foto a folha de ponto da upk
      ;; Se for fim de semana + Turno B, entao: adicionar Reuniao do bom dia, rotina de avac, rotina de legionela
      ;; Detetar feriados e incluir na Aba Resumo que equivale a mais X hora
+
+  ;; Traduzir de EN para PT os nomes dos dias da semana
+     (dv-translate-weak-days) 
 
   ;; Introdução de Header, independentemente se é Folga ou Turno
      (end-of-buffer)
      (insert "\n")
      (insert "* Dia ")
-     (insert (format-time-string "<%Y-%m-%d %a> "))
-     
-      ;; Traduzir de EN para PT os nomes dos dias da semana
-         ;;(dv-translate-weak-days) ;; uDev: esta função só ainda não funciona porque (search-forward) quando não encontra nada, pára o script
 
-      ;; Se esta fx dv-insert-new-day-upk for chamada entre as 22h e as 00h de um turno N (inicio do turno), entao esta fx deteta que tera de ser alterada a data do dia para +1 dia para a frente, porque os turnos N incluem 1 hora do dia anterior. Caso esta fx seja chamada no dia anterior, convem ser automaticamente corrigido
-      ;;   (defun xx ()
-      ;;     (interactive)
-      ;;     (setq v1 (format-time-string "%H"))
-      ;;     (setq v2 (concat "Current hour is: " v1))
-      ;;     (when (string-equal v1 "23")
-      ;;     (message v2)))
-      ;; 
+  ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
+     (setq v-hour (format-time-string "%H")) ;; Preencher a variavel v-hour com a hora atual %H
+
+     ;; Original: (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")
+
+     ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
+        ;; uDev: Precisa detetar v-dia certo e subtrair v-hour
+        ;;       Precisa tambem detetar se é fim do mes, para inserir corretamente que o turno será no prox mes
+        (when (and 
+                  (or (string-equal v-hour "22")
+                      (string-equal v-hour "23"))
+                  (string-equal v_turno "N"))
+              (message "uDev: Ainda n é o dia correto, inserir uma soma do dia atual +1"))
+
+     ;; Quando a Fx do Turno N esta incorretamente a ser chamada antes das 24h:
+        (when (not 
+                (and 
+                  (or (string-equal v-hour "22")
+                      (string-equal v-hour "23"))
+                  (string-equal v_turno "N")))
+              (insert (format-time-string "<%Y-%m-%d ") v-dia "> "))
+
 
 
      (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
