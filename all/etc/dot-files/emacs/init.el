@@ -467,9 +467,9 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
   ;; Fx Original: (insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  ;; A variavel v-dia já substituir %a e contempla a tradução direta de EN > PT
  
   (setq v-hour-num (format-time-string "%H")) ;; Preencher a variavel v-hour-num com a hora atual: %H
-  (setq v-dia-num  (format-time-string "%d")) ;; Preencher a variavel v-hour-num com o dia atual:  %d
-  (setq v-mes-num  (format-time-string "%m")) ;; Preencher a variavel v-hour-num com o mes atual:  %m
-  (setq v-ano-num  (format-time-string "%Y")) ;; Preencher a variavel v-hour-num com o ano atual:  %Y
+  ;;(setq v-dia-num  (format-time-string "%d")) ;; Preencher a variavel v-hour-num com o dia atual:  %d
+  ;;(setq v-mes-num  (format-time-string "%m")) ;; Preencher a variavel v-hour-num com o mes atual:  %m
+  ;;(setq v-ano-num  (format-time-string "%Y")) ;; Preencher a variavel v-hour-num com o ano atual:  %Y
 
   ;; Set same variable 2x for readable code
      ;; First time: 
@@ -483,6 +483,8 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
         ;;(setq v-dia-2 v-next-dia-text )
         ;;(setq mm      v-next-mes-num  )
         ;;(setq YY      v-next-ano-num  )
+
+     ;; uDev: descobrir elisp com (org-time-stamp-up-day) equivalente, para se evitar toda esta confusao de soma de variaveis
 
 
 
