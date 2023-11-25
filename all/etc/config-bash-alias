@@ -151,7 +151,7 @@ function siigo {
       
    # Using chrome   
       function f_chrome_siigo {
-         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar
+         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar 2>/dev/null
       }
 
    # Calling siigo webpage using one of the above options:
