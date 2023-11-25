@@ -417,6 +417,7 @@ Usado nas Fx:
    (when (string-equal v-day "qui")(setq v-dia "Qui"))
    (when (string-equal v-day "sex")(setq v-dia "Sex"))
    (when (string-equal v-day "sab")(setq v-dia "Sab"))
+   (when (string-equal v-day "sáb")(setq v-dia "Sab"))
    (when (string-equal v-day "dom")(setq v-dia "Dom")))
 
 
@@ -547,7 +548,8 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
         (end-of-buffer) (insert "\n") (insert "* Dia ")
 
      ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
-        ;; Usar apenas 1 destas 2 linhas de codigo (nunca as duas em simultaneo):
+        ;; Usar apenas 1 destas 3 linhas de codigo (nunca as mais que 1 em simultaneo):
+           ;;(insert (format-time-string "<%Y-%m-%d %a> "))
            ;;(insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
            (dv-detetar-dia-correto-no-inicio-de-turnos-N)
 
