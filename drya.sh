@@ -1265,6 +1265,16 @@ elif [ $1 == "install" ]; then
          upk-at-work)
             # Makes all dependencies for upk repo available
             # This might be used most likely at in-job phone
+            
+            # Echo a list of things that are going to be installed:
+               # uDev
+               # uDev
+               # uDev
+               # uDev
+               # uDev
+               # uDev
+
+            # Change dir, to avoid changing at every command
                cd ${v_REPOS_CENTER}
 
             # Install emacs
