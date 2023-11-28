@@ -81,7 +81,7 @@ function E {
          function f-reset-omni-key {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
             #sed -i "s/⎆/ॐ/g" ~/.termux/termux.properties  ## Se o ficheiro em .../etc/dot-files/... for copiado diretamente para ~/.termux/termux.properties entao nao é preciso 'sed'
-            termux-reload-settings
+            termux-reload-settings 2>/dev/null ## Won't work on WSL2
             bind -x '"\e[18~": f_my_reset_test'
 
          }
@@ -127,18 +127,20 @@ function key {
    # Menu para alternar drya-termux-omni-key icon e funcionalidade
    #
    # Bug: Quando em bash é usado o "F7 bind -x to key" entao encrava as funcoes bash que tiverem 'read -p "resposta? " v_ans'
+   clear
    figlet Omni Key
-   echo "Opcoes:"
-   echo " > om"
-   echo " > upk"
-   echo " > qr"
+   echo "Opcoes para Omni-Key:"
+   echo " Escreve Num ou Texto em minusculas"
+   echo " > (1) OM"
+   echo " > (2) UPK"
+   echo " > (3) QR"
    #echo " > Reset (leave empty)"
 
    read -p "Qual a funcao que quer para omni-key? " v_ans
 
-   if   [ $v_ans == "om"  ]; then f-reset-omni-key
-   elif [ $v_ans == "qr"  ]; then f-set-omni-key-qr
-   elif [ $v_ans == "upk" ]; then f-set-omni-key-upk
+   if   [ $v_ans == "om"  ] || [ $v_ans == "1" ]; then f-reset-omni-key
+   elif [ $v_ans == "qr"  ] || [ $v_ans == "2" ]; then f-set-omni-key-qr
+   elif [ $v_ans == "upk" ] || [ $v_ans == "3" ]; then f-set-omni-key-upk
    fi
 
 }
