@@ -43,25 +43,40 @@
 
 
 
-;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
-   ;; Otherwise, it's default is: "~/.config/emacs/"
-   ;; Note: You can check the variable system-type with: C-h v system-type
+;;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
+ ;; Otherwise, it's default is: "~/.config/emacs/"
+ ;; Note: You can check the variable system-type with: C-h v system-type
+ ;; You can always find out what Emacs thinks is your home directory’s location by typing C-x d ~/ RET
 
-   ;; If running on windows
-      ;; uDev: Roaming is not a good HOME dir
-   (when (eq system-type 'windows-nt)
-         (message "Dv: Defining 3 home vars for: Windows")
-         (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
-         (setq v-home "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
-         (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/."))
+ ;; If running on windows
+    (defun win-home-dir-option-1-of-2 ()
+       "Possible dependency for the set of $HOME variable on WSL2 systems."
+       (setq startup--xdg-config-home-emacs "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+       (setq v-home "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/.")
+       (setq ~ "/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d/."))
+ 
+    (defun win-home-dir-option-2-of-2 ()
+       "Possible dependency for the set of $HOME variable on WSL2 systems."
+       ;; uDev: Roaming is not a good HOME dir. Alterar para outro sitio
+       (setq startup--xdg-config-home-emacs "/mnt/c/wsl-dv/")
+       (setq v-home "/mnt/c/wsl-dv")
+       (setq HOME "/mnt/c/wsl-dv")
+       (setq ~ "/mnt/c/wsl-dv"))
+ 
+    (when (eq system-type 'windows-nt)
+          (message "Dv: Defining 3 home vars for: Windows WSL2")
+          ;; Choose only one of these 2:
+             ;;(win-home-dir-option-1-of-2)
+             (win-home-dir-option-2-of-2))
+          
 
-   ;; If running on Android
-   (when (eq system-type 'gnu/linux)
-         (message "Dv: Defining 3 home vars for: Linux")
-         (setq startup--xdg-config-home-emacs "/data/data/com.termux/files/home/")
-         (setq ~ "/data/data/com.termux/files/home/")
-         (setq v-home "/data/data/com.termux/files/home/"))
-
+ ;; If running on Android
+    (when (eq system-type 'gnu/linux)
+          (message "Dv: Defining 3 home vars for: Linux")
+          (setq startup--xdg-config-home-emacs "/data/data/com.termux/files/home/")
+          (setq ~ "/data/data/com.termux/files/home/")
+          (setq v-home "/data/data/com.termux/files/home/"))
+ 
    ;; Defining variable inside emacs es per variables on bash
       ;;(setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
         (setq v-repos-center (concat v-home "Repositories/"))
@@ -578,19 +593,21 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
                   (rotina-manha))
              
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
-            (insert "\n- [ ] Pos-Requisitos \n" ":PROPERTIES: \n\n")
-            (insert "- [ ] Escrever folha de ocorrencias\n")
-            (insert "- [ ] Tirar foto à folha de ocorrencias\n")
+            (insert "\n- [ ] Pos-Requisitos ")
+            (insert "\n" ":PROPERTIES: \n")
+            (insert "\n- [ ] Escrever folha de ocorrencias ")
+            (insert "\n- [ ] Tirar foto à folha de ocorrencias ")(dv-del-line-link)
 
          ;; Se o turno for "C" (adicionar texto aos Pos-Requisitos)
             (when (string-equal v_turno "C")
-                  (insert "- [ ] Entregar a folha de ocorrencias\n"))
+                  (insert "\n- [ ] Entregar a folha de ocorrencias\n"))
 
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
-            (insert "- [ ] Assinar folhas de saida no C.Nascente\n\n")
-            (insert "- [ ] Passagem de Serviço ")
+            (insert "\n- [ ] Assinar folhas de saida no C.Nascente\n")
+            (insert "\n- [ ] Passagem de Serviço ")
             (insert (format-time-string "<%Y-%m-%d %a>"))
-            (insert "{ \nAo: \n  -\n}\n")
+            (insert "{ \n")
+            (insert "Ao: \n  -\n}\n")
 
             ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
                (insert ":END:\n\n")
@@ -814,6 +831,10 @@ Notas {
 
 
 
+(defun dv-del-line-link ()
+  (interactive)
+  (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][(del)]] "))
+  
 
 
 
@@ -835,11 +856,11 @@ Notas {
      ;;(insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
   (insert " \{ \n\}\n\n")
     ;; Adding a function to create a new dv-ot-just-text
-       (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
+       (dv-del-line-link)
        (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(dv-add-ot-just-text))][dv-add-ot-just-text]] \n")
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
-  (previous-line)(previous-line)(previous-line)(end-of-line)
+  (previous-line)(previous-line)(previous-line)(previous-line)(end-of-line)
   ;; After navigating 2 lines above, then: uDev: press TAB to close properties
   (message "Dv: Text inserted into current buffer and current cursor position"))
 
