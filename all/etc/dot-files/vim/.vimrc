@@ -36,3 +36,10 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
+
+" F7 to close vim from normal mode (equivalent to zz)
+nnoremap <F7> <Esc>ZZ
+
+nnoremap <F8> zhzhzhzhzhzhzhzh
+nnoremap <F9> zlzlzlzlzlzlzlzl
