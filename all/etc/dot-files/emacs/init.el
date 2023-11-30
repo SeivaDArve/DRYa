@@ -515,7 +515,7 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      (when (and (or (string-equal v-hour-num "22")
                     (string-equal v-hour-num "23"))
                 (string-equal v_turno "N"))
-           (progn (insert "uDev: Ainda n é o dia correto, inserir uma soma do dia atual +1")
+           (progn (insert (format-time-string "<%Y-%m-%d ") "(+1 Dia)" v-dia "> ")  ;; uDev: clue to fix this function: (org-insert-time-stamp (current-time) +1d )
                   (message "Foi inserido uma data diferente, corrija se necessario")))
 
   ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
