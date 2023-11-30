@@ -88,6 +88,8 @@
 ;;; Attempting to play sound
    (defun dv-sound-test ()
       (interactive)
+      ;; We can use Shell command M-! termux-media-player play <file>
+      ;; To play/stop music, better send a message to *Messages* buffer to help
       (play-sound-file (concat v-home Repositories/DRYa/all/etc/example-sound.wav)))
 
 
@@ -1286,10 +1288,10 @@ This is used only for \"tipo:\""
 ;;       (setq package-check-signature nil)
 ;;       
 ;;       ;; UTF-8
-;;       (set-language-environment "UTF-8")
-;;       (set-default-coding-systems 'utf-8)
-;;       (set-keyboard-coding-system 'utf-8-unix)
-;;       (set-terminal-coding-system 'utf-8-unix)
+       (set-language-environment "UTF-8")
+       (set-default-coding-systems 'utf-8)
+       (set-keyboard-coding-system 'utf-8-unix)
+       (set-terminal-coding-system 'utf-8-unix)
 ;;       
 ;;       ;; Backups
 ;;       ;; URL: https://sachachua.com/dotemacs/index.html
