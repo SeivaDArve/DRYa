@@ -6,9 +6,12 @@
 Don't Repeat Yourself (app) 
 
 ## Description
-This project is a natural tendency for any entusiastic programmer...
+This project is a natural tendency for any entusiastic programmer, it is like a second Brain...
+Manages my Public and Private software. 
 
-When using any smart device or any computer, there are too many tings that may become repetitive.
+## Further Description
+
+When using any smart device or any computer, there are too many things that may become repetitive.
 Some examples are:
    - After formating your machine, installing all the apps again may be repetitive
    - If you want to perform same tasks everyday, pressing more that one 'start' button and one 'stop' button may be repetititive
