@@ -296,7 +296,7 @@ function f_pre_help {
    alias SS="ss all | less"
    alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/exp112.txt"
-   alias links="EM ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/Nythiananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
+   alias links="EM ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
 # Repository yogaBashApp
    alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
