@@ -915,6 +915,9 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
    echo
    echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
 
+elif [ $1 == "." ]; then
+   cd ${v_REPOS_CENTER}/DRYa && ls
+
 elif [ $1 == "location" ]; then 
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
