@@ -244,9 +244,14 @@ alias ls="ls -p"
 alias la="ls -pA"
 alias ll="ls -pl"
 #alias lll= pwd + file paths (uDev)
+alias lh="du -ah" # Lists all file's size
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
+alias lixo="mkdir -p ~/trash/; mv $@ ~/trash/"
+
+# 'Calc' and 'bc' are 2 Bash calculators
+# 'split -n 5' is a command that splits a text file into 5 parts
 
 # Media tools:
    alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
@@ -300,6 +305,30 @@ function op {
 
 # uDev: alias web="open default browser"
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
+
+function notify {
+   # Criar notificacoes via termux
+   clear
+   figlet "DRYa Notify"
+   echo "Notify: Create a notification message"
+   
+   echo
+   echo "What is your message? "
+   read -p " > " v_ans
+   termux-notification -t "DRYa: Notify:" -c "$v_ans" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
+}
+
+function ouvir {
+   # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
+   # Usará um ficheiro em omni-log
+   # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
+   echo "DRYa: Listener: uDev"
+}
+
+function falar {
+   # uDev: Cria uma notificacao noutro Android, via um ficheiro omni-log
+   echo "DRYa: Speaker: uDev"
+}
 
 
 alias play="termux-media-player play"
