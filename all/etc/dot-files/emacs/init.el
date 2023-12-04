@@ -597,7 +597,7 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
              
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
             (insert "\n- [ ] Pos-Requisitos ")
-            (insert "\n" ":PROPERTIES: \n")
+            (insert "\n" ":PROPERTIES:\n")
             (insert "\n- [ ] Escrever folha de ocorrencias ")
             (insert "\n- [ ] Tirar foto à folha de ocorrencias ")(dv-del-line-link)
 
