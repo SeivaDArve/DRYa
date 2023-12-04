@@ -1,5 +1,4 @@
-#!/bin/bash
-# Title: Groups of softwares for each situation
+#!/bin/bash # Title: Groups of softwares for each situation
 # Hint: Use "GETOPTS" in this file just as an exercise
 
 function f_gr_dependencies {
