@@ -765,7 +765,7 @@ Notas {
 
    ;; If running on windows
    (when (eq system-type 'windows-nt)
-      (switch-to-buffer-other-window (find-file-noselect "c:/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
+      (switch-to-buffer-other-window (find-file-noselect "c:/wsl-dv/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
 
    ;; If running on Android
    (when (eq system-type 'gnu/linux)
