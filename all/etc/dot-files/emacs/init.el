@@ -540,7 +540,7 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
 
 
 
-(defun dv-insert-new-day-upk ()
+(defun dv-insert-new-day-upk () 
   "Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
 
 uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
@@ -548,8 +548,6 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
 
   ;; Prompting user for values
      (setq v_turno (read-string "Turno do dia de hoje: "))
-     (setq v_rendi (read-string "Quem rendi: "))
-     ;;(setq v_text2 (read-string "Nova tarefa? "))
 
   ;; uDev:
      ;; Se este novo dia que esta a ser introduzido por o primeiro dia do mes, entao: calcular quantos dias de trabalho houve no mes anterior e quantas horas de trabalho houve no dia anterior
@@ -573,12 +571,15 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
      ;; Preenchero com o texto correspondente ao turno
         (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
 
-  ;; Quando é dia de turno (B, C, N) excluindo (Fg):
+  ;; Quando é dia de turno (B, C, N) excluindo (Fg e outros):
      (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C"))
          
+         ;; Se nao é folga, perguntar quem rendi
+            (setq v_rendi (read-string "Quem rendi: "))
+
          ;; Pre-Requisitos + PROPERTIES 
-            (insert "\n\n- [ ] () Pre-Requisitos \n")
-            (insert ":PROPERTIES: \n")
+            (insert "\n\n- [ ] () Pre-Requisitos\n")
+            (insert ":PROPERTIES:\n")
             (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
 
          ;; Quando o turno é especificamente "N", adicionar: 
@@ -606,23 +607,25 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
 
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
             (insert "\n- [ ] Assinar folhas de saida no C.Nascente\n")
+               ;; uDev: Se for dia 5, 6, 7, preencher folhas de ponto upk 
             (insert "\n- [ ] Passagem de Serviço ")
-            (insert (format-time-string "<%Y-%m-%d %a>"))
+            (insert (format-time-string "<%Y-%m-%d %a>")) ;; uDev: ja existe um modelo melhor de data do que o standard 
             (insert "{ \n")
             (insert "Ao: \n  -\n}\n")
+            (insert ":END:\n\n")
+            (insert "- Resumo\n" ":PROPERTIES:\n")
+            (insert "- Total Horas: \n")
+               ;; uDev: Se for dia 1, calcular o humero de horas do mes anterior
+            (insert ":END:\n\n"))
 
-            ;; Se for dia 5, 6, 7, preencher folhas de ponto upk
-               (insert ":END:\n\n")
-               (insert "- Resumo\n" ":PROPERTIES: \n")
-               (insert "- Total Horas: \n")
-               (insert ":END:\n\n"))
+         ;; Fechar convenientemente o texto entre :PROPERTIES: e :END: de todo o turno
+            (u)
 
    ;; Quando é dia de folga
       (when (or (string-equal v_turno "Fg")
                 (string-equal v_turno "fg"))
-                (message "Dv: Não esquecer de verificar a data deste dia de folga"))
-      ;; (u)
-  )
+                (progn (end-of-line)(insert "\n")
+                       (message "Dv: Não esquecer de verificar a data deste dia de folga")))  )
 
 
 ;;; dv- properties/end/properties-end
