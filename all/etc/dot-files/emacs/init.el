@@ -803,6 +803,13 @@ Notas {
    (global-set-key (kbd "C-x M-u") 'undo-redo)
    (global-set-key (kbd "C-x u") 'undo)
 
+;; Fill with ? or X the previous checkbox
+   (global-set-key (kbd "C-?") (lambda () (interactive) (save-excursion (search-backward "- [")(forward-char 3)(delete-char 1)(insert "?"))))
+   (global-set-key (kbd "C-M-?") (lambda () (interactive) (save-excursion (search-backward "- [")(forward-char 3)(delete-char 1)(insert "X"))))
+
+;; Open/Close previous block of :PROPERTIES: + :END:
+   (global-set-key (kbd "C-«") (lambda () (interactive) (end-of-line)(search-backward ":PROPERTIES:")(org-cycle))) 
+
 (defun dv-search-undone-checkbox ()
   (interactive)
   (search-backward "- [ ]"))
