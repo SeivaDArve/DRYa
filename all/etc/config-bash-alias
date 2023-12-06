@@ -218,6 +218,8 @@ function bt {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
+alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD.org"
+
 function f_debug {
    # Degug function: use it when you need to re-open this file over and over again for debug.
 	read
