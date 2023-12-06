@@ -93,6 +93,10 @@
       (play-sound-file (concat v-home Repositories/DRYa/all/etc/example-sound.wav)))
 
 
+;;; Creating blocks for source code
+    (defun dv-code-block ()
+      (interactive)
+      (insert "\n#+NAME: \n#+BEGIN_SRC \n\n#+END_SRCi \n"))
 
 
 ;; testing buttons:
