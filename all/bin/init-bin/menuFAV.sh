@@ -1,6 +1,8 @@
 #!/bin/bash
 # Title: menuFAV
 # uDev: rename to fluNav.sh (fluent navivation) and insert: nppn-looper + '. ?' commands
+#
+# uDev: Why not a tput menu for each? (better than select menu)
 
 # uDev: This app should have 3 prefixes: M F and D
 
