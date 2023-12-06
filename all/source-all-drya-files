@@ -188,11 +188,11 @@ function f_drya_plus {
 function f_pre_help {
    # Count number of lines in the terminal:
       v_tLines=$(stty size | cut -d ' ' -f 1)
-      echo "current number of lines in the terminal is: $v_tLines"
+      #echo "current number of lines in the terminal is: $v_tLines"
 
    # Dividing that number into 2
       v_half_tLines=$(expr $v_tLines / 2)
-      echo "Half of that is (rounded number): $v_half_tLines"
+      #echo "Half of that is (rounded number): $v_half_tLines"
 
    # And the into 2
       v_half_half_tLines=$(expr $v_half_tLines / 2)

@@ -1,5 +1,6 @@
 #!/bin/bash # Title: Groups of softwares for each situation
 # Hint: Use "GETOPTS" in this file just as an exercise
+# Use: uDev: Let DRYa source these functions so that the DRYa installed can run the function that installs dependencies
 
 function f_gr_dependencies {
    # List of DRYa dependencies (to be installed by DRYa installer)
@@ -22,7 +23,7 @@ function f_gr_dependencies {
 }
 
 # List of usefull apps 
-   dos2unix  ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
+   dos2unix  ## Or DRYa: dos-2-unix ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
    exiftool
    tree
    linx
