@@ -96,7 +96,8 @@
 ;;; Creating blocks for source code
     (defun dv-code-block ()
       (interactive)
-      (insert "\n#+NAME: \n#+BEGIN_SRC \n\n#+END_SRCi \n"))
+      (setq v_lang (read-string "Qual é a linguagem de programação? "))
+      (insert "\n#+NAME: \n#+BEGIN_SRC " v_lang "\n\n#+END_SRC \n"))
 
 
 ;; testing buttons:
