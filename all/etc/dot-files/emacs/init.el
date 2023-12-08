@@ -84,6 +84,15 @@
       ;; (getenv "HOME") ;; Gets the environment variable $HOME
 
 
+;;; Definir nomes corretos para cada dia da semana (variaveis existem no emacs como Default)
+    (setq calendar-week-start-day 0
+          calendar-day-name-array ["Domingo" "Segunda" "Terca" "Quarta" 
+                                   "Quinta" "Sexta" "Sabado"]
+          calendar-month-name-array ["Janeiro" "Fevereiro" "Marco" "Abril"
+                                     "Maio" "Junho" "Julho" "Agosto"
+                                     "Setembro" "Outubro" "Novembro" "Dezembro"]
+          calendar-day-abbrev-array ["Dom" "Seg" "Ter" "Qua" "Qui" "Sex" "Sab"])
+
 
 ;;; Attempting to play sound
    (defun dv-sound-test ()
@@ -543,8 +552,6 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
 
 
 
-
-
 (defun dv-insert-new-day-upk () 
   "Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
 
@@ -562,7 +569,7 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
 
   ;; Criacao do Header principal
      ;; Criar variaveis com a traducao de EN para PT dos dias da semana (antes de serem usados)
-        (dv-translate-weak-days) 
+        (dv-translate-weak-days) ;; Se existir alguma variavle do emacs que faca esta Fx, entao esta Fx criada manualmente torna-se inutil
 
      ;; Introdução de Header, independentemente se é Folga ou Turno
         (end-of-buffer) (insert "\n") (insert "* Dia ")
