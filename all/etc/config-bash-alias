@@ -33,13 +33,16 @@ function f_resetCor {
    #set -o vi
 
 function E {
-   select i in Nano Vim; do 
+   select i in Nano Vim Emacs; do 
       case $i in 
          Nano)
-	         if [ $i == "1" ]; then alias r="nano"; fi
+	         if [ $i == "1" ]; then alias e="nano"; fi
          ;;
          Vim)
-            if [ $i == "2" ]; then alias r="vim"; fi
+            if [ $i == "2" ]; then alias e="vim"; fi
+         ;;
+         Emacs)
+            if [ $i == "3" ]; then alias e="emacs"; fi
          ;;
          *)
             echo lol
@@ -215,6 +218,25 @@ function bt {
    fi
 }
 
+function dos-2-unix {
+   clear
+   figlet "DRYa: DOS to Unix"
+   echo "DRYa: convert a DOS file into Unix"
+
+   ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh". DRYa will hava a script to correct it also called 'dos-2-unix' by the reason I want to know what is being done by all my scripts
+
+   # uDev: Adicionar explicaco disto tambem na wikiD
+
+   echo 
+   echo "It will remove a bug when bash attempts to source a file"
+   echo "error message: (uDev)"
+   echo "explanation: (uDev)"
+   echo 
+   echo "Feed me a name (or path name) of a file to correct"
+   echo " > (uDev)"
+   #"sed -i 's/\r$//' scriptname.sh"
+}
+   
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
@@ -530,74 +552,6 @@ function go {
 alias src="go gnome-terminal; exit"
 
 
-function . {
-   # Navigate through the file system stupidly ez
-   
-   # uDev: Include 'function d' to give 'favs' if directory is not found
-
-      if [ -z $1 ]; then 
-         # If no argument is given, lists storage (ls command)
-         ls 
-
-      elif [ $1 == "." ]; then 
-         # If arg 1 is '.' then navigate to the center of seiva's repos
-         cd $v_REPOS_CENTER
-         # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
-   
-      elif [ $1 == "?" ]; then 
-         # Describe all these navigation alias
-         echo "'. ?' Shows this help menu" 
-         echo ".  1x Means: ls"
-         echo "..  2x Means: cd .."
-         echo "...  3x Means: cd -"
-         echo "....  4x Means: pwd"
-         echo ".....  5x Means: save this dir location in var \$h"
-         echo "......  6x Means: save previous dir location in var \$v"
-         echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
-
-      elif [ ! -z $1 ]; then
-         # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
-         cd $1 || vim $1
-      fi
-}
-
-#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
-alias ..="cd .."
-alias ...="cd -"
-
-function .... {
-   echo 'Current location $(pwd)'
-   echo " > $(pwd)"
-}
-
-function ..... {
-   # Saves current directory location 
-   # uDev: If script npNP gets finished, this one function gets useless. Finish that
-   h=$(pwd)
-   echo 'Current location $(pwd) saved as variable $h'
-   echo " > $(pwd)"
-}
-function ...... {
-   # This function is usefull when you want to move files to the previous directory
-      # 1 - Move to the destination you want to past the files
-      # 2 - Move to the origin of the files in one command using absolute path (where they are currently)
-      # 3 - press: .....
-      # Use command: mv <file1> <file2> <file3> $v
-   # uDev: If script npNP gets finished, this one function gets useless. Finish that
-   cd -   1>/dev/null   
-   v=$(pwd)
-   cd -   1>/dev/null   
-   echo 'Last directory $(pwd) saved as variable: $v'
-   echo " > $v"
-}
-function ....... {
-
-   echo 'Variable $h saved as:'
-   echo " > $h"
-   echo
-   echo 'Variable $v saved as:'
-   echo " > $v"
-}
 alias ,="cd"
 alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias ,,,=", ; ,," # Same as both 2 previous commands put together
@@ -632,34 +586,6 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 # Pandoc app to create man pages
 
-function npNP-dir-looper {
-   # Title: next-previous-Negative-Positive
-   # (looper app) Save a loop of directories:
-      alias P="Positive dir"  #uDev: Adds current dir to loop
-      alias N="Negative dir"  #uDev: Removes current dir from loop
-      alias p="previous dir"  #uDev: Swap to previous dir present in the loop 
-      alias n="next dir"      #uDev: Swap to next dir present in the loop
-      alias PP="list all stored locations as other apps list buffers"
-      alias NN="Prompt the user if he wants to delete the entire list of locations"
-      # when adding arguments:
-         # Using a number as an argument like: '$ np 1' makes you travel the the location listed first
-         # Using - or + to swap priority of the location listed in the list (example: '$ np +' and '$ np -)
-
-      # np | pn | Np | Pn) list all dirs and current one
-      function P {
-         mkdir -p ~/.config/h.h/nPpN-dir-looper
-         pwd >> ~/.config/h.h/nPpN-dir-looper/nPpN-list.txt
-          
-      }
-
-      # Curiosity: by typing '$ man termux' you can see that by coincidence and also by luck, termux uses the volume key <Up> to perform control over the terminal and over the smartphone.
-         # Two of those Volume Up shorcut control are:
-         # 'Volume key Up + P': Page Up
-         # 'Volume key Up + N': Page Down
-         # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
-            # These 3 commands allow you to see before, after and around your current line in the current file
-}  ## end of function: npNP-dir-looper
-#npNP-dir-looper
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
@@ -686,205 +612,63 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
-function f_notes {
-   echo "uDev: Will handle user notes and anotations in the future"
-   echo "alias << 1 >> set to:"
-   echo " > omni-log" && alias 1="echo uDev: will be omni-log"
+
+
+function hist {
+   # history-recall sub-app
+   mkdir -p ~/.tmp/
+   history > ~/.tmp/fileA.txt
+   history
+
+   echo -e "\n > Type Ctrl+C to cancel \n > Type a number to navigate: "
+   echo -n " > "
+   read v_ans
+
+   #echo "grep results:"
+
+   grep "$v_ans" ~/.tmp/fileA.txt > ~/.tmp/fileB.txt
+
+   # Remove 2 character to the begining of the text
+   sed -i 's/^..//g' ~/.tmp/fileB.txt
+
+   # Debugging process
+   #echo "Sed results:"
+   #echo "cat fileB"
+   #cat ~/.tmp/fileB.txt
+
+   # Search patter of the beggining of the line
+   grep ^$v_ans ~/.tmp/fileB.txt > ~/.tmp/fileA.txt
+
+   # Debugging process
+   #echo "cat fileA"
+   #cat ~/.tmp/fileA.txt
+   sed -i 's/^\w*\ *//' ~/.tmp/fileA.txt
+
+   # Now, cutting the command
+   cut -d ' ' -f2- ~/.tmp/fileA.txt
+
+   # Debugging process
+   #echo "fileA after cut"
+   #cat ~/.tmp/fileA.txt
+   #echo "trying to eval:"
+   #read
+
+   # Creating a variable called v_eval to store the content of the file as text
+   v_eval=$(cat ~/.tmp/fileA.txt)
+
+   # Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
+   eval $v_eval
 }
 
-# history-recall app
-	function hist {
-		mkdir -p ~/.tmp/
-		history > ~/.tmp/fileA.txt
-		history
-
-		echo -e "\n > Type Ctrl+C to cancel \n > Type a number to navigate: "
-		echo -n " > "
-		read v_ans
-
-		#echo "grep results:"
-
-		grep "$v_ans" ~/.tmp/fileA.txt > ~/.tmp/fileB.txt
-
-		# Remove 2 character to the begining of the text
-		sed -i 's/^..//g' ~/.tmp/fileB.txt
-
-		# Debugging process
-		#echo "Sed results:"
-		#echo "cat fileB"
-		#cat ~/.tmp/fileB.txt
-
-		# Search patter of the beggining of the line
-		grep ^$v_ans ~/.tmp/fileB.txt > ~/.tmp/fileA.txt
-
-		# Debugging process
-		#echo "cat fileA"
-		#cat ~/.tmp/fileA.txt
-		sed -i 's/^\w*\ *//' ~/.tmp/fileA.txt
-
-		# Now, cutting the command
-		cut -d ' ' -f2- ~/.tmp/fileA.txt
-		
-		# Debugging process
-		#echo "fileA after cut"
-		#cat ~/.tmp/fileA.txt
-		#echo "trying to eval:"
-		#read
-
-		# Creating a variable called v_eval to store the content of the file as text
-		v_eval=$(cat ~/.tmp/fileA.txt)
-
-		# Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
-		eval $v_eval
-	}
-
-# Alias morse-code-style
-   # Dot="morse ."
-   # Dash="morse ,"
-   # word="morse ..., ,.., .,,"
-
-# To load upk Repo at .bashrc with .dryarc:
-   #cat upk.sh then search only for a function of greetings, then echo that out
-
-#     function drya {
-#        if [ -z $1 ];
-#           # If drya is called with no arguments: 
-#           then 
-#              echo "no args"
-#              bash ~/Repositories/DRYa/drya.sh
-#        elif [ $1 == "catMe-dryarc" ];
-#           # If terminal: "$ drya catMe-dryarc":
-#           then
-#              echo "arg: catMe-dryarc"
-#              cat ~/.config/h.h/.dryarc
-#        else
-#           echo "need something?"
-#        fi
-#     }
-#     
-#     alias drya-editMe-permanently="vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias"
-#     alias drya-editMe-temporarily="vim ${v_REPOS_CENTER}/DRYa/install.uninstall/drya.installer/future-dryarc"
-#     #alias drya-updateMe-locally="cat ~/.config/h.h/.dryarc >> ${v_REPOS_CENTER}/DRYa/all/config-bash-alias && rm ~/.config/h.h/drya/.dryarc && creat .dryarc(with contents)" # This line copies temporary settings from users of drya and appends it to the directory where drya is installed and running. This way, if you push it to github, it will be permanent
-#     alias drya-updateMe-globally="echo 'ezGIT must be installed'"
-#     #alias drya-make-dryarc # uDev: function exists inside drya.sh
-
-
-alias sourceAll="source ~/.bashrc"
-
-# function drya {
-#   PS3="Select the operation: "
-#   select opt in Configurations installations edit-files quit
-#   do
-#      case $opt in
-#         Configurations)
-#            read -p "Enter the first number: " n1
-#            read -p "Enter the second number: " n2
-#            echo "$n1 + $n2 = $(($n1+$n2))"
-#            ;;
-#         installations)
-#            read -p "Enter the first number: " n1
-#            read -p "Enter the second number: " n2
-#            echo "$n1 - $n2 = $(($n1-$n2))"
-#            ;;
-#         edit-files)
-#            read -p "Enter the first number: " n1
-#            read -p "Enter the second number: " n2
-#            echo "$n1 * $n2 = $(($n1*$n2))"
-#            ;;
-#         quit)
-#            break
-#            ;;
-#         *)
-#            echo "Invalid option $REPLY"
-#            ;;
-#      esac
-#      # It works as a while loop too
-#   done
-#}
 
 
 
-function hkllhcf {
-   # If if you invoke "cdl" and no dir exists
-   if [ ! -d "./$1" ]; then
-      
-      # A function that is needed to be prepared in case later on the code it is called:
-      function f_cdl_mkdir {
-         # Generate a random number to be used as a key to delete our previous directory if it was  reated by mistake
-         declare v_random=$RANDOM
-
-         # If a new directory is to be created, verbose descriptions will happen
-         echo -n " > That directory "
-         tput setaf 4
-         echo -n $1
-         tput sgr0
-         echo " was not existent"
-         echo "  > Therefore was created"
-         echo -n "  > Delete it by executing "
-         tput setaf 4
-         echo $v_random
-         tput sgr0
-      }
-
-      declare cur_dir=$1
-      mkdir -p $1 
-      f_cdl_mkdir
-      cd $1
-      ls
-
-   else
-      # If you invoke "cdl" and dir exists
-      cd $1
-      ls
-      echo "normal run"
-   fi
-alias v="echo sk"
-}
-
-# '$ drya populate main-apps'
-  # Source all other repos if they exist:
-  # Source jarve
-  # Source upK
-  # Source ezGIT
-  # Source ... 
-  
-
-function drya-test {
-   PS3="Select the operation: "
-   select opt in Configurations installations edit-files quit
-   do
-      case $opt in
-         Configurations)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 + $n2 = $(($n1+$n2))"
-            ;;
-         installations)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 - $n2 = $(($n1-$n2))"
-            ;;
-         edit-files)
-            read -p "Enter the first number: " n1
-            read -p "Enter the second number: " n2
-            echo "$n1 * $n2 = $(($n1*$n2))"
-            ;;
-         quit)
-            break
-            ;;
-         *)
-            echo "Invalid option $REPLY"
-            ;;
-      esac
-      # It works as a while loop too
-   done
-}
-
-alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
+# Temporary script to map audio chapters in a file currently being studied
+   alias eoc="echo 'end of chapter, right?'; echo >> ~/eof; info 1>>~/eoc"
 
 # Bash fork bomb
    # Link tutorial: https://youtu.be/wIsGXkxXZzE
-   alias fork-bomb=":() { :|: & };:"
+   alias start-fork-bomb=":() { :|: & };:"
 
 # Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS

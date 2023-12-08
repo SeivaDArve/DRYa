@@ -4,7 +4,34 @@
 #
 # uDev: Why not a tput menu for each? (better than select menu)
 
-# uDev: This app should have 3 prefixes: M F and D
+# uDev: This app should NOT have 3 prefixes: M F and D
+#       Instead: use only: .
+
+
+# ---------------------------------
+# uDev list                          {
+# ---------------------------------
+
+#    '. '       ## ls
+#    '. mo'     ## cd moedaz
+#    '. D'      ## cd DRYa
+#    '. n'      ## next dir forward  (from NPNP looper)
+#    '.. n'     ## next dir backward (from NPNP looper)
+#    '. s'      ## save current dir  (from NPNP looper)
+#    '.. s'     ## del current dir   (from NPNP looper)
+#    '. e'      ## set default text editor and sends to .dryaRC
+#    'op file.org' detect current emacs (instead of EM, Em, em)
+
+
+
+
+# ---------------------------------
+# uDev list                          }
+# ---------------------------------
+
+
+
+
 
 function f_greet { 
    # Avoiding repetition
@@ -127,6 +154,204 @@ function f_down {
 function f_up {
    echo "uDev: Upload from github (after opening file)"
 }
+
+
+
+
+
+
+
+# ---------------------------------
+# Brought by config-bash-alias       {
+# ---------------------------------
+
+
+
+function . {
+   # Navigate through the file system stupidly ez
+   
+   # uDev: Include 'function d' to give 'favs' if directory is not found
+
+      if [ -z $1 ]; then 
+         # If no argument is given, lists storage (ls command)
+         ls 
+
+      elif [ $1 == "." ]; then 
+         # If arg 1 is '.' then navigate to the center of seiva's repos
+         cd $v_REPOS_CENTER
+         # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
+   
+      elif [ $1 == "?" ]; then 
+         # Describe all these navigation alias
+         echo "'. ?' Shows this help menu" 
+         echo ".  1x Means: ls"
+         echo "..  2x Means: cd .."
+         echo "...  3x Means: cd -"
+         echo "....  4x Means: pwd"
+         echo ".....  5x Means: save this dir location in var \$h"
+         echo "......  6x Means: save previous dir location in var \$v"
+         echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
+
+      elif [ ! -z $1 ]; then
+         # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
+         cd $1 || vim $1
+      fi
+}
+
+#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
+alias ..="cd .."
+alias ...="cd -"
+
+function .... {
+   echo 'Current location $(pwd)'
+   echo " > $(pwd)"
+}
+
+function ..... {
+   # Saves current directory location 
+   # uDev: If script npNP gets finished, this one function gets useless. Finish that
+   h=$(pwd)
+   echo 'Current location $(pwd) saved as variable $h'
+   echo " > $(pwd)"
+}
+function ...... {
+   # This function is usefull when you want to move files to the previous directory
+      # 1 - Move to the destination you want to past the files
+      # 2 - Move to the origin of the files in one command using absolute path (where they are currently)
+      # 3 - press: .....
+      # Use command: mv <file1> <file2> <file3> $v
+   # uDev: If script npNP gets finished, this one function gets useless. Finish that
+   cd -   1>/dev/null   
+   v=$(pwd)
+   cd -   1>/dev/null   
+   echo 'Last directory $(pwd) saved as variable: $v'
+   echo " > $v"
+}
+function ....... {
+
+   echo 'Variable $h saved as:'
+   echo " > $h"
+   echo
+   echo 'Variable $v saved as:'
+   echo " > $v"
+}
+
+
+function E {
+   select i in Nano Vim Emacs; do 
+      case $i in 
+         Nano)
+	         if [ $i == "1" ]; then alias e="nano"; fi
+         ;;
+         Vim)
+            if [ $i == "2" ]; then alias e="vim"; fi
+         ;;
+         Emacs)
+            if [ $i == "3" ]; then alias e="emacs"; fi
+         ;;
+         *)
+            echo lol
+         ;;
+      esac
+   done
+	
+}
+
+
+function hkllhcf {
+   # (Trasido do config-bash-alias para casar com este ficheiro menuFAV)
+   # If if you invoke "cdl" and no dir exists
+   if [ ! -d "./$1" ]; then
+      
+      # A function that is needed to be prepared in case later on the code it is called:
+      function f_cdl_mkdir {
+         # Generate a random number to be used as a key to delete our previous directory if it was  reated by mistake
+         declare v_random=$RANDOM
+
+         # If a new directory is to be created, verbose descriptions will happen
+         echo -n " > That directory "
+         tput setaf 4
+         echo -n $1
+         tput sgr0
+         echo " was not existent"
+         echo "  > Therefore was created"
+         echo -n "  > Delete it by executing "
+         tput setaf 4
+         echo $v_random
+         tput sgr0
+      }
+
+      declare cur_dir=$1
+      mkdir -p $1 
+      f_cdl_mkdir
+      cd $1
+      ls
+
+   else
+      # If you invoke "cdl" and dir exists
+      cd $1
+      ls
+      echo "normal run"
+   fi
+}
+
+# Alias morse-code-style
+   # Dot="morse ."
+   # Dash="morse ,"
+   # word="morse ..., ,.., .,,"
+
+function npNP-dir-looper {
+   # Title: next-previous-Negative-Positive
+   # (looper app) Save a loop of directories:
+      alias P="Positive dir"  #uDev: Adds current dir to loop
+      alias N="Negative dir"  #uDev: Removes current dir from loop
+      alias p="previous dir"  #uDev: Swap to previous dir present in the loop 
+      alias n="next dir"      #uDev: Swap to next dir present in the loop
+      alias PP="list all stored locations as other apps list buffers"
+      alias NN="Prompt the user if he wants to delete the entire list of locations"
+      # when adding arguments:
+         # Using a number as an argument like: '$ np 1' makes you travel the the location listed first
+         # Using - or + to swap priority of the location listed in the list (example: '$ np +' and '$ np -)
+
+      # np | pn | Np | Pn) list all dirs and current one
+      function P {
+         mkdir -p ~/.config/h.h/nPpN-dir-looper
+         pwd >> ~/.config/h.h/nPpN-dir-looper/nPpN-list.txt
+          
+      }
+
+      # Curiosity: by typing '$ man termux' you can see that by coincidence and also by luck, termux uses the volume key <Up> to perform control over the terminal and over the smartphone.
+         # Two of those Volume Up shorcut control are:
+         # 'Volume key Up + P': Page Up
+         # 'Volume key Up + N': Page Down
+         # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
+            # These 3 commands allow you to see before, after and around your current line in the current file
+}  ## end of function: npNP-dir-looper
+
+
+
+
+
+
+
+
+
+
+
+# ---------------------------------
+# Brought by config-bash-alias       }
+# ---------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 function M {
    # Function: "Directory"
