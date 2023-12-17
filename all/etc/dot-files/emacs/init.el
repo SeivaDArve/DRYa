@@ -124,6 +124,22 @@
    ;; source: https://emacs.stackexchange.com/questions/27126/is-it-possible-to-org-bable-tangle-an-org-file-from-the-command-line 
    ;; emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "file-to-tangle.org")'
 
+
+;;; Creating termux links (for example to images) inside emacs
+    (defun dv-create-termux-link-w-termux-open ()
+      (interactive)
+      (setq v-link        (read-string "(To list Default Variables: V)\n(termux-open) link: "))
+      (setq v-description (read-string "(termux-open) Description: "))
+      (setq v-concat-link (concat "[[elisp:(progn (shell-command \"termux-open "
+                                   v-link
+                                   "\"))]["
+                                   v-description
+                                   "\]]"))
+      (insert v-concat-link))
+
+    ;; Adding a Global Key to it
+       (global-set-key (kbd "C-c C-M l>") (lambda () (interactive) dv-create-termux-link-w-termux-open))
+
 ;;; Just testing if init file loads:
    ;; (set-background-color "grey")
 
@@ -1209,8 +1225,8 @@ This is used only for \"tipo:\""
    (defun dv-calculate-hipoclorito ()
      (interactive)
      "Para 1 copo de hipoclorito, 9 de agua"
-     (message "Para 1 Litro de Hipoclorito, 9 Litros de agua"))
-
+     (setq v-opc (read-string "Info do procedimento: Diluir o produto a 10% de concentracao (em agua) \n\nOpcoes de calculo: \n 1. UMA unidade de hipoclorito + NOVE unidades de agua \n 2. Quantos litros no deposito estao vazios? \n\nQual e a opcao que pretende usar para calculo?\n > "))
+     (message (concat "Opcao de calculo: " v-opc)))
 
    (defun dv-calculate-from-Lmin-M3h ()
      (interactive)
@@ -1451,15 +1467,22 @@ This is used only for \"tipo:\""
    ;; uDev: Se o buffer se chamar multiplexer.org, saltar diretamente para o header correspondente com o (concat "Mes" "Ano")
 
    (setq v_litros (concat (read-string "Foram quantos litros?: ") " Litros;"))
-   (setq v_posto  (read-string "Posto? Cepsa 'C' /  BP 'B' / Prio 'P' / Galp 'G' : "))
+   (setq v_preco-pr-litro (concat "Preco p/Litro: " (read-string "Qual o preço por litro?: ")))
+   (setq v_posto  (read-string "Posto? (Cepsa: C) (BP: B) (Prio: P) (Galp: G): "))
                   (when (or (string-equal v_posto "c") (string-equal v_posto "C"))
                         (setq v_posto "Cepsa;"))
 
                   (when (or (string-equal v_posto "p") (string-equal v_posto "P"))
                         (setq v_posto "Prio;"))
 
-   (setq v_preco  (concat (read-string "Qual foi o preço em €?: ") " €;"))
-                  
-   (setq v_km     (concat (read-string "Quantos KM marcava o painel?: ") " Km;"))
-   (setq v_dia    (read-string "Que dia foi? (Em Branco = Hoje): "))
-   (insert "Gazol: " v-time " " v_litros " " v_posto " " v_preco " " v_km " " v_dia))
+                  (when (or (string-equal v_posto "b") (string-equal v_posto "B"))
+                        (setq v_posto "BP;"))
+
+                  (when (or (string-equal v_posto "g") (string-equal v_posto "G"))
+                        (setq v_posto "Galp;"))
+
+   (setq v_preco     (concat (read-string "Qual foi o preço em euros €?: ") " €;"))
+   (setq v_tipo_comb (concat "Tipo de combst: " (read-string "Qual o tipo de combustivel? (simples: S) (aditivado: A): ") ";" ))
+   (setq v_km        (concat (read-string "Quantos KM marcava o painel?: ") " Km;"))
+   (setq v_dia       (read-string "Que dia foi? (Em Branco = Hoje): "))
+   (insert "Gazol: " v-time " " v_litros " " v_posto " " v_preco " " v_km " " v_tipo_comb " " v_preco-pr-litro " " v_dia))
