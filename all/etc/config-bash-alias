@@ -142,25 +142,45 @@ function key {
    read -p "Qual a funcao que quer para omni-key? " v_ans
 
    if   [ $v_ans == "om"  ] || [ $v_ans == "1" ]; then f-reset-omni-key
-   elif [ $v_ans == "qr"  ] || [ $v_ans == "2" ]; then f-set-omni-key-qr
-   elif [ $v_ans == "upk" ] || [ $v_ans == "3" ]; then f-set-omni-key-upk
+   elif [ $v_ans == "upk" ] || [ $v_ans == "2" ]; then f-set-omni-key-upk
+   elif [ $v_ans == "qr"  ] || [ $v_ans == "3" ]; then f-set-omni-key-qr
    fi
 
 }
 
 function siigo {
-   # Using termux 
-      function f_termux_siigo {
-         termux-open-url https://siigo-maintenance.com/#/calendar
-      }
-      
-   # Using chrome   
-      function f_chrome_siigo {
-         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar 2>/dev/null
-      }
+   # Finding a proper browser to open siigo.com
+
+   function f_termux_siigo {
+      # Using termux 
+      termux-open-url https://siigo-maintenance.com/#/calendar 2>/dev/null
+   }
+   
+   function f_chrome_siigo {
+      # Using chrome   
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar 2>/dev/null
+   }
 
    # Calling siigo webpage using one of the above options:
-      f_chrome_siigo || f_termux_siigo
+      f_chrome_siigo || f_termux_siigo || echo "DRYa: could not open siigo"
+      
+}
+
+function web {
+   # Simply opening a browser
+
+   function f_termux {
+      # Using Termux
+      termux-open-url https://duckduckgo.com 2>/dev/null
+   }
+   
+   function f_chrome {
+      # Using chrome on windows 
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://duckduckgo.com 2>/dev/null
+   }
+
+   # Calling siigo webpage using one of the above options:
+      f_termux || f_chrome || echo "DRYa: could not open a browser"
       
 }
 
@@ -339,6 +359,12 @@ function notify {
    figlet "DRYa Notify"
    echo "Notify: Create an Android notification message"
 
+   # Creating an history file
+      # uDev: enviat antes para omni-log repo
+      v_dir=~/.config/h.h/drya/tmp/
+      v_file="termux-notify-output.txt"
+      mkdir -p $v_dir
+            
    # Create an ID for each notification created
       # It will be a concat of year + month + day + hour + Min + Sec
       # It will be a concat of  %Y  +  %m   +  %d +  %k  +  %M +  %S
@@ -351,6 +377,9 @@ function notify {
          echo "What is your message? "
          read -p " > " v_ans
          termux-notification -t "DRYa: Notify:" -c "$v_ans" -i "$v_id" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
+
+         # Adding to history file
+            echo "$(date) > $v_ans" >> ${v_dir}${v_file}
       }
 
    # Echo notification ID number
@@ -384,6 +413,9 @@ function notify {
          echo
          echo "Manipulate ID: "
          echo " > notify -i"
+
+      elif [[ $1 == "-v" ]]; then
+         less ${v_dir}${v_file}
       fi
       
      
