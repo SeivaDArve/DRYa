@@ -240,7 +240,8 @@ function dos-2-unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD.org"
+#alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
+alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD"
 
 function f_debug {
    # Degug function: use it when you need to re-open this file over and over again for debug.
