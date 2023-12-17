@@ -1,6 +1,6 @@
 #!/bin/bash
-# Title: menuFAV
-# uDev: rename to fluNav.sh (fluent navivation) and insert: nppn-looper + '. ?' commands
+# Title: fluNav (fluent navigation)
+# uDev: insert: nppn-looper + '. ?' commands
 #
 # uDev: Why not a tput menu for each? (better than select menu)
 
@@ -36,31 +36,31 @@
 function f_greet { 
    # Avoiding repetition
    clear
-   figlet menuFAV 
+   figlet fluNav
 }
 
 function f_mF { 
    # Avoiding repetition
    clear
-   figlet menuFAV File
+   figlet fluNav File
 }
 
 function f_mD { 
    # Avoiding repetition
    clear
-   figlet menuFAV Dir
+   figlet fluNav Dir
 }
 
 function f_mM { 
    # Avoiding repetition
    clear
-   figlet menuFAV Menu
+   figlet fluNav Menu
 }
 
 function f_presenting_DF {
-   # presenting the file for our M menuFAV:
+   # presenting the file for our M fluNav:
       clear; 
-      figlet "menuFAV"
+      figlet "fluNav"
       echo -e "File closed (after editions):\n > $v_init_file \n"
 }
 
@@ -131,7 +131,7 @@ function f_manage_init_and_libraries_after_mod {
 }
 
 function f_emacs_init_vim {
-   # Important: menuFAV depends on this function
+   # Important: fluNav depends on this function
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
    # This way we know we can easily upload the file
 
@@ -143,12 +143,13 @@ function f_emacs_init_vim {
    # avoid duplication, we create a function to keep it simple and avoid spaghetti code
       f_manage_init_and_libraries_after_mod
 
-      # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
+      # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
       #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
 
 function f_down {
    echo "uDev: Download from github (before opening file)"
+   echo " > Code-Name of file to sync: $v_nm"
 }
 
 function f_up {
@@ -259,7 +260,7 @@ function E {
 
 
 function hkllhcf {
-   # (Trasido do config-bash-alias para casar com este ficheiro menuFAV)
+   # (Trasido do config-bash-alias para casar com este ficheiro fluNav)
    # If if you invoke "cdl" and no dir exists
    if [ ! -d "./$1" ]; then
       
@@ -357,7 +358,7 @@ function M {
    # Function: "Directory"
    
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
-      # sugestion: menuFAV will be under F so that D gets to be reserved for drya
+      # sugestion: fluNav will be under F so that D gets to be reserved for drya
 
    # uDev: Se for WSL3, detetar endereços: "C:\Users\$USER\Documents"
 
@@ -386,7 +387,7 @@ function M {
    # Implementation of Use 1:
    if [ -z $1 ]; then 
       f_cor1
-      figlet "menuFAV"
+      figlet "fluNav"
       f_resetCor
       echo " > No arguments. Choose some place to go to"
 
@@ -412,7 +413,7 @@ function M {
       
    # Implementation of Use 2:
    elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet menuFAV && echo -e "Command used: upk-dv\n" && ls
+      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet fluNav && echo -e "Command used: upk-dv\n" && ls
       
    # Implementation of Use 2:
    elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -575,7 +576,7 @@ function M {
 
 
 
-# List fav files for edition (menuFAV)
+# List fav files for edition (fluNav)
    function F {
 
       
@@ -610,7 +611,7 @@ function M {
 
       #f_unalias_all
             
-      #uDev: Turn these variables into usable arguments for menuFAV
+      #uDev: Turn these variables into usable arguments for fluNav
          #   Play with alias
          #   F 4 2 1
             # If !-z then for i in $@; do bash $i
@@ -631,11 +632,11 @@ function M {
          #}
          
 
-      # If there are no arguments, present the menuFAV
+      # If there are no arguments, present the fluNav
          if [ -z $1 ]; then
 
             clear
-            figlet menuFAV
+            figlet fluNav
 
             echo "SELECT file to edit by Title"
             echo
@@ -700,7 +701,7 @@ function M {
                      source ~/.bashrc
                      f_greet
                      drya update
-                     echo "Reload done to: ~/.bashrc by menuFAV"
+                     echo "Reload done to: ~/.bashrc by fluNav"
                      # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
@@ -725,7 +726,7 @@ function M {
                         # avoid duplication, we create a function to keep it simple and avoid spaghetti code
                            f_manage_init_and_libraries_after_mod
 
-                           # Note*1: In this menuFAV there are 2 options that choose 2 text editors (vim and emacs) 
+                           # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
                            #         to call the same function "f_manage_init_and_libraries_after_mod"
 
                      break
@@ -736,7 +737,7 @@ function M {
                   ;;
                   secundary-files)
                      f_greet
-                     echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this menuFAV"
+                     echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this fluNav"
                      break
                   ;;
                   quit) 
@@ -744,35 +745,34 @@ function M {
                   ;;
                   ? | help | --help | -h | h) 
                      f_greet
-                     echo "menuFAV"
+                     echo "fluNav"
                      echo " > Edits files inside 'DRYa repository' then copies those files across the system"
                      echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
                      echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
                      break  
                   ;;
                   *)    
-                     echo "menuFAV: Invalid option $REPLY"  
+                     echo "fluNav: Invalid option $REPLY"  
                   ;;
                esac
             done
 
          # When function F is presented with arguments (using elif):
          # And sync with github
-            elif [ $1 == "."  ]; then f_down; vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/menuFAV.sh; f_up ## Edit this file itself 
-            elif [ $1 == "0"  ]; then f_down; f_unalias_all; f_up
-            elif [ $1 == "1"  ]; then f_down; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-            elif [ $1 == "2"  ]; then f_down; f_emacs_init_vim; f_up
-            elif [ $1 == "19" ]; then f_down; echo "Test is working for 19"; f_up
-            elif [ $1 == "5"  ]; then f_down; echo "Alias for: drya update. Do you want to continue?"; f_up
-
-            elif [ $1 == "wd"    ]; then f_down; v_name="wikiD";      EM ${v_REPOS_CENTER}/wikiD/wikiD.org; f_up
-            elif [ $1 == "cv"    ]; then f_down; v_name="curriculum"; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-            elif [ $1 == "links" ]; then f_down; v_name="ss-links";   echo "uDev: open shiva sutra links"; f_up
+            elif [ $1 == "."     ]; then v_nm="self";       f_down; vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh; f_up ## Edit this file itself 
+            elif [ $1 == "0"     ]; then v_nm="unalias";    f_down; f_unalias_all; f_up
+            elif [ $1 == "1"     ]; then v_nm="dryaSH";     f_down; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+            elif [ $1 == "2"     ]; then v_nm="initVIM";    f_down; f_emacs_init_vim; f_up
+            elif [ $1 == "5"     ]; then v_nm="F5";         f_down; echo "Alias for: drya update. Do you want to continue?"; f_up
+            elif [ $1 == "19"    ]; then v_nm="test";       f_down; echo "Test is working for 19"; f_up
+            elif [ $1 == "wd"    ]; then v_nm="wikiD";      f_down; EM ${v_REPOS_CENTER}/wikiD/wikiD.org; f_up
+            elif [ $1 == "cv"    ]; then v_nm="curriculum"; f_down; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+            elif [ $1 == "links" ]; then v_nm="ss-links";   f_down; echo "uDev: open shiva sutra links"; f_up
 
             #elif [ $1 == "9" ]; f_F_9"
 
 
          # If arguments are given but they are wrong
-            else echo "menuFAV: Please choose a valid arg"
+            else echo "fluNav: Please choose a valid arg"
          fi
    }   ## End of function F
