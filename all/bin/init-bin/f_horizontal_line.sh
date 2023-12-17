@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#function f_horizontal_line {
+function f_horizontal_line {
    # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
 
    # Detecting how many columns there are currently in the terminal screen
@@ -36,7 +36,7 @@
       export v_line
       export v_line2
 
-#}
+}
 
 
 # uDev: After calculating the horizontal line amount of dots, if the user inputs a second argument $1 then the effect is immediatly applylies in the choosen way... otherwise, by running this script, the user only stores the variables
