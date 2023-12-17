@@ -3,13 +3,14 @@
 # Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
   v_title_drya="source-all-drya-files"  # Name of this file
 
+# uDev: PUT EVERYTHING INSIDE FUNCTIONS AND CREATE f_exec AT THE END
+
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: File started loading: DRYa's $v_title_drya"
       echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection"
       echo "      > running from: ${DRYa_HEART}"
       # udev: echo "Installed at.."
-} >> $v_MSGS 2>/dev/null
 
 # drya-messages: | 1. A file like neofetch for DRYa
 # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
@@ -22,6 +23,8 @@ function f_drya_msgs_init {
 # drya-info      | 1. It's Neofetch-like info retrieved by DRYa
 #                | 2. It sets variables too like: 'drya --os' (for operative system)
 
+}  >> $v_MSGS 2>/dev/null
+
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
 
@@ -32,69 +35,69 @@ function f_drya_msgs_init {
 # uDev: Set windows time and date automaticaly with batch scripts
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
-function f_traits {
-   # Gitting info about the machine
-      # uDev: Send this to .../DRYa/all/bin/init-bin/traitsID.sh
+function f_traitsID {
+   # Getting info about the machine
 
-      # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
-         v_dir=~/.config/h.h/drya/
-         v_file="traitsID"
-         v_id_file="${v_dir}${v_file}"
+   # uDev: Send this to .../DRYa/all/bin/init-bin/traitsID.sh
 
-         mkdir -p $v_dir
+   # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
+      v_dir=~/.config/h.h/drya/
+      v_file="traitsID"
+      v_id_file="${v_dir}${v_file}"
 
-      # Create the file from scrarch at every terminal startup
-         rm $v_id_file 2>/dev/null
-         touch $v_id_file
+      mkdir -p $v_dir
 
-         alias tid="less $v_id_file"
+   # Create the file from scrarch at every terminal startup
+      rm $v_id_file 2>/dev/null
+      touch $v_id_file
 
-      # Using command 'uname'
-         v_uname=$(uname -a)
+      alias tid="less $v_id_file"
 
-      # Filter the info to Detect OS
-         if [[ $v_uname =~ "Android" ]]; then 
-            echo "DRYa: Running on: Android"
-            echo 'v_OS="Android"' >> $v_id_file 
-            
+   # Using command 'uname'
+      v_uname=$(uname -a)
 
-         elif  [[ $v_uname =~ "Microsoft" ]]; then 
-            echo "DRYa: Running on: Windows"
-            echo 'v_OS="Windows"' >> $v_id_file
+   # Filter the info to Detect OS
+      if [[ $v_uname =~ "Android" ]]; then 
+         echo "DRYa: Running on: Android"
+         echo 'v_OS="Android"' >> $v_id_file 
+         
 
-         elif [[ $v_uname =~ "raspberrypi" ]]; then 
-            # Linux has to be the last one, because it means Windows and Android are not present
-            echo "DRYa: Running on: Linux (Raspberry Pi)"
-            echo 'v_OS="Linux-Rasp"' >> $v_id_file
+      elif  [[ $v_uname =~ "Microsoft" ]]; then 
+         echo "DRYa: Running on: Windows"
+         echo 'v_OS="Windows"' >> $v_id_file
 
-         elif [[ $v_uname =~ "Linux" ]]; then 
-            # Linux has to be the last one, because it means Windows and Android are not present
-            echo "DRYa: Running on: Linux"
-            echo 'v_OS="Linux"' >> $v_id_file
+      elif [[ $v_uname =~ "raspberrypi" ]]; then 
+         # Linux has to be the last one, because it means Windows and Android are not present
+         echo "DRYa: Running on: Linux (Raspberry Pi)"
+         echo 'v_OS="Linux-Rasp"' >> $v_id_file
 
-         else
-            echo "DRYa: Running on: NOT DETECTED"
-         fi 
+      elif [[ $v_uname =~ "Linux" ]]; then 
+         # Linux has to be the last one, because it means Windows and Android are not present
+         echo "DRYa: Running on: Linux"
+         echo 'v_OS="Linux"' >> $v_id_file
 
-         # Display a way to reach the info
-            echo "      > view traitsID with: tid "
+      else
+         echo "DRYa: Running on: NOT DETECTED"
+      fi 
 
-         # Create a script at DRYa/all/bin/ for drya-neofetch
-            # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
-            # uDev: Detecte personal/safe device from job/public/unsafe device
-            # uDev: Create the same for package manager: apt, pacman, dnf, pkg
-            # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
-            # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
-            # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
-            # uDev: Versao do Linux (para config do teclado)
-               #which yum >/dev/null && { echo Fedora flavour; exit 0; }
-               #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
-               #which apt-get >/dev/null && { echo Debian based;  }
-         # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
+      # Display a way to reach the info
+         echo "      > view traitsID with: tid "
 
-      # Source file After writting with all variables for traitsID
-         source ${v_dir}${v_file}
+      # Create a script at DRYa/all/bin/ for drya-neofetch
+         # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+         # uDev: Detecte personal/safe device from job/public/unsafe device
+         # uDev: Create the same for package manager: apt, pacman, dnf, pkg
+         # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
+         # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
+         # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
+         # uDev: Versao do Linux (para config do teclado)
+            #which yum >/dev/null && { echo Fedora flavour; exit 0; }
+            #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
+            #which apt-get >/dev/null && { echo Debian based;  }
+      # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
 
+   # Source file After writting with all variables for traitsID
+      source ${v_dir}${v_file}
 }
 
 
@@ -107,7 +110,8 @@ function f_dv_PS1 {
    echo
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
    # uDev: Create alias to define diferent PS1's
-} >> $v_MSGS
+}  >> $v_MSGS
+
 
 function f_drya_msgs_welcome {
       echo
@@ -122,7 +126,7 @@ function f_drya_msgs_welcome {
       echo " 3: Read the messages with command:"
       echo "    > drya + msgs"
       echo
-} >> $v_MSGS 2>/dev/null
+}  >> $v_MSGS 2>/dev/null
 
 function f_drya_msgs {
    # Configuring variable for DRYa messages
@@ -141,8 +145,6 @@ function f_drya_msgs {
 
 }
 
-
-
 function f_termux_welcome {
    # Display the standard welcome termux message
       # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
@@ -156,8 +158,6 @@ function f_neofetch {
       neofetch 2>/dev/null
 }
    
-
-
 function f_test_1 {
    alias test1="echo test about sourcing alias inside functions also work"
 }
@@ -173,8 +173,8 @@ function f_drya_plus {
       # uDev: Make ezGIT ask if the user wants: G v all
       
    # List and execution of function under drya_plus:
-      echo
-      f_traits
+      #echo
+      #f_traitsID
       echo "      > view DRYa messages with: (uDev) "
       f_drya_msgs
       f_dv_PS1
@@ -210,23 +210,7 @@ function f_pre_help {
 }
 
 
-
-
-
-
-# ---------------------------------------
-# -- Functions above -- Sequence Below 
-# ---------------------------------------
-
-
-
-
-
-
-
-
-
-
+function f_internal_drya_files_1_2 {
 # Repository: DRYa (internal files - (1/2) )
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
@@ -236,28 +220,42 @@ function f_pre_help {
       # Presenting it with figlet (which is a dependency) or just echo it's name:
          bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
-   # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
-      f_drya_plus  ## Turno ON/OFF for verbose welcome screen output
+}
 
 
 
+function f_config_figlet {
+   # Configuration for dependency: figlet
 
-
-# Dependency: figlet
-   # Not every instalation of figlet comes witht the same standard font, lets corret that
+   # Not every instalation of figlet comes with the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
+}
 
-# Repository: dWiki
+function f_repository_dWiki {
+   # Repository: dWiki
+
    alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
       alias dw="dwiki"
       
    # App under TODO-apps:
       alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
-         
-# Repository: scratch-paper
-   alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
+}
 
-# Repository: ezGIT
+function f_repository_QR-walking-stick {
+   # Repository: QR-walking-stick (inside dWiki/TODO-apps)
+
+   alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
+}
+
+function f_repository_scratch-paper {
+   # Repository: scratch-paper
+
+   alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
+}
+
+function f_repository_ezGIT {
+   # Repository: ezGIT
+
    # Define a key to call the entire program
       alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       # uDev: for some repos, must run a script that searches for updates at terminal startup
@@ -267,18 +265,21 @@ function f_pre_help {
 
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+}
    
-# Repository: moedaz
+function f_repository_moedaz {
+   # Repository: moedaz
+
    # uDev: Put all files to be open under menuFAV F   
    alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
+}
 
-# Repository: QR-walking-stick (inside dWiki/TODO-apps)
-   alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
+function f_repository_upK {
+   # Repository: upK 
 
-# Repository: upK and upK-diario-Dv
    source ${v_REPOS_CENTER}/upK/all/bin/bash/time.sh 2>/dev/null
 
    # Open with github sync
@@ -286,30 +287,48 @@ function f_pre_help {
       alias Upk="upk" # Same as previous alias but with capital letter for fast call at termux startup
       alias UPK="upk" # Same as previous alias but with capital letter for fast call at termux startup
 
-   # Open without github sync
-      # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
-      alias upk-dv="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
 
    # uDev: alias "upk dia"="...upk-diario-Dv"
    # NOTE: reporiory "upk" when called on the terminal without argument, it will call "upK-diario-Dv" if existent
+}
 
-# Repository 112-Shiva-Sutras
+function f_repository_upK-diario-Dv {
+   # Repository: upK-diario-Dv
+
+   # Open without github sync
+      # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
+      alias upk-dv="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
+}
+
+function f_repository_112-Shiva-Sutras {
+   # Repository: 112-Shiva-Sutras
+
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias SS="ss all | less"
    alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/exp112.txt"
    alias links="EM ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
-# Repository yogaBashApp
+}
+
+function f_repository_yogaBashApp {
+   # Repository: yogaBashApp
+
    alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
    alias termux-stop="termux-media-player stop"
    alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
    source ${v_REPOS_CENTER}/yogaBashApp/all/source-all-yoga-files 2>/dev/null
+}
 
-# Repository row-reader
+function f_repository_row-reader {
+   # Repository: row-reader
+
    alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
+}
 
-# Repository: omni-log
+function f_repository_omni-log {
+   # Repository: omni-log
+
    # If windows with graphical interface is available, we will prefer that to the terminal version
 
    # Using command 'log' to open our file
@@ -344,14 +363,11 @@ function f_pre_help {
    }
    alias Om="om"  ## Alow capital letters too
    alias OM="om"  ## Alow capital letters too
+}
 
+function f_internal_drya_files_2_2 {
+   # Repository: DRYa (internal files - (2/2) )
 
-
-
-
-      
-
-# Repository: DRYa (internal files - (2/2) )
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/
 
@@ -375,25 +391,65 @@ function f_pre_help {
 
          for i in $(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
          do 
-            source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/$i && echo "Sorced $i" >> $v_MSGS
+            source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/$i 1>/dev/null && echo "Sorced $i" >> $v_MSGS
          done 
 
       # Sourcing a specific list of scripts
          alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"
 
-   # Sourcing the temporary/local configs for DRYa (if they ido not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
+   # Sourcing the temporary local configs for DRYa (if they do not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
       source ~/.config/h.h/drya/.dryarc 2>/dev/null
+
+   # Sourcing config files stored inside DRYa repo created by other machines running DRYa
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
+}
 
+function f_verbose_drya_msgs_end_file {
+   # drya-messages: Verbose file (variables and outputs)
 
-
-
-# drya-messages: Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title_drya" >> $v_MSGS
 
    # Read messages file before normal tasks
-      # Creating a pre waning and reading it
-         f_pre_help; less $v_preMSGS
+      # Creating a pre warning and reading it
+         #f_pre_help; less $v_preMSGS
 
       # Reading the actuall messages
-         less $v_MSGS
+         #less $v_MSGS
+
+      # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
+         alias dmsgs="f_pre_help; less $v_preMSGS; less $v_MSGS"
+}
+
+function f_exec { 
+   f_drya_msgs
+   f_internal_drya_files_1_2
+   f_drya_msgs_init   >> $v_MSGS 2>/dev/null
+   f_traitsID
+   f_dv_PS1   >> $v_MSGS
+   f_drya_msgs_welcome   >> $v_MSGS 2>/dev/null
+   #f_termux_welcome
+   #f_neofetch
+   f_test_1  # Can be deleted
+
+   f_drya_plus  ## Turno ON/OFF for verbose welcome screen output. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
+   #f_pre_help
+   f_config_figlet
+
+   # Loading repositories
+      f_repository_dWiki   
+         f_repository_QR-walking-stick  # (inside dWiki/TODO-apps)
+      f_repository_scratch-paper 
+      f_repository_ezGIT   
+      f_repository_moedaz  
+      f_repository_upK  
+      f_repository_upK-diario-Dv 
+      f_repository_112-Shiva-Sutras
+      f_repository_yogaBashApp
+      f_repository_row-reader
+      f_repository_omni-log
+
+   f_internal_drya_files_2_2
+   f_verbose_drya_msgs_end_file
+}
+f_exec
+
