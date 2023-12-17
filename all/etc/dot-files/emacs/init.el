@@ -12,9 +12,14 @@
 
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
-;;;; Disable Dialog box when executing elisp code:
-   (setq org-confirm-elisp-link-function nil)
-   ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
+
+;;; Adding Melpa
+    (add-to-list 'package-archives
+                 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;;; Disable Dialog box when executing elisp code:
+    (setq org-confirm-elisp-link-function nil)
+    ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
 
 ;;;; Making use of Termux "Touch Keyboard" keys
    ;; Criar horizontal scroll
@@ -683,8 +688,8 @@ Descricao {
 Notas { 
 }
 
-(Mike 1 faz rotinas da manhã so aos dias: Ter, Qui, Sab, Dom)
-[[REL-Rotina-da-manha][[REL]]]
+(Mike 1 faz rotinas da manhã so aos dias: Ter, Qui, Sab, Dom, Feriados)
+[[REL-Rotina-da-manha][[REL\]]] [[Procedimentos: Rotina diaria do turno da manha][procedimentos]] 
 
 :END:\n"))
 
