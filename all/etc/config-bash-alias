@@ -420,6 +420,12 @@ function notify {
       
      
 }
+alias nt="notify"
+
+function nfc {
+   # Read and write NFC on termux
+   echo "uDev"
+}
 
 function ouvir {
    # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
