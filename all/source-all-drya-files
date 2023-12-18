@@ -81,7 +81,7 @@ function f_traitsID {
       fi 
 
       # Display a way to reach the info
-         echo "      > view traitsID with: tid "
+         echo "      > view traitsID with: 'tid' "
 
       # Create a script at DRYa/all/bin/ for drya-neofetch
          # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
@@ -175,7 +175,8 @@ function f_drya_plus {
    # List and execution of function under drya_plus:
       #echo
       #f_traitsID
-      echo "      > view DRYa messages with: (uDev) "
+      echo "      > view more DRYa options with: 'drya help' "
+      echo
       f_drya_msgs
       f_dv_PS1
       #f_termux_welcome
