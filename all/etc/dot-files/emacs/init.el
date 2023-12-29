@@ -807,6 +807,21 @@ Notas {
    (when (eq system-type 'gnu/linux)
       (switch-to-buffer-other-window (find-file-noselect "~/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org"))))
 
+;;; Apoio ao ensaio semanal das bombas de incendio da central de bombagem
+(defun dv-ensaio-semanal-CBI ()
+  (interactive)
+  "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de info necessario para fazer o arranque as bombas de incendio"
+
+   ;; If running on windows
+   (when (eq system-type 'windows-nt)
+      (switch-to-buffer-other-window (find-file-noselect "c:/wsl-dv/Repositories/upK/all/Documentos/apoio-ao-ensaio-semanal-bombas-de-incendio.org")))
+
+   ;; If running on Android
+   (when (eq system-type 'gnu/linux)
+      (switch-to-buffer-other-window (find-file-noselect "~/Repositories/upK/all/Documentos/apoio-ao-ensaio-semanal-bombas-de-incendio.org"))))
+
+
+
 
 (defun gt ()
     "Introduz texto automaticamente. Escreve texto tal como é apresentado no siigo"
@@ -1059,11 +1074,12 @@ This is used only for \"tipo:\""
 (defun dv-add-ot-just-text ()
   (interactive)
    "Serve para adicionar info necessária para fechar uma OT com info dentro da propria ENTRY"
-  (f-more-options-dv-add-ot-just-text)
+  ;;(f-more-options-dv-add-ot-just-text)
   (insert "\nOT {\n")
   ;; Note: The folowing text has a prefix :: that is used for detection of the beginnig of next line
      
-     
+     (insert "   :: \n")
+
      ;; For Tipo, choose either with or without links:
         ;;(insert "   :: Tipo: | ")(2-buttons-for-dv-add-ot-just-text)
         (insert "   :: ")(insert-literaly-tipo)(buttons-for-dv-add-ot-just-text-only-for-tipo )
@@ -1081,6 +1097,8 @@ This is used only for \"tipo:\""
      ;; For Materials we can choose a pair of buttons or a link for [REL]
         ;;(4-buttons-for-dv-add-ot-just-text) ;; Option 1
         (insert "[[target-materiais-do-shopping][[REL]​]] :: \n") ;; Option 2
+
+     (insert "   :: \n")
 
   (insert "}\n")
   (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
