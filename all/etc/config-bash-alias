@@ -350,8 +350,9 @@ function op {
    alias 453="upk"
    alias reboot="shutdown -r now"
 
-# uDev: alias web="open default browser"
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
+
+alias all="cd all; ls"
 
 function notify {
    # Criar notificacoes via termux
