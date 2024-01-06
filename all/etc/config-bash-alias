@@ -70,6 +70,14 @@ function E {
             termux-reload-settings
          }
 
+      # To exec 'luxam' 
+         function f-set-omni-key-upk {
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
+            sed -i "s/ॐ/✡/g" ~/.termux/termux.properties
+            bind -x '"\e[18~":"upk"'
+            termux-reload-settings
+         }
+
       # To open/exec the Android App: "Leitor QR"
          function f-set-omni-key-qr {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
