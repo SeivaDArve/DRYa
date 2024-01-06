@@ -73,7 +73,7 @@ alias luxam="em ${v_REPOS_CENTER}/luxam/grelhas-de-avaliacao.org"
          }
 
       # To exec 'luxam' 
-         function f-set-omni-key-upk {
+         function f-set-omni-key-luxam {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
             sed -i "s/ॐ/✡/g" ~/.termux/termux.properties
             bind -x '"\e[18~":"luxam"'
@@ -147,6 +147,7 @@ function key {
    echo " > (1) OM"
    echo " > (2) UPK"
    echo " > (3) QR"
+   echo " > (4) Luxam"
    #echo " > Reset (leave empty)"
 
    read -p "Qual a funcao que quer para omni-key? " v_ans
@@ -154,6 +155,7 @@ function key {
    if   [ $v_ans == "om"  ] || [ $v_ans == "1" ]; then f-reset-omni-key
    elif [ $v_ans == "upk" ] || [ $v_ans == "2" ]; then f-set-omni-key-upk
    elif [ $v_ans == "qr"  ] || [ $v_ans == "3" ]; then f-set-omni-key-qr
+   elif [ $v_ans == "luxam"  ] || [ $v_ans == "4" ]; then f-set-omni-key-luxam
    fi
 
 }
