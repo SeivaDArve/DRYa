@@ -458,6 +458,10 @@ function M {
       cd ${v_REPOS_CENTER}/Dota-2-guide && ls
 
    # Implementation of Use 2:
+   elif [ $1 == "lx" ]; then
+      cd ${v_REPOS_CENTER}/luxam && ls
+
+   # Implementation of Use 2:
    elif [ $1 == "m" ]; then
 
       case $2 in
