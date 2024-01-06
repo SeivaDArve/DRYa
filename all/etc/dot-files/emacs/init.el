@@ -13,10 +13,6 @@
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
 
-;;; Adding Melpa
-    (add-to-list 'package-archives
-                 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
 ;;; Disable Dialog box when executing elisp code:
     (setq org-confirm-elisp-link-function nil)
     ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
@@ -234,6 +230,10 @@
       (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
       (load-theme 'dracula t)
 
+
+;;; Adding Melpa
+    (add-to-list 'package-archives
+                 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 ;;    
 ;;    ;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
