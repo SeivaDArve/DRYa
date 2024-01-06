@@ -52,6 +52,8 @@ function E {
 	
 }
 
+alias luxam="em ${v_REPOS_CENTER}/luxam/grelhas-de-avaliacao.org"
+
 # DRYa-termux-omni-key (Bash keyboard bindings)
    # Bind F7 keycode: "\e[18~"
      v_default_omni_key="ॐ"
@@ -74,7 +76,7 @@ function E {
          function f-set-omni-key-upk {
             cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
             sed -i "s/ॐ/✡/g" ~/.termux/termux.properties
-            bind -x '"\e[18~":"upk"'
+            bind -x '"\e[18~":"luxam"'
             termux-reload-settings
          }
 
@@ -449,10 +451,10 @@ function falar {
 }
 
 
-alias play="termux-media-player play"
+alias  play="termux-media-player play"
 alias pause="termux-media-player pause"
-alias stop="termux-media-player stop"
-alias info="termux-media-player info"
+alias  stop="termux-media-player stop"
+alias  info="termux-media-player info"
 alias sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/example-sound.wav" ## example sound
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
