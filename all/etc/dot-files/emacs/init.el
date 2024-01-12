@@ -1349,10 +1349,10 @@ This is used only for \"tipo:\""
 ;;       (setq package-check-signature nil)
 ;;       
 ;;       ;; UTF-8
-       (set-language-environment "UTF-8")
-       (set-default-coding-systems 'utf-8)
-       (set-keyboard-coding-system 'utf-8-unix)
-       (set-terminal-coding-system 'utf-8-unix)
+       ;; (set-language-environment "UTF-8")
+       ;; (set-default-coding-systems 'utf-8)  ;; If you leave this option, the special characters like "ç" will be converted into octal like "/334"
+       ;; (set-keyboard-coding-system 'utf-8-unix)
+       ;; (set-terminal-coding-system 'utf-8-unix)
 ;;       
 ;;       ;; Backups
 ;;       ;; URL: https://sachachua.com/dotemacs/index.html
@@ -1485,7 +1485,7 @@ This is used only for \"tipo:\""
    ;; uDev: Se o buffer se chamar multiplexer.org, saltar diretamente para o header correspondente com o (concat "Mes" "Ano")
 
    (setq v_litros (concat (read-string "Foram quantos litros?: ") " Litros;"))
-   (setq v_preco-pr-litro (concat "Preco p/Litro: " (read-string "Qual o preço por litro?: ")))
+   (setq v_preco-pr-litro (concat "Preco p/Litro: " (read-string "Qual o preço por litro?: ") ";"))
    (setq v_posto  (read-string "Posto? (Cepsa: C) (BP: B) (Prio: P) (Galp: G): "))
                   (when (or (string-equal v_posto "c") (string-equal v_posto "C"))
                         (setq v_posto "Cepsa;"))
