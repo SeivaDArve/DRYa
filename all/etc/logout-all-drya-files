@@ -1,2 +1,20 @@
+#!/bin/bash
 # Title: logout-all-drya-files
 # Description: file that lists all functions to run from every app before shell logging out
+# Use: The name of this file (when used) should be changed to ".bash_ligout" and copied to ~
+#      To do so, you can navigate to the directori this file is located and run the command: "cp logout-all-drya-files ~/.bash_logout"
+
+clear
+figlet DRYa
+
+echo "DRYa: Restoring files and configs before terminal exit"
+
+# Create a separation line to distinguish changes easier
+   f_horizontal_line
+   echo $v_line
+
+# Restoring termux touch keybord to omni-key's default key
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/ && echo " > Omni-key default key: restored"
+
+# Time to allow the user to read
+   sleep 2

@@ -37,6 +37,11 @@ function f_greet2 {
       # f_talk
       tput setaf 4
    }
+   function f_cor5 { 
+      # Similar to Bold
+      # f_talk
+      tput setaf 6
+   }
    function f_resetCor { 
       tput sgr0
    }
@@ -45,6 +50,12 @@ function f_talk {
    # Copied from: ezGIT
    echo
    f_cor4; echo -n "DRYa: "
+   f_resetCor
+}
+
+function f_done {
+   # Copied from: ezGIT
+   f_cor5; echo -n ": Done"
    f_resetCor
 }
 
@@ -980,6 +991,7 @@ elif [ $1 == "update" ]; then
     echo " > termux: colors + properties (uDev)"
     echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
     echo " > init.el (uDev)"
+    echo " > drya: .bash_logout file"
     echo
 
     # Reload .bashrc
@@ -988,6 +1000,25 @@ elif [ $1 == "update" ]; then
     echo " > ~/.bashrc"
           source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
+elif [ $1 == "logout" ]; then 
+   # If you made modifications at ...DRYa/all/etc/logout-all-drya-files 
+   # and you want to conveniently apply it's changes at ~/.bash_logout
+   # just run this command
+
+   if [ -z "$2" ]; then
+      # If nothing was specified to clone
+         echo "What option do you want to perform around the logout file?"
+
+   elif [ $2 == "edit" ]; then
+      vim ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
+
+   elif [ $2 == "apply" ]; then
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files ~/.bash_logout \
+         && echo "DRYa: file logout-all-drya-files copied to ~/.bash_logout"
+
+   else
+      echo "Option not recognized"
+   fi
 
 elif [ $1 == "clone" ]; then 
    # Gets repositories from Github.com and tells how to clone DRYa itself
