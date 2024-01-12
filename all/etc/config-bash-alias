@@ -52,7 +52,7 @@ function E {
 	
 }
 
-alias luxam="em ${v_REPOS_CENTER}/luxam/grelhas-de-avaliacao.org"
+alias luxam="echo 'opening: grelhas-de-avaliacao.org' && echo ' > (alternative): F luxam' && cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org"
 
 # DRYa-termux-omni-key (Bash keyboard bindings)
    # Bind F7 keycode: "\e[18~"
