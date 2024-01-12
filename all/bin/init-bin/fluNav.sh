@@ -29,7 +29,14 @@
 # uDev list                          }
 # ---------------------------------
 
+function f_cor5 {
+   tput setaf 6
+}
 
+function f_done {
+   f_cor5; echo ": Done!"
+   f_resetCor
+}
 
 
 
@@ -71,29 +78,27 @@ function f_asking_to_apply_init {
       
       echo "Do you want to apply these changes NOW?"
       echo " > If not, you may run this command againg later"
-      echo " > Unless you want to aplly changes manually"
+      echo "   or apply manually"
       echo 
       read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
 }   
 
 function f_applying_changes_init {
-   # This is for Linux:
 
+   # This is for Linux:
       # Copy recursively all files about emacs to the localized machine-specific directory:
          echo "DRYa: copying recursively: "
-         echo " > \"centralized emacs files\" into \"~/.emacs.d\""
-            cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/
-         echo "   > done!"
+         echo -n " > Sending \"centralized emacs files\" to \"~/.emacs.d\"" && \
+            cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/  && f_done
       
       # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
-         echo " > removing: ~/.emacs (avoiding bugs)"
-            rm ~/.emacs 2>/dev/null; 
-         echo "   > done!"
+         echo -n " > Removing: \"~/.emacs\" (avoiding bugs)" && \
+            rm ~/.emacs 2>/dev/null; f_done
 
    # If we are on windows, the init file should also be somewhere at: %appdata%
-
-      v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
-      v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
+      # Finding right directories:
+         v_correct_win_dir="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs.d"
+         v_bugged_win_dir_to_del="/mnt/c/Users/Dv-User/AppData/Roaming/.emacs"
 
       if [ -d $v_correct_win_dir  ]; then
          # If the v_correct_win_dir exists, set it up too:
@@ -102,13 +107,11 @@ function f_applying_changes_init {
          # Copy files and directories recursively for the directory that emacs prefers on windows
             echo " > %AppData% exists, copying emacs files there too recursively"
                cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
-            echo "   > copied to: \"$v_correct_win_dir\""
-            echo -e "   > done! \n"
+            echo -n "   > copied to: \"$v_correct_win_dir\"" && f_done
          
          # Removing the extra file/directory that can create initialization issues
-            echo " > removing: $v_bugged_win_dir_to_del (avoiding bugs)"
-               rm $v_bugged_win_dir_to_del 2>/dev/null
-            echo "   > done!"
+            echo " > Removing: $v_bugged_win_dir_to_del (avoiding bugs)"
+               rm $v_bugged_win_dir_to_del 2>/dev/null && f_done
 
       fi
 }
@@ -124,8 +127,8 @@ function f_manage_init_and_libraries_after_mod {
    # Asking if the user really want apply changes (with: f_applying_changes_init)
       f_asking_to_apply_init
    
-      if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "Your choice was: Do apply\n\n"; f_applying_changes_init; 
-      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "Your choise was: Do not apply"; 
+      if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "\rYour choice was Yes: Do apply\n"; f_applying_changes_init; 
+      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "\rYour choise was No: Do not apply"; 
       else echo "Answers do not match, doing nothing for now. You can run the command again later";
       fi
 }
@@ -147,13 +150,32 @@ function f_emacs_init_vim {
       #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
 
+function f_action {
+   
+   if [ $v_nm == "self" ]; then
+      clear
+      figlet fluNav 
+      echo "$v_nm being edited"
+      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+      f_up 
+
+   elif [ $v_nm == "selfa" ]; then
+      echo ajal
+   fi
+
+   # To download updates:
+      #f_down
+}
+
 function f_down {
+   # To download updates:
    echo "uDev: Download from github (before opening file)"
    echo " > Code-Name of file to sync: $v_nm"
 }
 
 function f_up {
-   echo "uDev: Upload from github (after opening file)"
+   echo 
+   echo "uDev: Upload to github (after closing file)"
 }
 
 
@@ -763,15 +785,16 @@ function M {
 
          # When function F is presented with arguments (using elif):
          # And sync with github
-            elif [ $1 == "."     ]; then v_nm="self";       f_down; vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh; f_up ## Edit this file itself 
-            elif [ $1 == "0"     ]; then v_nm="unalias";    f_down; f_unalias_all; f_up
-            elif [ $1 == "1"     ]; then v_nm="dryaSH";     f_down; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-            elif [ $1 == "2"     ]; then v_nm="initVIM";    f_down; f_emacs_init_vim; f_up
-            elif [ $1 == "5"     ]; then v_nm="F5";         f_down; echo "Alias for: drya update. Do you want to continue?"; f_up
-            elif [ $1 == "19"    ]; then v_nm="test";       f_down; echo "Test is working for 19"; f_up
-            elif [ $1 == "wd"    ]; then v_nm="wikiD";      f_down; EM ${v_REPOS_CENTER}/wikiD/wikiD.org; f_up
-            elif [ $1 == "cv"    ]; then v_nm="curriculum"; f_down; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-            elif [ $1 == "links" ]; then v_nm="ss-links";   f_down; echo "uDev: open shiva sutra links"; f_up
+         # Use this menu to MANUALLY add/remove files to be handled
+            elif [ $1 == "."     ]; then v_nm="self";       f_action; ## Edit this file itself 
+            elif [ $1 == "0"     ]; then v_nm="unalias";    f_action; f_unalias_all; f_up
+            elif [ $1 == "1"     ]; then v_nm="dryaSH";     f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+            elif [ $1 == "2"     ]; then v_nm="initVIM";    f_action; f_emacs_init_vim; f_up
+            elif [ $1 == "5"     ]; then v_nm="F5";         f_action; echo "Alias for: drya update. Do you want to continue?"; f_up
+            elif [ $1 == "19"    ]; then v_nm="test";       f_action; echo "Test is working for 19"; f_up
+            elif [ $1 == "wd"    ]; then v_nm="wikiD";      f_action; EM ${v_REPOS_CENTER}/wikiD/wikiD.org; f_up
+            elif [ $1 == "cv"    ]; then v_nm="curriculum"; f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+            elif [ $1 == "links" ]; then v_nm="ss-links";   f_action; echo "uDev: open shiva sutra links"; f_up
 
             #elif [ $1 == "9" ]; f_F_9"
 
