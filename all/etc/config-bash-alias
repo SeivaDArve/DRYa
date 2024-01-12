@@ -98,7 +98,7 @@ alias luxam="em ${v_REPOS_CENTER}/luxam/grelhas-de-avaliacao.org"
             bind -x '"\e[18~": f_my_reset_test'
 
          }
-         f-reset-omni-key
+         #f-reset-omni-key  ## Esta Fx faz reset durante o startup do terminal por engano
 
 
 
@@ -373,26 +373,39 @@ function notify {
    echo "Notify: Create an Android notification message"
 
    # Creating an history file
-      # uDev: enviat antes para omni-log repo
+      # uDev: enviar antes para omni-log repo
       v_dir=~/.config/h.h/drya/tmp/
       v_file="termux-notify-output.txt"
       mkdir -p $v_dir
+      v_file2=${v_dir}${v_file}
             
    # Create an ID for each notification created
-      # It will be a concat of year + month + day + hour + Min + Sec
-      # It will be a concat of  %Y  +  %m   +  %d +  %k  +  %M +  %S
-      v_date=$(date +%Y%m%d%k%M%S)
-      v_id=$v_date
+      function f_create_id {
+         # It will be a concat of year + month + day + hour + Min + Sec
+         # It will be a concat of  %Y  +  %m   +  %d +  %k  +  %M +  %S
+         v_date=$(date +%Y%m%d%k%M%S)
+         v_id=$v_date
+      }
+
+   # Add a line to history file
+      function f_create_hist {
+            echo "$(date) > $v_ans" >> ${v_dir}${v_file}
+      }
+
+   # Create the message itself
+      function f_notify_create {
+         termux-notification -t "DRYa: Notify:" -c "$v_ans" -i "$v_id" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
+      }
 
    # Input a message
       function f_notify_message {
          echo
          echo "What is your message? "
          read -p " > " v_ans
-         termux-notification -t "DRYa: Notify:" -c "$v_ans" -i "$v_id" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
 
-         # Adding to history file
-            echo "$(date) > $v_ans" >> ${v_dir}${v_file}
+         f_create_id
+         f_notify_create
+         f_create_hist
       }
 
    # Echo notification ID number
@@ -422,6 +435,22 @@ function notify {
       elif [[ $1 == "-l" ]]; then
          termux-notification-list | grep -B 2 -A 7 "tag"
 
+   # For each line in 'notify' history file, notify it again. (If you dont want the same history file to come up, delete such line)
+      elif [[ $1 == "again" ]]; then
+
+         echo
+
+         while read i; do
+            v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
+            echo $v_ans
+            f_create_id
+            f_notify_create
+         done < $v_file2
+         
+   # Edit the history file
+      elif [[ $1 == "hist" ]]; then
+         vim $v_file2
+         
       elif [[ $1 == "-h" ]]; then
          echo
          echo "Manipulate ID: "
@@ -437,7 +466,58 @@ alias nt="notify"
 
 function nfc {
    # Read and write NFC on termux
-   echo "uDev"
+      clear
+      figlet NFC
+      echo "DRYa: Ler NFC (short)"
+
+      # Creating a file to hold nfc content temporarily
+         v_nfc=~/.tmp/termux-nfc-tmp-text
+         mkdir -p ~/.tmp
+         touch $v_nfc
+
+      # Example sound
+         v_sound=~/Repositories/DRYa/all/etc/example-sound.wav
+
+      termux-nfc -r short > $v_nfc
+
+      echo
+      echo -n "NFC lido: "
+
+      #read -p "Press Enter AFTER reading"
+
+      v_nfc_text=$(grep "Payload" $v_nfc )
+
+      if [[ $v_nfc_text =~ "nfc-base1" ]]; then
+         echo "Base 1"
+
+         termux-wake-lock
+
+         v_secs=$((60 * 60))
+         while [ $v_secs -gt 0 ]; do
+            echo -ne "\r$v_secs"
+            sleep 1
+            : $((v_secs--))
+         done
+
+         echo
+         termux-media-player play $v_sound 1>/dev/null
+         termux-wake-unlock
+
+      elif [[ $v_nfc_text =~ "nfc-MLavar1-start" ]]; then
+         echo "Maquina de lavar: Inicio"
+
+         for i in {1..60};
+         do
+            echo $i
+            sleep 1
+         done
+
+      elif [[ $v_nfc_text =~ "nfc-MLavar1-end" ]]; then
+         echo "Maquina de lavar: Fim"
+
+      else
+         echo $v_nfc_text
+      fi
 }
 
 function ouvir {
@@ -657,7 +737,7 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    alias 2468="exit"
    alias 24685="shutdown now"
    alias 246854="shutdown -r now"
-   alias 246856="win-hibernate"
+   alias 246856="echo 'From Linux, command Windows: Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
 
 
 
