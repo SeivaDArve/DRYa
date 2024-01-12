@@ -159,8 +159,8 @@ function f_action {
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
       f_up 
 
-   elif [ $v_nm == "selfa" ]; then
-      echo ajal
+   elif [ $v_nm == "foo" ]; then
+      echo bar
    fi
 
    # To download updates:
@@ -786,15 +786,16 @@ function M {
          # When function F is presented with arguments (using elif):
          # And sync with github
          # Use this menu to MANUALLY add/remove files to be handled
-            elif [ $1 == "."     ]; then v_nm="self";       f_action; ## Edit this file itself 
-            elif [ $1 == "0"     ]; then v_nm="unalias";    f_action; f_unalias_all; f_up
-            elif [ $1 == "1"     ]; then v_nm="dryaSH";     f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-            elif [ $1 == "2"     ]; then v_nm="initVIM";    f_action; f_emacs_init_vim; f_up
-            elif [ $1 == "5"     ]; then v_nm="F5";         f_action; echo "Alias for: drya update. Do you want to continue?"; f_up
-            elif [ $1 == "19"    ]; then v_nm="test";       f_action; echo "Test is working for 19"; f_up
-            elif [ $1 == "wd"    ]; then v_nm="wikiD";      f_action; EM ${v_REPOS_CENTER}/wikiD/wikiD.org; f_up
-            elif [ $1 == "cv"    ]; then v_nm="curriculum"; f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-            elif [ $1 == "links" ]; then v_nm="ss-links";   f_action; echo "uDev: open shiva sutra links"; f_up
+            elif [ $1 == "."     ]; then v_nm="self";        f_action; ## Edit this file itself 
+            elif [ $1 == "0"     ]; then v_nm="unalias";     f_action; f_unalias_all; f_up
+            elif [ $1 == "1"     ]; then v_nm="dryaSH";      f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+            elif [ $1 == "1."    ]; then v_nm="dryaSH-op-1"; f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+            elif [ $1 == "2"     ]; then v_nm="initVIM";     f_action; f_emacs_init_vim; f_up
+            elif [ $1 == "5"     ]; then v_nm="F5";          f_action; echo "Alias for: drya update. Do you want to continue?"; f_up
+            elif [ $1 == "19"    ]; then v_nm="test";        f_action; echo "Test is working for 19"; f_up
+            elif [ $1 == "wd"    ]; then v_nm="wikiD";       f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
+            elif [ $1 == "cv"    ]; then v_nm="curriculum";  f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+            elif [ $1 == "links" ]; then v_nm="ss-links";    f_action; echo "uDev: open shiva sutra links"; f_up
 
             #elif [ $1 == "9" ]; f_F_9"
 
