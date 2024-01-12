@@ -20,7 +20,7 @@
      f_attempt_WSL2 || f_attempt_termux || f_attempt_linux
    }
    
-   function f_sure_open {
+   function f_sure_open_card {
      v_name_example="cartao.jpg"
      v_name_example="/tmp/"
      #v_name="<define-your-img-name-externally-first,it-will-replace-text-here>"
