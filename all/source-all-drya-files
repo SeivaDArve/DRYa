@@ -57,31 +57,45 @@ function f_traitsID {
       v_uname=$(uname -a)
 
    # Filter the info to Detect OS
+   # SIGLA for $v_arr1: tid:A???? (A)ndroid (Wi)ndows (L)inux (R)aspberry (U)nknown
+
       if [[ $v_uname =~ "Android" ]]; then 
          echo "DRYa: Running on: Android"
          echo 'v_OS="Android"' >> $v_id_file 
+         v_arr1=A
          
-
       elif  [[ $v_uname =~ "Microsoft" ]]; then 
          echo "DRYa: Running on: Windows"
          echo 'v_OS="Windows"' >> $v_id_file
+         v_arr1=W
 
       elif [[ $v_uname =~ "raspberrypi" ]]; then 
          # Linux has to be the last one, because it means Windows and Android are not present
          echo "DRYa: Running on: Linux (Raspberry Pi)"
          echo 'v_OS="Linux-Rasp"' >> $v_id_file
+         v_arr1=R
 
       elif [[ $v_uname =~ "Linux" ]]; then 
          # Linux has to be the last one, because it means Windows and Android are not present
          echo "DRYa: Running on: Linux"
          echo 'v_OS="Linux"' >> $v_id_file
+         v_arr1=L
 
       else
          echo "DRYa: Running on: NOT DETECTED"
+         v_arr1=U
       fi 
 
       # Display a way to reach the info
          echo "      > view traitsID with: 'tid' "
+
+
+      # Create a single string with all info (as a code):
+         declare -a v_tid=(
+            [0]="tid="
+            [1]=$v_arr1
+         )
+         echo "${v_tid[0]}${v_tid[1]}" >> $v_id_file
 
       # Create a script at DRYa/all/bin/ for drya-neofetch
          # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
@@ -97,7 +111,7 @@ function f_traitsID {
       # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
 
    # Source file After writting with all variables for traitsID
-      source ${v_dir}${v_file}
+      source $v_id_file
 }
 
 
@@ -174,7 +188,6 @@ function f_drya_plus {
       
    # List and execution of function under drya_plus:
       #echo
-      #f_traitsID
       echo "      > view more DRYa options with: 'drya help' "
       echo
       f_drya_msgs
@@ -350,6 +363,7 @@ function f_repository_omni-log {
             echo "DRYa: Opening file (in GUI windows):"
             echo " > $v_choosen_file"
             echo
+            echo "Is file going to sync with github? (No)"; sleep 2
 
             /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_choosen_file 
                echo -e "... File closed\n" 
@@ -360,6 +374,7 @@ function f_repository_omni-log {
             echo "Drya: Opening file (in Terminal Linux):"
             echo " > $v_choosen_file"
             echo
+            echo "Is file going to sync with github? (No)"; sleep 2
 
             emacs $v_choosen_file 
                echo -e "... File closed\n"  
