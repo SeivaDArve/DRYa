@@ -11,13 +11,13 @@
       1 - Create a new shortcut with mouse's right click button.
          For the location of the shortcut, enter one of the following commands, depending on what you want to do.
 
-         1.1 - To shut down the computer, type the following line in the location text field.
+         1.1 - To SHUTDOWN the computer, type the following line in the location text field.
                'shutdown.exe /s /t 00'
 
-         1.2 - To restart the computer, type the following line in the location text field.
+         1.2 - To RESTART the computer, type the following line in the location text field.
                'shutdown.exe /r /t 00'
    
-         1.3 - To hibernate the computer, type the following line in the location text field.
+         1.3 - To HIBERNATE the computer, type the following line in the location text field.
                'shutdown.exe /h'
 
       2 - Click Next, and then type either Shut down, Restart, or Hibernate for the name of the shortcut. Once the shortcut is named, click Finish. 
