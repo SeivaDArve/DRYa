@@ -352,16 +352,6 @@ function op {
       # At ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
       # We can install stroken automatically with: '$ drya install stroken'
 
-# Fast dial:
-   # uDev: for WSL2, shutdown and reboot must be done by batch scripts
-   alias 2468="exit"
-   alias 24685="shutdown now"
-   alias 246854="shutdown -r now"
-   alias 48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
-   alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
-   alias 453="upk"
-   alias reboot="shutdown -r now"
-
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
 alias all="cd all; ls"
@@ -733,11 +723,27 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
       /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
    }
 
-   alias exe="/mnt/c/Windows/System32/cmd.exe /c"
-   alias 2468="exit"
-   alias 24685="shutdown now"
-   alias 246854="shutdown -r now"
-   alias 246856="echo 'From Linux, command Windows: Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
+   function win-restart {
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
+      /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
+   }
+
+   function win-shutdown {
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
+      /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
+   }
+
+   alias      exe="/mnt/c/Windows/System32/cmd.exe /c"
+   alias     2468="exit"
+   alias    24685="shutdown now"
+   alias   246854="shutdown -r now"
+   alias   246856="echo 'From Linux, command Windows: Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
+
+   alias    48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
+   alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+   alias      453="upk"
+   alias   reboot="shutdown -r now"
+
 
 
 
