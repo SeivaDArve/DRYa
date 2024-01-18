@@ -6,6 +6,7 @@
 
 # uDev: This app should NOT have 3 prefixes: M F and D
 #       Instead: use only: .
+#       But if some reason it does not work, try F (file) and P (place)
 
 
 # ---------------------------------
@@ -37,8 +38,6 @@ function f_done {
    f_cor5; echo ": Done!"
    f_resetCor
 }
-
-
 
 function f_greet { 
    # Avoiding repetition
@@ -151,6 +150,8 @@ function f_emacs_init_vim {
 }
 
 function f_action {
+   # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
+ 
    
    if [ $v_nm == "self" ]; then
       clear
@@ -200,7 +201,16 @@ function . {
          ls 
 
       elif [ $1 == "." ]; then 
-         # If arg 1 is '.' then navigate to the center of seiva's repos
+         echo "Before we could use '. .' to go to REPOS CENTER "
+         echo " > but now, to go there we use '. G' to help ezGIT"
+         echo 
+         echo "The command '. .' now opens the file of fluNav"
+         echo " > Same as 'F .'"
+
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+
+      elif [ $1 == "G" ]; then 
+         # If arg 1 is 'G' then navigate to the center of seiva's repos
          cd $v_REPOS_CENTER
          # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
    
