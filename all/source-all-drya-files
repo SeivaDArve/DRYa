@@ -353,6 +353,8 @@ function f_repository_omni-log {
    function om {
       
       # Defining the name of the file as a variable
+         v_dir="${v_REPOS_CENTER}/omni-log/"
+         v_file="multiplex.org "
          v_choosen_file="${v_REPOS_CENTER}/omni-log/multiplex.org "
 
       if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then
@@ -365,7 +367,7 @@ function f_repository_omni-log {
             echo
             echo "Is file going to sync with github? (No)"; sleep 2
 
-            /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_choosen_file 
+            cd $v_dir && /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_file 
                echo -e "... File closed\n" 
                cd ${v_REPOS_CENTER}/omni-log
 
