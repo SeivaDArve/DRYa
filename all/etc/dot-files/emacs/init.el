@@ -858,6 +858,28 @@ Notas {
 ;; Open/Close previous block of :PROPERTIES: + :END:
    (global-set-key (kbd "C-«") (lambda () (interactive) (end-of-line)(search-backward ":PROPERTIES:")(org-cycle))) 
 
+;; From checkbox [ ] to [-] and from [-] to [ ]
+   (global-set-key (kbd "C-c c")
+   		   (lambda () (interactive)
+		     (save-excursion
+		       ;; Replaces an empty checkbox [ ] with a checkbox with an "-" like [-]
+		       (beginning-of-line)
+		       (search-forward "[ ]")
+		       (backward-char 2)
+		       (delete-char 1)
+		       (insert "-"))))
+
+   (global-set-key (kbd "C-c M-c")
+		   (lambda () (interactive)
+		     ;; Replaces a checkbox in "-" like [-] with an empty checkbox like [ ]
+		     (save-excursion
+		       (beginning-of-line)
+		       (search-forward "[-]")
+		       (backward-char 2)
+		       (delete-char 1)
+		       (insert " "))))
+
+
 (defun dv-search-undone-checkbox ()
   (interactive)
   (search-backward "- [ ]"))
@@ -899,7 +921,7 @@ Notas {
 
 
 (defun dv-new-ENTRY-general ()
-  "Both functions dv-insert-new-Entry-upk and dv-insert-new-entry-upk have lines of code in commun, to keep the code readable, this function gathers all that is general. This function does not need to be interactive"
+  "Both functions dv-insert-new-Entry-upk and dv-insert-new-entry-upk have lines of code in common, to keep the code readable, this function gathers all that is general. This function does not need to be interactive"
   (setq v_tarefa (read-string "Introduz o Titulo da nova tarefa: "))
   (setq v_time (read-string "Quanto tempo demorou? "))
   (end-of-line)
@@ -909,15 +931,22 @@ Notas {
   (insert ") ")
   (insert v_tarefa)
   (insert "\n")
-  (insert ":PROPERTIES:\nDescricao ")
-  (insert "\{ \n\}\n\n")
-    ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
-     (insert "Notas")
-     ;;(insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
-  (insert " \{ \n\}\n\n")
-    ;; Adding a function to create a new dv-ot-just-text
-       (dv-del-line-link)
-       (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(dv-add-ot-just-text))][dv-add-ot-just-text]] \n")
+
+  ;; Add field "Descricao"
+     (insert ":PROPERTIES:\nDescricao ")
+     (insert "\{ \n\}\n\n")
+
+  ;; Add field "Notas"
+     ;; Choose between the next 2 lines either "Notas" just text or "Notas" with an elisp link. Comment out the one you do not want for now
+        (insert "Notas")
+        ;;(insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(kill-line)(dv-add-ot-just-text))][Notas]]")
+
+     (insert " \{ \n\}\n\n")
+
+  ;; Adding a function to create a new dv-ot-just-text
+     (dv-del-line-link)
+     (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line)(dv-add-ot-just-text))][dv-add-ot-just-text]] \n")
+
   (insert ":END:\n")
   (previous-line)(previous-line)(previous-line)(previous-line)
   (previous-line)(previous-line)(previous-line)(previous-line)(end-of-line)
@@ -1103,6 +1132,11 @@ This is used only for \"tipo:\""
   (insert "}\n")
   (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
   (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
+
+  ;; Placing the cursor where it is faster com repeat the same command
+     (previous-line)
+     (previous-line)
+     (beginning-of-line)
   ) 
 
 (defun dv-add-ot-number ()
