@@ -150,12 +150,12 @@ function key {
    echo " > (4) Luxam"
    #echo " > Reset (leave empty)"
 
-   read -p "Qual a funcao que quer para omni-key? " v_ans
+   read -n 1 -p "Qual a funcao que quer para omni-key? " v_ans
 
-   if   [ $v_ans == "om"  ] || [ $v_ans == "1" ]; then f-reset-omni-key
-   elif [ $v_ans == "upk" ] || [ $v_ans == "2" ]; then f-set-omni-key-upk
-   elif [ $v_ans == "qr"  ] || [ $v_ans == "3" ]; then f-set-omni-key-qr
-   elif [ $v_ans == "luxam"  ] || [ $v_ans == "4" ]; then f-set-omni-key-luxam
+   if   [ $v_ans == "om"  ] || [ $v_ans == "1" ]; then echo && f-reset-omni-key
+   elif [ $v_ans == "upk" ] || [ $v_ans == "2" ]; then echo && f-set-omni-key-upk
+   elif [ $v_ans == "qr"  ] || [ $v_ans == "3" ]; then echo && f-set-omni-key-qr
+   elif [ $v_ans == "luxam"  ] || [ $v_ans == "4" ]; then echo && f-set-omni-key-luxam
    fi
 
 }
