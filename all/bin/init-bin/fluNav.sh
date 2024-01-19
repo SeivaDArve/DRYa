@@ -70,6 +70,11 @@ function f_presenting_DF {
       echo -e "File closed (after editions):\n > $v_init_file \n"
 }
 
+function f_horiz_line {
+   # Using the in-built horizontal line from DRYa
+   echo $v_line
+}
+
 function f_asking_to_apply_init {
    # Ask if the user wants the changes to apply to this machine imediatly
       # If not, the user has to use this command again afterwards
@@ -513,11 +518,21 @@ function M {
             echo "Internal storage"
             pwd
             echo
+
+            f_greet
+            echo "Internal Storage"
+            f_horiz_line
+
             cd /sdcard && ls
          ;;
          1) # Travel to SD Card storage
+
+            v_place_2=/storage/0123-4567
+            v_place_3=/storage/
+
+            f_greet
+
             echo "SD card storage"
-            pwd
             echo
             echo "Termux cannot WRITE to SD card,"
             echo "but can READ and RUN bash scripts from it"
@@ -525,19 +540,39 @@ function M {
             echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
             echo "file explorer, MOVE it to the SD card"
             echo
-            cd /storage/0094-8210 && ls || cd /storage && ls
+
+            echo "Listing: $v_place_2"
+            echo "Listing: $v_place_3"
+            echo
+
+            echo "SD card Storage"
+            f_horiz_line
+
+            cd $v_place_2 && ls
+            f_horiz_line
+            cd $v_place_3 && ls
 
          ;;
          2) # Travel to USB storage
             echo "USB Storage"
             pwd
             echo
+
+            f_greet
+            echo "USB Storage"
+            f_horiz_line
+
             cd /storage/83DB-10EA && ls || cd /storage && ls
          ;;
          3) # Travel to the dir where many USB storages are mounted
             echo "List of options for: USB storage"
             pwd
             echo
+
+            f_greet
+            echo "Listing possible USB plugged in"
+            f_horiz_line
+
             cd /storage && ls
          ;;
          4) # Travel to the dir where many USB storages are mounted
@@ -548,6 +583,11 @@ function M {
             echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
             echo "file explorer, MOVE it to the SD card"
             echo
+
+            f_greet
+            echo "SD card Storage"
+            f_horiz_line
+
             echo "Do you need directories to be created in order to MOVE"
             echo "internal things to external SD?"
             echo 
@@ -564,16 +604,20 @@ function M {
          ;;
          b) 
             # Travel to dir at Internal storage called Termux-bridge-Android
+
+            f_greet
+            echo "Directory: Internal Storage: Termux-bridge-Android"
+            f_horiz_line
+
             cd /sdcard/Termux-bridge-Android && ls
          ;;
          *)
             echo "How to use:"
-            echo "$ d -m"
+            echo "$ M m [0|1|2|3|4|b]"
             echo '0) # Travel to Internal storage'
             echo '1) # Travel to SD Card storage'
             echo '2) # Travel to USB storage'
             echo '3) # Travel to the dir where many USB storages are mounted'
-            echo '4) # Travel to the dir where many USB storages are mounted'
             echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
 	    #uDev: May be needed termux-setup-storage to access some directories
          ;;
