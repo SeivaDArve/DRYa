@@ -98,6 +98,10 @@
                                      "Setembro" "Outubro" "Novembro" "Dezembro"]
           calendar-day-abbrev-array ["Dom" "Seg" "Ter" "Qua" "Qui" "Sex" "Sab"])
 
+;;; Open QR Code app on Android
+    (defun dv-open-qr-app ()
+      (interactive)
+      (shell-command-to-string "am start --user 0 -a andrppoid.intent.action.MAIN -n com.teacapps.barcodescanner/net.qrbot.ui.main.MainActivity"))
 
 ;;; Attempting to play sound
    (defun dv-sound-test ()
