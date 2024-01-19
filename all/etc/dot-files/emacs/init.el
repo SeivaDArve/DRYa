@@ -1138,7 +1138,7 @@ This is used only for \"tipo:\""
   ;; Note: The folowing text has a prefix :: that is used for detection of the beginnig of next line
      
      (insert "   :: \n")
-/global
+
      ;; For Tipo, choose either with or without links:
         ;;(insert "   :: Tipo: | ")(2-buttons-for-dv-add-ot-just-text)
         (insert "   :: ")(insert-literaly-tipo)(buttons-for-dv-add-ot-just-text-only-for-tipo )
