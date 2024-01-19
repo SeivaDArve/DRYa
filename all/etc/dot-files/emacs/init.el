@@ -103,6 +103,12 @@
       (interactive)
       (shell-command-to-string "am start --user 0 -a andrppoid.intent.action.MAIN -n com.teacapps.barcodescanner/net.qrbot.ui.main.MainActivity"))
 
+;;; Open Google Keeps app on Android
+    (defun dv-open-horario-app ()
+      (interactive)
+      (shell-command-to-string "am start --user 0 -a andrppoid.intent.action.MAIN -n com.google.android.keep/"))
+
+
 ;;; Attempting to play sound
    (defun dv-sound-test ()
       (interactive)
