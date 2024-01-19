@@ -744,9 +744,6 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    alias      453="upk"
    alias   reboot="shutdown -r now"
 
-
-
-
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
