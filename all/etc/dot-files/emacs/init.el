@@ -367,12 +367,38 @@
   (global-display-line-numbers-mode)
   (message "Dv: toggled line numbers mode globaly"))
     
+
+(defun copy-target-number-from-current-line-to-kill-ring ()
+  ;; Function used at: dv-add-id-line as 'copy'
+  ;; Suestion: ID: <<ID-18012024-113454-482622000>> (help / copy)
+  ;;    (global-set-key (kbd "C-?") (lambda () (interactive) )))
+  ;; [[elisp:(funcall-interactively 'occur ";;;; ")][click here]]
+  ;;  (insert "[[elisp:(funcall-interactively 'copy-target-number-from-current-line-to-kill-ring][(copy)]]"))
+  (interactive)
+  (save-excursion
+  (beginning-of-line)
+  (search-forward "<<")
+  (setq v-beg (point))
+  (cua-set-mark)
+  (search-forward ">>")
+  (forward-char -2)
+  (setq v-end (point))
+  (kill-ring-save v-beg v-end)))
+
 (defun dv-add-id-line ()
   "Adds a line of text with a unique number in order to facilitate internal links. Mix of text with: ID- then adds day number, then month number, then year number, then hiphen '-', then hour number from (0-24), then, minute number, then seconds number, then hiphen '-', then nanoseconds in order for 2 functions dv-add-id-line to be different when the user wants 2 ain the same second
   See format possibilities here: https://www.gnu.org/software/emacs/manual/html_node/elisp/Time-Parsing.html"
   (interactive)
   (setq v_id_time (format-time-string "ID-%d%m%Y-%k%M%S-%N"))
-  (insert "ID-with-emacs-target { <<" v_id_time ">> } (origin)"))
+
+   ;; Choose 1 of both:
+        (insert "ID: <<" v_id_time ">> ( ")
+        ;;(insert "ID-with-emacs-target { <<" v_id_time ">> } (origin)")
+
+  (insert "[[elisp:(message \"\\n\\nEste ID é onde varios links vem parar, é um numero unico que outros links procuram\")][help]]")
+  (insert " / ")
+  (insert "[[elisp:(funcall-interactively 'copy-target-number-from-current-line-to-kill-ring)][copy]]")
+  (insert " ) "))
 
 (defun date ()
   (interactive)
@@ -1108,7 +1134,7 @@ This is used only for \"tipo:\""
   ;; Note: The folowing text has a prefix :: that is used for detection of the beginnig of next line
      
      (insert "   :: \n")
-
+/global
      ;; For Tipo, choose either with or without links:
         ;;(insert "   :: Tipo: | ")(2-buttons-for-dv-add-ot-just-text)
         (insert "   :: ")(insert-literaly-tipo)(buttons-for-dv-add-ot-just-text-only-for-tipo )
