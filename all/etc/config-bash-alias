@@ -343,6 +343,9 @@ function op {
       fi
       
       # uDev: Add 'termux-open $* --chooser' as an option
+
+      # uDev: '$ op grep 20240114_094706.jpg' para procurar 'grep' pela foto certa
+      #       '$ op grep mv 20240114_094706.jpg' para mover a foto encontrada (precisa de um menu interativo)
 }
 
 
