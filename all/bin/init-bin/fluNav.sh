@@ -160,6 +160,17 @@ function f_action {
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
       f_up 
 
+   elif [ $v_nm == "trade" ]; then
+      clear
+      figlet fluNav 
+      echo "$v_nm being edited"
+      cd ${v_REPOS_CENTER}/moedaz && \
+      G v && \
+      EM all/trade.org && \
+      G ++ b
+
+      echo Done
+
    elif [ $v_nm == "foo" ]; then
       echo bar
    fi
@@ -807,6 +818,7 @@ function M {
             elif [ $1 == "cv"    ]; then v_nm="curriculum";  f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
             elif [ $1 == "links" ]; then v_nm="ss-links";    f_action; echo "uDev: open shiva sutra links"; f_up
             elif [ $1 == "luxam" ]; then v_nm="luxam";       f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+            elif [ $1 == "trade" ]; then v_nm="trade";       f_action; # Sync the trade.org wikipedia
 
 
             #elif [ $1 == "9" ]; f_F_9"
