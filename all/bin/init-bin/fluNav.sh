@@ -6,6 +6,7 @@
 
 # uDev: This app should NOT have 3 prefixes: M F and D
 #       Instead: use only: .
+#       But if some reason it does not work, try F (file) and P (place)
 
 
 # ---------------------------------
@@ -37,8 +38,6 @@ function f_done {
    f_cor5; echo ": Done!"
    f_resetCor
 }
-
-
 
 function f_greet { 
    # Avoiding repetition
@@ -151,6 +150,8 @@ function f_emacs_init_vim {
 }
 
 function f_action {
+   # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
+ 
    
    if [ $v_nm == "self" ]; then
       clear
@@ -158,6 +159,17 @@ function f_action {
       echo "$v_nm being edited"
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
       f_up 
+
+   elif [ $v_nm == "trade" ]; then
+      clear
+      figlet fluNav 
+      echo "$v_nm being edited"
+      cd ${v_REPOS_CENTER}/moedaz && \
+      G v && \
+      EM all/trade.org && \
+      G ++ b
+
+      echo Done
 
    elif [ $v_nm == "foo" ]; then
       echo bar
@@ -200,7 +212,16 @@ function . {
          ls 
 
       elif [ $1 == "." ]; then 
-         # If arg 1 is '.' then navigate to the center of seiva's repos
+         echo "Before we could use '. .' to go to REPOS CENTER "
+         echo " > but now, to go there we use '. G' to help ezGIT"
+         echo 
+         echo "The command '. .' now opens the file of fluNav"
+         echo " > Same as 'F .'"
+
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+
+      elif [ $1 == "G" ]; then 
+         # If arg 1 is 'G' then navigate to the center of seiva's repos
          cd $v_REPOS_CENTER
          # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
    
@@ -797,6 +818,7 @@ function M {
             elif [ $1 == "cv"    ]; then v_nm="curriculum";  f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
             elif [ $1 == "links" ]; then v_nm="ss-links";    f_action; echo "uDev: open shiva sutra links"; f_up
             elif [ $1 == "luxam" ]; then v_nm="luxam";       f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+            elif [ $1 == "trade" ]; then v_nm="trade";       f_action; # Sync the trade.org wikipedia
 
 
             #elif [ $1 == "9" ]; f_F_9"

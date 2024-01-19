@@ -170,7 +170,7 @@ function siigo {
    
    function f_chrome_siigo {
       # Using chrome   
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar 2>/dev/null
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://siigo-maintenance.com/#/calendar & 2>/dev/null
    }
 
    # Calling siigo webpage using one of the above options:
@@ -188,7 +188,7 @@ function web {
    
    function f_chrome {
       # Using chrome on windows 
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://duckduckgo.com 2>/dev/null
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" https://duckduckgo.com & 2>/dev/null
    }
 
    # Calling siigo webpage using one of the above options:
