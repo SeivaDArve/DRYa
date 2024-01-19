@@ -1,4 +1,10 @@
 #!/bin/bash
+# Title: Horizontal Line according ti terminal window
+# Use: 1. This script is meant to be sourced and it's variables to be exported
+#      2. At the terminal you can type "echo $v_line" for longger version of line
+#      3. At the terminal you can type "echo $v_line2" for shorter version of line
+#      4. You can navigate to this dir and command "bash f_horizontal_line -s"
+#      5. You can navigate to this dir and command "bash f_horizontal_line -short"
 
 function f_horizontal_line {
    # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
