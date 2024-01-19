@@ -625,6 +625,8 @@ function M {
 
 # List fav files for edition (fluNav)
    function F {
+   # uDev: letra S é melhor para ABRIR ficheiros com SYNC
+   #       letra . para abrir ficheiros sem sync
 
       
       function f_uDev_1 {
