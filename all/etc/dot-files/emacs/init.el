@@ -31,12 +31,16 @@
          (global-set-key (kbd "C-M-<wheel-up>") (lambda () (interactive) (scroll-right 6)))
          (global-set-key (kbd "C-M-<wheel-down>") (lambda () (interactive) (scroll-left 6)))
 
-      ;; Usando C-b e C-f nas teclas do termux (uDev: Mudar para teclas mais rebuscadas) 
+      ;; Usando F8 e F9 nas teclas do termux (uDev: Mudar para teclas mais rebuscadas) 
          (global-set-key (kbd "<f8>") (lambda () (interactive) (scroll-right 6)))
          (global-set-key (kbd "<f9>") (lambda () (interactive) (scroll-left 6)))
             ;; uDev: em vez de usar um valor constante, usar uma variavel para se poder ajustar
             ;; uDev: criar a funcao dv-scroll-help para ensinar a alterar dv-scroll-amount
             ;; uDev: nessa funcao dv-scroll-help pode ser tambem inserida a instrucao de como installar uma tecla no termux pra fazer isso e qual a tecla de atalho do teclado para se usar tanto no termux quanto no PC
+
+       
+   ;; Usando F5 nas teclas do termux para dv-insert-new-Entry-upk (por causa de ser tao comum)
+      (global-set-key (kbd "<f5>") (lambda () (interactive) (dv-insert-new-Entry-upk)))
 
    ;; Usar o F7 como drya-termux-omni-key (com simbolo do Om)
       (global-set-key (kbd "<f7>") (lambda () (interactive)(save-buffer)(kill-emacs)))
@@ -1244,7 +1248,9 @@ This is used only for \"tipo:\""
      (interactive)
      "Para 1 copo de hipoclorito, 9 de agua"
      (setq v-opc (read-string "Info do procedimento: Diluir o produto a 10% de concentracao (em agua) \n\nOpcoes de calculo: \n 1. UMA unidade de hipoclorito + NOVE unidades de agua \n 2. Quantos litros no deposito estao vazios? \n\nQual e a opcao que pretende usar para calculo?\n > "))
-     (message (concat "Opcao de calculo: " v-opc)))
+     (message (concat "Opcao de calculo: " v-opc))
+     ;; Apos a opcao 1, calcular por exemplo meio garragao de 5 Litros (=2,5 L) e perguntar de seguida quantos litros estao no deposito para se somar ao calculo anterior. O resultado da multiplicacao que é somada aos litros atuais do deposito da o nivel de litros ao qual tem de ficar o deposito no final. e esse resultado nao pode ultrapassar 125 litros porque 125 é a capacidade max do deposito
+     )
 
    (defun dv-calculate-from-Lmin-M3h ()
      (interactive)
