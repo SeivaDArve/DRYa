@@ -668,6 +668,13 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
             (when (string-equal v_turno "B")
                   (rotina-manha))
              
+         ;; Se o turno for "B" ao fim-de-semana, inserir tambem rotinas AVAC e legionela:
+            (when (and (string-equal v_turno "B")
+                       (or (string-equal v-dia "Sab")(string-equal v-dia "Dom")))
+                  (rotina-avac)
+                  (rotina-legionela)
+                  (rotina-reuniao-bom-dia))
+             
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
             (insert "\n- [ ] Pos-Requisitos ")
             (insert "\n" ":PROPERTIES:\n")
@@ -745,7 +752,58 @@ Notas {
 }
 
 (Mike 1 faz rotinas da manhã so aos dias: Ter, Qui, Sab, Dom, Feriados)
-[[REL-Rotina-da-manha][[REL\]]] [[Procedimentos: Rotina diaria do turno da manha][procedimentos]] 
+[[ID-20012024-110841-884999000][[REL\]]] [[Procedimentos: (Rotina) diaria do turno da manha][procedimentos]] 
+
+:END:\n"))
+
+(defun rotina-avac ()
+   (interactive)
+   (insert "\n- [ ] () Rotina Diária de AVAC
+:PROPERTIES:
+Descricao { 
+}
+
+Notas { 
+}
+
+(Mike 1 faz rotinas da manhã so aos dias: Sab, Dom, Feriados)
+[[ID-20012024-102932-938068000][[REL]​]] [[Procedimentos: (Rotina) diaria de AVAC][procedimentos]] 
+
+:END:\n"))
+
+(defun rotina-reuniao-bom-dia ()
+   (interactive)
+   (insert "\n- [ ] () Reuniao do Bom dia
+:PROPERTIES:
+
+OT {
+   :: 
+   :: Tipo       |       :: (reu) Preparação trabalhos, reuniões de manutenção, etc - Técnico
+   :: Titulo:    | [[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: Reunião do bom dia
+   :: Descrição: | [[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: No inicio do turno da manhã
+   :: Notas:     | [[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: 
+   :: 
+}
+
+:END:\n"))
+
+(defun rotina-legionela ()
+   (interactive)
+   (insert "\n- [ ] () Rotina Diária de Legionela
+:PROPERTIES:
+Descricao { 
+}
+
+Temp. Prestadores: 
+Temp. Lojistas: 
+Temp. Kitchen 1: 
+Temp. Kitchen 2: 
+Cont. Ag.Torres: 
+
+Notas { 
+}
+
+[[ID-20012024-110255-472907000][[REL]​]] [[Procedimentos: (Rotina) diaria de Legionela][procedimentos]] 
 
 :END:\n"))
 
