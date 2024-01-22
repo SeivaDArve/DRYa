@@ -5,6 +5,20 @@
 
 # uDev: PUT EVERYTHING INSIDE FUNCTIONS AND CREATE f_exec AT THE END
 
+# -------------------------------------------------------
+# Reserved alias/variables for DRYa
+# uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
+#
+# 2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
+# 24685  = DRYa's Repository Center --------------- (cd ~/Repositories)
+# 246851 = Move to DRYa directory ----------------- (cd ~/Repositories/DRYa/)
+# 246852 = Move to DRYa's most usefull parallel app (cd ~/Repositories/ezGIT/)
+# 24681  = DRYa's function 1 (Currently: menu 1)
+# 24682  = DRYa's function 2 (Currently: menu 2)
+# 246811 = DRYa Refresh ALL (just like F5 does + refresh dot-files)
+#
+# -------------------------------------------------------
+
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: File started loading: DRYa's $v_title_drya"
@@ -226,6 +240,9 @@ function f_pre_help {
 
 function f_internal_drya_files_1_2 {
 # Repository: DRYa (internal files - (1/2) )
+
+   # Abreviated REPOS CENTER variable (for easier terminal use)
+      alias 24685="cd ${v_REPOS_CENTER} && ls"
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa

@@ -878,11 +878,14 @@ function f_exec {
 	#f_master_dryaRC
    #f_readKeystroke
 
-   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   echo "DRYa: I'm Installed and Ready"
-   echo " > for help: drya -h"
+   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+   f_talk; echo "No valid arguments were given"
+           echo "       > for help: drya -h"
 
-   bash f_traits_id
+   # If no arg was given, also navigate do DRYa's repo directory
+      # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
+      cd ${v_REPOS_CENTER}/DRYa
+
 }
 
 
@@ -914,6 +917,10 @@ if [ -z "$*" ]; then
      clear
      f_greet
      f_talk; echo "No arguments were given"
+
+   # If no arg was given, also navigate do DRYa's repo directory
+      cd ${v_REPOS_CENTER}/DRYa
+
 
 elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
    # Help menu
