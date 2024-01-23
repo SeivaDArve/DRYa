@@ -1164,7 +1164,7 @@ elif [ $1 == "install" ]; then
             echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
             echo " > 1360x768 "
          ;;  
-         dot-files | dot)
+         dotfiles | dot)
 
             clear
             f_greet
