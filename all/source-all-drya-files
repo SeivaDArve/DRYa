@@ -342,7 +342,7 @@ function f_repository_112-Shiva-Sutras {
    alias SS="ss all | less"
    alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/exp112.txt"
-   alias links="EM ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
+   alias links="cd ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
 }
 
