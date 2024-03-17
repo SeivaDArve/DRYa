@@ -314,7 +314,7 @@
        (global-set-key (kbd "C-M-o") (lambda () (interactive)(beginning-of-line)(insert "\n")(previous-line)))
 
 ;; uDev: Create hotkey to mimic 'M-x' and then the vim key
-   ;; like: 'M-x x x' to call vim commands
+   ;; like: 'C-.' to call vim commands
        (global-set-key (kbd "C-.") (lambda () (interactive) (vim-key-search)))
 
 ;; Vim keys interactive prompt
