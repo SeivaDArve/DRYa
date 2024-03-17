@@ -1165,9 +1165,11 @@ tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, 
 
 
 
-(defun dv-just-crawl ()
+(defun dv-create-python-crawler ()
   (interactive)
-  (end-of-line)(insert "\n\n#+BEGIN_SRC python\n\n")
+  (beginning-of-line)(org-kill-line)(insert "\n- Python Web Crawler\n")
+  (insert "  > Push Entry to Siigo (automatically)")
+  (end-of-line)(insert "\n#+BEGIN_SRC python\n\n")
   (insert "v_titulo = \"\"")
   (insert "\nv_desc = \"\"")
   (insert "\n\n#+END_SRC"))
@@ -1276,7 +1278,7 @@ This is used only for \"tipo:\""
 
   (insert "}\n")
   (insert "[[elisp:(progn (beginning-of-line)(kill-line)(kill-line))][del:]] ")
-  (insert "[[elisp:(dv-just-crawl)][Create Python Webcrawler]] \n\n")
+  (insert "[[elisp:(dv-create-python-crawler)][Create Python Webcrawler]] \n\n")
 
   ;; Placing the cursor where it is faster com repeat the same command
      (previous-line)
