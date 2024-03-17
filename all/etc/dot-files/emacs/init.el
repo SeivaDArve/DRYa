@@ -203,7 +203,10 @@
     (defun om ()
       (interactive)      
       (switch-to-buffer (find-file-noselect "c:/Repositories/omni-log/multiplex.org")))
-      
+
+;;; Config minibuffer for vertical auto completion
+      ;;(icomplete-vertical-mode 1)
+
 ;;; Creating a keybinding for org-agenda
     (global-set-key (kbd "C-x a") #'org-agenda)
 
@@ -308,6 +311,17 @@
        (global-set-key (kbd "C-M-o") (lambda () (interactive)(beginning-of-line)(insert "\n")(previous-line)))
 
 ;; uDev: Create hotkey to mimic 'M-x' and then the vim key
+   ;; like: 'M-x x x' to call vim commands
+       (global-set-key (kbd "C-.") (lambda () (interactive) (vim-key-search)))
+
+;; Vim keys interactive prompt
+   (defun vim-key-search ()
+     (interactive)
+     (setq v-search-vim (read-string "Qual é o atalho do vim? "))
+     (when (string-equal v-search-vim "G")(end-of-buffer))
+     (when (string-equal v-search-vim "gg")(beginning-of-buffer))
+     (when (string-equal v-search-vim "zz")(zz)))
+
 ;; Functions like vim (but needs always to call M-x)
    (defun zz ()
      (interactive)
@@ -653,7 +667,7 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
          ;; Pre-Requisitos + PROPERTIES 
             (insert "\n\n- [ ] () Pre-Requisitos\n")
             (insert ":PROPERTIES:\n")
-            (insert "- [ ] Assinar folhas de entrada no C.Nascente\n")
+            (insert "- [ ] Passar o dedo/impressão digital para entrada no sistema\n")
 
          ;; Quando o turno é especificamente "N", adicionar: 
             (when (string-equal v_turno "N")
@@ -686,7 +700,7 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
                   (insert "\n- [ ] Entregar a folha de ocorrencias\n"))
 
          ;; Inserir mais texto neutro (Pos-requisitos + PROPERTIES)
-            (insert "\n- [ ] Assinar folhas de saida no C.Nascente\n")
+            (insert "\n- [ ] Passar o dedo/impressão digital para saida no sistema\n")
                ;; uDev: Se for dia 5, 6, 7, preencher folhas de ponto upk 
             (insert "\n- [ ] Passagem de Serviço ")
             (insert (format-time-string "<%Y-%m-%d %a>")) ;; uDev: ja existe um modelo melhor de data do que o standard 
@@ -808,61 +822,84 @@ Notas {
 :END:\n"))
 
 (defun dv-transfer-ot ()
-   "Usa as funçoes 'oj' "
+   "Usa as funçoes 'oj' e 'dv-add-id-line' 
+    
+tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, sobe ao inicio do buffer e pesquisa esse ID para a frente"
+   
    (interactive)
 
-   ;; Adicionar texto (OT inserida dia X)
-      (search-forward ":END:")
-      (beginning-of-line)(insert "\n\n")
-      (previous-line)
-         ;; Adicionar dia de hoje correto (equivalente a 'C-c .')
-         (oj)
+   ;; Copy current entry line
+      (beginning-of-line) (setq v-beg (point))
+      (end-of-line)       (setq v-end (point))
+      (kill-ring-save v-beg v-end)
+      (setq v-entry-result (current-kill 0 t))
 
-   ;; Alterar temporariamente o titulo da OT
-      ;; (para ganhar o formato necessario para ser usado na segunda janela)
-      (search-backward ":PROPERTIES:")(previous-line)
+   ;; Expandir :PROPERTIES:
+      (search-forward ":PROPERTIES:") 
+      ;; (org-show-subtree)
 
-   ;; Buscar e filtrar o dia em que esta OT foi escrita
-      ;; (Vai deixar temporariamente o titulo original da OT com a data do seu dia)
-      (end-of-line)
-      (insert "(marked place)")  ;; Para ajudar no debug
-      (search-backward "* Dia <")
-      (beginning-of-line)
-      (org-kill-line)(org-yank)
-      (search-forward "(marked place)")
-      (end-of-line)
-      (org-yank)
-      (search-backward "(marked place)")
-      (delete-char 20)
-      (insert " (dia ")
-      (beginning-of-line)
-      (search-forward "> (")
-      (backward-char 2)
-      (org-kill-line)
-      (insert ")")
+   ;; Inserir ID line
+      (end-of-line)(insert "\n")(dv-add-id-line)(insert "\n")
+      (previous-line)(previous-line)
 
-   ;; Enviar titulo temporario (ja completo) para a segunda janela
+   ;; Copy original ID to a variable
+      (search-forward "<<")(setq v-beg (point))
+      (search-forward ">>")(backward-char 2)(setq v-end (point))
+      (kill-ring-save v-beg v-end)
+      (setq v-id-result (current-kill 0 t))
+
+   ;; Copy dia
+      (save-excursion
+         (search-backward "* Dia <")(forward-char 6)(setq v-beg (point))
+         (search-forward ">")(setq v-end (point))
+         (kill-ring-save v-beg v-end)
+         (setq v-dia-result (current-kill 0 t)))
+
+   ;; Enviar ID para a segunda janela
       ;; O ideal é o cursor na segunda janela ja estar posicionado corretamente
-      (beginning-of-line)
-      (org-kill-line)(org-yank)
       (other-window 1)
-      (org-yank)
+      (insert v-entry-result)
+      (insert "  ::  ")
+      (insert v-dia-result)
+      (insert "  ::  ")
+      (insert v-id-result)
+      (insert "  ::  ")
+      ;; uDev: inserir "GO" para a entry anterior
+      (insert "[[elisp:(dv-transfer-ot-ID-link-uninteractive)][GO]]")
       (insert "\n")
-      (beginning-of-line)
-	    
 
    ;; Removing extra data added to: Window 1 > TITLE > date
       (other-window 1) (beginning-of-line)
 
       ;; Marcar [ ] com um X ficando [X]
+         (search-backward "- [")
          (org-ctrl-c-ctrl-c)
+         )
+  ;; end-of-el-function: dv-transfer-ot
 
-      ;; Buscar texto para remover
-         (search-forward " (dia")
-         (backward-char 5)
-         (org-kill-line)
-	 (beginning-of-line)
-	 (next-line))  ;; end-of-el-function: dv-transfer-ot
+(defun dv-transfer-ot-ID-link-uninteractive ()
+  "Funcao que dá apoio a funcao dv-transfer-ot (não precisa de ser interativa porque serve apenas para facilitar a leitura do codigo"
+
+  ;; Copy ID
+     (save-excursion
+        (beginning-of-line)
+        (search-forward "::  ID")(backward-char 2)(setq v-beg (point))
+        (search-forward "::")(backward-char 4)(setq v-end (point))
+        (kill-ring-save v-beg v-end)
+        (setq v-id-result (current-kill 0 t))
+        ;; for debug purpouse: (message (concat "Current id is: " v-id-result))
+     )
+
+   ;; Search last ID result in a vertical split window
+        (split-window-vertically)
+        (beginning-of-buffer)
+        (search-forward v-id-result)
+        (org-reveal)
+        (beginning-of-line))
+
+
+
+
 
 (defun dwiki ()
    (interactive)
@@ -956,26 +993,22 @@ Notas {
 ;; Open/Close previous block of :PROPERTIES: + :END:
    (global-set-key (kbd "C-«") (lambda () (interactive) (end-of-line)(search-backward ":PROPERTIES:")(org-cycle))) 
 
-;; From checkbox [ ] to [-] and from [-] to [ ]
+;; From checkbox [ ] to [-] or [X] or [?] 
+   (setq increm-num 1)  ;; Number to be used to define the character to be pasted
+
    (global-set-key (kbd "C-c c")
    		   (lambda () (interactive)
-		     (save-excursion
+		      (save-excursion
 		       ;; Replaces an empty checkbox [ ] with a checkbox with an "-" like [-]
 		       (beginning-of-line)
-		       (search-forward "[ ]")
+		       (search-forward "]")
 		       (backward-char 2)
 		       (delete-char 1)
-		       (insert "-"))))
-
-   (global-set-key (kbd "C-c M-c")
-		   (lambda () (interactive)
-		     ;; Replaces a checkbox in "-" like [-] with an empty checkbox like [ ]
-		     (save-excursion
-		       (beginning-of-line)
-		       (search-forward "[-]")
-		       (backward-char 2)
-		       (delete-char 1)
-		       (insert " "))))
+             (when (eq increm-num 4) (progn (insert "X")(setq increm-num 5)))
+             (when (eq increm-num 3) (progn (insert " ")(setq increm-num 4)))
+             (when (eq increm-num 2) (progn (insert "?")(setq increm-num 3)))
+             (when (eq increm-num 1) (progn (insert "-")(setq increm-num 2)))
+             (when (eq increm-num 5) (setq increm-num 1)))))
 
 
 (defun dv-search-undone-checkbox ()
@@ -1185,11 +1218,10 @@ Notas {
 (defun buttons-for-dv-add-ot-just-text-only-for-tipo ()
   "Used to remove text after :: and to paste between :: and ::
 This is used only for \"tipo:\""
-  (insert "[[elisp:(progn (search-forward \":: \")(kill-line))][rm]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: \n"))
- 
+  (insert "[[elisp:(progn (search-forward \":: \")(kill-line))][rm]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] [[elisp:(funcall-interactively '1-button-insert-tipo-by-interactive-fx)][fx]] :: \n"))
 (defun 2-buttons-for-dv-add-ot-just-text ()
   "Used to copy/paste between :: and ::"
-  (insert "[[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]] :: \n"))
+  (insert "[[elisp:(copy-text-from-double-colon-to-double-colon)][cp]] [[elisp:(paste-between-double-colon-and-double-colon)][cl]]    :: \n"))
 
 (defun 4-buttons-for-dv-add-ot-just-text ()
   "Used to copy/paste between :: and }"
@@ -1197,6 +1229,18 @@ This is used only for \"tipo:\""
 
 (defun f-more-options-dv-add-ot-just-text ()
   (insert "[[elisp:(message \"More options are uDev\")][_+_]]"))
+
+
+(defun 1-button-insert-tipo-by-interactive-fx ()
+  "Um dos botoes relativos à linha TIPO, será aquela interactive fx que não precisa de motor de busca"
+  (interactive)
+  (setq v-ans (read-string "uDev: inserir abrv do tipo de ot: "))
+    ;; exemplo: 'M-x temp' Insere a texto '(temp) Apoio a stands temporários - Produto'
+    (when (string-equal v-ans "temp")(progn (end-of-line)(insert "(temp) Apoio a stands temporários - Produto")))
+    (message "\n\nnot ready yet\n\nOnly fx 'temp' is ready"))
+
+
+
 
 (defun dv-add-ot-just-text ()
   (interactive)
@@ -1241,14 +1285,15 @@ This is used only for \"tipo:\""
   (interactive)
   "Serve para juntar varios tempos de varias entries numa só OT"
   (setq v_ot_num (read-string "Qual é a ordem numérica desta OT? "))
-  (insert "\n- [ ] << OT >> Grupo de tempos >> SIIGO >> ")(insert v_ot_num)(insert " <<\n")
+  (setq v_ot_sub (read-string "Qual é o assunto desta OT? "))
+  (insert "\n- [ ] << OT " v_ot_num " >> " v_ot_sub "\n")
   (insert ":PROPERTIES:\n")
+  (dv-add-id-line)
+  (insert "\n\n" ":: " "[[elisp:(dv-print-siigo-ot-type)][Tipo]]" "      :: " )
 
-  (insert "[[elisp:(dv-print-siigo-ot-type)][Tipo:]]")
-
-  (insert "\n\n")
-  (insert "Titulo (inserido na OT nr.): \n\n")
-  (insert "Descriçao { \n}\n\n")
+  (insert "\n:: ")
+  (insert "Titulo    :: \n")
+  (insert ":: Descriçao :: \n\n")
   (insert "Tempos { \n\n\n\n}\n\n") 
   (insert "Notas { \n}\n\n")
   (insert "Materiais { \n}\n\n")
