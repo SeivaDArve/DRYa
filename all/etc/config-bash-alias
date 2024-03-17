@@ -63,7 +63,7 @@ function siigo {
 
    function f_termux_siigo {
       # Using termux 
-      termux-open-url https://siigo-maintenance.com/#/calendar 2>/dev/null
+      termux-open-url "https://siigo-maintenance.com/#/calendar" 2>/dev/null
    }
    
    function f_chrome_siigo {
@@ -212,8 +212,10 @@ alias lixo="mkdir -p ~/trash/; mv $@ ~/trash/"
 
 # Media tools:
    alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+   alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
    alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
    alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
+
 
 function op {
    # Function to open all files and directories given as arguments ($*)

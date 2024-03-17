@@ -42,6 +42,9 @@
    ;; Usando F5 nas teclas do termux para dv-insert-new-Entry-upk (por causa de ser tao comum)
       (global-set-key (kbd "<f5>") (lambda () (interactive) (dv-insert-new-Entry-upk)))
 
+   ;; Usando F5 nas teclas do termux para dv-insert-new-Entry-upk (por causa de ser tao comum)
+      (global-set-key (kbd "<f6>") (lambda () (interactive) (u)))
+
    ;; Usar o F7 como drya-termux-omni-key (com simbolo do Om)
       (global-set-key (kbd "<f7>") (lambda () (interactive)(save-buffer)(kill-emacs)))
 
