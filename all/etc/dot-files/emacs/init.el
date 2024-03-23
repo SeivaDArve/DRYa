@@ -902,6 +902,25 @@ tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, 
 
 
 
+(defun dv-follow-id-starting-top ()
+   (interactive)
+   "Colocando o cursor em cima da ID que queremos seguir e chamando esta Fx, entao e emacs pesquisa a proxima ID igual mas que comece numa das pontas do buffer"
+   ;; Copy original ID to a variable
+      (search-backward "<<")(forward-char 2)(setq v-beg (point))
+      (search-forward ">>")(backward-char 2)(setq v-end (point))
+      (kill-ring-save v-beg v-end)
+      (setq v-id-result (current-kill 0 t))
+      (beginning-of-buffer)(search-forward v-id-result)(org-reveal))
+
+(defun dv-follow-id-starting-bottom ()
+   "Colocando o cursor em cima da ID que queremos seguir e chamando esta Fx, entao e emacs pesquisa a proxima ID igual mas que comece numa das pontas do buffer"
+   (interactive)
+   ;; Copy original ID to a variable
+      (search-backward "<<")(forward-char 2)(setq v-beg (point))
+      (search-forward ">>")(backward-char 2)(setq v-end (point))
+      (kill-ring-save v-beg v-end)
+      (setq v-id-result (current-kill 0 t))
+      (end-of-buffer)(search-backward v-id-result)(org-reveal))
 
 
 (defun dwiki ()
@@ -1007,11 +1026,12 @@ tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, 
 		       (search-forward "]")
 		       (backward-char 2)
 		       (delete-char 1)
-             (when (eq increm-num 4) (progn (insert "X")(setq increm-num 5)))
-             (when (eq increm-num 3) (progn (insert " ")(setq increm-num 4)))
-             (when (eq increm-num 2) (progn (insert "?")(setq increm-num 3)))
-             (when (eq increm-num 1) (progn (insert "-")(setq increm-num 2)))
-             (when (eq increm-num 5) (setq increm-num 1)))))
+             (when (eq increm-num 5) (progn (insert "P")(setq increm-num 6)))  ;; P ;; Pronto para ser introduzido no siigo
+             (when (eq increm-num 4) (progn (insert "X")(setq increm-num 5)))  ;; X ;; Tempos ja inseridos no siigo
+             (when (eq increm-num 3) (progn (insert " ")(setq increm-num 4)))  ;;   ;; Nada feito ainda
+             (when (eq increm-num 2) (progn (insert "?")(setq increm-num 3)))  ;; ? ;; Ja inserdido no siigo, estamos so a espera que o siigo nos dê o numero da OT (vai ser necessario refresh da pagina)
+             (when (eq increm-num 1) (progn (insert "-")(setq increm-num 2)))  ;; - ;; Tempos propositadamente nao inseridos no siigo
+             (when (eq increm-num 6) (setq increm-num 1)))))                   ;;      A contagem tem de ser um numero a mais para facilitar a programação, que ao ser encontrado é convertido no primeiro numero
 
 
 (defun dv-search-undone-checkbox ()
