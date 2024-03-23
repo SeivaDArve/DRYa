@@ -157,8 +157,12 @@ function f_emacs_init_vim {
 function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
  
+   if [ $v_nm == "test" ]; then
+      clear
+      figlet fluNav 
+      echo "$v_nm: Testing fluNav"
    
-   if [ $v_nm == "self" ]; then
+   elif [ $v_nm == "self" ]; then
       clear
       figlet fluNav 
       echo "$v_nm being edited"
@@ -169,6 +173,16 @@ function f_action {
       clear
       figlet fluNav 
       echo "$v_nm being edited"
+      echo " > Alias: 'F trade'"
+      echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
+      echo 
+      echo "Parent repo: moedaz"
+      echo "Other alias: 'trade' (no sync)"
+      echo 
+      echo "Will be syncronized only with ezGIT"
+
+      read
+
       cd ${v_REPOS_CENTER}/moedaz && \
       G v && \
       EM all/trade.org && \
@@ -853,24 +867,23 @@ function M {
          # When function F is presented with arguments (using elif):
          # And sync with github
          # Use this menu to MANUALLY add/remove files to be handled
+         # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
+         # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
+            elif [ $1 == "test"  ]; then v_nm="test";        f_action; ## Just test if this file is working
             elif [ $1 == "."     ]; then v_nm="self";        f_action; ## Edit this file itself 
             elif [ $1 == "0"     ]; then v_nm="unalias";     f_action; f_unalias_all; f_up
             elif [ $1 == "1"     ]; then v_nm="dryaSH";      f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
             elif [ $1 == "1."    ]; then v_nm="dryaSH-op-1"; f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
             elif [ $1 == "2"     ]; then v_nm="initVIM";     f_action; f_emacs_init_vim; f_up
-            elif [ $1 == "5"     ]; then v_nm="F5";          f_action; echo "Alias for: drya update. Do you want to continue?"; f_up
+            elif [ $1 == "5"     ]; then v_nm="F5";          f_action; # Refresh the entire terminal 
             elif [ $1 == "19"    ]; then v_nm="test";        f_action; echo "Test is working for 19"; f_up
             elif [ $1 == "wd"    ]; then v_nm="wikiD";       f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
             elif [ $1 == "cv"    ]; then v_nm="curriculum";  f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
             elif [ $1 == "links" ]; then v_nm="ss-links";    f_action; echo "uDev: open shiva sutra links"; f_up
             elif [ $1 == "luxam" ]; then v_nm="luxam";       f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
             elif [ $1 == "trade" ]; then v_nm="trade";       f_action; # Sync the trade.org wikipedia
+            elif [ $1 == "om"    ]; then v_nm="omni-log";    f_action; # Sync the omni-log.org file 
 
-
-            #elif [ $1 == "9" ]; f_F_9"
-
-
-         # If arguments are given but they are wrong
-            else echo "fluNav: Please choose a valid arg"
+            else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
    }   ## End of function F
