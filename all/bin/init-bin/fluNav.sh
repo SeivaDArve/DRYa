@@ -154,6 +154,42 @@ function f_emacs_init_vim {
       #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
 
+function f_edit_self {
+      clear
+      figlet fluNav 
+      echo "Editing/Opening: fluNav original file"
+      echo " > Parent repo: DRYa"
+      echo
+      echo
+      echo "-------- info --------"
+      echo "Outdated: opening REPOS CENTER with: '. .'"
+      echo " > Updated: '. G' to navigate there"
+      echo 
+      echo "To open fluNav (catalogue of all sync files):"
+      echo " > Function: F ."
+      echo " > Function: . ."
+      echo "----------------------"
+      echo
+      echo
+      echo "Press any key to continue"
+      echo " > To open fluNav.sh in vim editor" 
+      read -s -n 1 -p " "
+      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+
+      clear
+      figlet fluNav 
+      echo "Edited/Closed: fluNav original file"
+      echo
+      echo "Do you want to refresh the terminal to apply the changes?"
+      echo " > uDev (it will be alias: 'F 5')"
+      echo " > Press any key to continue"
+      echo " > (Or wait 5 secs to abort)"
+      read -s -n 1 -t 5
+
+      f_up 
+
+}
+
 function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
  
@@ -163,11 +199,7 @@ function f_action {
       echo "$v_nm: Testing fluNav"
    
    elif [ $v_nm == "self" ]; then
-      clear
-      figlet fluNav 
-      echo "$v_nm being edited"
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
-      f_up 
+      f_edit_self
 
    elif [ $v_nm == "trade" ]; then
       clear
@@ -231,13 +263,7 @@ function . {
          ls 
 
       elif [ $1 == "." ]; then 
-         echo "Before we could use '. .' to go to REPOS CENTER "
-         echo " > but now, to go there we use '. G' to help ezGIT"
-         echo 
-         echo "The command '. .' now opens the file of fluNav"
-         echo " > Same as 'F .'"
-
-         vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+         f_edit_self
 
       elif [ $1 == "G" ]; then 
          # If arg 1 is 'G' then navigate to the center of seiva's repos
