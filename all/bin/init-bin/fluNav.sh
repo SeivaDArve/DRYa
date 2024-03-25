@@ -25,6 +25,17 @@
 
 
 
+# Leters to be used:
+#     function F
+#     function M
+#     function PNpn
+#     function E
+#     function S      # To sync files (uDev: Replace with F?)
+#     function .
+#     function ..
+#     function ...
+#     function ....
+#     Forbiden function: Function D   ##   Reserved for DRYa
 
 # ---------------------------------
 # uDev list                          }
@@ -190,13 +201,40 @@ function f_edit_self {
 
 }
 
+function f_sync_ez_b4_after {
+   # Sync with ezGIT Before and After the file is opened
+
+      cd ${v_REPOS_CENTER}/$v_parent && \
+
+      echo 
+      echo "Will be syncronized only with ezGIT"
+      echo " > Before + After edition"
+      echo
+      echo "Do you want to continue? (Press any key)"
+      echo " > Press Ctrl-C to land on its dir only"
+      read -s -n 1
+
+      G v && \
+      EM $v_file && \
+      G ++ b
+      echo
+      echo Done!
+}
+
 function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
  
    if [ $v_nm == "test" ]; then
       clear
       figlet fluNav 
+      f_down
       echo "$v_nm: Testing fluNav"
+   
+   elif [ $v_nm == "car" ]; then
+      clear
+      figlet fluNav 
+      #f_down
+      echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
    
    elif [ $v_nm == "self" ]; then
       f_edit_self
@@ -205,22 +243,39 @@ function f_action {
       clear
       figlet fluNav 
       echo "$v_nm being edited"
+
+      v_file="all/trade.org"
+      v_parent="moedaz"
+
       echo " > Alias: 'F trade'"
       echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
       echo 
       echo "Parent repo: moedaz"
       echo "Other alias: 'trade' (no sync)"
       echo 
-      echo "Will be syncronized only with ezGIT"
 
-      read
+      f_sync_ez_b4_after
 
-      cd ${v_REPOS_CENTER}/moedaz && \
-      G v && \
-      EM all/trade.org && \
-      G ++ b
+   elif [ $v_nm == "om" ]; then
 
-      echo Done
+      # Variables to use on next function (to sync)
+         v_file="omni-log.org"
+         v_parent="omni-log"
+         #v_editor= Em || Vim
+
+      clear
+      figlet fluNav 
+      echo "$v_nm being edited (file: omni-log.org)"
+      echo " > Alias: 'F om' (sync)"
+      echo
+      echo "Parent repo: omni-log"
+      echo "Other alias: 'om' (no sync)"
+      echo 
+      echo " > Syncronization available: "
+      echo "   ezGIT (pull + Push all with random comment)"
+      echo 
+
+      f_sync_ez_b4_after
 
    elif [ $v_nm == "foo" ]; then
       echo bar
@@ -234,6 +289,7 @@ function f_down {
    # To download updates:
    echo "uDev: Download from github (before opening file)"
    echo " > Code-Name of file to sync: $v_nm"
+   bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh count^
 }
 
 function f_up {
@@ -908,7 +964,9 @@ function M {
             elif [ $1 == "links" ]; then v_nm="ss-links";    f_action; echo "uDev: open shiva sutra links"; f_up
             elif [ $1 == "luxam" ]; then v_nm="luxam";       f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
             elif [ $1 == "trade" ]; then v_nm="trade";       f_action; # Sync the trade.org wikipedia
-            elif [ $1 == "om"    ]; then v_nm="omni-log";    f_action; # Sync the omni-log.org file 
+            elif [ $1 == "om"    ]; then v_nm="om";          f_action; # Sync the omni-log.org file 
+            elif [ $1 == "note"  ]; then v_nm="note";        f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
+            elif [ $1 == "car"   ]; then v_nm="car";         f_action; # Sync Everything about the car
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
