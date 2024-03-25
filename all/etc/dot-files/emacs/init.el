@@ -906,6 +906,7 @@ tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, 
    (interactive)
    "Colocando o cursor em cima da ID que queremos seguir e chamando esta Fx, entao e emacs pesquisa a proxima ID igual mas que comece numa das pontas do buffer"
    ;; Copy original ID to a variable
+   ;; uDev: create a message to inform what hotkey (under dev also) that allows the user to search again
       (search-backward "<<")(forward-char 2)(setq v-beg (point))
       (search-forward ">>")(backward-char 2)(setq v-end (point))
       (kill-ring-save v-beg v-end)
@@ -916,12 +917,28 @@ tambem usa dv-transfer-ot-ID-link-uninteractive que extrai da linha atual o ID, 
    "Colocando o cursor em cima da ID que queremos seguir e chamando esta Fx, entao e emacs pesquisa a proxima ID igual mas que comece numa das pontas do buffer"
    (interactive)
    ;; Copy original ID to a variable
+   ;; uDev: create a message to inform what hotkey (under dev also) that allows the user to search again
       (search-backward "<<")(forward-char 2)(setq v-beg (point))
       (search-forward ">>")(backward-char 2)(setq v-end (point))
       (kill-ring-save v-beg v-end)
       (setq v-id-result (current-kill 0 t))
       (end-of-buffer)(search-backward v-id-result)(org-reveal))
 
+(defun dv-follow-ID-link-again ()
+"Sometimes we may use one of both function: dv-follow-id-starting-bottom 
+                                            dv-follow-id-starting-top
+and you want to use an hotkey to search again.
+This funtion should detect which direction last search was and allow to user to search again
+
+uDev:
+1: Each one of both functions must create a variable to store which direction was used (starting from bottom of top of buffer)
+2: An hotkey should be created to search backward or forward from that point to continue the search
+3: On original dv-add-id-line, 'help' should be replaced with 'more' with an interacrtive prompt that includes 'help', 'link to search from bottom' 'link to search from top' 
+
+4: Pode ser usado o Ctrl-I como tecla interativa do DV que faz de novo a acao anterior
+"
+
+)
 
 (defun dwiki ()
    (interactive)
