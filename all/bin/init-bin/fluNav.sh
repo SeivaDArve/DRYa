@@ -236,6 +236,30 @@ function f_action {
       #f_down
       echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
    
+   elif [ $v_nm == "upk" ]; then
+
+      # Esta fx pode e deve usar o nan-D
+      #    Cada smartphone deve ter um ficheiro nD em cada pasta principal (Armazenamento Interno, Cartao SD)
+      #    criados com o explorador do proprio Android para facilitar a busca feita pelo Termux  
+      #    exemplo: .../Armazenamento\ Interno/nD.Arm-Int.txt
+      #    exemplo: .../Cartao\ SD/nD.CartSD.txt
+      # 
+      #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
+
+      clear
+      figlet fluNav 
+      #f_down
+      echo "$v_nm: Menu to support UPK"
+      echo 
+      echo "What would you like to sync?"
+      echo " 1. Horario Novo"
+      echo "    2. Mostrar horario atual"
+      echo 
+      echo " 3. Renomear e buscar uma foto do DCIM"
+      echo ""
+      echo ""
+      echo ""
+   
    elif [ $v_nm == "self" ]; then
       f_edit_self
 
@@ -967,6 +991,7 @@ function M {
             elif [ $1 == "om"    ]; then v_nm="om";          f_action; # Sync the omni-log.org file 
             elif [ $1 == "note"  ]; then v_nm="note";        f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
             elif [ $1 == "car"   ]; then v_nm="car";         f_action; # Sync Everything about the car
+            elif [ $1 == "upk"   ]; then v_nm="upk";         f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
