@@ -813,7 +813,7 @@ function f_clone_repos {
       moedaz | mo) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
       yoga | yg) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
       dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
-      omni-log | omni | log) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
+      omni-log | omni | log | om) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
       shiva-sutras | shiva | ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
       upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
       upk-dv | upkd) 
