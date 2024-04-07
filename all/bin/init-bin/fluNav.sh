@@ -235,6 +235,7 @@ function f_action {
       figlet fluNav 
       #f_down
       echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
+      vim ${v_REPOS_CENTER}/moedaz/all/viatura/
    
    elif [ $v_nm == "upk" ]; then
 
