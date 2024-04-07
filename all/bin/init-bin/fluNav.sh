@@ -270,10 +270,10 @@ function f_action {
       echo "$v_nm being edited"
       cd ${v_REPOS_CENTER}/moedaz/trade && \
       G v && \
-      EM all/trade.org && \
+      EM all/trade/trade.org && \
       G ++ b
 
-      v_file="all/trade.org"
+      v_file="all/trade/trade.org"
       v_parent="moedaz"
 
       echo " > Alias: 'F trade'"
