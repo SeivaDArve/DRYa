@@ -1,0 +1,1 @@
+uDev: This commnad 'ex' will ask for an input value, will grep it from the 'ls' command and attempt to run the result... This is usefull for directories where all the files are scripts... the command ex will act as a menu system

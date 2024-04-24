@@ -27,6 +27,15 @@
             termux-reload-settings
          }
 
+      # To exec 'trade' 
+         function f-set-omni-key-trade {
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
+            #sed -i "s/ॐ/₸/g" ~/.termux/termux.properties
+            sed -i "s/ॐ/ᜎ/g" ~/.termux/termux.properties
+            bind -x '"\e[18~":"S trade"'
+            termux-reload-settings
+         }
+
       # To exec 'admin' 
          function f-set-omni-key-admin {
             echo "Admin Home not ready yet"
@@ -100,7 +109,8 @@ function key {
    echo " > (2) UPK"
    echo " > (3) QR"
    echo " > (4) Luxam"
-   echo " > (5) Admin-Home"
+   echo " > (5) Trade"
+   echo " > (6) Admin-Home"
    #echo " > Reset (leave empty)"
 
    read -n 1 -p "Qual a funcao que quer para omni-key? " v_ans
@@ -109,7 +119,8 @@ function key {
    elif [ $v_ans == "upk"   ] || [ $v_ans == "2" ]; then echo && f-set-omni-key-upk
    elif [ $v_ans == "qr"    ] || [ $v_ans == "3" ]; then echo && f-set-omni-key-qr
    elif [ $v_ans == "luxam" ] || [ $v_ans == "4" ]; then echo && f-set-omni-key-luxam
-   elif [ $v_ans == "admin" ] || [ $v_ans == "5" ]; then echo && f-set-omni-key-admin
+   elif [ $v_ans == "trade" ] || [ $v_ans == "5" ]; then echo && f-set-omni-key-trade
+   elif [ $v_ans == "admin" ] || [ $v_ans == "6" ]; then echo && f-set-omni-key-admin
    fi
 
 }

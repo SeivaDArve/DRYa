@@ -6,7 +6,7 @@
 
 # uDev: This app should NOT have 3 prefixes: M F and D
 #       Instead: use only: .
-#       But if some reason it does not work, try F (file) and P (place)
+#       But if some reason it does not work, try S (sync file) and V (Pointing to this place)
 
 
 # ---------------------------------
@@ -432,6 +432,18 @@ function E {
 }
 
 
+function f_trade_interactive_dir {
+      clear
+      figlet Moedaz
+      echo "moedaz: trade interactive DASHBOARD"; echo
+      ls
+      echo
+      echo "uDev: create command 'ex'"
+      echo "to ask for an input number"
+      echo "and the 'ex' will grep it from the 'ls'"
+      echo "and run it"
+}
+
 function hkllhcf {
    # (Trasido do config-bash-alias para casar com este ficheiro fluNav)
    # If if you invoke "cdl" and no dir exists
@@ -527,7 +539,7 @@ function npNP-dir-looper {
 
 
 
-function M {
+function V {
    # Function: "Directory"
    
    # uDev: why is it that D is not reserved for 'alias D="drya"'? 
@@ -571,6 +583,11 @@ function M {
    # Implementation of Use 2:
    elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
       cd ${v_REPOS_CENTER}/moedaz && ls
+   
+   # Implementation of Use 2:
+   elif [ $1 == "trade" ] ; then
+      cd ${v_REPOS_CENTER}/moedaz/all/trade/dashboard-scripts 
+      f_trade_interactive_dir
    
    # Implementation of Use 2:
    elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
@@ -793,7 +810,7 @@ function M {
 
 
 # List fav files for edition (fluNav)
-   function F {
+   function S {
    # uDev: letra S é melhor para ABRIR ficheiros com SYNC
    #       letra . para abrir ficheiros sem sync
 
