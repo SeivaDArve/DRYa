@@ -87,3 +87,6 @@ Repositories:	https://github.com/SeivaDArve?tab=repositories
 
 ## Clone DRYa directly:
 git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa
+
+## QR Code (link to open DRYa's Github page directly from another device)
+uDev

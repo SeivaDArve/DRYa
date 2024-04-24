@@ -1,0 +1,7 @@
+Para osvmomentos em que DRYa é desinstalaaa em aparelhis (ex: telemovel de antigosbtrabalhos) drya pode solicitar deixar um script na pasra ~ para que apos o repositorio DEYa sejabremovido, possa ser dlfacilmente reinstalado clonandobapartir do GITHUB.
+
+Aubdesinstalar a repo, tera se ser removido o ficheiro .netrc, senao obviamente é uma falha de seguranca
+
+Ao utilizar o script, o Termux instala novamenteba DRYa
+
+o repo DRYa pode tambem ter um script para ser utilizado no telemovel principal do DArve. o proposito deste script é a utilizacao em caso de esquecimento de apagar a repo no aparelho do antigo trabalho.... Ou seja, se Darve sair de um emprego em que se demitiu e sebesqueceu de apagarba DRYa no telemovel da empresa, entao pode pedir a um ex colegabde trabalho que execute esse script. O script ao ser executado, apaga o .netrc, apaga os repisitorios todos, apaga DRYa e deixa na pasta ~ um script para clonar DRYa de novo
