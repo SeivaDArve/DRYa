@@ -8,5 +8,6 @@ function ex {
    for i in $*
    do 
       bash $(ls | grep "$i")
+      #python3 $(ls | grep ".py$" | grep "$i")
    done
 }

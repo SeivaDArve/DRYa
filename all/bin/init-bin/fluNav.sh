@@ -435,13 +435,10 @@ function E {
 function f_trade_interactive_dir {
       clear
       figlet Moedaz
-      echo "moedaz: trade interactive DASHBOARD"; echo
-      ls
+      echo "moedaz: trade: interactive DASHBOARD"
+      echo " > You may use the comand 'ex'"
       echo
-      echo "uDev: create command 'ex'"
-      echo "to ask for an input number"
-      echo "and the 'ex' will grep it from the 'ls'"
-      echo "and run it"
+      ls -1
 }
 
 function hkllhcf {
