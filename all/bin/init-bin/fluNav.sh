@@ -276,7 +276,7 @@ function f_action {
       v_file="all/trade/trade.org"
       v_parent="moedaz"
 
-      echo " > Alias: 'F trade'"
+      echo " > Alias: 'S trade'"
       echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
       echo 
       echo "Parent repo: moedaz"
@@ -368,7 +368,7 @@ function . {
 
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
-         cd $1 || vim $1
+         cd $1 2>/dev/null && ls $1 || vim $1
       fi
 }
 
