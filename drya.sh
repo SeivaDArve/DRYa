@@ -1160,6 +1160,23 @@ elif [ $1 == "install" ]; then
             # install '1st' here 
             # pkg install termux-api
          ;;
+         pycharm)
+            clear
+            f_greet
+            echo "Installing PyCharm on Fedora"
+            echo " > Press ENTER to continue; Press Ctrl-C to Abort"
+            echo 
+            read -sn 1
+            echo "Tutorial source: https://snapcraft.io/install/pycharm-community/fedora#install"
+            echo 
+            # Installing Snap Store and from there, installing pycharm-community
+               sudo dnf install snapd
+               sudo ln -s /var/lib/snapd/snap /snap
+               sudo snap install pycharm-community --classic
+            echo
+            echo "PyCharm installed"
+            echo " > Logout the session or restart to update and use pyCharm"
+         ;;
          xrandr) 
             echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
             echo " > 1360x768 "
