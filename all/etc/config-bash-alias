@@ -130,6 +130,7 @@ alias appdata="udev: must be completed"
       esac
 }
 
+alias pycharm="pycharm-community &"
 
 alias grep="grep --color=auto"
 
