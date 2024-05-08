@@ -601,7 +601,11 @@ function V {
       cd ${v_REPOS_CENTER}/ezGIT && ls
       
    # Implementation of Use 2:
-   elif [ $1 == "dwiki" ] || [ $1 == "wiki" ] || [ $1 = "dw" ] || [ $1 == "w" ]; then
+   elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
+      cd ${v_REPOS_CENTER}/dWiki && ls
+      
+   # Implementation of Use 2:
+   elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
       cd ${v_REPOS_CENTER}/dWiki && ls
       
    # Implementation of Use 2:
@@ -999,7 +1003,7 @@ function V {
                esac
             done
 
-         # When function F is presented with arguments (using elif):
+         # When function S is presented with arguments (using elif):
          # And sync with github
          # Use this menu to MANUALLY add/remove files to be handled
          # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
