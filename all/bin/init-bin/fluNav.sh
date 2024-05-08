@@ -606,7 +606,7 @@ function V {
       
    # Implementation of Use 2:
    elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
-      cd ${v_REPOS_CENTER}/dWiki && ls
+      cd ${v_REPOS_CENTER}/wikiD && ls
       
    # Implementation of Use 2:
    elif [ $1 == "upk" ]; then
