@@ -368,7 +368,17 @@ function . {
 
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
-         cd $1 2>/dev/null && ls $1 || vim $1
+         
+            cd $1 && \
+            v=$(pwd) && \
+            b=$(basename $v) && \
+            echo "-----------------\\" && \
+            echo "Listing files at  \\ " && \
+            echo " > ./$b" && \
+            echo && \
+            ls || \
+            vim $1
+
       fi
 }
 
