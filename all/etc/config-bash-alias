@@ -130,7 +130,9 @@ alias appdata="udev: must be completed"
       esac
 }
 
-alias pycharm="pycharm-community &"
+# uDev: alias para: 'date' que neste momento so da as horas e dia em ingles e com pouca info, udev: criar date que da info tao boas quanto a fx 'date' que criei no emacs init.el
+
+alias pycharm="pycharm-community 1>/dev/null &"
 
 alias grep="grep --color=auto"
 

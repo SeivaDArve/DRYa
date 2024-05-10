@@ -9,6 +9,9 @@ function ex {
       # Assim, cada pasta/diretorio pode ser uma especie menu incorporado por pre-definicao
       # Basta renomear os ficheiros por: 1-ficheiro; 2-ficheiro; 3-ficheiro
       # que o comando 'ex' reconhece que o argumento dado '3' significa "3-ficheiro" em vez de "2-ficheiro3"
+
+      # uDev: Se houver mais do que um ficheiro: questionar qual o utilizador quer
+      # uDev: atender à extensao do ficheiro, se for .py entao abre com python
       bash $(ls | grep "^$i")
    done
 }
