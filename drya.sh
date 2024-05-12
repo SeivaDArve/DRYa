@@ -960,6 +960,9 @@ elif [ $1 == "deactivate" ]; then
    echo " > ~/.config"
    echo " > ~/.netrc"
    echo "e deixar so um script para voltar a clonar DRYa do GitHub"
+   echo
+   echo "Vai criar um script para"
+   echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
 
 elif [ $1 == "location" ]; then 
    # Save GPS locations
