@@ -936,6 +936,31 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
 elif [ $1 == "." ]; then
    cd ${v_REPOS_CENTER}/DRYa && ls
 
+elif [ $1 == "activate" ]; then
+   # Ao instalar DRYa, fica autimaticamente ativo
+   # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
+   # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
+   clear
+   figlet DRYa
+   echo "DRYa: activate"
+   echo
+   echo "uDev: Se nao existe nenhuma repo no dispositivo:"
+   echo " > clonar DRYa do GitHub"
+
+elif [ $1 == "deactivate" ]; then
+   # Apos insdalar DRYa, fica possivel desarivar com 'deactivate'
+   # Serve para apagar tudo o que existe na pasta ~/Repositories incluindo DRYa, apagando tambem as configs na pasta ~ relativamente a DRYa e deixar no seu lugar um script que volta a clonar do Github 
+   # Serve para usar em telemoveis ou dispositivos dos quais SeivaDArve na é o dono, tal como nos dispositivos do trabalho
+   clear
+   figlet DRYa
+   echo "DRYa: deactivate"
+   echo
+   echo "uDev: Apagar TUDO em:"
+   echo " > ~/Repositories"
+   echo " > ~/.config"
+   echo " > ~/.netrc"
+   echo "e deixar so um script para voltar a clonar DRYa do GitHub"
+
 elif [ $1 == "location" ]; then 
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
