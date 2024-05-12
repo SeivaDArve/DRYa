@@ -968,6 +968,7 @@ elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ]; then
       echo '# Description: Run this script to clone DRYa to ~/Repositories automatically' >> ~/.DRYa-activate.sh
       echo "git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa" >> ~/.DRYa-activate.sh && echo "DRYa: Criado ~/.DRYa-activate.sh"
       # uDev: usar ~/.config/h.h/DRYa-activate.sh rm vez de ~/.DRYa-activate.sh
+      # uDev: Mencionar o Stroken
 
 elif [ $1 == "location" ]; then 
    # Save GPS locations
