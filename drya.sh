@@ -1123,8 +1123,8 @@ elif [ $1 == "backup" ]; then
 
 elif [ $1 == "seiva-up-time" ]; then 
          # uDev: Tells how long the Linux experience started for Seiva
+         # Tutorial to follow: https://www.linuxjournal.com/content/doing-date-math-command-line-part-i
          echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
-
 
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
