@@ -12,6 +12,7 @@ function ex {
 
       # uDev: Se houver mais do que um ficheiro: questionar qual o utilizador quer
       # uDev: atender à extensao do ficheiro, se for .py entao abre com python
+      # uDev: vao existir numeros 01, 02, 03, 04... para esses numeros, detetar se sao abaixo de 10 e permitir que o argumento dado a 'ex' seja so com 1 digito (exemplo: '$ ex 1' igual a: '$ ex 01')
       bash $(ls | grep "^$i")
    done
 }
