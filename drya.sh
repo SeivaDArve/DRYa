@@ -936,7 +936,7 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
 elif [ $1 == "." ]; then
    cd ${v_REPOS_CENTER}/DRYa && ls
 
-elif [ $1 == "activate" ]; then  #  || [ $1 == "placeholder-on" ] 
+elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then
    # Ao instalar DRYa, fica autimaticamente ativo
    # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
    # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
@@ -947,7 +947,7 @@ elif [ $1 == "activate" ]; then  #  || [ $1 == "placeholder-on" ]
    echo "uDev: Se nao existe nenhuma repo no dispositivo:"
    echo " > clonar DRYa do GitHub"
 
-elif [ $1 == "deactivate" ]; then  #  || [ $1 == "placeholder-off" ] 
+elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ]; then
    # Apos insdalar DRYa, fica possivel desarivar com 'deactivate'
    # Serve para apagar tudo o que existe na pasta ~/Repositories incluindo DRYa, apagando tambem as configs na pasta ~ relativamente a DRYa e deixar no seu lugar um script que volta a clonar do Github 
    # Serve para usar em telemoveis ou dispositivos dos quais SeivaDArve na é o dono, tal como nos dispositivos do trabalho
@@ -961,8 +961,13 @@ elif [ $1 == "deactivate" ]; then  #  || [ $1 == "placeholder-off" ]
    echo " > ~/.netrc"
    echo "e deixar so um script para voltar a clonar DRYa do GitHub"
    echo
-   echo "Vai criar um script para"
-   echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+
+   # Criar o fucheiro que Re-Ativa DRYa, clonando do Github
+      echo '#!/bin/bash' > ~/.DRYa-activate.sh
+      echo '# Title: Activate DRYa again' >> ~/.DRYa-activate.sh
+      echo '# Description: Run this script to clone DRYa to ~/Repositories automatically' >> ~/.DRYa-activate.sh
+      echo "git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa" >> ~/.DRYa-activate.sh && echo "DRYa: Criado ~/.DRYa-activate.sh"
+      # uDev: usar ~/.config/h.h/DRYa-activate.sh rm vez de ~/.DRYa-activate.sh
 
 elif [ $1 == "location" ]; then 
    # Save GPS locations
@@ -1471,6 +1476,7 @@ elif [ $1 == "remove" ]; then
             dot-files)
                echo "drya: drya dot-files remove"
                echo " > remove files from default locations and do not touch files inside drya repo"
+               # Remove ~/.config/h.h
             ;;
             upk)
                # Makes all dependencies for upk repo disapear
@@ -1529,6 +1535,9 @@ elif [ $1 == "vlm" ]; then
 
          # As per termux instructions, we can reload the configs: 
             #termux-reload-settings
+
+elif [ $1 == "QR-to-clone-drya" ] || [ $1 == "QR-clone" ]; then 
+   echo "uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
 
 elif [ $1 == "logo" ]; then 
          # Presenting DRYa
