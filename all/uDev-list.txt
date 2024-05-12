@@ -1,0 +1,10 @@
+# Title: uDev List
+
+uDev: Criar um Indice ou uma Arvore: 
+      o objetivo é listar as localizacoes dos conteudos das repos do autor SeivaDArve. Serve para a DRYa nao ter de fazer clone de cada repo à procura do conteudo certo
+      Esta arvore diz que que repo se encontram: Contactos, Browser-Bookmarks, Trading Scripts, Cartoes de compras (Lidl, Auchan...), Script encriptador, Scripts conversores, Biblioteca de Scripts, Bloco de notas de emprego, etc...
+      Com esta arvore, é possivel que DRYa saiba ao certo qual repo clonar à primeira, sem ter de andar à procura
+      Para curriculo: mencionar todos os tipos de scripts que este programador SeivaDArve foi capaz de fazer
+
+uDev: QRcode-link-to-Github:
+      Imagem com QR code que permite outros dispisitivos clonar DRYa facilmente do github

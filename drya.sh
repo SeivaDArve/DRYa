@@ -936,7 +936,7 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
 elif [ $1 == "." ]; then
    cd ${v_REPOS_CENTER}/DRYa && ls
 
-elif [ $1 == "activate" ]; then
+elif [ $1 == "activate" ]; then  #  || [ $1 == "placeholder-on" ] 
    # Ao instalar DRYa, fica autimaticamente ativo
    # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
    # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
@@ -947,7 +947,7 @@ elif [ $1 == "activate" ]; then
    echo "uDev: Se nao existe nenhuma repo no dispositivo:"
    echo " > clonar DRYa do GitHub"
 
-elif [ $1 == "deactivate" ]; then
+elif [ $1 == "deactivate" ]; then  #  || [ $1 == "placeholder-off" ] 
    # Apos insdalar DRYa, fica possivel desarivar com 'deactivate'
    # Serve para apagar tudo o que existe na pasta ~/Repositories incluindo DRYa, apagando tambem as configs na pasta ~ relativamente a DRYa e deixar no seu lugar um script que volta a clonar do Github 
    # Serve para usar em telemoveis ou dispositivos dos quais SeivaDArve na é o dono, tal como nos dispositivos do trabalho
@@ -1126,8 +1126,8 @@ elif [ $1 == "backup" ]; then
 
 elif [ $1 == "seiva-up-time" ]; then 
          # uDev: Tells how long the Linux experience started for Seiva
+         # Tutorial to follow: https://www.linuxjournal.com/content/doing-date-math-command-line-part-i
          echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
-
 
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
