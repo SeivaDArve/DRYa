@@ -927,11 +927,34 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
    
    clear; f_greet
 
-   f_talk; echo "Help options will have:"
-           echo -e " > man page \n > Terminal printed instructions \n > README file \n > (uDev)"
+   if [ -z $2 ]; then
+      f_talk; 
+      echo "Help options menu:"
+      echo " 1. man page"
+      echo " 2. Terminal printed instructions "
+      echo " 3. README file "
+      echo " 4. Most common alias "
+      echo " > Press a number like: '$ D -h 2'"
+      echo
+      echo "DRYa is a CLI software that prevents repetitive tasks"
+      echo " > D.R.Y.a. (Don't Repeat Yourself app)"
+      echo " > author: David Rodrigues (Seiva D'Arve)"
 
-   echo
-   echo "DRYa is a CLI software that... by the author David Rodrigues... that syncs... "
+   elif [ $2 == "1" ]; then
+      echo "uDev: man page is not ready yet"
+
+   elif [ $2 == "2" ]; then
+      echo "uDev: Terminal Printes instructions is not ready yet"
+
+   elif [ $2 == "3" ]; then
+      less ${v_REPOS_CENTER}/DRYa/README.md
+
+   elif [ $2 == "4" ]; then
+      echo "uDev"
+         
+   else
+      echo "That option is not recognized"
+   fi
 
 elif [ $1 == "." ]; then
    cd ${v_REPOS_CENTER}/DRYa && ls

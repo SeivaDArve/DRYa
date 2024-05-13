@@ -6,7 +6,16 @@
 Don't Repeat Yourself (app) 
 
 ## Description
-This project is a natural tendency for any entusiastic programmer, it is like a second Brain...
+A Software to supress repetitive tasks
+
+This repo is the link fand manager for many other repos
+
+Built on top of the DRY principle (Don't Repeat Yourself)
+
+It is a project of a seft-taught student who writes code for people to read and run, not only for machines no run. If you read a script, your english is enought to allow understanding
+
+This project is a natural tendency for any entusiastic programmer, it is like a second Brain, all third-party software has it's commands and alias and DRYa the 'wrap around' those commands for better enjoymient of it's user...
+
 Manages my Public and Private software. 
 
 ## Further Description
