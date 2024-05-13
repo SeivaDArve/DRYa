@@ -1,0 +1,8 @@
+#!/bin/bash
+# Title: 'tm' script to warp and help tmux
+
+examples: 
+   '$ tm s'   (function for sessions)
+   '$ tm w'   (function for windows)
+   '$ tm p'   (function for panes)
+   '$ tm p j' (function no navigate to bottom pane)
