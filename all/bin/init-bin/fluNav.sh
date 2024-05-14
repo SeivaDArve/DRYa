@@ -223,7 +223,7 @@ function f_sync_ez_b4_after {
 
 function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
-   # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence
+   # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence. isso ajuda aos dev que usam git
  
    if [ $v_nm == "test" ]; then
       clear
