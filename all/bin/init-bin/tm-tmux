@@ -6,3 +6,15 @@
 #   '$ tm w'   (function for windows)
 #   '$ tm p'   (function for panes)
 #   '$ tm p j' (function no navigate to bottom pane)
+
+# List sessions 
+#  tmux list-session
+#  tmux list-sessions
+#  tmux ls
+#  'C-b s'
+
+# Command line (usefull for Tab-Completions)
+#  'C-b :'
+
+
+# Para Absorver: https://www.pluralsight.com/resources/blog/cloud/tmux-cheat-sheet
