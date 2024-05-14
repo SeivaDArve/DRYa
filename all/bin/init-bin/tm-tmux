@@ -18,3 +18,36 @@
 
 
 # Para Absorver: https://www.pluralsight.com/resources/blog/cloud/tmux-cheat-sheet
+
+
+function tm {
+   if [ -z $1 ]; then
+      echo "TM: wrap-around para tmux (terminal multiplexer)" 
+      echo " > Para instrucoes: 'tm -h'" 
+
+   elif [ $1 == "k" ]; then
+      tmux kill-server && echo "tmux: all sessions (and server) killed"
+   
+   elif [ $1 == "s" ]; then
+      echo "tmux: what do you want to do about S (sessions)?" 
+      echo " > '$ tm s': prints this message" 
+      echo " > '$ tm S': lists all sessions" 
+
+   elif [ $1 == "h" ]; then
+      echo "tmux: uDev list"
+      echo 
+      echo " |  tm S     | create new session" 
+      echo " |  tm s     | prints this message" 
+      echo " |  tm s .   | lists all sessions" 
+      echo " |  tm s r   | rename curent session" 
+      echo " |  tm s ,   | detach curent session" 
+      echo " |  tm s ..  | attach session" 
+      echo " |  tm s n   | next session" 
+      echo " |  tm s N   | previous session" 
+      echo " |  tm :     | tmux command line" 
+      
+
+   else
+      echo "tmux: opcao nao reconhecida"
+   fi
+}

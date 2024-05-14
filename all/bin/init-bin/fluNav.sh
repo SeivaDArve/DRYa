@@ -223,6 +223,7 @@ function f_sync_ez_b4_after {
 
 function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
+   # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence
  
    if [ $v_nm == "test" ]; then
       clear
@@ -235,8 +236,16 @@ function f_action {
       figlet fluNav 
       #f_down
       echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
+      cd ${v_REPOS_CENTER}/moedaz/all/viatura/
       vim ${v_REPOS_CENTER}/moedaz/all/viatura/
    
+   elif [ $v_nm == "tmux" ]; then
+      clear
+      figlet fluNav 
+      cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
+      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
+      
+      
    elif [ $v_nm == "upk" ]; then
 
       # Esta fx pode e deve usar o nan-D
@@ -1025,6 +1034,7 @@ function V {
             elif [ $1 == "note"  ]; then v_nm="note";        f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
             elif [ $1 == "car"   ]; then v_nm="car";         f_action; # Sync Everything about the car
             elif [ $1 == "upk"   ]; then v_nm="upk";         f_action; # Asks in a menu, which file is meant to be sync
+            elif [ $1 == "tm"    ]; then v_nm="tmux";        f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
