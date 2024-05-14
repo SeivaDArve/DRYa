@@ -36,18 +36,20 @@ function tm {
    elif [ $1 == "h" ]; then
       echo "tmux: uDev list"
       echo 
-      echo " |  tm h     | prints this message" 
+      echo " |  tm h    -------| prints this message" 
+      echo " |  tm :    -------| tmux command line (helps with completions)" 
       echo 
-      echo " |  tm S     | create new session" 
-      echo " |  tm s .   | lists all sessions" 
-      echo " |  tm s r   | rename curent session" 
-      echo " |  tm s ,   | detach curent session" 
-      echo " |  tm s ..  | attach session" 
-      echo " |  tm s n   | next session" 
-      echo " |  tm s N   | previous session" 
-      echo " |  tm :     | tmux command line" 
-      echo " |  tm q     | quits current session" 
-      echo " |  tm K     | kills all sessions and tmux server" 
+      echo " |  tm S    -------| create new session" 
+      echo " |  tm S r  -------| create new session with name" 
+      echo " |  tm s r  -------| rename curent session" 
+      echo " |  tm s .  -------| lists all sessions" 
+      echo " |  tm s .. -------| attach session" 
+      echo " |  tm s ,  -------| detach curent session" 
+      echo " |  tm s n  -------| next session" 
+      echo " |  tm s N  -------| previous session" 
+      echo " |  tm s s <name>  | switches to session name 'name' " 
+      echo " |  tm s q  -------| quits current session" 
+      echo " |  tm q    -------| Quits/kills all sessions and tmux server" 
       
 
    else
