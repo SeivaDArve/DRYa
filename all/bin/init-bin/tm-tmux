@@ -18,7 +18,27 @@
 
 
 # Para Absorver: https://www.pluralsight.com/resources/blog/cloud/tmux-cheat-sheet
+# Para Absorver: https://gist.github.com/kennyng/816c29eb75e8eb022108
+# Para absorver: https://tmuxcheatsheet.com/
+# Para absorver: https://youtu.be/nTqu6w2wc68?si=RxAPK4ECmr8lSnEo
+# Para absorver: Restore session after reboot: https://youtu.be/Bb5n58JynYQ?si=AX26VpjLgqWwyqbi
 
+function f_session_instructions {
+      echo " |  tm S    -------|       | create new session" 
+      echo " |  tm S r  -------|       | create new session with name" 
+      echo " |  tm s r  -------|       | rename curent session" 
+      echo " |  tm s .  -------| C-b s | lists all sessions" 
+      echo " |  tm s .. -------|       | toggle with last session" 
+      echo " |  tm s a  -------|       | attach session" 
+      echo " |  tm s d  -------|       | detach curent session" 
+      echo " |  tm s n  -------|       | next session" 
+      echo " |  tm s N  -------|       | previous session" 
+      echo " |  tm s s <name>  |       | switches to session name 'name' " 
+      echo " |  tm s h  -------|       | print instructions only for session commands"
+      echo " |  tm s q  -------|       | quits current session" 
+      echo " |  tm q    -------|       | Quits/kills all sessions and tmux server" 
+      echo 
+}
 
 function tm {
    if [ -z $1 ]; then
@@ -39,18 +59,8 @@ function tm {
       echo " |  tm h    -------| prints this message" 
       echo " |  tm :    -------| tmux command line (helps with completions)" 
       echo 
-      echo " |  tm S    -------| create new session" 
-      echo " |  tm S r  -------| create new session with name" 
-      echo " |  tm s r  -------| rename curent session" 
-      echo " |  tm s .  -------| lists all sessions" 
-      echo " |  tm s .. -------| attach session" 
-      echo " |  tm s ,  -------| detach curent session" 
-      echo " |  tm s n  -------| next session" 
-      echo " |  tm s N  -------| previous session" 
-      echo " |  tm s s <name>  | switches to session name 'name' " 
-      echo " |  tm s q  -------| quits current session" 
-      echo " |  tm q    -------| Quits/kills all sessions and tmux server" 
-      
+
+      f_session_instructions
 
    else
       echo "tmux: opcao nao reconhecida"

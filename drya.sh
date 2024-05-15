@@ -916,7 +916,8 @@ if [ -z "$*" ]; then
   # Do something else if there are no arguments
      clear
      f_greet
-     f_talk; echo "No arguments were given"
+     f_talk; echo "Master, I'm installed"
+             echo " > But No arguments were given"
 
    # If no arg was given, also navigate do DRYa's repo directory
       cd ${v_REPOS_CENTER}/DRYa
@@ -1125,6 +1126,23 @@ elif [ $1 == "config" ]; then
       v_whoami=$(whoami); echo "whoami is: $v_whoami"
       echo
       echo "uDev: This info must be environment variables for other apps"
+
+elif [ $1 == "wsl" ]; then 
+
+   if [ -z $2 ]; then 
+      echo "DRYa: options for WSL2"
+      echo
+      echo " D wsl p || D wsl path : feed windows relative path to convert to linux and navigate there"
+
+   elif [ $2 == "p" ]; then 
+      echo "DRYa: feed me an windows path to convert"
+      mkdir -p ~/.tmp
+      echo -e "DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' \n\n" > ~/.tmp/wsl-rel-path
+      vim ~/.tmp/wsl-rel-path
+      sed -i "s/DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ'//g" ~/.tmp/wsl-rel-path
+      cat ~/.tmp/wsl-rel-path
+      echo "uDev: convertion is not fully ready"
+   fi
 
 elif [ $1 == "backup" ]; then 
 
