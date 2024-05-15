@@ -236,8 +236,8 @@ function f_action {
       figlet fluNav 
       #f_down
       echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
-      cd ${v_REPOS_CENTER}/moedaz/all/viatura/
-      vim ${v_REPOS_CENTER}/moedaz/all/viatura/
+      cd ${v_REPOS_CENTER}/moedaz/all/viatura/ && \
+      EM viatura-all-info.org
    
    elif [ $v_nm == "tmux" ]; then
       clear
