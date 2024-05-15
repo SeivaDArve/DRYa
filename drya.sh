@@ -1188,9 +1188,12 @@ elif [ $1 == "install" ]; then
       echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
       echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
 
+   elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
+      cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && echo "hit" && . ./termux-PS1
+
    else
       # Install extra stuff
-      case $2 in
+      case $2 in  # uDev: remove case/esac and replace with if/elif/else
          doom-emacs)
             echo "Installing doom emacs for linux "
             read -p " > Do you want to continue?"
@@ -1282,6 +1285,7 @@ elif [ $1 == "install" ]; then
                                 "termux:properties" \
                                 "termux:colors" \
                                 ".dryarc" \
+                                "\$PS1" \
                                 "browser:bookmarks")  
 
                # ECHO variable horizontally:
@@ -1316,35 +1320,35 @@ elif [ $1 == "install" ]; then
               # both files must be place inside their own repos because it is sensitive data
 
             # For git
-            echo "attempting git"
-            echo " Copying "
-            echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-            echo " to"
-            echo -e" > \$HOME"
-            read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-            echo "Done!"
-            echo
+               echo "attempting git"
+               echo " Copying "
+               echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+               echo " to"
+               echo -e" > \$HOME"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+               echo "Done!"
+               echo
 
             # For vim
-            echo "attempting Vim"
-            echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
-            echo " to"
-            echo " > ~"
-            read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-            echo "Done!"
-            echo
+               echo "attempting Vim"
+               echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
+               echo " to"
+               echo " > ~"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+               echo "Done!"
+               echo
 
             # Colors and properties for Termux
-            echo "attempting termux colors"
-            echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
-            echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
-            echo "   to      ~/.termux"
-            read -s -n 1
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
-            echo "Done! (Restart thr terminal is needed)"
+               echo "attempting termux colors"
+               echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
+               echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
+               echo "   to      ~/.termux"
+               read -s -n 1
+               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
+               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
+               echo "Done! (Restart thr terminal is needed)"
          ;;
          dryarc)
             echo "DRYa: source .dryarc if any exists (uDev)"
