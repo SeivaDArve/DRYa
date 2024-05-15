@@ -1137,9 +1137,9 @@ elif [ $1 == "wsl" ]; then
    elif [ $2 == "p" ]; then 
       echo "DRYa: feed me an windows path to convert"
       mkdir -p ~/.tmp
-      echo -e "DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' \n\n" > ~/.tmp/wsl-rel-path
+      echo -e "\n\n# DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' \n# \n# \n# Help with vim commands:\n# > uDev" > ~/.tmp/wsl-rel-path
       vim ~/.tmp/wsl-rel-path
-      sed -i "s/DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ'//g" ~/.tmp/wsl-rel-path
+      #sed -i "s/DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ'//g" ~/.tmp/wsl-rel-path
       cat ~/.tmp/wsl-rel-path
       echo "uDev: convertion is not fully ready"
    fi

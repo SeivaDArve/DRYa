@@ -362,7 +362,8 @@ function . {
       elif [ $1 == "G" ]; then 
          # If arg 1 is 'G' then navigate to the center of seiva's repos
          cd $v_REPOS_CENTER
-         # uDev: this command '. .' is usually issued at thr beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
+         # uDev: this command '. .' is usually issued at the beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
+         # uDev: similar to '$ D .' ezGIT could have also an alias to navigate to it's home dir. Use command '$ . G .' to do it
    
       elif [ $1 == "?" ]; then 
          # Describe all these navigation alias
@@ -378,7 +379,7 @@ function . {
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
          
-            cd $1 && \
+            cd $1 2>/dev/null && \
             v=$(pwd) && \
             b=$(basename $v) && \
             echo "-----------------\\" && \
@@ -386,7 +387,7 @@ function . {
             echo " > ./$b" && \
             echo && \
             ls || \
-            vim $1
+            for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly  ::  Atempt of c_editor failed here
 
       fi
 }
@@ -431,25 +432,45 @@ function ....... {
 
 
 function E {
-   select i in Nano Vim Emacs; do 
+   # In fluNav, there is a command to open either a dir or to open a file:
+   # '$ . <file>'
+   # and if there is no dir or existent file, it will create one,
+   # so, this function will decide which text editor will open the file
+
+   # uDev: variable PS3
+   select i in Nano Vim Emacs
+   do 
       case $i in 
          Nano)
-	         if [ $i == "1" ]; then alias e="nano"; fi
+            alias v_editor="nano"
+            echo "Nano"
+            break
          ;;
          Vim)
-            if [ $i == "2" ]; then alias e="vim"; fi
+            alias v_editor="vim"
+            echo "Vim"
+            break
          ;;
          Emacs)
-            if [ $i == "3" ]; then alias e="emacs"; fi
+            alias v_editor="EM"
+            echo "Emacs"
+            break
          ;;
          *)
-            echo lol
+            echo "What text editor do you want as default?"
          ;;
       esac
    done
-	
 }
+alias v_editor="vim"  ## This alias goes in combination with function 'E' and '$ . <file>'
 
+# function c_editor {
+#    # 'Command editor' a command/alias to another command to eventually open a file
+#    if [ -z $v_editor ]; then ls
+#    elif [ $v_editor == "vim" ]; then vim $1
+#    elif [ $v_editor == "nano" ]; then nano $1
+#    fi
+# }
 
 function f_trade_interactive_dir {
       clear
