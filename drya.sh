@@ -1135,13 +1135,45 @@ elif [ $1 == "wsl" ]; then
       echo " D wsl p || D wsl path : feed windows relative path to convert to linux and navigate there"
 
    elif [ $2 == "p" ]; then 
-      echo "DRYa: feed me an windows path to convert"
-      mkdir -p ~/.tmp
-      echo -e "\n\n# DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' \n# \n# \n# Help with vim commands:\n# > uDev" > ~/.tmp/wsl-rel-path
-      vim ~/.tmp/wsl-rel-path
-      #sed -i "s/DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ'//g" ~/.tmp/wsl-rel-path
-      cat ~/.tmp/wsl-rel-path
-      echo "uDev: convertion is not fully ready"
+      clear
+      figlet DRYa
+      echo "DRYa: feed me 1 or + Windows paths to convert"
+      echo
+
+      # Make a dir and a file, to paste and convert windows text to linux text
+         mkdir -p ~/.tmp 
+         v_file=~/.tmp/wsl-rel-path  # Note: Does not work: v_file="~/.tmp/wsl-rel-path"
+         touch $v_file 
+
+      # File the file with some instructions
+         echo -e "\n\n# DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' " > $v_file
+         echo -e "# \n# \n# Help with vim commands:\n# > uDev" >> $v_file
+         # uDev: finish vim instructions
+
+      # Edit the file, so that the user can paste the C:\<path> and exit
+         vim $v_file
+
+      # Convert the text inside the file
+         sed -i '/^#/d'             $v_file  # Delete all comented lines
+         sed -i '/^$/d'             $v_file  # Delete all empty lines
+         sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
+         sed -i 's/\\/\//g'         $v_file  # Convert \ into /
+         sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
+
+      # Copy text to variable, to test if file/variable is empty
+         v_text=$(cat ~/.tmp/wsl-rel-path )
+         #v_text=""  # Debug: To test if file is empty
+
+      # Tell if it is empty or print the remaining contents (hopefully with a valid path converted)
+         if [ -z "$v_text" ]; then
+            echo "The file is empty"
+         else 
+            cat $v_file
+            echo
+         fi
+
+      echo "uDev: Colocar o path numa variavel \$w"
+      echo "uDev: Mostrar o antes e o depois"
    fi
 
 elif [ $1 == "backup" ]; then 
