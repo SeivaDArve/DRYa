@@ -111,6 +111,7 @@ function key {
    echo " > (4) Luxam"
    echo " > (5) Trade"
    echo " > (6) Admin-Home"
+   echo " > (7) messenger"
    #echo " > Reset (leave empty)"
 
    read -n 1 -p "Qual a funcao que quer para omni-key? " v_ans
