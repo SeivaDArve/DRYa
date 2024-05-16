@@ -1173,6 +1173,7 @@ elif [ $1 == "wsl" ]; then
          fi
 
       echo "uDev: Colocar o path numa variavel \$w"
+      echo "uDev: Give dir basename into variable \$W so that command '$ op .' can operate"
       echo "uDev: Mostrar o antes e o depois"
    fi
 
