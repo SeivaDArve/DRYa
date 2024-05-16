@@ -8,3 +8,5 @@ uDev: Criar um Indice ou uma Arvore:
 
 uDev: QRcode-link-to-Github:
       Imagem com QR code que permite outros dispisitivos clonar DRYa facilmente do github
+
+

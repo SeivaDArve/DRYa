@@ -426,6 +426,8 @@ function nfc {
 alias py="python3"
 alias pip="pip3"
 
+# uDev: alias dnf-apt-pkg-pacman = X
+
 function clc {
    # dee: in Bash there is  very good calculator caled 'bc', but it's command is not very intuitive
    clear
