@@ -1,0 +1,17 @@
+#!/bin/bash
+# Title: ez-ov
+# Description: 'Tas ma ovir?' Grava som apartir do microfone do dispositivo.
+#              Feito para ser discreto
+#              Vai substituir ezREC
+#              Vai ter '$ ez ov on'
+#              Vai ter '$ ez ov off'
+#              Vai ter icons para home screen 'ezOV-on'   apartir do termux
+#              Vai ter icons para home screen 'ezOV-off'  apartir do termux
+#
+#
+#function ov {
+#   if [ $1 = "on" ]...
+#   if [ $1 = "off" ]...
+#}
+
+alias ov="echo 'DRYa: ez-ov: Not ready yet'"

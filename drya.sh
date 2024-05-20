@@ -1209,6 +1209,8 @@ elif [ $1 == "seiva-up-time" ]; then
          # Tutorial to follow: https://www.linuxjournal.com/content/doing-date-math-command-line-part-i
          echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
 
+         # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
+
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
 

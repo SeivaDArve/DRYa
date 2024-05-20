@@ -1,7 +1,7 @@
 #/bin/bash
 # Title: Helper to write notes
 
-function note {
+function no {
    # Perguntal de qual eteronimo adicionar notas
    echo "uDev: Add notas para omni-log/all/ex-pressa"
    cd ${v_REPOS_CENTER}/omni-log/all/ex-pressa

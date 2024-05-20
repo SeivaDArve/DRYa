@@ -18,6 +18,12 @@ This project is a natural tendency for any entusiastic programmer, it is like a 
 
 Manages my Public and Private software. 
 
+## Why Bash?
+Bash allows my Repo and Programming to achieve: Holy trinity
+   - Cross-Platform (and stardard in most machines (Omnipresent))
+   - Fully featured (all I needed was already there (Omnipotent))
+   - Allows me to carry all my info and web scrapers (Omniscient)
+
 ## Further Description
 
 When using any smart device or any computer, there are too many things that may become repetitive.
