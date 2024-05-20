@@ -431,7 +431,7 @@
   (insert "[[elisp:(funcall-interactively 'copy-target-number-from-current-line-to-kill-ring)][copy]]")
   (insert " ) "))
 
-(defun date ()
+(defun data ()
   (interactive)
   (setq v-time-1 (format-time-string "(Dia %d "))  ;; -------------------------------------- Part 1 of the time string to be printed
   (dv-translate-weak-days) ;; -------‐---‐-------------------------------------------------- Part 2 of the time string to be printed
