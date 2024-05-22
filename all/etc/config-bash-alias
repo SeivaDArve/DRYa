@@ -607,6 +607,7 @@ alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
 alias ,,,=", ; ,," # Same as both 2 previous commands put together
 alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 alias CLEAR="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
+alias sh="bash"
 
 function f_emacs {
    # Attempt to untangle emacs alias (due to so many versions)
