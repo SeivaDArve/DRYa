@@ -614,6 +614,7 @@ function f_emacs {
    alias em="emacs"
    alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
    alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
+   alias ems="emacs --script"
 
    # Decide for alias EM which emacs corresponds best with the System
       if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then 

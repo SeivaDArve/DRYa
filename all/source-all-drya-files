@@ -416,7 +416,15 @@ function f_internal_drya_files_2_2 {
    # Repository: DRYa (internal files - (2/2) )
 
    # Remove temporary dir created by DRYa's other scripts
-      rm -rf ~/.tmp/
+      rm -rf ~/.tmp/  
+
+      # nota: Passar tambem para o ficheiro bash_logout
+      #       Manter assim a apagar em ambos 
+      #       para propositadamente apagar os conteudos da pasta ao
+      #       abrir um novo separador de terminal
+      #
+      #       Para programar scripts temporarios de teste é melhor usar a pasta ~/.code/
+      
 
    # Sourcing DRYa's own configs
       source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias

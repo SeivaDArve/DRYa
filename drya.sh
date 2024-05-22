@@ -1266,6 +1266,16 @@ elif [ $1 == "ip" ]; then
       echo "IP Público: $PUBLIC_IP"
       echo "IP Local: $LOCAL_IP"
 
+elif [ $1 == "mac" ]; then 
+
+   f_greet
+
+   # Get MAC address using ifconfig
+   mac_address=$(ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+
+   # Print MAC address
+   echo "MAC Address: $mac_address"
+
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
 
