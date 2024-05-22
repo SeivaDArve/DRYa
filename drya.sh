@@ -1245,9 +1245,6 @@ elif [ $1 == "seiva-up-time" ]; then
 
    # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
 
-elif [ $1 == "sshfs" ]; then 
-   # Options for SSH File System
-   echo "Options for SSH File System"
 
 elif [ $1 == "ip" ]; then 
    # Mencionar no terminsl qual é o endereço de IP publico e local
@@ -1556,6 +1553,10 @@ elif [ $1 == "install" ]; then
          ;;
       esac
    fi
+
+elif [ $1 == "sshfs" ]; then 
+   # Options for SSH File System
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
 
 elif [ $1 == "edit" ]; then 
          case $2 in
