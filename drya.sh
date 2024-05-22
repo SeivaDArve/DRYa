@@ -1211,6 +1211,27 @@ elif [ $1 == "seiva-up-time" ]; then
 
          # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
 
+elif [ $1 == "ip" ]; then 
+   # Mencionar no terminsl qual é o endereço de IP publico e local
+
+   f_greet
+
+   # Obtendo o IP público usando curl e um serviço online
+      PUBLIC_IP=$(curl -s ifconfig.me)
+
+   # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
+      LOCAL_IP=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+
+      # Alternativa 1: 
+         #LOCAL_IP=$(hostname -I | awk '{print $1}')
+
+      # Alternativa 2: 
+         #LOCAL_IP=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+
+   # Imprimindo os resultados
+      echo "IP Público: $PUBLIC_IP"
+      echo "IP Local: $LOCAL_IP"
+
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
 

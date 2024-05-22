@@ -38,8 +38,22 @@
 #
    #
    #
-   # uDev: No interior dos scripts, cada fx pode ter um titulo 'dee: ' e tambem pode ter um Hashtag 'dee: fx-de-opcoes #46632'
+   # uDev: No interior dos scripts, 
+   #       cada fx pode ter um titulo 'dee: ' 
+   #       e tambem pode ter um Hashtag 'dee: fx-de-opcoes #46632'
    #
+   #       cujo Hasgtag é "nested", ou seja:
+   #
+   #           #!/bin/bash
+   #           # Title: X
+   #           # dee: #T0
+   #
+   #           if $1 == Y; then  # dee: T1
+   #              if $2 == Y; then  # dee: T11
+   #              if $2 == C; then  # dee: T12
+   #
+   #           if $1 == Z; then  # dee: T2
+   #              if $2 == Y; then  # dee: T21
    #
 
 # Verbose file (variables and outputs)
