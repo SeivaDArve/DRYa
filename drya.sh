@@ -737,6 +737,31 @@ function f_detect_these {
 
 }
 	
+function f_calcular_tempo_decorrido_apos_data {
+   # Data de aniversário no formato YYYY-MM-DD
+      #STARTINGDATE="1992-04-01"  # Variavel que é preciso alimentar a este script
+
+   # Converter a data de aniversário para um timestamp
+      BIRTH_TIMESTAMP=$(date -d "$STARTINGDATE" +%s)
+
+   # Obter o timestamp atual
+      CURRENT_TIMESTAMP=$(date +%s)
+
+   # Calcular a diferença em segundos
+      DIFF_SECONDS=$(( CURRENT_TIMESTAMP - BIRTH_TIMESTAMP ))
+
+   # Converter a diferença para dias, meses e anos
+      DIFF_DAYS=$(( DIFF_SECONDS / 86400 ))
+
+   # Calcular a diferença em anos e meses
+      YEARS=$(( DIFF_DAYS / 365 ))
+      MONTHS=$(( (DIFF_DAYS % 365) / 30 ))
+      DAYS=$(( (DIFF_DAYS % 365) % 30 ))
+
+   # Imprimir o resultado
+      echo "Tempo passado desde $STARTINGDATE:"
+      echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
+}
 function f_get_script_current_abs_path {
 
 	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
@@ -1205,11 +1230,20 @@ elif [ $1 == "backup" ]; then
    fi
 
 elif [ $1 == "seiva-up-time" ]; then 
-         # uDev: Tells how long the Linux experience started for Seiva
-         # Tutorial to follow: https://www.linuxjournal.com/content/doing-date-math-command-line-part-i
-         echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
+   # uDev: Tells how long the Linux experience started for Seiva
+   
+   f_greet
 
-         # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
+   echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
+   echo
+
+   # Variavel com a data
+      STARTINGDATE="2021-03-25"  
+
+   # Data de aniversário no formato YYYY-MM-DD
+      f_calcular_tempo_decorrido_apos_data
+
+   # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
 
 elif [ $1 == "ip" ]; then 
    # Mencionar no terminsl qual é o endereço de IP publico e local
