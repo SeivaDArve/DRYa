@@ -1,0 +1,65 @@
+#!/bin/bash
+export GPG_TTY=$(tty)
+
+# Verbose instructons
+clear
+figlet en-crypt
+
+function encrypt_directory {
+   # Function to encrypt a directory
+    #echo "Enter passphrase for encryption:"
+    #read -s passphrase
+    tar cz "$1" | gpg --symmetric --cipher-algo AES256 --passphrase "$passphrase" --output "$1.tar.gz.gpg"
+    echo "Directory encrypted successfully."
+}
+
+function decrypt_directory {
+   # Function to decrypt a directory
+    #echo "Enter passphrase for decryption:"
+    #read -s passphrase
+    gpg --decrypt --passphrase "$passphrase" "$1" | tar xz
+    echo "Directory decrypted successfully."
+}
+
+
+if [ -z "$1" ]; then
+   # If no instructions are given to the script:
+   echo "To run this script:"
+   echo " > '$ bash en-crypt <enc|dec> <name-of-file>'"
+   echo " > Please give me more arguments"
+   exit 0
+
+elif [ "$1" == "enc" ]; then
+   # When user asks to encrypt
+   if [ -z "$2" ]; then
+      echo "Please specify a second argument (file or dir) to be encrypted or decrypted"
+      echo
+      exit 0
+
+   else
+      echo "User asked to encrypt: "
+      echo " > $2"
+      echo
+   fi
+   
+   encrypt_directory "$2"
+
+elif [ "$1" == "dec" ]; then
+   # When user asks to decrypt
+   if [ -z "$2" ]; then
+      echo "Please specify a second argument (file or dir) to be encrypted or decrypted"
+      echo
+      exit 0
+
+   else
+      echo "User asked to decrypt: "
+      echo " > $2"
+      echo
+   fi
+
+   decrypt_directory "$2"
+
+else
+    echo "Usage: $0 [encrypt|decrypt] directory"
+    exit 1
+fi
