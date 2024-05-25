@@ -26,12 +26,12 @@ function f_check_current_user {
 }
 
 function f_install_ssh {
-   # Installing sshfs
+   # Installing ssh
 
 
    if [ -n "$TERMUX_VERSION" ]; then
       #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
-      ssh-keygen -t rsa
+      pkg install openssh-clients
    else
       #echo "Este terminal não é o Termux."
 
@@ -41,14 +41,16 @@ function f_install_ssh {
          read -p " > " v_across
 
       if [ -z $v_across ]; then
+         # Se o utilizador deixar em vazio, instala com o mais comum (apt)
          echo "Installing with 'apt'..."
-         sudo apt install sshfs
+         sudo apt install openssh-clients
       else 
-         sudo $v_across install sshfs
+         sudo $v_across install ssh
       fi
    fi
 
-   # Se o utilizador deixar em vazio, instala com o mais comum (apt)
+   echo "Criar uma chave SSH publica:"
+   ssh-keygen -t rsa
 }
 
 function f_install_sshfs {
@@ -85,16 +87,18 @@ function f_uninstall_sshfs {
 }
 
 function f_check_installed_ssh {
-   # Check if sshfs command is available (WITHOUT VERBOSE OUTPUT)
-   if command -v ssh &>/dev/null; then
+   # Check if ssh command is available (WITHOUT VERBOSE OUTPUT)
+   ssh -V &>/dev/null
+   if [ $? == 0 ]; then
       v_ssh_installed="true"
+      #v_pub_key=
    else
       v_ssh_installed="false"
    fi
 }
 
 function f_check_installed_ssh_verbose {
-   # Check if sshfs command is available (WITH VERBOSE OUTPUT)
+   # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_ssh_installed == "true" ]]; then
       echo " > SSH is installed."
@@ -106,8 +110,6 @@ function f_check_installed_ssh_verbose {
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH devido a um erro"
       exit 1
    fi
-         
-
 }
 
 
@@ -125,19 +127,18 @@ function f_check_installed_sshfs_verbose {
 
    if [[ $v_sshfs_installed == "true" ]]; then
       echo " > SSHFS is installed."
-      if [ -n "$TERMUX_VERSION" ]; then echo "    > Para termux precisa: root"; fi
+      if [ -n "$TERMUX_VERSION" ]; then echo "   > Para termux precisa: root"; fi
 
    elif [[ $v_sshfs_installed == "false" ]]; then
       echo " > SSHFS is not installed."
-      if [ -n "$TERMUX_VERSION" ]; then echo "    > Para termux precisa: root"; fi
+      if [ -n "$TERMUX_VERSION" ]; then echo "   > Para termux precisa: root"; fi
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSHFS devido a um erro"
       exit 1
    fi
-         
-
 }
+
 function f_check_if_user_is_on_fuse_group {
    # Verifica se o utilizador faz parte do grupo fuse (WITHOUT VERBOSE OUTPUT)
       v_group="fuse"
@@ -151,7 +152,6 @@ function f_check_if_user_is_on_fuse_group {
    else
       v_ison_fuse="false"
    fi
-
 }
 
 function f_check_if_user_is_on_fuse_group_verbose {
@@ -166,7 +166,6 @@ function f_check_if_user_is_on_fuse_group_verbose {
    else
       echo "O software nao conseguiu detetar se está ou nao está no grupo fuse devido a um erro"
    fi
-
 }
 
 
@@ -190,7 +189,6 @@ function f_create_fuse_group {
            echo "Failed to create the FUSE group."
        fi
    fi
-
 }
 
 function f_remove_user_from_fuse_group {
@@ -246,7 +244,6 @@ function f_check_mounting_point_parent {
    else
        echo " > Default mounting point '$v_parent_dir' does not exist."
    fi
-
 }
 
 function f_verbose_check {
@@ -293,7 +290,6 @@ function f_check_mounting_point_array {
       do
          echo " > $i"
       done
-
 }
 
 function f_delete_DRYa_mounting_points {
@@ -375,7 +371,6 @@ function f_ser_cliente {
          
          let "v_o = v_mach - 1"
          echo " >> $v_parent_dir${v_array_remote_dir[$v_o]}"
-
 }
 
 function f_enable_everything {
@@ -610,6 +605,7 @@ function f_exec {
       #f_disable_everything
 
    # Installing/Uninstalling SSHFS
+      #f_install_ssh
       #f_install_sshfs
       #f_uninstall_sshfs
 
