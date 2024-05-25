@@ -25,6 +25,32 @@ function f_check_current_user {
    echo " > Your current username is: $v_current_username"
 }
 
+function f_install_ssh {
+   # Installing sshfs
+
+
+   if [ -n "$TERMUX_VERSION" ]; then
+      #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
+      ssh-keygen -t rsa
+   else
+      #echo "Este terminal não é o Termux."
+
+      # Se nao estivermos no Termux, perguntar qual é o package manager no dispositivo atual
+         echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
+         echo " > Se deixar em branco, será usado: apt"
+         read -p " > " v_across
+
+      if [ -z $v_across ]; then
+         echo "Installing with 'apt'..."
+         sudo apt install sshfs
+      else 
+         sudo $v_across install sshfs
+      fi
+   fi
+
+   # Se o utilizador deixar em vazio, instala com o mais comum (apt)
+}
+
 function f_install_sshfs {
    # Installing sshfs
 
@@ -357,8 +383,23 @@ function f_enable_everything {
          # Verificar se ja está instalado:
             f_check_installed_ssh  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
             f_check_installed_sshfs  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+         
+         # Se nao estiver instalada SSH, vai instalar
+            if [[ $v_sshfs_installed == "false" ]]; then 
+               # Confirmar com o user se quer instalar:
+                  echo "(Y)es para Instalar SSH" v_ans
+                  read -sn 1 -p " > " v_ans
+                  echo $v_ans
+                  echo 
 
-         # Se nao estiver instalada, vai instalar
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                     f_install_ssh
+                  else
+                     exit 0
+                  fi
+            fi
+
+         # Se nao estiver instalada SSHFS, vai instalar
             #if [[ $v_sshfs_installed == "true" ]]; then 
             #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
             #   #f_check_installed_verbose 
@@ -376,7 +417,6 @@ function f_enable_everything {
                      exit 0
                   fi
             fi
-         
          
       ##########################################################################
       # Criar FUSE group
