@@ -33,13 +33,20 @@ function f_install_sshfs {
       echo " > Se deixar em branco, será usado: apt"
       read -p " > " v_across
 
-   # Se o utilizador deixar em vazio, instala com o mais comum (apt)
+   if [ -n "$TERMUX_VERSION" ]; then
+      #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
+      pkg install sshfs
+   else
+      #echo "Este terminal não é o Termux."
       if [ -z $v_across ]; then
          echo "Installing with 'apt'..."
          sudo apt install sshfs
       else 
          sudo $v_across install sshfs
       fi
+   fi
+
+   # Se o utilizador deixar em vazio, instala com o mais comum (apt)
 }
 
 function f_uninstall_sshfs {
