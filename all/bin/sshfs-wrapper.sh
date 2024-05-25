@@ -1,18 +1,40 @@
 #!/bin/bash
 
-v_ssh_on="false"  # If true, sshfs might get installed by an fx
+# Para Debug:
+   # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como v_1, v_2, v_3
+   #echo $0, $v_1, $v_2, $v_3...
+   #read
 
+# Verificar a env variable para o nome de utilizador atual
+   v_current_username=$USER
+
+# Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
+   v_parent_dir=~/sshfs/
+   v_array_remote_dir=("remote-Rasp-miau" "remote-Lenovo-Dv" "remote-MSI-dv_msi" "remote-ASUS-indratena" "remote-A6-termux-Dv")
+
+   # Print the entire array
+      #echo "Array elements: ${v_array_remote_dir[@]}"
+ 
 function f_check_current_user {
    # Get the current username
-   v_current_username=$USER
    echo " > Your current username is: $v_current_username"
 }
 
 function f_install_sshfs {
    # Installing sshfs
 
-   echo "Installing with 'apt'..."
-   sudo apt install sshfs
+   # Perguntar qual é o package manager no dispositivo atual
+      echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
+      echo " > Se deixar em branco, será usado: apt"
+      read -p " > " v_across
+
+   # Se o utilizador deixar em vazio, instala com o mais comum (apt)
+      if [ -z $v_across ]; then
+         echo "Installing with 'apt'..."
+         sudo apt install sshfs
+      else 
+         sudo $v_across install sshfs
+      fi
 }
 
 function f_uninstall_sshfs {
@@ -23,37 +45,58 @@ function f_uninstall_sshfs {
 }
 
 function f_check_installed {
-   # Check if sshfs command is available
+   # Check if sshfs command is available (WITHOUT VERBOSE OUTPUT)
    if command -v sshfs &>/dev/null; then
-       echo " > SSHFS is installed."
+      v_ssh_installed="true"
    else
-      echo " > SSHFS is not installed."
-      
-      # If the enabler script wants to run and install sshfs, the variable $v_ssh_on comes as 'true'
-      # After installing, this fx turns that variable back 'false'
-         if [ $v_ssh_on == "true" ]; then
-            echo "SSHFS is now going to be installed"
-         fi
-      
-      # Turn variable back 'false'
-         v_ssh_on="false"
+      v_ssh_installed="false"
    fi
 }
 
+function f_check_installed_verbose {
+   # Check if sshfs command is available (WITH VERBOSE OUTPUT)
 
+   if [[ $v_ssh_installed == "true" ]]; then
+      echo " > SSHFS is installed."
+
+   elif [[ $v_ssh_installed == "false" ]]; then
+      echo " > SSHFS is not installed."
+   
+   else
+      echo "O software nao conseguiu detetar se está ou nao está instalado SSHFS devido a um erro"
+      exit 1
+   fi
+         
+
+}
 
 function f_check_if_user_is_on_fuse_group {
-   # Define the FUSE group
-   fuse_group="fuse"
+   # Verifica se o utilizador faz parte do grupo fuse (WITHOUT VERBOSE OUTPUT)
+      v_group="fuse"
 
    # Get the groups the current user is a member of
-   user_groups=$(groups)
+   user_groups=$(groups $USER)
 
    # Check if the FUSE group is in the list of groups
-   if [[ $user_groups =~ (^|[[:space:]])"$fuse_group"($|[[:space:]]) ]]; then
-       echo " > The current user is a member of the $fuse_group group."
+   if [[ $user_groups =~ (^|[[:space:]])"$v_group"($|[[:space:]]) ]]; then
+      v_ison_fuse="true"
    else
-       echo " > The current user is not a member of the $fuse_group group."
+      v_ison_fuse="false"
+   fi
+
+}
+
+function f_check_if_user_is_on_fuse_group_verbose {
+   # Verifica se o utilizador faz parte do grupo fuse (WITH VERBOSE OUTPUT)
+
+   if [ $v_ison_fuse == "true" ]; then
+       echo " > The current user is a member of the $v_group group."
+
+   elif [ $v_ison_fuse == "false" ]; then
+       echo " > The current user is not a member of the $v_group group."
+
+   else
+      echo "O software nao conseguiu detetar se está ou nao está no grupo fuse devido a um erro"
    fi
 
 }
@@ -98,27 +141,42 @@ function f_remove_user_from_fuse_group {
 }
 
 function f_check_if_fuse_exists {
-   grep -q "^fuse:" /etc/group
+   grep -q "^fuse:" /etc/group &>/dev/null
 
    if [ $? -eq 0 ]; then
-       echo " > Group fuse exists."
+      v_group="true"
    else
-       echo " > Group fuse does not exist."
+      v_group="false"
    fi
 }
 
-function f_check_mounting_point {
+function f_check_if_fuse_exists_verbose {
+   # Check if sshfs command is available (WITH VERBOSE OUTPUT)
+
+   if [[ $v_group == "true" ]]; then
+      echo " > Group fuse exists."
+
+   elif [[ $v_group == "false" ]]; then
+      echo " > Group fuse does not exist."
+   
+   else
+      echo "O software nao conseguiu detetar se existe ou nao um grupo FUSE devido a um erro"
+      exit 1
+   fi
+}
+
+function f_check_mounting_point_parent {
    # check if Default mounting point for DRYa exists
-   v_mount_dir=~/sshfs-mp/
+   v_parent_dir=~/sshfs/
       # For raspberry: .../remote-miau
       # For MSI laptop: .../remote-MSI
    
-   ls $v_mount_dir &>/dev/null
+   ls $v_parent_dir &>/dev/null
 
    if [ $? -eq 0 ]; then
-       echo " > Default mounting point exists."
+       echo " > Default mounting point exists: $v_parent_dir"
    else
-       echo " > Default mounting point does not exist."
+       echo " > Default mounting point '$v_parent_dir' does not exist."
    fi
 
 }
@@ -126,82 +184,188 @@ function f_check_mounting_point {
 function f_verbose_check {
       echo "Current status of SSHFS: "
       f_check_current_user
+
       f_check_installed
+      f_check_installed_verbose
+
       f_check_if_fuse_exists
+      f_check_if_fuse_exists_verbose
+
       f_check_if_user_is_on_fuse_group
-      f_check_mounting_point
+      f_check_if_user_is_on_fuse_group_verbose
+
+      f_check_mounting_point_parent
       echo
       echo "Options:"
-      echo " > 'on'  to enable everything'"
-      echo " > 'off' to disable everything'"
+      echo " > 'on'  to enable everything"
+      echo " > 'off' to disable everything"
+      echo " > 'dir' See all Default dir mounting points"
       echo " > 'no option' for instructions (uDev)"
       echo
       echo "Example: "
       echo " > '$ bash sshfs-wrapper.sh on'"
 }
       
-function f_create_DRYa_mounting_points {
-   echo "Confirme no script, as pastas que vao ser criadas"
-   read
-   read
-   read
-   read
-   mkdir -p ~/sshfs/remote-Rasp-miau
-   mkdir -p ~/sshfs/remote-Lenovo-Dv
-   mkdir -p ~/sshfs/remote-MSI-dv_msi
-   mkdir -p ~/sshfs/remote-ASUS-indratena
-   mkdir -p ~/sshfs/remote-A6-termux-Dv
+function f_check_mounting_point_array {
+   # Visualizar o array de pastas 
+      echo "Array definido (em: $v_parent_dir)"
+
+      for i in ${v_array_remote_dir[@]};
+      do
+         echo " > $i"
+      done
+      echo
+
+   # Visualizar as pastas criadas atualemte:
+      echo "Visualizar as pastas que estao criadas neste momento:"
+      for i in $(ls $v_parent_dir);
+      do
+         echo " > $i"
+      done
+
 }
 
-#function f_check_overall_status {
-   
-   clear
-   figlet SSHFS
+function f_delete_DRYa_mounting_points {
+   # Apagar todas as pastas pre-definidas
 
-   if [[ -z $1 ]]; then
-      echo "DRYa: SSHFS-wrapper: A verificar o estado atual..."
-      echo
-      f_verbose_check
+   rmdir $v_parent_dir/*
+}
 
-   elif [[ $1 == "on" ]]; then
-      # Verbose output do instalador
-         echo "Escolheu a opcao: on"
-         echo " > Tem a certeza que quer ativar todas as fx para poder usar sshfs?"
+function f_create_DRYa_mounting_points {
+   #echo "Array elements: ${v_array_remote_dir[@]}"
+   #echo 
+   #echo "Demonstração de cada pasta:"
+
+   # Criacao de cada pasta (caso nao exista)
+   for i in ${v_array_remote_dir[@]};
+   do
+      v_temp="${v_parent_dir}$i"
+
+      # Debug: echo " > $v_temp"
+      mkdir -p $v_temp
+
+   done
+
+   #v_parent_dir=~/sshfs/
+   #echo "First element: ${my_array[0]}"
+}
+
+
+function f_enable_everything {
+      ##########################################################################
+      # Perguntar: Cliente ou Servidor?
+         echo "Pretende ser (C)liente ou (S)ervidor?"
+         read -n 1 -p " > " v_side
+         if [[ $v_side == "c" ]] || [[ $v_side == "C" ]]; then echo " > Client"; fi
+         if [[ $v_side == "s" ]] || [[ $v_side == "S" ]]; then echo " > Server"; fi
          echo
 
-      # Perguntar: Cliente ou Servidor?
-         echo 
-         echo "Pretende ser (C)liente ou (S)ervidor?"
-         read -p " > " v_side
+      ##########################################################################
+      # Instalar SSHFS (verificando primeiro se ja está instalado)
 
-      # Instalar SSHFS
-         # Verificar primeiro se SSHFS esta instalado (se nao estiver, perguntar se quer instalar):
-         read -p "(Y)es para Instalar SSHFS" v_ans
-         if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then f_install_sshfs; fi
+         # Verificar se ja está instalado:
+            f_check_installed  # Vai traser a variavel $v_ssh_installed "true" ou "false"
+
+         # Se nao estiver instalada, vai instalar
+            #if [[ $v_shh_installed == "true" ]]; then 
+            #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
+            #   #f_check_installed_verbose 
+               
+            if [[ $v_shh_installed == "false" ]]; then 
+               # Confirmar com o user se quer instalar:
+                  read -p "(Y)es para Instalar SSHFS" v_ans
+
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                     f_install_sshfs
+                  else
+                     exit 0
+                  fi
+            fi
          
-      #f_create_fuse_group
-      #f_add_user_to_fuse_group
-      #f_create_DRYa_mounting_points
-      # Create dir
+         
+      ##########################################################################
+      # Criar FUSE group
+
+         # Verificar se ja está existe esse grupo:
+            f_check_if_fuse_exists
       
-      # Perguntar: 
-      #  > Quer que este dispositivo aceda a um servido remotamento?
-      #  > Quer que este dispositivo seja um servidor que permita visitas?
+         # Se nao existir, vai criar:
+            if [[ $v_group == "false" ]]; then 
+               # Confirmar com o user se quer instalar:
+                  echo "(Y)es para Criar grupo FUSE"
+                  read -n 1 -p " > " v_ans
+                  echo
 
-   elif [[ $1 == "off" ]]; then
-      # Verbose output do desinstalador
-         echo "Escolheu a opcao: off"
-         echo " > Tem a certeza que quer desativar todas as fx e deixar de usar sshfs?"
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                     f_create_fuse_group
+                  else
+                     exit 0
+                  fi
+            fi
+         
 
+
+      ##########################################################################
+      # Adicionar Utilizador ao grupo fuse
+
+         # Verificar se o utilizador ja está adicionado ao grupo:
+            f_check_if_user_is_on_fuse_group
+
+         # Se nao estiver adicionado, vai adicionar:
+            if [[ $v_ison_fuse == "false" ]]; then 
+               # Confirmar com o user se quer instalar:
+                  echo "(Y)es para adicionar utilizador ao grupo FUSE"
+                  read -n 1 -p " > " v_ans
+                  echo
+
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                     f_add_user_to_fuse_group
+                  else
+                     exit 0
+                  fi
+            fi
+
+
+
+      ##########################################################################
+      # Criar as pastas onde podem sermontados os  file systems
+
+         # uDev: Verificar se existe neste momento algum sshfs montado, caso nao haja, apagar todas as subpastas do mounting point
+         
+         f_delete_DRYa_mounting_points
+         f_create_DRYa_mounting_points
+
+         # Questionar qual mounting point o utilizador quer (e de acordo com esse mounting point, ligar à maquina correspondente)
+      
+      ##########################################################################
+      echo "Foi tudo verificado"
+}
+
+function f_disable_everything {
       # Perguntar: Quer so desligar o Servico ou Desinstalar tudo?
-         echo 
          echo "Pretende tornar-se (O)ffline ou (D)esinstalar tudinho?"
          read -p " > " v_off
+         echo 
 
-      # Desinstalar SSHFS (Se escolheu desinstalar)
-         read -p "(Y)es para Desinstalar SSHFS" v_ans
-         if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then f_uninstall_sshfs; fi
+         # Desinstalar SSHFS (Se escolheu desinstalar)
+            if [[ $v_ans == "d" ]] || [[ $v_ans == "D" ]]; then 
+               echo "Tem a certeza que quer desativar todas as fx e deixar de usar sshfs?"
+               read -p "(Y)es para Desinstalar SSHFS" v_ans
+      
+               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then i
+                  f_uninstall_sshfs
+               fi
+            fi
 
+         # Tornar-se Offline
+            if [[ $v_ans == "o" ]] || [[ $v_ans == "O" ]]; then 
+               echo "Tem a certeza que quer cncelar o serviço de servidor sshfs nesta maquina?"
+               read -p "(Y)es para desligar-se de servidor SSHFS" v_ans
+      
+               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                  echo "uDev: desligar-se a si proprio de ser servidor"
+               fi
+            fi
       # remove: f_create_fuse_group
       #f_remove_user_from_fuse_group
       # Delete dir
@@ -209,27 +373,81 @@ function f_create_DRYa_mounting_points {
       # Perguntar: 
       #  > Quer que este dispositivo desconecte do servidor remotamento?
       #  > Quer que este dispositivo bloqueie os seus servicos de servidor e bloqueie visitas?
+}
+
+
+
+
+
+
+
+
+
+
+function f_check_overall_status {
+   clear
+   figlet SSHFS
+
+   if [[ -z $v_2 ]]; then
+      echo "DRYa: SSHFS-wrapper: A verificar o estado atual..."
+      echo
+      f_verbose_check
+
+   elif [[ $v_2 == "on" ]]; then
+      # Verbose output do instalador
+         echo "Escolheu a opcao: on"
+         echo 
+         f_enable_everything
+
+   elif [[ $v_2 == "off" ]]; then
+      # Verbose output do desinstalador
+         echo "Escolheu a opcao: off"
+         echo 
+         f_disable_everything
+
+   elif [[ $v_2 == "dir" ]]; then
+      # Verbose: Pastas pre-definidas para mounting points
+         echo "Escolheu a opcao: dir"
+         echo
+         echo "Instrucao:"
+         echo " > No interior do script, pode alterar:"
+         echo " >> o array de pastas (mounting point para cada servidor)"
+         echo " >> o 'parent directory' onde residem todas essas"
+         echo 
+
+         f_check_mounting_point_array
+         exit 0
 
    else
       echo "SSHFS-wrapper: comando nao encontrado"
    fi
-#}
-
-function f_enable_everything {
-   echo
-   
 }
 
-#function f_exec {
 
- # f_check_overall_status
+
+function f_exec {
+
+  f_check_overall_status
 
    # Status (each fx separate, for debug)
       #f_check_current_user
+      #
       #f_check_installed
+      #f_check_installed_verbose
+      #
       #f_check_if_fuse_exists
+      #f_check_if_fuse_exists_verbose
+      #
       #f_check_if_user_is_on_fuse_group
-      #f_check_mounting_point
+      #f_check_if_user_is_on_fuse_group_verbose
+      #
+      #f_check_mounting_point_parent
+      #f_check_mounting_point_array
+      #
+
+   # Function for $2 when it is on|off
+      #f_enable_everything
+      #f_disable_everything
 
    # Installing/Uninstalling SSHFS
       #f_install_sshfs
@@ -246,9 +464,9 @@ function f_enable_everything {
 
    # Create/Remove mounting point
       #f_create_DRYa_mounting_points
-      # Delete dir
+      #f_delete_DRYa_mounting_points
 
    # Instructions and wizzard to Uninstall everything
 
-#}
-#f_exec
+}
+f_exec
