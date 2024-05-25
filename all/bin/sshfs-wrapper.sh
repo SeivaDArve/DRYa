@@ -1,5 +1,10 @@
 #!/bin/bash
 
+function f_greet {
+   clear
+   figlet SSHFS
+}
+
 # Para Debug:
    # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como v_1, v_2, v_3
    #echo $0, $v_1, $v_2, $v_3...
@@ -250,16 +255,61 @@ function f_create_DRYa_mounting_points {
    #echo "First element: ${my_array[0]}"
 }
 
+function f_ser_servidor {
+   
+   function f_ask {
+      f_greet
+      echo "Ser servidor"
+   }
+
+   f_ask
+   echo " > na maquina remota, que acerder a qual pasta?"
+   echo " >> A tudo?? '/'"
+   echo " >> So aos Documentos 'Home' '~'?"
+   echo -n " > "
+   read v_r_dir
+   
+   f_ask
+   echo " > Na pasta remota: $v_r_dir"
+   echo
+
+   echo "Utilizador: "
+   echo " > $USER"
+   echo
+   
+   v_ip=$(curl -s ifconfig.me)
+   echo "IP publico:"
+   echo " > $v_ip"
+   echo
+   
+   # Concatenar TUDO
+      echo "Na maquina que quer aceder ao servidor, escreva o comando:"
+      echo " > sshfs $USER@$v_ip:$v_r_dir  (mais o mounting point do cliente)"
+      echo "   Por exemplo: remote-MSI-dv_msi" 
+}
+
+function f_ser_cliente {
+   # Perguntar: Qual maquina remota quer aceder?
+      echo "A qual maquina remota quer aceder?"
+
+      # Visualizar as pastas criadas atualemte:
+         echo "Visualizar as pastas que estao criadas neste momento:"
+         
+         # iterador contador do 'for' loop
+            e=1
+
+         for i in ${v_array_remote_dir[@]};
+         do
+            echo " > $e.$i"
+            e=$((e+1))
+         done
+         read -sn 1 -p " > " v_mach
+         echo
+         echo $v_mach
+
+}
 
 function f_enable_everything {
-      ##########################################################################
-      # Perguntar: Cliente ou Servidor?
-         echo "Pretende ser (C)liente ou (S)ervidor?"
-         read -n 1 -p " > " v_side
-         if [[ $v_side == "c" ]] || [[ $v_side == "C" ]]; then echo " > Client"; fi
-         if [[ $v_side == "s" ]] || [[ $v_side == "S" ]]; then echo " > Server"; fi
-         echo
-
       ##########################################################################
       # Instalar SSHFS (verificando primeiro se ja está instalado)
 
@@ -337,6 +387,26 @@ function f_enable_everything {
 
          # Questionar qual mounting point o utilizador quer (e de acordo com esse mounting point, ligar à maquina correspondente)
       
+
+      ##########################################################################
+      # Perguntar: Cliente ou Servidor?
+         echo "Pretende ser (C)liente ou (S)ervidor?"
+         read -n 1 -p " > " v_side
+
+         if [[ $v_side == "c" ]] || [[ $v_side == "C" ]]; then
+            # Se for Cliente: Perguntar a qual maquina quer aceder
+            echo " > Client"
+            f_ser_cliente
+         fi
+
+         if [[ $v_side == "s" ]] || [[ $v_side == "S" ]]; then 
+            # Se for Servidor, dar os dados no ecra para o cliente no outro dispositivo poder aceder
+            echo " > Server"
+            f_ser_servidor
+         fi
+         echo
+
+
       ##########################################################################
       echo "Foi tudo verificado"
 }
@@ -385,8 +455,8 @@ function f_disable_everything {
 
 
 function f_check_overall_status {
-   clear
-   figlet SSHFS
+
+   f_greet
 
    if [[ -z $v_2 ]]; then
       echo "DRYa: SSHFS-wrapper: A verificar o estado atual..."
@@ -457,7 +527,6 @@ function f_exec {
       #f_create_fuse_group
       # remove: f_create_fuse_group
    
-
    # Include/Exclude current user from Fuse Group
       #f_add_user_to_fuse_group
       #f_remove_user_from_fuse_group
@@ -466,6 +535,9 @@ function f_exec {
       #f_create_DRYa_mounting_points
       #f_delete_DRYa_mounting_points
 
+   # Dados de connexao
+      #f_ser_servidor
+      #f_ser_cliente
    # Instructions and wizzard to Uninstall everything
 
 }
