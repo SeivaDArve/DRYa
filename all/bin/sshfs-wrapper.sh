@@ -320,11 +320,11 @@ function f_enable_everything {
             f_check_installed  # Vai traser a variavel $v_ssh_installed "true" ou "false"
 
          # Se nao estiver instalada, vai instalar
-            #if [[ $v_shh_installed == "true" ]]; then 
+            #if [[ $v_ssh_installed == "true" ]]; then 
             #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
             #   #f_check_installed_verbose 
                
-            if [[ $v_shh_installed == "false" ]]; then 
+            if [[ $v_ssh_installed == "false" ]]; then 
                # Confirmar com o user se quer instalar:
                   read -p "(Y)es para Instalar SSHFS" v_ans
 
