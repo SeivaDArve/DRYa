@@ -25,6 +25,11 @@ function f_check_current_user {
    echo " > Your current username is: $v_current_username"
 }
 
+function f_install_ssh_key {
+   echo "Criar uma chave SSH publica e uma privada:"
+   ssh-keygen -t rsa
+}
+
 function f_install_ssh {
    # Installing ssh
 
@@ -49,8 +54,6 @@ function f_install_ssh {
       fi
    fi
 
-   echo "Criar uma chave SSH publica:"
-   ssh-keygen -t rsa
 }
 
 function f_install_sshfs {
@@ -86,12 +89,35 @@ function f_uninstall_sshfs {
    sudo apt remove sshfs
 }
 
+function f_check_installed_ssh_key {
+   # Check if ssh key is available (WITHOUT VERBOSE OUTPUT)
+   if [ -f ~/.ssh/id_rsa ]; then
+      v_ssh_installed_key="true"
+   else
+      v_ssh_installed_key="false"
+   fi
+}
+
+function f_check_installed_ssh_key_verbose {
+   # Check if ssh command is available (WITH VERBOSE OUTPUT)
+
+   if [[ $v_ssh_installed_key == "true" ]]; then
+      echo " > SSH key is installed."
+
+   elif [[ $v_ssh_installed_key == "false" ]]; then
+      echo " > SSH key is not installed."
+   
+   else
+      echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
+      exit 1
+   fi
+}
+
 function f_check_installed_ssh {
    # Check if ssh command is available (WITHOUT VERBOSE OUTPUT)
    ssh -V &>/dev/null
    if [ $? == 0 ]; then
       v_ssh_installed="true"
-      #v_pub_key=
    else
       v_ssh_installed="false"
    fi
@@ -253,6 +279,9 @@ function f_verbose_check {
       f_check_installed_ssh
       f_check_installed_ssh_verbose
 
+      f_check_installed_ssh_key
+      f_check_installed_ssh_key_verbose
+
       f_check_installed_sshfs
       f_check_installed_sshfs_verbose
 
@@ -379,22 +408,39 @@ function f_enable_everything {
 
          # Verificar se ja está instalado:
             f_check_installed_ssh  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+            f_check_installed_ssh_key  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
             f_check_installed_sshfs  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
          
-         # Se nao estiver instalada SSH, vai instalar
-            if [[ $v_sshfs_installed == "false" ]]; then 
-               # Confirmar com o user se quer instalar:
-                  echo "(Y)es para Instalar SSH" v_ans
+         # se nao estiver instalada ssh, vai instalar
+            if [[ $v_ssh_installed == "false" ]]; then 
+               # confirmar com o user se quer instalar:
+                  echo "(y)es para instalar ssh"
                   read -sn 1 -p " > " v_ans
                   echo $v_ans
                   echo 
 
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
                      f_install_ssh
                   else
                      exit 0
                   fi
             fi
+
+         # se nao estiver instalada ssh key, vai instalar
+            if [[ $v_ssh_installed_key == "false" ]]; then 
+               # confirmar com o user se quer instalar:
+                  echo "(y)es para instalar ssh key" 
+                  read -sn 1 -p " > " v_ans
+                  echo $v_ans
+                  echo 
+
+                  if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
+                     f_install_ssh_key
+                  else
+                     exit 0
+                  fi
+            fi
+
 
          # Se nao estiver instalada SSHFS, vai instalar
             #if [[ $v_sshfs_installed == "true" ]]; then 
@@ -403,7 +449,7 @@ function f_enable_everything {
                
             if [[ $v_sshfs_installed == "false" ]]; then 
                # Confirmar com o user se quer instalar:
-                  echo "(Y)es para Instalar SSHFS" v_ans
+                  echo "(Y)es para Instalar SSHFS" 
                   read -sn 1 -p " > " v_ans
                   echo $v_ans
                   echo 
@@ -587,6 +633,9 @@ function f_exec {
       #f_check_installed_ssh
       #f_check_installed_ssh_verbose
       #
+      #f_check_installed_ssh_key
+      #f_check_installed_ssh_key_verbose
+      #
       #f_check_installed_sshfs
       #f_check_installed_sshfs_verbose
       #
@@ -606,6 +655,7 @@ function f_exec {
 
    # Installing/Uninstalling SSHFS
       #f_install_ssh
+      #f_install_ssh_key
       #f_install_sshfs
       #f_uninstall_sshfs
 
