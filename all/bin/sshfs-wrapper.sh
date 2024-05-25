@@ -60,7 +60,7 @@ function f_uninstall_sshfs {
 
 function f_check_installed_ssh {
    # Check if sshfs command is available (WITHOUT VERBOSE OUTPUT)
-   if command -v sshfs &>/dev/null; then
+   if command -v ssh &>/dev/null; then
       v_ssh_installed="true"
    else
       v_ssh_installed="false"
