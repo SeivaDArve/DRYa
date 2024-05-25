@@ -125,9 +125,11 @@ function f_check_installed_sshfs_verbose {
 
    if [[ $v_sshfs_installed == "true" ]]; then
       echo " > SSHFS is installed."
+      if [ -n "$TERMUX_VERSION" ]; then echo "    > Para termux precisa: root"; fi
 
    elif [[ $v_sshfs_installed == "false" ]]; then
       echo " > SSHFS is not installed."
+      if [ -n "$TERMUX_VERSION" ]; then echo "    > Para termux precisa: root"; fi
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSHFS devido a um erro"
