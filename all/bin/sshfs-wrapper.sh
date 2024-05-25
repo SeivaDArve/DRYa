@@ -305,7 +305,10 @@ function f_ser_cliente {
          done
          read -sn 1 -p " > " v_mach
          echo
-         echo $v_mach
+         echo " > $v_mach"
+         
+         let "v_o = v_mach - 1"
+         echo " >> $v_parent_dir${v_array_remote_dir[$v_o]}"
 
 }
 
