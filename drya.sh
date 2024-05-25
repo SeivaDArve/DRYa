@@ -1570,7 +1570,7 @@ elif [ $1 == "install" ]; then
       esac
    fi
 
-elif [ $1 == "sshfs" ]; then 
+elif [ $1 == "ssh" ]; then 
    # Options for SSH File System
 
    # Para transportar os argumento de script para script, exportamos para o env
