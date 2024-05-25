@@ -58,7 +58,7 @@ function f_uninstall_sshfs {
    sudo apt remove sshfs
 }
 
-function f_check_installed {
+function f_check_installed_ssh {
    # Check if sshfs command is available (WITHOUT VERBOSE OUTPUT)
    if command -v sshfs &>/dev/null; then
       v_ssh_installed="true"
@@ -67,13 +67,40 @@ function f_check_installed {
    fi
 }
 
-function f_check_installed_verbose {
+function f_check_installed_ssh_verbose {
    # Check if sshfs command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_ssh_installed == "true" ]]; then
+      echo " > SSH is installed."
+
+   elif [[ $v_sshfs_installed == "false" ]]; then
+      echo " > SSH is not installed."
+   
+   else
+      echo "O software nao conseguiu detetar se está ou nao está instalado SSH devido a um erro"
+      exit 1
+   fi
+         
+
+}
+
+
+function f_check_installed_sshfs {
+   # Check if sshfs command is available (WITHOUT VERBOSE OUTPUT)
+   if command -v sshfs &>/dev/null; then
+      v_sshfs_installed="true"
+   else
+      v_sshfs_installed="false"
+   fi
+}
+
+function f_check_installed_sshfs_verbose {
+   # Check if sshfs command is available (WITH VERBOSE OUTPUT)
+
+   if [[ $v_sshfs_installed == "true" ]]; then
       echo " > SSHFS is installed."
 
-   elif [[ $v_ssh_installed == "false" ]]; then
+   elif [[ $v_sshfs_installed == "false" ]]; then
       echo " > SSHFS is not installed."
    
    else
@@ -83,7 +110,6 @@ function f_check_installed_verbose {
          
 
 }
-
 function f_check_if_user_is_on_fuse_group {
    # Verifica se o utilizador faz parte do grupo fuse (WITHOUT VERBOSE OUTPUT)
       v_group="fuse"
@@ -199,8 +225,11 @@ function f_verbose_check {
       echo "Current status of SSHFS: "
       f_check_current_user
 
-      f_check_installed
-      f_check_installed_verbose
+      f_check_installed_ssh
+      f_check_installed_ssh_verbose
+
+      f_check_installed_sshfs
+      f_check_installed_sshfs_verbose
 
       f_check_if_fuse_exists
       f_check_if_fuse_exists_verbose
@@ -326,14 +355,15 @@ function f_enable_everything {
       # Instalar SSHFS (verificando primeiro se ja está instalado)
 
          # Verificar se ja está instalado:
-            f_check_installed  # Vai traser a variavel $v_ssh_installed "true" ou "false"
+            f_check_installed_ssh  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+            f_check_installed_sshfs  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
 
          # Se nao estiver instalada, vai instalar
-            #if [[ $v_ssh_installed == "true" ]]; then 
+            #if [[ $v_sshfs_installed == "true" ]]; then 
             #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
             #   #f_check_installed_verbose 
                
-            if [[ $v_ssh_installed == "false" ]]; then 
+            if [[ $v_sshfs_installed == "false" ]]; then 
                # Confirmar com o user se quer instalar:
                   echo "(Y)es para Instalar SSHFS" v_ans
                   read -sn 1 -p " > " v_ans
@@ -517,8 +547,11 @@ function f_exec {
    # Status (each fx separate, for debug)
       #f_check_current_user
       #
-      #f_check_installed
-      #f_check_installed_verbose
+      #f_check_installed_ssh
+      #f_check_installed_ssh_verbose
+      #
+      #f_check_installed_sshfs
+      #f_check_installed_sshfs_verbose
       #
       #f_check_if_fuse_exists
       #f_check_if_fuse_exists_verbose
