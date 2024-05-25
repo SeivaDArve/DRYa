@@ -167,8 +167,15 @@ function f_create_DRYa_mounting_points {
       # Verbose output do instalador
          echo "Escolheu a opcao: on"
          echo " > Tem a certeza que quer ativar todas as fx para poder usar sshfs?"
+         echo
+
+      # Perguntar: Cliente ou Servidor?
+         echo 
+         echo "Pretende ser (C)liente ou (S)ervidor?"
+         read -p " > " v_side
 
       # Instalar SSHFS
+         # Verificar primeiro se SSHFS esta instalado (se nao estiver, perguntar se quer instalar):
          read -p "(Y)es para Instalar SSHFS" v_ans
          if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then f_install_sshfs; fi
          
@@ -186,7 +193,12 @@ function f_create_DRYa_mounting_points {
          echo "Escolheu a opcao: off"
          echo " > Tem a certeza que quer desativar todas as fx e deixar de usar sshfs?"
 
-      # Desinstalar SSHFS
+      # Perguntar: Quer so desligar o Servico ou Desinstalar tudo?
+         echo 
+         echo "Pretende tornar-se (O)ffline ou (D)esinstalar tudinho?"
+         read -p " > " v_off
+
+      # Desinstalar SSHFS (Se escolheu desinstalar)
          read -p "(Y)es para Desinstalar SSHFS" v_ans
          if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then f_uninstall_sshfs; fi
 

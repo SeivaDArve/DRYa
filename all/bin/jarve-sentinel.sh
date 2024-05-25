@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# uDev: Jarve stats the sshfs server
 
 echo "Jarve running (uDev)"
 echo " > type 'D clone try jarve' to download my repo"

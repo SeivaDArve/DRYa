@@ -1229,6 +1229,22 @@ elif [ $1 == "backup" ]; then
       echo " > ..."
    fi
 
+
+elif [ $1 == "eysek" ]; then 
+
+   f_greet 
+
+   # Frase bonita
+      echo "Desde o filme..." 
+      echo
+
+   # Variavel com a data
+      STARTINGDATE="2021-02-05"  
+
+   # Data de aniversário no formato YYYY-MM-DD
+      f_calcular_tempo_decorrido_apos_data
+
+
 elif [ $1 == "seiva-up-time" ]; then 
    # uDev: Tells how long the Linux experience started for Seiva
    
