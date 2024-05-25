@@ -73,7 +73,7 @@ function f_check_installed_ssh_verbose {
    if [[ $v_ssh_installed == "true" ]]; then
       echo " > SSH is installed."
 
-   elif [[ $v_sshfs_installed == "false" ]]; then
+   elif [[ $v_ssh_installed == "false" ]]; then
       echo " > SSH is not installed."
    
    else
