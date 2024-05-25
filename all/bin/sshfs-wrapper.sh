@@ -327,7 +327,7 @@ function f_enable_everything {
             if [[ $v_ssh_installed == "false" ]]; then 
                # Confirmar com o user se quer instalar:
                   echo "(Y)es para Instalar SSHFS" v_ans
-                  read -p " > " v_ans
+                  read -n 1 -p " > " v_ans
                   echo $v_ans
                   echo 
 
