@@ -28,16 +28,18 @@ function f_check_current_user {
 function f_install_sshfs {
    # Installing sshfs
 
-   # Perguntar qual é o package manager no dispositivo atual
-      echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
-      echo " > Se deixar em branco, será usado: apt"
-      read -p " > " v_across
 
    if [ -n "$TERMUX_VERSION" ]; then
       #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
       pkg install sshfs
    else
       #echo "Este terminal não é o Termux."
+
+      # Se nao estivermos no Termux, perguntar qual é o package manager no dispositivo atual
+         echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
+         echo " > Se deixar em branco, será usado: apt"
+         read -p " > " v_across
+
       if [ -z $v_across ]; then
          echo "Installing with 'apt'..."
          sudo apt install sshfs
