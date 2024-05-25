@@ -1570,9 +1570,20 @@ elif [ $1 == "install" ]; then
       esac
    fi
 
-elif [ $1 == "sshfs" ]; then 
+elif [ $1 == "ssh" ]; then 
    # Options for SSH File System
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
+
+   # Para transportar os argumento de script para script, exportamos para o env
+      v_1=$1
+      v_2=$2
+      v_3=$3
+      export v_1 v_2 v_3
+
+   # Para facilitar ao utilizador que pode querer fazer alteracoes ao script, viajamos primeiro para a pasta onde se encontra o script
+      cd ${v_REPOS_CENTER}/DRYa/all/bin/
+   
+   # Executamos o wrapper do SSHFS
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
 
 elif [ $1 == "edit" ]; then 
          case $2 in
