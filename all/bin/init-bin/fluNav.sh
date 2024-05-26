@@ -660,7 +660,7 @@ function V {
 
    # Implementation of Use 2:
    elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
-      cd ${v_REPOS_CENTER}/verbose-line && ls
+      cd ${v_REPOS_CENTER}/verbose-lines && ls
       
    # Implementation of Use 2:
    elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
