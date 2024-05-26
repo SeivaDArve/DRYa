@@ -24,6 +24,7 @@ function f_greet {
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
    v_verbose_line=${v_REPOS_CENTER}/verbose-lines/ssh
+   v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
 
 function f_check_current_user {
    # Get the current username
@@ -141,6 +142,9 @@ function f_send_public_key_to_verbose_line_repo {
       echo " > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)" >> $v_verbose_line
       cat $v_public_key >> $v_verbose_line
       echo              >> $v_verbose_line
+
+      # Enviar o mesmo tempo para um ficheiro tmp (para quem nao tem a repo 'verbose-lines' 
+         cat $v_public_key > $v_temporary_file  ## Foi definido no inicio deste script
 }
 
 function f_check_installed_ssh_key {
