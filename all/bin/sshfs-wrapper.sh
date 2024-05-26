@@ -435,7 +435,8 @@ function f_ser_cliente {
          echo " > $v_mach"
          
          let "v_o = v_mach - 1"
-         echo " >> $v_parent_dir${v_array_remote_dir[$v_o]}"
+         v_client_mount_point=${v_array_remote_dir[$v_o]}
+         echo " >> $v_parent_dir$v_client_mount_point"
 }
 
 function f_enable_everything {
