@@ -217,6 +217,19 @@ function f_check_if_user_is_on_fuse_group_verbose {
    fi
 }
 
+function f_check_ssh_daemon_is_on {
+   # Verificar se o Daemon do ssh estao ON ou OFF
+   v_started=$(sudo service ssh status)
+   #echo "debug $v_started"
+}
+
+function f_check_ssh_daemon_is_on_verbose {
+   echo
+   if [[ $v_started =~ "No superuser binary detected" ]]; then
+      echo " > You are on termux, not sure if ssh Daemon is on"
+   fi
+}
+
 function f_cat_this_public_key {
    # Mostra ao utilizador o ssh key publica desta maquina
       f_send_public_key_to_verbose_line_repo
@@ -311,6 +324,9 @@ function f_verbose_check {
       f_check_installed_ssh_key
       f_check_installed_ssh_key_verbose
 
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+
       f_check_installed_sshfs
       f_check_installed_sshfs_verbose
 
@@ -394,10 +410,16 @@ function f_ser_servidor {
    echo " > Na pasta remota: $v_r_dir"
    echo
 
-   # Mostrar se o servidor SSH está ativo e a escutar connexões:
-      sudo service ssh status
+   # Mostrar se o servidor SSH está ativo e a escutar conexões:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+
+   # Iniciar o servico (Daemon) do ssh
       sudo service ssh start
-      sudo service ssh status
+
+   # Ver o estado atual do serviço apos fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
       echo
 
    # Mostrar a cahve publica da maquina atual no ecra
@@ -428,7 +450,9 @@ function f_ser_servidor {
 
 function f_ser_cliente {
    # Perguntar: Qual maquina remota quer aceder?
+      echo
       echo "A qual maquina remota quer aceder?"
+      echo
 
       # Visualizar as pastas criadas atualemte:
          echo "Visualizar as pastas que estao criadas neste momento:"
@@ -438,16 +462,24 @@ function f_ser_cliente {
 
          for i in ${v_array_remote_dir[@]};
          do
-            echo " > $e.$i"
+            echo "   $e = $i"
             e=$((e+1))
          done
          read -sn 1 -p " > " v_mach
+         echo -e "\r\r\r > $v_mach"
          echo
-         echo " > $v_mach"
          
          let "v_o = v_mach - 1"
          v_client_mount_point=${v_array_remote_dir[$v_o]}
-         echo " >> $v_parent_dir$v_client_mount_point"
+
+         echo "Escolheu: $v_mach:"
+         echo " > $v_parent_dir$v_client_mount_point"
+         echo
+         echo " >> Ative 'Ser Servidor' na outra maquina'"
+         echo " >> La, vai receber uma mensagem:"
+         echo " >> 'Dados de servidor sincronizados apartir da repo: verbose-lines'"
+         echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
+         ech9 " >> uDev..."
 }
 
 function f_enable_everything {
@@ -565,6 +597,10 @@ function f_enable_everything {
 
       ##########################################################################
       # Perguntar: Cliente ou Servidor?
+
+         read -p "Enter para continuar (debug)"
+         f_greet
+
          echo "Pretende ser (C)liente ou (S)ervidor?"
          read -n 1 -p " > " v_side
 
@@ -613,13 +649,15 @@ function f_disable_everything {
                   echo "uDev: desligar-se a si proprio de ser servidor"
 
                   # Ver o estado atual do serviço antes de fazer alterações:
-                     sudo service ssh status
+                     f_check_ssh_daemon_is_on
+                     f_check_ssh_daemon_is_on_verbose
 
                   # Parar o serviço
                      sudo service ssh stop
 
                   # Ver o estado atual do serviço apos fazer alterações:
-                     sudo service ssh status
+                     f_check_ssh_daemon_is_on
+                     f_check_ssh_daemon_is_on_verbose
                fi
             fi
       # remove: f_create_fuse_group
@@ -705,6 +743,9 @@ function f_exec {
       #
       #f_check_mounting_point_parent
       #f_check_mounting_point_array
+      #
+      #f_check_ssh_daemon_is_on
+      #f_check_ssh_daemon_is_on_verbose
       #
       #uDev: check if repo exists: verbose-line
 
