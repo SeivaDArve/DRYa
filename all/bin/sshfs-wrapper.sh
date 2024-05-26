@@ -20,6 +20,10 @@ function f_greet {
    # Print the entire array
       #echo "Array elements: ${v_array_remote_dir[@]}"
  
+# Variaveis que guardam a localização da chave publica SSH
+   v_public_key=~/.ssh/id_rsa.pub
+   v_verbose_line=${v_REPOS_CENTER}/verbose-lines/ssh
+
 function f_check_current_user {
    # Get the current username
    echo " > Your current username is: $v_current_username"
@@ -89,10 +93,25 @@ function f_uninstall_sshfs {
    sudo apt remove sshfs
 }
 
+function f_send_public_key_to_verbose_line_repo {
+   # Send text to a specific repo for verbose outputs through github
+      v_date=$(date)
+      echo              >> $v_verbose_line
+      echo "- $v_date"  >> $v_verbose_line
+      echo " > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)" >> $v_verbose_line
+      cat $v_public_key >> $v_verbose_line
+      echo              >> $v_verbose_line
+}
+
 function f_check_installed_ssh_key {
    # Check if ssh key is available (WITHOUT VERBOSE OUTPUT)
-   if [ -f ~/.ssh/id_rsa ]; then
+
+   # variaveis definidas no inicio do fucheiro: v_public_key, v_verbose_line
+
+   # Se existir chave public, envia tambem para a repo: verbose-line
+   if [ -f $v_public_key ]; then
       v_ssh_installed_key="true"
+
    else
       v_ssh_installed_key="false"
    fi
@@ -192,6 +211,12 @@ function f_check_if_user_is_on_fuse_group_verbose {
    else
       echo "O software nao conseguiu detetar se está ou nao está no grupo fuse devido a um erro"
    fi
+}
+
+function f_cat_this_public_key {
+   # Mostra ao utilizador o ssh key publica desta maquina
+      f_send_public_key_to_verbose_line_repo
+      tail -n 4 $v_verbose_line
 }
 
 
@@ -364,6 +389,9 @@ function f_ser_servidor {
    echo " > Na pasta remota: $v_r_dir"
    echo
 
+   # Mostrar a cahve publica da maquina atual no ecra
+      f_cat_this_public_key
+
    echo "Utilizador: "
    echo " > $USER"
    echo
@@ -373,10 +401,18 @@ function f_ser_servidor {
    echo " > $v_ip"
    echo
    
+   v_loc_ip=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+   echo "IP local:"
+   echo " > $v_loc_ip"
+   echo
+   
    # Concatenar TUDO
       echo "Na maquina que quer aceder ao servidor, escreva o comando:"
-      echo " > sshfs $USER@$v_ip:$v_r_dir  (mais o mounting point do cliente)"
-      echo "   Por exemplo: remote-MSI-dv_msi" 
+      echo " > IP publico:"
+      echo " >> sshfs $USER@$v_ip:$v_r_dir  (+ mounting point, ex: remote-MSI-dv_msi)" 
+      echo " |"
+      echo " > IP local:"
+      echo " >> sshfs $USER@$v_loc_ip:$v_r_dir  (+ mounting point, ex: remote-MSI-dv_msi)" 
 }
 
 function f_ser_cliente {
@@ -504,7 +540,6 @@ function f_enable_everything {
             fi
 
 
-
       ##########################################################################
       # Criar as pastas onde podem sermontados os  file systems
 
@@ -536,7 +571,7 @@ function f_enable_everything {
 
 
       ##########################################################################
-      echo "Foi tudo verificado"
+      echo "fim...";  exit 0
 }
 
 function f_disable_everything {
@@ -648,6 +683,7 @@ function f_exec {
       #f_check_mounting_point_parent
       #f_check_mounting_point_array
       #
+      #uDev: check if repo exists: verbose-line
 
    # Function for $2 when it is on|off
       #f_enable_everything
@@ -655,9 +691,12 @@ function f_exec {
 
    # Installing/Uninstalling SSHFS
       #f_install_ssh
-      #f_install_ssh_key
       #f_install_sshfs
       #f_uninstall_sshfs
+
+   # About ssh keys
+      #f_install_ssh_key
+      #f_send_public_key_to_verbose_line_repo
 
    # Create/Remove Fuse Group
       #f_create_fuse_group
@@ -675,6 +714,5 @@ function f_exec {
       #f_ser_servidor
       #f_ser_cliente
    # Instructions and wizzard to Uninstall everything
-
 }
 f_exec
