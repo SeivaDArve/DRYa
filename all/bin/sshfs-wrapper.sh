@@ -2,7 +2,7 @@
 
 function f_greet {
    clear
-   figlet SSHFS
+   figlet SSH / SSHFS
 }
 
 # Para Debug:
@@ -41,6 +41,7 @@ function f_install_ssh {
    if [ -n "$TERMUX_VERSION" ]; then
       #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
       pkg install openssh-clients
+      pkg install openssh-server
    else
       #echo "Este terminal não é o Termux."
 
@@ -53,8 +54,11 @@ function f_install_ssh {
          # Se o utilizador deixar em vazio, instala com o mais comum (apt)
          echo "Installing with 'apt'..."
          sudo apt install openssh-clients
+         sudo apt install openssh-server
       else 
          sudo $v_across install ssh
+         sudo $across install openssh-server
+         sudo $across install openssh-server
       fi
    fi
 
@@ -380,14 +384,21 @@ function f_ser_servidor {
 
    f_ask
    echo " > na maquina remota, que acerder a qual pasta?"
-   echo " >> A tudo?? '/'"
-   echo " >> So aos Documentos 'Home' '~'?"
-   echo -n " > "
+   echo " > A tudo: '/'   Aos Documentos (Home): '~'"
+   echo " > Deixar em branco: '~'"
+   echo -n " >> "
    read v_r_dir
+   [ -z $v_r_dir ] && v_r_dir=~
    
    f_ask
    echo " > Na pasta remota: $v_r_dir"
    echo
+
+   # Mostrar se o servidor SSH está ativo e a escutar connexões:
+      sudo service ssh status
+      sudo service ssh start
+      sudo service ssh status
+      echo
 
    # Mostrar a cahve publica da maquina atual no ecra
       f_cat_this_public_key
@@ -578,26 +589,37 @@ function f_enable_everything {
 function f_disable_everything {
       # Perguntar: Quer so desligar o Servico ou Desinstalar tudo?
          echo "Pretende tornar-se (O)ffline ou (D)esinstalar tudinho?"
-         read -p " > " v_off
+         read -n 1 -p " > " v_ans
          echo 
 
          # Desinstalar SSHFS (Se escolheu desinstalar)
             if [[ $v_ans == "d" ]] || [[ $v_ans == "D" ]]; then 
                echo "Tem a certeza que quer desativar todas as fx e deixar de usar sshfs?"
-               read -p "(Y)es para Desinstalar SSHFS" v_ans
+               echo " > (Y)es para Desinstalar SSHFS" 
+               read -n 1 -p " > " v_ans
       
-               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then i
+               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
                   f_uninstall_sshfs
                fi
             fi
 
          # Tornar-se Offline
             if [[ $v_ans == "o" ]] || [[ $v_ans == "O" ]]; then 
-               echo "Tem a certeza que quer cncelar o serviço de servidor sshfs nesta maquina?"
-               read -p "(Y)es para desligar-se de servidor SSHFS" v_ans
+               echo "Tem a certeza que quer parar (stop) o serviço de servidor ssh nesta maquina?"
+               echo " > (Y)es para desligar-se de servidor SSH" 
+               read -n 1 -p " > " v_ans
       
                if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
                   echo "uDev: desligar-se a si proprio de ser servidor"
+
+                  # Ver o estado atual do serviço antes de fazer alterações:
+                     sudo service ssh status
+
+                  # Parar o serviço
+                     sudo service ssh stop
+
+                  # Ver o estado atual do serviço apos fazer alterações:
+                     sudo service ssh status
                fi
             fi
       # remove: f_create_fuse_group

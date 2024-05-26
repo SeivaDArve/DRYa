@@ -88,6 +88,8 @@ function f_traitsID {
          traits_OS="Microsoft"; export traits_OS
          v_arr1=W
 
+         # uDev: Verificar se o sistema está no WSL2
+
       elif [[ $v_uname =~ "raspberrypi" ]]; then 
          # Linux has to be the last one, because it means Windows and Android are not present
          echo "DRYa: Running on: Linux (Raspberry Pi)"
