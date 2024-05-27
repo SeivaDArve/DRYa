@@ -1574,6 +1574,7 @@ elif [ $1 == "ssh" ]; then
    # Options for SSH File System
 
    # Para transportar os argumento de script para script, exportamos para o env
+      # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
       v_1=$1
       v_2=$2
       v_3=$3
