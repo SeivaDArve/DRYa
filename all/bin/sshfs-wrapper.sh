@@ -12,6 +12,7 @@ function f_greet {
 
 # Verificar a env variable para o nome de utilizador atual
    v_current_username=$USER
+   [[ -z $USER ]] && USER=$(whoami) && export USER
 
 # Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
    v_parent_dir=~/sshfs/
@@ -23,10 +24,46 @@ function f_greet {
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
    v_verbose_line=${v_REPOS_CENTER}/verbose-lines/ssh
+   v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
 
 function f_check_current_user {
    # Get the current username
    echo " > Your current username is: $v_current_username"
+}
+
+function f_is_rooted {
+   # Verificar se o comando 'su' está disponível
+
+   if command -v su > /dev/null 2>&1; then
+       #echo "O comando 'su' está disponível. Verificando permissões de root..."
+
+       # Tentar obter permissões de root
+       if su -c "echo 'Permissões de root verificadas com sucesso'" > /dev/null 2>&1; then
+           #echo "Você tem permissões de root."
+           v_rooted="true"
+       else
+           #echo "Você não tem permissões de root ou não foi possível obter acesso root."
+           v_rooted="false"
+       fi
+   else
+      #echo "O comando 'su' não está disponível. Você não tem permissões de root."
+      v_rooted="false"
+   fi
+}
+
+function f_is_rooted_verbose {
+   # Check if ssh command is available (WITH VERBOSE OUTPUT)
+
+   if [[ $v_rooted == "true" ]]; then
+      echo " > Tem permissoes: root"
+
+   elif [[ $v_rooted == "false" ]]; then
+      echo " > Nao tem permissoes: root"
+   
+   else
+      echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
+      exit 1
+   fi
 }
 
 function f_install_ssh_key {
@@ -105,6 +142,9 @@ function f_send_public_key_to_verbose_line_repo {
       echo " > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)" >> $v_verbose_line
       cat $v_public_key >> $v_verbose_line
       echo              >> $v_verbose_line
+
+      # Enviar o mesmo tempo para um ficheiro tmp (para quem nao tem a repo 'verbose-lines' 
+         cat $v_public_key > $v_temporary_file  ## Foi definido no inicio deste script
 }
 
 function f_check_installed_ssh_key {
@@ -217,6 +257,19 @@ function f_check_if_user_is_on_fuse_group_verbose {
    fi
 }
 
+function f_check_ssh_daemon_is_on {
+   # Verificar se o Daemon do ssh estao ON ou OFF
+   v_started=$(sudo service ssh status)
+   #echo "debug $v_started"
+}
+
+function f_check_ssh_daemon_is_on_verbose {
+   echo
+   if [[ $v_started =~ "No superuser binary detected" ]]; then
+      echo " > You are on termux, not sure if ssh Daemon is on"
+   fi
+}
+
 function f_cat_this_public_key {
    # Mostra ao utilizador o ssh key publica desta maquina
       f_send_public_key_to_verbose_line_repo
@@ -305,11 +358,17 @@ function f_verbose_check {
       echo "Current status of SSHFS: "
       f_check_current_user
 
+      f_is_rooted
+      f_is_rooted_verbose
+
       f_check_installed_ssh
       f_check_installed_ssh_verbose
 
       f_check_installed_ssh_key
       f_check_installed_ssh_key_verbose
+
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
 
       f_check_installed_sshfs
       f_check_installed_sshfs_verbose
@@ -330,6 +389,7 @@ function f_verbose_check {
       echo
       echo "Example: "
       echo " > '$ bash sshfs-wrapper.sh on'"
+      echo " > '$ D ssh on'"
 }
       
 function f_check_mounting_point_array {
@@ -394,10 +454,16 @@ function f_ser_servidor {
    echo " > Na pasta remota: $v_r_dir"
    echo
 
-   # Mostrar se o servidor SSH está ativo e a escutar connexões:
-      sudo service ssh status
+   # Mostrar se o servidor SSH está ativo e a escutar conexões:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+
+   # Iniciar o servico (Daemon) do ssh
       sudo service ssh start
-      sudo service ssh status
+
+   # Ver o estado atual do serviço apos fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
       echo
 
    # Mostrar a cahve publica da maquina atual no ecra
@@ -428,7 +494,9 @@ function f_ser_servidor {
 
 function f_ser_cliente {
    # Perguntar: Qual maquina remota quer aceder?
+      echo
       echo "A qual maquina remota quer aceder?"
+      echo
 
       # Visualizar as pastas criadas atualemte:
          echo "Visualizar as pastas que estao criadas neste momento:"
@@ -438,16 +506,24 @@ function f_ser_cliente {
 
          for i in ${v_array_remote_dir[@]};
          do
-            echo " > $e.$i"
+            echo "   $e = $i"
             e=$((e+1))
          done
          read -sn 1 -p " > " v_mach
+         echo -e "\r\r\r > $v_mach"
          echo
-         echo " > $v_mach"
          
          let "v_o = v_mach - 1"
          v_client_mount_point=${v_array_remote_dir[$v_o]}
-         echo " >> $v_parent_dir$v_client_mount_point"
+
+         echo "Escolheu: $v_mach:"
+         echo " > $v_parent_dir$v_client_mount_point"
+         echo
+         echo " >> Ative 'Ser Servidor' na outra maquina'"
+         echo " >> La, vai receber uma mensagem:"
+         echo " >> 'Dados de servidor sincronizados apartir da repo: verbose-lines'"
+         echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
+         ech9 " >> uDev..."
 }
 
 function f_enable_everything {
@@ -490,22 +566,25 @@ function f_enable_everything {
             fi
 
 
-         # Se nao estiver instalada SSHFS, vai instalar
-            #if [[ $v_sshfs_installed == "true" ]]; then 
-            #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
-            #   #f_check_installed_verbose 
-               
-            if [[ $v_sshfs_installed == "false" ]]; then 
-               # Confirmar com o user se quer instalar:
-                  echo "(Y)es para Instalar SSHFS" 
-                  read -sn 1 -p " > " v_ans
-                  echo $v_ans
-                  echo 
+         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+            if [[ $v_rooted == "true" ]]; then
+               # Se nao estiver instalada SSHFS, vai instalar
+                  #if [[ $v_sshfs_installed == "true" ]]; then 
+                  #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
+                  #   #f_check_installed_verbose 
+                     
+                  if [[ $v_sshfs_installed == "false" ]]; then 
+                     # Confirmar com o user se quer instalar:
+                        echo "(Y)es para Instalar SSHFS" 
+                        read -sn 1 -p " > " v_ans
+                        echo $v_ans
+                        echo 
 
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                     f_install_sshfs
-                  else
-                     exit 0
+                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                           f_install_sshfs
+                        else
+                           exit 0
+                        fi
                   fi
             fi
          
@@ -515,17 +594,21 @@ function f_enable_everything {
          # Verificar se ja está existe esse grupo:
             f_check_if_fuse_exists
       
-         # Se nao existir, vai criar:
-            if [[ $v_group == "false" ]]; then 
-               # Confirmar com o user se quer instalar:
-                  echo "(Y)es para Criar grupo FUSE"
-                  read -n 1 -p " > " v_ans
-                  echo
+         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+            if [[ $v_rooted == "true" ]]; then
+               
+               # Se nao existir, vai criar:
+                  if [[ $v_group == "false" ]]; then 
+                     # Confirmar com o user se quer instalar:
+                        echo "(Y)es para Criar grupo FUSE"
+                        read -n 1 -p " > " v_ans
+                        echo
 
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                     f_create_fuse_group
-                  else
-                     exit 0
+                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                           f_create_fuse_group
+                        else
+                           exit 0
+                        fi
                   fi
             fi
          
@@ -537,17 +620,20 @@ function f_enable_everything {
          # Verificar se o utilizador ja está adicionado ao grupo:
             f_check_if_user_is_on_fuse_group
 
-         # Se nao estiver adicionado, vai adicionar:
-            if [[ $v_ison_fuse == "false" ]]; then 
-               # Confirmar com o user se quer instalar:
-                  echo "(Y)es para adicionar utilizador ao grupo FUSE"
-                  read -n 1 -p " > " v_ans
-                  echo
+         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+            if [[ $v_rooted == "true" ]]; then
+               # Se nao estiver adicionado, vai adicionar:
+                  if [[ $v_ison_fuse == "false" ]]; then 
+                     # Confirmar com o user se quer instalar:
+                        echo "(Y)es para adicionar utilizador ao grupo FUSE"
+                        read -n 1 -p " > " v_ans
+                        echo
 
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                     f_add_user_to_fuse_group
-                  else
-                     exit 0
+                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                           f_add_user_to_fuse_group
+                        else
+                           exit 0
+                        fi
                   fi
             fi
 
@@ -565,6 +651,7 @@ function f_enable_everything {
 
       ##########################################################################
       # Perguntar: Cliente ou Servidor?
+
          echo "Pretende ser (C)liente ou (S)ervidor?"
          read -n 1 -p " > " v_side
 
@@ -613,13 +700,15 @@ function f_disable_everything {
                   echo "uDev: desligar-se a si proprio de ser servidor"
 
                   # Ver o estado atual do serviço antes de fazer alterações:
-                     sudo service ssh status
+                     f_check_ssh_daemon_is_on
+                     f_check_ssh_daemon_is_on_verbose
 
                   # Parar o serviço
                      sudo service ssh stop
 
                   # Ver o estado atual do serviço apos fazer alterações:
-                     sudo service ssh status
+                     f_check_ssh_daemon_is_on
+                     f_check_ssh_daemon_is_on_verbose
                fi
             fi
       # remove: f_create_fuse_group
@@ -687,6 +776,8 @@ function f_exec {
 
    # Status (each fx separate, for debug)
       #f_check_current_user
+      #f_is_rooted
+      #f_is_rooted_verbose
       #
       #f_check_installed_ssh
       #f_check_installed_ssh_verbose
@@ -705,6 +796,9 @@ function f_exec {
       #
       #f_check_mounting_point_parent
       #f_check_mounting_point_array
+      #
+      #f_check_ssh_daemon_is_on
+      #f_check_ssh_daemon_is_on_verbose
       #
       #uDev: check if repo exists: verbose-line
 
