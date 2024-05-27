@@ -1193,11 +1193,14 @@ elif [ $1 == "wsl" ]; then
          if [ -z "$v_text" ]; then
             echo "The file is empty"
          else 
-            cat $v_file
+            w=$(cat $v_file)
+            echo $w
+            export w
             echo
          fi
 
-      echo "uDev: Colocar o path numa variavel \$w"
+      echo "Foi colocar todo esse texto (path) numa variavel \$w"
+      echo
       echo "uDev: Give dir basename into variable \$W so that command '$ op .' can operate"
       echo "uDev: Mostrar o antes e o depois"
    fi
