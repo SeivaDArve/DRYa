@@ -229,25 +229,68 @@ function op {
    # Function to open all files and directories given as arguments ($*)
       # Similar apps: termux-open; termux-open-url; wslview
 
-   # uDev: Since DRYa is developing drya-neofetch, then in the future we will get our OS from an environment variable made by DRYa
+   # uDev: Since DRYa is developing traitsID, then in the future we will get our OS from an environment variable made by DRYa
 
    # Test in which OS this script is running:
       v_uname=$(uname -a)
 
-   # Try to find the file opener at each OS:
-      if [[ $v_uname =~ "Microsoft" ]]; then 
-         # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
-            /mnt/c/windows/explorer.exe $*
+   # from the list o arguments, send links to an array, send non-links to another array
+      # Unseting array variabls, so that they start empty
+         unset link links          # Erasing the contents of the 'links' variable/array
+         unset non_link non_links  # Erasing the contents of the 'non_links' variable/array
+         #unset ls_detected_files
+         #unset op_special_commands
+         #unset saved_recognized_files
 
-      elif [[ $v_uname =~ "Android" ]]; then
-         # If it finds "Android" then it should be working at Termux terminal
+      # Filtering the arguments 
+      #  for i in $*
+      #  do
+      #     # Testing each arg
+      #        link=$(echo $i | grep "^http")         # Attempt to detect if a given argument is a link
+      #        non_link=$(echo $i | grep -v "^http")  # Ateempt to detect if a given argument is not a link (by inverting the grep search with -v)
+
+      #     # For debug, verbose var:
+      #        echo "arg: $i"
+
+      #     # If var if link, go to Variable A; If var is non_non link, go to var B  (WITH VERBOSE, FOR DEBUG)
+      #        [[ ! -z $link ]] && echo "'link' var is: $link" && \
+      #        links+=("$link")  # If variable 'link' comes with some value (meaning that we detected a link) then, append it to the array 'links'
+
+      #        [[ ! -z $non_link ]] && echo "'non_link' var is: $non_link" && \
+      #        non_links+=("$non_link")
+      #  done
+
+      # Verbose results (for debug):
+      #  echo
+      #  echo "------------------------------"
+      #  echo "'links' array: ${links[@]}"
+      #  echo "'non_links' array: ${non_links[@]}"
+      #  #read; clear; exit 0  # For testing only
+
+   # Try to find the file opener at each OS:
+      if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
+         /mnt/c/windows/explorer.exe $*  # Original script, without a for loop
+   
+           # uDev: For links and non_links open accordingly:   
+           #   # open each link
+           #      for i in ${links[@]}
+           #      do 
+           #         /mnt/c/windows/explorer.exe $links  #Error: windows explorer does not open links
+           #      done
+           #
+           #   # open each non_link
+           #      for i in ${non_links[@]}
+           #      do 
+           #         /mnt/c/windows/explorer.exe $non_links
+           #      done
+
+      elif [[ $v_uname =~ "Android" ]]; then  # If it finds "Android" then it should be working at Termux terminal
             xdg-open $*
 
-      elif [[ $v_uname =~ "Linux" ]]; then
-         # If it is Any kind of Linux, try to open as standard
+      elif [[ $v_uname =~ "Linux" ]]; then  # If it is Any kind of Linux, try to open as standard
             xdg-open $*
       else
-         echo "DRYa: op: Attempt to open that argument failed"
+         echo "DRYa: 'op' command failed to open the arguments"
       fi
       
       # uDev: Add 'termux-open $* --chooser' as an option
