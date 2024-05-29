@@ -209,10 +209,17 @@ alias mk="mkdir" # Creates one directory for each name given as an argument and 
 alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
-alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
-   alias lx="lixo"
 
 alias tc="touch"
+
+# uDev: 'Mv' Alias for 'cut' 'paste' 'list mv-v clipboard'
+   # alias 'Mv'  : without arguments, show mv-cut/mv-paste clipboard and help
+   # alias 'Mv c': move-cut  # add files and their absolute path to an array.... then paste then with mv-p at the dir you want
+   # alias 'Mv C': move-cut  # move files from current dir to another at ~/.config/h.h/... and when 'Mv p' is used.... all contents from such dir are moved again to the final location
+   # alias 'Mv p': move-paste
+   # alias 'Mv l': Move to 'lixo'/'lx'
+   alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
+      alias lx="lixo"
 
 # 'Calc' and 'bc' are 2 Bash calculators
 # 'split -n 5' is a command that splits a text file into 5 parts

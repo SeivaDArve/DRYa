@@ -354,7 +354,7 @@ function . {
 
       if [ -z $1 ]; then 
          # If no argument is given, lists storage (ls command)
-         ls 
+         ls -p
 
       elif [ $1 == "." ]; then 
          f_edit_self

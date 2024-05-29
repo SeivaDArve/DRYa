@@ -53,6 +53,7 @@ function f_traitsID {
    # Getting info about the machine
 
    # uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
+   # uDrv: Detetar WM (window manager, se estar a usar GNOME, KDE...
 
    # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
       v_dir=~/.config/h.h/drya/
