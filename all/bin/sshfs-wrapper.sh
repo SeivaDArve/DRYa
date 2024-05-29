@@ -16,7 +16,8 @@ function f_greet {
 
 # Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
    v_parent_dir=~/sshfs/
-   v_array_remote_dir=("remote-Rasp-miau" "remote-Lenovo-Dv" "remote-MSI-dv_msi" "remote-ASUS-indratena" "remote-A6-termux-Dv")
+   v_array_remote_dir=("remote-Rasp-miau" "remote-Lenovo-Dv" "remote-MSI-dv_msi" "remote-ASUS-indratena" "remote-A6-termux-Dv" "public-device-id-35780065215")
+   # uDev: find a solution on traitsID to identify publuc devices like WORK phones
 
    # Print the entire array
       #echo "Array elements: ${v_array_remote_dir[@]}"
