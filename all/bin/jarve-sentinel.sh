@@ -2,11 +2,27 @@
 #
 # uDev: Jarve stats the sshfs server
 
+# Update à repo DRYa  ## QUANDO O USER CARREGA 'J'
+   # Cuidado: Ao utilizadores que nao sabem ler nem Bash nem os conteudos DRYa
+   #          Quando alguem faz uso de um 'git branch' do qual nao viu as alteracoes
+   #          Esta sujeito que o nosso DRYa seja atualizado para uma versao que extrar info maliciosa do nosso smartphone
+   #          (Faz 'git pull' de DRYa de um ramo que seja seguro, usa so ramos seguros
+
+   cd ${v_REPOS_CENTER}/DRYa
+   clear
+   figlet Jarve
+   echo "Jarve: git pull à repo DRYa"
+   echo
+   git pull
+   echo
+
 echo "Jarve running (uDev)"
 echo " > type 'D clone try jarve' to download my repo"
 echo " >> Use DRYa for shortcuts and commands"
 echo " >> Use Jarve to decide what commands to run next"
+echo
 
+read -p "[ANY KEY] para executar o sentinel"
 while true
 do
    echo "Starting ezGIT pull all"

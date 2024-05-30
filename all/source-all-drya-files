@@ -419,6 +419,7 @@ function f_repository_omni-log {
 
 function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+   alias J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    echo
    echo " >> O comando 'jarve', 'J' inicia o sentinela"
    echo
