@@ -1703,6 +1703,18 @@ elif [ $1 == "news" ]; then
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
 
+elif [ $1 == "calc" ]; then 
+   # Prompt de calculadora da DRYa que faz wrap-around ao pkg 'bc' e que dá exemplos no inicio do prompt para relembrar ao utilizador como se usa
+
+   f_greet
+
+   f_talk; echo "DRYa: calc"
+   echo
+   echo "exemplos de como usar a calculadora"
+   echo " > 3 + (34 * 2)/3"
+   echo
+   echo "uDev: calc com 'bc'"
+
 elif [ $1 == "vlm" ]; then 
          # Works on termux only
             # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
