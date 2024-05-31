@@ -1745,7 +1745,7 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
             v_result=$(echo "scale=2; $v_input" | bc)
 
          # Dar estes input para sair da app:
-            [[ $v_input == "sair" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "ZZ" ]] && exit 0 
+            [[ $v_input == "sair" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] && exit 0 
 
          # Mostrar os resultados
             # uDev: Enviar tudo para o verbose-lines para usar como historico
