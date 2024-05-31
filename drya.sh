@@ -1703,17 +1703,43 @@ elif [ $1 == "news" ]; then
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
 
-elif [ $1 == "calc" ]; then 
+elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ $1 == "clc" ]; then 
    # Prompt de calculadora da DRYa que faz wrap-around ao pkg 'bc' e que dá exemplos no inicio do prompt para relembrar ao utilizador como se usa
 
    f_greet
 
    f_talk; echo "DRYa: calc"
    echo
-   echo "exemplos de como usar a calculadora"
-   echo " > 3 + (34 * 2)/3"
+   echo " > Ver historico e sair: 'H'"
+   echo " > Casas decimais em vigor: 2"
+   echo "   > Para alterar escreve: 'S'"
    echo
-   echo "uDev: calc com 'bc'"
+   echo " > Sair: Ctrl-C"
+   echo
+   echo "Exemplos de como usar a calculadora 'bc'"
+   echo " > 3 + (34 * 2)/3 + 1.2"
+   echo " > scale=2; 2/3 (for more precision)"
+   echo
+
+   #alias bc="bc <<< scale=2"
+
+   # Disponibilizar a calculadora constantemente até que o utilizador cancele o axript
+      while true
+      do
+         # Perguntar qual o Calculo ou Input a usar como comando
+            echo -n " < "
+            read v_input
+
+         # Twntar diferenciar entre comando dado a este script e conta para calcular
+            v_result=$(echo "scale=2; $v_input" | bc)
+
+            [[ $v_input == "sair" ]] && exit 0  # uDev: add: Q; ZZ; quit
+
+         # Mostrar os resultados
+            # uDev: Enviar tudo para o verbose-lines para usar como historico
+            echo " > $v_result"
+            echo
+      done
 
 elif [ $1 == "vlm" ]; then 
          # Works on termux only

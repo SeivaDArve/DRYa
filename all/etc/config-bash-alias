@@ -211,6 +211,7 @@ alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a 
 
 
 alias tc="touch"
+alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tree ."
 
 # uDev: 'Mv' Alias for 'cut' 'paste' 'list mv-v clipboard'
    # alias 'Mv'  : without arguments, show mv-cut/mv-paste clipboard and help
