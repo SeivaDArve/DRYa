@@ -32,3 +32,39 @@ do
 
 done
 
+
+
+#
+# while true  ## Loop sem intençao de quebrar automaticamente
+# do
+#
+#  # Procurar coisas para fazer. Depois ao encontrar, nao passar para outra atividade até que essa nao eateja toda concluida
+#
+#     while true
+#     do
+#       <Encontrar tarefa incomplera #1>
+#       if [ ?$ == "0" ]; then <Se o comando anterior teve sucesso, tentar fazer de novo, senao, break>; fi
+#     done
+#
+#
+#
+#
+#     while true
+#     do
+#       <Encontrar tarefa incomplera #2>
+#       if [ ?$ == "0" ]; then <Se o comando anterior teve sucesso, tentar fazer de novo, senao, break>; fi
+#     done
+#
+#
+#
+#
+#     while true
+#     do
+#       <Encontrar tarefa incomplera #3>
+#       if [ ?$ == "0" ]; then <Se o comando anterior teve sucesso, tentar fazer de novo, senao, break>; fi
+#     done
+#
+#
+#
+# done
+#
