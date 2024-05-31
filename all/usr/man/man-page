@@ -1,2 +1,42 @@
-cria man page
-https://youtu.be/KVhFUwdsE2w
+.\" Manpage example/boilerplate for SOMETHING.
+.\" Contact AUTHOR@EMAIL.com to correct errors or typos
+.\" uDev: Is this a comment??
+.TH CREATING-MAN-PAGES 7 "31 December 2016" "1.0" "SOMETHING User Manual"
+.SH NAME
+SOMETHING \- brief example
+.SH SYNOPSIS
+SOMETHING [TEXT] [PARAMETERS]
+.SH DESCRIPTION
+A description of this imaginary object called "SOMETHING".
+.SH OPTIONS
+.RS 4
+.PP
+\fB\-\-timeout\fR=\fITIMEOUT\fR
+.RE
+.SH EXAMPLES
+SOMETHING --parameters random-text
+.SH "SEE ALSO"
+command(1), game(6)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Some Random Dude (dude@someplace.com)
+.SH COPYRIGHT
+Place a GPL header here or whatever license terms you prefer.
+.SH INSTALL
+
+First command:    
+.P 
+\fB mkdir -p ~/../usr/share/man/man1/ 
+.P 
+.P 
+Second command:    
+.P 
+\fB cp testi ~/../usr/share/man/man1/testi.1 && chmod 0644 ~/../usr/share/man/man1/testi.1 && gzip ~/../usr/share/man/man1/testi.1
+.P 
+
+But can also ve used (as Second command):
+\fB gzip testi.1 && install -g 0 -o 0 -m 0644 testi.1.gz ~/../usr/share/man/man1/
+
+Also, when running the command: '$ man testi' I received the message:
+man: outdated mandoc.db lacks testi(1) entry, run makewhatis /data/data/com.termux/files/usr/share/man
