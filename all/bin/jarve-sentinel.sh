@@ -16,6 +16,8 @@
    git pull
    echo
 
+# uDev: se existir a repo 'verbose-lines': atualizar de X em X tempos
+
 echo "Jarve running (uDev)"
 echo " > type 'D clone try jarve' to download my repo"
 echo " >> Use DRYa for shortcuts and commands"
