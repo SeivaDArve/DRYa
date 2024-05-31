@@ -1721,7 +1721,17 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
    echo " > scale=2; 2/3 (for more precision)"
    echo
 
-   #alias bc="bc <<< scale=2"
+   #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
+
+   # Criar ficheiro de historico
+      v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
+      mkdir -p $v_dir
+
+      v_file=history-drya-calculator.txt
+
+      v_log=$v_dir/$v_file
+
+      touch $v_log
 
    # Disponibilizar a calculadora constantemente até que o utilizador cancele o axript
       while true
@@ -1729,16 +1739,24 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
          # Perguntar qual o Calculo ou Input a usar como comando
             echo -n " < "
             read v_input
+            v_long_input=" < $v_input"  # Vai ser usado para enviar para um ficheiro de historico
 
-         # Twntar diferenciar entre comando dado a este script e conta para calcular
+         # Tentar diferenciar entre comando dado a este script e conta para calcular
             v_result=$(echo "scale=2; $v_input" | bc)
 
-            [[ $v_input == "sair" ]] && exit 0  # uDev: add: Q; ZZ; quit
+         # Dar estes input para sair da app:
+            [[ $v_input == "sair" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "ZZ" ]] && exit 0 
 
          # Mostrar os resultados
             # uDev: Enviar tudo para o verbose-lines para usar como historico
             echo " > $v_result"
             echo
+            v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
+
+         # Enviar ambas as variaves input e output para um ficheiro de historico
+            echo "            " >> $v_log
+            echo $v_long_input  >> $v_log
+            echo $v_long_result >> $v_log
       done
 
 elif [ $1 == "vlm" ]; then 
