@@ -7,3 +7,5 @@
 
 # v_is_termux="True'
 # export v_is_termux
+
+# uDev: Se for WSL2, definir os alias corretos para: reboot, shutdown, hibernate...
