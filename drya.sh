@@ -1708,10 +1708,15 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
 
    f_greet
 
+   # Definir o numero de casas decimais a aplicar aos resultados das contas
+      #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
+      v_decimal=2                 # Alterar este numero para alterar a pre-definicao
+      
+
    f_talk; echo "DRYa: calc"
    echo
    echo " > Ver historico e sair: 'H'"
-   echo " > Casas decimais em vigor: 2"
+   echo " > Casas decimais predefinidas: $v_decimal"
    echo "   > Para alterar escreve: 'S'"
    echo
    echo " > Sair: Ctrl-C"
@@ -1720,8 +1725,6 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
    echo " > 3 + (34 * 2)/3 + 1.2"
    echo " > scale=2; 2/3 (for more precision)"
    echo
-
-   #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
 
    # Criar ficheiro de historico
       v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
@@ -1739,13 +1742,30 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
          # Perguntar qual o Calculo ou Input a usar como comando
             echo -n " < "
             read v_input
-            v_long_input=" < $v_input"  # Vai ser usado para enviar para um ficheiro de historico
+            # Concatenar o text "<" com o resultado "$v_input" para ser enviado para um ficheiro de historico
+               v_long_input=" < $v_input" 
+
+            # Criar uma variavel que deteta que foi introduzido um input em vez de numeros para calculara, que faz com que no final do loop, nao execute calculos com variaveis que venham do loop anterior
+               v_esc=0   # Todos os input tem de colocar esra variavel a '1' E no inicio de cada loop, esta variavel volta a zero
 
          # Tentar diferenciar entre comando dado a este script e conta para calcular
-            v_result=$(echo "scale=2; $v_input" | bc)
+            v_result=$(echo "scale=$v_decimal; $v_input" | bc)
 
          # Dar estes input para sair da app:
-            [[ $v_input == "sair" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] && exit 0 
+            [[ $v_input == "sair" ]] || [[ $v_input == "exit" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] \
+               && v_esc=1 && exit 0 
+
+         # Visualizar ficheiro de historico
+            [[ $v_input == "h" ]] \
+               && less $v_log && exit 0
+
+         # Visualizar e editar ficheiro de historico
+            [[ $v_input == "H" ]] \
+               && vim $v_log && exit 0
+
+         # Alterar a quantidade de casas decimais
+            [[ $v_input == "s" ]] || [[ $v_input == "S" ]] \
+               && read -p " >> Predefinir numero de casas decimais: " v_decimal
 
          # Mostrar os resultados
             # uDev: Enviar tudo para o verbose-lines para usar como historico
