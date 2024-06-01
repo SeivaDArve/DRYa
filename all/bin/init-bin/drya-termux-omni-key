@@ -1,6 +1,11 @@
 #!bin/bash
 # Title: drya-termux-omni-key
 
+# Escape character para as teclas:
+   # F5: \e[15~
+   # F6: \e[17~
+   # F7: \e[18~
+
 # DRYa-termux-omni-key (Bash keyboard bindings)
    # Bind F7 keycode: "\e[18~"
      v_default_omni_key="ॐ"
