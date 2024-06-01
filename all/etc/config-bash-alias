@@ -733,11 +733,28 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
    alias      453="upk"
 
-
 alias bashrc="vim ~/.bashrc"
 alias vimrc="vim ~/.vimrc"
 
+function teste {
+   echo "Teste do uso de placeholder %s em bash com printf"
 
+   # Teste 1
+      name=Alice
+      printf "Hi, %s \n" "$name"
+
+   # Teste 2
+      name=Alce
+      printf "Hi, %s \n" \
+      "$name"
+
+   # Teste 3
+      name1=Alface
+      name2=Ale
+      printf "Hi, %s %s \n" \
+      "$name1" \
+      "$name2"
+}
 
 function hist {
    # history-recall sub-app
