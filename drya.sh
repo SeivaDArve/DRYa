@@ -1724,9 +1724,9 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
    function f_clc_help {
       echo
       echo "---- Historico ----"
-      echo " > Ver                  (software: less): 'v'"
-      echo " > Editar               (software: vim) : 'V'"
-      echo " > Ver ultimas linhas:  (software: less): 't'"
+      echo " > Ver                  (software: less): 'V'"
+      echo " > Editar               (software: vim) : 'E'"
+      echo " > Ver ultimas linhas:  (software: less): 'U'"
       echo
       echo "---- Casas decimais ----"
       echo " > Editar: 'S'"
@@ -1735,15 +1735,16 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
       echo "---- Exemplos de como usar a calculadora 'bc' ----"
       echo " > 3 + (34 * 2)/3 + 1.2"
       echo
-      echo "---- Limpar o ecra ----"
-      echo " > L; l "
+      echo "---- Exemplos de como usar a calculadora 'D clc' ----"
+      echo " > 3x 2 : 3 + pi"
+      echo
+      echo "---- Editar o ecra ----"
+      echo " > Limpar ecra: 'L' "
       echo
       echo "---- Notas ---- "
-      echo " > Pode usar 'PI' que significa '3.1415'"
+      echo " > Pode usar 'pi' que significa '3.1415'"
       echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
-      echo
-      echo " > Podem ser criadas mais variaveis e modificadores "
-      echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
+      echo " > Pode usar ':' que significa '/' para usar nas divisões"
       echo
       echo " > Podem ser criadas mais variaveis e modificadores "
       echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
@@ -1780,8 +1781,22 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
             # substituir 'x' por '*'
                v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
 
-            # substituir 'PI' por '3.1415'
-               v_input=${v_input//PI/3.1415}  # Usa a substituição de parametros do Bash
+            # substituir ':' por '/'
+               v_input=${v_input//:/\/}  # Usa a substituição de parametros do Bash
+
+            # substituir 'pi' por '3.1415'
+               v_input=${v_input//pi/3.1415}  # usa a substituição de parametros do bash
+
+            # substituir 'tk' por '* 0.05' para multiplicacoes (taxa de Market Taker na corretora binance que é de 0.0500% de comissoes
+               v_input=${v_input//tkc/* 0.05}  # usa a substituição de parametros do bash
+
+            # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
+               v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
+
+            # uDev: MODIFICADOR: '( )tk' que faz o seguinte: (v_var - (v_var × 0.05)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
+            # uDev: MODIFICADOR: '( )mk' que faz o seguinte: (v_var - (v_var × 0.02)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
+            # uDev: MODIFICADOR: 'ans'   que faz o seguinte: Vai buscar o ultimo valor calculado e pode ser usada como variavel
+            # uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci
 
          # Tentar diferenciar entre comando dado a este script e conta para calcular
             v_result=$(echo "scale=$v_decimal; $v_input" | bc)
@@ -1791,15 +1806,15 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
                && v_esc=1 && exit 0 
 
          # Visualizar ficheiro de historico
-            [[ $v_input == "v" ]] \
+            [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
                && v_esc=1 && less $v_log
 
          # Visualizar ficheiro de historico (so ultimas linhas)
-            [[ $v_input == "t" ]] || [[ $v_input == "T" ]] \
+            [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
                && v_esc=1 && tail $v_log | less
 
          # Visualizar e editar ficheiro de historico
-            [[ $v_input == "V" ]] \
+            [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
                && v_esc=1 && vim $v_log
 
          # Abrir ajuda
