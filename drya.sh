@@ -1723,28 +1723,30 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
 
    function f_clc_help {
       echo
-      echo "Historico"
+      echo "---- Historico ----"
       echo " > Ver                  (software: less): 'v'"
       echo " > Editar               (software: vim) : 'V'"
       echo " > Ver ultimas linhas:  (software: less): 't'"
       echo
-      echo "Casas decimais"
+      echo "---- Casas decimais ----"
       echo " > Editar: 'S'"
       echo " > Predefinido atualmente: $v_decimal"
       echo
-      echo "Exemplos de como usar a calculadora 'bc'"
+      echo "---- Exemplos de como usar a calculadora 'bc' ----"
       echo " > 3 + (34 * 2)/3 + 1.2"
       echo
-      echo "Limpar o ecra: 'l'"
+      echo "---- Limpar o ecra ----"
+      echo " > L; l "
       echo
-      echo "Notas: "
+      echo "---- Notas ---- "
       echo " > Pode usar 'PI' que significa '3.1415'"
       echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
       echo
       echo " > Podem ser criadas mais variaveis e modificadores "
       echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
       echo
-      echo "Sair: sair; quit; exit; q; Q; ZZ; Ctrl-C"
+      echo "---- Sair ----"
+      echo " >  sair; quit; exit; q; Q; ZZ; Ctrl-C"
       echo
    }
 
