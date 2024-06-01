@@ -1793,9 +1793,11 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
             # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
                v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
 
+            # substituir 'ans' pelo resultado do loop anterior
+               v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
+              
             # uDev: MODIFICADOR: '( )tk' que faz o seguinte: (v_var - (v_var × 0.05)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
             # uDev: MODIFICADOR: '( )mk' que faz o seguinte: (v_var - (v_var × 0.02)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
-            # uDev: MODIFICADOR: 'ans'   que faz o seguinte: Vai buscar o ultimo valor calculado e pode ser usada como variavel
             # uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci
 
          # Tentar diferenciar entre comando dado a este script e conta para calcular
