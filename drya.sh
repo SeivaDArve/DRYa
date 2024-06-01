@@ -1710,21 +1710,41 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
 
    # Definir o numero de casas decimais a aplicar aos resultados das contas
       #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
-      v_decimal=2                 # Alterar este numero para alterar a pre-definicao
+      v_decimal=3                 # Alterar este numero para alterar a pre-definicao
       
 
-   f_talk; echo "DRYa: calc"
-   echo
-   echo " > Ver historico e sair: 'H'"
-   echo " > Casas decimais predefinidas: $v_decimal"
-   echo "   > Para alterar escreve: 'S'"
-   echo
-   echo " > Sair: Ctrl-C"
-   echo
-   echo "Exemplos de como usar a calculadora 'bc'"
-   echo " > 3 + (34 * 2)/3 + 1.2"
-   echo " > scale=2; 2/3 (for more precision)"
-   echo
+   function f_start {
+      f_talk; echo "Calculadora"
+      echo " > Instruções: h"
+      echo " > Casas decimais: $v_decimal"
+      echo
+   }
+   f_start
+
+   function f_clc_help {
+      echo
+      echo "Historico"
+      echo " > Ver                  (software: less): 'v'"
+      echo " > Editar               (software: vim) : 'V'"
+      echo " > Ver ultimas linhas:  (software: less): 't'"
+      echo
+      echo "Casas decimais"
+      echo " > Editar: 'S'"
+      echo " > Predefinido atualmente: $v_decimal"
+      echo
+      echo "Exemplos de como usar a calculadora 'bc'"
+      echo " > 3 + (34 * 2)/3 + 1.2"
+      echo
+      echo "Limpar o ecra: 'l'"
+      echo
+      echo "Notas: "
+      echo " > Pode usar 'PI' que significa '3.1415'"
+      echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
+      echo "   Podem ser criadas mais variaveis e modificadores de: 'texto' para: 'numeros'"
+      echo
+      echo "Sair: sair; quit; exit; q; Q; ZZ; Ctrl-C"
+      echo
+   }
 
    # Criar ficheiro de historico
       v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
@@ -1742,11 +1762,19 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
          # Perguntar qual o Calculo ou Input a usar como comando
             echo -n " < "
             read v_input
-            # Concatenar o text "<" com o resultado "$v_input" para ser enviado para um ficheiro de historico
+            # Concatenar o text "<" com o input "$v_input" para ser enviado para um ficheiro de historico
                v_long_input=" < $v_input" 
 
             # Criar uma variavel que deteta que foi introduzido um input em vez de numeros para calculara, que faz com que no final do loop, nao execute calculos com variaveis que venham do loop anterior
                v_esc=0   # Todos os input tem de colocar esra variavel a '1' E no inicio de cada loop, esta variavel volta a zero
+
+
+         # Permitir: modificadores matematicos + variaveis + incognitas
+            # substituir 'x' por '*'
+               v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
+
+            # substituir 'PI' por '3.1415'
+               v_input=${v_input//PI/3.1415}  # Usa a substituição de parametros do Bash
 
          # Tentar diferenciar entre comando dado a este script e conta para calcular
             v_result=$(echo "scale=$v_decimal; $v_input" | bc)
@@ -1756,27 +1784,43 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
                && v_esc=1 && exit 0 
 
          # Visualizar ficheiro de historico
-            [[ $v_input == "h" ]] \
-               && less $v_log && exit 0
+            [[ $v_input == "v" ]] \
+               && v_esc=1 && less $v_log
+
+         # Visualizar ficheiro de historico (so ultimas linhas)
+            [[ $v_input == "t" ]] || [[ $v_input == "T" ]] \
+               && v_esc=1 && tail $v_log | less
 
          # Visualizar e editar ficheiro de historico
-            [[ $v_input == "H" ]] \
-               && vim $v_log && exit 0
+            [[ $v_input == "V" ]] \
+               && v_esc=1 && vim $v_log
+
+         # Abrir ajuda
+            [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
+               && v_esc=1 && echo " > Instruções: " && f_clc_help
+
+         # Limpar o ecra
+            [[ $v_input == "l" ]] || [[ $v_input == "L" ]] \
+               && v_esc=1 && clear && f_greet && f_start
 
          # Alterar a quantidade de casas decimais
             [[ $v_input == "s" ]] || [[ $v_input == "S" ]] \
-               && read -p " >> Predefinir numero de casas decimais: " v_decimal
+               && v_esc=1 && read -p " >> Predefinir numero de casas decimais: " v_decimal && echo
 
-         # Mostrar os resultados
-            # uDev: Enviar tudo para o verbose-lines para usar como historico
-            echo " > $v_result"
-            echo
-            v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
+         # Mostrar os resultados (caso a variavel v_esc seja igual a 0)
+            if [ $v_esc == "0" ]; then
+               # Apresentar no ecra o valor resulante da conta
+                  echo " > $v_result"
+                  echo
 
-         # Enviar ambas as variaves input e output para um ficheiro de historico
-            echo "            " >> $v_log
-            echo $v_long_input  >> $v_log
-            echo $v_long_result >> $v_log
+               # Concatenar o texto ">" com o resultado "$v_result" para ser enviado para um ficheiro de historico
+                  v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
+
+               # Enviar ambas as variaves input e output para um ficheiro de historico
+                  echo "            " >> $v_log
+                  echo $v_long_input  >> $v_log
+                  echo $v_long_result >> $v_log
+            fi
       done
 
 elif [ $1 == "vlm" ]; then 
