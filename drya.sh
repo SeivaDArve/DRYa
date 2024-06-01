@@ -1740,7 +1740,9 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
       echo "Notas: "
       echo " > Pode usar 'PI' que significa '3.1415'"
       echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
-      echo "   Podem ser criadas mais variaveis e modificadores de: 'texto' para: 'numeros'"
+      echo
+      echo " > Podem ser criadas mais variaveis e modificadores "
+      echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
       echo
       echo "Sair: sair; quit; exit; q; Q; ZZ; Ctrl-C"
       echo
