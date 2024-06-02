@@ -94,11 +94,14 @@ function f_clc_help {
    echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
    echo
    echo " > uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci"
+   echo " > uDev: No inicio do script, buscar o historico à repo: verbose-lines"
+   echo " > uDev: Ao sair do script, depositar o historico na repo: verbose-lines"
 
 }
 
 # Criar ficheiro de historico
-   v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
+   #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
+   v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
    mkdir -p $v_dir
 
    v_file=history-drya-calculator.org
