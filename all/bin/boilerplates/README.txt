@@ -1,0 +1,1 @@
+Nota: Nos scripts, quando queremos explicar as proximas linha de texto, em vez de o fazermos em explicações de 3, 4, 5 linhas comentadas,metemos em apenas 1 linha muito extensa e para ler, basta usar os comandos correspondentes do editor de texto (exemplo no vim: ': set wrap')
