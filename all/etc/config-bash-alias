@@ -173,6 +173,20 @@ function dos-2-unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
+function data {
+   while true
+   do
+      v_data=$(date +'%Y-%m-%d %H:%M:%S')
+      echo -ne "\r\r\r\r\r\r\rData/Hora: $v_data"
+      sleep 1
+
+   # Em vez de uma fx, também podia ser um alias:
+      #alias data="date +'%Y-%m-%d %H:%M:%S'"
+   done
+      
+}
+
+
 #alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
 alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD"
 
