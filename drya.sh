@@ -1741,6 +1741,8 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
       echo "---- Editar o ecra ----"
       echo " > Limpar ecra: 'L' "
       echo
+      echo "---- Inserir notas na registadora ----"
+      echo " > d"
       echo "---- Notas ---- "
       echo " > Pode usar 'pi' que significa '3.1415'"
       echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
@@ -1752,13 +1754,17 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
       echo "---- Sair ----"
       echo " >  sair; quit; exit; q; Q; ZZ; Ctrl-C"
       echo
+      echo "uDev: mostrar help com o less"
+      echo "uDev: mudar nome da calc"
+      echo "uDev: mudar scrip clc para .../bin"
+
    }
 
    # Criar ficheiro de historico
       v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
       mkdir -p $v_dir
 
-      v_file=history-drya-calculator.txt
+      v_file=history-drya-calculator.org
 
       v_log=$v_dir/$v_file
 
@@ -1796,8 +1802,8 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
             # substituir 'ans' pelo resultado do loop anterior
                v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
               
-            # uDev: MODIFICADOR: '( )tk' que faz o seguinte: (v_var - (v_var × 0.05)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
-            # uDev: MODIFICADOR: '( )mk' que faz o seguinte: (v_var - (v_var × 0.02)) ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
+            # uDev: MODIFICADOR: '[ ]tk' que faz o seguinte: 'v_var - (v_var × 0.05)' ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
+            # uDev: MODIFICADOR: '[ ]mk' que faz o seguinte: 'v_var - (v_var × 0.02)' ou seja: Ve qual é o valor que está dentro de parenteses, e subtrai-lhe a comissao correspondente ja calculada
             # uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci
 
          # Tentar diferenciar entre comando dado a este script e conta para calcular
@@ -1809,15 +1815,19 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
 
          # Visualizar ficheiro de historico
             [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
-               && v_esc=1 && less $v_log
+               && v_esc=1 && less $v_log && echo
 
          # Visualizar ficheiro de historico (so ultimas linhas)
             [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
-               && v_esc=1 && tail $v_log | less
+               && v_esc=1 && tail $v_log | less && echo
 
          # Visualizar e editar ficheiro de historico
             [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
-               && v_esc=1 && vim $v_log
+               && v_esc=1 && vim $v_log && echo
+
+         # Visualizar e editar ficheiro de historico
+            [[ $v_input == "emacs" ]] || [[ $v_input == "Emacs" ]] \
+               && v_esc=1 && emacs $v_log && echo
 
          # Abrir ajuda
             [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
@@ -1830,6 +1840,13 @@ elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ 
          # Alterar a quantidade de casas decimais
             [[ $v_input == "s" ]] || [[ $v_input == "S" ]] \
                && v_esc=1 && read -p " >> Predefinir numero de casas decimais: " v_decimal && echo
+
+         # Inserir data (timestamp) com mensagem adicionar (nota) no ficheiro de historico
+            [[ $v_input == "d" ]] || [[ $v_input == "D" ]] \
+               && v_esc=1 && echo " >> Inserir Data e Nota (no ficheiro de historico)." && read -p " >> Nota: " v_nota \
+               && echo "                " >> $v_log \
+               && echo "* [$(date)] > $v_nota"  >> $v_log \
+               && echo
 
          # Mostrar os resultados (caso a variavel v_esc seja igual a 0)
             if [ $v_esc == "0" ]; then
