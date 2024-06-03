@@ -36,7 +36,7 @@ f_greet
    
 
 function f_start {
-   f_talk; echo "Calculadora"
+   f_talk; echo "Calculadora Basica (extendida)"
    echo " > Instruções: h"
    echo " > Casas decimais: $v_decimal"
    echo
