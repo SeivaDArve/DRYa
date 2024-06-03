@@ -74,6 +74,7 @@ Exemplos de como usar a calculadora 'D clc' ----------------------"
 
 Editar o ecra ----------------------------------------------------"
  > Limpar ecra: 'L' "
+ > uDev: Mater sempre limpo (para usar em conjunto com '$ watch $v_log'"
 
 
 
