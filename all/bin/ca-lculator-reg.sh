@@ -94,6 +94,9 @@ function f_clc_help {
    echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
    echo
    echo " > uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci"
+   echo " > uDev: MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
+   echo " > uDev: MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
+   echo " > uDev: Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
    echo " > uDev: No inicio do script, buscar o historico à repo: verbose-lines"
    echo " > uDev: Ao sair do script, depositar o historico na repo: verbose-lines"
 
