@@ -177,7 +177,7 @@ function data {
    while true
    do
       v_data=$(date +'%Y-%m-%d %H:%M:%S')
-      echo -ne "\rData/Hora: $v_data"
+      echo -ne "\rData/Hora: $v_data "
       sleep 1
 
    # Em vez de uma fx, também podia ser um alias:
