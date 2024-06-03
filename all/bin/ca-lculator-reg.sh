@@ -119,6 +119,9 @@ Em desenvolvimento (uDev)  -----------------------------------------------"
       e resulta a quanto é que temos de fechar a operação para sair com Zero"
       é preciso introduzir Alavancagem e preço de entrada"
 
+ > Atalho para visualizar constantemente o ficheiro \$v_log de 2 em 2 segundos
+   >> Por exemplo: 
+   >> '$ watch -n 2 tail $v_log'
 
 
 Sair -------------------------------------------------------------"
