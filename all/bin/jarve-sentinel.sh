@@ -2,6 +2,8 @@
 #
 # uDev: Jarve stats the sshfs server
 
+# uDev: AutoRUN (on/off): iniciar o terminal abrindo logo o jarve: É otimo para usar em dispositivos que publico desconhecido tamb+em tenha acesso tal como o telemovel do emprego
+   
 # Update à repo DRYa  ## QUANDO O USER CARREGA 'J'
    # Cuidado: Ao utilizadores que nao sabem ler nem Bash nem os conteudos DRYa
    #          Quando alguem faz uso de um 'git branch' do qual nao viu as alteracoes
