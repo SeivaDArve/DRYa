@@ -44,62 +44,87 @@ function f_start {
 f_start
 
 function f_clc_help {
-   echo
-   echo "Historico/Registadora --------------------------------------------"
-   echo " > Ver                  (software: less) : 'V'"
-   echo " > Editar               (software: vim)  : 'E'"
-   echo " > Editar               (software: emacs): 'emacs'"
-   echo " > Ver ultimas linhas:  (software: less) : 'U'"
-   echo 
-   echo " > Editar manualmente um input anterior falhado: 'f'"
-   echo
-   echo "Casas decimais ---------------------------------------------------"
-   echo " > Editar: 'S'"
-   echo " > Predefinido atualmente: $v_decimal"
-   echo
-   echo "Exemplos de como usar a calculadora 'bc' -------------------------"
-   echo " > 3 + (34 * 2)/3 + 1.2"
-   echo
-   echo "Exemplos de como usar a calculadora 'D clc' ----------------------"
-   echo " > 3x 2 : 3 + pi + 3tkc - 4mkc"
-   echo
-   echo "Editar o ecra ----------------------------------------------------"
-   echo " > Limpar ecra: 'L' "
-   echo
-   echo "Inserir notas na registadora -------------------------------------"
-   echo " > n"
-   echo
-   echo "Modificadores ----------------------------------------------------"
-   echo " > Pode usar 'pi' que significa '3.1415'"
-   echo " > Pode usar 'x' que significa '*' para usar nas multiplicações"
-   echo " > Pode usar ':' que significa '/' para usar nas divisões"
-   echo
-   echo " > Pode usar 'tk' que significa '* 0.05' para calcular comissoes de taker"
-   echo " >> '3tk' é igual a '3 * 0.05'"
-   echo
-   echo " > Pode usar 'mk' que significa '* 0.02' para calcular comissoes de maker"
-   echo " >> '3tk' é igual a '3 * 0.02'"
-   echo
-   echo " > Encontra o conteudo de '[ ]tk' e coloca numa variavel \$i para a modificar"
-   echo " >> '[4]tk' é igual a '(4 - (4 * 0.05))' "
-   echo 
-   echo " > Encontra o conteudo de '[ ]mk' e coloca numa variavel \$i para a modificar"
-   echo " >> '[4]mk' é igual a '(4 - (4 * 0.02))' "
-   echo
-   echo "Sair -------------------------------------------------------------"
-   echo " >  sair; quit; exit; q; Q; ZZ; Ctrl-C"
-   echo
-   echo "Em desenvolvimento -----------------------------------------------"
-   echo " > Podem ser criadas mais variaveis e modificadores "
-   echo "   de: 'texto' para: 'numeros' no interior do script drya.sh"
-   echo
-   echo " > uDev: MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci"
-   echo " > uDev: MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
-   echo " > uDev: MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
-   echo " > uDev: Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
-   echo " > uDev: No inicio do script, buscar o historico à repo: verbose-lines"
-   echo " > uDev: Ao sair do script, depositar o historico na repo: verbose-lines"
+   # HereDoc com instruçoes de utilização
+cat <<EOF
+Historico/Registadora --------------------------------------------"
+ > Ver                  (software: less) : 'V'"
+ > Editar               (software: vim)  : 'E'"
+ > Editar               (software: emacs): 'emacs'"
+ > Ver ultimas linhas:  (software: less) : 'U'"
 
+ > Editar manualmente um input anterior falhado: 'f'"
+
+
+
+Casas decimais ---------------------------------------------------"
+ > Editar: 'S'"
+ > Predefinido atualmente: $v_decimal"
+
+
+
+Exemplos de como usar a calculadora 'bc' -------------------------"
+ > 3 + (34 * 2)/3 + 1.2"
+
+
+
+Exemplos de como usar a calculadora 'D clc' ----------------------"
+ > 3x 2 : 3 + pi + ( 3 tkc ) - (4mkc)"
+
+
+
+Editar o ecra ----------------------------------------------------"
+ > Limpar ecra: 'L' "
+
+
+
+Inserir notas na registadora -------------------------------------"
+ > N"
+
+
+
+Modificadores ----------------------------------------------------"
+ > Pode usar 'pi' que significa '3.1415'"
+ > Pode usar 'x' que significa '*' para usar nas multiplicações"
+ > Pode usar ':' que significa '/' para usar nas divisões"
+
+ > Procura o texto 'tkc' que significa 'taker commission' e substitui para o texto '* 0.05' para calcular comissoes correspondentes"
+ >> '4tkc' é igual a '4 * 0.05' = '0.20'"
+
+ > Procura o texto 'mkc' que significa 'maker commission' e substitui para o texto '* 0.02' para calcular comissoes correspondentes"
+ >> '4mkc' é igual a '4 * 0.02' = '0.08'"
+
+ > Encontra o conteudo de '[ ]tk' e modifica. Se o conteudo for 'y' entao calcula: [y]tk
+ >> '[4]tk' é igual a '(4 - (4 * 0.05))' = '3.80'"
+
+ > Encontra o conteudo de '[ ]mk' e modifica. Se o conteudo for 'y' entao calcula: [y]mk
+ >> '[4]mk' é igual a '(4 - (4 * 0.02))' = '3.92' "
+
+
+Em desenvolvimento (uDev)  -----------------------------------------------"
+ > Podem ser criadas mais variaveis e modificadores "
+   de: 'texto' para: 'numeros' no interior do script drya.sh"
+
+ > MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci"
+ > MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
+ > MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
+ > Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
+ > No inicio do script, buscar o historico à repo: verbose-lines"
+ > Ao sair do script, depositar o historico na repo: verbose-lines"
+
+ > Encontrar o conteudo de '[ ]a-mk-f' e modificar"
+   >> Calcula como sair com zero '0' de um trade em que abrimos e fechamos a operaçao como maker
+   >> Abrir um trade tem comissoes, fechar também.
+   >> '[4]amk' é igual a '(4 + 2 * (4 * 0.02))' = '4 + 0.20 + 0.20' = (4.40) "
+   >> (Refere-se ao valor de abertura de Market Maker "
+      e resulta a quanto é que temos de fechar a operação para sair com Zero"
+      é preciso introduzir Alavancagem e preço de entrada"
+
+
+
+Sair -------------------------------------------------------------"
+ >  sair; quit; exit; q; Q; ZZ; Ctrl-C"
+
+EOF
 }
 
 # Criar ficheiro de historico
