@@ -44,6 +44,10 @@ function tm {
    if [ -z $1 ]; then
       echo "TM: wrap-around para tmux (terminal multiplexer)" 
       echo " > Para instrucoes: 'tm -h'" 
+      echo 
+      echo "Vai abrir o comando: tmux"
+      sleep 2
+      tmux
 
    elif [ $1 == "K" ]; then
       tmux kill-server && echo "tmux: all sessions (and server) killed"
@@ -53,12 +57,13 @@ function tm {
       echo " > '$ tm s': prints this message" 
       echo " > '$ tm S': lists all sessions" 
 
-   elif [ $1 == "h" ]; then
+   elif [ $1 == "-h" ]; then
       echo "tmux: uDev list"
       echo 
       echo " |  tm h    -------| prints this message" 
       echo " |  tm :    -------| tmux command line (helps with completions)" 
       echo 
+      echo " Mais info na repo wikiD" 
 
       f_session_instructions
 
