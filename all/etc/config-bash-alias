@@ -729,8 +729,9 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
       /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
    }
 
+   # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
    alias           exe="/mnt/c/Windows/System32/cmd.exe /c"
-   alias          2468="echo 'Help form numpad menu 2468' (uDev)"
+   alias          2468="echo 'Help: Main Menu: Power options: 5'"
    alias         24685="echo 'Lock Screen'"
    alias        246857="echo 'Shutdown'; shutdown now"
    alias        246854="echo 'Restart'; shutdown -r now"
