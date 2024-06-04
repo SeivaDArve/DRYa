@@ -176,8 +176,13 @@ alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 function hora {
    while true
    do
+      
+      # Instrucoes:
+         # echo -ne "\r"      ## Move o cursor para o inicio da linha
+         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+
       v_data=$(date +'%Y-%m-%d %H:%M:%S')
-      echo -ne "\rData/Hora: $v_data "
+      echo -ne "\r\033[KData/Hora: $v_data "
       sleep 1
 
    # Em vez de uma fx, também podia ser um alias:
