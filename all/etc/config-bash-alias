@@ -173,7 +173,7 @@ function dos-2-unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-function data {
+function hora {
    while true
    do
       v_data=$(date +'%Y-%m-%d %H:%M:%S')
