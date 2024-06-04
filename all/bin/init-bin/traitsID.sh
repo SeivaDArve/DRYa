@@ -36,6 +36,11 @@ function f_array_1 {
          traits_termux="false"
          export traits_termux
    
+         traits_1="Is-Termux::$traits_termux"
+         export traits_1
+
+         echo "Var termux:"
+         echo " > $traits_1"
       fi
 }
 f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so para debug
