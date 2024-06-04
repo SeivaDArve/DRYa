@@ -1405,6 +1405,7 @@ elif [ $1 == "install" ]; then
                                 "termux:properties" \
                                 "termux:colors" \
                                 ".dryarc" \
+                                ".tmux.conf" \
                                 "\$PS1" \
                                 "browser:bookmarks")  
 
