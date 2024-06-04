@@ -5,5 +5,7 @@
 
 
 
+# Detetar o Termux
+   #/data/data/com.termux/files/usr
 # v_is_termux="True'
 # export v_is_termux
