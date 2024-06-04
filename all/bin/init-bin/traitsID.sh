@@ -158,4 +158,8 @@ f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so par
       
 
 # Catalogo de todas as variaveis do traitsID encontradas neste ficheiro desde o inicio
+   # traits_file =
+   # traits_0 = 
+
    # traits_termux = [ 'true' | 'false' ]
+   # traits_1 = 
