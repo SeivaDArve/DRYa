@@ -24,7 +24,7 @@ function f_greet {
  
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
-   v_verbose_line=${v_REPOS_CENTER}/verbose-lines/ssh
+   v_verbose_line=${v_REPOS_CENTER}/verbose-lines/all/ssh
    v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
 
 function f_check_current_user {
@@ -33,29 +33,38 @@ function f_check_current_user {
 }
 
 function f_is_rooted {
-   # Verificar se o comando 'su' está disponível
+   # Verificar se estamos no termux. Se estivermos no termux, sera verificado se temos permissoes root
 
-   if command -v su > /dev/null 2>&1; then
-       #echo "O comando 'su' está disponível. Verificando permissões de root..."
+   # No termux, a variavel $PREFIX nao vem vazia. Costuma conter "/data/data/com.termux/files/usr"
+      if  [ $traits_termux == "true" ]; then 
+   
+         # Verificar se o comando 'su' está disponível
+            if command -v su > /dev/null 2>&1; then
+                #echo "O comando 'su' está disponível. Verificando permissões de root..."
 
-       # Tentar obter permissões de root
-       if su -c "echo 'Permissões de root verificadas com sucesso'" > /dev/null 2>&1; then
-           #echo "Você tem permissões de root."
-           v_rooted="true"
-       else
-           #echo "Você não tem permissões de root ou não foi possível obter acesso root."
-           v_rooted="false"
-       fi
-   else
-      #echo "O comando 'su' não está disponível. Você não tem permissões de root."
-      v_rooted="false"
-   fi
+                # Tentar obter permissões de root
+                if su -c "echo 'Permissões de root verificadas com sucesso'" > /dev/null 2>&1; then
+                    #echo "Você tem permissões de root."
+                    v_rooted="true"
+                else
+                    #echo "Você não tem permissões de root ou não foi possível obter acesso root."
+                    v_rooted="false"
+                fi
+            else
+               #echo "O comando 'su' não está disponível. Você não tem permissões de root."
+               v_rooted="false"
+            fi
+      fi
+
 }
 
 function f_is_rooted_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
-   if [[ $v_rooted == "true" ]]; then
+   if [[ -z $v_rooted ]]; then
+      echo " > Detetado que não está no termux"
+
+   elif [[ $v_rooted == "true" ]]; then
       echo " > Tem permissoes: root"
 
    elif [[ $v_rooted == "false" ]]; then
@@ -260,6 +269,8 @@ function f_check_if_user_is_on_fuse_group_verbose {
 
 function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
+   echo
+   echo "Vai ser verificado o Status do Daemon:"
    v_started=$(sudo service ssh status)
    #echo "debug $v_started"
 }
@@ -444,7 +455,7 @@ function f_ser_servidor {
    }
 
    f_ask
-   echo " > na maquina remota, que acerder a qual pasta?"
+   echo " > Na maquina remota, quer acerder a qual pasta?"
    echo " > A tudo: '/'   Aos Documentos (Home): '~'"
    echo " > Deixar em branco: '~'"
    echo -n " >> "
@@ -467,7 +478,7 @@ function f_ser_servidor {
       f_check_ssh_daemon_is_on_verbose
       echo
 
-   # Mostrar a cahve publica da maquina atual no ecra
+   # Mostrar a chave publica da maquina atual no ecra
       f_cat_this_public_key
 
    echo "Utilizador: "
