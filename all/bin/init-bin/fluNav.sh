@@ -1048,7 +1048,7 @@ function V {
             elif [ $1 == "1"     ]; then v_nm="dryaSH";         f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
             elif [ $1 == "1."    ]; then v_nm="dryaSH-op-1";    f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
             elif [ $1 == "2"     ]; then v_nm="initVIM";        f_action; f_emacs_init_vim; f_up
-            elif [ $1 == "3"     ]; then v_nm="jarve-sentinel"; f_action; vim ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh; f_up
+            elif [ $1 == "3"     ]; then v_nm="jarve-sentinel"; f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
             elif [ $1 == "5"     ]; then v_nm="F5";             f_action; # Refresh the entire terminal 
             elif [ $1 == "19"    ]; then v_nm="test";           f_action; echo "Test is working for 19"; f_up
             elif [ $1 == "wd"    ]; then v_nm="wikiD";          f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
