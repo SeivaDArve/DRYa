@@ -190,11 +190,16 @@ function dos-2-unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-function data {
+function hora {
    while true
    do
+      
+      # Instrucoes:
+         # echo -ne "\r"      ## Move o cursor para o inicio da linha
+         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+
       v_data=$(date +'%Y-%m-%d %H:%M:%S')
-      echo -ne "\rData/Hora: $v_data "
+      echo -ne "\r\033[KData/Hora: $v_data "
       sleep 1
 
    # Em vez de uma fx, também podia ser um alias:
@@ -746,13 +751,14 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
       /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
    }
 
+   # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
    alias           exe="/mnt/c/Windows/System32/cmd.exe /c"
-   alias          2468="echo 'Help form numpad menu 2468' (uDev)"
-   alias         24685="echo 'Lock Screen'"
-   alias        246857="echo 'Shutdown'; shutdown now"
-   alias        246854="echo 'Restart'; shutdown -r now"
-   alias        246856="echo 'Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
-   alias        246853="echo 'Suspend'"
+   alias          2468="echo 'Help: Main Menu: Power options: 5'"
+   alias        246855="echo 'Lock Screen'"
+   alias        246852="echo 'Shutdown'; shutdown now"
+   alias        246858="echo 'Restart'; shutdown -r now"
+   alias        246850="echo 'Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
+   alias        246851="echo 'Suspend'"
    alias      shutdown="shutdown -r now"
    alias        reboot="shutdown -r now"
    alias       restart="shutdown -r now"
