@@ -50,95 +50,30 @@ function f_drya_msgs_init {
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
 function f_traitsID {
-   # Getting info about the machine
+   # Deteta variaveis de software e hardware, para permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
+   # Este ficheiro é lido 2x porque a pasta onde pertence é de ficheiros que sao sempre lidos, e também porque tem de ser o primeiro de todos a ser lido
 
-   # uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
-   # uDrv: Detetar WM (window manager, se estar a usar GNOME, KDE...
+   # Nome do ficheiro e ver se ele existe
+      v_dir="${v_REPOS_CENTER}/DRYa/all/bin/init-bin"
+      v_file="traitsID.sh"
 
-   # Clear the file with all the outputs of traitsID (it is created anew every single time DRYa is loaded on a terminal)
-      v_dir=~/.config/h.h/drya/
-      v_file="traitsID"
-      v_id_file="${v_dir}${v_file}"
+      traits_file="$v_dir/$v_file"
+      traits_0="Source-of-traitsID-script::$traits_file"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-      mkdir -p $v_dir
-      touch $v_id_file
+      if [[ -f $traits_file ]]; then
+         #echo "file $v_file exists"  # Debug
+         export traits_file
+         export traits_0    # Igual a $traits_file mas com numero do ID
+      fi
 
-   # Create the file from scrarch at every terminal startup
-      rm $v_id_file 2>/dev/null
-      touch $v_id_file
+      # Debug:
+         #echo "env: $traits_file"; read
 
-      alias tid="less $v_id_file"
+   source $traits_file # 1>/dev/null && echo "Sorced $i" >> $v_MSGS
 
-   # Using command 'uname'
-      v_uname=$(uname -a)
-
-   # Filter the info to Detect OS
-   # SIGLA for $v_arr1: tid:A???? (A)ndroid (Wi)ndows (L)inux (R)aspberry (U)nknown
-
-      if [[ $v_uname =~ "Android" ]]; then 
-         echo "DRYa: Running on: Android"
-         echo 'traits_OS="Android"' >> $v_id_file 
-
-         traits_OS="Android"; export traits_OS
-         v_arr1=A
-         
-      elif  [[ $v_uname =~ "Microsoft" ]]; then 
-         echo "DRYa: Running on: Windows"
-         echo 'traits_OS="Windows"' >> $v_id_file
-
-         traits_OS="Microsoft"; export traits_OS
-         v_arr1=W
-
-         # uDev: Verificar se o sistema está no WSL2
-
-      elif [[ $v_uname =~ "raspberrypi" ]]; then 
-         # Linux has to be the last one, because it means Windows and Android are not present
-         echo "DRYa: Running on: Linux (Raspberry Pi)"
-         echo 'traits_OS="Linux-Rasp"' >> $v_id_file
-
-         traits_OS="RaspberryPi"; export traits_OS
-         v_arr1=R
-
-      elif [[ $v_uname =~ "Linux" ]]; then 
-         # Linux has to be the last one, because it means Windows and Android are not present
-         echo "DRYa: Running on: Linux"
-         echo 'traits_OS="Linux"' >> $v_id_file
-
-         traits_OS="Linux"; export traits_OS
-         v_arr1=L
-
-      else
-         echo "DRYa: Running on: NOT DETECTED"
-         traits_OS="NotDetected"; export traits_OS
-         v_arr1=U
-      fi 
-
-      # Display a way to reach the info
-         echo "      > view traitsID with: 'tid' "
-
-
-      # Create a single string with all info (as a code):
-         declare -a v_tid=(
-            [0]="tid="
-            [1]=$v_arr1
-         )
-         echo "${v_tid[0]}${v_tid[1]}" >> $v_id_file
-
-      # Create a script at DRYa/all/bin/ for drya-neofetch
-         # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
-         # uDev: Detecte personal/safe device from job/public/unsafe device
-         # uDev: Create the same for package manager: apt, pacman, dnf, pkg
-         # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
-         # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
-         # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
-         # uDev: Versao do Linux (para config do teclado)
-            #which yum >/dev/null && { echo Fedora flavour; exit 0; }
-            #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
-            #which apt-get >/dev/null && { echo Debian based;  }
-      # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
-
-   # Source file After writting with all variables for traitsID
-      source $v_id_file
+   # Debug
+      #source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh 1>/dev/null && echo "Sorced $i" >> $v_MSGS
+      #source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh 
 }
 
 
@@ -255,7 +190,7 @@ function f_internal_drya_files_1_2 {
 # Repository: DRYa (internal files - (1/2) )
 
    # Abreviated REPOS CENTER variable (for easier terminal use)
-      alias 24685="cd ${v_REPOS_CENTER} && ls"
+      alias 2468555="cd ${v_REPOS_CENTER} && ls"
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa
@@ -451,7 +386,7 @@ function f_internal_drya_files_2_2 {
       alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
    
-   # Drya bin files
+   # Drya start-up bin files (init-bin)
       # Sourcing all stand-alone scripts
          # uDev: tell $v_MSGS the 'ls' found at 'bin/init-bin/"
          v_list_of_scripts=$(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
@@ -492,7 +427,7 @@ function f_exec {
    f_drya_msgs
    f_internal_drya_files_1_2
    f_drya_msgs_init     >> $v_MSGS 2>/dev/null
-   f_traitsID
+   f_traitsID           
    f_dv_PS1             >> $v_MSGS
    f_drya_msgs_welcome  >> $v_MSGS 2>/dev/null
    #f_termux_welcome
