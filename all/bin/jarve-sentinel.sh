@@ -36,3 +36,8 @@ do
 
 done
 
+# uDev: Tomar conta de:
+#        > Detetar ano/mes/dia/hora/minuto constantemente para apps de calendario tipo:
+#        > moedaz: compromissos agendados "source-all-moedaz-files"
+#        > moedaz: trade: "G-Midnight-balance-of-day-checker.py"
+
