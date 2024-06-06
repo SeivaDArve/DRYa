@@ -78,18 +78,27 @@ function GPT {
 function siigo {
    # Finding a proper browser to open siigo.com
 
-   function f_termux_siigo {
-      # Using termux 
-      termux-open-url "https://siigo-maintenance.com/#/calendar" 2>/dev/null
-   }
-   
-   function f_chrome_siigo {
-      # Using chrome   
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "https://siigo-maintenance.com/#/calendar" & 2>/dev/null
-   }
+   v_success=0
+   if [[ $traits_termux == "true" ]]; then 
+      # se for termux, abre como tal
+      v_success=1
 
-   # Calling siigo webpage using one of the above options:
-      f_termux_siigo || f_chrome_siigo || echo "DRYa: could not open siigo"
+      echo "DRYa: A abrir com Termux: https://siigo-maintenance.com"
+      termux-open-url "https://siigo-maintenance.com/#/calendar" 2>/dev/null
+
+   else
+      # Se for Windows com WSL2, abre como tal
+      v_success=1
+
+      echo "DRYa: A abrir com WSL2: https://siigo-maintenance.com"
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "https://siigo-maintenance.com/#/calendar" &
+   fi
+
+
+   if [[ $v_success == "0" ]]; then
+      # Se of `if` anterior nao teve sucesso a detetar terminal passando a variavel $v_success para 1, dar uma mensagem de erro
+      echo "DRYa: Erro, nao deu para abror o siigo"
+   fi
       
 }
 
