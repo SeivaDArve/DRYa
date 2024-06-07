@@ -20,6 +20,7 @@ function f_gr_dependencies {
    which  # Used to detect the path of installed scripts
    termux-api
    tsu   # To grant sudo permissions, may be needed to enable phone screenshots
+   upower
 }
 
 # List of usefull apps 

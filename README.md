@@ -6,7 +6,7 @@
 Don't Repeat Yourself (app) 
 
 ## Description
-A Software to supress repetitive tasks
+3 in 1: Learning to build software; Software to supress repetitive tasks; Software to become software/hradware agnostic
 
 This repo is the link fand manager for many other repos
 
