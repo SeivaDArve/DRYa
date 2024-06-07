@@ -199,7 +199,40 @@ function dos-2-unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
+function data {
+   # Exemplo: "Data atual: (Dia 07 Sex)(Mês 06 jun)(Ano 2024)(03:38:38)"
+   # uDev: fx para print apenas 1x sem loop
+
+   while true
+   do
+      
+      # Instrucoes:
+         # echo -ne "\r"      ## Move o cursor para o inicio da linha
+         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+
+      v_texto="Data atual: (Dia"
+      v_dia=$(date +'%d %a')
+      v_texto_dia="$v_texto $v_dia"
+
+      v_texto="$v_texto_dia)(Mês"
+      v_mes=$(date +'%m %b')
+      v_texto_mes="$v_texto $v_mes"
+
+      v_texto="$v_texto_mes)(Ano"
+      v_ano=$(date +'%Y)')
+      v_texto_ano="$v_texto $v_ano"
+
+      v_hora=$(date +'(%H:%M:%S)')
+      v_data="$v_texto_ano$v_hora"
+      echo -ne "\r\033[K$v_data "
+      sleep 1
+
+   done
+}
+
 function hora {
+   # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
+   # uDev: fx para print apenas 1x sem loop
    while true
    do
       
@@ -211,8 +244,6 @@ function hora {
       echo -ne "\r\033[KData/Hora: $v_data "
       sleep 1
 
-   # Em vez de uma fx, também podia ser um alias:
-      #alias data="date +'%Y-%m-%d %H:%M:%S'"
    done
       
 }
