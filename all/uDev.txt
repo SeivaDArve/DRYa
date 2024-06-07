@@ -13,3 +13,5 @@ uDev: QRcode-link-to-Github:
 uDev: Criar um calendario lunar correto: 28 dias cada mes, 13 meses
 
 uDev: melhorar alias 'shebang' com fx: drya-bash-boilerplate.txt: Um texto para ser enviado para o inicio de cada sceipt, para ja ter definicoes de cores, formatacao de data, f_talk, etc..
+
+uDev: descobrir como se enviam comandos pra drya. exemplo: `echo "exec" | drya`

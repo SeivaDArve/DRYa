@@ -370,6 +370,7 @@ function op {
 
       elif [[ $v_uname =~ "Android" ]]; then  # If it finds "Android" then it should be working at Termux terminal
             xdg-open $*
+            # uDev: usar `termux-open --chooser`
 
       elif [[ $v_uname =~ "Linux" ]]; then  # If it is Any kind of Linux, try to open as standard
             xdg-open $*

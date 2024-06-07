@@ -1703,6 +1703,8 @@ elif [ $1 == "news" ]; then
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
+elif [ $1 == "link" ]; then 
+   echo "uDev: criar soft e hard links (simbolic links etc...) para ficheiros e pastas"
 
 elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ $1 == "clc" ]; then
     # calculator modified for Trading 
