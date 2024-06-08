@@ -607,8 +607,13 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
      (when (and (or (string-equal v-hour-num "22")
                     (string-equal v-hour-num "23"))
                 (string-equal v_turno "N"))
-           (progn (insert (format-time-string "<%Y-%m-%d ") "(+1 Dia)" v-dia "> ")  ;; uDev: clue to fix this function: (org-insert-time-stamp (current-time) +1d )
-                  (message "Foi inserido uma data diferente, corrija se necessario")))
+           (let ((one-day-seconds (* 24 60 60)))  ;; Definido quantos segundos tem 1 dia, para se poder fazer uso da fx `time-add`
+	        (insert (format-time-string "<%Y-%m-%d" (time-add (current-time) (seconds-to-time one-day-seconds))) " (+1 Dia) > ")))  ;; Inserido o timestamp atual com horas formatadas e adicionado tempo em segundos a esse tempo atual
+       ;; Substituidas as 2 linhas de baixo pelas 2 de cima (ajuda do chat GPT)
+       ;;(progn (insert (format-time-string "<%Y-%m-%d ") "(+1 Dia)" v-dia "> ")  ;; uDev: clue to fix this function: (org-insert-time-stamp (current-time) +1d )
+       ;;       (message "Foi inserido uma data diferente, corrija se necessario")))
+
+
 
   ;; Quando a Fx do Turno N esta corretamente a ser chamada apos as 24h:
      ;; Ou quando é chamada em turnos B e C
