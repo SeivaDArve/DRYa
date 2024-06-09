@@ -35,6 +35,12 @@ function f_1st {
    echo -e "                 (Step 1 of 4)                 \n"
    echo -e "       --- Checklist for instalation --- "
    echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
+   echo
+   echo    "  Note: On WSL2 it is recomended at: '/mnt/c/\$USER'"
+   echo    "  which is the C:\ drive, but with a directory created by hand with"
+   echo    "  the user's account name (or similar) in order to better open files"
+   echo    "  with windows's native software. This way, navigation through"
+   echo    "  explorer.exe is easier"
 } 
 
 function f_2nd {

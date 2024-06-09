@@ -728,6 +728,7 @@ function go {
 
 # This command is same as: "source ~/.bashrc" (but needs the function: go)
 alias src="go gnome-terminal; exit"
+alias f5="source ~/.bashrc"
 
 
 alias ,="cd"
