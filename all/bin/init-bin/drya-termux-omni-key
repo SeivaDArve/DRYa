@@ -119,10 +119,10 @@ function key {
    echo " > (1) OM"
    echo " > (2) UPK"
    echo " > (3) QR"
-   echo " > (4) Luxam"
-   echo " > (5) Trade Dispatcher"
-   echo " > (6) Admin-Home"
-   echo " > (7) messenger"
+   echo " > (4) Luxam File"
+   echo " > (5) Trade Directory"
+   echo " > (6) Palacio Manager"
+   echo " > (7) Messenger"
    #echo " > Reset (leave empty)"
 
    read -n 1 -p "Qual a funcao que quer para omni-key? " v_ans
