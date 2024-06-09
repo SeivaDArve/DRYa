@@ -194,6 +194,7 @@ function f_internal_drya_files_1_2 {
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa
+      export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin
 
    # Display info about it at the screen when DRYa is loaded by the terminal
       # Presenting it with figlet (which is a dependency) or just echo it's name:
