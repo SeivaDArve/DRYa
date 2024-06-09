@@ -507,11 +507,11 @@ function f_ser_servidor {
 function f_ser_cliente {
    # Perguntar: Qual maquina remota quer aceder?
       echo
-      echo "A qual maquina remota quer aceder?"
+      echo "A qual maquina remota quer aceder? (de acordo com pasta pre-definida)"
       echo
 
       # Visualizar as pastas criadas atualemte:
-         echo "Visualizar as pastas que estao criadas neste momento:"
+         echo "Visualizar as pastas pre-definidas que estao criadas neste momento:"
          
          # iterador contador do 'for' loop
             e=1
@@ -531,11 +531,11 @@ function f_ser_cliente {
          echo "Escolheu: $v_mach:"
          echo " > $v_parent_dir$v_client_mount_point"
          echo
-         echo " >> Ative 'Ser Servidor' na outra maquina'"
+         echo " >> Ative 'Ser Servidor' na outra maquina"
          echo " >> La, vai receber uma mensagem:"
-         echo " >> 'Dados de servidor sincronizados apartir da repo: verbose-lines'"
+         echo " >> \"Dados de servidor sincronizados apartir da repo: verbose-lines\""
          echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
-         ech9 " >> uDev..."
+         echo " >> uDev..."
 }
 
 function f_enable_everything {
