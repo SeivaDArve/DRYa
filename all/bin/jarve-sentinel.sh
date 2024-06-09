@@ -10,6 +10,7 @@
    #          Esta sujeito que o nosso DRYa seja atualizado para uma versao que extrar info maliciosa do nosso smartphone
    #          (Faz 'git pull' de DRYa de um ramo que seja seguro, usa so ramos seguros
 
+   echo "Bla Bla"  # Test
    cd ${v_REPOS_CENTER}/DRYa
    clear
    figlet Jarve
