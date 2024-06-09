@@ -41,4 +41,6 @@ done
 #        > Detetar ano/mes/dia/hora/minuto constantemente para apps de calendario tipo:
 #        > moedaz: compromissos agendados "source-all-moedaz-files"
 #        > moedaz: trade: "G-Midnight-balance-of-day-checker.py"
+#
+# uDev: Sempre que for ativado o Jarve, enviar inicialmente o ambos os IP pronto para SSH para o Verbose-lines e Git Pull a essa repo (caso seja o raspberry, e a momolada esteja encarregue de carregar no botao ON, ja nao tem de enviar por whatsapp nenhuma info pra mim). Serve para o SSHFS
 
