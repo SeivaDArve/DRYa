@@ -16,3 +16,5 @@
 
 # Horizontal line variables
    # uDev
+
+# Ficheiro tmp em pasta tmp
