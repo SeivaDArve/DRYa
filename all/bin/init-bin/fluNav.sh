@@ -384,7 +384,7 @@ function . {
             cd $1 2>/dev/null && \
             v=$(pwd) && \
             b=$(basename $v) && \
-            echo "DRYa: fluNav: Listing files at  \\ " && \
+            echo "DRYa: fluNav: Listing files at:" && \
             echo " > ./$b" && \
             echo && \
             ls || \
