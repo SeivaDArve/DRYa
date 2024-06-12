@@ -399,8 +399,24 @@ alias all="cd all; ls"
 
 function notify {
    # Criar notificacoes via termux
+
+   # uDev: --------------------------------------------------------------
+      function ouvir {
+         # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
+         # Usará um ficheiro em verbose-lines e jarve-sentinel
+         # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
+         echo "DRYa: Listener: uDev"
+      }
+
+      function falar {
+         # uDev: Cria uma notificacao noutro Android, via um ficheiro verbose-lines e jarve-sentinel
+         echo "DRYa: Speaker: uDev"
+      }
+   # --------------------------------------------------------------------
+
    clear
    figlet "DRYa Notify"
+   #f_talk; 
    echo "Notify: Create an Android notification message"
 
    # Creating an history file
@@ -566,24 +582,11 @@ function clc {
    bc --quiet
 }
 
-function ouvir {
-   # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
-   # Usará um ficheiro em omni-log
-   # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
-   echo "DRYa: Listener: uDev"
-}
-
-function falar {
-   # uDev: Cria uma notificacao noutro Android, via um ficheiro omni-log
-   echo "DRYa: Speaker: uDev"
-}
-
-
-alias  play="termux-media-player play"
-alias pause="termux-media-player pause"
-alias  stop="termux-media-player stop"
-alias  info="termux-media-player info"
-alias sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/example-sound.wav" ## example sound
+alias  t-play="termux-media-player play"
+alias t-pause="termux-media-player pause"
+alias  t-stop="termux-media-player stop"
+alias  t-info="termux-media-player info"
+alias t-sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/example-sound.wav" ## example sound
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
