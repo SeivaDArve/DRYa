@@ -155,6 +155,50 @@ f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so par
 
 
 # } --------------------------------------------------------------
+
+
+
+
+
+# Verificar o package manager atual (pkg, apt, brew, pacman)
+   if [ -f /etc/os-release ]; then
+      source /etc/os-release
+       if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+           echo "apt"
+           traits_pkgm="apt"
+           pkgm="apt"
+           export traits_pkgm
+           export pkgm
+
+       elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
+           echo "pacman"
+           traits_pkgm="pacman"
+           pkgm="pacman"
+           export traits_pkgm
+           export pkgm
+
+       else
+           echo "Outro package manager Linux"
+       fi
+   # Verificar se o sistema operacional é Termux (Android)
+   elif [ -d "$PREFIX" ]; then
+      echo "pkg"
+      traits_pkgm="pkg"
+      pkgm="pkg"
+      export traits_pkgm
+      export pkgm
+
+   # Verificar se o sistema operacional é macOS
+   elif [ "$(uname)" == "Darwin" ]; then
+      echo "brew"
+      traits_pkgm="brew"
+      pkgm="brew"
+      export traits_pkgm
+      export pkgm
+
+   else
+       echo "Package manager não identificado"
+   fi
       
 
 # Catalogo de todas as variaveis do traitsID encontradas neste ficheiro desde o inicio
