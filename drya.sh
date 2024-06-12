@@ -1705,6 +1705,9 @@ elif [ $1 == "news" ]; then
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
+elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
+   echo "uDev: Idenfiticação de photos criando um nome com ID"
+
 elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
    # uDev: criar também hard links para ficheiros e pastas
    
