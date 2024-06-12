@@ -1705,6 +1705,63 @@ elif [ $1 == "news" ]; then
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
+elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na pasta atual, identifica todas as fotos editadas pelo Photoshop (com apoio do chatGPT)
+   # uDev: Existem mais campos que mencionam 'Photoshop' sem ser so o campo '-Software', é necessario completar
+
+   # Caminho para a pasta com as imagens
+      FOLDER_PATH="."
+
+   # Loop através dos arquivos na pasta
+      for FILE in "$FOLDER_PATH"/*; do
+        # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
+        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+          # Extrai os metadados EXIF
+          SOFTWARE=$(exiftool -Software "$FILE")
+          
+          # Verifica se o Software usado foi o Photoshop
+          if [[ $SOFTWARE == *"Adobe Photoshop"* ]]; then
+            echo "Imagem editada no Photoshop: $FILE"
+          fi
+        fi
+      done
+
+elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "clrPSmeta" ]; then  # Na pasta atual, elimina os campos onde diz que a foto foi editada por algum software 
+   # Caminho para a pasta com as imagens
+      FOLDER_PATH="."
+
+   # Loop através dos arquivos na pasta
+      for FILE in "$FOLDER_PATH"/*; do
+        # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
+        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+          # Remove o metadado do software da imagem
+          #exiftool -Software= "$FILE"
+          exiftool -all= "$FILE"
+          echo "Metadado do software removido de: $FILE"
+        fi
+      done
+
+elif [ $1 == "list-all-file-metadata" ] || [ $1 == "lsmeta" ]; then  # mostra os seu metadados da imagem fornecida
+   # Caminho para a imagem
+      echo "Introduza o nome do ficheiro do qual quer ver os metadados"
+      read -p " > " v_file
+
+      exiftool "$v_file"
+
+elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta todas as fotos do dir atual e mostra os seus metadados
+
+   # Caminho para a pasta com as imagens
+      FOLDER_PATH="."
+
+   # Loop através dos arquivos na pasta
+      for FILE in "$FOLDER_PATH"/*; do
+        # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
+        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+          # Listar todos os metadados da imagem
+          exiftool "$FILE"
+        fi
+      done
+
+
 elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
    echo "uDev: Idenfiticação de photos criando um nome com ID"
    # uDev: criar fx que busca TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
