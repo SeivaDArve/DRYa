@@ -1404,6 +1404,8 @@ elif [ $1 == "install" ]; then
                                 "termux:repos" \
                                 "termux:properties" \
                                 "termux:colors" \
+                                '~/sl/wsl' \           # Soft link for WSL2 C:\
+                                '~/sl/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
                                 ".dryarc" \
                                 ".tmux.conf" \
                                 "\$PS1" \
@@ -1703,8 +1705,69 @@ elif [ $1 == "news" ]; then
          # Runs a script inside DRYa directories that continuously rolls information
          bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
-elif [ $1 == "link" ]; then 
-   echo "uDev: criar soft e hard links (simbolic links etc...) para ficheiros e pastas"
+elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
+   # uDev: criar também hard links para ficheiros e pastas
+   
+   f_greet
+
+   # Função para exibir como usar o script
+      f_instructions_of_usage() {
+         f_talk; 
+         #echo "Uso: $0 <origem> <destino>"
+         echo "Instruções: Criar um link simbólico de <origem> para <destino>."
+         echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
+         echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
+         echo "            Para o destino, tem de escolher um nome novo"
+         echo 
+         echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
+         echo
+         echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
+         echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
+         echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
+         echo 
+         f_talk
+         echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
+         echo ' > exemplo: `origem=$(pwd)`'
+         echo ' >> `D sl $origem <novo-caminho-com-nome>`'
+         echo
+         echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
+         echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
+         echo 
+         echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
+         echo 
+         f_talk
+         echo "Remover um link:"
+         echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
+         echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
+         exit 1
+      }
+
+   # Verificar se o número de argumentos é igual a 2
+      if [ "$#" -ne 3 ]; then
+         f_instructions_of_usage
+      fi
+
+   origem=$2
+   destino=$3
+
+   # Verificar se o arquivo/diretório de origem existe
+      if [ ! -e "$origem" ]; then
+          echo "Erro: O arquivo ou diretório de origem '$origem' não existe."
+          f_instructions_of_usage
+          exit 1
+      fi
+
+   # Criar o link simbólico
+      ln -s "$origem" "$destino"
+
+   # Verificar se o link simbólico foi criado com sucesso
+      if [ "$?" -eq 0 ]; then
+          echo "Link simbólico criado com sucesso: '$destino' -> '$origem'"
+      else
+          echo "Erro ao criar o link simbólico."
+          f_instructions_of_usage
+          exit 1
+      fi
 
 elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ $1 == "clc" ]; then
     # calculator modified for Trading 
