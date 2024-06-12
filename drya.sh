@@ -948,7 +948,7 @@ if [ -z "$*" ]; then
       cd ${v_REPOS_CENTER}/DRYa
 
 
-elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; then
+elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ]; then
    # Help menu
    
    clear; f_greet
@@ -982,10 +982,10 @@ elif [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "-?" ]; th
       echo "That option is not recognized"
    fi
 
-elif [ $1 == "." ]; then
+elif [ $1 == "." ]; then  # List files here
    cd ${v_REPOS_CENTER}/DRYa && ls
 
-elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then
+elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
    # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
    # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
