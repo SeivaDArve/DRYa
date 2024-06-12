@@ -1707,6 +1707,7 @@ elif [ $1 == "news" ]; then
 
 elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
    echo "uDev: Idenfiticação de photos criando um nome com ID"
+   # uDev: criar fx que busca TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
 
 elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
    # uDev: criar também hard links para ficheiros e pastas
