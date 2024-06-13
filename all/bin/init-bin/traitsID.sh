@@ -20,6 +20,8 @@ f_array_0 1>/dev/null  # O output será envido para o crl... porque serve so par
    
 function f_array_1 {
    # Detetar o Termux
+   # Será guardado como: traits_termux
+
       # No termux a variavel $PREFIX nao vem vazia e tras normalmente o conteudo: "/data/data/com.termux/files/usr"
       if [[ $PREFIX == "/data/data/com.termux/files/usr" ]]; then
          #echo "Estamos no termux"  # Debug
@@ -45,7 +47,53 @@ function f_array_1 {
 }
 f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so para debug
    
+function f_array_2 {
+   # Verificar o package manager atual (pkg, apt, brew, pacman)
+   # Será exportada a variavel: traits_pkgm; pkgm; traits_2
 
+   if [ -f /etc/os-release ]; then
+      source /etc/os-release
+       if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+           echo "apt"
+           traits_pkgm="apt"
+           pkgm="apt"
+           export traits_pkgm
+           export pkgm
+
+       elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
+           echo "pacman"
+           traits_pkgm="pacman"
+           pkgm="pacman"
+           export traits_pkgm
+           export pkgm
+
+       else
+           echo "Outro package manager Linux"
+       fi
+
+   elif [ -d "$PREFIX" ]; then
+      # Verificar se o sistema operativo é Termux (Android)
+
+      echo "pkg"
+      traits_pkgm="pkg"
+      pkgm="pkg"
+      export traits_pkgm
+      export pkgm
+
+   elif [ "$(uname)" == "Darwin" ]; then
+      # Verificar se o sistema operacional é macOS
+
+      echo "brew"
+      traits_pkgm="brew"
+      pkgm="brew"
+      export traits_pkgm
+      export pkgm
+
+   else
+       echo "Package manager não identificado"
+   fi
+}
+f_array_2 1>/dev/null  # O output será envido para o crl... porque serve so para debug
 
 
 
@@ -159,46 +207,6 @@ f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so par
 
 
 
-
-# Verificar o package manager atual (pkg, apt, brew, pacman)
-   if [ -f /etc/os-release ]; then
-      source /etc/os-release
-       if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
-           echo "apt"
-           traits_pkgm="apt"
-           pkgm="apt"
-           export traits_pkgm
-           export pkgm
-
-       elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
-           echo "pacman"
-           traits_pkgm="pacman"
-           pkgm="pacman"
-           export traits_pkgm
-           export pkgm
-
-       else
-           echo "Outro package manager Linux"
-       fi
-   # Verificar se o sistema operacional é Termux (Android)
-   elif [ -d "$PREFIX" ]; then
-      echo "pkg"
-      traits_pkgm="pkg"
-      pkgm="pkg"
-      export traits_pkgm
-      export pkgm
-
-   # Verificar se o sistema operacional é macOS
-   elif [ "$(uname)" == "Darwin" ]; then
-      echo "brew"
-      traits_pkgm="brew"
-      pkgm="brew"
-      export traits_pkgm
-      export pkgm
-
-   else
-       echo "Package manager não identificado"
-   fi
       
 
 # Catalogo de todas as variaveis do traitsID encontradas neste ficheiro desde o inicio
