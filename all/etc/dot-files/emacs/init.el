@@ -66,10 +66,10 @@
     (defun win-home-dir-option-2-of-2 ()
        "Possible dependency for the set of $HOME variable on WSL2 systems."
        ;; uDev: Roaming is not a good HOME dir. Alterar para outro sitio
-       (setq startup--xdg-config-home-emacs "/mnt/c/wsl-dv/")
-       (setq v-home "/mnt/c/wsl-dv")
-       (setq HOME "/mnt/c/wsl-dv")
-       (setq ~ "/mnt/c/wsl-dv"))
+       (setq startup--xdg-config-home-emacs "/mnt/c/dv-wsl-ubuntu/")
+       (setq v-home "/mnt/c/dv-wsl-ubuntu")
+       (setq HOME "/mnt/c/dv-wsl-ubuntu")
+       (setq ~ "/mnt/c/dv-wsl-ubuntu"))
  
     (when (eq system-type 'windows-nt)
           (message "Dv: Defining 3 home vars for: Windows WSL2")
@@ -534,13 +534,13 @@ Usado nas Fx:
 
 
 ;; Toggle stuff for focus
-   (defun dv-focus-mode-t ()
+   (defun dv-focus-mode-on ()
       ;; uDev: falta a funcao toggle... se a variavel estiver t passa a -1 e vice-versa
       (interactive)
       (tool-bar-mode -1)  ;; complementar com (tool-bar-mode t)
       (menu-bar-mode -1)) ;; complementar com (menu-bar-mode t)
 
-   (defun dv-focus-mode-nil ()
+   (defun dv-focus-mode-off ()
       ;; uDev: falta a funcao toggle... se a variavel estiver t passa a -1 e vice-versa
       (interactive)
       (tool-bar-mode t)  
@@ -980,7 +980,7 @@ uDev:
 
    ;; If running on windows
    (when (eq system-type 'windows-nt)
-      (switch-to-buffer-other-window (find-file-noselect "c:/wsl-dv/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
+      (switch-to-buffer-other-window (find-file-noselect "c:/dv-wsl-ubuntu/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org")))
 
    ;; If running on Android
    (when (eq system-type 'gnu/linux)
@@ -993,7 +993,7 @@ uDev:
 
    ;; If running on windows
    (when (eq system-type 'windows-nt)
-      (switch-to-buffer-other-window (find-file-noselect "c:/wsl-dv/Repositories/upK/all/Documentos/apoio-ao-ensaio-semanal-bombas-de-incendio.org")))
+      (switch-to-buffer-other-window (find-file-noselect "c:/dv-wsl-ubuntu/Repositories/upK/all/Documentos/apoio-ao-ensaio-semanal-bombas-de-incendio.org")))
 
    ;; If running on Android
    (when (eq system-type 'gnu/linux)
