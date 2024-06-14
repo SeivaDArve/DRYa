@@ -109,12 +109,12 @@ function web {
 
    function f_termux {
       # Using Termux
-      termux-open-url $v_URL 2>/dev/null
+      termux-open-url "$v_URL" 2>/dev/null
    }
    
    function f_chrome {
       # Using chrome on windows 
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" $v_URL & 2>/dev/null
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & 2>/dev/null
    }
 
    # Calling siigo webpage using one of the above options:
