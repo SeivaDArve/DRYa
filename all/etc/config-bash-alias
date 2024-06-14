@@ -779,6 +779,7 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    }
 
    # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
+      # Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
    alias           exe="/mnt/c/Windows/System32/cmd.exe /c"
    alias          2468="echo 'Help: Main Menu: Power options: 5'"
    alias        246855="echo 'Lock Screen'"
