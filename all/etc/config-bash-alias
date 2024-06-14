@@ -117,7 +117,7 @@ function web {
       "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & 2>/dev/null
    }
 
-   # Calling siigo webpage using one of the above options:
+   # Calling web browser using one of the above options:
       f_termux || f_chrome || xdg-open $v_URL || echo "DRYa: could not open a browser"
       
 }
