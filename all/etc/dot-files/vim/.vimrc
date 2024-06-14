@@ -43,3 +43,6 @@ nnoremap <F7> <Esc>ZZ
 
 nnoremap <F8> zhzhzhzhzhzhzhzh
 nnoremap <F9> zlzlzlzlzlzlzlzl
+
+" Não manter sublinhado a pesquisa de palavras anterio. Esse mapeamento faz com que, quando pressiona Enter no modo normal, o Vim execute o comando :nohlsearch antes de inserir uma nova linha. que apaga o highlight da pesquisa
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
