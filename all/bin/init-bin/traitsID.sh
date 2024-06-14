@@ -4,6 +4,7 @@
 #              No final do ficheiro também estara um catalogo de todas as variaveis
 #              As variaveis que vao ser encontradas vao ser colocadas em 4 sitios: Uma Array; Exportadas para o Env; Concatenadas num ficheiro de configs; No final deste documento de texto num mini catalogo de variaveis
 
+# uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
 
 function f_array_0 {
    # Criar um Array Associativo (semelhante a um dicionario em python com pares de key + value)
