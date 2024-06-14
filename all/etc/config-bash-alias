@@ -104,21 +104,24 @@ function siigo {
 
 function web {
    # Simply opening a browser
-
-   v_URL="https://duckduckgo.com 2>/dev/null"
-
-   function f_termux {
-      # Using Termux
-      termux-open-url "$v_URL" 2>/dev/null
-   }
    
-   function f_chrome {
-      # Using chrome on windows 
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & 2>/dev/null
-   }
+   # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
 
-   # Calling web browser using one of the above options:
-      f_termux || f_chrome || xdg-open $v_URL || echo "DRYa: could not open a browser"
+   v_URL="https://duckduckgo.com"
+
+   if [ $traits_termux == "true" ]; then     # When using Termux
+      termux-open-url "$v_URL"
+   
+   elif [ $traits_OS == "Linux" ]; then      # When using Linux 
+      xdg-open $v_URL
+
+   elif [ ! $traits_OS == "Linux" ]; then    # Maybe using windows 
+      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
+   
+   else
+       echo "DRYa: could not open a browser"
+   fi
+
       
 }
 
