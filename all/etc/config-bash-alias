@@ -62,35 +62,41 @@ function web {
    # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
 
    # Identificar os argumentos que se enviam para esta fx
-      if [ $1 == "siigo" ]; then 
+      if [ -z $1 ]; then 
+         v_URL="https://duckduckgo.com"
+
+      elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
       elif [ $1 == "GPT" ]; then 
          v_URL="https://chatgpt.com/?oai-dm=1"
 
       else
-         v_URL="https://duckduckgo.com"
+         echo "DRYa: web: O arg fornecido vai ser lido como um link"
+         v_URL=$1
 
       fi
 
 
    # Identificar a maquina atual
       if [ $traits_termux == "true" ]; then     # When using Termux
-         termux-open-url "$v_URL"
+         echo "DRYa: A abrir com Termux: $v_URL"
+         termux-open-url "$v_URL" &
       
       elif [ $traits_OS == "Linux" ]; then      # When using Linux 
-         xdg-open $v_URL
+         echo "DRYa: A abrir com Linux: $v_URL"
+         xdg-open $v_URL & 
 
       elif [ ! $traits_OS == "Linux" ]; then    # Maybe using windows 
+         echo "DRYa: A abrir com Windows: $v_URL"
          "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
       
       else
-         echo "DRYa: could not open a browser"
+         echo "DRYa: Erro a abrir o link"
          exit 1
       
       fi
 
-      echo "DRYa: A abrir: $v_URL"
       
 }
 
