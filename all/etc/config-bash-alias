@@ -52,85 +52,62 @@ function E {
 	
 }
 
-alias luxam="echo 'opening: grelhas-de-avaliacao.org' && echo ' > (alternative): F luxam' && cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org"
 
-
-## Removido OMni-key desta linha
-
-function GPT {
-   # Finding a proper browser to open siigo.com
-
-   function f_termux_siigo {
-      # Using termux 
-      termux-open-url "https://chatgpt.com/?oai-dm=1" 2>/dev/null
-   }
-   
-   function f_chrome_siigo {
-      # Using chrome   
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "https://chatgpt.com/?oai-dm=1" & 2>/dev/null
-   }
-
-   # Calling siigo webpage using one of the above options:
-      f_termux_siigo || f_chrome_siigo || echo "DRYa: could not open ChatGPT"
-      
-}
-
-function siigo {
-   # Finding a proper browser to open siigo.com
-
-   v_success=0
-   if [[ $traits_termux == "true" ]]; then 
-      # se for termux, abre como tal
-      v_success=1
-
-      echo "DRYa: A abrir com Termux: https://siigo-maintenance.com"
-      termux-open-url "https://siigo-maintenance.com/#/calendar" 2>/dev/null
-
-   else
-      # Se for Windows com WSL2, abre como tal
-      v_success=1
-
-      echo "DRYa: A abrir com WSL2: https://siigo-maintenance.com"
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "https://siigo-maintenance.com/#/calendar" &
-   fi
-
-
-   if [[ $v_success == "0" ]]; then
-      # Se of `if` anterior nao teve sucesso a detetar terminal passando a variavel $v_success para 1, dar uma mensagem de erro
-      echo "DRYa: Erro, nao deu para abror o siigo"
-   fi
-      
-}
 
 function web {
-   # Simply opening a browser
+   # dee: T: `web`  ::  D: Fx que abre websites corretamente de acordo com o dispositivo/maquina atual  #HashTag:987657897
+   # Simply opening a browser (args may be given)
+   # Note: after this fx, some shortcuts will be created also
    
    # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
 
-   v_URL="https://duckduckgo.com"
+   # Identificar os argumentos que se enviam para esta fx
+      if [ $1 == "siigo" ]; then 
+         v_URL="https://siigo-maintenance.com/#/calendar"
 
-   if [ $traits_termux == "true" ]; then     # When using Termux
-      termux-open-url "$v_URL"
-   
-   elif [ $traits_OS == "Linux" ]; then      # When using Linux 
-      xdg-open $v_URL
+      elif [ $1 == "GPT" ]; then 
+         v_URL="https://chatgpt.com/?oai-dm=1"
 
-   elif [ ! $traits_OS == "Linux" ]; then    # Maybe using windows 
-      "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
-   
-   else
-       echo "DRYa: could not open a browser"
-   fi
+      else
+         v_URL="https://duckduckgo.com"
 
+      fi
+
+
+   # Identificar a maquina atual
+      if [ $traits_termux == "true" ]; then     # When using Termux
+         termux-open-url "$v_URL"
+      
+      elif [ $traits_OS == "Linux" ]; then      # When using Linux 
+         xdg-open $v_URL
+
+      elif [ ! $traits_OS == "Linux" ]; then    # Maybe using windows 
+         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
+      
+      else
+         echo "DRYa: could not open a browser"
+         exit 1
+      
+      fi
+
+      echo "DRYa: A abrir: $v_URL"
       
 }
+
+# Shortcuts for fx `web`
+   # dee: HashTag:987657897
+   alias siigo="eval web siigo"
+   alias GPT="eval web GPT"
+
+
+
+
 
 
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
    # More info at: '$ man bash'
    HISTCONTROL=ignoreboth
 
-alias appdata="udev: must be completed"
 
 # Termux alias
    alias REC="termux-microphone-record -l 0"
