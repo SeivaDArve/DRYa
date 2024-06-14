@@ -26,6 +26,7 @@ function f_drya_msgs_init {
       echo "      > running from: ${DRYa_HEART}"
       # udev: echo "Installed at.."
 
+
 # drya-messages: | 1. A file like neofetch for DRYa
 # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
 #                     At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
@@ -384,8 +385,12 @@ function f_internal_drya_files_2_2 {
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
       alias D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
 
+   # List DRYa work directory
       alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+
+   # To use in scripts (vim $DRYa/all/.../...)
+      DRYa="${v_REPOS_CENTER}/DRYa"
    
    # Drya start-up bin files (init-bin)
       # Sourcing all stand-alone scripts
