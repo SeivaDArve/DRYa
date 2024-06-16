@@ -52,3 +52,5 @@
    # uDev
 
 # Ficheiro tmp em pasta tmp
+
+# Sound Samples

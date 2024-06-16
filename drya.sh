@@ -153,7 +153,7 @@ function f_default_vars {
 			f_setafD; echo $(pwd)
 			f_nn;
 			f_setafA; echo -n "saving current "
-			f_setafD; echo -n "pwd "; 
+			f_setafD; echo -n "pwd " 
 			f_setafA; echo -n "into "
 			f_setafD; echo -n "_BEFORE_CALLING_SCRIPT"; 
 			f_setafC;
@@ -939,7 +939,6 @@ function f_exec {
 
 if [ -z "$*" ]; then
   # Do something else if there are no arguments
-     clear
      f_greet
      f_talk; echo "Master, I'm installed"
              echo " > But No arguments were given"
@@ -1152,12 +1151,15 @@ elif [ $1 == "config" ]; then
       echo
       echo "uDev: This info must be environment variables for other apps"
 
-elif [ $1 == "wsl" ]; then 
+elif [ $1 == "wpwd" ]; then 
+
+   f_greet
 
    if [ -z $2 ]; then 
-      echo "DRYa: options for WSL2"
+      echo 'DRYa: options for w-pwd `windows-$(pwd)`on WSL2'
       echo
-      echo " D wsl p || D wsl path : feed windows relative path to convert to linux and navigate there"
+      echo "DRYa: feed windows 'Path' to a file, to be converted to Linux 'Path'"
+      echo " > D wpwd p || D wpwd path"
 
    elif [ $2 == "p" ]; then 
       clear
@@ -1167,7 +1169,7 @@ elif [ $1 == "wsl" ]; then
 
       # Make a dir and a file, to paste and convert windows text to linux text
          mkdir -p ~/.tmp 
-         v_file=~/.tmp/wsl-rel-path  # Note: Does not work: v_file="~/.tmp/wsl-rel-path"
+         v_file=~/.tmp/wpwd-rel-path  # Note: Does not work: v_file="~/.tmp/wpwd-rel-path"
          touch $v_file 
 
       # File the file with some instructions
@@ -1186,7 +1188,7 @@ elif [ $1 == "wsl" ]; then
          sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
 
       # Copy text to variable, to test if file/variable is empty
-         v_text=$(cat ~/.tmp/wsl-rel-path )
+         v_text=$(cat ~/.tmp/wpwd-rel-path )
          #v_text=""  # Debug: To test if file is empty
 
       # Tell if it is empty or print the remaining contents (hopefully with a valid path converted)
@@ -1359,8 +1361,9 @@ elif [ $1 == "install" ]; then
             # pkg install termux-api
          ;;
          pycharm)
-            clear
+
             f_greet
+
             echo "Installing PyCharm on Fedora"
             echo " > Press ENTER to continue; Press Ctrl-C to Abort"
             echo 
@@ -1381,7 +1384,6 @@ elif [ $1 == "install" ]; then
          ;;  
          dotfiles | dot)
 
-            clear
             f_greet
 
             f_talk; echo "drya install dot-files"
@@ -1404,8 +1406,8 @@ elif [ $1 == "install" ]; then
                                 "termux:repos" \
                                 "termux:properties" \
                                 "termux:colors" \
-                                '~/sl/wsl' \           # Soft link for WSL2 C:\
-                                '~/sl/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
+                                '~/ln/wsl' \           # Soft link for WSL2 C:\
+                                '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
                                 ".dryarc" \
                                 ".tmux.conf" \
                                 "\$PS1" \

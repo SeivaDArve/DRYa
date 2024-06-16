@@ -39,6 +39,7 @@
             sed -i "s/ॐ/ᜎ/g" ~/.termux/termux.properties
 
             # Mudar a omni-key principal para o 'T' e definir a sua fx
+               #bind -x '"\e[18~":"cd ~/sl/trade"'
                bind -x '"\e[18~":"V trade"'
 
             # Mudar a omni-key parcial 'A' para a fx: [Dos conteudos da pasta (a lista de scripts) filtra e apresentar so os scripts que sao para executar, com um comando 'read' a perguntar qual quer executar]

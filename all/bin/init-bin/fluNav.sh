@@ -144,9 +144,18 @@ function f_manage_init_and_libraries_after_mod {
    # Asking if the user really want apply changes (with: f_applying_changes_init)
       f_asking_to_apply_init
    
-      if [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then echo -e "\rYour choice was Yes: Do apply\n"; f_applying_changes_init; 
-      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then echo "\rYour choise was No: Do not apply"; 
-      else echo "Answers do not match, doing nothing for now. You can run the command again later";
+      if [ -z $v_apply]; then 
+         echo " > No action taken"
+
+      elif [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then 
+         echo -e "\rYour choice was Yes: Do apply\n"; 
+         f_applying_changes_init; 
+
+      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then 
+         echo "\rYour choise was No: Do not apply"; 
+
+      else 
+         echo "Answers do not match, doing nothing for now. You can run the command again later";
       fi
 }
 
@@ -360,6 +369,9 @@ function . {
 
       elif [ $1 == "." ]; then 
          f_edit_self
+
+      #elif [ $1 == "-" ]; then 
+         # Open last file edited, because last file opened saved it's absolute path somewhere 
 
       elif [ $1 == "G" ]; then 
          # If arg 1 is 'G' then navigate to the center of seiva's repos

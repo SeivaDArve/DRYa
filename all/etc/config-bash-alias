@@ -45,6 +45,7 @@ function E {
             if [ $i == "3" ]; then alias e="emacs"; fi
          ;;
          *)
+            # uDev: permitir escolher outro, definindo o seu nome numa variavel $v_editor e depois usando com o comando `eval $v_editor <ficheiro>`
             echo lol
          ;;
       esac
@@ -53,6 +54,8 @@ function E {
 }
 
 
+alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
+alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
 
 function web {
    # dee: T: `web`  ::  D: Fx que abre websites corretamente de acordo com o dispositivo/maquina atual  #HashTag:987657897
@@ -60,6 +63,7 @@ function web {
    # Note: after this fx, some shortcuts will be created also
    
    # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
+   # uDev: Filtrar os "browser-bookmarks" e fornecer uma opcao para isso
 
    # Identificar os argumentos que se enviam para esta fx
       if [ -z $1 ]; then 
@@ -71,6 +75,13 @@ function web {
       elif [ $1 == "GPT" ]; then 
          v_URL="https://chatgpt.com/?oai-dm=1"
 
+      elif [ $1 == "lojas" ]; then 
+         v_URL="https://www.cascaishopping.pt/mapa/#/location/639a8d573b88061336d69a59"
+
+      elif [ $1 == "yt" ]; then 
+         # uDev: Se for Android, abrir a app
+         v_URL="https://www.youtube.com"
+
       else
          echo "DRYa: web: O arg fornecido vai ser lido como um link"
          v_URL=$1
@@ -81,7 +92,8 @@ function web {
    # Identificar a maquina atual
       if [ $traits_termux == "true" ]; then     # When using Termux
          echo "DRYa: A abrir com Termux: $v_URL"
-         termux-open-url "$v_URL" &
+         #termux-open-url "$v_URL" &
+         nohup termux-open-url "$v_URL" & disown
       
       elif [ $traits_OS == "Linux" ]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
@@ -104,6 +116,8 @@ function web {
    # dee: HashTag:987657897
    alias siigo="eval web siigo"
    alias GPT="eval web GPT"
+   alias lojas="eval web lojas"
+   alias yt="eval web yt"
 
 
 
