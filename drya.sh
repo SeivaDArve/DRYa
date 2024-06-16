@@ -1293,10 +1293,29 @@ elif [ $1 == "mac" ]; then
    f_greet
 
    # Get MAC address using ifconfig
-   mac_address=$(ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
+      mac_address=$(ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}')
 
    # Print MAC address
-   echo "MAC Address: $mac_address"
+      echo "MAC Address: $mac_address"
+      echo
+
+   # Print Android ID
+      ANDROID_ID=$(termux-telephony-deviceinfo | grep 'device_id' | awk -F': ' '{print $2}' | tr -d '",')
+      echo "Android ID: $ANDROID_ID"
+      echo
+
+   # Print Numero de serie do Android
+      SERIAL=$(getprop ro.serialno)
+      echo "Número de série do dispositivo: $SERIAL"
+      echo
+
+   # Mais info
+      getprop | grep "product" | grep brand
+      echo
+      getprop | grep "product" | grep model
+      echo
+      getprop | grep "product" | grep name
+      echo
 
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
