@@ -53,6 +53,7 @@ function E {
 	
 }
 
+alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 
 alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
 alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
@@ -88,12 +89,20 @@ function web {
 
       fi
 
+   # Send file 'nohup.out' to a tmp dir
+      mkdir -p ~/.tmp
+
 
    # Identificar a maquina atual
       if [ $traits_termux == "true" ]; then     # When using Termux
-         echo "DRYa: A abrir com Termux: $v_URL"
+         echo "DRYa: A abrir com Termux: "
+         echo " > $v_URL"
+
+         cd ~/.tmp
+
          #termux-open-url "$v_URL" &
          nohup termux-open-url "$v_URL" & disown
+         cd -
       
       elif [ $traits_OS == "Linux" ]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
