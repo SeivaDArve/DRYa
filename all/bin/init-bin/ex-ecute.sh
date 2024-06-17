@@ -34,3 +34,8 @@ function ex {
       #python3 $(ls | grep ".py$" | grep "$i")
    done
 }
+
+# Overwritting last fx
+   function ex {
+      ls | fzf
+   }

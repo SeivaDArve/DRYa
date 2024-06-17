@@ -21,6 +21,7 @@ function f_gr_dependencies {
    termux-api
    tsu   # To grant sudo permissions, may be needed to enable phone screenshots
    upower
+   fzf   # Fuzzyfinder
 }
 
 # List of usefull apps 

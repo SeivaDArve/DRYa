@@ -638,8 +638,8 @@ function V {
    
    # Implementation of Use 2:
    elif [ $1 == "trade" ] || [ $1 == "t" ]; then
-      cd ${v_REPOS_CENTER}/moedaz/all/trade/dashboard-scripts 
-      f_trade_interactive_dir
+      cd ${v_REPOS_CENTER}/moedaz/all/trade/dashboard-scripts && ls
+      #f_trade_interactive_dir
    
    # Implementation of Use 2:
    elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
