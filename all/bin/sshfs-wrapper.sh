@@ -163,9 +163,12 @@ function f_uninstall_sshfs {
 
 function f_send_public_key_to_verbose_line_repo {
    # Send text to a specific repo for verbose outputs through github
-      v_date=$(date)
+
+      # Data (Exemplo: "Data/Hora: 2024-06-07 04:21:26")
+         v_data=$(date +'%Y-%m-%d %H:%M:%S')
+
       echo              >> $v_verbose_line
-      echo "- $v_date"  >> $v_verbose_line
+      echo "- $v_data"  >> $v_verbose_line
       echo " > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)" >> $v_verbose_line
       cat $v_public_key >> $v_verbose_line
       echo              >> $v_verbose_line
@@ -286,14 +289,30 @@ function f_check_if_user_is_on_fuse_group_verbose {
 
 function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
+
    echo
    echo "Vai ser verificado o Status do Daemon:"
    
-   v_started=$(sudo systemctl status ssh | grep Active) # para quando o daemos de chama `ssh`
+   if [ $traits_pkgm == "pkg" ]; then 
+      # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
+      v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
+
+   elif [ $traits_pkgm == "apt" ]; then 
+      # para quando o daemos de chama `ssh`
+      v_started=$(sudo systemctl status ssh | grep Active) 
+
+   elif [ $traits_pkgm == "dnf" ]; then 
+      # para quando o daemos de chama `sshd`
+      v_started=$(sudo systemctl status sshd.service | grep Active)
+   fi
+
+   #echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+   #echo "hit"; read  # Debug
+
    
-   if [ -z $v_started ]; then
-      v_started=$(sudo systemctl status sshd.service | grep Active) # para quando o daemos de chama `sshd`
-      echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+   if [[ -z $v_started ]]; then
+      # Se a variavel $v_started estiver vazia, nenhum processo ou Daemon foi encontrado, logo, está desligado
+      echo " > Servico nao iniciado"
    
    else
       echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
@@ -497,7 +516,8 @@ function f_ser_servidor {
       f_check_ssh_daemon_is_on_verbose
 
    # Iniciar o servico (Daemon) do ssh
-      sudo service ssh start
+      if [ $traits_pkgm == "pkg" ]; then sshd; fi
+      if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh start; fi
 
    # Ver o estado atual do serviço apos fazer alterações:
       f_check_ssh_daemon_is_on
@@ -742,8 +762,19 @@ function f_disable_everything {
                      f_check_ssh_daemon_is_on_verbose
 
                   # Parar o serviço
-                     sudo service ssh stop
+                     # Parar no termux
+                        if [ $traits_pkgm == "pkg" ]; then 
 
+                           # Detetar qual é o PID do `sshd` 
+                              v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
+
+                           # Terminar esse processo
+                              kill $v_proc
+                        fi 
+
+                     # Parar noutros OS
+                        if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
+                     
                   # Ver o estado atual do serviço apos fazer alterações:
                      f_check_ssh_daemon_is_on
                      f_check_ssh_daemon_is_on_verbose
