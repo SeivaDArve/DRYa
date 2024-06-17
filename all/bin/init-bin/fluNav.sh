@@ -930,6 +930,42 @@ function V {
       # If there are no arguments, present the fluNav
          if [ -z $1 ]; then
 
+            function f_menu_fzf {
+               # Menu que usa fzf e HEREDOC
+
+# --------- # Heredoc  {  ------------------------------------------------- 
+            # Passando o HEREDOC para o fzf e capturando a seleção
+
+selecao=$(fzf -m --prompt="SELECIONE um ou + ficheiros para editar: " <<EOF
+config-bash-alias
+notes
+source-all-drya-files
+.bashrc
+source-all-moedaz-files
+com.list-econ-items.txt
+com.associative-array
+.vimrc
+Refresh-Reload-Source
+1st
+emacs-init (emacs)
+emacs-init (vim)
+secundary-files
+EXIT
+EOF
+)
+
+for i in $selecao; 
+   do
+   echo "Item: $i"
+   echo
+done
+}
+
+# --------- # Heredoc  }  ------------------------------------------------- 
+
+
+
+function f_menu_select {
             clear
             figlet fluNav
 
@@ -1051,6 +1087,12 @@ function V {
                   ;;
                esac
             done
+         }
+
+
+         # Escolha 1 de 2 funcoes disponiveis para menu (uDev: passar so para a melhor, para so 1)
+            #f_menu_fzf
+            f_menu_select
 
          # When function S is presented with arguments (using elif):
          # And sync with github
