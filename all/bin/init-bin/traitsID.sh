@@ -52,46 +52,62 @@ function f_array_2 {
    # Verificar o package manager atual (pkg, apt, brew, pacman)
    # Será exportada a variavel: traits_pkgm; pkgm; traits_2
 
+   function f_export {
+      # Apos ser detetada a familia Linux Correta, esta fx exporta as variaveis para o Env
+
+      # Copiar a variavel encontrada para cada uma das Var que pretendemos
+         traits_pkgm=$v_found
+         traits_2=$v_found
+         pkgm=$v_found
+
+      # Exportar todas as Var para o Env (É possivel ler o Env com o comando `printenv`)
+         export traits_pkgm
+         export traits_2
+         export pkgm
+
+   }
+
    if [ -f /etc/os-release ]; then
       source /etc/os-release
-       if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
-           echo "apt"
-           traits_pkgm="apt"
-           pkgm="apt"
-           export traits_pkgm
-           export pkgm
 
-       elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
-           echo "pacman"
-           traits_pkgm="pacman"
-           pkgm="pacman"
-           export traits_pkgm
-           export pkgm
+      if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+         # Encontrada a familia Debian
 
-       else
-           echo "Outro package manager Linux"
-       fi
+         v_found="apt"
+         f_export
+
+      elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
+         # Encontrada a familia Arch
+
+         v_found="pacman"
+         f_export
+
+      elif command -v dnf >/dev/null 2>&1; then
+         # Encontrada a familia Red Hat
+
+         v_found="dnf"
+         f_export
+
+      else
+         v_found="nil"
+         echo "DRYa: traitsID: Package Manager Linux desconhecido"
+      fi
 
    elif [ -d "$PREFIX" ]; then
-      # Verificar se o sistema operativo é Termux (Android)
+      # Encontrado o Termux (Android)
 
-      echo "pkg"
-      traits_pkgm="pkg"
-      pkgm="pkg"
-      export traits_pkgm
-      export pkgm
+      v_found="pkg"
+      f_export
 
    elif [ "$(uname)" == "Darwin" ]; then
-      # Verificar se o sistema operacional é macOS
+      # Encontrado o macOS
 
-      echo "brew"
-      traits_pkgm="brew"
-      pkgm="brew"
-      export traits_pkgm
-      export pkgm
+      v_found="brew"
+      f_export
 
    else
-       echo "Package manager não identificado"
+       v_found="nil"
+       echo "DRYa: traitsID: Package Manager desconhecido"
    fi
 }
 f_array_2 1>/dev/null  # O output será envido para o crl... porque serve so para debug
