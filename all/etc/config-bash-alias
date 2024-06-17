@@ -76,6 +76,10 @@ function web {
       elif [ $1 == "gpt" ]; then 
          v_URL="https://chatgpt.com/?oai-dm=1"
 
+      elif [ $1 == "book-marks" ]; then 
+         v_URL="https://duckduckgo.com"
+         # uDev: cd 'V om'; cd all/browser-bookmarks; bash raw-link-opener.sh
+         
       elif [ $1 == "lojas" ]; then 
          v_URL="https://www.cascaishopping.pt/mapa/#/location/639a8d573b88061336d69a59"
 
