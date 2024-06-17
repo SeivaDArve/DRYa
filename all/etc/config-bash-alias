@@ -73,7 +73,7 @@ function web {
       elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
-      elif [ $1 == "GPT" ]; then 
+      elif [ $1 == "gpt" ]; then 
          v_URL="https://chatgpt.com/?oai-dm=1"
 
       elif [ $1 == "lojas" ]; then 
@@ -124,7 +124,7 @@ function web {
 # Shortcuts for fx `web`
    # dee: HashTag:987657897
    alias siigo="eval web siigo"
-   alias GPT="eval web GPT"
+   alias gpt="eval web GPT"
    alias lojas="eval web lojas"
    alias yt="eval web yt"
 
