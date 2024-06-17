@@ -81,34 +81,51 @@ function f_install_ssh_key {
    ssh-keygen -t rsa
 }
 
-function f_install_ssh {
-   # Installing ssh
+#  function f_install_ssh {
+#     # Installing ssh
+#     # "$traits_pkgm"  # Variavel que carrega a info do package manager atual. Detetado pela DRYa
+#  
+#  
+#     if [ -n "$TERMUX_VERSION" ]; then
+#        #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
+#        pkg install openssh-clients
+#        pkg install openssh-server
+#     else
+#        #echo "Este terminal não é o Termux."
+#  
+#        # Se nao estivermos no Termux, perguntar qual é o package manager no dispositivo atual
+#           echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
+#           echo " > Se deixar em branco, será usado: apt"
+#           read -p " > " v_across
+#  
+#        if [ -z $v_across ]; then
+#           # Se o utilizador deixar em vazio, instala com o mais comum (apt)
+#           echo "Installing with 'apt'..."
+#           sudo apt install openssh-clients
+#           sudo apt install openssh-server
+#        else 
+#           sudo $v_across install ssh
+#           sudo $across install openssh-server
+#           sudo $across install openssh-server
+#        fi
+#     fi
+#  
+#  }
 
+function f_install_ssh {
+   # Overwrite a fx anterior
 
    if [ -n "$TERMUX_VERSION" ]; then
-      #echo "Este terminal é o Termux. Versão: $TERMUX_VERSION"
-      pkg install openssh-clients
-      pkg install openssh-server
+      # termux detetado, o comando não precisa de sudo
+         pkg install openssh-clients
+         pkg install openssh-server
+
    else
-      #echo "Este terminal não é o Termux."
-
-      # Se nao estivermos no Termux, perguntar qual é o package manager no dispositivo atual
-         echo "Qual é o package manager da maquina atual? (pkg, apt, dnf, ...)"
-         echo " > Se deixar em branco, será usado: apt"
-         read -p " > " v_across
-
-      if [ -z $v_across ]; then
-         # Se o utilizador deixar em vazio, instala com o mais comum (apt)
-         echo "Installing with 'apt'..."
-         sudo apt install openssh-clients
-         sudo apt install openssh-server
-      else 
-         sudo $v_across install ssh
-         sudo $across install openssh-server
-         sudo $across install openssh-server
-      fi
+      # Usar traitsID para detetar o package manager na variavel $traits_pkgm e aplicar
+         eval "sudo $traits_pkgm install openssh-clients"
+         eval "sudo $traits_pkgm install openssh-server"
    fi
-
+  
 }
 
 function f_install_sshfs {
@@ -271,8 +288,17 @@ function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
    echo
    echo "Vai ser verificado o Status do Daemon:"
-   v_started=$(sudo service ssh status)
-   #echo "debug $v_started"
+   
+   v_started=$(sudo systemctl status ssh | grep Active) # para quando o daemos de chama `ssh`
+   
+   if [ -z $v_started ]; then
+      v_started=$(sudo systemctl status sshd.service | grep Active) # para quando o daemos de chama `sshd`
+      echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+   
+   else
+      echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+   fi
+
 }
 
 function f_check_ssh_daemon_is_on_verbose {
