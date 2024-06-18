@@ -947,8 +947,8 @@ if [ -z "$*" ]; then
       cd ${v_REPOS_CENTER}/DRYa
 
 
-elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ]; then
-   # Help menu
+elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
+   # Help menu  ::  rtfm: Read the Fucking Manual
    
    clear; f_greet
 

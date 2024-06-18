@@ -274,6 +274,10 @@ function f_debug {
 	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
 }
 
+
+
+
+
 function f_drya-messages {
    # All Seiva's software (including DRYa)
       # will have at the start of the file,
