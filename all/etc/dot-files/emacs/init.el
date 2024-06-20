@@ -79,14 +79,24 @@
           
 
  ;; If running on Android
-    (when (eq system-type 'gnu/linux)
+    (when (string-match-p "android" system-configuration)
           (message "Dv: Defining 3 home vars for: Linux")
           (setq startup--xdg-config-home-emacs "/data/data/com.termux/files/home/")
           (setq ~ "/data/data/com.termux/files/home/")
           (setq v-home "/data/data/com.termux/files/home/"))
  
+
+
+
+
+
+
+
+
+
    ;; Defining variable inside emacs es per variables on bash
       ;;(setq v-repos-center (shell-command-to-string "echo ${v_REPOS_CENTER}"))
+        (setq v-home (file-name-directory (or load-file-name user-init-file)))
         (setq v-repos-center (concat v-home "Repositories/"))
          
       ;; (getenv "HOME") ;; Gets the environment variable $HOME
@@ -195,7 +205,8 @@
 
      ;; Loading upk.el
         ;; For Android
-        (if (eq system-type 'gnu/linux)
+        (when (string-match-p "android" system-configuration)
+        ;;(if (eq system-type 'gnu/linux)
             (load "/data/data/com.termux/files/home/.emacs.d/libraries/upk/upk.el")
             (message "Dv: Loaded upk.el on GNU/Linux"))
 
