@@ -953,8 +953,9 @@ function V {
 
 
 
-# List fav files for edition (fluNav)
-   function S {
+function S {
+   # List fav files for edition (fluNav)
+   
    # uDev: letra S é melhor para ABRIR ficheiros com SYNC
    #       letra . para abrir ficheiros sem sync
 
@@ -1208,4 +1209,4 @@ function f_menu_select {
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
-   }   ## End of function F
+   }   
