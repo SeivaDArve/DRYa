@@ -54,3 +54,28 @@
 # Ficheiro tmp em pasta tmp
 
 # Sound Samples
+
+# fzf menu exemplo (uDev: adicionar `for` loop para multiplas escolhas
+         # Reset às variaveis
+         v_list=0
+         v_lstX=0
+
+      # Lista de opções para o menu `fzf`
+         v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc y" | fzf --prompt="fzf Example Menu: ")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ "1" ]] && v_lstX=1 #&& echo "Detetado 1 (debug)"
+         [[ $v_list =~ "2" ]] && v_lstX=2 #&& echo "Detetado 2 (debug)"
+         [[ $v_list =~ "3" ]] && v_lstX=3 #&& echo "Detetado 3 (debug)"
+
+      # Tomar ação acerca da escolha do menu 
+         [[ $v_lstX =~ "1" ]] && f_fzf_1...
+         [[ $v_lstX =~ "2" ]] && f_fzf_2...
+         [[ $v_lstX =~ "3" ]] && f_fzf_3...
+    
+      # uDev: for loop caso haja multiplas escohas
+	 #for i in $vlist...
+	 
+      # Reset às variaveis, para que o proximo loop (a proxima vez que seja executado) e que também seja cancelado a meio, não assuma valores deste loop anterior
+         v_list=0
+         v_lstX=0
