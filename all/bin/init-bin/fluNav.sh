@@ -786,8 +786,13 @@ function V {
       cd ${v_REPOS_CENTER}/Dota-2-guide && ls
 
    # Implementation of Use 2:
-   elif [ $1 == "lx" ]; then
+   elif [ $1 == "lxm" ]; then
       cd ${v_REPOS_CENTER}/luxam && ls
+
+   # Implementation of Use 2:
+   elif [ $1 == "ln" ]; then
+      # Se a pasta ~/ls/ existir, navega para ela e lista os seus conteudos
+      [[ -d ~/ln/ ]] && cd ~/ln/ && ls
 
    # Implementation of Use 2:
    elif [ $1 == "m" ]; then
