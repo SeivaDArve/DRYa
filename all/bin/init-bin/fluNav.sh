@@ -256,7 +256,10 @@ function f_action {
       figlet fluNav 
       cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
-      
+
+   elif [ $v_nm == "search-files" ]; then
+     # From current directory, search files with fzf menu and open with vim 
+     vim $(fzf)
       
    elif [ $v_nm == "upk" ]; then
 
@@ -1186,6 +1189,7 @@ function f_menu_select {
             elif [ $1 == "car"   ]; then v_nm="car";            f_action; # Sync Everything about the car
             elif [ $1 == "upk"   ]; then v_nm="upk";            f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "tm"    ]; then v_nm="tmux";           f_action; # Asks in a menu, which file is meant to be sync
+            elif [ $1 == "s"     ]; then v_nm="search-files";   f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi

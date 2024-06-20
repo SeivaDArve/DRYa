@@ -45,8 +45,8 @@ function tm {
       echo "TM: wrap-around para tmux (terminal multiplexer)" 
       echo " > Para instrucoes: 'tm -h'" 
       echo 
-      echo "Vai abrir o comando: tmux"
-      sleep 2
+      echo "Vai abrir o comando: tmux. [ENTER] para continuar."
+      read -sn 1 -t 2
       tmux
 
    elif [ $1 == "K" ]; then
