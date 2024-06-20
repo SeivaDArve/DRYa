@@ -89,6 +89,17 @@ function web {
          # uDev: Se for Android, abrir a app
          v_URL="https://www.youtube.com"
 
+      elif [ $1 == "bm" ]; then 
+         # Esta fx visita a repo 'Omni-log' e usa o script lá presente com menu `fzf` que filtra os links dos ultimos backups de bookmarks.. O link de lá escolhido, será usado aqui
+
+         # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
+            cd ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/
+            bash ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/raw-link-opener.sh
+            cd -
+         
+         # Como o script anterior já vai abrir o link que encontrar no browser, entao neste script informamos às proximas fx que nao haverá URL  
+            v_URL="nil"
+
       else
          echo "DRYa: web: O arg fornecido vai ser lido como um link"
          v_URL=$1
@@ -100,7 +111,7 @@ function web {
 
 
    # Identificar a maquina atual
-      if [ $traits_termux == "true" ]; then     # When using Termux
+      if [ $traits_termux == "true" ] && [ ! $v_URL == "nil"] ; then     # When using Termux
          echo "DRYa: A abrir com Termux: "
          echo " > $v_URL"
 
@@ -110,17 +121,19 @@ function web {
          nohup termux-open-url "$v_URL" & disown
          cd -
       
-      elif [ $traits_OS == "Linux" ]; then      # When using Linux 
+      elif [[ $traits_OS == "Linux" ]] && [[ ! $v_URL == "nil" ]]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
          xdg-open $v_URL & 
 
-      elif [ ! $traits_OS == "Linux" ]; then    # Maybe using windows 
+      elif [[ ! $traits_OS == "Linux" ]] && [[ ! $v_URL == "nil" ]]; then    # Maybe using windows 
          echo "DRYa: A abrir com Windows: $v_URL"
          "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
       
+      elif [[ $v_URL == "nil" ]]; then
+         echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
+
       else
          echo "DRYa: Erro a abrir o link"
-         exit 1
       
       fi
 
@@ -803,7 +816,7 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
 
 # Using Num Pad numbers as shortcuts
    function f_fzf_power_options {
-      v_list=$(echo -e "1. Sair \n2. Bloquear ecra \n3. Desligar \n4. Suspender \n5. Hibernar \n6. Reiniciar \n7. Refresh" | fzf --prompt="POWER: ")
+      v_list=$(echo -e "1. Sair \n5. Bloquear ecra \n0. Desligar \n4. Suspender \n2. Hibernar \n8. Reiniciar \n6. Refresh" | fzf --prompt="POWER: ")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "1" ]] && v_lstX=1 && echo "Detetado 1 (debug)"
