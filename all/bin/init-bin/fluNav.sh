@@ -17,23 +17,17 @@
 # Em vez de NPNP: só P
 
 #    '. '       ## ls
-#    '. mo'     ## cd moedaz
-#    '. D'      ## cd DRYa
-#    '. n'      ## next dir forward  (from NPNP looper)
-#    '.. n'     ## next dir backward (from NPNP looper)
-#    '. s'      ## save current dir  (from NPNP looper)
-#    '.. s'     ## del current dir   (from NPNP looper)
-#    '. e'      ## set default text editor and sends to .dryaRC
+#    'V mo'     ## cd moedaz
+#    'DD'      ## cd DRYa
 #    'op file.org' detect current emacs (instead of EM, Em, em)
 
 
 
 # Leters to be used:
-#     function F
-#     function M
-#     function PNpn
-#     function E
-#     function S      # To sync files (uDev: Replace with F?)
+#     function S     (Sync files before + after editing)
+#     function V     (NaVigate to dirs)
+#     function PNpn  (Replaced with `fzf` + `V`    ---->    `V +`  `V -`  `V .`  `V --`  (To create a tmp favourite list of dirs  @verbose-lines)
+#     function PNpn  (Replaced with `fzf` + `S`    ---->    `S +`  `S -`  `S .`  `S --`  (To create a tmp favourite list of files @Verbose-lines)
 #     function .
 #     function ..
 #     function ...
