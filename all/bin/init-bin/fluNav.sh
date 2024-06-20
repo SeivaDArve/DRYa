@@ -259,7 +259,21 @@ function f_action {
 
    elif [ $v_nm == "search-files" ]; then
      # From current directory, search files with fzf menu and open with vim 
-     vim $(fzf)
+
+     v_file=$(fzf --prompt="EDITE um ficheiro: ")
+
+     [[ ! -z $v_file ]] && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+
+   elif [ $v_nm == "search-dirs" ]; then
+      # From current directory, search other directories with fzf menu and navigate there
+      
+      v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+
+      if [[ ! -z $v_dir ]]; then
+         # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+         v_dirname=$(dirname $v_dir)
+         cd $v_dirname
+      fi
       
    elif [ $v_nm == "upk" ]; then
 
@@ -1170,7 +1184,7 @@ function f_menu_select {
          # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
          # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
             elif [ $1 == "test"  ]; then v_nm="test";           f_action; ## Just test if this file is working
-            elif [ $1 == "."     ]; then v_nm="self";           f_action; ## Edit this file itself 
+            elif [ $1 == "S"     ]; then v_nm="self";           f_action; ## Edit this file itself 
             elif [ $1 == "0"     ]; then v_nm="unalias";        f_action; f_unalias_all; f_up
             elif [ $1 == "1"     ]; then v_nm="dryaSH";         f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
             elif [ $1 == "1."    ]; then v_nm="dryaSH-op-1";    f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
@@ -1189,7 +1203,8 @@ function f_menu_select {
             elif [ $1 == "car"   ]; then v_nm="car";            f_action; # Sync Everything about the car
             elif [ $1 == "upk"   ]; then v_nm="upk";            f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "tm"    ]; then v_nm="tmux";           f_action; # Asks in a menu, which file is meant to be sync
-            elif [ $1 == "s"     ]; then v_nm="search-files";   f_action; # Asks in a menu, which file is meant to be sync
+            elif [ $1 == "."     ]; then v_nm="search-files";   f_action; # Asks in a menu, which file is meant to be sync
+            elif [ $1 == "v"     ]; then v_nm="search-dirs";    f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
