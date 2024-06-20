@@ -53,6 +53,8 @@ function E {
 	
 }
 
+# uDev: fx para verificar se existem novos bookmark no browser
+
 alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 
 alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
@@ -800,6 +802,26 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    alias emacs-init="emacs ~/.emacs.d/init.el"
 
 # Using Num Pad numbers as shortcuts
+   function f_fzf_power_options {
+      v_list=$(echo -e "1. Sair \n2. Bloquear ecra \n3. Desligar \n4. Suspender \n5. Hibernar \n6. Reiniciar \n7. Refresh" | fzf --prompt="POWER: ")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && v_lstX=1 && echo "Detetado 1 (debug)"
+      [[ $v_list =~ "2" ]] && v_lstX=2 && echo "Detetado 2 (debug)"
+      [[ $v_list =~ "3" ]] && v_lstX=3 && echo "Detetado 3 (debug)"
+      [[ $v_list =~ "4" ]] && v_lstX=4 && echo "Detetado 3 (debug)"
+      [[ $v_list =~ "5" ]] && v_lstX=5 && echo "Detetado 3 (debug)"
+      [[ $v_list =~ "6" ]] && v_lstX=6 && echo "Detetado 3 (debug)"
+
+   # Tomar ação acerca da escolha do menu
+      #[[ $v_lstX =~ "1" ]] && f_fzf_filtrar_binance_bot
+      #[[ $v_lstX =~ "2" ]] && ls | fzf | echo "uDev: filtrar extensao"
+      #[[ $v_lstX =~ "3" ]] && ls -
+
+
+
+   }
+
    function win-hibernate {
       cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
       /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
@@ -818,7 +840,7 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
    # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
       # Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
    alias           exe="/mnt/c/Windows/System32/cmd.exe /c"
-   alias          2468="echo 'Help: Main Menu: Power options: 5'"
+   alias          2468="f_fzf_power_options"
    alias        246855="echo 'Lock Screen'"
    alias        246852="echo 'Shutdown'; shutdown now"
    alias        246858="echo 'Restart'; shutdown -r now"
