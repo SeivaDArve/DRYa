@@ -822,16 +822,18 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "1" ]] && v_lstX=1 && echo "Detetado 1 (debug)"
-      [[ $v_list =~ "2" ]] && v_lstX=2 && echo "Detetado 2 (debug)"
-      [[ $v_list =~ "3" ]] && v_lstX=3 && echo "Detetado 3 (debug)"
-      [[ $v_list =~ "4" ]] && v_lstX=4 && echo "Detetado 3 (debug)"
-      [[ $v_list =~ "5" ]] && v_lstX=5 && echo "Detetado 3 (debug)"
-      [[ $v_list =~ "6" ]] && v_lstX=6 && echo "Detetado 3 (debug)"
+      [[ $v_list =~ "5" ]] && v_lstX=5 && echo "Detetado 5 (debug)"
+      [[ $v_list =~ "0" ]] && v_lstX=0 && echo "Detetado 0 (debug)"
+      [[ $v_list =~ "4" ]] && v_lstX=2 && echo "Detetado 2 (debug)"
+      [[ $v_list =~ "5" ]] && v_lstX=8 && echo "Detetado 8 (debug)"
+      [[ $v_list =~ "6" ]] && v_lstX=6 && echo "Detetado 6 (debug)"
 
    # Tomar ação acerca da escolha do menu
-      #[[ $v_lstX =~ "1" ]] && f_fzf_filtrar_binance_bot
-      #[[ $v_lstX =~ "2" ]] && ls | fzf | echo "uDev: filtrar extensao"
-      #[[ $v_lstX =~ "3" ]] && ls -
+      [[ $v_lstX =~ "0" ]] && echo "Desligar" && shutdown now
+      #[[ $v_lstX =~ "1" ]] && 
+      #[[ $v_lstX =~ "1" ]] && 
+      #[[ $v_lstX =~ "1" ]] && 
+      #[[ $v_lstX =~ "1" ]] && 
 
 
 
