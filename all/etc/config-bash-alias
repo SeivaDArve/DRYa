@@ -111,7 +111,7 @@ function web {
 
 
    # Identificar a maquina atual
-      if [ $traits_termux == "true" ] && [ ! $v_URL == "nil"] ; then     # When using Termux
+      if [[ $traits_OS == "Android" ]] ; then     # When using Termux
          echo "DRYa: A abrir com Termux: "
          echo " > $v_URL"
 
@@ -143,7 +143,7 @@ function web {
 # Shortcuts for fx `web`
    # dee: HashTag:987657897
    alias siigo="eval web siigo"
-   alias gpt="eval web GPT"
+   alias gpt="eval web gpt"
    alias lojas="eval web lojas"
    alias yt="eval web yt"
 
