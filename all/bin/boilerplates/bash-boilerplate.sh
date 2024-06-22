@@ -40,9 +40,29 @@
       f_resetCor
    }
 
-# Menu dizer sim/nao
-   echo "Do you want to continue? [Y/n]"
-   # Todas as teclas diferentes de Enter e 'y' e 'Y', dizer 'Abort'
+# Menu dizer SIM/nao. Enter = SIM
+   function f_Yn_option {
+      echo "Do you want to continue? [Y/n]"
+      read -p " > " v_ans
+
+      if [ -z $v_ans ] || [ $v_ans = "y" ] || [ $v_ans == "Y" ]; then
+         echo "O programa continua"
+      else
+         echo "O programa acaba aqui"
+      fi
+   }
+
+# Menu dizer sim/NAO. Enter = NAO
+   function f_yN_option {
+      echo "Do you want to continue? [y/N]"
+      read -p " > " v_ans
+
+      if [ -z $v_ans ] || [ $v_ans = "n" ] || [ $v_ans == "N" ]; then
+         echo "O programa continua"
+      else
+         echo "O programa acaba aqui"
+      fi
+   }
    
 # Date variables
    v_date=$(date +'%Y-%m-%d %H:%M:%S')
