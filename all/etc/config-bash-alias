@@ -60,6 +60,17 @@ alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
 alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
 
+function f_fzf_raw_link_opener {
+   # Esta fx visita a repo 'Omni-log' e usa o script lá presente com menu `fzf` que filtra os links dos ultimos backups de bookmarks.. O link de lá escolhido, será usado aqui
+
+   # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
+      cd ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/
+      bash ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/raw-link-opener.sh
+      cd -
+   
+   # Como o script anterior já vai abrir o link que encontrar no browser, entao neste script informamos às proximas fx que nao haverá URL  
+}
+
 function web {
    # dee: T: `web`  ::  D: Fx que abre websites corretamente de acordo com o dispositivo/maquina atual  #HashTag:987657897
    # Simply opening a browser (args may be given)
@@ -68,41 +79,43 @@ function web {
    # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
    # uDev: Filtrar os "browser-bookmarks" e fornecer uma opcao para isso
 
+   # Homepage pre-definida
+      homePage="https://duckduckgo.com"
+      #homeName="Duck Duck Go"
+
+   # Reset à variavel
+      unset v_URL
+      unset v_boder
+
    # Identificar os argumentos que se enviam para esta fx
       if [ -z $1 ]; then 
-         v_URL="https://duckduckgo.com"
+         # Se nao for dado nenhum argumento, dar a oportunidade ao utilizador de escolher entre a homepage e uma lista de bookmarks
+   
+         v_ask=$(echo -e "1. Abrir $homePage \n2. Abrir Bookmarks Guardados" | fzf --prompt="Escolha como quer aceder à Web")
 
+         [[ $v_ask =~ "2" ]] && f_fzf_raw_link_opener 
+         [[ $v_ask =~ "1" ]] && v_URL="https://duckduckgo.com"
+         
       elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
       elif [ $1 == "gpt" ]; then 
          v_URL="https://chatgpt.com/?oai-dm=1"
 
-      elif [ $1 == "book-marks" ]; then 
+      elif [ $1 == "duck" ]; then 
          v_URL="https://duckduckgo.com"
-         # uDev: cd 'V om'; cd all/browser-bookmarks; bash raw-link-opener.sh
          
       elif [ $1 == "lojas" ]; then 
          v_URL="https://www.cascaishopping.pt/mapa/#/location/639a8d573b88061336d69a59"
 
       elif [ $1 == "yt" ]; then 
-         # uDev: Se for Android, abrir a app
          v_URL="https://www.youtube.com"
 
       elif [ $1 == "bm" ]; then 
-         # Esta fx visita a repo 'Omni-log' e usa o script lá presente com menu `fzf` que filtra os links dos ultimos backups de bookmarks.. O link de lá escolhido, será usado aqui
-
-         # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
-            cd ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/
-            bash ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/raw-link-opener.sh
-            cd -
-         
-         # Como o script anterior já vai abrir o link que encontrar no browser, entao neste script informamos às proximas fx que nao haverá URL  
-            v_URL="nil"
+         f_fzf_raw_link_opener
 
       else
-         echo "DRYa: web: O arg fornecido vai ser lido como um link"
-         v_URL=$1
+         echo "DRYa: web: Tem de inserir um link"
 
       fi
 
@@ -111,7 +124,10 @@ function web {
 
 
    # Identificar a maquina atual
-      if [[ $traits_OS == "Android" ]] ; then     # When using Termux
+      if [[ -z $v_URL ]]; then
+         echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
+
+      elif [[ $traits_OS == "Android" ]]; then     # When using Termux
          echo "DRYa: A abrir com Termux: "
          echo " > $v_URL"
 
@@ -121,16 +137,13 @@ function web {
          nohup termux-open-url "$v_URL" & disown
          cd -
       
-      elif [[ $traits_OS == "Linux" ]] && [[ ! $v_URL == "nil" ]]; then      # When using Linux 
+      elif [[ $traits_OS == "Linux" ]]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
          xdg-open $v_URL & 
 
-      elif [[ ! $traits_OS == "Linux" ]] && [[ ! $v_URL == "nil" ]]; then    # Maybe using windows 
+      elif [[ $traits_OS == "Windows" ]]; then    # Maybe using windows 
          echo "DRYa: A abrir com Windows: $v_URL"
          "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
-      
-      elif [[ $v_URL == "nil" ]]; then
-         echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
 
       else
          echo "DRYa: Erro a abrir o link"
