@@ -1184,6 +1184,8 @@ elif [ $1 == "wpwd" ]; then
          sed -i '/^#/d'             $v_file  # Delete all comented lines
          sed -i '/^$/d'             $v_file  # Delete all empty lines
          sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
+         sed -i 's#c:\\#/mnt/c/#g'  $v_file  # Convert c:\ into /mnt/c
+         sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
          sed -i 's/\\/\//g'         $v_file  # Convert \ into /
          sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
 
