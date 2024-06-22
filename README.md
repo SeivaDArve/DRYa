@@ -100,8 +100,16 @@ The author is David Rodrigues, also know everywhere as Flowreshe Seiva Naghori D
 Overview: 	https://github.com/SeivaDArve
 Repositories:	https://github.com/SeivaDArve?tab=repositories 
 
-## Clone DRYa directly:
-git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa
-
 ## QR Code (link to open DRYa's Github page directly from another device)
 uDev
+
+## Installing DRYa:
+### Instaling dependencies first
+1. Enter command: `sudo apt install git fzf`
+
+### Clone DRYa directly:
+1. Replace $HOME either for ~ or for other path you choose to put into a variable
+2. Enter command: `git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa`
+
+### Installing DRYa
+1. Enter command: `bash $HOME/Repositories/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-installer.sh`
