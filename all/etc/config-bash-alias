@@ -150,6 +150,8 @@ function web {
 
 
 
+# App "Despezas-Fixas"
+alias F="figlet Fixas; echo 'DRYa: Despezas Fixas'"
 
 
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
