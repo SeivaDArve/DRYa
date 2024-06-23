@@ -85,7 +85,6 @@ function web {
 
    # Reset à variavel
       unset v_URL
-      unset v_boder
 
    # Identificar os argumentos que se enviam para esta fx
       if [ -z $1 ]; then 
@@ -115,7 +114,9 @@ function web {
          f_fzf_raw_link_opener
 
       else
-         echo "DRYa: web: Tem de inserir um link"
+         echo "DRYa: web: Tem de inserir um link valido"
+         #echo " > Vamos tentar abrir o texto introduzido "
+         #v_URL=$1
 
       fi
 
