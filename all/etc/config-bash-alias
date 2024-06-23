@@ -849,7 +849,7 @@ function f_restart {
       /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
 
    elif [ $traits_OS == "Linux" ]; then
-      shutdow -r
+      shutdown -r
    fi
 }
 
@@ -859,7 +859,7 @@ function f_shutdown {
       /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
    
    elif [ $traits_OS == "Linux" ]; then
-      shutdow now
+      shutdown now
    fi
 }
 
