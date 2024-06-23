@@ -829,43 +829,54 @@ alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" 
 # Acessing emacs init.el file
    alias emacs-init="emacs ~/.emacs.d/init.el"
 
-# Using Num Pad numbers as shortcuts
-   function f_fzf_power_options {
+
+
+
+function f_hibernate {
+   if [ $traits_OS == "Windows" ]; then
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
+
+   elif [ $traits_OS == "Linux" ]; then
+      echo "uDev: Hibernar"
+   fi
+}
+
+function f_restart {
+   if [ $traits_OS == "Windows" ]; then
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
+
+   elif [ $traits_OS == "Linux" ]; then
+      shutdow -r
+   fi
+}
+
+function f_shutdown {
+   if [ $traits_OS == "Windows" ]; then
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
+   
+   elif [ $traits_OS == "Linux" ]; then
+      shutdow now
+   fi
+}
+
+function f_fzf_power_options {
+   # POWER OPTIONS: Using Num Pad numbers as shortcuts
+
+   # Menu
       v_list=$(echo -e "1. Sair \n5. Bloquear ecra \n0. Desligar \n4. Suspender \n2. Hibernar \n8. Reiniciar \n6. Refresh" | fzf --prompt="POWER: ")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && v_lstX=1 && echo "Detetado 1 (debug)"
-      [[ $v_list =~ "5" ]] && v_lstX=5 && echo "Detetado 5 (debug)"
-      [[ $v_list =~ "0" ]] && v_lstX=0 && echo "Detetado 0 (debug)"
-      [[ $v_list =~ "4" ]] && v_lstX=2 && echo "Detetado 2 (debug)"
-      [[ $v_list =~ "5" ]] && v_lstX=8 && echo "Detetado 8 (debug)"
-      [[ $v_list =~ "6" ]] && v_lstX=6 && echo "Detetado 6 (debug)"
+      [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina
+      [[ $v_list =~ "5" ]] && echo "Detetado 5 (debug)"
+      [[ $v_list =~ "4" ]] && echo "Detetado 4 (debug)"
+      [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)"
+      [[ $v_list =~ "6" ]] && echo "Detetado 6 (debug)"
+      [[ $v_list =~ "8" ]] && echo "Reiniciar" && f_restart  # Restart à maquina
+}
 
-   # Tomar ação acerca da escolha do menu
-      [[ $v_lstX =~ "0" ]] && echo "Desligar" && shutdown now
-      #[[ $v_lstX =~ "1" ]] && 
-      #[[ $v_lstX =~ "1" ]] && 
-      #[[ $v_lstX =~ "1" ]] && 
-      #[[ $v_lstX =~ "1" ]] && 
-
-
-
-   }
-
-   function win-hibernate {
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
-      /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
-   }
-
-   function win-restart {
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
-      /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
-   }
-
-   function win-shutdown {
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/ && \
-      /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
-   }
 
    # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
       # Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
