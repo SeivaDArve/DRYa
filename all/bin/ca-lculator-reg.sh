@@ -102,15 +102,16 @@ Modificadores ----------------------------------------------------"
 
 
 Em desenvolvimento (uDev)  -----------------------------------------------"
- > Podem ser criadas mais variaveis e modificadores "
-   de: 'texto' para: 'numeros' no interior do script drya.sh"
+ > Nota: Podem ser criadas mais variaveis e modificadores "
+          > exemplo: de: 'texto' para: 'numeros' no interior do script ca-lculator-reg.sh"
 
- > MODIFICADOR: 'fi'    que faz o seguimte: é substituida pelo valor fixo de fibonacci"
- > MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
- > MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
- > Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
- > No inicio do script, buscar o historico à repo: verbose-lines"
- > Ao sair do script, depositar o historico na repo: verbose-lines"
+ > Modificadores: 
+    > MODIFICADOR: 'fi'    que faz o seguinte: é substituida pelo valor fixo de fibonacci"
+    > MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
+    > MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
+    > Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
+    > No inicio do script, buscar o historico à repo: verbose-lines"
+    > Ao sair do script, depositar o historico na repo: verbose-lines"
 
  > Encontrar o conteudo de '[ ]a-mk-f' e modificar"
    >> Calcula como sair com zero '0' de um trade em que abrimos e fechamos a operaçao como maker
@@ -123,6 +124,13 @@ Em desenvolvimento (uDev)  -----------------------------------------------"
  > Atalho para visualizar constantemente o ficheiro \$v_log de 2 em 2 segundos
    >> Por exemplo: 
    >> '$ watch -n 2 tail $v_log'
+
+ > Conversor de unidade de medida + Conversor de Cambios
+   > exemplo: 1 BTC = 1000 mBTC (1 Bitcoin = 1000 mili Bitcoins)    # Converter Unidades
+   > exemplo: 1 Bitcoin = X Satoshi (uDev)                          # Converter Unidades 
+   > exemplo: 1 mBTC = 56.6646 EUR (1 mili Bitcoin = 56,6646 Euros) # Converter com taxas de cambio
+   > exemplo: 10 EUR = 0.17648 mBTC                                 # Converter com taxas de cambio
+   
 
 
 Sair -------------------------------------------------------------"
