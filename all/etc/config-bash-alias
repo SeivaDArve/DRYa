@@ -839,7 +839,7 @@ function f_hibernate {
       /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
 
    elif [ $traits_OS == "Linux" ]; then
-      echo "uDev: Hibernar"
+      sudo systemctl hibernate
    fi
 }
 
@@ -863,6 +863,9 @@ function f_shutdown {
    fi
 }
 
+
+
+
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
@@ -873,7 +876,7 @@ function f_fzf_power_options {
       [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina
       [[ $v_list =~ "5" ]] && echo "Detetado 5 (debug)"
       [[ $v_list =~ "4" ]] && echo "Detetado 4 (debug)"
-      [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)"
+      [[ $v_list =~ "2" ]] && echo "Hibernar" && f_hibernate
       [[ $v_list =~ "6" ]] && echo "Detetado 6 (debug)"
       [[ $v_list =~ "8" ]] && echo "Reiniciar" && f_restart  # Restart à maquina
 }

@@ -1337,6 +1337,10 @@ elif [ $1 == "install" ]; then
    else
       # Install extra stuff
       case $2 in  # uDev: remove case/esac and replace with if/elif/else
+         bitcoin-core)
+            # Install a full Bitcoin node to validade blocks and allow mining
+            sudo snap install bitcoin-core
+         ;;
          doom-emacs)
             echo "Installing doom emacs for linux "
             read -p " > Do you want to continue?"
