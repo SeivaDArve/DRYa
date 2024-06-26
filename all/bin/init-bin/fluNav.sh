@@ -1,19 +1,21 @@
 #!/bin/bash
 # Title: fluNav (fluent navigation)
-# Dependencies: fzf
-# uDev: insert: nppn-looper + '. ?' commands
+
+# Dependencies: figlet, file, fzf (may bi instaled by typing):
+   # '$ pkg install figlet file fzf'
+
+# ---------------------------------
+# uDev list                          {
+# ---------------------------------
 #
+# uDev: insert: nppn-looper + '. ?' commands
+ 
 # uDev: Why not a tput menu for each? (better than select menu)
 
 # uDev: This app should NOT have 3 prefixes: M F and D
 #       Instead: use only: .
 #       But if some reason it does not work, try S (sync file) and V (Pointing to this place)
 
-
-# ---------------------------------
-# uDev list                          {
-# ---------------------------------
-#
 # Em vez de NPNP: só P
 
 #    '. '       ## ls
@@ -256,18 +258,8 @@ function f_action {
 
      v_file=$(fzf --prompt="EDITE um ficheiro: ")
 
-     [[ ! -z $v_file ]] && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+     [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
 
-   elif [ $v_nm == "search-dirs" ]; then
-      # From current directory, search other directories with fzf menu and navigate there
-      
-      v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
-
-      if [[ ! -z $v_dir ]]; then
-         # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
-         v_dirname=$(dirname $v_dir)
-         cd $v_dirname
-      fi
       
    elif [ $v_nm == "upk" ]; then
 
@@ -685,19 +677,16 @@ function V {
          # It finds directories
          # uDev: to find and edite files, function f needes to be created and needs to ask for the default text editor
 
-   # Dependencies: figlet, file
-      # Install it by typing:
-      # '$ pkg install figlet'
-      # '$ pkg install file'
 
    # Usage:
-      # Use 1: '$ D             # Complains that there is no destination specified
-      # Use 2: '$ D drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
-      # Use 3: '$ D -p <dir>    # Create new dir and travel to it
-      # Use 4: '$ D -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
-      # Use 5: '$ D -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
-      # Use 6: '$ D ..          # Go to parent dir and ls
-      # Use 7: '$ D <dir>       # Go to existent dir
+      # Use 1: '$ V             # Complains that there is no destination specified
+      # Use 2: '$ V drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
+      # Use 3: '$ V -p <dir>    # Create new dir and travel to it
+      # Use 4: '$ V -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
+      # Use 5: '$ V -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+      # Use 6: '$ V ..          # Go to parent dir and ls
+      # Use 7: '$ V .           # Uses `fzf` to search for a file. Then navigate to it's directory
+      # Use 8: '$ V <dir>       # Go to existent dir at current pwd
 
    # Implementation of Use 1:
    if [ -z $1 ]; then 
@@ -932,7 +921,21 @@ function V {
 
       # uDev: add a $2 to insert a number. That number is thr number of time '$ cd ..' will be executed
 
+
    # Implementation of Use 7:
+   elif [ $1 == "." ]; then
+      # From current directory, search other directories with fzf menu and navigate there
+      
+      v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+
+      if [[ ! -z $v_dir ]]; then
+         # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+         v_dirname=$(dirname $v_dir)
+         echo "fluNav: A navegar para: $v_dirname"
+         cd $v_dirname
+      fi
+
+   # Implementation of Use 8:
    else 
       # mkdir -p ~/.tmp
       # ls > ~/.tmp/found.txt
@@ -947,6 +950,7 @@ function V {
       #uDev: use to command '$ file' to exclude all non directories
       #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
+
 }
 
 
@@ -1204,7 +1208,6 @@ function f_menu_select {
             elif [ $1 == "upk"   ]; then v_nm="upk";            f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "tm"    ]; then v_nm="tmux";           f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "."     ]; then v_nm="search-files";   f_action; # Asks in a menu, which file is meant to be sync
-            elif [ $1 == "v"     ]; then v_nm="search-dirs";    f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi
