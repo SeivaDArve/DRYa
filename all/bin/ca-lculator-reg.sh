@@ -47,79 +47,79 @@ function f_clc_help {
    # HereDoc com instruçoes de utilização
 cat <<EOF
 Historico/Registadora --------------------------------------------"
- > Ver                  (software: less) : 'V'"
- > Editar               (software: vim)  : 'E'"
- > Editar               (software: emacs): 'emacs'"
- > Ver ultimas linhas:  (software: less) : 'U'"
+ > Ver                  (software: less) : 'V'
+ > Editar               (software: vim)  : 'E'
+ > Editar               (software: emacs): 'emacs'
+ > Ver ultimas linhas:  (software: less) : 'U'
 
- > Editar manualmente um input anterior falhado: 'f'"
+ > Editar manualmente um input anterior falhado: 'f'
 
 
 
 Casas decimais ---------------------------------------------------"
- > Editar: 'S'"
+ > Editar: 'S'
  > Predefinido atualmente: $v_decimal"
 
 
 
 Exemplos de como usar a calculadora 'bc' -------------------------"
- > 3 + (34 * 2)/3 + 1.2"
+ > 3 + (34 * 2)/3 + 1.2
 
 
 
 Exemplos de como usar a calculadora 'D clc' ----------------------"
- > 3x 2 : 3 + pi + ( 3 tkc ) - (4mkc)"
+ > 3x 2 : 3 + pi + ( 3 tkc ) - (4mkc)
 
 
 
 Editar o ecra ----------------------------------------------------"
- > Limpar ecra: 'L' "
- > uDev: Mater sempre limpo (para usar em conjunto com '$ watch $v_log'"
+ > Limpar ecra: 'L' 
+ > uDev: Mater sempre limpo (para usar em conjunto com '$ watch $v_log'
 
 
 
 Inserir notas na registadora -------------------------------------"
- > N"
+ > N
 
 
 
 Modificadores ----------------------------------------------------"
- > Pode usar 'pi' que significa '3.1415'"
- > Pode usar 'x' que significa '*' para usar nas multiplicações"
- > Pode usar ':' que significa '/' para usar nas divisões"
+ > Pode usar 'pi' que significa '3.1415'
+ > Pode usar 'x' que significa '*' para usar nas multiplicações
+ > Pode usar ':' que significa '/' para usar nas divisões
 
- > Procura o texto 'tkc' que significa 'taker commission' e substitui para o texto '* 0.05' para calcular comissoes correspondentes"
- >> '4tkc' é igual a '4 * 0.05' = '0.20'"
+ > Procura o texto 'tkc' que significa 'taker commission' e substitui para o texto '* 0.05' para calcular comissoes correspondentes
+ >> '4tkc' é igual a '4 * 0.05' = '0.20'
 
- > Procura o texto 'mkc' que significa 'maker commission' e substitui para o texto '* 0.02' para calcular comissoes correspondentes"
- >> '4mkc' é igual a '4 * 0.02' = '0.08'"
+ > Procura o texto 'mkc' que significa 'maker commission' e substitui para o texto '* 0.02' para calcular comissoes correspondentes
+ >> '4mkc' é igual a '4 * 0.02' = '0.08'
 
  > Encontra o conteudo de '[ ]tk' e modifica. Se o conteudo for 'y' entao calcula: [y]tk
- >> '[4]tk' é igual a '(4 - (4 * 0.05))' = '3.80'"
+ >> '[4]tk' é igual a '(4 - (4 * 0.05))' = '3.80'
 
  > Encontra o conteudo de '[ ]mk' e modifica. Se o conteudo for 'y' entao calcula: [y]mk
- >> '[4]mk' é igual a '(4 - (4 * 0.02))' = '3.92' "
+ >> '[4]mk' é igual a '(4 - (4 * 0.02))' = '3.92' 
 
 
 Em desenvolvimento (uDev)  -----------------------------------------------"
- > Nota: Podem ser criadas mais variaveis e modificadores "
-          > exemplo: de: 'texto' para: 'numeros' no interior do script ca-lculator-reg.sh"
+ > Nota: Podem ser criadas mais variaveis e modificadores 
+          > exemplo: de: 'texto' para: 'numeros' no interior do script ca-lculator-reg.sh
 
  > Modificadores: 
-    > MODIFICADOR: 'fi'    que faz o seguinte: é substituida pelo valor fixo de fibonacci"
-    > MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker"
-    > MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker"
-    > Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira"
-    > No inicio do script, buscar o historico à repo: verbose-lines"
-    > Ao sair do script, depositar o historico na repo: verbose-lines"
+    > MODIFICADOR: 'fi'    que faz o seguinte: é substituida pelo valor fixo de fibonacci
+    > MODIFICADOR: '[]atk' Calcula o preco de Fecho para quem abriu um trade como taker
+    > MODIFICADOR: '[]amk' Calcula o preco de Fecho para quem abriu um trade como maker
+    > Se abrirmos o editor 'f' entao o script executa cada linha com um for loop em vez de executar so a primeira
+    > No inicio do script, buscar o historico à repo: verbose-lines
+    > Ao sair do script, depositar o historico na repo: verbose-lines
 
- > Encontrar o conteudo de '[ ]a-mk-f' e modificar"
+ > Encontrar o conteudo de '[ ]a-mk-f' e modificar
    >> Calcula como sair com zero '0' de um trade em que abrimos e fechamos a operaçao como maker
    >> Abrir um trade tem comissoes, fechar também.
-   >> '[4]amk' é igual a '(4 + 2 * (4 * 0.02))' = '4 + 0.20 + 0.20' = (4.40) "
-   >> (Refere-se ao valor de abertura de Market Maker "
-      e resulta a quanto é que temos de fechar a operação para sair com Zero"
-      é preciso introduzir Alavancagem e preço de entrada"
+   >> '[4]amk' é igual a '(4 + 2 * (4 * 0.02))' = '4 + 0.20 + 0.20' = (4.40) 
+   >> (Refere-se ao valor de abertura de Market Maker 
+      e resulta a quanto é que temos de fechar a operação para sair com Zero
+      é preciso introduzir Alavancagem e preço de entrada
 
  > Atalho para visualizar constantemente o ficheiro \$v_log de 2 em 2 segundos
    >> Por exemplo: 
@@ -134,7 +134,7 @@ Em desenvolvimento (uDev)  -----------------------------------------------"
 
 
 Sair -------------------------------------------------------------"
- >  sair; quit; exit; q; Q; ZZ; Ctrl-C"
+ >  sair; quit; exit; q; Q; ZZ; Ctrl-C
 
 EOF
 }
@@ -165,189 +165,189 @@ function f_tmp_instructions {
       echo -e "\n\n# Coloque o seu input neste ficheiro de texto (com editor vim) e simplesmente feche" >> $v_tmp
 }
 
-# Disponibilizar a calculadora constantemente até que o utilizador cancele o axript
-   while true
-   do
+while true # Disponibilizar a calculadora constantemente até que o utilizador cancele o script
+do
+   
 
-      # Criar uma variavel para denunciar que foi detetada a introdução de um input de comando em vez de numeros para calculara
-      # será usada no final do loop. Antes de chegar ao calculo pode ser modificada para 1 se for detetado um comando, impedindo o calculo que resultaria em erro
-      # É feito reset no inicio de cada loop para não ser executado o comando do loop anterior
-      # Todos os input tem de colocar esra variavel a '1' E no inicio de cada loop, esta variavel volta a zero
-         v_esc=0   
+   # Criar uma variavel para denunciar que foi detetada a introdução de um input de comando em vez de numeros para calculara
+   # será usada no final do loop. Antes de chegar ao calculo pode ser modificada para 1 se for detetado um comando, impedindo o calculo que resultaria em erro
+   # É feito reset no inicio de cada loop para não ser executado o comando do loop anterior
+   # Todos os input tem de colocar esra variavel a '1' E no inicio de cada loop, esta variavel volta a zero
+      v_esc=0   
 
-      # Criar uma variavel que guarda o resultado do loop anterior e o edita antes de tentar calcular de novo
-         v_failed_input=$v_input  # O terminal Bash nao permite navegar com as setas, esta variavel irá permitir ao loop seguinte abrir este texto com um editor e depois modificar se for preciso
+   # Criar uma variavel que guarda o resultado do loop anterior e o edita antes de tentar calcular de novo
+      v_failed_input=$v_input  # O terminal Bash nao permite navegar com as setas, esta variavel irá permitir ao loop seguinte abrir este texto com um editor e depois modificar se for preciso
 
-      # Perguntar qual o Calculo ou Input a usar como comando
-         echo -n " < "
-         read v_input
-         # Concatenar o texto "<" com o input "$v_input" para ser enviado para um ficheiro de registo (historico)
-            v_long_input=" < $v_input" 
+   # Perguntar qual o Calculo ou Input a usar como comando
+      echo -n " < "
+      read v_input
+      # Concatenar o texto "<" com o input "$v_input" para ser enviado para um ficheiro de registo (historico)
+         v_long_input=" < $v_input" 
 
-      # Permitir: modificadores matematicos + variaveis + incognitas
-         # substituir 'x' por '*'
-            v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
+   # Permitir: modificadores matematicos + variaveis + incognitas
+      # substituir 'x' por '*'
+         v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
 
-         # substituir ':' por '/'
-            v_input=${v_input//:/\/}  # Usa a substituição de parametros do Bash
+      # substituir ':' por '/'
+         v_input=${v_input//:/\/}  # Usa a substituição de parametros do Bash
 
-         # substituir 'pi' por '3.1415'
-            v_input=${v_input//pi/3.1415}  # usa a substituição de parametros do bash
+      # substituir 'pi' por '3.1415'
+         v_input=${v_input//pi/3.1415}  # usa a substituição de parametros do bash
 
-         # substituir 'tk' por '* 0.05' para multiplicacoes (taxa de Market Taker na corretora binance que é de 0.0500% de comissoes
-            v_input=${v_input//tkc/* 0.05}  # usa a substituição de parametros do bash
+      # substituir 'tk' por '* 0.05' para multiplicacoes (taxa de Market Taker na corretora binance que é de 0.0500% de comissoes
+         v_input=${v_input//tkc/* 0.05}  # usa a substituição de parametros do bash
 
-         # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
-            v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
+      # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
+         v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
 
-         # substituir 'ans' pelo resultado do loop anterior
-            v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
-           
+      # substituir 'ans' pelo resultado do loop anterior
+         v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
+        
 
-         ########################################################################
-         # Com apoio do chatGPT que fornce uma "PCRE" (Perl Compatible Regular Expression) para utilizar no ´grep´
-            # Encontrar e modificar ']tk'
-               # Extrai o conteúdo entre '[' e ']tk' e armazena em uma variável separada por espaços
-               # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
-                  CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]tk)' | tr '\n' ' ')
-                  #echo "Conteudo: $CONTEUDO"; read  # Debug
+      ########################################################################
+      # Com apoio do chatGPT que fornce uma "PCRE" (Perl Compatible Regular Expression) para utilizar no ´grep´
+         # Encontrar e modificar ']tk'
+            # Extrai o conteúdo entre '[' e ']tk' e armazena em uma variável separada por espaços
+            # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
+               CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]tk)' | tr '\n' ' ')
+               #echo "Conteudo: $CONTEUDO"; read  # Debug
 
-               # Remove o espaço final
-                  CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
+            # Remove o espaço final
+               CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
 
-               # Exibe o resultado (debug)
-                  #echo "Conteúdo dentro de '[' e ']tk': $CONTEUDO"
+            # Exibe o resultado (debug)
+               #echo "Conteúdo dentro de '[' e ']tk': $CONTEUDO"
 
-               #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
-               #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
-                  for i in $CONTEUDO
-                  do
+            #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
+            #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
+               for i in $CONTEUDO
+               do
+                  #echo
+
+                  # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
+                     #echo "Conteudo é: $i"  # (para debug)
+                     v_input=${v_input//]tk/ - ($i * 0.05))}  # usa a substituição de parametros do bash
+                     #echo "Portanto: $v_input"  # (para debug)
                      #echo
-
-                     # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
-                        #echo "Conteudo é: $i"  # (para debug)
-                        v_input=${v_input//]tk/ - ($i * 0.05))}  # usa a substituição de parametros do bash
-                        #echo "Portanto: $v_input"  # (para debug)
-                        #echo
-                  done
-                  #echo "Input atual: $v_input"; read
+               done
+               #echo "Input atual: $v_input"; read
 
 
-            # Encontrar e modificar ']mk'
-               # Extrai o conteúdo entre '[' e ']mk' e armazena em uma variável separada por espaços
-               # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
-                  CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]mk)' | tr '\n' ' ')
-                  #echo "Conteudo: $CONTEUDO"; read  # Debug
+         # Encontrar e modificar ']mk'
+            # Extrai o conteúdo entre '[' e ']mk' e armazena em uma variável separada por espaços
+            # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
+               CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]mk)' | tr '\n' ' ')
+               #echo "Conteudo: $CONTEUDO"; read  # Debug
 
-               # Remove o espaço final
-                  CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
+            # Remove o espaço final
+               CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
 
-               # Exibe o resultado (debug)
-                  #echo "Conteúdo dentro de '[' e ']mk': $CONTEUDO"
+            # Exibe o resultado (debug)
+               #echo "Conteúdo dentro de '[' e ']mk': $CONTEUDO"
 
-               #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
-               #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
-                  for i in $CONTEUDO
-                  do
+            #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
+            #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
+               for i in $CONTEUDO
+               do
+                  #echo
+
+                  # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
+                     #echo "Conteudo é: $i"  # (para debug)
+                     v_input=${v_input//]mk/ - ($i * 0.02))}  # usa a substituição de parametros do bash
+                     #echo "Portanto: $v_input"  # (para debug)
                      #echo
-
-                     # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
-                        #echo "Conteudo é: $i"  # (para debug)
-                        v_input=${v_input//]mk/ - ($i * 0.02))}  # usa a substituição de parametros do bash
-                        #echo "Portanto: $v_input"  # (para debug)
-                        #echo
-                  done
+               done
 
 
-            # Modificar globalmente '[' por '(' que só pode ser feito no final de entrontrar todos os ]tk e ]mk
-               v_input=$(echo "$v_input" | sed "s/\[/\(/g")
-               #echo "Melhor: $v_input"  # (para debug)
-         ########################################################################
+         # Modificar globalmente '[' por '(' que só pode ser feito no final de entrontrar todos os ]tk e ]mk
+            v_input=$(echo "$v_input" | sed "s/\[/\(/g")
+            #echo "Melhor: $v_input"  # (para debug)
+      ########################################################################
 
 
-            # Se o padrao ']tk' foi encontrado pelo menos 1x, proceder à extracao do numero que estiver entre '[' e ']tk'
-            # Modificar todos os parenteses quadrados '[' por parenteses curvos '(' para poder proceder ao calculo
-               v_input=${v_input//\[/(}  # usa a substituição de parametros do bash
+         # Se o padrao ']tk' foi encontrado pelo menos 1x, proceder à extracao do numero que estiver entre '[' e ']tk'
+         # Modificar todos os parenteses quadrados '[' por parenteses curvos '(' para poder proceder ao calculo
+            v_input=${v_input//\[/(}  # usa a substituição de parametros do bash
 
-      function f_calcular {
-         # Tentar diferenciar entre comando dado a este script e conta para calcular
-         # Se o Resultado ($v_result) do calculo der errado, será igual a zero '0' e não dá mensagem de erro que bloqueie o funcionamento normal do script
-         # E assim, o input de Entrada ($v_input) tem uma oportunidade de ser avaliado 
-            v_result=$(echo "scale=$v_decimal; $v_input" | bc)
-      }
-      f_calcular
+   function f_calcular {
+      # Tentar diferenciar entre comando dado a este script e conta para calcular
+      # Se o Resultado ($v_result) do calculo der errado, será igual a zero '0' e não dá mensagem de erro que bloqueie o funcionamento normal do script
+      # E assim, o input de Entrada ($v_input) tem uma oportunidade de ser avaliado 
+         v_result=$(echo "scale=$v_decimal; $v_input" | bc)
+   }
+   f_calcular
 
-      # Dar estes input para sair da app:
-         [[ $v_input == "sair" ]] || [[ $v_input == "exit" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] \
-            && v_esc=1 && exit 0 
+   # Dar estes input para sair da app:
+      [[ $v_input == "sair" ]] || [[ $v_input == "exit" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] \
+         && v_esc=1 && exit 0 
 
-      # Visualizar ficheiro de historico
-         [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
-            && v_esc=1 && less $v_log && echo
+   # Visualizar ficheiro de historico
+      [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
+         && v_esc=1 && less $v_log && echo
 
-      # Visualizar ficheiro de historico (so ultimas linhas)
-         [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
-            && v_esc=1 && tail $v_log | less && echo
+   # Visualizar ficheiro de historico (so ultimas linhas)
+      [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
+         && v_esc=1 && tail $v_log | less && echo
 
-      # Visualizar e editar ficheiro de historico
-         [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
-            && v_esc=1 && vim $v_log && echo
+   # Visualizar e editar ficheiro de historico
+      [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
+         && v_esc=1 && vim $v_log && echo
 
-      # Visualizar e editar ficheiro de historico
-         [[ $v_input == "emacs" ]] || [[ $v_input == "Emacs" ]] \
-            && v_esc=1 && emacs $v_log && echo
+   # Visualizar e editar ficheiro de historico
+      [[ $v_input == "emacs" ]] || [[ $v_input == "Emacs" ]] \
+         && v_esc=1 && emacs $v_log && echo
 
-      # Abrir ajuda
-         [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
-            && v_esc=1 && echo " > Instruções: " && f_clc_help | less && echo
+   # Abrir ajuda
+      [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
+         && v_esc=1 && echo " > Instruções: " && f_clc_help | less && echo
 
-      # Limpar o ecra
-         [[ $v_input == "l" ]] || [[ $v_input == "L" ]] \
-            && v_esc=1 && clear && f_greet && f_start
+   # Limpar o ecra
+      [[ $v_input == "l" ]] || [[ $v_input == "L" ]] \
+         && v_esc=1 && clear && f_greet && f_start
 
-      # Alterar a quantidade de casas decimais
-         [[ $v_input == "s" ]] || [[ $v_input == "S" ]] \
-            && v_esc=1 && read -p " >> Predefinir numero de casas decimais: " v_decimal && echo
+   # Alterar a quantidade de casas decimais
+      [[ $v_input == "s" ]] || [[ $v_input == "S" ]] \
+         && v_esc=1 && read -p " >> Predefinir numero de casas decimais: " v_decimal && echo
 
-      # Inserir data (timestamp) com mensagem adicionar (nota) no ficheiro de historico
-         [[ $v_input == "n" ]] || [[ $v_input == "N" ]] \
-            && v_esc=1 && echo " >> Inserir Data e Nota (no ficheiro de historico)." && read -p " >> Nota: " v_nota && echo " " >> $v_log  && echo "* Nota: [$(date +'%Y-%m-%d %H:%M:%S')] > $v_nota"  >> $v_log \ && echo
+   # Inserir data (timestamp) com mensagem adicionar (nota) no ficheiro de historico
+      [[ $v_input == "n" ]] || [[ $v_input == "N" ]] \
+         && v_esc=1 && echo " >> Inserir Data e Nota (no ficheiro de historico)." && read -p " >> Nota: " v_nota && echo " " >> $v_log  && echo "* Nota: [$(date +'%Y-%m-%d %H:%M:%S')] > $v_nota"  >> $v_log \ && echo
 
-      # Editar o resultado falhado do loop anterior
-         [[ $v_input == "f" ]] || [[ $v_input == "F" ]] \
-            && v_esc=0 \
-            && f_create_tmp \
-            && echo -n "$v_failed_input" > $v_tmp \
-            && f_tmp_instructions \
-            && vim $v_tmp \
-            && v_input=$(cat $v_tmp | head -n 1) \
-            && v_old=" < Velho input: $v_failed_input" \
-            && v_new=" < Novo input: $v_input" \
-            && echo "$v_old" \
-            && echo "$v_new" \
-            && f_calcular \
-            #&& echo
+   # Editar o resultado falhado do loop anterior
+      [[ $v_input == "f" ]] || [[ $v_input == "F" ]] \
+         && v_esc=0 \
+         && f_create_tmp \
+         && echo -n "$v_failed_input" > $v_tmp \
+         && f_tmp_instructions \
+         && vim $v_tmp \
+         && v_input=$(cat $v_tmp | head -n 1) \
+         && v_old=" < Velho input: $v_failed_input" \
+         && v_new=" < Novo input: $v_input" \
+         && echo "$v_old" \
+         && echo "$v_new" \
+         && f_calcular \
+         #&& echo
 
-      # At the end, if letters are still found, then, nicely, say ERROOOOR!
-         if [[ $v_esc = "0" ]] && [[ $v_input =~ [a-zA-Z] ]]; then  # Deteta que nenhum modificador foi atuado porque $v_esc é '0' e não deu erro. O input '3+1' não dá erro, o input 'r3+1' da zero, o input '3+1r' da erro... Portanto, nesta fx vamos detetar letras e dizer que tem erro, passando $v_esc para '1' inpedindo de ser calculado
-            #echo " > A string contém letras."  # Debug
+   # At the end, if letters are still found, then, nicely, say ERROOOOR!
+      if [[ $v_esc = "0" ]] && [[ $v_input =~ [a-zA-Z] ]]; then  # Deteta que nenhum modificador foi atuado porque $v_esc é '0' e não deu erro. O input '3+1' não dá erro, o input 'r3+1' da zero, o input '3+1r' da erro... Portanto, nesta fx vamos detetar letras e dizer que tem erro, passando $v_esc para '1' inpedindo de ser calculado
+         #echo " > A string contém letras."  # Debug
 
-            v_esc=1; echo " > A string não pode conter letras."; echo
-         fi
+         v_esc=1; echo " > A string não pode conter letras."; echo
+      fi
 
-      # Mostrar os resultados (caso a variavel v_esc seja igual a 0)
-         if [ $v_esc == "0" ]; then
-            # Apresentar no ecra o valor resulante da conta
-               echo " > $v_result"
-               echo
+   # Mostrar os resultados (caso a variavel v_esc seja igual a 0)
+      if [ $v_esc == "0" ]; then
+         # Apresentar no ecra o valor resulante da conta
+            echo " > $v_result"
+            echo
 
-            # Concatenar o texto ">" com o resultado "$v_result" para ser enviado para um ficheiro de historico
-               v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
+         # Concatenar o texto ">" com o resultado "$v_result" para ser enviado para um ficheiro de historico
+            v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
 
-            # Enviar ambas as variaves input e output para um ficheiro de historico
-               echo "            " >> $v_log
-               echo $v_long_input  >> $v_log
-               [[ ! -z $v_new ]] && echo $v_old >> $v_log && echo $v_new >> $v_log && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
-               echo $v_long_result >> $v_log
-         fi
-   done
+         # Enviar ambas as variaves input e output para um ficheiro de historico
+            echo "            " >> $v_log
+            echo $v_long_input  >> $v_log
+            [[ ! -z $v_new ]] && echo $v_old >> $v_log && echo $v_new >> $v_log && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
+            echo $v_long_result >> $v_log
+      fi
+done
