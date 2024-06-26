@@ -164,9 +164,7 @@ function web {
 
 
 
-# App "Despezas-Fixas"
-alias F="figlet Fixas; echo 'DRYa: Despezas Fixas'"
-
+alias cm="cmatrix"
 
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
    # More info at: '$ man bash'
@@ -849,7 +847,7 @@ function f_restart {
       /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
 
    elif [ $traits_OS == "Linux" ]; then
-      shutdown -r
+      shutdown -r now
    fi
 }
 
