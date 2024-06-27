@@ -838,6 +838,98 @@ function f_clone_repos {
       unset v_pwd
 }
 
+function f_dotFiles_install_git {
+   # For git
+      echo "attempting git"
+      echo " Copying "
+      echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+      echo " to"
+      echo -e" > \$HOME"
+      read -s -n 1
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+      echo "Done!"
+      echo
+}
+
+function f_dotFiles_install_vim {
+   # For vim
+      echo "attempting Vim"
+      echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
+      echo " to"
+      echo " > ~"
+      read -s -n 1
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+      echo "Done!"
+      echo
+}
+
+function f_dotFiles_install_termux_properties {
+   # Colors and properties for Termux
+      echo "attempting termux colors"
+      echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
+      echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
+      echo "   to      ~/.termux"
+      read -s -n 1
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
+      echo "Done! (Restart thr terminal is needed)"
+}
+
+function f_dotFiles_install_dryarc {
+   echo "DRYa: source .dryarc if any exists (uDev)"
+}
+
+
+function f_dotFiles_install_netrc {
+   # Installing .netrc
+   
+   # Installing the file that allows the user to bypass entering user and password at every git push
+   # Automatic setup for file: .netrc
+   # Description: We can avoid repetitive manual autentication for git by using a file .netrc at ~ and at this file, a token must be written. This sript sends the current stroken (token with a mispelled bug) to the correct file. Afterwards prompts the user to correct the bug
+
+   clear
+   figlet DRYa
+
+   echo "Installing Stroken as ~/.netrc"
+   echo
+   echo "Job to be done:"
+   echo " > echo \$stroken > ~/.netrc"
+   echo " > edit ~/.netrc"
+   echo
+   echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
+   echo
+   echo "Do you want to continue?"
+   echo " > Press [Any key] to continue"
+   echo " > Press Ctrl-C to exit"
+   read -s -n 1
+   echo
+
+
+   # If DRYa is installed on ~/.bashrc then:
+     # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
+     # Set an alias "stroken" to read such file
+
+     # We need that stroken message in these 2 variables: 
+       v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
+       v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
+
+   # Creating a file ~/.netrc with our new stroken info
+      echo "machine github.com login $v_username password $v_token" > ~/.netrc
+      echo "File created "
+      echo " > with stroken instead of a token (still contains a bug)"
+      echo " > Press [Any key] to continue and to edit..."
+      read -s -n 1
+      echo
+
+   # Opening the file to edit
+      echo "Opening the file ~/.netrc"
+      echo " > (3 seconds to cancel with Ctrl-C)"
+      read -s -n 1 -t 3
+      vim ~/.netrc
+      echo "Done!"
+}
+
+
 function f_exec {
 	f_greet
 	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
@@ -1095,6 +1187,8 @@ elif [ $1 == "clone" ]; then
    fi
 
 elif [ $1 == "config" ]; then 
+
+   if [ -z $2 ]; then 
    # uDev: at source-all-drya-files one function called traitsID will have these options
       uname -a | grep "Microsoft" 1>/dev/null
       if [ $? == 0 ]; then echo "This is microsoft"; fi
@@ -1105,6 +1199,13 @@ elif [ $1 == "config" ]; then
       v_whoami=$(whoami); echo "whoami is: $v_whoami"
       echo
       echo "uDev: This info must be environment variables for other apps"
+
+   elif [ $2 == "dot" ]; then 
+      echo "uDev: Config fot dot files"
+      
+   else
+      echo "List of possible things to config is uDev"
+   fi
 
 elif [ $1 == "wpwd" ]; then 
 
@@ -1274,6 +1375,89 @@ elif [ $1 == "mac" ]; then
       getprop | grep "product" | grep name
       echo
 
+
+elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == "dot" ]]; then 
+   # Installing all configuration files
+
+   if [[ -z $2 ]]; then 
+      # Menu for dot files
+         v_list=$(echo -e "1. Install \n2. List ready (inside DRYa repo) \n3. Remove \n4. Edit (Inside DRYa) \n5. Edit (at Default Location) \n6. Backup" | fzf --cycle --prompt="Menu: Dot Files: ")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ "1" ]] && echo "Detetado 1"
+         [[ $v_list =~ "2" ]] && echo "Detetado 2"
+         [[ $v_list =~ "3" ]] && echo "Detetado 3"
+         [[ $v_list =~ "4" ]] && echo "Detetado 4"
+         [[ $v_list =~ "5" ]] && echo "Detetado 5"
+         [[ $v_list =~ "6" ]] && echo "Detetado 6"
+      
+         unset v_list
+
+   elif [[ $2 == "list-ready" ]]; then 
+
+      f_greet
+      f_talk; echo "drya dot-files list-ready"
+      echo " > Files ready to copy from DRYa repo to their Default locations"
+
+      # List all files in one array variable
+         v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" \ 
+                          "emacs:lib" "emacs:lib:upk" "emacs:lib:omni-log" ".gitconfig" \
+                          "xrandr" "keyboard:layout" "manpages" "termux:storage" \
+                          "termux:repos" "termux:properties" \
+                          "termux:colors" \
+                          '~/ln/wsl' \           # Soft link for WSL2 C:\
+                          '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
+                          ".dryarc" \
+                          ".tmux.conf" "\$PS1" "browser:bookmarks")  
+
+      # ECHO variable horizontally:
+         #echo "Array is: ${v_all_dot_files[@]}"
+
+      # ECHO variable veryically:
+         echo -e "\nListing all dot files to handle:"
+         for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
+
+      # Verbose notes
+         echo 
+         echo "It can config:"
+         echo " > emacs (init file + libraries)"
+         echo " > git and github with .netrc"
+         echo " > man pages"
+         echo " > ezGIT automatic encryption"
+         echo " > .vimrc"
+         echo " > termux.properties"
+         echo " > termux widgets"
+         echo " uDev"
+         echo
+
+   elif [[ $2 == "install" ]]; then 
+      # Menu to install dot files
+         v_list=$(echo -e "1. TODOS \n2. .dryarc \n3. .netrc \n4. .vimrc \n5 .gitconfig \n6. termux.properties" | fzf --cycle -m --prompt="SELECT dot files to install: ")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ "1" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+         [[ $v_list =~ "2" ]] && f_dotFiles_install_dryarc
+         [[ $v_list =~ "3" ]] && f_dotFiles_install_netrc
+         [[ $v_list =~ "4" ]] && f_dotFiles_install_vim
+         [[ $v_list =~ "5" ]] && f_dotFiles_install_git 
+         [[ $v_list =~ "6" ]] && f_dotFiles_install_termux_properties
+      
+         unset v_list
+
+
+   elif [[ $2 == "remove" ]]; then 
+      echo "uDev"
+
+   elif [[ $2 == "backup" ]]; then 
+      echo "uDev: Backup Browser-Bokkmarks"
+
+   elif [[ $2 == "edit" ]]; then 
+      echo "uDev"
+
+   fi
+
+
+
 elif [ $1 == "install" ]; then 
    # Install DRYa and more stuff
 
@@ -1289,12 +1473,13 @@ elif [ $1 == "install" ]; then
    elif [[ $2 == "--me" ]] || [ $2 == "DRYa" ]; then 
       echo "uDev: Are you sure you want to install DRYa?"; 
       # Install DRYa itself
+      # install dependencies
       # termux-setup-storage
-      # install '1st' here 
       # pkg install termux-api
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
-      cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && echo "hit" && . ./termux-PS1
+      # uDev: This is a config to set, not an instalation
+      cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
 
    elif [[ $2 == "bitcoin-core" ]]; then 
       # Install a full Bitcoin node to validade blocks and allow mining
@@ -1365,154 +1550,10 @@ elif [ $1 == "install" ]; then
 
    elif [[ $2 == "xrandr" ]] || [ $2 == "" ]; then 
       # Config the correct screen resolution with `xrandr`
+      # uDev: This is a config to set, not an instalation
 
       echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
       echo " > 1360x768 "
-
-
-   elif [[ $2 == "dot-files" ]] || [[ $2 == "dotfiles" ]] || [[ $2 == "dot" ]]; then 
-      # Installing all configuration files
-
-      f_greet
-      f_talk; echo "drya install dot-files"
-      echo " > copying from drya repo to Default locations"
-
-      # List all files in one array variable
-         v_all_dot_files=(".bashrc" \
-                          ".bash_logout" \
-                          ".netrc" \
-                          ".vimrc" \
-                          "emacs:init.el" \ 
-                          "emacs:lib" \
-                          "emacs:lib:upk" \
-                          "emacs:lib:omni-log" \ 
-                          ".gitconfig" \
-                          "xrandr" \
-                          "keyboard:layout" 
-                          "manpages" \
-                          "termux:storage" \
-                          "termux:repos" \
-                          "termux:properties" \
-                          "termux:colors" \
-                          '~/ln/wsl' \           # Soft link for WSL2 C:\
-                          '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
-                          ".dryarc" \
-                          ".tmux.conf" \
-                          "\$PS1" \
-                          "browser:bookmarks")  
-
-         # ECHO variable horizontally:
-            #echo "Array is: ${v_all_dot_files[@]}"
-
-         # ECHO variable veryically:
-            echo -e "\nListing all dot files to handle:"
-            for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
-      read
-      # Verbose notes
-      echo 
-      echo "It can config:"
-      echo " > emacs (init file + libraries)"
-      echo " > git and github with .netrc"
-      echo " > man pages"
-      echo " > ezGIT automatic encryption"
-      echo " > .vimrc"
-      echo " > termux.properties"
-      echo " > termux widgets"
-      echo " uDev"
-      echo
-
-      # For .netrc
-        # uDev: if file exists, probably it is configured alread. So, ask the user if wants to copy it again or leave it
-
-      # For browser bookmarks
-         # Private bookmarks can be found at omni-log, they should not be at DRYa
-
-      # Libraries for emacs like:
-        #  "emacs:lib:upk" \
-        #  "emacs:lib:omni-log" \ 
-        # both files must be place inside their own repos because it is sensitive data
-
-      # For git
-         echo "attempting git"
-         echo " Copying "
-         echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-         echo " to"
-         echo -e" > \$HOME"
-         read -s -n 1
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-         echo "Done!"
-         echo
-
-      # For vim
-         echo "attempting Vim"
-         echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
-         echo " to"
-         echo " > ~"
-         read -s -n 1
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-         echo "Done!"
-         echo
-
-      # Colors and properties for Termux
-         echo "attempting termux colors"
-         echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
-         echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
-         echo "   to      ~/.termux"
-         read -s -n 1
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
-         echo "Done! (Restart thr terminal is needed)"
-   
-
-   elif [[ $2 == "dryarc" ]] || [ $2 == ".dryarc" ]; then 
-      echo "DRYa: source .dryarc if any exists (uDev)"
-
-
-   elif [[ $2 == "netrc" ]] || [ $2 == ".netrc" ]; then 
-      # Installing the file that allows the user to bypass entering user and password at every git push
-      # Automatic setup for file: .netrc
-      # Description: We can avoid repetitive manual autentication for git by using a file .netrc at ~ and at this file, a token must be written. This sript sends the current stroken (token with a mispelled bug) to the correct file. Afterwards prompts the user to correct the bug
-
-      clear
-      figlet DRYa
-
-      echo "Installing Stroken as ~/.netrc"
-      echo
-      echo "Job to be done:"
-      echo " > echo \$stroken > ~/.netrc"
-      echo " > edit ~/.netrc"
-      echo
-      echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
-      echo
-      echo "Do you want to continue?"
-      echo " > Press [Any key] to continue"
-      echo " > Press Ctrl-C to exit"
-      read -s -n 1
-      echo
-
-
-      # If DRYa is installed on ~/.bashrc then:
-        # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
-        # Set an alias "stroken" to read such file
-
-        # We need that stroken message in these 2 variables: 
-          v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
-          v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
-
-      # Creating a file ~/.netrc with our new stroken info
-         echo "machine github.com login $v_username password $v_token" > ~/.netrc
-         echo "File created "
-         echo " > with stroken instead of a token (still contains a bug)"
-         echo " > Press [Any key] to continue and to edit..."
-         read -s -n 1
-         echo
-
-      # Opening the file to edit
-         echo "Opening the file ~/.netrc"
-         echo " > (3 seconds to cancel with Ctrl-C)"
-         read -s -n 1 -t 3
-         vim ~/.netrc
-         echo "Done!"
 
 
    elif [[ $2 == "upk-at-work" ]]; then 
