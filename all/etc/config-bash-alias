@@ -818,7 +818,7 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 # Pandoc app to create man pages
 
-alias ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculator-reg.sh"
+alias ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/calculadoras/menu.sh"
 
 alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
 
