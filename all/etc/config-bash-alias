@@ -818,12 +818,10 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 # Pandoc app to create man pages
 
-alias ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculator-reg.sh"
-
-alias R='echo "List Repositories by number and jumpt to them. uDev: Not available yet"'
+alias ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
 # Acessing emacs-wiki.org
-alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
+   alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
 
 # Acessing emacs init.el file
    alias emacs-init="emacs ~/.emacs.d/init.el"

@@ -669,6 +669,8 @@ function V {
 
    # uDev: add: appdata (windows)
 
+   # uDev: alias R: listar repositorios por numero para saltar para eles (ou usar menu fzf)
+
    # Description: 
       # This function is a combination of:
          # '$ cd'
