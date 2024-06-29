@@ -360,7 +360,55 @@ EOF
 }
 
 function f_exec_calculadora_conversora {
-   echo "uDev: conversora"
+   # Conversora de 1 unidade para 1 outra unidade
+
+
+   function f_info_unidades_de_medida {
+cat << EOF
+Informação dedicada a conversoes de BITCOIN usando a carteira Electrum
+
+Na carteira Electrum, assim como na maioria das carteiras de Bitcoin, o saldo é medido em unidades de Bitcoin e suas subunidades. As unidades de medida usadas para medir o saldo são:
+BTC, mBTC, µBTC (bits) e Satoshis (sat).
+
+1 - Bitcoin (BTC):
+
+    A unidade padrão e mais conhecida de medida.
+       1 BTC = 100,000,000 Satoshis (sats).
+
+2 - MilliBitcoin (mBTC):
+
+    Uma subunidade de Bitcoin.
+       1 mBTC = 0.001 BTC = 100,000 Satoshis.
+
+3 - MicroBitcoin (µBTC) ou Bit:
+
+    Outra subunidade de Bitcoin.
+       1 µBTC = 0.000001 BTC = 100 Satoshis.
+
+4 - Satoshi (sat):
+
+    A menor unidade de Bitcoin.
+       1 Satoshi = 0.00000001 BTC.
+
+
+Exemplo Prático
+   Se você tiver 0.12345678 BTC na sua carteira:
+
+   Em BTC, será exibido como:            0.12345678 BTC.
+   Em mBTC, será exibido como:           123.45678 mBTC.
+   Em µBTC (bits), será exibido como:    123456.78 µBTC.
+   Em Satoshis (sat), será exibido como: 12,345,678 sat.
+EOF
+}
+
+   # Texto do menu
+      v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Info sobre unidades" | fzf -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
+               
+   # Quando o menu Ã© de Escolha multipla tipo `for` loop
+      [[ $v_list =~ "1." ]] && echo "debug"
+      [[ $v_list =~ "2." ]] && echo "debug"
+      [[ $v_list =~ "3." ]] && f_info_unidades_de_medida
+      unset v_list             # Reset Ã  Variavel
 }
 
 function f_exec_calculadora_cambios {
