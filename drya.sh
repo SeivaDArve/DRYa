@@ -1238,10 +1238,18 @@ elif [ $1 == "wpwd" ]; then
          vim $v_file
 
       # Convert the text inside the file
-         sed -i '/^#/d'             $v_file  # Delete all comented lines
+         sed -i '/^#/d'             $v_file  # Delete all commented lines
          sed -i '/^$/d'             $v_file  # Delete all empty lines
+
          sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
          sed -i 's#c:\\#/mnt/c/#g'  $v_file  # Convert c:\ into /mnt/c
+
+         sed -i 's#D:\\#/mnt/d/#g'  $v_file  # Convert D:\ into /mnt/d
+         sed -i 's#d:\\#/mnt/d/#g'  $v_file  # Convert d:\ into /mnt/d
+
+         sed -i 's#E:\\#/mnt/e/#g'  $v_file  # Convert E:\ into /mnt/e
+         sed -i 's#e:\\#/mnt/e/#g'  $v_file  # Convert e:\ into /mnt/e
+
          sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
          sed -i 's/\\/\//g'         $v_file  # Convert \ into /
          sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
@@ -1257,7 +1265,7 @@ elif [ $1 == "wpwd" ]; then
             w=$(cat $v_file)
             echo $w
             export w
-            echo
+            echo "uDev: Perguntar com fzf qual dos links quer navegar (\`D wpwd n\`)"
          fi
 
       echo "Foi colocar todo esse texto (path) numa variavel \$w"
