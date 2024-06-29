@@ -28,6 +28,19 @@ function f_talk {
    f_resetCor
 }
 
+# Criar ficheiro de historico
+   #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
+   v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
+   mkdir -p $v_dir
+
+   v_file=history-drya-calculator.org
+   v_log=$v_dir/$v_file
+
+   touch $v_log
+
+
+
+
 function f_exec_calculadora_registadora {
    # Calculadora dedicaca a contas básicas e a calculos de comissoes
 
@@ -145,15 +158,6 @@ EOF
 # --- # -------------------------------------------------------------------------
    }
 
-   # Criar ficheiro de historico
-      #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
-      v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
-      mkdir -p $v_dir
-
-      v_file=history-drya-calculator.org
-      v_log=$v_dir/$v_file
-
-      touch $v_log
 
    function f_create_tmp {
       # Criar ficheiro temporario (para edição do resultado anterior)
@@ -402,12 +406,12 @@ EOF
 }
 
    # Texto do menu
-      v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Info sobre unidades" | fzf -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
+      v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Converter: de µBIT para... \n4. Converter: de Sat  para... \n5. Info sobre unidades" | fzf --cycle -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
                
    # Quando o menu Ã© de Escolha multipla tipo `for` loop
       [[ $v_list =~ "1." ]] && echo "debug"
       [[ $v_list =~ "2." ]] && echo "debug"
-      [[ $v_list =~ "3." ]] && f_info_unidades_de_medida
+      [[ $v_list =~ "5." ]] && f_info_unidades_de_medida | less
       unset v_list             # Reset Ã  Variavel
 }
 
@@ -419,10 +423,11 @@ function f_exec_calculadora_cambios {
 
 
 # Texto do menu
-   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios" | fzf -m --prompt="SELECIONE 1 calculadora: ")
+   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
             
 # Quando o menu Ã© de Escolha multipla tipo `for` loop
    [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
    [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
    [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
+   [[ $v_list =~ "4." ]] && vim $v_log
    unset v_list             # Reset Ã  Variavel
