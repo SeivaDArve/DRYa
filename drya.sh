@@ -791,6 +791,7 @@ function f_clone_repos {
       # uDev: Print their webpage link
       
       ezGIT | ezgit | ez) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
+      Tesoro | tesoro | T) echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git;;
       moedaz | mo) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
       yoga | yg) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
       dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;

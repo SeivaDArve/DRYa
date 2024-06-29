@@ -75,27 +75,36 @@
 
 # Sound Samples
 
-# fzf menu exemplo (uDev: adicionar `for` loop para multiplas escolhas
-         # Reset às variaveis
-         v_list=0
-         v_lstX=0
+# fzf menu exemplo
 
       # Lista de opções para o menu `fzf`
          v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc y" | fzf --prompt="fzf Example Menu: ")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && v_lstX=1 #&& echo "Detetado 1 (debug)"
-         [[ $v_list =~ "2" ]] && v_lstX=2 #&& echo "Detetado 2 (debug)"
-         [[ $v_list =~ "3" ]] && v_lstX=3 #&& echo "Detetado 3 (debug)"
-
-      # Tomar ação acerca da escolha do menu 
-         [[ $v_lstX =~ "1" ]] && f_fzf_1...
-         [[ $v_lstX =~ "2" ]] && f_fzf_2...
-         [[ $v_lstX =~ "3" ]] && f_fzf_3...
+         [[ $v_list =~ "1" ]] && echo "Detetado 1 (debug)"
+         [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)"
+         [[ $v_list =~ "3" ]] && echo "Detetado 3 (debug)"
+         unset v_list
     
-      # uDev: for loop caso haja multiplas escohas
-	 #for i in $vlist...
 	 
-      # Reset às variaveis, para que o proximo loop (a proxima vez que seja executado) e que também seja cancelado a meio, não assuma valores deste loop anterior
-         v_list=0
-         v_lstX=0
+# fzf com texto textra no proprio menu, onde o texto � discartado, apenas respostas validas sao validas
+       # Lista de opções para o menu `fzf` (com loop)
+        while true
+        do
+           # Texto do menu
+              v_list=$(echo -e "1. Opcao n.1 \n2. Opcao n.2 \n3. Opcao n.3 \n----------------------------- \nEscolha uma destas hipoteses: " | fzf -m --prompt="SELECIONE (1 ou +) do TRADE menu: ")
+           
+           # As SELECOES nao podem conter a o texto "hipotese" nem linhas vaxias de 3 espacos "   ". So quando nao tem esse texto é que quebra o loop
+              if [[ $v_list =~ "hipotese" ]] || [[ $v_list =~ "---" ]]; then
+                 echo "Menu: SFF nao selecione opcoes invalidas. [ENTER] para continuar"; read -sn 1
+                 continue
+              else
+                 break
+              fi
+        done
+
+      # Quando o menu é de Escolha multipla tipo `for` loop
+         [[ $v_list =~ "1." ]] && echo "Debug"
+         [[ $v_list =~ "2." ]] && echo "Debug"
+         [[ $v_list =~ "3." ]] && echo "Debug"
+         unset v_list             # Reset a Variavel
