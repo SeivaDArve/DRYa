@@ -291,23 +291,31 @@ function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
 
    echo
-   echo "Vai ser verificado o Status do Daemon:"
+   echo "- Vai ser verificado o Status do Daemon:"
    
    if [ $traits_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
       v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
 
    elif [ $traits_pkgm == "apt" ]; then 
-      # para quando o daemos de chama `ssh`
-      v_started=$(sudo systemctl status ssh | grep Active) 
+      if [ $traits_OS == "Windows" ]; then
+         echo " > Detetado windows" 
+
+      else
+         echo " > Detetado que não é windows"
+         # para quando o daemos de chama `ssh`
+         v_started=$(sudo systemctl status ssh | grep Active) 
+      fi 
 
    elif [ $traits_pkgm == "dnf" ]; then 
       # para quando o daemos de chama `sshd`
       v_started=$(sudo systemctl status sshd.service | grep Active)
+   
    fi
 
-   #echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
-   #echo "hit"; read  # Debug
+   # Debug
+      #echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+      #echo "hit"; read  # Debug
 
    
    if [[ -z $v_started ]]; then
