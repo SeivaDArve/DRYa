@@ -1618,10 +1618,10 @@ elif [ $1 == "ssh" ]; then
 
    # Para transportar os argumento de script para script, exportamos para o env
       # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
-      v_1=$1
-      v_2=$2
-      v_3=$3
-      export v_1 v_2 v_3
+      ARG1=$1
+      ARG2=$2
+      ARG3=$3
+      export ARG1 ARG2 ARG3
 
    # Para facilitar ao utilizador que pode querer fazer alteracoes ao script, viajamos primeiro para a pasta onde se encontra o script
       cd ${v_REPOS_CENTER}/DRYa/all/bin/

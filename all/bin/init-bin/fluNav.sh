@@ -258,7 +258,20 @@ function f_action {
 
      v_file=$(fzf --prompt="EDITE um ficheiro: ")
 
+     # Adiconar a um ficheiro temporario fluNav
+         mkdir -p ~/.config/h.h/drya/flunav
+         echo "$v_file" >> ~/.config/h.h/drya/flunav/history-files
+
      [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+
+   elif [ $v_nm == "edit-history-files" ]; then
+      # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
+
+      # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
+         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR")
+   
+      # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
+         [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
 
       
    elif [ $v_nm == "upk" ]; then
@@ -1210,6 +1223,7 @@ function f_menu_select {
             elif [ $1 == "upk"   ]; then v_nm="upk";            f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "tm"    ]; then v_nm="tmux";           f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "."     ]; then v_nm="search-files";   f_action; # Asks in a menu, which file is meant to be sync
+            elif [ $1 == ".."    ]; then v_nm="edit-history-files";   f_action; # Asks in a menu, which file is meant to be sync
 
             else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
          fi

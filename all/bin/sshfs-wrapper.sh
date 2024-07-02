@@ -6,8 +6,8 @@ function f_greet {
 }
 
 # Para Debug:
-   # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como v_1, v_2, v_3
-   #echo $0, $v_1, $v_2, $v_3...
+   # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como ARG1, ARG2, ARG3
+   #echo $0, $ARG1, $ARG2, $ARG3...
    #read
 
 # Verificar a env variable para o nome de utilizador atual
@@ -16,11 +16,15 @@ function f_greet {
 
 # Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
    v_parent_dir=~/sshfs/
-   v_array_remote_dir=("remote-Rasp-miau" "remote-Lenovo-Dv" "remote-MSI-dv_msi" "remote-ASUS-indratena" "remote-A6-termux-Dv" "public-device-id-35780065215")
+
+   
+   v_array_A_remote_dir=("remote-sv-Rasp-miau" "remote-sv-Lenovo-Dv" "remote-sv-MSI-dv_msi" "remote-sv-ASUS-indratena" "remote-sv-A6-termux-Dv" "remote-sv-public-device-id-35780065215")
+   #v_array_B_this_machine=("local-Raspberry-Miau" "local-Lenovo-Dv" "local-MSI-dv_msi" "local-ASUS-indratena" "local-A6-termux-Dv" "local-public-device-id-35780065215")
+      #v_list=$(for i in ${v_array_A_remote_dir[@]}; do echo $i; done | fzf)
    # uDev: find a solution on traitsID to identify publuc devices like WORK phones
 
    # Print the entire array
-      #echo "Array elements: ${v_array_remote_dir[@]}"
+      #echo "Array elements: ${v_array_A_remote_dir[@]}"
  
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
@@ -74,6 +78,20 @@ function f_is_rooted_verbose {
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
       exit 1
    fi
+}
+
+function f_menu_para_ver_resumo {
+      # Apos decidir todas as configurações para ser Servidor, apresentar um menu para ler tudo o que foi definido
+         echo "Press [ENTER] para opções"; read -s
+         while true
+         do
+            v_menu=$(echo -e "1. Ver com \`less\` o ficheiro verboso (na repo Verbose-lines) \n2. Ver com \`less\` o ficheiro da chave publica) \n3. Sair" | fzf --prompt "SELECIONE ")
+
+            [[ $v_menu =~ "1." ]] && less $v_verbose_line
+            [[ $v_menu =~ "2." ]] && less $v_temporary_file
+            [[ $v_menu =~ "3." ]] && break
+            unset v_menu
+         done
 }
 
 function f_install_ssh_key {
@@ -166,10 +184,14 @@ function f_send_public_key_to_verbose_line_repo {
 
       # Data (Exemplo: "Data/Hora: 2024-06-07 04:21:26")
          v_data=$(date +'%Y-%m-%d %H:%M:%S')
+         v_data=" - $v_data"
+
+      # Apos escrever um texto com data, será escrito umtitulo
+         v_titulo=" > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)"
 
       echo              >> $v_verbose_line
-      echo "- $v_data"  >> $v_verbose_line
-      echo " > Public key for ssh (user: $USER)(at ~/.sshid_rsa.pub)" >> $v_verbose_line
+      echo "$v_data"    >> $v_verbose_line
+      echo "$v_titulo " >> $v_verbose_line
       cat $v_public_key >> $v_verbose_line
       echo              >> $v_verbose_line
 
@@ -308,6 +330,7 @@ function f_check_ssh_daemon_is_on {
       fi 
 
    elif [ $traits_pkgm == "dnf" ]; then 
+      echo " > Detetado Fedora" 
       # para quando o daemos de chama `sshd`
       v_started=$(sudo systemctl status sshd.service | grep Active)
    
@@ -326,6 +349,20 @@ function f_check_ssh_daemon_is_on {
       echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
    fi
 
+}
+
+function f_ver_as_pastas_pre_definidas {
+   # Verbose: Pastas pre-definidas para mounting points
+      echo "Escolheu a opcao:"
+      echo " > Listar pastas pre-definidas"
+      echo
+      echo "Instrucao:"
+      echo " > No interior do script, pode alterar:"
+      echo " >> o array de pastas (mounting point para cada servidor)"
+      echo " >> o 'parent directory' onde residem todas essas"
+      echo 
+
+      f_check_mounting_point_array
 }
 
 function f_check_ssh_daemon_is_on_verbose {
@@ -406,7 +443,6 @@ function f_check_if_fuse_exists_verbose {
 
 function f_check_mounting_point_parent {
    # check if Default mounting point for DRYa exists
-   v_parent_dir=~/sshfs/
       # For raspberry: .../remote-miau
       # For MSI laptop: .../remote-MSI
    
@@ -461,7 +497,7 @@ function f_check_mounting_point_array {
    # Visualizar o array de pastas 
       echo "Array definido (em: $v_parent_dir)"
 
-      for i in ${v_array_remote_dir[@]};
+      for i in ${v_array_A_remote_dir[@]};
       do
          echo " > $i"
       done
@@ -482,12 +518,12 @@ function f_delete_DRYa_mounting_points {
 }
 
 function f_create_DRYa_mounting_points {
-   #echo "Array elements: ${v_array_remote_dir[@]}"
+   #echo "Array elements: ${v_array_A_remote_dir[@]}"
    #echo 
    #echo "Demonstração de cada pasta:"
 
    # Criacao de cada pasta (caso nao exista)
-   for i in ${v_array_remote_dir[@]};
+   for i in ${v_array_A_remote_dir[@]};
    do
       v_temp="${v_parent_dir}$i"
 
@@ -502,22 +538,18 @@ function f_create_DRYa_mounting_points {
 
 function f_ser_servidor {
    
-   function f_ask {
-      f_greet
-      echo "Ser servidor"
-   }
 
-   f_ask
-   echo " > Na maquina remota, quer acerder a qual pasta?"
-   echo " > A tudo: '/'   Aos Documentos (Home): '~'"
-   echo " > Deixar em branco: '~'"
-   echo -n " >> "
-   read v_r_dir
-   [ -z $v_r_dir ] && v_r_dir=~
-   
-   f_ask
-   echo " > Na pasta remota: $v_r_dir"
-   echo
+   # Perguntar ao servidor, a que pasta quer deixar aceder o cliente
+      while true
+      do
+         v_menu=$(echo -e "1. Pasta raiz do sistema: / \n2. Pasta \$Home do uitlizador: ~ \n3. sair" | fzf --prompt "Para SERVIDOR: A que pasta quer dar acesso?")
+
+         [[ $v_menu =~ "1." ]] && echo "Quer deixar aceder a: /" && v_r_dir=/ && break ## Pasta remota
+         [[ $v_menu =~ "2." ]] && echo "Quer deixar aceder a: ~" && v_r_dir=~ && break ## Pasta remota 
+         [[ $v_menu =~ "3." ]] && break
+         unset v_menu
+      done
+
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
       f_check_ssh_daemon_is_on
@@ -556,6 +588,8 @@ function f_ser_servidor {
       echo " |"
       echo " > IP local:"
       echo " >> sshfs $USER@$v_loc_ip:$v_r_dir  (+ mounting point, ex: remote-MSI-dv_msi)" 
+
+   f_menu_para_ver_resumo
 }
 
 function f_ser_cliente {
@@ -570,7 +604,7 @@ function f_ser_cliente {
          # iterador contador do 'for' loop
             e=1
 
-         for i in ${v_array_remote_dir[@]};
+         for i in ${v_array_A_remote_dir[@]};
          do
             echo "   $e = $i"
             e=$((e+1))
@@ -580,7 +614,7 @@ function f_ser_cliente {
          echo
          
          let "v_o = v_mach - 1"
-         v_client_mount_point=${v_array_remote_dir[$v_o]}
+         v_client_mount_point=${v_array_A_remote_dir[$v_o]}
 
          echo "Escolheu: $v_mach:"
          echo " > $v_parent_dir$v_client_mount_point"
@@ -718,25 +752,21 @@ function f_enable_everything {
       ##########################################################################
       # Perguntar: Cliente ou Servidor?
 
-         echo "Pretende ser (C)liente ou (S)ervidor?"
-         read -n 1 -p " > " v_side
+         while true
+         do
+            v_menu=$(echo -e "1. Quero ser CLIENTE \n2. Quero ser SERVIDOR \n3. Sair" | fzf --prompt "SELECIONE 1 para ligar o servico (ON)")
 
-         if [[ $v_side == "c" ]] || [[ $v_side == "C" ]]; then
-            # Se for Cliente: Perguntar a qual maquina quer aceder
-            echo " > Client"
-            f_ser_cliente
-         fi
-
-         if [[ $v_side == "s" ]] || [[ $v_side == "S" ]]; then 
-            # Se for Servidor, dar os dados no ecra para o cliente no outro dispositivo poder aceder
-            echo " > Server"
-            f_ser_servidor
-         fi
-         echo
-
+            [[ $v_menu =~ "1." ]] && f_ser_client && echo "Quero ser: Cliente" && break
+            [[ $v_menu =~ "2." ]] && f_ser_servidor && echo "Quero ser: Servidor" && break
+            [[ $v_menu =~ "3." ]] && break
+            unset v_menu
+         done
 
       ##########################################################################
-      echo "fim...";  exit 0
+      echo "fim..."
+
+
+
 }
 
 function f_disable_everything {
@@ -808,41 +838,20 @@ function f_disable_everything {
 
 function f_check_overall_status {
 
+   # Impedir aos utilizadores de usarem mais do que um argumento
+      [[ ! -z $ARG2 ]] && echo "DRYa: SSH: arg 2 não reconhecido, por favor nao user argumento 2" && exit 1
+
    f_greet
+   echo "DRYa: Menu wrap para SSH"
+   echo
 
-   if [[ -z $v_2 ]]; then
-      echo "DRYa: SSHFS-wrapper: A verificar o estado atual..."
-      echo
-      f_verbose_check
+   v_menu=$(echo -e "1. LIGAR:    servico SSH ou SSHFS \n2. DESLIGAR: servico SSH ou SSHFS \n3. VER:      estado atual do sistema \n4. LISTA de: Mounting Points pre-definidos" | fzf --prompt "DRYa: Menu para os servicos SSH")
 
-   elif [[ $v_2 == "on" ]]; then
-      # Verbose output do instalador
-         echo "Escolheu a opcao: on"
-         echo 
-         f_enable_everything
-
-   elif [[ $v_2 == "off" ]]; then
-      # Verbose output do desinstalador
-         echo "Escolheu a opcao: off"
-         echo 
-         f_disable_everything
-
-   elif [[ $v_2 == "dir" ]]; then
-      # Verbose: Pastas pre-definidas para mounting points
-         echo "Escolheu a opcao: dir"
-         echo
-         echo "Instrucao:"
-         echo " > No interior do script, pode alterar:"
-         echo " >> o array de pastas (mounting point para cada servidor)"
-         echo " >> o 'parent directory' onde residem todas essas"
-         echo 
-
-         f_check_mounting_point_array
-         exit 0
-
-   else
-      echo "SSHFS-wrapper: comando nao encontrado"
-   fi
+   [[ $v_menu =~ "1." ]] && f_enable_everything
+   [[ $v_menu =~ "2." ]] && f_disable_everything
+   [[ $v_menu =~ "3." ]] && f_verbose_check
+   [[ $v_menu =~ "4." ]] && f_ver_as_pastas_pre_definidas
+   unset v_menu
 }
 
 
