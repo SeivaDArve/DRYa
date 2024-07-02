@@ -866,7 +866,7 @@ function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
    # Menu
-      v_list=$(echo -e "1. Sair \n5. Bloquear ecra \n0. Desligar   (shutdown) \n4. Suspender \n2. Hibernar \n8. Reiniciar  (reeboot, restart) \n6. Refresh    (F5) \n\nT. Temporizar acções \nA. Abort Restart/Shutdown" | fzf --cycle --prompt="POWER: ")
+      v_list=$(echo -e "1. Sair \n5. Bloquear ecra \n0. Desligar   (Encerrar, shutdown) \n4. Suspender \n2. Hibernar \n8. Reiniciar  (reeboot, restart) \n6. Refresh    (F5) \n\nT. Temporizar acções \nA. Abort Restart/Shutdown" | fzf --cycle --prompt="POWER: ")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina
