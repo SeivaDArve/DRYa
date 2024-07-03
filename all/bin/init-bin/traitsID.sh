@@ -70,7 +70,7 @@ function f_array_2 {
    if [ -f /etc/os-release ]; then
       source /etc/os-release
 
-      if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ]; then
+      if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ] || [ $ID = "raspbian" ]; then
          # Encontrada a familia Debian
 
          v_found="apt"

@@ -63,6 +63,7 @@ function f_greet {
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
    v_verbose_line=${v_REPOS_CENTER}/verbose-lines/all/ssh
+   v_verbose_line_repo=${v_REPOS_CENTER}/verbose-lines/
    v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
 
 function f_check_current_user {
@@ -932,7 +933,7 @@ function f_check_overall_status {
    [[ $v_menu =~ "2." ]] && f_disable_everything
    [[ $v_menu =~ "3." ]] && f_verbose_check
    [[ $v_menu =~ "4." ]] && f_ver_as_pastas_pre_definidas
-   [[ $v_menu =~ "5." ]] && echo "debug"
+   [[ $v_menu =~ "5." ]] && less $v_verbose_line
    unset v_menu
 }
 
