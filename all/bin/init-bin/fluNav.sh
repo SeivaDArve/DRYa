@@ -268,7 +268,7 @@ function f_action {
       # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
 
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR")
+         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
    
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
@@ -660,7 +660,7 @@ function H {
       rm $v_file
 
    elif [ $1 == "." ]; then
-      cat $v_file | fzf --prompt="VISUALIZAR cada ficheiro guardado " 1>/dev/null
+      cat $v_file | fzf --prompt="VISUALIZAR cada ficheiro guardado: " 1>/dev/null
    fi
 
 }
