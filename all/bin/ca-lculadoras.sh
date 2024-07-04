@@ -419,15 +419,58 @@ function f_exec_calculadora_cambios {
    echo "uDev: cambios"
 }
 
+function f_exec_calculadora_regra_de_3 {
+f_greet
+f_talk; echo "Calculadora Regra de 3 Simples"
+
+echo "
+                           |
+---------------------------|
+  |  Regra de 3 Simples:   | 
+  |                        |
+  |       A     C          |
+  |      --- = ---         |
+  |       B     X          |
+  |                        |
+  |    X = (B x C) / A     |
+  |                        |
+  |---------------------------
+  |
+
+Lenga-lenga: 
+ - A está para B
+      assim como C está para... ... X
+_______________________________________
+
+"
+
+read -p "Introduza A: " vA
+read -p "Introduza B: " vB
+read -p "Introduza C: " vC
+
+echo
+echo "A = $vA"
+echo "B = $vB"
+echo "C = $vC"
+
+v_multip=$(echo "$vB * $vC" | bc)
+vX=$(echo "$v_multip / $vA" | bc)
+echo
+echo "X = $vX"
+echo
+echo "$vA está para $vB, assim como $vC está para $vX"
+}
+
 # Menu para aceder a todas as calculadoras
 
 
 # Texto do menu
-   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
+   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. calculadora-regra-3-simples \n5. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
             
 # Quando o menu Ã© de Escolha multipla tipo `for` loop
    [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
    [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
    [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
-   [[ $v_list =~ "4." ]] && vim $v_log
+   [[ $v_list =~ "4." ]] && f_exec_calculadora_regra_de_3
+   [[ $v_list =~ "5." ]] && vim $v_log
    unset v_list             # Reset Ã  Variavel
