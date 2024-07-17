@@ -39,6 +39,14 @@ function f_talk {
    touch $v_log
 
 
+function f_calc_regr_3_simples {
+   # Utilizado para calcular a formula final da regra de 3 simples
+   
+   #v_result=$(echo "scale=$v_decimal; $v_input" | bc)
+   v_multip=$(echo "scale=3; $vB * $vC" | bc)
+   vX=$(echo "scale=3; $v_multip / $vA" | bc)
+   echo
+}
 
 
 function f_exec_calculadora_registadora {
@@ -440,6 +448,8 @@ echo "
 Lenga-lenga: 
  - A está para B
       assim como C está para... ... X
+
+   uDev: Por enquanto usa numeros decimais com '.' em vez de ','
 _______________________________________
 
 "
@@ -453,25 +463,85 @@ echo "A = $vA"
 echo "B = $vB"
 echo "C = $vC"
 
-#v_result=$(echo "scale=$v_decimal; $v_input" | bc)
-v_multip=$(echo "scale=3; $vB * $vC" | bc)
-vX=$(echo "scale=3; $v_multip / $vA" | bc)
-echo
+f_calc_regr_3_simples 
+
 echo "X = $vX"
 echo
 echo "$vA está para $vB, assim como $vC está para $vX"
+}
+
+function f_exec_calculadora_trim {
+  echo "hit" 
+   f_greet
+   f_talk; echo "Calculadora Trim the HEDGE"
+
+   echo "
+                              |
+   ---------------------------|
+     |  Regra de 3 Simples:   | 
+     |                        |
+     |       A     C          |
+     |      --- = ---         |
+     |       B     X          |
+     |                        |
+     |    X = (B x C) / A     |
+     |                        |
+     |---------------------------
+     |
+
+   Lenga-lenga: 
+    - A está para B
+         assim como C está para... ... X
+
+   Ou: 
+    - A é o valor negativo a cortar (trim)
+    - B é o tamanho em BTC dessa ordem a negativo
+    - C é o valor do saldo positivo (ou umapercentagem) que temos na carteira (saldo realizado), apartir do qual devolver para o valornegativo
+    - P é o preco a que estas contas foram vistas pelo utilizador (recomenda-se o uso de print-screen em momentos de grande volatilidade)
+
+   uDev: Por enquanto usa numeros decimais com '.' em vez de ','
+   _______________________________________
+
+   "
+
+   read -p "Introduza A (valor negativo): " vA
+   read -p "Introduza B (tamanho BTC do negativo): " vB
+   read -p "Introduza C (valor positivo): " vC
+   read -p "Introduza P (preço atual (facultativo)): " vP
+   # uDev: read -p "Introduza O (Operacao negativa a cortar (L)ong ou (S)hort (facultativo)): " vO
+   echo
+
+   f_calc_regr_3_simples 
+
+   # Resumo verboso dos valores introduzidos
+   echo "A = $vA"
+   echo "B = $vB"
+   echo "C = $vC"
+   echo "X = $vX"
+   [[ ! -z $vP ]] && echo "P = $vP"  
+   echo
+
+   # Caso o utilizador queira especificar a que preco estava quando quis ver as contas, entao, tambem escreve esse preco no ecra (para mais facil compreensao)
+      [[ ! -z $vP ]] && echo "Se a operação negativa for long: Fechar mais acima possivel" && echo "--- Preco atual: $vP" && echo "Se a operação negativa for short: Fechar mais abaixo possivel" 
+   
+      echo
+
+   # Resultado final verboso
+      echo "$vA está para $vB, assim como $vC está para $vX"
+      echo "Vai reduzir $vX BTC da operação que esta neste momento negativa"
 }
 
 # Menu para aceder a todas as calculadoras
 
 
 # Texto do menu
-   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. calculadora-regra-3-simples \n5. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
+   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. calculadora-regra-3-simples \n5. calculadora-trim-the-hedge \n6. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
             
 # Quando o menu Ã© de Escolha multipla tipo `for` loop
    [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
    [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
    [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
    [[ $v_list =~ "4." ]] && f_exec_calculadora_regra_de_3
-   [[ $v_list =~ "5." ]] && vim $v_log
+   [[ $v_list =~ "5." ]] && f_exec_calculadora_trim
+   [[ $v_list =~ "6." ]] && vim $v_log
    unset v_list             # Reset Ã  Variavel
