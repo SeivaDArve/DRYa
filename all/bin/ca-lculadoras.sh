@@ -453,8 +453,9 @@ echo "A = $vA"
 echo "B = $vB"
 echo "C = $vC"
 
-v_multip=$(echo "$vB * $vC" | bc)
-vX=$(echo "$v_multip / $vA" | bc)
+#v_result=$(echo "scale=$v_decimal; $v_input" | bc)
+v_multip=$(echo "scale=3; $vB * $vC" | bc)
+vX=$(echo "scale=3; $v_multip / $vA" | bc)
 echo
 echo "X = $vX"
 echo
