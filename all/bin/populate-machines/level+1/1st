@@ -3,10 +3,19 @@
 # Use: uDev: Let DRYa source these functions so that the DRYa installed can run the function that installs dependencies
 
 # Help
-   # You may use this command to FULLY INSTALL the most basic DRYa's functionality:
-   # `git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa`
-   # `cd $HOME/Repositories/DRYa/install.uninstall/linux-or-WSL/master-bash && bash 1-installer.sh`
-   #
+   # Step 1 (Most Basic) :: You may use this command to FULLY INSTALL the most basic DRYa's functionality:
+      # Verbose # clear; echo -e "DRYa: Quick install is starting (3 seconds) \n > Starting: System Update and System upgrade \n > Installing git, ncurses-utils and neofetch \n"; sleep 3;
+      # Command # pkg update; yes | pkg upgrade; yes | pkg install git ncurses-utils neofetch;
+      # Verbose # echo -e "\n\n - Complete: System Update \n - Complete: System Upgrade \n - Complete: Installing some basic Linux dependencies \n\n - Starting: DRYa download and installation \n\n"; sleep 3;
+      # Command # git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa; cd $HOME; cd Repositories/DRYa/install.uninstall/linux-or-WSL/master-bashrc/; bash 1-installer.sh;
+      # Verbose # clear && echo "DRYa: Installation Complete" && echo " > Restart the terminal now (CTRL-D)" 
+
+      # Resumo dos 3 anteriores (sugestao: para copiar o texto por inteiro em 1 so linha, convem abrir este ficheiro apartir do emacs e desativar as info de quebra de linha com a letra 'backslash' '\' com o comando 'M-x dv-truncate-lines-off', com o comando 'M-x visual-line-mode' e com zoom-out para que muito texto caiba dentro de 1 so linha sem quebras forçadas com '\' : 
+         clear; echo -e "DRYa: Quick install is starting (3 seconds) \n > Starting: System Update and System upgrade \n > Installing git, ncurses-utils and neofetch \n"; sleep 3; pkg update; yes | pkg upgrade; yes | pkg install git ncurses-utils neofetch; echo -e "\n\n - Complete: System Update \n - Complete: System Upgrade \n - Complete: Installing some basic Linux dependencies \n\n - Starting: DRYa download and installation \n\n"; sleep 3; git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa; cd $HOME; cd Repositories/DRYa/install.uninstall/linux-or-WSL/master-bashrc/; bash 1-installer.sh; clear && echo "DRYa: Installation Complete" && echo " > Restart the terminal now (CTRL-D)" 
+
+   # Step 2 :: After installing the most basic DRYa and restart the terminal
+      # uDev: Call this file and execute one group of instalations. Example: f_gr_soft_DRYa_dependencies
+
 
 function f_gr_soft_DRYa_dependencies {
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
