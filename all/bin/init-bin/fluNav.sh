@@ -1049,7 +1049,8 @@ com.list-econ-items.txt
 com.associative-array
 .vimrc
 Refresh-Reload-Source
-1st
+1st (emacs)
+1st (vim)
 emacs-init (emacs)
 emacs-init (vim)
 secundary-files
@@ -1080,7 +1081,7 @@ function f_menu_select {
                PS3="Select a file to edit: "
                COLUMNS=0
 
-               select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array 1st "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
+               select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array "1st (emacs)" "1st (vim)" "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
 
                case $opt in
                   config-bash-alias)
@@ -1139,7 +1140,16 @@ function f_menu_select {
                      # uDev: Fazer reset tambem ao init.el
                      break
                   ;;
-                  1st)
+                  "1st (emacs)")
+                     f_greet
+                     echo "Editing the list of 1st apps to install"
+                     read -s -t 2
+                     EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+                     f_greet
+                     echo "edited: 1st"
+                     break
+                  ;;
+                  "1st (vim)")
                      f_greet
                      echo "Editing the list of 1st apps to install"
                      read -s -t 2
