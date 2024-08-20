@@ -1003,11 +1003,12 @@ elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || 
    if [ -z $2 ]; then
       f_talk; 
       echo "Help options menu:"
-      echo " 1. man page"
+      echo " 1. man page (uDev)"
       echo " 2. Terminal printed instructions "
       echo " 3. README file "
       echo " 4. Most common alias "
-      echo " > Press a number like: '$ D -h 2'"
+      echo " > uDev: Press a number like: '$ D -h 2'"
+      echo " > uDev: menu with \`fzf\` for each option"
       echo
       echo "DRYa is a CLI software that prevents repetitive tasks"
       echo " > D.R.Y.a. (Don't Repeat Yourself app)"
