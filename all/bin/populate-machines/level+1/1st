@@ -2,6 +2,12 @@
 # Hint: Use "GETOPTS" in this file just as an exercise
 # Use: uDev: Let DRYa source these functions so that the DRYa installed can run the function that installs dependencies
 
+# Help
+   # You may use this command to FULLY INSTALL the most basic DRYa's functionality:
+   # `git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa`
+   # `cd $HOME/Repositories/DRYa/install.uninstall/linux-or-WSL/master-bash && bash 1-installer.sh`
+   #
+
 function f_gr_soft_DRYa_dependencies {
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
 
@@ -14,6 +20,7 @@ function f_gr_soft_DRYa_dependencies {
       upower         \  # Usado para ler info de bateria
       fzf            \  # Fuzzyfinder
       ncurses-utils  \  # Instala comandos scripts uteis, por exemplo `tput` 
+      neofetch
 
    # Figlet command
       # the APT package manager may not have it,
@@ -21,6 +28,7 @@ function f_gr_soft_DRYa_dependencies {
       # sudo apt install figlet || sudo snap install figlet
 
       pkg install figlet || snap install figlet
+
 }
 
 function f_gr_dependencies {
@@ -39,7 +47,6 @@ function f_gr_dependencies {
    dialog # Tool to give GUI menus on Bash (like whiptail but with more options
    man
    which  # Used to detect the path of installed scripts
-   termux-api
    tsu   # To grant sudo permissions, may be needed to enable phone screenshots
    upower
    fzf   # Fuzzyfinder
@@ -60,7 +67,6 @@ function f_gr_dependencies {
    irssi # IRC client for termux
    youtube-dl
    cmatrix
-   neofetch
    syncthing # To sync files across machines (does not need a cloud, it is decentralized)
    zenity # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
 
