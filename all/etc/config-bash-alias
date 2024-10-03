@@ -350,7 +350,9 @@ alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tr
 # 'split -n 5' is a command that splits a text file into 5 parts
 
 # Media tools:
+   alias untangle="termux-open-url https://youtube.com/shorts/0wobqw589l0?si=h4D_6LNBeid77Bq_"
    alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+   alias capitain="termux-open-url https://youtube.com/shorts/lquMb_8j38w?si=awBQ0gxdoQYxW8TJ"
    alias eclipse="termux-open-url https://youtube.com/shorts/X87ZTOhkbf0?si=cKQGVXz4bZWySIXx"
    alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
    alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
