@@ -1,5 +1,5 @@
 #!/bin/bash
-# Title: Horizontal Line according ti terminal window
+# Title: Horizontal Line according to terminal window
 # Use: 1. This script is meant to be sourced and it's variables to be exported
 #      2. At the terminal you can type "echo $v_line" for longer version of line
 #      3. At the terminal you can type "echo $v_line2" for shorter version of line
