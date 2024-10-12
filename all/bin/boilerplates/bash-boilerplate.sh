@@ -78,12 +78,12 @@
 # fzf menu exemplo
 
       # Lista de opções para o menu `fzf`
-         v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc y" | fzf --prompt="fzf Example Menu: ")
+         v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc " | fzf --prompt="fzf Example Menu: ")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && echo "Detetado 1 (debug)"
-         [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)"
-         [[ $v_list =~ "3" ]] && echo "Detetado 3 (debug)"
+         [[ $v_list =~ "1" ]] && echo "Detetado 1 (debug)" && sleep 1
+         [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
+         [[ $v_list =~ "3" ]] && echo "Detetado 3 (debug)" && sleep 1
          unset v_list
     
 	 
@@ -104,7 +104,7 @@
         done
 
       # Quando o menu é de Escolha multipla tipo `for` loop
-         [[ $v_list =~ "1." ]] && echo "Debug"
-         [[ $v_list =~ "2." ]] && echo "Debug"
-         [[ $v_list =~ "3." ]] && echo "Debug"
+         [[ $v_list =~ "1." ]] && echo "uDev: 1"
+         [[ $v_list =~ "2." ]] && echo "uDev: 2"
+         [[ $v_list =~ "3." ]] && echo "uDev: 3"
          unset v_list             # Reset a Variavel
