@@ -324,7 +324,7 @@ function f_drya-messages {
 # joke:
    alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
-alias ls="ls -p"
+alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
 #alias lll= pwd + file paths (uDev)
