@@ -255,7 +255,6 @@ function f_repository_ezGIT {
 
 
    echo -ne " >> O comando 'ezG' ou 'G v all' atualiza todos os repos"
-   read -sn1 -t 3
 }
    
 function f_repository_wikiD {
