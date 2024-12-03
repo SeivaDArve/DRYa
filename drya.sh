@@ -15,11 +15,11 @@ function f_greet {
 }
 
 function f_greet2 {
-   # Prints a more verbose output of the ascii text "DRYa"
+   # Prints a more verbose output of the ascii text "DRYa" then f_greet
       ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
-# Functions for text colors (used usually with Figlet)
+# Functions for text colors (used usually with `figlet`)
    function f_cor1 {	
       tput setaf 5 
    }
@@ -31,13 +31,11 @@ function f_greet2 {
       tput setaf 3
    }
    function f_cor4 { 
-      # Similar to Bold
-      # f_talk
+      # Similar to Bold. Used in: f_talk
       tput setaf 4
    }
    function f_cor5 { 
       # Similar to Bold
-      # f_talk
       tput setaf 6
    }
    function f_resetCor { 
@@ -410,204 +408,6 @@ function f_detectOS {
 	f_menu1
 }
 
-function f_readKeystroke {
-	function f_method1 {
-		while true
-			do
-	
-			# If you run f_exec for the first time, this if statment will break the while loop allowing f_mainmenu to run for the first time without asking for any keystroke or changes
-			if [ ${_h} = 0 ] && [ ${_V} = 0 ]; then
-				#echo "no keystroke is asked"
-				_h=1;_V=1
-				f_menu1
-			fi
-				
-			read -rsn1 input
-			if [ "$input" = "s" ]; then
-    				echo "key pressed: s"
-				sleep 1
-				#echo $_V
-				f_slideVdw
-				
-			fi
-	
-			if [ "$input" = "b" ]; then echo "key pressed: b"; fi
-			if [ "$input" = "S" ]; then echo ""; tput cnorm; exit; fi
-			if [ "$input" = "D" ]; then f_detectOS; fi
-	
-			# Next it needs to recognize:
-			# -Arrow Keys
-			# -Enter
-			
-		done
-			f_mainmenu
-	}
-
-	function f_method2 {
-		while read -rsn1 input
-		do
-    			case "$input"
-				in
-				$'\x1B') # ESC ASCII code (https://dirask.com/posts/ASCII-Table-pJ3Y0j)
-					read -rsn1 -t 0.1 input
-					if [ "$input" = "[" ]
-					then
-						read -rsn1 -t 0.1 input
-						case "$input"
-						in
-							A) echo '^' ;;
-							B) echo 'v' ;;
-							C) echo '>' ;;
-							D) echo '<' ;;
-						esac
-					fi
-					read -rsn5 -t 0.1   # flushing stdin
-					;;
-				a) echo "Letra A" ;;
-				q) # q letter
-					break
-					;;
-				*) # other letters
-					echo "$input"
-				;;
-    			esac
-		done
-	}
-	f_method2
-
-	f_keyOutputX
-}
-
-function f_entryA1 {
-	# Reverse colors for this entry if it matches cursor
-	if [ ${_V} = 1 ]; then tput rev; fi
-
-	tput cup 2 7
-	echo "Entry 1"
-
-	# Reset text format (if any)
-	tput sgr0
-
-	# Reset Cursor position
-	f_res_cursor
-}
-
-function f_entryA2 {
-	# Reverse colors for this entry if it matches cursor
-	if [ ${_V} = 2 ]; then tput rev; fi
-
-	tput cup 3 4
-	echo "Entry 2"
-
-	# Reset text format (if any)
-	tput sgr0
-
-	# Reset Cursor position
-	f_res_cursor
-}
-
-function f_keyOutputX {
-	# Add bottom horizontal line again
-	#tput cup 25 0; f_horizline
-	# Just change position
-	tput cup 23 0
-}
-
-function f_footer {
-
-	tput rev
-
-	# Arrows
-	tput cup 23 6
-	echo " <   ^   v   > "
-	tput cup 24 6
-	echo "(a) (w) (s) (d)"
-
-	# Stop
-	tput cup 24 22
-	echo "(S)top"
-
-	# Decect Device
-	tput cup 24 29
-	echo "(D)etect Device"
-
-	# Reset cursor to bottom
-	tput cup 25 4
-
-	tput sgr0
-}
-
-function f_menu1 {
-
-	# Change the menu variable for internal comunication
-	_m=1
-
-	tput cup 2 1
-	echo "M1"
-	echo " --"
-	echo " --"
-	echo " --"
-	echo " --"
-	echo " --"
-	f_res_cursor
-	f_entryA1
-	#f_entryA2
-	#f_entryA3
-}
-
-#function f_menu2 {
-#	#f_entryB1
-#	#f_entryB2
-#	#f_entryB3
-#}
-
-function f_mainmenu {
-	function f_mStyle {
-		# Create a style/frame for the menu:
-		clear
-
-		_xPlace=3
-		_hLinePlace=28
-		_mPlace=1
-
-		f_verticline
-		tput home;     f_horizline; 
-		tput cup $_hLinePlace 0; f_horizline
-
-		tput cup 0 $_xPlace; echo X
-		tput cup $_hLinePlace $_xPlace; echo X
-
-		tput cup 0 9;  echo " Menu DRYa "
-
-		tput cup 2 $_mPlace; echo "M"
-		tput cup 3 $_mPlace; echo "e"
-		tput cup 4 $_mPlace; echo "n"
-		tput cup 5 $_mPlace; echo "u"
-		tput cup 6 $_mPlace; echo ":"
-		tput cup 7 $_mPlace; echo ""
-		tput cup 8 $_mPlace; echo "$_m"
-		
-	}
-	f_mStyle
-
-	# If "i" is pressed, toggle print info at the footer:
-	if [ $_i == "1" ]; then f_footer; fi
-
-	# When done printing the frame of the menu, read these:
-#	if [ $_m == 1 ]; then f_menu1; fi
-	#if [ $_m = 2 ]; then f_menu2; fi
-	#if [ $_m = 3 ]; then f_menu3; fi
-	#if [ $_m = 4 ]; then f_menu4; fi
-	#if [ $_m = 5 ]; then f_menu5; fi
-	#if [ $_m = 6 ]; then f_menu6; fi
-	#if [ $_m = 7 ]; then f_menu7; fi
-	#if [ $_m = 8 ]; then f_menu8; fi
-	#if [ $_m = 9 ]; then f_menu9; fi
-	#if [ $_m = 0 ]; then f_menu0; fi
-
-	f_keyOutputX
-}
-
 function f_detect_dir {
 	if [ -d "$_DIR_NAME" ]; then
 		# Define a variable to hold a certain state
@@ -932,24 +732,27 @@ function f_dotFiles_install_netrc {
 
 
 function f_exec {
-	f_greet
-	# Comment/Uncomment to turn Off/On therefore to bebug easily step by step:
-   #f_default_vars
+   # When invalid args are given at the teminal: 
+      #f_greet
 
-	#f_cursorON
-	#f_cursorOFF
-	#f_make_file_dryarc 
-   #f_ascii_icon
-	#f_tableOfContents
-   #f_mainmenu
-	#f_wiki
-	#f_install_vimrc
-	#f_get_script_current_abs_path
-	#source ../jarve/jrv/etc/usr-etc/termux-Dv/.jrvrc
-	#f_detect_these
-	#f_fillscreenE
-	#f_master_dryaRC
-   #f_readKeystroke
+   # It can be used for other function debugs also:
+      # Comment/Uncomment to turn Off/On each to debug accordingly:
+
+      #f_default_vars
+      #f_cursorON
+      #f_cursorOFF
+      #f_make_file_dryarc 
+      #f_ascii_icon
+      #f_tableOfContents
+      #f_mainmenu
+      #f_wiki
+      #f_install_vimrc
+      #f_get_script_current_abs_path
+      #source ../jarve/jrv/etc/usr-etc/termux-Dv/.jrvrc
+      #f_detect_these
+      #f_fillscreenE
+      #f_master_dryaRC
+      #f_readKeystroke
 
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
    f_talk; echo "No valid arguments were given"
@@ -975,25 +778,68 @@ function f_exec {
 
 
 
-# Function drya
-   # this file is alias "drya" inside "source-all-drya-files"
-   # Use: The programming structure '$ case / esac' 
-      # is best to be the last part of this file
-      # in order to have an interactive '$ drya' in
-      # the terminal
-      # and if you give no arguments to '$ drya'
-      # like '$ drya + do something' then '$ drya' will still
-      # open the f_greet and f_quick_menu through f_exec
+# ARGUMENTS: for the Function DRYa
+   # Use the programming structure provided below (if elif else fi) along 
+   # with the Alias "drya" or "D" (defined in the file "source-all-drya-files")
+      # Examples at the teminal: 
+      #
+      #  drya (with-no-arguments)
+      #  drya -h
+      #  drya --help
+      #  drya +
+      #
+      #  D (with-no-arguments)
+      #  D -h
+      #  D --help
+      #  D +
+      # 
 
 if [ -z "$*" ]; then
-  # Do something else if there are no arguments
-     f_greet
-     f_talk; echo "Master, I'm installed"
-             echo " > But No arguments were given"
+  # Do something if there are no arguments
 
-   # If no arg was given, also navigate do DRYa's repo directory
-      cd ${v_REPOS_CENTER}/DRYa
+  f_greet
+  f_talk; echo "is installed!"
+          echo
+          echo "      Can be used:"
+          echo "       > by calling Terminal commands. Example: 'D --help'"
+          echo "       > by calling 'D +' for extended \`fzf\` main menu"
 
+   echo
+   f_talk; echo "Temporized Menu (available only for 2 secs):"
+   echo " > Press 'd' to open DRYa fzf main menu"
+   echo "   (same as Terminal command: 'D +')"
+   echo
+
+   
+   # Options available during only 2 seconds
+      f_talk; f_cor5; echo -en "listening... "; f_resetCor
+
+      read -sn1 -t 2 v_ans
+      
+      if [ -z $v_ans ]; then
+         sleep 0.1
+   
+         # ANSII to go to beggining of line and clear endire line after cursor
+            echo -ne "\r\033[K"
+
+      elif [ $v_ans == "d" ]; then
+         # When 'd' is pressed to open DRYa fzf main menu
+
+         # ANSII to go to beggining of line and clear endire line after cursor
+            echo -ne "\r\033[K"
+
+         echo "uDev: call DRYa fzf main menu"
+
+      else
+         # If there is a variable, delete and tell which was
+         
+         # ANSII to go to beggining of line and clear endire line after cursor
+            echo -ne "\r\033[K"
+
+         echo "Argument $v_ans not recognized at the temporized menu"
+         unset v_ans
+
+      fi
 
 elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu  ::  rtfm: Read the Fucking Manual
@@ -1092,14 +938,14 @@ elif [ $1 == "location" ]; then
    fi
 
 
-elif [ $1 == "+" ]; then 
+elif [ $1 == "v" ]; then 
    # Function found at: source-all-drya-files which is the first file on DRYa repository to run
    # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
 
-   # uDev: drya +    # First Level of help
-   # uDev: drya ++   # Second level of help
-   # uDev: drya +++  # Third level of help
-   # uDev: drya ++++ # Forth level of help ... instead of "msgs"
+   # uDev: drya h    # 1st Level of help
+   # uDev: drya hh   # 2nd level of help
+   # uDev: drya hhh  # 3rd level of help
+   # uDev: drya hhhh # 4th level of help ... instead of "msgs"
    
    if [ -z "$2" ]; then
       echo "uDev"
@@ -1899,9 +1745,23 @@ elif [ $1 == "gui" ]; then
             whiptail --title "Example Dialog" \
                      --infobox "This is an example of an info box" 8 78 \
                      --yesno "yea" 8 8
-else 
 
-         f_exec
+elif [ $1 == "+" ]; then 
+   # The DRYa's fzf main menu
+   # uDev: If fzf is not installed, imediatly do it, no questions!
+
+   # Lista de opcoes para o menu `fzf`
+      v_list=$(echo -e "1. Exit \n2. Commands \n3. Help " | fzf --cycle --prompt="DRYA: fzf menu: ")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
+      [[ $v_list =~ "2" ]] && echo "DRYa: Comandos: uDev"
+      [[ $v_list =~ "3" ]] && echo "DRYa: Help: uDev"
+      unset v_list
+
+else 
+   # When invalid arguments are given. (May also be used to debug functions)
+      f_exec
 
 fi
 
