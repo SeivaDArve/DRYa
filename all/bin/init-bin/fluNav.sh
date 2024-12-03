@@ -238,17 +238,54 @@ function f_action {
       clear
       figlet fluNav 
 
+      # uDev: f_tst_repo: test if correspondant repo is already cloned
       f_down
       echo "$v_nm: Testing fluNav"
       f_up
-   
+
    elif [ $v_nm == "car" ]; then
+      # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
+
       clear
       figlet fluNav 
-      #f_down
-      echo "$v_nm: Editing 1 or + files from .../moedaz/viatura/..."
-      cd ${v_REPOS_CENTER}/moedaz/all/viatura/ && \
-      EM viatura-all-info.org
+
+      # Variables for this task
+         v_respective_repo=${v_REPOS_CENTER}/moedaz 
+         v_respective_file_dir=${v_REPOS_CENTER}/moedaz/all/viatura/ 
+         v_respective_file=viatura-all-info.org
+
+
+      function f_ask_what_to_do {
+         # Inform "error" if correspondant repo does not exist and then quit
+
+         # Lista de opÃ§Ãµes para o menu `fzf`
+         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'moedaz' does not exist")
+
+         # Perceber qual foi a escolha da lista
+            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'moedaz' and did not open 'car' file"
+            [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
+            unset v_list
+      }
+
+      # If repo does not exist, ask user what to do
+         [[ ! -d $v_respective_repo ]] && f_ask_what_to_do
+
+      # Downloading updates from github
+         #f_down
+
+      function f_edit {
+         # Editing the file
+         
+         echo "$v_nm: Editing one or more files from .../moedaz/viatura/..."
+         cd $v_respective_file_dir && EM $v_respective_file 
+      }
+
+      # If repo does exist, proced and edit the file
+         [[ -d $v_respective_repo ]] && f_edit
+
+
+      # Uploading changes to github
+         # f_up
    
    elif [ $v_nm == "tmux" ]; then
       clear
@@ -1232,7 +1269,7 @@ function f_menu_select {
             elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
             elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
             elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
-            elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync Everything about the car
+            elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
             elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
             elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
