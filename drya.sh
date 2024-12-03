@@ -685,9 +685,10 @@ function f_drya_help {
    echo " 1. DRYa man page (uDev)"
    echo " 2. DRYa (Terminal printed instructions)"
    echo " 3. DRYa README.md file "
-   echo " 4. DRYa cheat sheets and alias "
-   echo " 5. traitsID: Print specs of current device"
-   echo " 6. What is D.R.Y.a. "
+   echo " 4. DRYa cheat sheets and alias for terminal commands"
+   echo " 5. DRYa cheat sheets for 'Temporized Menu' "
+   echo " 6. traitsID: Print specs of current device"
+   echo " 7. What is D.R.Y.a. "
 }
 
 
