@@ -284,19 +284,6 @@ function f_ascii_icon {
 }
 
 
-function f_tableOfContents {
-	tput rev
-	echo Table of contents
-	tput sgr0
-	f_setafA
-	echo ""
-	echo "Menu D (Drya)"
-	echo "Menu J (jarve)"
-	echo "Menu G (ezGIT)"
-	echo "Menu Y (yogaBashApp)"
-	f_setafC
-}
-
 function f_slideVup {
 	((_V=_V+1))
 	#echo $_V
@@ -444,55 +431,6 @@ function f_detect_file {
 	fi
 }
 
-function f_detect_these {
-	# To check if a directory exists side by side with DRYa repo:
-
-	f_get_script_current_abs_path
-
-	cd $_SCRIPT_DIR
-	f_setafD; echo Current pwd:
-	f_setafC
-		  echo -e "$(pwd)\n"
-
-	f_setafA; echo "What are you looking for?"
-	f_setafC
-		  echo "(0) .dryarc"
-		  echo "(1) jarve repo?"
-		  echo "(2) upK repo?"
-		  echo "(3) .vimrc file?"
-		  echo "(4) gitMenu"
-		  echo ""
-
-	read _ans
-
-	#if [ $_ans = * ]; then
-	#	echo "you just hit enter, right?"
-	if [ $_ans = "0" ]; then f_master_dryaRC; fi
-	if [ $_ans = "1" ]; then _DIR_NAME=../jarve; f_detect_dir; fi
-	if [ $_ans = "2" ]; then _DIR_NAME=../upK; f_detect_dir 
-	elif [ $_ans = "3" ]; then _FILE_NAME=../jarve/jrv/etc/.vimrc; f_detect_file
-		f_setafA; echo -ne "\nDo you want that .vimrc file to replace the current ~/.vimrc? (y/n) "
-		f_setafC
-
-		read _ans
-
-		if [ $_ans == "y" ]; then
-			cp $_FILE_NAME ~
-			echo ".vimrc copied to ~"
-		elif [ $_ans == "n" ]; then
-			echo it was not copied
-		else
-			echo your input did nothing
-		fi
-	else
-		echo "Please enter one of the options below"
-		read
-		clear
-		f_detect_these
-	fi
-
-}
-	
 function f_calcular_tempo_decorrido_apos_data {
    # Data de aniversário no formato YYYY-MM-DD
       #STARTINGDATE="1992-04-01"  # Variavel que é preciso alimentar a este script
@@ -730,6 +668,41 @@ function f_dotFiles_install_netrc {
       echo "Done!"
 }
 
+function f_drya_help {
+   # Main help function
+  
+   clear; f_greet
+
+   f_talk; echo "Help"
+   
+   echo
+   echo "What is DRYa:"
+   echo " > DRYa is a CLI software that prevents repetitive tasks"
+   echo " > D.R.Y.a. (Don't Repeat Yourself app)"
+   echo " > author: David Rodrigues (Seiva D'Arve)"
+   echo
+   echo "uDev: press 'H' to Help menu with \`fzf\` for each option:"
+   echo " 1. DRYa man page (uDev)"
+   echo " 2. DRYa (Terminal printed instructions)"
+   echo " 3. DRYa README.md file "
+   echo " 4. DRYa cheat sheets and alias "
+   echo " 5. traitsID: Print specs of current device"
+   echo " 6. What is D.R.Y.a. "
+}
+
+
+function f_drya_fzf_main_menu {
+   # Lista de opcoes para o menu `fzf`
+      v_list=$(echo -e "1. Exit menu \n2. >> Functionality package \n3. Help + info" | fzf --cycle --prompt="DRYA: fzf menu: ")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
+      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality: uDev"
+      [[ $v_list =~ "3" ]] && f_drya_help
+      unset v_list
+}
+
+
 
 function f_exec {
    # When invalid args are given at the teminal: 
@@ -743,13 +716,11 @@ function f_exec {
       #f_cursorOFF
       #f_make_file_dryarc 
       #f_ascii_icon
-      #f_tableOfContents
       #f_mainmenu
       #f_wiki
       #f_install_vimrc
       #f_get_script_current_abs_path
       #source ../jarve/jrv/etc/usr-etc/termux-Dv/.jrvrc
-      #f_detect_these
       #f_fillscreenE
       #f_master_dryaRC
       #f_readKeystroke
@@ -762,19 +733,6 @@ function f_exec {
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
       cd ${v_REPOS_CENTER}/DRYa
 
-}
-
-
-
-function f_drya_fzf_main_menu {
-   # Lista de opcoes para o menu `fzf`
-      v_list=$(echo -e "1. Exit \n2. Commands \n3. Help " | fzf --cycle --prompt="DRYA: fzf menu: ")
-
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
-      [[ $v_list =~ "2" ]] && echo "DRYa: Comandos: uDev"
-      [[ $v_list =~ "3" ]] && echo "DRYa: Help: uDev"
-      unset v_list
 }
 
 
@@ -814,11 +772,9 @@ if [ -z "$*" ]; then
           echo "       > by calling Terminal commands. Example: 'D --help'"
           echo "       > by calling 'D +' for extended \`fzf\` main menu"
 
-   echo
    f_talk; echo "Temporized Menu (available only for 2 secs):"
-   echo " > Press 'd' to open DRYa fzf main menu"
-   echo "   (same as Terminal command: 'D +')"
-   echo
+   echo -n " > Press '"; f_cor5; echo -n "d"; f_resetCor; echo "' to open DRYa fzf main menu"
+   echo   "   (same as Terminal command: 'D +')"
 
    
    # Options available during only 2 seconds
@@ -852,40 +808,10 @@ if [ -z "$*" ]; then
 
       fi
 
-elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
+elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu  ::  rtfm: Read the Fucking Manual
    
-   clear; f_greet
-
-   if [ -z $2 ]; then
-      f_talk; 
-      echo "Help options menu:"
-      echo " 1. man page (uDev)"
-      echo " 2. Terminal printed instructions "
-      echo " 3. README file "
-      echo " 4. Most common alias "
-      echo " > uDev: Press a number like: '$ D -h 2'"
-      echo " > uDev: menu with \`fzf\` for each option"
-      echo
-      echo "DRYa is a CLI software that prevents repetitive tasks"
-      echo " > D.R.Y.a. (Don't Repeat Yourself app)"
-      echo " > author: David Rodrigues (Seiva D'Arve)"
-
-   elif [ $2 == "1" ]; then
-      echo "uDev: man page is not ready yet"
-
-   elif [ $2 == "2" ]; then
-      echo "uDev: Terminal Printes instructions is not ready yet"
-
-   elif [ $2 == "3" ]; then
-      less ${v_REPOS_CENTER}/DRYa/README.md
-
-   elif [ $2 == "4" ]; then
-      echo "uDev"
-         
-   else
-      echo "That option is not recognized"
-   fi
+   f_drya_help
 
 elif [ $1 == "." ]; then  # List files here
    cd ${v_REPOS_CENTER}/DRYa && ls
