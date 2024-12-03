@@ -766,6 +766,16 @@ function f_exec {
 
 
 
+function f_drya_fzf_main_menu {
+   # Lista de opcoes para o menu `fzf`
+      v_list=$(echo -e "1. Exit \n2. Commands \n3. Help " | fzf --cycle --prompt="DRYA: fzf menu: ")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
+      [[ $v_list =~ "2" ]] && echo "DRYa: Comandos: uDev"
+      [[ $v_list =~ "3" ]] && echo "DRYa: Help: uDev"
+      unset v_list
+}
 
 
 
@@ -828,7 +838,8 @@ if [ -z "$*" ]; then
          # ANSII to go to beggining of line and clear endire line after cursor
             echo -ne "\r\033[K"
 
-         echo "uDev: call DRYa fzf main menu"
+         # Calling the actual menu
+            f_drya_fzf_main_menu
 
       else
          # If there is a variable, delete and tell which was
@@ -1750,14 +1761,7 @@ elif [ $1 == "+" ]; then
    # The DRYa's fzf main menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
-   # Lista de opcoes para o menu `fzf`
-      v_list=$(echo -e "1. Exit \n2. Commands \n3. Help " | fzf --cycle --prompt="DRYA: fzf menu: ")
-
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
-      [[ $v_list =~ "2" ]] && echo "DRYa: Comandos: uDev"
-      [[ $v_list =~ "3" ]] && echo "DRYa: Help: uDev"
-      unset v_list
+   f_drya_fzf_main_menu
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
