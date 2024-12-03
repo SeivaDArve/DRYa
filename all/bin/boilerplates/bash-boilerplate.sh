@@ -115,8 +115,12 @@ function f_horizontal_line {
 
 # fzf menu exemplo
 
-      # Lista de opções para o menu `fzf`
-         v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc " | fzf --prompt="fzf Example Menu: ")
+      # Lista de opcoes para o menu `fzf`
+         L1="1. Opcao"
+         L1="2. Opcao"
+         L1="3. Opcao"
+         
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 " | fzf --prompt="fzf Example Menu: ")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "1" ]] && echo "Detetado 1 (uDev)" && sleep 1
