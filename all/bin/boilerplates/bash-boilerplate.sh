@@ -119,9 +119,9 @@ function f_horizontal_line {
          v_list=$(echo -e "1. Opc \n2. Opc \n3. Opc " | fzf --prompt="fzf Example Menu: ")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && echo "Detetado 1 (debug)" && sleep 1
-         [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
-         [[ $v_list =~ "3" ]] && echo "Detetado 3 (debug)" && sleep 1
+         [[ $v_list =~ "1" ]] && echo "Detetado 1 (uDev)" && sleep 1
+         [[ $v_list =~ "2" ]] && echo "Detetado 2 (uDev)" && sleep 1
+         [[ $v_list =~ "3" ]] && echo "Detetado 3 (uDev)" && sleep 1
          unset v_list
     
 	 
