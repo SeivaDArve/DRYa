@@ -158,6 +158,7 @@ function f_drya_plus {
    # List and execution of function under drya_plus:
       #echo
       echo "      > view more DRYa options with: 'drya help' "
+      echo "      > DRYa extended menu with fzf: 'D +'"
       echo
       f_drya_msgs
       f_dv_PS1
