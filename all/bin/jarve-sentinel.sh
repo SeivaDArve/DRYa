@@ -1,31 +1,35 @@
 #!/bin/bash
-#
+
 # uDev: Jarve stats the sshfs server
 
 # uDev: AutoRUN (on/off): iniciar o terminal abrindo logo o jarve: É otimo para usar em dispositivos que publico desconhecido tamb+em tenha acesso tal como o telemovel do emprego
    
-# Update à repo DRYa  ## QUANDO O USER CARREGA 'J'
-   # Cuidado: Ao utilizadores que nao sabem ler nem Bash nem os conteudos DRYa
-   #          Quando alguem faz uso de um 'git branch' do qual nao viu as alteracoes
-   #          Esta sujeito que o nosso DRYa seja atualizado para uma versao que extrar info maliciosa do nosso smartphone
-   #          (Faz 'git pull' de DRYa de um ramo que seja seguro, usa so ramos seguros
+# Update a tudo ## QUANDO O USER CARREGA 'J'
 
    cd ${v_REPOS_CENTER}/DRYa
    clear
    figlet Jarve
-   echo "Jarve: git pull à repo DRYa"
+   echo "Jarve: You can suspend your laptop now"
+   echo "       (leave laptop OFF suspended: to enable IMEDIATE update when turned ON)"
+   echo "       (leave laptop ON: to update every 5 mins)"
+   echo "       (press 's' to suspend)"
+   echo "       (press 'n' to add news-displayer.sh and see the change log)"
    echo
    git pull
    echo
-   source ~/.bashrc
 
 # uDev: se existir a repo 'verbose-lines': atualizar de X em X tempos
 
 echo "Jarve running (uDev)"
 echo " > type 'D clone try jarve' to download my repo"
-echo " >> Use DRYa for shortcuts and commands"
-echo " >> Use Jarve to decide what commands to run next"
+echo " > Use DRYa for shortcuts and commands"
+echo " > Use Jarve to decide what commands to run next"
+echo " > jarve sets up everything after laptop suspention ends"
 echo
+echo " > uDev: tmux will open 1 vertical split screen. "
+echo "   >> One for jarve-sentinel.sh showing always the same screen (as ready to update, or updating)"
+echo "   >> One for news-displayer.sh to list all the changes"
+echo 
 
 read -p "[ANY KEY] para executar o sentinel"
 while true
