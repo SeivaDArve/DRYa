@@ -637,6 +637,7 @@ alias t-pause="termux-media-player pause"
 alias  t-stop="termux-media-player stop"
 alias  t-info="termux-media-player info"
 alias t-sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
+alias t-sound1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
