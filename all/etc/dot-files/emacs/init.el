@@ -1,4 +1,4 @@
-;;;; Title: init.el
+;;;; Title: init.el (dot-files by Seiva D'Arve)
 
 ;; Author: David Rodrigues (Seiva D'Arve)
 ;; Description: First file of configurations loaded by emacs

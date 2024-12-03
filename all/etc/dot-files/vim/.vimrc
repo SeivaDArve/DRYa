@@ -1,4 +1,4 @@
-" Title: .vimrc
+" Title: .vimrc (dot-files by Seiva D'Arve)
 " Description: file that stores all settings for vim CLI app
 
 "This is a comment
