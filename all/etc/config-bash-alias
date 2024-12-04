@@ -641,6 +641,31 @@ alias t-sound1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completi
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
+function hr {
+   # Fx para adicionar novos horarios do trabalho e visual os que ja existem
+
+   clear
+   figlet DRYa
+
+   echo "DRYa: Gerir Horario"
+
+   # Lista de opcoes para o menu `fzf`
+      L4="4. Registar  | Horas apos o turno (upK)" 
+      L3="3. Ver       | Todos os Horarios anteriores"
+      L2="2. Adicionar | Horario novo"
+      L1="1. Ver       | Horario atual"
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4" | fzf --cycle --prompt="DRYa: Gerir Horario: ")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && echo " > $L1 (uDev)" 
+      [[ $v_list =~ "2" ]] && echo " > $L2 (uDev)" 
+      [[ $v_list =~ "3" ]] && echo " > $L3 (uDev)" 
+      [[ $v_list =~ "4" ]] && echo " > $L4 (uDev)" 
+      unset v_list
+
+      echo
+}
 
 function shebang {
    # It creates a bash script (if no args are input)
