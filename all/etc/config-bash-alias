@@ -90,7 +90,7 @@ function web {
       if [ -z $1 ]; then 
          # Se nao for dado nenhum argumento, dar a oportunidade ao utilizador de escolher entre a homepage e uma lista de bookmarks
    
-         v_ask=$(echo -e "1. Abrir $homePage \n2. Abrir Bookmarks Guardados" | fzf --prompt="Escolha como quer aceder à Web")
+         v_ask=$(echo -e "1. Abrir $homePage \n2. Abrir Bookmarks Guardados" | fzf --prompt="SELECT: como quer aceder à Web: ")
 
          [[ $v_ask =~ "2" ]] && f_fzf_raw_link_opener 
          [[ $v_ask =~ "1" ]] && v_URL="https://duckduckgo.com"
@@ -294,7 +294,7 @@ function hora {
 
 
 #alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
-alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD"
+alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD.org"
 
 function f_debug {
    # Degug function: use it when you need to re-open this file over and over again for debug.
@@ -632,11 +632,11 @@ function clc {
    bc --quiet
 }
 
-alias  t-play="termux-media-player play"
-alias t-pause="termux-media-player pause"
-alias  t-stop="termux-media-player stop"
-alias  t-info="termux-media-player info"
-alias t-sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
+alias   t-play="termux-media-player play"
+alias  t-pause="termux-media-player pause"
+alias   t-stop="termux-media-player stop"
+alias   t-info="termux-media-player info"
+alias  t-sound="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
 alias t-sound1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
 
 alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
@@ -649,6 +649,14 @@ function hr {
 
    echo "DRYa: Gerir Horario"
 
+   # Lista de diretorios onde é possivel encontrar mais imgs de horarios
+   # 
+   #   cd /storage/0123-4567
+   #   cd /storage/
+   #   cd /storage/83DB-10EA || cd /storage 
+   #   cd /sdcard/Termux-bridge-Android
+   #
+   
    # Lista de opcoes para o menu `fzf`
       L4="4. Registar  | Horas apos o turno (upK)" 
       L3="3. Ver       | Todos os Horarios anteriores"
@@ -661,7 +669,7 @@ function hr {
       [[ $v_list =~ "1" ]] && echo " > $L1 (uDev)" 
       [[ $v_list =~ "2" ]] && echo " > $L2 (uDev)" 
       [[ $v_list =~ "3" ]] && echo " > $L3 (uDev)" 
-      [[ $v_list =~ "4" ]] && echo " > $L4 (uDev)" 
+      [[ $v_list =~ "4" ]] && echo " > $L4"; upk
       unset v_list
 
       echo
@@ -894,7 +902,21 @@ function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
    # Menu
-      v_list=$(echo -e "1. Sair deste menu\n5. Bloquear ecra \n0. Desligar  | Encerrar | Shutdown | OFF \n4. Suspender \n2. Hibernar \n8. Reiniciar | Reeboot  | Restart \n6. Refresh   | (F5) \n\nT. Temporizar acções \nA. Abort (Restart and Shutdown)" | fzf --cycle --prompt="POWER Options: ")
+      # ------------------------------------------ #
+      L9="A. Abort (Restart and Shutdown)          "
+      L8="T. Temporizar acções                     "
+      # ------------------------------------------ #
+      L7="6. Refresh   | (F5)                      "
+      L6="8. Reiniciar | Reeboot  | Restart        "
+      L5="2. Hibernar                              "
+      L4="4. Suspender                             "
+      L3="0. Desligar  | Encerrar | Shutdown | OFF "
+      L2="5. Bloquear ecra                         "
+      L1="1. Sair deste menu                       "
+      # ------------------------------------------ #
+      L0="POWER Options: "
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina

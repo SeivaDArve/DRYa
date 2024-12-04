@@ -480,33 +480,34 @@ function f_clone_info {
    # > Tell how to clone DRYa
    # > List Repositories (public and private)
    # > Automatically redirects Termux to github.com
-      echo "DRYa: Must specify a repository to clone"
-      echo
-      echo " You can use:"
-      echo " > '$ drya clone --list-public' or "
-      echo " > '$ drya clone -p' "
-      echo "    to list all public repositories"
-      echo 
-      echo " You can use: "
-      echo " > '$ drya clone --list-private' or"
-      echo " > '$ drya clone -P'"
-      echo "   to list all private repositories"
-      echo
-      echo "To clone DRYa:  "
-      echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
-      echo
-      echo " Press ENTER to visit a webpage with all repositories:"
-      echo " > https://github.com/SeivaDArve?tab=repositories"
-      echo
-      echo " Press Ctrl-C to abort"
-      read -s
-      echo
-      f_horizline
-      echo " Note: So far, drya can open this link only with Termux"
-      echo " > uDev: No other browser found"
-      echo
-      echo "Opening URL with Termux (terminal)"
-      termux-open-url https://github.com/SeivaDArve?tab=repositories
+
+   echo "DRYa: Must specify a repository to clone"
+   echo
+   echo " You can use:"
+   echo " > '$ drya clone --list-public' or "
+   echo " > '$ drya clone -p' "
+   echo "    to list all public repositories"
+   echo 
+   echo " You can use: "
+   echo " > '$ drya clone --list-private' or"
+   echo " > '$ drya clone -P'"
+   echo "   to list all private repositories"
+   echo
+   echo "To clone DRYa:  "
+   echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+   echo
+   echo " Press ENTER to visit a webpage with all repositories:"
+   echo " > https://github.com/SeivaDArve?tab=repositories"
+   echo
+   echo " Press Ctrl-C to abort"
+   read -s
+   echo
+   f_horizline
+   echo " Note: So far, drya can open this link only with Termux"
+   echo " > uDev: No other browser found"
+   echo
+   echo "Opening URL with Termux (terminal)"
+   termux-open-url https://github.com/SeivaDArve?tab=repositories
 }
 
 function f_init_clone_repos {
@@ -528,21 +529,39 @@ function f_clone_repos {
       # uDev: Search for dependencies file if any
       # uDev: Print their webpage link
       
-      ezGIT | ezgit | ez) echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git;;
-      Tesoro | tesoro | T) echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git;;
-      moedaz | mo) echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git;;
-      yoga | yg) echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git;;
-      dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git;;
-      omni-log | omni | log | om) echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git;;
-      shiva-sutras | shiva | ss) echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git;;
-      upk) echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git;;
-      upk-dv | upkd) 
-         echo "cloning upK-diario-Dv"; 
-         echo "Link for download is:"; 
-         echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
-         git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+      ezGIT | ezgit | ez)           echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
       ;;
-      setup-internal-dir) echo "uDev";; #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
+
+      Tesoro | tesoro | T)          echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git
+      ;;
+
+      moedaz | mo)                  echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
+      ;;
+
+      yoga | yg)                    echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
+      ;;
+
+      dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
+      ;;
+
+      omni-log | omni | log | om)   echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
+      ;;
+
+      shiva-sutras | shiva | ss)    echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git
+      ;;
+
+      upk)                          echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git
+      ;;
+
+      upk-dv | upkd)                echo "cloning upK-diario-Dv"; 
+                                    echo "Link for download is:"; 
+                                    echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
+                                    git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+      ;;
+
+      setup-internal-dir)           echo "uDev"  #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
+      ;;
+
       -p | --public-list) 
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
@@ -552,6 +571,7 @@ function f_clone_repos {
             | sed 's,        <a href="/SeivaDArve/,,g' \
             | sed 's," itemprop="name codeRepository" >,,g'
       ;;
+
       -P | --private-list) 
          echo "# uDev: listing of all repositories including private ones is not ready yet"
          : '
@@ -567,6 +587,7 @@ function f_clone_repos {
                https://mygithuburl.com/user/repos?visibility=private
          '
       ;;
+
       *)
          f_talk; echo "Repository not recognized"
       ;;
@@ -579,27 +600,33 @@ function f_clone_repos {
 
 function f_dotFiles_install_git {
    # For git
-      echo "attempting git"
-      echo " Copying "
-      echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-      echo " to"
-      echo -e" > \$HOME"
-      read -s -n 1
-      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-      echo "Done!"
-      echo
+   
+   clear
+
+   echo "attempting git"
+   echo " Copying "
+   echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+   echo " to"
+   echo -e" > \$HOME"
+   read -s -n 1
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+   echo "Done!"
+   echo
 }
 
 function f_dotFiles_install_vim {
    # For vim
-      echo "attempting Vim"
-      echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
-      echo " to"
-      echo " > ~"
-      read -s -n 1
-      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-      echo "Done!"
-      echo
+
+   clear 
+
+   echo "attempting Vim"
+   echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
+   echo " to"
+   echo " > ~"
+   read -s -n 1
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+   echo "Done!"
+   echo
 }
 
 function f_dotFiles_install_termux_properties {
@@ -691,14 +718,134 @@ function f_drya_help {
    echo " 7. What is D.R.Y.a. "
 }
 
+function f_dot_files_list_available {
+   # List dot-files available in DRYa repo
 
-function f_drya_fzf_main_menu {
+   f_greet
+   f_talk; echo "drya dot-files list-ready"
+   echo " > Files ready to copy from DRYa repo to their Default locations"
+
+   # List all files in one array variable
+      v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" \ 
+                       "emacs:lib" "emacs:lib:upk" "emacs:lib:omni-log" ".gitconfig" \
+                       "xrandr" "keyboard:layout" "manpages" "termux:storage" \
+                       "termux:repos" "termux:properties" \
+                       "termux:colors" \
+                       '~/ln/wsl' \           # Soft link for WSL2 C:\
+                       '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
+                       ".dryarc" \
+                       ".tmux.conf" "\$PS1" "browser:bookmarks")  
+
+   # ECHO variable horizontally:
+      #echo "Array is: ${v_all_dot_files[@]}"
+
+   # ECHO variable veryically:
+      echo -e "\nListing all dot files to handle:"
+      for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
+
+   # Verbose notes
+      echo 
+      echo "It can config:"
+      echo " > emacs (init file + libraries)"
+      echo " > git and github with .netrc"
+      echo " > man pages"
+      echo " > ezGIT automatic encryption"
+      echo " > .vimrc"
+      echo " > termux.properties"
+      echo " > termux widgets"
+      echo " uDev"
+      echo
+}
+
+function f_dot_files_install {
+   L8="8. termux.properties"
+   L7="7. .bash_logout"
+   L6="6. .gitconfig "
+   L5="5. .vimrc "
+   L4="4. .netrc "
+   L3="3. .dryarc "
+
+   L2="2. PRESETS"
+   L1="1. TODOS "
+
+   L0="SELECT (1 or +) dot-files to install: "
+
+   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8" | fzf --cycle -m --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+      [[ $v_list =~ "2" ]] && echo "Detected 2: PRESETS"
+      [[ $v_list =~ "3" ]] && f_dotFiles_install_dryarc
+      [[ $v_list =~ "4" ]] && f_dotFiles_install_netrc
+      [[ $v_list =~ "5" ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "6" ]] && f_dotFiles_install_git 
+      [[ $v_list =~ "7" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "8" ]] && f_dotFiles_install_termux_properties
+   
+      unset v_list
+}
+
+function f_dot_files_menu {
+   # Main Menu for dot files
+      L7="7. Factory Reset"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
+      L6="6. Backup"
+      L5="5. Edit original (at Default DRYa repo) "
+      L4="4. Edit Installed (files across the system) "
+      L3="3. Remove "
+      L2="2. Install" 
+      L1="1. List available and describe (at DRYa repo) "
+
+      L0="Menu: Manage dot-files: "
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && f_dot_files_list_available
+      [[ $v_list =~ "2" ]] && f_dot_files_install
+      [[ $v_list =~ "3" ]] && echo "Detetado 3"
+      [[ $v_list =~ "4" ]] && echo "Detetado 4"
+      [[ $v_list =~ "5" ]] && echo "Detetado 5"
+      [[ $v_list =~ "6" ]] && echo "Detetado 6"
+      [[ $v_list =~ "7" ]] && echo "Detetado 6"
+   
+      unset v_list
+}
+
+function f_drya_fzf_MM_functionality_pakage {
+   # Funcoes inbutidas na Repo DRYa 
+
    # Lista de opcoes para o menu `fzf`
-      v_list=$(echo -e "1. Exit menu \n2. >> Functionality package \n3. Help + info" | fzf --cycle --prompt="DRYA: fzf menu: ")
+      elem_0="DRYA: Functionality Pakage:" 
+
+      elem_3="3. Help" 
+      elem_2="2. Manage dot-files"
+      elem_1="1. Exit" 
+
+      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3" | fzf --cycle --prompt="$elem_0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "1" ]] && sleep 0.1
+      [[ $v_list =~ "2" ]] && f_dot_files_menu
+      [[ $v_list =~ "3" ]] && sleep 0.1
+      unset v_list
+
+}
+
+function f_drya_fzf_MM {
+   # FZF Main Menu (for DRYa)
+
+   # Lista de opcoes para o menu `fzf`
+      elem_0="DRYA: fzf main Menu:" 
+
+      elem_3="3. Help and Info"
+      elem_2="2. Functionality package" 
+      elem_1="1. Exit menu" 
+
+      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3" | fzf --cycle --prompt="$elem_0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
-      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality: uDev"
+      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
       [[ $v_list =~ "3" ]] && f_drya_help
       unset v_list
 }
@@ -796,9 +943,10 @@ if [ -z "$*" ]; then
             echo -ne "\r\033[K"
 
          # Calling the actual menu
-            f_drya_fzf_main_menu
+            f_drya_fzf_MM
 
       else
+
          # If there is a variable, delete and tell which was
          
          # ANSII to go to beggining of line and clear endire line after cursor
@@ -876,7 +1024,7 @@ elif [ $1 == "location" ]; then
    fi
 
 
-elif [ $1 == "v" ]; then 
+elif [ $1 == "verbose" ] || [ $1 == "v" ]; then 
    # Function found at: source-all-drya-files which is the first file on DRYa repository to run
    # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
 
@@ -926,6 +1074,8 @@ elif [ $1 == "logout" ]; then
    # If you made modifications at ...DRYa/all/etc/logout-all-drya-files 
    # and you want to conveniently apply it's changes at ~/.bash_logout
    # just run this command
+   #
+   # The file ~/.bash_logout has an fx that calls logout-all-drya-files
 
    if [ -z "$2" ]; then
       # If nothing was specified to clone
@@ -934,9 +1084,8 @@ elif [ $1 == "logout" ]; then
    elif [ $2 == "edit" ]; then
       vim ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
 
-   elif [ $2 == "apply" ]; then
-      cp ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files ~/.bash_logout \
-         && echo "DRYa: file logout-all-drya-files copied to ~/.bash_logout"
+   #elif [ $2 == "install" ]; then
+      # It is ready and was sent to DRYa fzf main menu
 
    else
       echo "Option not recognized"
@@ -975,7 +1124,10 @@ elif [ $1 == "clone" ]; then
 elif [ $1 == "config" ]; then 
 
    if [ -z $2 ]; then 
-   # uDev: at source-all-drya-files one function called traitsID will have these options
+      # uDev: at source-all-drya-files one function called traitsID will have these options
+     
+      # uDev: traitsID already gives these variables as environment variables. No need to repeat code 
+
       uname -a | grep "Microsoft" 1>/dev/null
       if [ $? == 0 ]; then echo "This is microsoft"; fi
       uname -a | grep "Android" 1>/dev/null
@@ -986,8 +1138,8 @@ elif [ $1 == "config" ]; then
       echo
       echo "uDev: This info must be environment variables for other apps"
 
-   elif [ $2 == "dot" ]; then 
-      echo "uDev: Config fot dot files"
+   elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == "dot" ]]; then 
+      f_dot_files_menu
       
    else
       echo "List of possible things to config is uDev"
@@ -1174,70 +1326,16 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
    # Installing all configuration files
 
    if [[ -z $2 ]]; then 
-      # Menu for dot files
-         v_list=$(echo -e "1. Install \n2. List ready (inside DRYa repo) \n3. Remove \n4. Edit (Inside DRYa) \n5. Edit (at Default Location) \n6. Backup" | fzf --cycle --prompt="Menu: Dot Files: ")
+      # Main Menu for dot-files
+      f_dot_files_menu  
 
-      # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && echo "Detetado 1"
-         [[ $v_list =~ "2" ]] && echo "Detetado 2"
-         [[ $v_list =~ "3" ]] && echo "Detetado 3"
-         [[ $v_list =~ "4" ]] && echo "Detetado 4"
-         [[ $v_list =~ "5" ]] && echo "Detetado 5"
-         [[ $v_list =~ "6" ]] && echo "Detetado 6"
-      
-         unset v_list
-
-   elif [[ $2 == "list-ready" ]]; then 
-
-      f_greet
-      f_talk; echo "drya dot-files list-ready"
-      echo " > Files ready to copy from DRYa repo to their Default locations"
-
-      # List all files in one array variable
-         v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" \ 
-                          "emacs:lib" "emacs:lib:upk" "emacs:lib:omni-log" ".gitconfig" \
-                          "xrandr" "keyboard:layout" "manpages" "termux:storage" \
-                          "termux:repos" "termux:properties" \
-                          "termux:colors" \
-                          '~/ln/wsl' \           # Soft link for WSL2 C:\
-                          '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
-                          ".dryarc" \
-                          ".tmux.conf" "\$PS1" "browser:bookmarks")  
-
-      # ECHO variable horizontally:
-         #echo "Array is: ${v_all_dot_files[@]}"
-
-      # ECHO variable veryically:
-         echo -e "\nListing all dot files to handle:"
-         for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cor2; echo $i; f_resetCor; done
-
-      # Verbose notes
-         echo 
-         echo "It can config:"
-         echo " > emacs (init file + libraries)"
-         echo " > git and github with .netrc"
-         echo " > man pages"
-         echo " > ezGIT automatic encryption"
-         echo " > .vimrc"
-         echo " > termux.properties"
-         echo " > termux widgets"
-         echo " uDev"
-         echo
+   elif [[ $2 == "list-ready" ]] || [[ $2 == "list-available" ]]; then 
+      # List dot-files available in DRYa repo
+      f_dot_files_list_available
 
    elif [[ $2 == "install" ]]; then 
       # Menu to install dot files
-         v_list=$(echo -e "1. TODOS \n2. .dryarc \n3. .netrc \n4. .vimrc \n5 .gitconfig \n6. termux.properties" | fzf --cycle -m --prompt="SELECT dot files to install: ")
-
-      # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
-         [[ $v_list =~ "2" ]] && f_dotFiles_install_dryarc
-         [[ $v_list =~ "3" ]] && f_dotFiles_install_netrc
-         [[ $v_list =~ "4" ]] && f_dotFiles_install_vim
-         [[ $v_list =~ "5" ]] && f_dotFiles_install_git 
-         [[ $v_list =~ "6" ]] && f_dotFiles_install_termux_properties
-      
-         unset v_list
-
+      f_dot_files_install
 
    elif [[ $2 == "remove" ]]; then 
       echo "uDev"
@@ -1688,7 +1786,7 @@ elif [ $1 == "+" ]; then
    # The DRYa's fzf main menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
-   f_drya_fzf_main_menu
+   f_drya_fzf_MM
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
