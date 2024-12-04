@@ -942,7 +942,7 @@ function V {
          ;;
          *)
             echo "How to use:"
-            echo "$ M m [0|1|2|3|4|b]"
+            echo "$ V m [0|1|2|3|4|b]"
             echo '0) # Travel to Internal storage'
             echo '1) # Travel to SD Card storage'
             echo '2) # Travel to USB storage'
