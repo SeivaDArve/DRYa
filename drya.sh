@@ -1261,7 +1261,7 @@ elif [ $1 == "seiva-up-time" ]; then
 
    echo "DRYa: seiva-up-time"
    echo
-   echo "Seiva D'Arve iniciou estudo de Linux em:"
+   echo "Seiva D'Arve iniciou estudos em Linux:"
    echo " > 2021-03-25"
    echo
 
