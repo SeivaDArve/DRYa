@@ -1259,7 +1259,10 @@ elif [ $1 == "seiva-up-time" ]; then
    
    f_greet
 
-   echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
+   echo "DRYa: seiva-up-time"
+   echo
+   echo "Seiva D'Arve iniciou estudo de Linux em:"
+   echo " > 2021-03-25"
    echo
 
    # Variavel com a data
