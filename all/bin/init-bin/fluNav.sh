@@ -806,6 +806,10 @@ function V {
    # Implementation of Use 2:
    elif [[ $1 == "shamb" ]]; then
       cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
+   
+   # Implementation of Use 2:
+   elif [[ $1 == "3sab" ]]; then
+      cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
       
    # Implementation of Use 2:
    elif [ $1 == "tmp" ]; then
