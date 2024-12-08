@@ -1870,33 +1870,54 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    echo "Procedimento para o PC reconhecer o HD"
    echo " > Também resolve HD retirado de XBOX ONE, DVR, etc..."
    echo 
+   echo "Use as teclas 'P' de 'proximo' ou 'A' de 'anterior' para navegar neste script"
+   echo 
    echo "Passo 1: No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
    f_cor1
-   echo '|--------------------------------------------------------------|'
-   echo '| Microsoft Windows [Version 10.0.22631.44.60                  |'
-   echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-   echo '|                                                              |'
-   echo '| C:\>                                                         |'
-   echo '| C:\>diskpart                                                 |'
-   echo '|--------------------------------------------------------------|'
+   echo    '|--------------------------------------------------------------|'
+   echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+   echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+   echo    '|                                                              |'
+   echo -n '| C:\>'
+   f_cor2
+   echo -n 'diskpart'
+   f_cor1
+   echo    '                                                 |'
+   echo    '|--------------------------------------------------------------|'
    f_resetCor
    echo
    echo "Passo 2: Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
    f_cor1
    echo '|--------------------------------------------------------------|'
-   echo '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+   echo '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
    echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
    echo '|                                                              |'
-   echo '| C:\>                                                         |'
-   echo '| C:\>diskpart                                                 |'
-   echo ' DISKPART> list disk'
+   echo -n '| C:\>'
+   f_cor2
+   echo -n 'diskpart'
+   f_cor1
+   echo    '                                                 |'
+   echo '|                                                              |'
+   echo '| Microsoft DiskPart version 10.0.22621.1                      |'
+   echo '|                                                              |'
+   echo '| Copyright (C) Microsoft Corporation.                         |'
+   echo '| On computer: YourName                                        |'
+   echo '|                                                              |'
+   echo -n '| DISKPART>'
+   f_cor2
+   echo -n 'list disk'
+   f_cor1
+   echo    '                                           |'
+   echo '|                                                              |'
+   echo '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+   echo '| --------  -------------  -------  -------  ---  ---          |'
+   echo '| Disk 0    Online          476 GB      0 B        *           |'
+   echo '| Disk 1    Online           59 GB    29 MB                    |'
+   echo '|                                                              |'
+   echo '| DISKPART>                                                    |'
    echo '|--------------------------------------------------------------|'
    f_resetCor
    echo
-   echo "Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
-   echo -n "Qual é o NUMERO disco aescolher? (exemplo: 'select disk 2') "
-   read v_ans
-   echo "selecionou: $v_ans" 
 
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
