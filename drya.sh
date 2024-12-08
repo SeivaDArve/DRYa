@@ -1919,6 +1919,16 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    f_resetCor
    echo
 
+   #  3-  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas.
+   #  4-  CLEAN
+   #  5-  CREATE PARTITION PRIMARY
+   #  6-  SELECT PARTITION 1
+   #  7-  ACTIVE
+   #  8-  FORMAT FS= NTFS QUICK ou FORMAT FS=FAT QUICK
+   #      (FAT para cartoes de memoria, pendrives, HDs externos e outros dispositivos).
+   #  9-  ASSIGN
+   #  10- EXIT
+
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
