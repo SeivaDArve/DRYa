@@ -1862,8 +1862,41 @@ elif [ $1 == "gui" ]; then
                      --yesno "yea" 8 8
 
 
-elif [ $1 == "create-winndows-bootable-USB-cmd" ]; then 
-   echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
+elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
+   #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
+
+   clear
+   figlet Windows USB
+   echo "Procedimento para o PC reconhecer o HD"
+   echo " > Também resolve HD retirado de XBOX ONE, DVR, etc..."
+   echo 
+   echo "Passo 1: No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
+   f_cor1
+   echo '|--------------------------------------------------------------|'
+   echo '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+   echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+   echo '|                                                              |'
+   echo '| C:\>                                                         |'
+   echo '| C:\>diskpart                                                 |'
+   echo '|--------------------------------------------------------------|'
+   f_resetCor
+   echo
+   echo "Passo 2: Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
+   f_cor1
+   echo '|--------------------------------------------------------------|'
+   echo '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+   echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+   echo '|                                                              |'
+   echo '| C:\>                                                         |'
+   echo '| C:\>diskpart                                                 |'
+   echo ' DISKPART> list disk'
+   echo '|--------------------------------------------------------------|'
+   f_resetCor
+   echo
+   echo "Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
+   echo -n "Qual é o NUMERO disco aescolher? (exemplo: 'select disk 2') "
+   read v_ans
+   echo "selecionou: $v_ans" 
 
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
