@@ -562,6 +562,9 @@ function f_clone_repos {
       setup-internal-dir)           echo "uDev"  #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
       ;;
 
+      3-sticks-alpha-bravo | 3sab)    echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
+      ;;
+
       -p | --public-list) 
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
