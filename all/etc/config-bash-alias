@@ -33,6 +33,9 @@ function f_resetCor {
    #set -o vi
 
 function E {
+
+   PS3="SELECT a file editor to set as default"
+
    select i in Nano Vim Emacs; do 
       case $i in 
          Nano)

@@ -520,52 +520,57 @@ function f_init_clone_repos {
       f_stroken
 }
 
-
 function f_clone_repos {
 
-   f_talk 
+   function f_improve_readability {
+      # These next functions are to improve the reading of `case-esac` below them
 
-   case $v_arg2 in
-      # uDev: Search for dependencies file if any
-      # uDev: Print their webpage link
-      
-      ezGIT | ezgit | ez)           echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
-      ;;
+      function f_clone_repos_upk {
+         echo "cloning upK"
+         git clone https://github.com/SeivaDArve/upK.git
+      }
 
-      Tesoro | tesoro | T)          echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git
-      ;;
+      function f_clone_repos_upk-dv {
+         echo "cloning upK-diario-Dv"; 
+         echo "Link for download is:"; 
+         echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
+         git clone https://github.com/SeivaDArve/upK-diario-Dv.git
 
-      moedaz | mo)                  echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
-      ;;
+      }
 
-      yoga | yg)                    echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
-      ;;
+      function f_clone_repos_shiva {
+         echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git
+      }
 
-      dWiki | wiki | DWiki | Dwiki) echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
-      ;;
+      function f_clone_repos_omni {
+         echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
+      }
 
-      omni-log | omni | log | om)   echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
-      ;;
+      function f_clone_repos_dWiki {
+         echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
+      }
 
-      shiva-sutras | shiva | ss)    echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git
-      ;;
+      function f_clone_repos_yoga {
+         echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
+      }
 
-      upk)                          echo "cloning upK"; git clone https://github.com/SeivaDArve/upK.git
-      ;;
+      function f_clone_repos_moedaz {
+         echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
+      }
 
-      upk-dv | upkd)                echo "cloning upK-diario-Dv"; 
-                                    echo "Link for download is:"; 
-                                    echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
-                                    git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-      ;;
+      function f_clone_repos_Tesoro {
+         echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git
+      }
 
-      setup-internal-dir)           echo "uDev"  #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
-      ;;
+      function f_clone_repos_ezGIT {
+         echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
+      }
 
-      3-sticks-alpha-bravo | 3sab)    echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
-      ;;
+      function f_3_sticks_alpha_bravo {
+         echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
+      }
 
-      -p | --public-list) 
+      function f_clone_repos_public_repos {
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
          echo "List of public repositories from Seiva D'Arve from GitHub.com:"
@@ -573,9 +578,9 @@ function f_clone_repos {
             | grep "codeRepository" \
             | sed 's,        <a href="/SeivaDArve/,,g' \
             | sed 's," itemprop="name codeRepository" >,,g'
-      ;;
+      }
 
-      -P | --private-list) 
+      function f_clone_repos_private_repos {
          echo "# uDev: listing of all repositories including private ones is not ready yet"
          : '
            Multi comment example
@@ -589,6 +594,74 @@ function f_clone_repos {
                -X GET \
                https://mygithuburl.com/user/repos?visibility=private
          '
+      }
+
+      function f_clone_repos_setup_internal_dir {
+         echo "uDev"  #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
+      }
+   }
+
+   f_improve_readability  # Simply runs last fx. 
+
+   f_talk 
+
+   case $v_arg2 in
+      # uDev: Search for dependencies file if any
+      # uDev: Print their webpage link
+      
+      ezGIT | ezgit | ez)         
+         # Runs the fx that clones ezGIT
+         f_clone_repos_ezGIT
+      ;;
+
+      Tesoro | tesoro | T)          
+         f_clone_repos_Tesoro
+      ;;
+
+      moedaz | mo)                 
+         f_clone_repos_moedaz
+      ;;
+
+      yoga | yg)                   
+         f_clone_repos_yoga
+      ;;
+
+      dWiki | wiki | DWiki | Dwiki) 
+         f_clone_repos_dWiki
+      ;;
+
+      omni-log | omni | log | om)   
+         f_clone_repos_omni
+      ;;
+
+      shiva-sutras | shiva | ss)    
+         f_clone_repos_shiva
+      ;;
+
+      upk) 
+         f_clone_repos_upk
+      ;;
+
+      upk-dv | upkd)   
+         f_clone_repos_upk-dv
+
+      ;;
+
+      3-sticks-alpha-bravo | 3sab)  
+         f_3_sticks_alpha_bravo
+      ;;
+
+
+      setup-internal-dir)          
+         f_clone_repos_setup_internal_di
+      ;;
+
+      -p | --public-list) 
+         f_clone_repos_public_repos
+      ;;
+
+      -P | --private-list) 
+         f_clone_repos_private_repos
       ;;
 
       *)
@@ -1262,7 +1335,10 @@ elif [ $1 == "seiva-up-time" ]; then
    
    f_greet
 
-   echo "DRYa: Seiva D'Arve started intense linux learning at: March 25th, 2021"
+   echo "DRYa: seiva-up-time"
+   echo
+   echo "Seiva D'Arve iniciou estudos em Linux:"
+   echo " > 2021-03-25"
    echo
 
    # Variavel com a data
@@ -1784,6 +1860,10 @@ elif [ $1 == "gui" ]; then
             whiptail --title "Example Dialog" \
                      --infobox "This is an example of an info box" 8 78 \
                      --yesno "yea" 8 8
+
+
+elif [ $1 == "create-winndows-bootable-USB-cmd" ]; then 
+   echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
 
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
