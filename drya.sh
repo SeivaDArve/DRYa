@@ -1865,21 +1865,37 @@ elif [ $1 == "gui" ]; then
 elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
 
-   function f_usb_tut_2 {
+   function f_usb_tut_2 {  # uDev: rename to: _part_00
       clear
       figlet Windows USB
    }
 
+   function f_example_0 {  # uDev: rename to: _part_0
+      echo "Procedimento para o PC reconhecer o HD"
+      echo " > Também resolve HD retirado de XBOX ONE, DVR, etc..."
+      echo 
+      echo "Para navegar no tutorial:"
+      echo " > Tecla 'S' para o passo Seguinte"
+      echo " > Tecla 'A' para o passo Anterior"
+      echo 
+   }
+
+   function f_example_1 {  # uDev: rename to: _part_1
+      f_cor1;     echo
+                  echo    '(exemplo)'
+                  echo    '|--------------------------------------------------------------|'
+                  echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                  echo    '|                                                              |'
+                  echo -n '| C:\>'
+      f_cor2;     echo -n       'diskpart'
+      f_cor1;     echo                  '                                                 |'
+                  echo    '|--------------------------------------------------------------|'
+      f_resetCor; echo
+   }
+
    f_usb_tut_2
-
-   echo "Procedimento para o PC reconhecer o HD"
-   echo " > Também resolve HD retirado de XBOX ONE, DVR, etc..."
-   echo 
-   echo "Para navegar no tutorial:"
-   echo " > Tecla 'S' para o passo Seguinte"
-   echo " > Tecla 'A' para o passo Anterior"
-   echo 
-
+   f_example_0 
    read -n 1 -p "Press Next "
 
    f_usb_tut_2
@@ -1887,27 +1903,14 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    echo "Passo 1: "
    echo "  No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
 
-   f_cor1
-   echo
-   echo    '(exemplo)'
-   echo    '|--------------------------------------------------------------|'
-   echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
-   echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-   echo    '|                                                              |'
-   echo -n '| C:\>'
-   f_cor2
-   echo -n 'diskpart'
-   f_cor1
-   echo    '                                                 |'
-   echo    '|--------------------------------------------------------------|'
-   f_resetCor
-   echo
+   f_example_1
    
    read -n 1 -p "Press Next"
 
    f_usb_tut_2
 
-   echo "Passo 2: Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
+   echo "Passo 2:"
+   echo "  Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
    f_cor1
    echo
    echo    '(exemplo)'
@@ -1945,13 +1948,11 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    read -n 1 -p "Press Next "
    f_usb_tut_2
 
-   echo "Passo 2: Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
 
-   echo -n 'Qual é o Disco que vai selecionar? '
+   echo "Passo 3:"
+   echo "  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas."   
    echo
-   echo "Passo 3-  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas."   
    f_cor1
-   echo
    echo    '(exemplo)'
    echo '|--------------------------------------------------------------|'
    echo '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
@@ -1986,9 +1987,14 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
 
    f_cor4
+   echo ' Qual é o numero do disco que vai selecionar?  '
+   f_cor1
+   echo -n '  DISKPART>'
+   f_cor2
    echo -n 'select disk '
    read -n 1 v_disk
    echo
+   f_resetCor
    v_disk="select disk $v_disk"
    echo
    echo $v_disk
