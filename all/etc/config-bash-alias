@@ -65,6 +65,8 @@ alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
 
 alias note="uDev: Create a note file with Date as a title"
 
+alias timg="termimage"
+
 function f_fzf_raw_link_opener {
    # Esta fx visita a repo 'Omni-log' e usa o script lá presente com menu `fzf` que filtra os links dos ultimos backups de bookmarks.. O link de lá escolhido, será usado aqui
 
