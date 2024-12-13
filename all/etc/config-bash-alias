@@ -625,6 +625,8 @@ function nfc {
 alias py="python3"
 alias pip="pip3"
 
+alias timg="termimage"
+
 # uDev: alias dnf-apt-pkg-pacman = X
 
 function clc {
