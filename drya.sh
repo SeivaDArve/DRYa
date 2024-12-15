@@ -834,6 +834,8 @@ function f_dot_files_list_available {
 }
 
 function f_dot_files_install {
+   Lz='`D dot install`'
+
    L8="8. termux.properties"
    L7="7. .bash_logout"
    L6="6. .gitconfig "
@@ -846,7 +848,7 @@ function f_dot_files_install {
 
    L0="SELECT (1 or +) dot-files to install: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "1" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
