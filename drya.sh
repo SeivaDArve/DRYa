@@ -1859,13 +1859,6 @@ elif [ $1 == "logo" ]; then
          # Presenting DRYa
          ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
-elif [ $1 == "gui" ]; then 
-         TERM=ansi \
-            whiptail --title "Example Dialog" \
-                     --infobox "This is an example of an info box" 8 78 \
-                     --yesno "yea" 8 8
-
-
 elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
 
