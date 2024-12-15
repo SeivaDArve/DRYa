@@ -893,16 +893,18 @@ function f_drya_fzf_MM_functionality_pakage {
    # Lista de opcoes para o menu `fzf`
       elem_0="DRYA: Functionality Pakage:" 
 
-      elem_3="3. Help" 
+      elem_4="4. Help" 
+      elem_3="3. notify (+ Android notifications)"
       elem_2="2. Manage dot-files"
       elem_1="1. Exit" 
 
-      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3" | fzf --cycle --prompt="$elem_0")
+      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3 \n$elem_4" | fzf --cycle --prompt="$elem_0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "1" ]] && sleep 0.1
       [[ $v_list =~ "2" ]] && f_dot_files_menu
-      [[ $v_list =~ "3" ]] && sleep 0.1
+      [[ $v_list =~ "3" ]] && echo "uDev"
+      [[ $v_list =~ "4" ]] && sleep 0.1
       unset v_list
 
 }
