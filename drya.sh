@@ -1883,8 +1883,8 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    }
 
    function f_example_1 {  # uDev: rename to: _part_1
-      f_cor1;     echo
-                  echo    '(exemplo)'
+                  echo
+      f_cor1;     echo    '(exemplo)'
                   echo    '|--------------------------------------------------------------|'
                   echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
                   echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
@@ -1892,124 +1892,158 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
                   echo -n '| C:\>'
       f_cor2;     echo -n       'diskpart'
       f_cor1;     echo                  '                                                 |'
-                  echo    '|--------------------------------------------------------------|'
+         f_cor1;  echo    '|                                                              |'
+                  echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                  echo    '|                                                              |'
+                  echo    '| DISKPART>'
+      f_cor1;     echo    '|--------------------------------------------------------------|'
       f_resetCor; echo
    }
 
-   f_usb_tut_2
-   f_example_0 
-   read -n 1 -p "Press Next "
+   function f_example_ask {
+      read -n 1 -p "Press [ENTER]"
+   }
 
-   f_usb_tut_2
+
+   # Greet the user
+      f_usb_tut_2
+      f_example_0 
+      f_example_ask
+
+   # Passo 1
+      # 1- No Prompt digite DISKPART, quando ele abrir aparecera escrito DISKPART a esquerda
+
+      f_usb_tut_2
    
-   echo "Passo 1: "
-   echo "  No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
+      echo "Passo 1: "
+      echo "  No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
 
-   f_example_1
-   
-   read -n 1 -p "Press Next"
+      f_example_1
+      f_example_ask
 
-   f_usb_tut_2
+   # Passo 2:
+      # Passo 2: Digite LIST DISK, esse comando ira listar is HD's instalados na maquina, preste muita atencao para nao escolher o HD errado
+      f_usb_tut_2
 
-   echo "Passo 2:"
-   echo "  Digite LIST DISK, esse comando ira listar od HD's instalados na maquina, preste muita atençao para nao escolher o HD errado"
-   f_cor1
-   echo
-   echo    '(exemplo)'
-   echo '|--------------------------------------------------------------|'
-   echo '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-   echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-   echo '|                                                              |'
-   echo -n '| C:\>'
-   f_cor2
-   echo -n 'diskpart'
-   f_cor1
-   echo    '                                                 |'
-   echo '|                                                              |'
-   echo '| Microsoft DiskPart version 10.0.22621.1                      |'
-   echo '|                                                              |'
-   echo '| Copyright (C) Microsoft Corporation.                         |'
-   echo '| On computer: YourName                                        |'
-   echo '|                                                              |'
-   echo -n '| DISKPART>'
-   f_cor2
-   echo -n 'list disk'
-   f_cor1
-   echo    '                                           |'
-   echo '|                                                              |'
-   echo '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-   echo '| --------  -------------  -------  -------  ---  ---          |'
-   echo '| Disk 0    Online          476 GB      0 B        *           |'
-   echo '| Disk 1    Online           59 GB    29 MB                    |'
-   echo '|                                                              |'
-   echo '| DISKPART>                                                    |'
-   echo '|--------------------------------------------------------------|'
-   f_resetCor
-   echo
+                  echo    "Passo 2:"
+                  echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
+                  echo
+         f_cor1;  echo    '(exemplo)'
+                  echo    '|--------------------------------------------------------------|'
+                  echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                  echo    '|                                                              |'
+                  echo -n '| C:\>'
+         f_cor2;  echo -n       'diskpart'
+         f_cor1;  echo                  '                                                 |'
+         f_cor1;  echo    '|                                                              |'
+                  echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+                  echo    '|                                                              |'
+                  echo    '| Copyright (C) Microsoft Corporation.                         |'
+                  echo    '| On computer: YourName                                        |'
+                  echo    '|                                                              |'
+                  echo -n '| DISKPART>'
+         f_cor2;  echo -n            'list disk'
+         f_cor1;  echo    '                                           |'
+                  echo    '|                                                              |'
+                  echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+                  echo    '| --------  -------------  -------  -------  ---  ---          |'
+                  echo    '| Disk 0    Online          476 GB      0 B        *           |'
+                  echo    '| Disk 1    Online           59 GB    29 MB                    |'
+                  echo    '|                                                              |'
+                  echo    '| DISKPART>                                                    |'
+                  echo    '|--------------------------------------------------------------|'
+      f_resetCor; echo
 
-   read -n 1 -p "Press Next "
-   f_usb_tut_2
+      f_example_ask
+
+   # Passo 3:
+      # 3-  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas.
+      f_usb_tut_2
 
 
-   echo "Passo 3:"
-   echo "  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas."   
-   echo
-   f_cor1
-   echo    '(exemplo)'
-   echo '|--------------------------------------------------------------|'
-   echo '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-   echo '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-   echo '|                                                              |'
-   echo -n '| C:\>'
-   f_cor2
-   echo -n 'diskpart'
-   f_cor1
-   echo    '                                                 |'
-   echo '|                                                              |'
-   echo '| Microsoft DiskPart version 10.0.22621.1                      |'
-   echo '|                                                              |'
-   echo '| Copyright (C) Microsoft Corporation.                         |'
-   echo '| On computer: YourName                                        |'
-   echo '|                                                              |'
-   echo -n '| DISKPART>'
-   f_cor2
-   echo -n 'list disk'
-   f_cor1
-   echo    '                                           |'
-   echo '|                                                              |'
-   echo '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-   echo '| --------  -------------  -------  -------  ---  ---          |'
-   echo '| Disk 0    Online          476 GB      0 B        *           |'
-   echo '| Disk 1    Online           59 GB    29 MB                    |'
-   echo '|                                                              |'
-   echo '| DISKPART>                                                    |'
-   echo '|--------------------------------------------------------------|'
-   f_resetCor
-   echo
+      function f_cwusb_passo_3 {
+                     echo    "Passo 3:"
+                     echo -n '  Digite "SELECT DISK '
+            f_cor2;  echo -n                       'X'
+         f_resetCor; echo                           '", mas no lugar do X colocar o numero'
+                     echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
+                     echo    "  Preste muita atençao para nao escolher o HD errado"
+                     echo
+            f_cor1;  echo    '(exemplo)'
+                     echo    '|--------------------------------------------------------------|'
+                     echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+                     echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                     echo    '|                                                              |'
+                     echo -n '| C:\>'
+            f_cor2;  echo -n       'diskpart'
+            f_cor1;  echo                  '                                                 |'
+                     echo    '|                                                              |'
+                     echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+                     echo    '|                                                              |'
+                     echo    '| Copyright (C) Microsoft Corporation.                         |'
+                     echo    '| On computer: YourName                                        |'
+                     echo    '|                                                              |'
+                     echo -n '| DISKPART>'
+            f_cor2;  echo -n            'list disk'
+            f_cor1;  echo                        '                                           |'
+                     echo    '|                                                              |'
+                     echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+                     echo    '| --------  -------------  -------  -------  ---  ---          |'
+                     echo    '| Disk 0    Online          476 GB      0 B        *           |'
+                     echo    '| Disk 1    Online           59 GB    29 MB                    |'
+                     echo    '|                                                              |'
+      }
+
+      f_cwusb_passo_3
+
+                     echo    '| DISKPART>                                                    |'
+                     echo    '|--------------------------------------------------------------|'
+         f_resetCor; echo
+             f_cor4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
+             f_cor1; echo -n '  DISKPART>'
+             f_cor2; echo -n            'select disk '
 
 
-   f_cor4
-   echo ' Qual é o numero do disco que vai selecionar?  '
-   f_cor1
-   echo -n '  DISKPART>'
-   f_cor2
-   echo -n 'select disk '
-   read -n 1 v_disk
-   echo
-   f_resetCor
-   v_disk="select disk $v_disk"
-   echo
-   echo $v_disk
+      function f_cwusb_passo_3_final {
+                     echo -n '| DISKPART>'
+             f_cor2; echo               "$v_disk"
+             f_cor1; echo    '|--------------------------------------------------------------|'
+      }
 
-   #  3-  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas.
+            
+
+         read v_disk
+      f_resetCor; echo
+          f_cor4; echo -n " Confirme se vai selecionar o disco "
+          f_cor2; echo    "$v_disk"
+      f_resetCor; echo    '  > "S" sim; "N" nao'
+                  echo -n '  > '
+         read v_ans
+
+         v_disk="select disk $v_disk"
+
+         [[ $v_ans == "s" ]] || [[ $v_ans == "S" ]] && clear && f_usb_tut_2 && f_cwusb_passo_3 && f_cwusb_passo_3_final
+         [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]] && echo -e "\nOperacao cancelada: a Sair"; exit 
+         echo
+
+      f_resetCor
+      f_example_ask
+
    #  4-  CLEAN
    #  5-  CREATE PARTITION PRIMARY
    #  6-  SELECT PARTITION 1
    #  7-  ACTIVE
-   #  8-  FORMAT FS= NTFS QUICK ou FORMAT FS=FAT QUICK
+   #  8-  FORMAT FS=NTFS QUICK ou FORMAT FS=FAT QUICK
    #      (FAT para cartoes de memoria, pendrives, HDs externos e outros dispositivos).
    #  9-  ASSIGN
    #  10- EXIT
+
+elif [ $1 == "wiki" ]; then 
+   echo "uDev: Opens wikiD"
+   v_file="EM ${v_REPOS_CENTER}/wikiD/wikiD.org"
+   eval $v_file
 
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
