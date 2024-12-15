@@ -1596,113 +1596,113 @@ elif [ $1 == "ssh" ]; then
       bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
 
 elif [ $1 == "edit" ]; then 
-         case $2 in
-            stroken)
-               # Editing stroken globally
-               vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
-                  echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
-                  echo
+   case $2 in
+      stroken)
+         # Editing stroken globally
+         vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
+            echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
+            echo
 
-               cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-                  echo "Copied also too: ...DRYa/install.uninstall/stroken"
-                  echo
-               
-                  # Adding info for the new user:
-                     echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+            echo "Copied also too: ...DRYa/install.uninstall/stroken"
+            echo
+         
+            # Adding info for the new user:
+               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
 
-               # Verbose output
-                  echo "You may install stroken as ~/.netrc file with the command:"
-                  echo " > drya install stroken"
-                  # uDev: to be sent to: drya.sh edit stroken
-            ;;
-            news)
-               vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
-            ;;
-            dryarc)
-               echo "edit the file to program this machine without saving inside original DRYa (uDev)"
-            ;;
-            alias | config-bash-alias)
-               ## PERMANENT CHANGES if "git push" is used
-               vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-               
-               # Other ways to open the same file: 
-                  # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
-                     # '$ F'
+         # Verbose output
+            echo "You may install stroken as ~/.netrc file with the command:"
+            echo " > drya install stroken"
+            # uDev: to be sent to: drya.sh edit stroken
+      ;;
+      news)
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+      ;;
+      dryarc)
+         echo "edit the file to program this machine without saving inside original DRYa (uDev)"
+      ;;
+      alias | config-bash-alias)
+         ## PERMANENT CHANGES if "git push" is used
+         vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+         
+         # Other ways to open the same file: 
+            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+               # '$ F'
 
-                  # Using the alias set on 'source-all-drya-files'
-                     # '$ ,.' 
-            ;;
-            source | source-drya | source-all-drya-files) 
-               vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+            # Using the alias set on 'source-all-drya-files'
+               # '$ ,.' 
+      ;;
+      source | source-drya | source-all-drya-files) 
+         vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
 
-               # Other ways to open the same file: 
-                  # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
-                     # '$ F'
+         # Other ways to open the same file: 
+            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+               # '$ F'
 
-                  # Using the alias set on 'source-all-drya-files'
-                     # '$ ,..' 
-            ;;
-            termux)
-               # Will edit termux.properties file at ~/.termux/termux.properties
-               echo uDev
-            ;;
-            *)
-               echo "drya: What do you want to edit?"
-               echo 
-               echo "Notes:"
-               echo " > you can call '$ M' for the Menu with favourite files for edition"
-               echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
+            # Using the alias set on 'source-all-drya-files'
+               # '$ ,..' 
+      ;;
+      termux)
+         # Will edit termux.properties file at ~/.termux/termux.properties
+         echo uDev
+      ;;
+      *)
+         echo "drya: What do you want to edit?"
+         echo 
+         echo "Notes:"
+         echo " > you can call '$ M' for the Menu with favourite files for edition"
+         echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
 
-            ;;
+      ;;
 
-         esac
+   esac
 
 
 
 elif [ $1 == "remove" ]; then 
-         case $2 in
-            dot-files)
-               echo "drya: drya dot-files remove"
-               echo " > remove files from default locations and do not touch files inside drya repo"
-               # Remove ~/.config/h.h
-            ;;
-            upk)
-               # Makes all dependencies for upk repo disapear
-               # This might be used most likely at in-job phone
-               #    remove:  upk repo
-               #             upk-dv
-               #             !emacs
-               #             !emacs for windows
-               #             !install init.el
-               #             source bashrc file
-               #             !figlet
-               #             netrc
-               echo "drya: udev: remove all dependencies for upk repo to run"
-            ;;
-            netrc)
-               f_greet
-               echo "drya: removing the dot file ~/.netrc"
-               echo -e "\nAre you sure you want to remove ~/.netrc? \n > [ Ctrl-C ] to Cancel\n > [ Any key ] to accept"
-               read -s -n 1
-               echo
-               rm ~/.netrc && echo "Done!"
+   case $2 in
+      dot-files)
+         echo "drya: drya dot-files remove"
+         echo " > remove files from default locations and do not touch files inside drya repo"
+         # Remove ~/.config/h.h
+      ;;
+      upk)
+         # Makes all dependencies for upk repo disapear
+         # This might be used most likely at in-job phone
+         #    remove:  upk repo
+         #             upk-dv
+         #             !emacs
+         #             !emacs for windows
+         #             !install init.el
+         #             source bashrc file
+         #             !figlet
+         #             netrc
+         echo "drya: udev: remove all dependencies for upk repo to run"
+      ;;
+      netrc)
+         f_greet
+         echo "drya: removing the dot file ~/.netrc"
+         echo -e "\nAre you sure you want to remove ~/.netrc? \n > [ Ctrl-C ] to Cancel\n > [ Any key ] to accept"
+         read -s -n 1
+         echo
+         rm ~/.netrc && echo "Done!"
 
-            ;;
-            *)
-               echo "drya: What do you want to remove? (uDev)"
-            ;;
-         esac
+      ;;
+      *)
+         echo "drya: What do you want to remove? (uDev)"
+      ;;
+   esac
 
 elif [ $1 == "save" ]; then 
-         case $2 in
-            dot-files)
-               echo "drya: drya dot-files save"
-               echo " > copy from default locations to drya repo"
-            ;;
-            *)
-               echo "drya: What do you want to save? (uDev)"
-            ;;
-         esac
+   case $2 in
+      dot-files)
+         echo "drya: drya dot-files save"
+         echo " > copy from default locations to drya repo"
+      ;;
+      *)
+         echo "drya: What do you want to save? (uDev)"
+      ;;
+   esac
 
 elif [ $1 == "news" ]; then 
          # Runs a script inside DRYa directories that continuously rolls information
@@ -1834,30 +1834,33 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
       fi
 
 elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ $1 == "clc" ]; then
-    # calculator modified for Trading 
-    bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculator-reg.sh
+   # calculator modified for Trading 
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculator-reg.sh
     
 elif [ $1 == "vlm" ]; then 
-         # Works on termux only
-            # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
+   # Works on termux only
+      # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
 
-         echo uDev
+   echo uDev
 
-         #echo "volume keys on Termux toggled. Now they act as X instead of Y"
-         # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
-         # volume-keys = volume
-         # volume-keys = virtual
-         # Default is virtual
+   #echo "volume keys on Termux toggled. Now they act as X instead of Y"
+   # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
+   # volume-keys = volume
+   # volume-keys = virtual
+   # Default is virtual
 
-         # As per termux instructions, we can reload the configs: 
-            #termux-reload-settings
+   # As per termux instructions, we can reload the configs: 
+      #termux-reload-settings
 
-elif [ $1 == "QR-to-clone-drya" ] || [ $1 == "QR-clone" ]; then 
-   echo "uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
+elif [ $1 == "QR" ]; then 
+   # Options for QR codes
+   
+   echo '`D QR-to-clone-drya` or `QR-clone` '
+   echo " > uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
 
 elif [ $1 == "logo" ]; then 
-         # Presenting DRYa
-         ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+   # Presenting DRYa
+   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
 elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
