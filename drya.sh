@@ -2059,6 +2059,10 @@ elif [ $1 == "." ]; then
 
    f_drya_fzf_MM
 
+elif [ $1 == ".." ]; then  
+   # After using fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
+
+   echo '`D ..` is uDev' 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
       f_exec
