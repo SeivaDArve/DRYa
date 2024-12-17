@@ -780,14 +780,16 @@ function f_drya_help {
    
    echo
    echo "What is DRYa:"
-   echo " > D.R.Y.a. (Don't Repeat Yourself app)"
-   echo "            is a CLI software intended"
-   echo "            to prevent repetitive tasks"
-   echo "            and work like a 2nd brain"
-   echo "            written in Bash (Cross-Platform)"
+   echo " > D.R.Y.a. "
+   echo "   (Don't Repeat Yourself app)"
+   echo "   is a CLI software intended"
+   echo "   to prevent repetitive tasks"
+   echo "   and work like a 2nd brain"
+   echo "   written in Bash (Cross-Platform)"
    echo
-   echo " > author: David Rodrigues (Seiva D'Arve)"
-   echo "           @ flowreshe.seiva.d.arve@gmail.com"
+   echo "Author: "
+   echo " > David Rodrigues (Seiva D'Arve)"
+   echo "   flowreshe.seiva.d.arve@gmail.com"
    echo
    echo "uDev: press 'H' to Help menu with \`fzf\` for each option:"
    echo " 1. DRYa man page (uDev)"
