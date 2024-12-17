@@ -334,13 +334,21 @@ function f_drya-messages {
 alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
-alias lll="echo 'uDev: give pwd for every file in . dir'"
-#alias lll= pwd + file paths (uDev)
 alias lh="du -ah" # Lists all file's size
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 
+function lll {
+   echo "Printing absolute path for each file:"
+
+   for i in $(ls -A -p);
+   do
+      v_pwd=$(pwd)
+      v_ls="$v_pwd/$i"
+      echo $v_ls
+   done
+}
 
 alias tc="touch"
 alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tree ."
