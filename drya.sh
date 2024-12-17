@@ -836,30 +836,31 @@ function f_dot_files_list_available {
 function f_dot_files_install {
    Lz='`D dot install`'
 
-   L8="8. termux.properties"
-   L7="7. .bash_logout"
-   L6="6. .gitconfig "
-   L5="5. .vimrc "
-   L4="4. .netrc "
-   L3="3. .dryarc "
+   L9="9. termux.properties"
+   L8="8. .bash_logout"
+   L7="7. .gitconfig "
+   L6="6. .vimrc "
+   L5="5. .netrc "
+   L4="4. .dryarc "
 
-   L2="2. PRESETS"
-   L1="1. TODOS "
+   L3="3. PRESETS"
+   L2="2. TODOS "
+   L1="1. Cancel "
 
    L0="SELECT (1 or +) dot-files to install: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
-      [[ $v_list =~ "2" ]] && echo "Detected 2: PRESETS"
-      [[ $v_list =~ "3" ]] && f_dotFiles_install_dryarc
-      [[ $v_list =~ "4" ]] && f_dotFiles_install_netrc
-      [[ $v_list =~ "5" ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "6" ]] && f_dotFiles_install_git 
-      [[ $v_list =~ "7" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
-      [[ $v_list =~ "8" ]] && f_dotFiles_install_termux_properties
-   
+      [[ $v_list =~ "9" ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "8" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "7" ]] && f_dotFiles_install_git 
+      [[ $v_list =~ "6" ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "5" ]] && f_dotFiles_install_netrc
+      [[ $v_list =~ "4" ]] && f_dotFiles_install_dryarc
+      [[ $v_list =~ "3" ]] && echo "uDev: PRESETS"
+      [[ $v_list =~ "2" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+      [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
       unset v_list
 }
 
@@ -898,7 +899,7 @@ function f_drya_fzf_MM_functionality_pakage {
       elem_4="4. Help" 
       elem_3="3. notify (+ Android notifications)"
       elem_2="2. Manage dot-files"
-      elem_1="1. Exit" 
+      elem_1="1. Cancel" 
 
       v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3 \n$elem_4" | fzf --cycle --prompt="$elem_0")
 
@@ -915,18 +916,20 @@ function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
 
    # Lista de opcoes para o menu `fzf`
-      elem_0="DRYA: fzf main Menu:" 
 
-      elem_3="3. Help and Info"
-      elem_2="2. Functionality package" 
-      elem_1="1. Exit menu" 
+      Lz='`D .`'
+      L3="3. Help and Info"
+      L2="2. Functionality package" 
+      L1="1. Cancel" 
 
-      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3" | fzf --cycle --prompt="$elem_0")
+      L0="DRYA: fzf main Menu:" 
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && sleep 0.1  # este comando nao faz nada, dai ter so um temporizador
-      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
       [[ $v_list =~ "3" ]] && f_drya_help
+      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
+      [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
       unset v_list
 }
 
@@ -1041,9 +1044,6 @@ elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "h" ] || [ $1 == "-h" ] || [
    # Help menu  ::  rtfm: Read the Fucking Manual
    
    f_drya_help
-
-elif [ $1 == "." ]; then  # List files here
-   cd ${v_REPOS_CENTER}/DRYa && ls
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
@@ -2046,6 +2046,11 @@ elif [ $1 == "wiki" ]; then
 elif [ $1 == "+" ]; then 
    # The DRYa's fzf main menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
+
+   f_drya_fzf_MM
+
+elif [ $1 == "." ]; then  
+   # Open DRYa Main Menu
 
    f_drya_fzf_MM
 
