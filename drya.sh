@@ -957,8 +957,9 @@ function f_exec {
       #f_readKeystroke
 
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   f_talk; echo "No valid arguments were given"
-           echo "       > for help: drya -h"
+   f_talk; echo "Invalid arguments"
+           echo " > for help: drya -h"
+           echo
 
    # If no arg was given, also navigate do DRYa's repo directory
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
