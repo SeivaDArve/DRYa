@@ -116,22 +116,24 @@ function f_horizontal_line {
 # fzf menu exemplo
 
       # Lista de opcoes para o menu `fzf`
-         L0="fzf Example Menu: "
+         Lz='`Terminal Command HERE`'
 
          L3="3. Opcao"
          L2="2. Opcao"
-         L1="1. Opcao"
+         L1="1. Cancel"
+
+         L0='`fzf` Example Menu: '
          
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 " | fzf --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "1" ]] && echo "Detetado 1 (uDev)" && sleep 1
-         [[ $v_list =~ "2" ]] && echo "Detetado 2 (uDev)" && sleep 1
-         [[ $v_list =~ "3" ]] && echo "Detetado 3 (uDev)" && sleep 1
+         [[ $v_list =~ "3" ]] && echo "uDev: 3" && sleep 0.1
+         [[ $v_list =~ "2" ]] && echo "uDev: 2" && sleep 0.1
+         [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
          unset v_list
     
 	 
-# fzf com texto textra no proprio menu, onde o texto È discartado, apenas respostas validas sao validas
+# fzf com texto extra no proprio menu, onde o texto È discartado, apenas respostas validas sao validas
        # Lista de op√ß√µes para o menu `fzf` (com loop)
         while true
         do
