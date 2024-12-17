@@ -780,9 +780,14 @@ function f_drya_help {
    
    echo
    echo "What is DRYa:"
-   echo " > DRYa is a CLI software that prevents repetitive tasks"
    echo " > D.R.Y.a. (Don't Repeat Yourself app)"
+   echo "            is a CLI software intended"
+   echo "            to prevent repetitive tasks"
+   echo "            and work like a 2nd brain"
+   echo "            written in Bash (Cross-Platform)"
+   echo
    echo " > author: David Rodrigues (Seiva D'Arve)"
+   echo "           @ flowreshe.seiva.d.arve@gmail.com"
    echo
    echo "uDev: press 'H' to Help menu with \`fzf\` for each option:"
    echo " 1. DRYa man page (uDev)"
@@ -790,6 +795,7 @@ function f_drya_help {
    echo " 3. DRYa README.md file "
    echo " 4. DRYa cheat sheets and alias for terminal commands"
    echo " 5. DRYa cheat sheets for 'Temporized Menu' "
+   echo " 6. DRYa environment variables and .dryarc"
    echo " 6. traitsID: Print specs of current device"
    echo " 7. What is D.R.Y.a. "
 }
@@ -852,6 +858,7 @@ function f_dot_files_install {
    v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "\`" ]] && export Lz
       [[ $v_list =~ "9" ]] && f_dotFiles_install_termux_properties
       [[ $v_list =~ "8" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7" ]] && f_dotFiles_install_git 
@@ -896,18 +903,20 @@ function f_drya_fzf_MM_functionality_pakage {
    # Lista de opcoes para o menu `fzf`
       elem_0="DRYA: Functionality Pakage:" 
 
-      elem_4="4. Help" 
-      elem_3="3. notify (+ Android notifications)"
+      elem_5="5. Help" 
+      elem_4="4. notify (+ Android notifications)"
+      elem_3="3. Calculadoras"
       elem_2="2. Manage dot-files"
       elem_1="1. Cancel" 
 
-      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3 \n$elem_4" | fzf --cycle --prompt="$elem_0")
+      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3 \n$elem_4 \n$elem_5" | fzf --cycle --prompt="$elem_0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && sleep 0.1
+      [[ $v_list =~ "5" ]] && sleep 0.1
+      [[ $v_list =~ "4" ]] && echo "uDev"
+      [[ $v_list =~ "3" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
       [[ $v_list =~ "2" ]] && f_dot_files_menu
-      [[ $v_list =~ "3" ]] && echo "uDev"
-      [[ $v_list =~ "4" ]] && sleep 0.1
+      [[ $v_list =~ "1" ]] && sleep 0.1
       unset v_list
 
 }
@@ -957,7 +966,7 @@ function f_exec {
       #f_readKeystroke
 
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   f_talk; echo "Invalid arguments"
+   f_talk; echo "Invalid argument(s)"
            echo " > for help: drya -h"
            echo
 
@@ -995,24 +1004,28 @@ function f_exec {
       # 
 
 if [ -z "$*" ]; then
-  # Do something if there are no arguments
+   # Do something if there are no arguments
 
-  f_greet
-  f_talk; echo "is installed!"
-          echo
-          echo "      Can be used:"
-          echo "       > by calling Terminal commands. Example: 'D --help'"
-          echo "       > by calling 'D +' for extended \`fzf\` main menu"
+   f_greet
 
-   f_talk; echo "Temporized Menu (available only for 2 secs):"
-   echo -n " > Press '"; f_cor5; echo -n "d"; f_resetCor; echo "' to open DRYa fzf main menu"
-   echo   "   (same as Terminal command: 'D +')"
+   # Set Available time (in seconds) for Temporized quick menu
+      v_secs=2
+
+   # Info when no args are given
+      f_talk; echo "is installed!"
+              echo " > Terminal version: e.g. 'D --help'"
+              echo " > Menu fzf version: e.g. 'D +'"
+
+   # Temporized Quick menu
+      f_talk; echo "Temporized Menu (available only for $v_secs secs):"
+              echo -n " > Press '"; f_cor5; echo -n "d"; f_resetCor; echo -n "' or '"; f_cor5; echo -n "."; f_resetCor; echo "' to open DRYa fzf main menu"
+              echo   "   (same as Terminal command: 'D +')"
 
    
-   # Options available during only 2 seconds
+   # Options available during only few seconds
       f_talk; f_cor5; echo -en "listening... "; f_resetCor
 
-      read -sn1 -t 2 v_ans
+      read -sn1 -t $v_secs v_ans
       
       if [ -z $v_ans ]; then
          sleep 0.1
@@ -2058,8 +2071,8 @@ elif [ $1 == "." ]; then
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
-      f_exec
 
+   f_exec
 fi
 
 
