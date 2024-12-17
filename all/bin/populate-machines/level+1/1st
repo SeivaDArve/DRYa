@@ -29,6 +29,7 @@ function f_gr_soft_DRYa_dependencies {
       upower         \  # Usado para ler info de bateria
       fzf            \  # Fuzzyfinder
       ncurses-utils  \  # Instala comandos scripts uteis, por exemplo `tput` 
+      bc             \  # Best Calculator. "DRYa" needs it to use `D clc`
       neofetch
 
    # Figlet command

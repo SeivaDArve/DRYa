@@ -29,6 +29,9 @@ function f_talk {
 }
 
 # Criar ficheiro de historico
+   #uDev: Enviar para verbose-lines APENAS quando repo existe, senao, apos algum registo forcado nesse nome, nao sera possivel colonar verbose-lines repo
+   #uDev: Criar menu fzf para configurar uma lista de ficheiros com pwd absoluto para onde queremos enviar historico
+
    #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
    v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
    mkdir -p $v_dir
@@ -72,6 +75,8 @@ function f_exec_calculadora_registadora {
 
 # --- # -------------------------------------------------------------------------
    cat <<EOF
+uDev: Criar menu fzf para este Doc
+
 Historico/Registadora --------------------------------------------"
  > Ver                  (software: less) : 'V'
  > Editar               (software: vim)  : 'E'
@@ -417,10 +422,10 @@ EOF
       v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Converter: de µBIT para... \n4. Converter: de Sat  para... \n5. Info sobre unidades" | fzf --cycle -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
                
    # Quando o menu Ã© de Escolha multipla tipo `for` loop
-      [[ $v_list =~ "1." ]] && echo "debug"
-      [[ $v_list =~ "2." ]] && echo "debug"
+      [[ $v_list =~ "1." ]] && echo "uDev: 1"
+      [[ $v_list =~ "2." ]] && echo "uDev: 2"
       [[ $v_list =~ "5." ]] && f_info_unidades_de_medida | less
-      unset v_list             # Reset Ã  Variavel
+      unset v_list             # Reset a Variavel
 }
 
 function f_exec_calculadora_cambios {
@@ -535,13 +540,26 @@ function f_exec_calculadora_trim {
 
 
 # Texto do menu
-   v_list=$(echo -e "1. calculadora-registadora \n2. calculadora-conversora \n3. calculadora-cambios \n4. calculadora-regra-3-simples \n5. calculadora-trim-the-hedge \n6. Historico" | fzf -m --cycle --prompt="SELECIONE 1 calculadora: ")
+   Lz='`D clc`'
+
+   L7="7. Historico"
+   L6="6. calculadora-supermercado"
+   L5="5. calculadora-trim-the-hedge"
+   L4="4. calculadora-regra-3-simples"
+   L3="3. calculadora-cambios"
+   L2="2. calculadora-conversora"
+   L1="1. calculadora-registadora"
+
+   L0="SELECIONE 1 calculadora: "
+
+   v_list=$(echo -e "$L1 \n \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf -m --cycle --prompt="$L0")
             
-# Quando o menu Ã© de Escolha multipla tipo `for` loop
-   [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
-   [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
-   [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
-   [[ $v_list =~ "4." ]] && f_exec_calculadora_regra_de_3
+# Quando o menu de Escolha multipla tipo `for` loop
+   [[ $v_list =~ "7." ]] && vim $v_log
+   [[ $v_list =~ "6." ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
    [[ $v_list =~ "5." ]] && f_exec_calculadora_trim
-   [[ $v_list =~ "6." ]] && vim $v_log
-   unset v_list             # Reset Ã  Variavel
+   [[ $v_list =~ "4." ]] && f_exec_calculadora_regra_de_3
+   [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
+   [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
+   [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
+   unset v_list             # Reset a Variavel
