@@ -1743,6 +1743,9 @@ elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "clrPSm
         fi
       done
 
+elif [ $1 == "todo" ] || [ $1 == "t" ]; then  # Lista de tarefas
+   echo "uDev: ToDo list: @ Android Notifications, @ scratch-paper, @ omni-log, @ moedaz"
+
 elif [ $1 == "list-all-file-metadata" ] || [ $1 == "lsmeta" ]; then  # mostra os seu metadados da imagem fornecida
    # Caminho para a imagem
       echo "Introduza o nome do ficheiro do qual quer ver os metadados"
