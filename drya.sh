@@ -888,13 +888,13 @@ function f_dot_files_menu {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && f_dot_files_list_available
-      [[ $v_list =~ "2" ]] && f_dot_files_install
-      [[ $v_list =~ "3" ]] && echo "Detetado 3"
-      [[ $v_list =~ "4" ]] && echo "Detetado 4"
-      [[ $v_list =~ "5" ]] && echo "Detetado 5"
-      [[ $v_list =~ "6" ]] && echo "Detetado 6"
-      [[ $v_list =~ "7" ]] && echo "Detetado 6"
+      [[ $v_list =~ "1. " ]] && f_dot_files_list_available
+      [[ $v_list =~ "2. " ]] && f_dot_files_install
+      [[ $v_list =~ "3. " ]] && echo "Detetado 3"
+      [[ $v_list =~ "4. " ]] && echo "Detetado 4"
+      [[ $v_list =~ "5. " ]] && echo "Detetado 5"
+      [[ $v_list =~ "6. " ]] && echo "Detetado 6"
+      [[ $v_list =~ "7. " ]] && echo "Detetado 6"
    
       unset v_list
 }
@@ -903,22 +903,22 @@ function f_drya_fzf_MM_functionality_pakage {
    # Funcoes inbutidas na Repo DRYa 
 
    # Lista de opcoes para o menu `fzf`
-      elem_0="DRYA: Functionality Pakage:" 
+      L0="DRYA: Functionality Pakage:" 
 
-      elem_5="5. Help" 
-      elem_4="4. notify (+ Android notifications)"
-      elem_3="3. Calculadoras"
-      elem_2="2. Manage dot-files"
-      elem_1="1. Cancel" 
+      L5="5. Help" 
+      L4="4. notify (+ Android notifications)"
+      L3="3. Calculadoras"
+      L2="2. Manage dot-files"
+      L1="1. Cancel" 
 
-      v_list=$(echo -e "$elem_1 \n$elem_2 \n$elem_3 \n$elem_4 \n$elem_5" | fzf --cycle --prompt="$elem_0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "5" ]] && sleep 0.1
-      [[ $v_list =~ "4" ]] && echo "uDev"
-      [[ $v_list =~ "3" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
-      [[ $v_list =~ "2" ]] && f_dot_files_menu
-      [[ $v_list =~ "1" ]] && sleep 0.1
+      [[ $v_list =~ "5. " ]] && sleep 0.1
+      [[ $v_list =~ "4. " ]] && echo "uDev"
+      [[ $v_list =~ "3. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
+      [[ $v_list =~ "2. " ]] && f_dot_files_menu
+      [[ $v_list =~ "1. " ]] && sleep 0.1
       unset v_list
 
 }
@@ -927,8 +927,8 @@ function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
 
    # Lista de opcoes para o menu `fzf`
-
       Lz='`D .`'
+
       L3="3. Help and Info"
       L2="2. Functionality package" 
       L1="1. Cancel" 
@@ -938,9 +938,9 @@ function f_drya_fzf_MM {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "3" ]] && f_drya_help
-      [[ $v_list =~ "2" ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
-      [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
+      [[ $v_list =~ "3. " ]] && f_drya_help
+      [[ $v_list =~ "2. " ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       unset v_list
 }
 
@@ -1241,7 +1241,7 @@ elif [ $1 == "config" ]; then
       echo "List of possible things to config is uDev"
    fi
 
-elif [ $1 == "wpwd" ]; then 
+elif [ $1 == "wpwd" ] || [ $1 == "wPWD"]; then 
 
    f_greet
 
