@@ -555,6 +555,7 @@ function f_exec_calculadora_trim {
    v_list=$(echo -e "$L1 \n \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf -m --cycle --prompt="$L0")
             
 # Quando o menu de Escolha multipla tipo `for` loop
+   [[ $v_list =~ "\`" ]] && echo "$Lz"
    [[ $v_list =~ "7." ]] && vim $v_log
    [[ $v_list =~ "6." ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
    [[ $v_list =~ "5." ]] && f_exec_calculadora_trim
