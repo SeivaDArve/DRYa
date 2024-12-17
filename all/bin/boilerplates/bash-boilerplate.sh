@@ -127,9 +127,9 @@ function f_horizontal_line {
          v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "3" ]] && echo "uDev: 3" && sleep 0.1
-         [[ $v_list =~ "2" ]] && echo "uDev: 2" && sleep 0.1
-         [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
+         [[ $v_list =~ "3. " ]] && echo "uDev: 3" && sleep 0.1
+         [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1
+         [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
          unset v_list
     
 	 
