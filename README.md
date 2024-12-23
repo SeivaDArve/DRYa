@@ -25,7 +25,6 @@ Bash allows my Repo and Programming to achieve: Holy trinity
    - Allows me to carry all my info and web scrapers (Omniscient)
 
 ## Further Description
-
 When using any smart device or any computer, there are too many things that may become repetitive.
 Some examples are:
    - After formating your machine, installing all the apps again may be repetitive

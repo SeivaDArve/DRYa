@@ -113,44 +113,124 @@ function f_horizontal_line {
 
 # Sound Samples
 
-# fzf menu exemplo
+# [fzf menu exemplo 1]
+   # Menu Simples
 
-      # Lista de opcoes para o menu `fzf`
-         Lz='`Terminal Command HERE`'
+   # Lista de opcoes para o menu `fzf`
+      Lz='0. `Terminal Command HERE`'
 
-         L3="3. Opcao"
-         L2="2. Opcao"
-         L1="1. Cancel"
+      L3="3. Opcao"
+      L2="2. Opcao"
+      L1="1. Cancel"
 
-         L0='`fzf` Example Menu: '
-         
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      L0='`fzf` Example Menu: '
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
-      # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "3. " ]] && echo "uDev: 3" && sleep 0.1
-         [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1
-         [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
-         unset v_list
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "3. " ]] && echo "uDev: 3" && sleep 0.1
+      [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
+      unset v_list
     
 	 
-# fzf com texto extra no proprio menu, onde o texto � discartado, apenas respostas validas sao validas
-       # Lista de opções para o menu `fzf` (com loop)
-        while true
-        do
-           # Texto do menu
-              v_list=$(echo -e "1. Opcao n.1 \n2. Opcao n.2 \n3. Opcao n.3 \n----------------------------- \nEscolha uma destas hipoteses: " | fzf -m --prompt="SELECIONE (1 ou +) do TRADE menu: ")
-           
-           # As SELECOES nao podem conter a o texto "hipotese" nem linhas vaxias de 3 espacos "   ". So quando nao tem esse texto é que quebra o loop
-              if [[ $v_list =~ "hipotese" ]] || [[ $v_list =~ "---" ]]; then
-                 echo "Menu: SFF nao selecione opcoes invalidas. [ENTER] para continuar"; read -sn 1
-                 continue
-              else
-                 break
-              fi
-        done
 
-      # Quando o menu é de Escolha multipla tipo `for` loop
-         [[ $v_list =~ "1." ]] && echo "uDev: 1"
-         [[ $v_list =~ "2." ]] && echo "uDev: 2"
-         [[ $v_list =~ "3." ]] && echo "uDev: 3"
-         unset v_list             # Reset a Variavel
+
+# [fzf menu exemplo 2] 
+   # Menu com loop + texto extra no proprio menu, onde o texto � discartado, apenas respostas validas sao validas
+
+   while true
+   do
+      # Texto do menu
+         Lz='`Terminal Command HERE`'
+
+         L4="Escolha 1 destas opcoes"
+         Lm="-----------------------"
+         L3="2. Opcao 2. foo"
+         L2="1. Opcao 3. bar"
+         L1="Cancel"
+
+         L0="SELECIONE (1 ou +) do menu: "
+      
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lm \n$L4" | fzf -m --prompt="$L0")
+      
+      # As SELECOES nao podem conter a o texto "hipotese" nem linhas vazias de 3 espacos "   ". So quando nao tem esse texto é que quebra o loop
+         if [[ $v_list =~ "destas" ]] || [[ $v_list =~ "---" ]]; then
+            echo "Menu: opcoes invalida. [ENTER] para tenrar novamente"; read -sn 1
+            continue
+         else
+            break
+         fi
+   done
+
+   # Quando o menu de Escolha multipla tipo `for` loop
+      [[ $v_list =~ "1. " ]] && echo "uDev: 1"
+      [[ $v_list =~ "foo" ]] && echo "uDev: 2"
+      [[ $v_list =~ "bar" ]] && echo "uDev: 3"
+      unset v_list  # Reset a Variavel
+
+
+
+
+
+
+# [fzf menu exemplo 3]  (uDev)
+   # Menu com loop + checkbox
+
+   # Texto do menu
+      Lz='`Terminal Command HERE`'
+
+      L3="3. Opcao 3."
+      L2a="2. [X] Opcao 2"
+      L2b="2. [ ] Opcao 2"
+      L1a="1. [X] Opcao 1"
+      L1b="1. [ ] Opcao 1"
+
+      Lc="Cancel"
+
+      L0="SELECIONE (1 ou +) do menu: "
+
+   # Verificar qual variante apresentar: A ou B
+      function f_L1 {
+         # A data contem o dia X ?
+            # Sim: L1 = L1a
+            # Nao: L1 = L1b
+
+         v_date=$(date)
+         [[ $_date != "Mon" ]] && L1="$L1a"
+         [[ $_date =~ "Mon" ]] && L1="$L1b"
+      }
+
+   # Present the menu and updating each click using last defined fxs
+      while true
+      do
+         # Refresh each variable
+            f_L1; 
+
+         v_list=$(echo -e "$Lc \n\n$L1 \n$L2 \n$L3" | fzf -m --prompt="$L0")
+         
+         # As SELECOES nao podem conter a o texto "hipotese" nem linhas vazias de 3 espacos "   ". So quando nao tem esse texto é que quebra o loop
+            if [[ $v_list =~ "<all-invalid-options>" ]]; then
+               echo "Menu: opcoes invalida."
+               read -s -p " > [ENTER] para tentar novamente" -n 1
+               continue
+
+            else
+               # Quando o menu de Escolha multipla tipo `for` loop
+
+               [[ $v_list =~ "1. " ]] && echo "uDev: 1" && break
+               [[ $v_list =~ "foo" ]] && echo "uDev: 2" && break
+               [[ $v_list =~ "bar" ]] && echo "uDev: 3" && break
+            fi
+      done
+
+   # Rese a lisea de variaveis
+      unset v_list 
+
+
+
+
+
+
+
+

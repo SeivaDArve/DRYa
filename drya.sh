@@ -1,7 +1,9 @@
 #!/bin/bash 
 # Title: DRYa
 # Description: Don't Repeat Yourself (app)
-# Use: You may use this app in many way. One of those is a package manager for a few specific repositories (until you change it)
+# Use: You may use this app in many ways. 
+#      1. A package manager for a few specific repositories (until you change it)
+#      2. ...
 
 # This script was intended to be called at the terminal by the alias 'drya'. 
    # If the package manager that installs this script does not set this alias, lets set this alias here (from within)
@@ -12,7 +14,7 @@ function f_create_sub_menu_hist {
 
    mkdir -p ~/.config/h.h/drya/tmp/ 
    v_sub_menu_hist=~/.config/h.h/drya/tmp/drya-last-fzf-menus
-   touch $v_sub_menu_hist
+   touch $v_sub_menu_hist && echo "hit"
 }
 
 function f_greet {
@@ -794,6 +796,34 @@ function f_drya_help {
    echo "   and work like a 2nd brain"
    echo "   written in Bash (Cross-Platform)"
    echo
+   echo "Developer Intentions (on DRYa):"
+   echo " > The most light weight app possible "
+   echo "   that each command is performed very fast"
+   echo
+   echo " > Works on any device after proper config"
+   echo "   Windows, Linux, Mac, Android, iPhone"
+   echo
+   echo " > All burocracy around the user of the app"
+   echo "   is taken care of, without spy or malware"
+   echo   
+   echo "   possible because the code is not compiled"
+   echo "   abd any user non-developer is able to open"
+   echo "   each script and actually read every command"
+   echo "   that is going to run, and change it"
+   echo
+   echo " > It is a compilation of every cool feature"
+   echo "   of every other cool app without their"
+   echo "   bloated garbage. It either mimics features"
+   echo "   or gives simplified commands to the user"
+   echo "   to make use of the original app. No need"
+   echo "   install any 3rd party software that"
+   echo "   duplixates functionality of other apps"
+   echo
+   echo " > A server or cloud should be running online"
+   echo "   always to allow DRYa repo to be cloned"
+   echo "   (if needed)"
+   echo   
+   echo
    echo "Author: "
    echo " > David Rodrigues (Seiva D'Arve)"
    echo "   flowreshe.seiva.d.arve@gmail.com"
@@ -910,7 +940,7 @@ function f_drya_fzf_MM_functionality_pakage {
    # Funcoes inbutidas na Repo DRYa 
 
    # Lista de opcoes para o menu `fzf`
-      L0="DRYA: Functionality Pakage:" 
+      L0="DRYA: Fx List:" 
 
       L5="5. Help" 
       L4="4. notify (+ Android notifications)"
@@ -918,7 +948,7 @@ function f_drya_fzf_MM_functionality_pakage {
       L2="2. Manage dot-files"
       L1="1. Cancel" 
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "5. " ]] && sleep 0.1
@@ -947,7 +977,7 @@ function f_drya_fzf_MM {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_sub_menu_hist
       [[ $v_list =~ "3. " ]] && f_drya_help
-      [[ $v_list =~ "2. " ]] && echo "DRYa: Functionality" && f_drya_fzf_MM_functionality_pakage
+      [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_functionality_pakage
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       #unset v_list
 }
@@ -2068,8 +2098,10 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
 elif [ $1 == "wiki" ]; then 
    echo "uDev: Opens wikiD"
-   v_file="EM ${v_REPOS_CENTER}/wikiD/wikiD.org"
-   eval $v_file
+   #v_file="emacs ${v_REPOS_CENTER}/wikiD/wikiD.org"
+   #eval $v_file
+
+  cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
 elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then  
    # Open DRYa fzf Main Menu
@@ -2087,11 +2119,15 @@ elif [ $1 == ".." ]; then
       f_create_sub_menu_hist 
 
    # Acess history of visited menus
-      v_list=$(less "$v_sub_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
+      echo "Cancel" >> $v_sub_menu_hist
+      v_list=$(cat "$v_sub_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
 
    # Attempt to run such menu
-      [[ ! -z $v_list ]] && echo "Do you want to run $v_list?"
-   
+      [[ $v_list != "Cancel" ]] && echo "$v_list" | sed 's/`//g'
+      [[ $v_list =~ "Cancel" ]] && echo "Canceled"
+
+   # Remove all text 'Cancel' from the previous file
+      sed -i "/Cancel/d" $v_sub_menu_hist
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
