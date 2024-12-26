@@ -9,13 +9,13 @@
    # If the package manager that installs this script does not set this alias, lets set this alias here (from within)
    alias drya="${v_REPOS_CENTER}/DRYa/drya.sh"
 
-function f_create_sub_menu_hist {
-   # uDev: send this dir and file to source-al-drya-files
-
-   mkdir -p ~/.config/h.h/drya/tmp/ 
-   v_sub_menu_hist=~/.config/h.h/drya/tmp/drya-last-fzf-menus
-   touch $v_sub_menu_hist && echo "hit"
-}
+# function f_create_fzf_menu_hist {
+#    # uDev: send this dir and file to source-al-drya-files
+# 
+#    mkdir -p ~/.config/h.h/drya/tmp/ 
+#    v_drya_fzf_menu_hist=~/.config/h.h/drya/tmp/drya-last-fzf-menus
+#    touch $v_drya_fzf_menu_hist && echo "hit"
+# }
 
 function f_greet {
    # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
@@ -897,7 +897,7 @@ function f_dot_files_install {
    v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_sub_menu_hist
+      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_drya_fzf_menu_hist
       [[ $v_list =~ "9" ]] && f_dotFiles_install_termux_properties
       [[ $v_list =~ "8" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7" ]] && f_dotFiles_install_git 
@@ -975,7 +975,7 @@ function f_drya_fzf_MM {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_sub_menu_hist
+      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_drya_fzf_menu_hist
       [[ $v_list =~ "3. " ]] && f_drya_help
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_functionality_pakage
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
@@ -2108,7 +2108,7 @@ elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then
    # uDev: If fzf is not installed, imediatly do it, no questions!
       
    # Main menu will be open, so, create a tmp file to hold last visited sub menu
-      f_create_sub_menu_hist 
+      #f_create_fzf_menu_hist
 
    f_drya_fzf_MM
 
@@ -2116,18 +2116,18 @@ elif [ $1 == ".." ]; then
    # After using fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
    
    # There is a file on the system not set as env variable.. Lets load such variable and then acess it's files
-      f_create_sub_menu_hist 
+      #f_create_fzf_menu_hist
 
    # Acess history of visited menus
-      echo "Cancel" >> $v_sub_menu_hist
-      v_list=$(cat "$v_sub_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
+      echo "Cancel" >> $v_drya_fzf_menu_hist
+      v_list=$(cat "$v_drya_fzf_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
 
    # Attempt to run such menu
       [[ $v_list != "Cancel" ]] && echo "$v_list" | sed 's/`//g'
       [[ $v_list =~ "Cancel" ]] && echo "Canceled"
 
    # Remove all text 'Cancel' from the previous file
-      sed -i "/Cancel/d" $v_sub_menu_hist
+      sed -i "/Cancel/d" $v_drya_fzf_menu_hist
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
