@@ -117,10 +117,10 @@ function f_horizontal_line {
    # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
-      Lz='0. `Terminal Command HERE`'
+      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3="3. Opcao"
-      L2="2. Opcao"
+      L3="3. Opcao";  L3c="<fx-terminal-command>"  # Option with terminal command: YES
+      L2="2. Opcao"                                # Option with terminal command: NO
       L1="1. Cancel"
 
       L0='`fzf` Example Menu: '
@@ -128,9 +128,10 @@ function f_horizontal_line {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "3. " ]] && echo "uDev: 3" && sleep 0.1
-      [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
+      [[ $v_list =~ "3. " ]] && echo "uDev: 3" && echo "$L3c" >> $Lz4
+      [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       unset v_list
     
 	 
