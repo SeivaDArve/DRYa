@@ -835,6 +835,7 @@ function f_drya_help {
    echo " 4. DRYa cheat sheets and alias for terminal commands"
    echo " 5. DRYa cheat sheets for 'Temporized Menu' "
    echo " 6. DRYa environment variables and .dryarc"
+   echo ' 6. DRYa file where `notify` saves history'
    echo " 6. traitsID: Print specs of current device"
    echo " 7. What is D.R.Y.a. "
 }
