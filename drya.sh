@@ -9,14 +9,6 @@
    # If the package manager that installs this script does not set this alias, lets set this alias here (from within)
    alias drya="${v_REPOS_CENTER}/DRYa/drya.sh"
 
-# function f_create_fzf_menu_hist {
-#    # uDev: send this dir and file to source-al-drya-files
-# 
-#    mkdir -p ~/.config/h.h/drya/tmp/ 
-#    v_drya_fzf_menu_hist=~/.config/h.h/drya/tmp/drya-last-fzf-menus
-#    touch $v_drya_fzf_menu_hist && echo "hit"
-# }
-
 function f_greet {
    # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
       clear
@@ -2107,18 +2099,12 @@ elif [ $1 == "wiki" ]; then
 elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then  
    # Open DRYa fzf Main Menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
-      
-   # Main menu will be open, so, create a tmp file to hold last visited sub menu
-      #f_create_fzf_menu_hist
 
    f_drya_fzf_MM
 
 elif [ $1 == ".." ]; then  
    # After using fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
    
-   # There is a file on the system not set as env variable.. Lets load such variable and then acess it's files
-      #f_create_fzf_menu_hist
-
    # Acess history of visited menus
       echo "Cancel" >> $v_drya_fzf_menu_hist
       v_list=$(cat "$v_drya_fzf_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
