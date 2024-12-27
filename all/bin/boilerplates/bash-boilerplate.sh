@@ -119,9 +119,9 @@ function f_horizontal_line {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3="3. Opcao";  L3c="<fx-terminal-command>"  # Option with terminal command: YES
-      L2="2. Opcao"                                # Option with terminal command: NO
-      L1="1. Cancel"
+      L3='3. Opcao';  L3c='<fx-terminal-command>'  # Option with terminal command: YES
+      L2='2. Opcao'                                # Option with terminal command: NO
+      L1='1. Cancel'
 
       L0='`fzf` Example Menu: '
       
