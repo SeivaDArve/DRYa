@@ -112,6 +112,30 @@ function f_horizontal_line {
 # Ficheiro tmp em pasta tmp
 
 # Sound Samples
+   termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav
+
+
+
+
+
+
+# [fzf menu: Suplementos]
+
+   function f_pin {
+      # Adicionar codigo para aceder a fx pretendida
+      echo
+
+   }
+
+   function f_stop_duplicates {
+      # Mantem apenas X linhas (por exemplo 20) no ficheiro de historico
+      # Remove linhas duplicadas no ficheiro de historico (com preferencia das mais antigas).
+      echo
+   }
+
+
+
+
 
 # [fzf menu exemplo 1]
    # Menu Simples
@@ -119,15 +143,17 @@ function f_horizontal_line {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3="3. Opcao";  L3c="<fx-terminal-command>"  # Option with terminal command: YES
-      L2="2. Opcao"                                # Option with terminal command: NO
-      L1="1. Cancel"
+      L4='4. Opcao c/ Pin'                                # Option with terminal command: NO
+      L3='3. Opcao c/ fx history';  L3c='<fx-terminal-command>'  # Option with terminal command: YES
+      L2='2. Opcao simples'                                # Option with terminal command: NO
+      L1='1. Cancel'
 
-      L0='`fzf` Example Menu: '
+      L0="SELECIONE 1 do menu (exemplo): "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "4. " ]] && f_pin && [[ $v_pin == "x" ]] && echo "pin acepted... (uDev)"
       [[ $v_list =~ "3. " ]] && echo "uDev: 3" && echo "$L3c" >> $Lz4
       [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1 
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
