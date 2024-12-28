@@ -546,7 +546,7 @@ if [ -z "$*" ]; then
    # Menu para aceder a todas as calculadoras
 
       # Texto do menu
-         Lz='`D clc`'
+         Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
          L8="8. Historico"
          L7="7. calculadora-supermercado"
@@ -559,18 +559,18 @@ if [ -z "$*" ]; then
 
          L0="SELECIONE 1 calculadora: "
 
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8\n\n$Lz" | fzf -m --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8\n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                   
       # Quando o menu de Escolha multipla tipo `for` loop
-         [[ $v_list =~ "\`" ]] && echo "$Lz"
-         [[ $v_list =~ "8." ]] && vim $v_log
-         [[ $v_list =~ "7." ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
-         [[ $v_list =~ "6." ]] && f_exec_calculadora_trim
-         [[ $v_list =~ "5." ]] && f_exec_calculadora_regra_de_3
-         [[ $v_list =~ "4." ]] && f_exec_calculadora_cambios
-         [[ $v_list =~ "3." ]] && f_exec_calculadora_conversora
-         [[ $v_list =~ "2." ]] && f_exec_calculadora_registadora
-         [[ $v_list =~ "1." ]] && sleep 0.1
+         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
+         [[ $v_list =~ "8. " ]] && vim $v_log
+         [[ $v_list =~ "7. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+         [[ $v_list =~ "6. " ]] && f_exec_calculadora_trim
+         [[ $v_list =~ "5. " ]] && f_exec_calculadora_regra_de_3
+         [[ $v_list =~ "4. " ]] && f_exec_calculadora_cambios
+         [[ $v_list =~ "3. " ]] && f_exec_calculadora_conversora
+         [[ $v_list =~ "2. " ]] && f_exec_calculadora_registadora
+         [[ $v_list =~ "1. " ]] && sleep 0.1
          unset v_list
 
 elif [ $1 == "h" ]; then

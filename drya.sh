@@ -935,7 +935,7 @@ function f_drya_fzf_MM_functionality_pakage {
 
    function f_void {
       # Runs only once at the beginning
-      L5="5. [X] Verbose help"
+      L5="5. [ ] Verbose help"
       L5x="5. [ ] Verbose help"
       L5X="5. [X] Verbose help"
    }
@@ -947,9 +947,9 @@ function f_drya_fzf_MM_functionality_pakage {
          L0="DRYA: Fx List:" 
 
          # Void: L5, ...
-         L4="4. notify (+ Android notifications)"
-         L3="3. Calculadoras"
-         L2="2. Manage dot-files"
+         L4="4. App  | notify (Android notifications)"
+         L3="3. Menu | calculadoras"
+         L2="2. Menu | dot-files"
          L1="1. Cancel" 
 
          v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
@@ -984,18 +984,18 @@ function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
 
    # Lista de opcoes para o menu `fzf`
-      Lz='`D .`'
+      Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3="3. Help and Info"
-      L2="2. Functionality package" 
+      L3="3. | Help"
+      L2="2. | Toolbox" 
       L1="1. Cancel" 
 
       L0="DRYA: fzf main Menu:" 
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_drya_fzf_menu_hist
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       [[ $v_list =~ "3. " ]] && f_drya_help
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_functionality_pakage
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
