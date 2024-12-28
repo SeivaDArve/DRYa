@@ -1,44 +1,46 @@
 #!/bin/bash
 
-# f_greet
-   # uDev
+function f_greet {
+   # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
+      clear
+      figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
+}
 
-# Functions for text colors
-   # Copied from ezGIT
-   function f_cor1 {	
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      tput setaf 5 
-   }
-   function f_cor2 { 
-      tput setaf 2 
-   }
-   function f_cor3 { 
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      tput setaf 3
-   }
-   function f_cor5 { 
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      # Similar to Bold
-      # f_talk
-      tput setaf 6
-   }
-   function f_cor4 { 
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      # Similar to Bold
-      # f_talk
-      tput setaf 4
-   }
-   function f_resetCor { 
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      tput sgr0
-   }
-   function f_talk {
-      # Vindo de .../bin/boilerplates/bash-boilerplate.sh
-      # Copied from: ezGIT
-      echo
-      f_cor4; echo -n "DRYa: "
-      f_resetCor
-   }
+function f_c1 {	
+   # Fx for colored text: Cor 1
+   tput setaf 5 
+}
+
+function f_c2 { 
+   # Fx for colored text: Cor 2
+   tput setaf 2 
+}
+
+function f_c3 { 
+   # Fx for colored text: Cor 3
+   tput setaf 3
+}
+
+function f_c4 { 
+   # Fx for colored text: Cor 4 (Similar to Bold)
+   tput setaf 4
+}
+
+function f_c5 { 
+   # Fx for colored text: Cor 5 (Similar to Bold)
+   tput setaf 6
+}
+
+function f_rc { 
+   # Fx for colored text: Standard (reset)
+   tput sgr0
+}
+
+function f_talk {
+         echo
+   f_c4; echo -n "DRYa: "
+   f_rc
+}
 
 function f_horizontal_line {
    # This function calculates the amount of line present in the terminal window for the current zoom and creates an horizontal line across the screen
@@ -202,62 +204,48 @@ function f_horizontal_line {
 
 
 # [fzf menu exemplo 3]  (uDev)
-   # Menu com loop + checkbox
 
-   # Texto do menu
-      Lz='`Terminal Command HERE`'
+   function f_void {
+      # Runs only once at the beginning
+      L5="5. [X] Verbose help"
+      L5x="5. [ ] Verbose help"
+      L5X="5. [X] Verbose help"
+   }
+ 
+   function f_loop {
+      # Esta fx pode voltar a ser chamada varias vezes 
 
-      L3="3. Opcao 3."
-      L2a="2. [X] Opcao 2"
-      L2b="2. [ ] Opcao 2"
-      L1a="1. [X] Opcao 1"
-      L1b="1. [ ] Opcao 1"
+      # Lista de opcoes para o menu `fzf`
+         L0="DRYA: Fx List:" 
 
-      Lc="Cancel"
+         # Void: L5, ...
+         L4="4. notify (+ Android notifications)"
+         L3="3. Calculadoras"
+         L2="2. Manage dot-files"
+         L1="1. Cancel" 
 
-      L0="SELECIONE (1 ou +) do menu: "
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
 
-   # Verificar qual variante apresentar: A ou B
-      function f_L1 {
-         # A data contem o dia X ?
-            # Sim: L1 = L1a
-            # Nao: L1 = L1b
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[X]" ]] && L5="$L5x" && f_loop
+         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[ ]" ]] && L5="$L5X" && f_loop
 
-         v_date=$(date)
-         [[ $_date != "Mon" ]] && L1="$L1a"
-         [[ $_date =~ "Mon" ]] && L1="$L1b"
-      }
+         [[ $v_list =~ "4. " ]] && echo "uDev"
 
-   # Present the menu and updating each click using last defined fxs
-      while true
-      do
-         # Refresh each variable
-            f_L1; 
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
-         v_list=$(echo -e "$Lc \n\n$L1 \n$L2 \n$L3" | fzf -m --prompt="$L0")
-         
-         # As SELECOES nao podem conter a o texto "hipotese" nem linhas vazias de 3 espacos "   ". So quando nao tem esse texto é que quebra o loop
-            if [[ $v_list =~ "<all-invalid-options>" ]]; then
-               echo "Menu: opcoes invalida."
-               read -s -p " > [ENTER] para tentar novamente" -n 1
-               continue
+         [[ $v_list =~ "2. " ]] && f_dot_files_menu
+         [[ $v_list =~ "1. " ]] && sleep 0.1
 
-            else
-               # Quando o menu de Escolha multipla tipo `for` loop
+      # Evitar loops a mais
+         # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
+         # Mas precisa que esse loop seja quebrado no final
+         exit 0
+   }
 
-               [[ $v_list =~ "1. " ]] && echo "uDev: 1" && break
-               [[ $v_list =~ "foo" ]] && echo "uDev: 2" && break
-               [[ $v_list =~ "bar" ]] && echo "uDev: 3" && break
-            fi
-      done
+   # Correr 1x "void" e possivelmente correr varias vezes "loop"
+      f_void
+      f_loop
 
-   # Rese a lisea de variaveis
-      unset v_list 
-
-
-
-
-
-
-
-
+   unset v_list

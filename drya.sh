@@ -929,27 +929,54 @@ function f_dot_files_menu {
       unset v_list
 }
 
+
 function f_drya_fzf_MM_functionality_pakage {
    # Funcoes inbutidas na Repo DRYa 
 
-   # Lista de opcoes para o menu `fzf`
-      L0="DRYA: Fx List:" 
+   function f_void {
+      # Runs only once at the beginning
+      L5="5. [X] Verbose help"
+      L5x="5. [ ] Verbose help"
+      L5X="5. [X] Verbose help"
+   }
+ 
+   function f_loop {
+      # Esta fx pode voltar a ser chamada varias vezes 
 
-      L5="5. Help" 
-      L4="4. notify (+ Android notifications)"
-      L3="3. Calculadoras"
-      L2="2. Manage dot-files"
-      L1="1. Cancel" 
+      # Lista de opcoes para o menu `fzf`
+         L0="DRYA: Fx List:" 
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
+         # Void: L5, ...
+         L4="4. notify (+ Android notifications)"
+         L3="3. Calculadoras"
+         L2="2. Manage dot-files"
+         L1="1. Cancel" 
 
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "5. " ]] && sleep 0.1
-      [[ $v_list =~ "4. " ]] && echo "uDev"
-      [[ $v_list =~ "3. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
-      [[ $v_list =~ "2. " ]] && f_dot_files_menu
-      [[ $v_list =~ "1. " ]] && sleep 0.1
-      unset v_list
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[X]" ]] && L5="$L5x" && f_loop
+         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[ ]" ]] && L5="$L5X" && f_loop
+
+         [[ $v_list =~ "4. " ]] && echo "uDev"
+
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+
+         [[ $v_list =~ "2. " ]] && f_dot_files_menu
+         [[ $v_list =~ "1. " ]] && sleep 0.1
+
+      # Evitar loops a mais
+         # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
+         # Mas precisa que esse loop seja quebrado no final
+         exit 0
+   }
+
+   # Correr 1x "void" e possivelmente correr varias vezes "loop"
+      f_void
+      f_loop
+
+   unset v_list
 
 }
 

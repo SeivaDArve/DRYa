@@ -168,7 +168,7 @@ Sair -------------------------------------------------------------"
  >  sair; quit; exit; q; Q; ZZ; Ctrl-C
 
 EOF
-# --- # -------------------------------------------------------------------------
+# -# -------------------------------------------------------------------------
    }
 
 
@@ -376,12 +376,9 @@ EOF
    done
 }
 
-function f_exec_calculadora_conversora {
-   # Conversora de 1 unidade para 1 outra unidade
-
-
-   function f_info_unidades_de_medida {
-cat << EOF
+function f_info_unidades_de_medida {
+# -# -------------------------------------------------------------------------
+   cat << EOF
 Informação dedicada a conversoes de BITCOIN usando a carteira Electrum
 
 Na carteira Electrum, assim como na maioria das carteiras de Bitcoin, o saldo é medido em unidades de Bitcoin e suas subunidades. As unidades de medida usadas para medir o saldo são:
@@ -416,7 +413,14 @@ Exemplo Prático
    Em µBTC (bits), será exibido como:    123456.78 µBTC.
    Em Satoshis (sat), será exibido como: 12,345,678 sat.
 EOF
+# -# -------------------------------------------------------------------------
 }
+
+function f_exec_calculadora_conversora {
+   # Conversora de 1 unidade para 1 outra unidade
+
+   # Info
+      f_info_unidades_de_medida
 
    # Texto do menu
       v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Converter: de µBIT para... \n4. Converter: de Sat  para... \n5. Info sobre unidades" | fzf --cycle -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
@@ -433,46 +437,46 @@ function f_exec_calculadora_cambios {
 }
 
 function f_exec_calculadora_regra_de_3 {
-f_greet
-f_talk; echo "Calculadora Regra de 3 Simples"
+   f_greet
+   f_talk; echo "Calculadora Regra de 3 Simples"
 
-echo "
-                           |
----------------------------|
-  |  Regra de 3 Simples:   | 
-  |                        |
-  |       A     C          |
-  |      --- = ---         |
-  |       B     X          |
-  |                        |
-  |    X = (B x C) / A     |
-  |                        |
-  |---------------------------
-  |
+   echo "
+                              |
+   ---------------------------|
+     |  Regra de 3 Simples:   | 
+     |                        |
+     |       A     C          |
+     |      --- = ---         |
+     |       B     X          |
+     |                        |
+     |    X = (B x C) / A     |
+     |                        |
+     |---------------------------
+     |
 
-Lenga-lenga: 
- - A está para B
-      assim como C está para... ... X
+   Lenga-lenga: 
+    - A está para B
+         assim como C está para... ... X
 
-   uDev: Por enquanto usa numeros decimais com '.' em vez de ','
-_______________________________________
+      uDev: Por enquanto usa numeros decimais com '.' em vez de ','
+   _______________________________________
 
-"
+   "
 
-read -p "Introduza A: " vA
-read -p "Introduza B: " vB
-read -p "Introduza C: " vC
+   read -p "Introduza A: " vA
+   read -p "Introduza B: " vB
+   read -p "Introduza C: " vC
 
-echo
-echo "A = $vA"
-echo "B = $vB"
-echo "C = $vC"
+   echo
+   echo "A = $vA"
+   echo "B = $vB"
+   echo "C = $vC"
 
-f_calc_regr_3_simples 
+   f_calc_regr_3_simples 
 
-echo "X = $vX"
-echo
-echo "$vA está para $vB, assim como $vC está para $vX"
+   echo "X = $vX"
+   echo
+   echo "$vA está para $vB, assim como $vC está para $vX"
 }
 
 function f_exec_calculadora_trim {
@@ -536,31 +540,40 @@ function f_exec_calculadora_trim {
       echo "Vai reduzir $vX BTC da operação que esta neste momento negativa"
 }
 
-# Menu para aceder a todas as calculadoras
 
 
-# Texto do menu
-   Lz='`D clc`'
+if [ -z "$*" ]; then
+   # Menu para aceder a todas as calculadoras
 
-   L7="7. Historico"
-   L6="6. calculadora-supermercado"
-   L5="5. calculadora-trim-the-hedge"
-   L4="4. calculadora-regra-3-simples"
-   L3="3. calculadora-cambios"
-   L2="2. calculadora-conversora"
-   L1="1. calculadora-registadora"
+      # Texto do menu
+         Lz='`D clc`'
 
-   L0="SELECIONE 1 calculadora: "
+         L8="8. Historico"
+         L7="7. calculadora-supermercado"
+         L6="6. calculadora-trim-the-hedge"
+         L5="5. calculadora-regra-3-simples"
+         L4="4. calculadora-cambios"
+         L3="3. calculadora-conversora"
+         L2="2. calculadora-registadora"
+         L1="1. Cancel"
 
-   v_list=$(echo -e "$L1 \n \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf -m --cycle --prompt="$L0")
-            
-# Quando o menu de Escolha multipla tipo `for` loop
-   [[ $v_list =~ "\`" ]] && echo "$Lz"
-   [[ $v_list =~ "7." ]] && vim $v_log
-   [[ $v_list =~ "6." ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
-   [[ $v_list =~ "5." ]] && f_exec_calculadora_trim
-   [[ $v_list =~ "4." ]] && f_exec_calculadora_regra_de_3
-   [[ $v_list =~ "3." ]] && f_exec_calculadora_cambios
-   [[ $v_list =~ "2." ]] && f_exec_calculadora_conversora
-   [[ $v_list =~ "1." ]] && f_exec_calculadora_registadora
-   unset v_list             # Reset a Variavel
+         L0="SELECIONE 1 calculadora: "
+
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8\n\n$Lz" | fzf -m --cycle --prompt="$L0")
+                  
+      # Quando o menu de Escolha multipla tipo `for` loop
+         [[ $v_list =~ "\`" ]] && echo "$Lz"
+         [[ $v_list =~ "8." ]] && vim $v_log
+         [[ $v_list =~ "7." ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+         [[ $v_list =~ "6." ]] && f_exec_calculadora_trim
+         [[ $v_list =~ "5." ]] && f_exec_calculadora_regra_de_3
+         [[ $v_list =~ "4." ]] && f_exec_calculadora_cambios
+         [[ $v_list =~ "3." ]] && f_exec_calculadora_conversora
+         [[ $v_list =~ "2." ]] && f_exec_calculadora_registadora
+         [[ $v_list =~ "1." ]] && sleep 0.1
+         unset v_list
+
+elif [ $1 == "h" ]; then
+   echo "hit help"
+
+fi
