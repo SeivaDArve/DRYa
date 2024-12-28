@@ -935,36 +935,39 @@ function f_drya_fzf_MM_functionality_pakage {
 
    function f_void {
       # Runs only once at the beginning
-      L5="5. [ ] Verbose help"
-      L5x="5. [ ] Verbose help"
-      L5X="5. [X] Verbose help"
+      Lv="V. [ ] Verbose help"
+      Lvx="V. [ ] Verbose help"
+      LvX="V. [X] Verbose help"
    }
  
    function f_loop {
       # Esta fx pode voltar a ser chamada varias vezes 
 
       # Lista de opcoes para o menu `fzf`
-         L0="DRYA: Fx List:" 
 
-         # Void: L5, ...
-         L4="4. App  | notify (Android notifications)"
+         # Void: Lv, ...
+         L5="5. App  | xKill"
+         L4="4. App  | notify"
          L3="3. Menu | calculadoras"
          L2="2. Menu | dot-files"
          L1="1. Cancel" 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5" | fzf --cycle --prompt="$L0")
+         L0="DRYA: Fx List:" 
+
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[X]" ]] && L5="$L5x" && f_loop
-         [[ $v_list =~ "5. " ]] && [[ $v_list =~ "[ ]" ]] && L5="$L5X" && f_loop
+         [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
+         [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "5. " ]] && echo "uDev"
          [[ $v_list =~ "4. " ]] && echo "uDev"
 
-         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
          [[ $v_list =~ "2. " ]] && f_dot_files_menu
-         [[ $v_list =~ "1. " ]] && sleep 0.1
+         [[ $v_list =~ "1. " ]] && echo "Canceled"
 
       # Evitar loops a mais
          # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
@@ -998,7 +1001,7 @@ function f_drya_fzf_MM {
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       [[ $v_list =~ "3. " ]] && f_drya_help
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_functionality_pakage
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
 }
 

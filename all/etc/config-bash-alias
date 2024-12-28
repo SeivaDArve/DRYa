@@ -926,13 +926,14 @@ function f_fzf_power_options {
       L9="A. Abort (Restart and Shutdown)          "
       L8="T. Temporizar acções                     "
       # ------------------------------------------ #
+      
       L7="6. Refresh   | (F5)                      "
       L6="8. Reiniciar | Reeboot  | Restart        "
       L5="2. Hibernar                              "
       L4="4. Suspender                             "
       L3="0. Desligar  | Encerrar | Shutdown | OFF "
       L2="5. Bloquear ecra                         "
-      L1="1. Sair deste menu                       "
+      L1="1. Cancel                                "
       # ------------------------------------------ #
       L0="POWER Options: "
 
@@ -941,7 +942,7 @@ function f_fzf_power_options {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina
       [[ $v_list =~ "5" ]] && echo "Detetado 5 (debug)"
-      [[ $v_list =~ "4" ]] && echo "Detetado 4 (debug)"
+      [[ $v_list =~ "4" ]] && echo "Suspender" && systemctl suspend
       [[ $v_list =~ "2" ]] && echo "Hibernar" && f_hibernate
       [[ $v_list =~ "6" ]] && echo "Detetado 6 (debug)"
       [[ $v_list =~ "8" ]] && echo "Reiniciar" && f_restart  # Restart à maquina
