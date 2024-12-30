@@ -337,9 +337,17 @@ alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
 alias lh="du -ah" # Lists all file's size
-alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 alias d="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
+alias RM="rm -rf"
+
+alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
+function Mk {
+   # Creates a directory and navigates to it imediatly
+   read -p "New directory name: " v_dir
+   mkdir -p $v_dir
+   cd $v_dir
+}
 
 function lll {
    echo "Printing absolute path for each file:"
@@ -464,6 +472,7 @@ alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op htt
 #alias car="Abre uma copia da imagem GPS-view-casa para marcar na imagem onde ficou o carro (apagando a imagem anterior)" # Serve para quando se estaciona o carro em casa (na cidade, porque nunca se estaciona no mesmo sitio)
 
 alias all="cd all; ls"
+alias   A="cd all; ls"
 
 function notify {
    # Criar notificacoes via termux

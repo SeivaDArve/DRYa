@@ -808,7 +808,7 @@ function V {
       cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
    
    # Implementation of Use 2:
-   elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]]; then
+   elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
       cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
       
    # Implementation of Use 2:
