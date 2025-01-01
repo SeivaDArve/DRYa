@@ -1,13 +1,7 @@
 #!/bin/bash 
-# Title: DRYa
-# Description: Don't Repeat Yourself (app)
-# Use: You may use this app in many ways. 
-#      1. A package manager for a few specific repositories (until you change it)
-#      2. ...
-
-# This script was intended to be called at the terminal by the alias 'drya'. 
-   # If the package manager that installs this script does not set this alias, lets set this alias here (from within)
-   alias drya="${v_REPOS_CENTER}/DRYa/drya.sh"
+# Title: DRYa (Don't Repeat Yourself app)
+# Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
+# Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 function f_greet {
    # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
@@ -17,7 +11,7 @@ function f_greet {
 
 function f_greet2 {
    # Prints a more verbose output of the ascii text "DRYa" then f_greet
-      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
 # Functions for text colors (used usually with `figlet`)
@@ -45,7 +39,7 @@ function f_greet2 {
       
 function f_talk {
    # Copied from: ezGIT
-   echo
+          echo
    f_cr4; echo -n "DRYa: "
    f_res
 }
@@ -64,30 +58,32 @@ function f_stroken {
       if [ -f ~/.netrc ]; then
          #echo "netrc exists"
          echo "it exists" 1>/dev/null
+
       else
-         f_talk; echo "stroken"
-                 echo " > Inside the ezGIT app I found this: "
-         f_cr4; echo -n "seivadarve";
-         f_res; echo " and this:";
-         f_cr4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_res
-         echo
+         f_talk; echo    "stroken"
+                 echo    " > Inside the ezGIT app I found this: "
+         f_cr4;  echo -n "seivadarve";
+         f_res;  echo    " and this:";
+         f_cr4;  echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_res;  echo
       fi
 }
 
 function f_git_status {
    # Copied from: ezGIT
-   echo
+          echo
    f_cr4; echo -n "DRYa/ezGIT: "
    f_res; echo "git status"
+
    git status
 }
 
 function f_git_pull {
    # Copied from: ezGIT
-   echo
+          echo
    f_cr4; echo -n "DRYa/ezGIT: "
    f_res; echo "git pull"
+
    git pull
 }
 
@@ -96,23 +92,20 @@ function f_master_dryaRC {
 	f_setafD; echo "Menu to master .dryarc file"
 	f_setafC
 
+   echo 
+   echo "Are you looking for .dryarc?"
+   echo 
+   echo "edit: Original (at repo)"
+   echo "edit: Temporary (at use at: ~)"
 
-	function f_findPlace {
-		# Check if parent dir "~/.config/seivaDArve" exists
-
-		_DIR_NAME=~/.config/seivaDArve/
-		f_detect_dir
-		echo ak
-		read
-	}
-
-		  echo 
-		  echo "Are you looking for .dryarc?"
-		  echo 
-		  echo "edit: Original (at repo)"
-		  echo "edit: Temporary (at use at: ~)"
 	read
-	f_findPlace
+  
+   # Check if parent dir "~/.config/seivaDArve" exists
+      _DIR_NAME=~/.config/seivaDArve/
+      f_detect_dir
+      echo ak
+
+   read
 }
 
 function f_trap {
@@ -127,8 +120,6 @@ function f_trap {
 }
 
 function f_default_vars {
-	
-
 	# When at "1" it allows info to be printed at the footer. In the future you can toggle this info On/Off by pressing "i"
 	_i=1
 
@@ -136,30 +127,30 @@ function f_default_vars {
 
 		# Calling a function that defines the variable _SCRIPT_DIR:
 		f_get_script_current_abs_path
-			f_nn
+			echo
 			f_setafA; echo -n _SCRIPT_DIR
 			f_setafC; echo -n ": "
 			f_setafD; echo $_SCRIPT_DIR
 			f_setafC;
-			f_nn
+			echo
 
 		# Informing about our location
 		echo "but we are running it from:"
 			f_setafA; echo -n "pwd"
 			f_setafC; echo -n ": "
 			f_setafD; echo $(pwd)
-			f_nn;
+			echo;
 			f_setafA; echo -n "saving current "
 			f_setafD; echo -n "pwd " 
 			f_setafA; echo -n "into "
 			f_setafD; echo -n "_BEFORE_CALLING_SCRIPT"; 
 			f_setafC;
-			f_nn;
+			echo;
 
 			_BEFORE_CALLING_SCRIPT=$(pwd)
 
 			echo "_BEFORE_CALLING_SCRIPT: $_BEFORE_CALLING_SCRIPT"
-			f_nn;
+			echo;
 		
 		# Traveling to dir of main script in order to make use of relative file positions (this script is not compiled and this prevents "missing files" or "commands")
 		echo "Now, cd into _SCRIPT_DIR"
@@ -168,9 +159,9 @@ function f_default_vars {
 			f_setafC; echo -n ": "
 			f_setafD; echo $(pwd)
 			f_setafC
-			f_nn;
+			echo;
 
-		echo yo!; f_nn
+		echo yo!; echo
 
 		# If this troubleshooting works, you should be able to cat the following file from any directory:
 		cat ./wiki/testFile
@@ -193,11 +184,6 @@ function f_default_vars {
 		#v_positionSelector
 	}
 	f_positionSelector
-}
-
-function f_nn {
-	# This function only prints a new line
-	echo ""
 }
 
 function f_cursorON {
@@ -360,17 +346,21 @@ function f_fillscreenE {
 }
 
 function f_horizline {
-	_count=$(tput cols)
-	for i in $(seq $_count); do
-	   	echo -ne "-" 
-	done
+   # Criar uma linha horizontal do tamanho correto do ecra
+
+   # Buscar tamanho correto (precisa da dependencia `tput`)
+      v_count=$(tput cols)
+
+   # Escrever uma linha no ecra
+      for i in $(seq $v_count); do
+            echo -ne "-" 
+      done
 }
 
 function f_verticline {
 	_count=$(tput lines)
 	for i in $(seq $_count); do
    	echo -ne "   |\n" 
-	#sleep 0.5
 	done
 }
 
@@ -457,6 +447,7 @@ function f_calcular_tempo_decorrido_apos_data {
       echo "Tempo passado desde $STARTINGDATE:"
       echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
 }
+
 function f_get_script_current_abs_path {
 
 	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
@@ -471,6 +462,7 @@ function f_get_script_current_abs_path {
 		echo $_drya_pwd
 	}
 }
+
 function f_drya_plus {
    clear
    echo "uDev: will cat a file under ~/.config/h.h/drya/drya-welcome"
@@ -695,14 +687,12 @@ function f_dotFiles_install_vim {
    # For vim
 
    clear 
-
-   echo "attempting Vim"
-   echo " > Copying .../DRYa/all/etc/dot-files/vim/.vimrc"
-   echo " to"
-   echo " > ~"
-   read -s -n 1
-   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-   echo "Done!"
+   echo "Copying vim dotfile:"
+   echo " > from: .../DRYa/all/etc/dot-files/vim/.vimrc"
+   echo " > To:   ~"
+   read -s -n 1 -p "Press Any Key "
+   
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~ && echo "Done!"
    echo
 }
 
@@ -724,12 +714,10 @@ function f_dotFiles_install_dryarc {
 
 
 function f_dotFiles_install_netrc {
-   # Installing .netrc
+   # Installing .netrc at ~
+   # This file allows the user to avoid repetitive autentication (user and password) for github.com
+   # In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
    
-   # Installing the file that allows the user to bypass entering user and password at every git push
-   # Automatic setup for file: .netrc
-   # Description: We can avoid repetitive manual autentication for git by using a file .netrc at ~ and at this file, a token must be written. This sript sends the current stroken (token with a mispelled bug) to the correct file. Afterwards prompts the user to correct the bug
-
    clear
    figlet DRYa
 
@@ -754,83 +742,82 @@ function f_dotFiles_install_netrc {
 
      # We need that stroken message in these 2 variables: 
        v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
-       v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
+          v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
 
    # Creating a file ~/.netrc with our new stroken info
-      echo "machine github.com login $v_username password $v_token" > ~/.netrc
-      echo "File created "
-      echo " > with stroken instead of a token (still contains a bug)"
-      echo " > Press [Any key] to continue and to edit..."
-      read -s -n 1
+      echo            "Machine github.com login $v_username password $v_token" > ~/.netrc
+      echo            "File created "
+      echo            " > with stroken instead of a token (still contains a bug)"
+      read -s -n 1 -p " > Press [Any key] to continue and edit..."
       echo
 
    # Opening the file to edit
       echo "Opening the file ~/.netrc"
       echo " > (3 seconds to cancel with Ctrl-C)"
+
       read -s -n 1 -t 3
-      vim ~/.netrc
-      echo "Done!"
+
+      vim ~/.netrc && echo "Done!"
 }
 
 function f_drya_help {
    # Main help function
   
-   clear; f_greet
+   f_greet
 
    f_talk; echo "Help"
-   
-   echo
-   echo "What is DRYa:"
-   echo " > D.R.Y.a. "
-   echo "   (Don't Repeat Yourself app)"
-   echo "   is a CLI software intended"
-   echo "   to prevent repetitive tasks"
-   echo "   and work like a 2nd brain"
-   echo "   written in Bash (Cross-Platform)"
-   echo
-   echo "Developer Intentions (on DRYa):"
-   echo " > The most light weight app possible "
-   echo "   that each command is performed very fast"
-   echo
-   echo " > Works on any device after proper config"
-   echo "   Windows, Linux, Mac, Android, iPhone"
-   echo
-   echo " > All burocracy around the user of the app"
-   echo "   is taken care of, without spy or malware"
-   echo   
-   echo "   possible because the code is not compiled"
-   echo "   abd any user non-developer is able to open"
-   echo "   each script and actually read every command"
-   echo "   that is going to run, and change it"
-   echo
-   echo " > It is a compilation of every cool feature"
-   echo "   of every other cool app without their"
-   echo "   bloated garbage. It either mimics features"
-   echo "   or gives simplified commands to the user"
-   echo "   to make use of the original app. No need"
-   echo "   install any 3rd party software that"
-   echo "   duplixates functionality of other apps"
-   echo
-   echo " > A server or cloud should be running online"
-   echo "   always to allow DRYa repo to be cloned"
-   echo "   (if needed)"
-   echo   
-   echo
-   echo "Author: "
-   echo " > David Rodrigues (Seiva D'Arve)"
-   echo "   flowreshe.seiva.d.arve@gmail.com"
-   echo
-   echo "uDev: press 'H' to Help menu with \`fzf\` for each option:"
-   echo " 1. DRYa man page (uDev)"
-   echo " 2. DRYa (Terminal printed instructions)"
-   echo " 3. DRYa README.md file "
-   echo " 4. DRYa cheat sheets and alias for terminal commands"
-   echo " 5. DRYa cheat sheets for 'Temporized Menu' "
-   echo " 6. DRYa environment variables and .dryarc"
-   echo ' 6. DRYa file where `notify` saves history'
-   echo " 6. traitsID: Print specs of current device"
-   echo " 7. What is D.R.Y.a. "
-   echo " 8. Welcome screen DRYa's instructions"
+           echo
+           echo "What is DRYa:"
+           echo " > D.R.Y.a. "
+           echo "   (Don't Repeat Yourself app)"
+           echo "   is a CLI software intended"
+           echo "   to prevent repetitive tasks"
+           echo "   and work like a 2nd brain"
+           echo "   written in Bash (Cross-Platform)"
+           echo
+           echo "Developer Intentions (on DRYa):"
+           echo " > The most light weight app possible "
+           echo "   that each command is performed very fast"
+           echo
+           echo " > Works on any device after proper config"
+           echo "   Windows, Linux, Mac, Android, iPhone"
+           echo
+           echo " > All burocracy around the user of the app"
+           echo "   is taken care of, without spy or malware"
+           echo   
+           echo "   possible because the code is not compiled"
+           echo "   abd any user non-developer is able to open"
+           echo "   each script and actually read every command"
+           echo "   that is going to run, and change it"
+           echo
+           echo " > It is a compilation of every cool feature"
+           echo "   of every other cool app without their"
+           echo "   bloated garbage. It either mimics features"
+           echo "   or gives simplified commands to the user"
+           echo "   to make use of the original app. No need"
+           echo "   install any 3rd party software that"
+           echo "   duplixates functionality of other apps"
+           echo
+           echo " > A server or cloud should be running online"
+           echo "   always to allow DRYa repo to be cloned"
+           echo "   (if needed)"
+           echo   
+           echo
+           echo "Author: "
+           echo " > David Rodrigues (Seiva D'Arve)"
+           echo "   flowreshe.seiva.d.arve@gmail.com"
+           echo
+           echo "uDev: press 'H' to Help menu with \`fzf\` for each option:"
+           echo " 1. DRYa man page (uDev)"
+           echo " 2. DRYa (Terminal printed instructions)"
+           echo " 3. DRYa README.md file "
+           echo " 4. DRYa cheat sheets and alias for terminal commands"
+           echo " 5. DRYa cheat sheets for 'Temporized Menu' "
+           echo " 6. DRYa environment variables and .dryarc"
+           echo ' 6. DRYa file where `notify` saves history'
+           echo " 6. traitsID: Print specs of current device"
+           echo " 7. What is D.R.Y.a. "
+           echo " 8. Welcome screen DRYa's instructions"
 }
 
 function f_dot_files_list_available {
@@ -838,7 +825,7 @@ function f_dot_files_list_available {
 
    f_greet
    f_talk; echo "drya dot-files list-ready"
-   echo " > Files ready to copy from DRYa repo to their Default locations"
+           echo " > Files ready to copy from DRYa repo to their Default locations"
 
    # List all files in one array variable
       v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" \ 
@@ -854,9 +841,15 @@ function f_dot_files_list_available {
    # ECHO variable horizontally:
       #echo "Array is: ${v_all_dot_files[@]}"
 
-   # ECHO variable veryically:
+   # ECHO variable vertically:
       echo -e "\nListing all dot files to handle:"
-      for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cr2; echo $i; f_res; done
+
+      for i in ${v_all_dot_files[@]}
+      do 
+                echo -n " > "
+         f_cr2; echo $i
+         f_res
+      done
 
    # Verbose notes
       echo 
@@ -936,7 +929,7 @@ function f_drya_fzf_MM_functionality_pakage {
 
    function f_void {
       # Runs only once at the beginning
-      Lv="V. [ ] Verbose help"
+       Lv="V. [ ] Verbose help"
       Lvx="V. [ ] Verbose help"
       LvX="V. [X] Verbose help"
    }
@@ -992,6 +985,7 @@ function f_drya_fzf_MM {
 
       L3="3. | Help"
       L2="2. | Toolbox" 
+
       L1="1. Cancel" 
 
       L0="DRYA: fzf main Menu:" 
@@ -1097,7 +1091,7 @@ if [ -z "$*" ]; then
          # ANSII to go to beggining of line and clear endire line after cursor
             echo -ne "\r\033[K"
 
-      elif [ $v_ans == "d" ]; then
+      elif [ $v_ans == "d" ] || [ $v_ans == "." ]; then
          # When 'd' is pressed to open DRYa fzf main menu
 
          # ANSII to go to beggining of line and clear endire line after cursor
@@ -1519,7 +1513,7 @@ elif [ $1 == "install" ]; then
       echo "drya: Please specify what to install"
       echo
       echo "If you want to install drya itself, 3 ways:"
-      echo "  1. Download and run: github.com/drya/ghost-in.sh"
+      echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
       echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
       echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
 
@@ -1609,7 +1603,7 @@ elif [ $1 == "install" ]; then
       echo " > 1360x768 "
 
 
-   elif [[ $2 == "upk-at-work" ]]; then 
+   elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
       # Makes all dependencies for upk repo available
       # This might be used most likely at in-job phone
       
@@ -1624,22 +1618,15 @@ elif [ $1 == "install" ]; then
       # Change dir, to avoid changing at every command
          cd ${v_REPOS_CENTER}
 
-      # Install emacs
-         pkg install emacs
+      # Install dependencies (and automatically answering YES to all questions)
          # uDev: Test if it is windows and install GUI version also
-
-      # Install figlet
-         pkg install figlet
-
-      # Install vim
-         pkg install vim
+         yes | pkg install emacs figlet vim 
 
       # Repo: upk
          echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
 
       # Installing .netrc
-         bash ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/bin/create-netrc-from-stroken.sh
-         vim ~/.netrc
+         f_dotFiles_install_netrc
          
       # Repo: upk-diario-dv
          echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
@@ -1772,19 +1759,17 @@ elif [ $1 == "remove" ]; then
    esac
 
 elif [ $1 == "save" ]; then 
-   case $2 in
-      dot-files)
+
+   if [ $2 == "dot-files" ]; then 
          echo "drya: drya dot-files save"
          echo " > copy from default locations to drya repo"
-      ;;
-      *)
+   else
          echo "drya: What do you want to save? (uDev)"
-      ;;
-   esac
+   fi
 
 elif [ $1 == "news" ]; then 
-         # Runs a script inside DRYa directories that continuously rolls information
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+   # Runs a script inside DRYa directories that continuously rolls information
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
 elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na pasta atual, identifica todas as fotos editadas pelo Photoshop (com apoio do chatGPT)
    # uDev: Existem mais campos que mencionam 'Photoshop' sem ser so o campo '-Software', é necessario completar
@@ -1857,33 +1842,29 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
 
    # Função para exibir como usar o script
       f_instructions_of_usage() {
-         f_talk; 
-         #echo "Uso: $0 <origem> <destino>"
-         echo "Instruções: Criar um link simbólico de <origem> para <destino>."
-         echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
-         echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
-         echo "            Para o destino, tem de escolher um nome novo"
-         echo 
-         echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
-         echo
-         echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
-         echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
-         echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
-         echo 
-         f_talk
-         echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
-         echo ' > exemplo: `origem=$(pwd)`'
-         echo ' >> `D sl $origem <novo-caminho-com-nome>`'
-         echo
-         echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
-         echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
-         echo 
-         echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
-         echo 
-         f_talk
-         echo "Remover um link:"
-         echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
-         echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
+         f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
+                 echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
+                 echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
+                 echo "            Para o destino, tem de escolher um nome novo"
+                 echo 
+                 echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
+                 echo
+                 echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
+                 echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
+                 echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
+                 echo 
+         f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
+                 echo ' > exemplo: `origem=$(pwd)`'
+                 echo ' >> `D sl $origem <novo-caminho-com-nome>`'
+                 echo
+                 echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
+                 echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
+                 echo 
+                 echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
+                 echo 
+         f_talk; echo "Remover um link:"
+                 echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
+                 echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
          exit 1
       }
 
@@ -1944,7 +1925,7 @@ elif [ $1 == "logo" ]; then
    # Presenting DRYa
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
-elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
+elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
 
    function f_usb_tut_2 {  # uDev: rename to: _part_00
@@ -1963,21 +1944,21 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    }
 
    function f_example_1 {  # uDev: rename to: _part_1
-                  echo
-      f_cr1;     echo    '(exemplo)'
-                  echo    '|--------------------------------------------------------------|'
-                  echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
-                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                  echo    '|                                                              |'
-                  echo -n '| C:\>'
-      f_cr2;     echo -n       'diskpart'
-      f_cr1;     echo                  '                                                 |'
-         f_cr1;  echo    '|                                                              |'
-                  echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                  echo    '|                                                              |'
-                  echo    '| DISKPART>'
-      f_cr1;     echo    '|--------------------------------------------------------------|'
+             echo
+      f_cr1; echo    '(exemplo)'
+             echo    '|--------------------------------------------------------------|'
+             echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+             echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+             echo    '|                                                              |'
+             echo -n '| C:\>'
+      f_cr2; echo -n       'diskpart'
+      f_cr1; echo                  '                                                 |'
+      f_cr1; echo    '|                                                              |'
+             echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+             echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+             echo    '|                                                              |'
+             echo    '| DISKPART>'
+      f_cr1; echo    '|--------------------------------------------------------------|'
       f_res; echo
    }
 
@@ -2006,35 +1987,35 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
       # Passo 2: Digite LIST DISK, esse comando ira listar is HD's instalados na maquina, preste muita atencao para nao escolher o HD errado
       f_usb_tut_2
 
-                  echo    "Passo 2:"
-                  echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
-                  echo
-         f_cr1;  echo    '(exemplo)'
-                  echo    '|--------------------------------------------------------------|'
-                  echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-                  echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                  echo    '|                                                              |'
-                  echo -n '| C:\>'
-         f_cr2;  echo -n       'diskpart'
-         f_cr1;  echo                  '                                                 |'
-         f_cr1;  echo    '|                                                              |'
-                  echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-                  echo    '|                                                              |'
-                  echo    '| Copyright (C) Microsoft Corporation.                         |'
-                  echo    '| On computer: YourName                                        |'
-                  echo    '|                                                              |'
-                  echo -n '| DISKPART>'
-         f_cr2;  echo -n            'list disk'
-         f_cr1;  echo    '                                           |'
-                  echo    '|                                                              |'
-                  echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-                  echo    '| --------  -------------  -------  -------  ---  ---          |'
-                  echo    '| Disk 0    Online          476 GB      0 B        *           |'
-                  echo    '| Disk 1    Online           59 GB    29 MB                    |'
-                  echo    '|                                                              |'
-                  echo    '| DISKPART>                                                    |'
-                  echo    '|--------------------------------------------------------------|'
-      f_res; echo
+                echo    "Passo 2:"
+                echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
+                echo
+         f_cr1; echo    '(exemplo)'
+                echo    '|--------------------------------------------------------------|'
+                echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+                echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                echo    '|                                                              |'
+                echo -n '| C:\>'
+         f_cr2; echo -n       'diskpart'
+         f_cr1; echo                  '                                                 |'
+         f_cr1; echo    '|                                                              |'
+                echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+                echo    '|                                                              |'
+                echo    '| Copyright (C) Microsoft Corporation.                         |'
+                echo    '| On computer: YourName                                        |'
+                echo    '|                                                              |'
+                echo -n '| DISKPART>'
+         f_cr2; echo -n            'list disk'
+         f_cr1; echo    '                                           |'
+                echo    '|                                                              |'
+                echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+                echo    '| --------  -------------  -------  -------  ---  ---          |'
+                echo    '| Disk 0    Online          476 GB      0 B        *           |'
+                echo    '| Disk 1    Online           59 GB    29 MB                    |'
+                echo    '|                                                              |'
+                echo    '| DISKPART>                                                    |'
+                echo    '|--------------------------------------------------------------|'
+         f_res; echo
 
       f_example_ask
 
@@ -2044,63 +2025,63 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
 
       function f_cwusb_passo_3 {
-                     echo    "Passo 3:"
-                     echo -n '  Digite "SELECT DISK '
-            f_cr2;  echo -n                       'X'
+                echo    "Passo 3:"
+                echo -n '  Digite "SELECT DISK '
+         f_cr2; echo -n                       'X'
          f_res; echo                           '", mas no lugar do X colocar o numero'
-                     echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
-                     echo    "  Preste muita atençao para nao escolher o HD errado"
-                     echo
-            f_cr1;  echo    '(exemplo)'
-                     echo    '|--------------------------------------------------------------|'
-                     echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-                     echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                     echo    '|                                                              |'
-                     echo -n '| C:\>'
-            f_cr2;  echo -n       'diskpart'
-            f_cr1;  echo                  '                                                 |'
-                     echo    '|                                                              |'
-                     echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-                     echo    '|                                                              |'
-                     echo    '| Copyright (C) Microsoft Corporation.                         |'
-                     echo    '| On computer: YourName                                        |'
-                     echo    '|                                                              |'
-                     echo -n '| DISKPART>'
-            f_cr2;  echo -n            'list disk'
-            f_cr1;  echo                        '                                           |'
-                     echo    '|                                                              |'
-                     echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-                     echo    '| --------  -------------  -------  -------  ---  ---          |'
-                     echo    '| Disk 0    Online          476 GB      0 B        *           |'
-                     echo    '| Disk 1    Online           59 GB    29 MB                    |'
-                     echo    '|                                                              |'
+                echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
+                echo    "  Preste muita atençao para nao escolher o HD errado"
+                echo
+         f_cr1; echo    '(exemplo)'
+                echo    '|--------------------------------------------------------------|'
+                echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+                echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+                echo    '|                                                              |'
+                echo -n '| C:\>'
+        f_cr2;  echo -n       'diskpart'
+        f_cr1;  echo                  '                                                 |'
+                echo    '|                                                              |'
+                echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+                echo    '|                                                              |'
+                echo    '| Copyright (C) Microsoft Corporation.                         |'
+                echo    '| On computer: YourName                                        |'
+                echo    '|                                                              |'
+                echo -n '| DISKPART>'
+        f_cr2;  echo -n            'list disk'
+        f_cr1;  echo                        '                                           |'
+                echo    '|                                                              |'
+                echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+                echo    '| --------  -------------  -------  -------  ---  ---          |'
+                echo    '| Disk 0    Online          476 GB      0 B        *           |'
+                echo    '| Disk 1    Online           59 GB    29 MB                    |'
+                echo    '|                                                              |'
       }
 
       f_cwusb_passo_3
 
-                     echo    '| DISKPART>                                                    |'
-                     echo    '|--------------------------------------------------------------|'
+                echo    '| DISKPART>                                                    |'
+                echo    '|--------------------------------------------------------------|'
          f_res; echo
-             f_cr4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
-             f_cr1; echo -n '  DISKPART>'
-             f_cr2; echo -n            'select disk '
+         f_cr4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
+         f_cr1; echo -n '  DISKPART>'
+         f_cr2; echo -n            'select disk '
 
 
       function f_cwusb_passo_3_final {
-                     echo -n '| DISKPART>'
-             f_cr2; echo               "$v_disk"
-             f_cr1; echo    '|--------------------------------------------------------------|'
+                 echo -n '| DISKPART>'
+          f_cr2; echo               "$v_disk"
+          f_cr1; echo    '|--------------------------------------------------------------|'
       }
 
             
 
-         read v_disk
+             read v_disk
       f_res; echo
-          f_cr4; echo -n " Confirme se vai selecionar o disco "
-          f_cr2; echo    "$v_disk"
+      f_cr4; echo -n " Confirme se vai selecionar o disco "
+      f_cr2; echo    "$v_disk"
       f_res; echo    '  > "S" sim; "N" nao'
-                  echo -n '  > '
-         read v_ans
+             echo -n '  > '
+             read v_ans
 
          v_disk="select disk $v_disk"
 
@@ -2127,25 +2108,30 @@ elif [ $1 == "wiki" ]; then
 
   cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
+elif [ $1 == ".." ]; then  
+   # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
+   
+   ### Estas fx com o ficheiro de historico $v_drya_fzf_menu_hist vao ser descontinuadas para se passar a usar `history -s "command"` que coloca no historico do bash o texto que quisermos
+   #
+   #    # Acess history of visited menus
+   #       echo "Cancel" >> $v_drya_fzf_menu_hist
+   #       v_list=$(cat "$v_drya_fzf_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
+   #  
+   #    # Attempt to run such menu
+   #       [[ $v_list != "Cancel" ]] && echo "$v_list" | sed 's/`//g'
+   #       [[ $v_list =~ "Cancel" ]] && echo "Canceled"
+   #  
+   #    # Remove all text 'Cancel' from the previous file
+   #       sed -i "/Cancel/d" $v_drya_fzf_menu_hist
+
+   f_talk; echo '$v_drya_fzf_menu_hist sera agora substituido por `history -s "<comando>"`'
+           echo
+
 elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then  
    # Open DRYa fzf Main Menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
    f_drya_fzf_MM
-
-elif [ $1 == ".." ]; then  
-   # After using fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
-   
-   # Acess history of visited menus
-      echo "Cancel" >> $v_drya_fzf_menu_hist
-      v_list=$(cat "$v_drya_fzf_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
-
-   # Attempt to run such menu
-      [[ $v_list != "Cancel" ]] && echo "$v_list" | sed 's/`//g'
-      [[ $v_list =~ "Cancel" ]] && echo "Canceled"
-
-   # Remove all text 'Cancel' from the previous file
-      sed -i "/Cancel/d" $v_drya_fzf_menu_hist
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
