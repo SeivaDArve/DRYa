@@ -39,7 +39,7 @@ function f_greet2 {
       # Similar to Bold
       tput setaf 6
    }
-   function f_rc { 
+   function f_res { 
       tput sgr0
    }
       
@@ -47,13 +47,13 @@ function f_talk {
    # Copied from: ezGIT
    echo
    f_cr4; echo -n "DRYa: "
-   f_rc
+   f_res
 }
 
 function f_done {
    # Copied from: ezGIT
    f_cr5; echo -n ": Done"
-   f_rc
+   f_res
 }
 
 function f_stroken {
@@ -68,9 +68,9 @@ function f_stroken {
          f_talk; echo "stroken"
                  echo " > Inside the ezGIT app I found this: "
          f_cr4; echo -n "seivadarve";
-         f_rc; echo " and this:";
+         f_res; echo " and this:";
          f_cr4; echo "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_rc
+         f_res
          echo
       fi
 }
@@ -79,7 +79,7 @@ function f_git_status {
    # Copied from: ezGIT
    echo
    f_cr4; echo -n "DRYa/ezGIT: "
-   f_rc; echo "git status"
+   f_res; echo "git status"
    git status
 }
 
@@ -87,7 +87,7 @@ function f_git_pull {
    # Copied from: ezGIT
    echo
    f_cr4; echo -n "DRYa/ezGIT: "
-   f_rc; echo "git pull"
+   f_res; echo "git pull"
    git pull
 }
 
@@ -856,7 +856,7 @@ function f_dot_files_list_available {
 
    # ECHO variable veryically:
       echo -e "\nListing all dot files to handle:"
-      for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cr2; echo $i; f_rc; done
+      for i in ${v_all_dot_files[@]}; do echo -n " > "; f_cr2; echo $i; f_res; done
 
    # Verbose notes
       echo 
@@ -1082,12 +1082,12 @@ if [ -z "$*" ]; then
 
    # Temporized Quick menu
       f_talk; echo "Temporized Menu (available only for $v_secs secs):"
-              echo -n " > Press '"; f_cr5; echo -n "d"; f_rc; echo -n "' or '"; f_cr5; echo -n "."; f_rc; echo "' to open DRYa fzf main menu"
+              echo -n " > Press '"; f_cr5; echo -n "d"; f_res; echo -n "' or '"; f_cr5; echo -n "."; f_res; echo "' to open DRYa fzf main menu"
               echo   "   (same as Terminal command: 'D +')"
 
    
    # Options available during only few seconds
-      f_talk; f_cr5; echo -en "listening... "; f_rc
+      f_talk; f_cr5; echo -en "listening... "; f_res
 
       read -sn1 -t $v_secs v_ans
       
@@ -1206,7 +1206,7 @@ elif [ $1 == "update" ]; then
 
     f_greet
     f_cr4; echo -n "DRYa: "
-    f_rc; echo "Downloading updates and applying them"
+    f_res; echo "Downloading updates and applying them"
          cd ${v_REPOS_CENTER}/DRYa
     f_git_status
     f_git_pull
@@ -1214,7 +1214,7 @@ elif [ $1 == "update" ]; then
 
     # Aplly each dot-file in their correct places across the system
     f_cr4; echo -n "DRYa: "
-    f_rc; echo "applying dot-files:"
+    f_res; echo "applying dot-files:"
     echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
     echo " > termux: colors + properties (uDev)"
     echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
@@ -1224,7 +1224,7 @@ elif [ $1 == "update" ]; then
 
     # Reload .bashrc
     f_cr4; echo -n "DRYa: "
-    f_rc; echo "reloading functions, variables, alias at:"
+    f_res; echo "reloading functions, variables, alias at:"
     echo " > ~/.bashrc"
           source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
@@ -1978,7 +1978,7 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
                   echo    '|                                                              |'
                   echo    '| DISKPART>'
       f_cr1;     echo    '|--------------------------------------------------------------|'
-      f_rc; echo
+      f_res; echo
    }
 
    function f_example_ask {
@@ -2034,7 +2034,7 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
                   echo    '|                                                              |'
                   echo    '| DISKPART>                                                    |'
                   echo    '|--------------------------------------------------------------|'
-      f_rc; echo
+      f_res; echo
 
       f_example_ask
 
@@ -2047,7 +2047,7 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
                      echo    "Passo 3:"
                      echo -n '  Digite "SELECT DISK '
             f_cr2;  echo -n                       'X'
-         f_rc; echo                           '", mas no lugar do X colocar o numero'
+         f_res; echo                           '", mas no lugar do X colocar o numero'
                      echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
                      echo    "  Preste muita atençao para nao escolher o HD errado"
                      echo
@@ -2080,7 +2080,7 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
                      echo    '| DISKPART>                                                    |'
                      echo    '|--------------------------------------------------------------|'
-         f_rc; echo
+         f_res; echo
              f_cr4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
              f_cr1; echo -n '  DISKPART>'
              f_cr2; echo -n            'select disk '
@@ -2095,10 +2095,10 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
             
 
          read v_disk
-      f_rc; echo
+      f_res; echo
           f_cr4; echo -n " Confirme se vai selecionar o disco "
           f_cr2; echo    "$v_disk"
-      f_rc; echo    '  > "S" sim; "N" nao'
+      f_res; echo    '  > "S" sim; "N" nao'
                   echo -n '  > '
          read v_ans
 
@@ -2108,7 +2108,7 @@ elif [ $1 == "create-winndows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
          [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]] && echo -e "\nOperacao cancelada: a Sair"; exit 
          echo
 
-      f_rc
+      f_res
       f_example_ask
 
    #  4-  CLEAN
