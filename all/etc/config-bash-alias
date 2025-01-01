@@ -97,12 +97,20 @@ function web {
 
    # Identificar os argumentos que se enviam para esta fx
       if [ -z $1 ]; then 
-         # Se nao for dado nenhum argumento, dar a oportunidade ao utilizador de escolher entre a homepage e uma lista de bookmarks
+         # Se nao for dado nenhum argumento, dar o menu: 
    
-         v_ask=$(echo -e "1. Abrir | Bookmarks Guardados \n2. Abrir | $homePage_name" | fzf --prompt="SELECT: como quer aceder à Web: ")
+         # Lista de opcoes
+            L4="4. Abrir | Google.com"
+            L3="3. Abrir | $homePage_name"
+            L2='2. Abrir | Bookmarks Guardados '
+            L1='1. Cancel'
 
-         [[ $v_ask =~ "1" ]] && f_fzf_raw_link_opener 
-         [[ $v_ask =~ "2" ]] && v_URL="https://duckduckgo.com"
+         v_ask=$(echo -e "$L1 \n$L2 \n$L3 \n$L4" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
+
+         [[ $v_ask =~ "4" ]] && v_URL="https://google.com"
+         [[ $v_ask =~ "3" ]] && v_URL="https://duckduckgo.com"
+         [[ $v_ask =~ "2" ]] && f_fzf_raw_link_opener 
+         [[ $v_ask =~ "1" ]] && echo "Canceled"
          
       elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
