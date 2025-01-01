@@ -89,8 +89,8 @@ function web {
    # uDev: Filtrar os "browser-bookmarks" e fornecer uma opcao para isso
 
    # Homepage pre-definida
-      homePage="https://duckduckgo.com"
-      #homeName="Duck Duck Go"
+      homePage_name="Duckduckgo.com"
+      homePage="https://$homePage_name"
 
    # Reset à variavel
       unset v_URL
@@ -99,10 +99,10 @@ function web {
       if [ -z $1 ]; then 
          # Se nao for dado nenhum argumento, dar a oportunidade ao utilizador de escolher entre a homepage e uma lista de bookmarks
    
-         v_ask=$(echo -e "1. Abrir $homePage \n2. Abrir Bookmarks Guardados" | fzf --prompt="SELECT: como quer aceder à Web: ")
+         v_ask=$(echo -e "1. Abrir | Bookmarks Guardados \n2. Abrir | $homePage_name" | fzf --prompt="SELECT: como quer aceder à Web: ")
 
-         [[ $v_ask =~ "2" ]] && f_fzf_raw_link_opener 
-         [[ $v_ask =~ "1" ]] && v_URL="https://duckduckgo.com"
+         [[ $v_ask =~ "1" ]] && f_fzf_raw_link_opener 
+         [[ $v_ask =~ "2" ]] && v_URL="https://duckduckgo.com"
          
       elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
