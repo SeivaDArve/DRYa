@@ -415,6 +415,11 @@ function f_up {
 
 
 
+
+#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
+alias ..="cd .."
+alias ...="cd -"
+
 function . {
    # Navigate through the file system stupidly ez
    
@@ -461,10 +466,6 @@ function . {
 
       fi
 }
-
-#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
-alias ..="cd .."
-alias ...="cd -"
 
 function .... {
    echo 'Current location $(pwd)'
@@ -666,43 +667,48 @@ fi
 function H {
    # Funcao para 2 coisas: Abrir historico Bash com `fzf` e Abrir historico dos ultimos ficheiros editados que queremos editar de novo
 
-   # Criar um ficheiro que gere o historico de Ultimos ficheiros (se nao existir)
-      # Nome do ficheiro
-         v_file=~/.config/h.h/drya/H-fzf 
+   #   # Criar um ficheiro que gere o historico de Ultimos ficheiros (se nao existir)
+   #      # Nome do ficheiro
+   #         v_file=~/.config/h.h/drya/H-fzf 
+   #    
+   #      # Confirmar se existe
+   #         if [ ! -f $v_file ]; then
+   #            echo "Ficheiro n existe, vai ser criado" 
+   #            touch "$v_file" && echo " > Criado"
+   #         fi
+   #
+   #   if [[ -z $1 ]]; then
+   #         f_hist_2_fzf
+   #
+   #   elif [[ $1 == ".." ]]; then
+   #      v_hist=$(echo -e "2. Ultimos Ficheiros \n1. Historico Bash " | fzf)
+   #
+   #      [[ $v_hist =~ "1" ]] && echo "Escolheu 1" && history | tac | fzf
+   #
+   #      if [[ $v_hist =~ "2" ]]; then
+   #         f_hist_2_fzf
+   #      fi
+   #
+   #   elif [ $1 == "+" ]; then
+   #      echo "adding"
+   #      cd
+   #      v_add=$(fzf)
+   #      echo "$v_add" >> $v_file
+   #      cd -
+   #
+   #   elif [ $1 == "--" ]; then
+   #      echo "removing entire file"
+   #      rm $v_file
+   #
+   #   elif [ $1 == "." ]; then
+   #      cat $v_file | fzf --prompt="VISUALIZAR cada ficheiro guardado: " 1>/dev/null
+   #   fi
 
-      # Confirmar se existe
-         if [ ! -f $v_file ]; then
-            echo "Ficheiro n existe, vai ser criado" 
-            touch "$v_file" && echo " > Criado"
-         fi
+   # As linhas anteriores nao precisam existir porque
+   # podemos usar o comando `history -s "comando"`
+   # para enviar texto para o ficheiro de historico do bash
 
-   if [[ -z $1 ]]; then
-         f_hist_2_fzf
-
-   elif [[ $1 == ".." ]]; then
-      v_hist=$(echo -e "2. Ultimos Ficheiros \n1. Historico Bash " | fzf)
-
-      [[ $v_hist =~ "1" ]] && echo "Escolheu 1" && history | tac | fzf
-
-      if [[ $v_hist =~ "2" ]]; then
-         f_hist_2_fzf
-      fi
-
-   elif [ $1 == "+" ]; then
-      echo "adding"
-      cd
-      v_add=$(fzf)
-      echo "$v_add" >> $v_file
-      cd -
-
-   elif [ $1 == "--" ]; then
-      echo "removing entire file"
-      rm $v_file
-
-   elif [ $1 == "." ]; then
-      cat $v_file | fzf --prompt="VISUALIZAR cada ficheiro guardado: " 1>/dev/null
-   fi
-
+   cat ~/.bash_history | fzf --tac --prompt "RUN 1 command from HISTORY: " 
 }
 
 

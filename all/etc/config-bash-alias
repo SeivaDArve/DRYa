@@ -63,14 +63,12 @@ alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
 alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
 
-alias note="uDev: Create a note file with Date as a title"
-
 alias timg="termimage"
 
+alias note="bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/no-tes"
 alias notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 function f_fzf_raw_link_opener {
-   # Esta fx visita a repo 'Omni-log' e usa o script lá presente com menu `fzf` que filtra os links dos ultimos backups de bookmarks.. O link de lá escolhido, será usado aqui
 
    # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
       cd ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/
@@ -173,6 +171,7 @@ function web {
 
 
 
+#alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
 alias cm="cmatrix"
 
 # Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
@@ -343,10 +342,20 @@ alias RM="rm -rf"
 
 alias mk="mkdir" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
 function Mk {
-   # Creates a directory and navigates to it imediatly
-   read -p "New directory name: " v_dir
-   mkdir -p $v_dir
-   cd $v_dir
+
+   if [[ -z $* ]]; then
+      # Creates a directory and navigates to it imediatly
+      read -p "New directory name: " v_dir
+      mkdir -p $v_dir
+      cd $v_dir
+
+   else 
+      for i in $*
+      do
+         mkdir -p $i
+      done
+      ls
+   fi
 }
 
 function lll {
