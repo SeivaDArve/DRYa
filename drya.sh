@@ -15,39 +15,39 @@ function f_greet2 {
 }
 
 # Functions for text colors (used usually with `figlet`)
-   function f_cr1 {	
+   function f_c1 {	
       tput setaf 5 
    }
-   function f_cr2 { 
+   function f_c2 { 
       tput setaf 2 
    }
-   function f_cr3 { 
+   function f_c3 { 
       # Mentioning user input or valiable input
       tput setaf 3
    }
-   function f_cr4 { 
+   function f_c4 { 
       # Similar to Bold. Used in: f_talk
       tput setaf 4
    }
-   function f_cr5 { 
+   function f_c5 { 
       # Similar to Bold
       tput setaf 6
    }
-   function f_res { 
+   function f_rc { 
       tput sgr0
    }
       
 function f_talk {
    # Copied from: ezGIT
           echo
-   f_cr4; echo -n "DRYa: "
-   f_res
+   f_c4; echo -n "DRYa: "
+   f_rc
 }
 
 function f_done {
    # Copied from: ezGIT
-   f_cr5; echo -n ": Done"
-   f_res
+   f_c5; echo -n ": Done"
+   f_rc
 }
 
 function f_stroken {
@@ -62,18 +62,18 @@ function f_stroken {
       else
          f_talk; echo    "stroken"
                  echo    " > Inside the ezGIT app I found this: "
-         f_cr4;  echo -n "seivadarve";
-         f_res;  echo    " and this:";
-         f_cr4;  echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_res;  echo
+         f_c4;  echo -n "seivadarve";
+         f_rc;  echo    " and this:";
+         f_c4;  echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_rc;  echo
       fi
 }
 
 function f_git_status {
    # Copied from: ezGIT
           echo
-   f_cr4; echo -n "DRYa/ezGIT: "
-   f_res; echo "git status"
+   f_c4; echo -n "DRYa/ezGIT: "
+   f_rc; echo "git status"
 
    git status
 }
@@ -81,8 +81,8 @@ function f_git_status {
 function f_git_pull {
    # Copied from: ezGIT
           echo
-   f_cr4; echo -n "DRYa/ezGIT: "
-   f_res; echo "git pull"
+   f_c4; echo -n "DRYa/ezGIT: "
+   f_rc; echo "git pull"
 
    git pull
 }
@@ -316,7 +316,7 @@ function f_setafC {
 	tput sgr0
 }
 
-function f_res_cursor {
+function f_rc_cursor {
 	tput cup 25 4
 }
 
@@ -848,8 +848,8 @@ function f_dot_files_list_available {
       for i in ${v_all_dot_files[@]}
       do 
                 echo -n " > "
-         f_cr2; echo $i
-         f_res
+         f_c2; echo $i
+         f_rc
       done
 
    # Verbose notes
@@ -1077,12 +1077,12 @@ if [ -z "$*" ]; then
 
    # Temporized Quick menu
       f_talk; echo "Temporized Menu (available only for $v_secs secs):"
-              echo -n " > Press '"; f_cr5; echo -n "d"; f_res; echo -n "' or '"; f_cr5; echo -n "."; f_res; echo "' to open DRYa fzf main menu"
+              echo -n " > Press '"; f_c5; echo -n "d"; f_rc; echo -n "' or '"; f_c5; echo -n "."; f_rc; echo "' to open DRYa fzf main menu"
               echo   "   (same as Terminal command: 'D +')"
 
    
    # Options available during only few seconds
-      f_talk; f_cr5; echo -en "listening... "; f_res
+      f_talk; f_c5; echo -en "listening... "; f_rc
 
       read -sn1 -t $v_secs v_ans
       
@@ -1200,16 +1200,16 @@ elif [ $1 == "update" ]; then
     echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
 
     f_greet
-    f_cr4; echo -n "DRYa: "
-    f_res; echo "Downloading updates and applying them"
+    f_c4; echo -n "DRYa: "
+    f_rc; echo "Downloading updates and applying them"
          cd ${v_REPOS_CENTER}/DRYa
     f_git_status
     f_git_pull
     echo
 
     # Aplly each dot-file in their correct places across the system
-    f_cr4; echo -n "DRYa: "
-    f_res; echo "applying dot-files:"
+    f_c4; echo -n "DRYa: "
+    f_rc; echo "applying dot-files:"
     echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
     echo " > termux: colors + properties (uDev)"
     echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
@@ -1218,8 +1218,8 @@ elif [ $1 == "update" ]; then
     echo
 
     # Reload .bashrc
-    f_cr4; echo -n "DRYa: "
-    f_res; echo "reloading functions, variables, alias at:"
+    f_c4; echo -n "DRYa: "
+    f_rc; echo "reloading functions, variables, alias at:"
     echo " > ~/.bashrc"
           source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
@@ -1511,7 +1511,7 @@ elif [ $1 == "install" ]; then
 
    if [[ -z $2 ]]; then 
       # If there are no args:
-      echo "drya: Please specify what to install"
+      f_talk; echo "Please specify what to install"
       echo
       echo "If you want to install drya itself, 3 ways:"
       echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
@@ -1945,22 +1945,22 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    }
 
    function f_example_1 {  # uDev: rename to: _part_1
-             echo
-      f_cr1; echo    '(exemplo)'
-             echo    '|--------------------------------------------------------------|'
-             echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
-             echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-             echo    '|                                                              |'
-             echo -n '| C:\>'
-      f_cr2; echo -n       'diskpart'
-      f_cr1; echo                  '                                                 |'
-      f_cr1; echo    '|                                                              |'
-             echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-             echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-             echo    '|                                                              |'
-             echo    '| DISKPART>'
-      f_cr1; echo    '|--------------------------------------------------------------|'
-      f_res; echo
+            echo
+      f_c1; echo    '(exemplo)'
+            echo    '|--------------------------------------------------------------|'
+            echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
+            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+            echo    '|                                                              |'
+            echo -n '| C:\>'
+      f_c2; echo -n       'diskpart'
+      f_c1; echo                  '                                                 |'
+      f_c1; echo    '|                                                              |'
+            echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+            echo    '|                                                              |'
+            echo    '| DISKPART>'
+      f_c1; echo    '|--------------------------------------------------------------|'
+      f_rc; echo
    }
 
    function f_example_ask {
@@ -1988,35 +1988,35 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
       # Passo 2: Digite LIST DISK, esse comando ira listar is HD's instalados na maquina, preste muita atencao para nao escolher o HD errado
       f_usb_tut_2
 
-                echo    "Passo 2:"
-                echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
-                echo
-         f_cr1; echo    '(exemplo)'
-                echo    '|--------------------------------------------------------------|'
-                echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-                echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                echo    '|                                                              |'
-                echo -n '| C:\>'
-         f_cr2; echo -n       'diskpart'
-         f_cr1; echo                  '                                                 |'
-         f_cr1; echo    '|                                                              |'
-                echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-                echo    '|                                                              |'
-                echo    '| Copyright (C) Microsoft Corporation.                         |'
-                echo    '| On computer: YourName                                        |'
-                echo    '|                                                              |'
-                echo -n '| DISKPART>'
-         f_cr2; echo -n            'list disk'
-         f_cr1; echo    '                                           |'
-                echo    '|                                                              |'
-                echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-                echo    '| --------  -------------  -------  -------  ---  ---          |'
-                echo    '| Disk 0    Online          476 GB      0 B        *           |'
-                echo    '| Disk 1    Online           59 GB    29 MB                    |'
-                echo    '|                                                              |'
-                echo    '| DISKPART>                                                    |'
-                echo    '|--------------------------------------------------------------|'
-         f_res; echo
+               echo    "Passo 2:"
+               echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
+               echo
+         f_c1; echo    '(exemplo)'
+               echo    '|--------------------------------------------------------------|'
+               echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+               echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+               echo    '|                                                              |'
+               echo -n '| C:\>'
+         f_c2; echo -n       'diskpart'
+         f_c1; echo                  '                                                 |'
+         f_c1; echo    '|                                                              |'
+               echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+               echo    '|                                                              |'
+               echo    '| Copyright (C) Microsoft Corporation.                         |'
+               echo    '| On computer: YourName                                        |'
+               echo    '|                                                              |'
+               echo -n '| DISKPART>'
+         f_c2; echo -n            'list disk'
+         f_c1; echo    '                                           |'
+               echo    '|                                                              |'
+               echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+               echo    '| --------  -------------  -------  -------  ---  ---          |'
+               echo    '| Disk 0    Online          476 GB      0 B        *           |'
+               echo    '| Disk 1    Online           59 GB    29 MB                    |'
+               echo    '|                                                              |'
+               echo    '| DISKPART>                                                    |'
+               echo    '|--------------------------------------------------------------|'
+         f_rc; echo
 
       f_example_ask
 
@@ -2026,63 +2026,63 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
 
       function f_cwusb_passo_3 {
-                echo    "Passo 3:"
-                echo -n '  Digite "SELECT DISK '
-         f_cr2; echo -n                       'X'
-         f_res; echo                           '", mas no lugar do X colocar o numero'
-                echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
-                echo    "  Preste muita atençao para nao escolher o HD errado"
-                echo
-         f_cr1; echo    '(exemplo)'
-                echo    '|--------------------------------------------------------------|'
-                echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-                echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-                echo    '|                                                              |'
-                echo -n '| C:\>'
-        f_cr2;  echo -n       'diskpart'
-        f_cr1;  echo                  '                                                 |'
-                echo    '|                                                              |'
-                echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-                echo    '|                                                              |'
-                echo    '| Copyright (C) Microsoft Corporation.                         |'
-                echo    '| On computer: YourName                                        |'
-                echo    '|                                                              |'
-                echo -n '| DISKPART>'
-        f_cr2;  echo -n            'list disk'
-        f_cr1;  echo                        '                                           |'
-                echo    '|                                                              |'
-                echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-                echo    '| --------  -------------  -------  -------  ---  ---          |'
-                echo    '| Disk 0    Online          476 GB      0 B        *           |'
-                echo    '| Disk 1    Online           59 GB    29 MB                    |'
-                echo    '|                                                              |'
+              echo    "Passo 3:"
+              echo -n '  Digite "SELECT DISK '
+        f_c2; echo -n                       'X'
+        f_rc; echo                           '", mas no lugar do X colocar o numero'
+              echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
+              echo    "  Preste muita atençao para nao escolher o HD errado"
+              echo
+        f_c1; echo    '(exemplo)'
+              echo    '|--------------------------------------------------------------|'
+              echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+              echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+              echo    '|                                                              |'
+              echo -n '| C:\>'
+        f_c2; echo -n       'diskpart'
+        f_c1; echo                  '                                                 |'
+              echo    '|                                                              |'
+              echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+              echo    '|                                                              |'
+              echo    '| Copyright (C) Microsoft Corporation.                         |'
+              echo    '| On computer: YourName                                        |'
+              echo    '|                                                              |'
+              echo -n '| DISKPART>'
+        f_c2; echo -n            'list disk'
+        f_c1; echo                        '                                           |'
+              echo    '|                                                              |'
+              echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+              echo    '| --------  -------------  -------  -------  ---  ---          |'
+              echo    '| Disk 0    Online          476 GB      0 B        *           |'
+              echo    '| Disk 1    Online           59 GB    29 MB                    |'
+              echo    '|                                                              |'
       }
 
       f_cwusb_passo_3
 
-                echo    '| DISKPART>                                                    |'
-                echo    '|--------------------------------------------------------------|'
-         f_res; echo
-         f_cr4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
-         f_cr1; echo -n '  DISKPART>'
-         f_cr2; echo -n            'select disk '
+              echo    '| DISKPART>                                                    |'
+              echo    '|--------------------------------------------------------------|'
+        f_rc; echo
+        f_c4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
+        f_c1; echo -n '  DISKPART>'
+        f_c2; echo -n            'select disk '
 
 
       function f_cwusb_passo_3_final {
-                 echo -n '| DISKPART>'
-          f_cr2; echo               "$v_disk"
-          f_cr1; echo    '|--------------------------------------------------------------|'
+              echo -n '| DISKPART>'
+        f_c2; echo               "$v_disk"
+        f_c1; echo    '|--------------------------------------------------------------|'
       }
 
             
 
-             read v_disk
-      f_res; echo
-      f_cr4; echo -n " Confirme se vai selecionar o disco "
-      f_cr2; echo    "$v_disk"
-      f_res; echo    '  > "S" sim; "N" nao'
-             echo -n '  > '
-             read v_ans
+            read v_disk
+      f_rc; echo
+      f_c4; echo -n " Confirme se vai selecionar o disco "
+      f_c2; echo    "$v_disk"
+      f_rc; echo    '  > "S" sim; "N" nao'
+            echo -n '  > '
+            read v_ans
 
          v_disk="select disk $v_disk"
 
@@ -2090,7 +2090,7 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
          [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]] && echo -e "\nOperacao cancelada: a Sair"; exit 
          echo
 
-      f_res
+      f_rc
       f_example_ask
 
    #  4-  CLEAN
