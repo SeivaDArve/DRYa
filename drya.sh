@@ -817,7 +817,8 @@ function f_drya_help {
            echo ' 6. DRYa file where `notify` saves history'
            echo " 6. traitsID: Print specs of current device"
            echo " 7. What is D.R.Y.a. "
-           echo " 8. Welcome screen DRYa's instructions"
+           echo " 8. dee-pages: filter real commands from their own script"
+           echo " 9. Welcome screen DRYa's instructions"
 }
 
 function f_dot_files_list_available {
