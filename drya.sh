@@ -958,6 +958,34 @@ function f_drya_fzf_MM {
       #unset v_list
 }
 
+function f_instructions_of_usage {
+   # Função para exibir como usar o script
+
+   f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
+           echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
+           echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
+           echo "            Para o destino, tem de escolher um nome novo"
+           echo 
+           echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
+           echo
+           echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
+           echo 
+   f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
+           echo ' > exemplo: `origem=$(pwd)`'
+           echo ' >> `D sl $origem <novo-caminho-com-nome>`'
+           echo
+           echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
+           echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
+           echo 
+           echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
+           echo 
+   f_talk; echo "Remover um link:"
+           echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
+           echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
+      exit 1
+}
 
 
 function f_exec {
@@ -1788,34 +1816,6 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
    # uDev: criar também hard links para ficheiros e pastas
    
    f_greet
-
-   # Função para exibir como usar o script
-      f_instructions_of_usage() {
-         f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
-                 echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
-                 echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
-                 echo "            Para o destino, tem de escolher um nome novo"
-                 echo 
-                 echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
-                 echo
-                 echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
-                 echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
-                 echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
-                 echo 
-         f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
-                 echo ' > exemplo: `origem=$(pwd)`'
-                 echo ' >> `D sl $origem <novo-caminho-com-nome>`'
-                 echo
-                 echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
-                 echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
-                 echo 
-                 echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
-                 echo 
-         f_talk; echo "Remover um link:"
-                 echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
-                 echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
-         exit 1
-      }
 
    # Verificar se o número de argumentos é igual a 2
       if [ "$#" -ne 3 ]; then
