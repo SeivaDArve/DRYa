@@ -217,7 +217,7 @@ function f_ascii_icon {
          v_cols=$(tput cols)
 
       # Do total de colunas do terminal, retirar o tamanho que ocupa o logo e dividir por 2
-         v_cols=$(($v_cols-40))
+         v_cols=$(($v_cols-32))
          v_cols=$(($v_cols/2))
 
       # Preencher do lado Esq com espacos vazios de forma que o logo fique ao centro
