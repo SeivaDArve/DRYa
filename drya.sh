@@ -16,26 +16,49 @@ function f_greet2 {
 
 # Functions for text colors (used usually with `figlet`)
    function f_c1 {	
+      # This function is to be used when something is SEARCHED
       tput setaf 5 
    }
+
    function f_c2 { 
       tput setaf 2 
    }
+
    function f_c3 { 
       # Mentioning user input or valiable input
+      # This function is to be used when something is DECLAIRED
       tput setaf 3
    }
+
    function f_c4 { 
       # Similar to Bold. Used in: f_talk
+      # This function is to be used when something is ASKED
       tput setaf 4
    }
+
    function f_c5 { 
       # Similar to Bold
       tput setaf 6
    }
+
    function f_rc { 
+      # This function is to be used when styles are to be CLEARED
       tput sgr0
    }
+
+function f_cursorON {
+	# Show cursor normally. Use "tput civis" to hide
+	tput cnorm
+}
+
+function f_cursorOFF {
+	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
+	tput civis
+}
+
+function f_rc_cursor {
+	tput cup 25 4
+}
       
 function f_talk {
    # Copied from: ezGIT
@@ -62,16 +85,16 @@ function f_stroken {
       else
          f_talk; echo    "stroken"
                  echo    " > Inside the ezGIT app I found this: "
-         f_c4;  echo -n "seivadarve";
-         f_rc;  echo    " and this:";
-         f_c4;  echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_rc;  echo
+         f_c4;   echo -n "seivadarve";
+         f_rc;   echo    " and this:";
+         f_c4;   echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_rc;   echo
       fi
 }
 
 function f_git_status {
    # Copied from: ezGIT
-          echo
+         echo
    f_c4; echo -n "DRYa/ezGIT: "
    f_rc; echo "git status"
 
@@ -80,7 +103,7 @@ function f_git_status {
 
 function f_git_pull {
    # Copied from: ezGIT
-          echo
+         echo
    f_c4; echo -n "DRYa/ezGIT: "
    f_rc; echo "git pull"
 
@@ -88,17 +111,14 @@ function f_git_pull {
 }
 
 function f_master_dryaRC {
-	clear
-	f_setafD; echo "Menu to master .dryarc file"
-	f_setafC
-
-   echo 
-   echo "Are you looking for .dryarc?"
-   echo 
-   echo "edit: Original (at repo)"
-   echo "edit: Temporary (at use at: ~)"
-
-	read
+      	clear
+	f_c3; echo "Menu to master .dryarc file"
+	f_rc; echo 
+         echo "Are you looking for .dryarc?"
+         echo 
+         echo "edit: Original (at repo)"
+         echo "edit: Temporary (at use at: ~)"
+         read
   
    # Check if parent dir "~/.config/seivaDArve" exists
       _DIR_NAME=~/.config/seivaDArve/
@@ -119,81 +139,49 @@ function f_trap {
 	https://www.linuxjournal.com/content/bash-trap-command
 }
 
-function f_default_vars {
-	# When at "1" it allows info to be printed at the footer. In the future you can toggle this info On/Off by pressing "i"
-	_i=1
+function f_troubleshootingPWD {
 
-	function f_troubleshootingPWD {
+   # Calling a function that defines the variable _SCRIPT_DIR:
+      f_get_script_current_abs_path
+      echo
+      f_c4; echo -n _SCRIPT_DIR
+      f_rc; echo -n ": "
+      f_c3; echo $_SCRIPT_DIR
+      f_rc;
+      echo
 
-		# Calling a function that defines the variable _SCRIPT_DIR:
-		f_get_script_current_abs_path
-			echo
-			f_setafA; echo -n _SCRIPT_DIR
-			f_setafC; echo -n ": "
-			f_setafD; echo $_SCRIPT_DIR
-			f_setafC;
-			echo
+   # Informing about our location
+      echo "but we are running it from:"
+      f_c4; echo -n "pwd"
+      f_rc; echo -n ": "
+      f_c3; echo $(pwd)
+      echo;
+      f_c4; echo -n "saving current "
+      f_c3; echo -n "pwd " 
+      f_c4; echo -n "into "
+      f_c3; echo -n "_BEFORE_CALLING_SCRIPT"; 
+      f_rc;
+      echo;
 
-		# Informing about our location
-		echo "but we are running it from:"
-			f_setafA; echo -n "pwd"
-			f_setafC; echo -n ": "
-			f_setafD; echo $(pwd)
-			echo;
-			f_setafA; echo -n "saving current "
-			f_setafD; echo -n "pwd " 
-			f_setafA; echo -n "into "
-			f_setafD; echo -n "_BEFORE_CALLING_SCRIPT"; 
-			f_setafC;
-			echo;
+      _BEFORE_CALLING_SCRIPT=$(pwd)
 
-			_BEFORE_CALLING_SCRIPT=$(pwd)
+      echo "_BEFORE_CALLING_SCRIPT: $_BEFORE_CALLING_SCRIPT"
+      echo;
+   
+   # Traveling to dir of main script in order to make use of relative file positions (this script is not compiled and this prevents "missing files" or "commands")
+   echo "Now, cd into _SCRIPT_DIR"
+   cd $_SCRIPT_DIR
+      f_c4; echo -n "pwd"
+      f_rc; echo -n ": "
+      f_c3; echo $(pwd)
+      f_rc
+      echo;
 
-			echo "_BEFORE_CALLING_SCRIPT: $_BEFORE_CALLING_SCRIPT"
-			echo;
-		
-		# Traveling to dir of main script in order to make use of relative file positions (this script is not compiled and this prevents "missing files" or "commands")
-		echo "Now, cd into _SCRIPT_DIR"
-		cd $_SCRIPT_DIR
-			f_setafA; echo -n "pwd"
-			f_setafC; echo -n ": "
-			f_setafD; echo $(pwd)
-			f_setafC
-			echo;
+   echo yo!; echo
 
-		echo yo!; echo
-
-		# If this troubleshooting works, you should be able to cat the following file from any directory:
-		cat ./wiki/testFile
-			sleep 2; clear
-	}
-	f_troubleshootingPWD
-
-	function f_positionSelector {
-		_v=0; # Selector of vertical position (for the cursor)
-		_h=0; # Selector of horizontal  position (for the cursor)
-		_m=0; # Selector of menu position (for the cursor)
-
-		function v_positionSelector {
-			#_xy=(concatonate _v _h _m)
-			echo "_v $_v"
-			echo "_h $_h"
-			echo "_m $_m"
-		}
-		# "v_ functions" stands for "verbose_ function"
-		#v_positionSelector
-	}
-	f_positionSelector
-}
-
-function f_cursorON {
-	# Show cursor normally. Use "tput civis" to hide
-	tput cnorm
-}
-
-function f_cursorOFF {
-	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
-	tput civis
+   # If this troubleshooting works, you should be able to cat the following file from any directory:
+   cat ./wiki/testFile
+      sleep 2; clear
 }
 
 function f_ascii_icon {
@@ -241,7 +229,7 @@ function f_ascii_icon {
 
 	tput setaf 28
 	tput bold
-		  echo ""; #-------------------------------------
+		       echo ""; #-------------------------------------
 	f_spaces; echo -e "     ||\`				"
 	f_spaces; echo "     ||				"
 	f_spaces; echo -e " .|''||  '||''| '||  ||\`  '''|.	"
@@ -249,8 +237,8 @@ function f_ascii_icon {
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
 	f_spaces; echo "                  ,  |'		"
 	f_spaces; echo "                    ''		"
-		  echo ""; #-------------------------------------
-	tput sgr0
+		       echo ""; #-------------------------------------
+       f_rc
 
 	function f_countDown {
 	# To do: add a while loop to this. To prevent manuall inputs "3... 2... 1... bla bla bla rubish"
@@ -289,35 +277,6 @@ function f_slideVdw {
 function f_slideHdw {
 	((_h=_h-1))
 	#echo $_h
-}
-
-function f_setafA {
-	# This function is to be used when something is ASKED
-	tput setaf 4
-}
-
-function f_setafD {
-	# This function is to be used when something is DECLAIRED
-	tput setaf 3
-}
-
-function f_setafD2 {
-	# This function is to be used when something is DECLAIRED
-	tput setaf 2
-}
-
-function f_setafS {
-	# This function is to be used when something is SEARCHED
-	tput setaf 5
-}
-
-function f_setafC {
-	# This function is to be used when styles are to be CLEARED
-	tput sgr0
-}
-
-function f_rc_cursor {
-	tput cup 25 4
 }
 
 function f_clear_space {
@@ -374,14 +333,13 @@ function f_replaceRead {
 
 
 function f_detectOS {
-	clear
-	f_setafD; echo Detect OS
-	f_setafC
-	echo "whoami: 	$(whoami)"
-	echo "OS type: 	${OSTYPE}"
-	echo "uname:		$(uname)"
-	echo "uname -a: 	$(uname -a)"
-	read
+         clear
+	f_c3; echo Detect OS
+	f_rc; echo "whoami: 	$(whoami)"
+         echo "OS type: 	${OSTYPE}"
+         echo "uname:		$(uname)"
+         echo "uname -a: 	$(uname -a)"
+         read
 
 	f_menu1
 }
@@ -391,16 +349,16 @@ function f_detect_dir {
 		# Define a variable to hold a certain state
 		_d=exists
 
-		f_setafS; echo $_DIR_NAME
-		f_setafD; echo exists
-		f_setafC
+		f_c5; echo $_DIR_NAME
+		f_c3; echo exists
+		f_rc
 	else
 		# Define a variable to hold a certain state
 		_d=missing
 
-		f_setafS; echo $_DIR_NAME
-		f_setafD; echo not found
-		f_setafC
+		f_c5; echo $_DIR_NAME
+		f_c3; echo not found
+		f_rc
 	fi
 }
 
@@ -409,16 +367,16 @@ function f_detect_file {
 		# Define a variable to hold a certain state
 		_f=exists
 
-		f_setafS; echo $_FILE_NAME
-		f_setafD; echo exists
-		f_setafC
+		f_c5; echo $_FILE_NAME
+		f_c3; echo exists
+		f_rc
 	else
 		# Define a variable to hold a certain state
 		_f=missing
 
-		f_setafS; echo $_FILE_NAME
-		f_setafD; echo not found
-		f_setafC
+		f_c5; echo $_FILE_NAME
+		f_c3; echo not found
+		f_rc
 	fi
 }
 
@@ -452,9 +410,8 @@ function f_get_script_current_abs_path {
 
 	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
 	_SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-	f_setafD; echo "This script is written/located at:"; 
-	f_setafC
-	echo $_SCRIPT_DIR;
+	f_c3; echo "This script is written/located at:"; 
+	f_rc; echo $_SCRIPT_DIR;
 	
 	function f_test1 {
 		# This does not work, it is subjective to change. it depends from where you ryn the script
@@ -847,7 +804,7 @@ function f_dot_files_list_available {
 
       for i in ${v_all_dot_files[@]}
       do 
-                echo -n " > "
+               echo -n " > "
          f_c2; echo $i
          f_rc
       done
@@ -1010,24 +967,15 @@ function f_exec {
    # It can be used for other function debugs also:
       # Comment/Uncomment to turn Off/On each to debug accordingly:
 
-      #f_default_vars
-      #f_cursorON
-      #f_cursorOFF
-      #f_make_file_dryarc 
       #f_ascii_icon
-      #f_mainmenu
-      #f_wiki
-      #f_install_vimrc
       #f_get_script_current_abs_path
-      #source ../jarve/jrv/etc/usr-etc/termux-Dv/.jrvrc
       #f_fillscreenE
       #f_master_dryaRC
-      #f_readKeystroke
 
-   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   f_talk; echo "Invalid argument(s)"
-           echo " > for help: drya -h"
-           echo
+      f_greet2
+      f_talk; echo "Invalid argument(s)"
+              echo ' > for help: `drya -h`'
+              echo
 
    # If no arg was given, also navigate do DRYa's repo directory
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
@@ -2136,7 +2084,6 @@ elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
-
    f_exec
 fi
 
