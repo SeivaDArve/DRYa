@@ -110,24 +110,6 @@ function f_git_pull {
    git pull
 }
 
-function f_master_dryaRC {
-      	clear
-	f_c3; echo "Menu to master .dryarc file"
-	f_rc; echo 
-         echo "Are you looking for .dryarc?"
-         echo 
-         echo "edit: Original (at repo)"
-         echo "edit: Temporary (at use at: ~)"
-         read
-  
-   # Check if parent dir "~/.config/seivaDArve" exists
-      _DIR_NAME=~/.config/seivaDArve/
-      f_detect_dir
-      echo ak
-
-   read
-}
-
 function f_trap {
 	# Set a trap to restore terminal on Ctrl-c (exit).
     	# Reset character attributes, make cursor visible, and restore
@@ -187,6 +169,8 @@ function f_troubleshootingPWD {
 function f_ascii_icon {
 
 	function f_center_to_screen_verbose {
+      # Fx to verbosely study the process of creating this logo
+
 		# To messure the screen width:
 		_cols=$(tput cols)
 		echo Total cols: $_cols
@@ -222,14 +206,30 @@ function f_ascii_icon {
 	#f_center_to_screen_verbose
 
 	function f_spaces {
-		# Manually writting 12 spaces before the ascii logo like defined at f_center_of_screen_verbose
-		# Manually means: script not complete yet, it should detect the screen and act automated
-		echo -n "           "
+		# Manually writting spaces before and after the ascii logo
+
+      # Assumindo que o logo tem 33 ou mais letras de cumprimento horizontal
+
+      # Sera feito o calculo com 40 letras
+         # Ler quantas colunas tem no total da janela do terminal neste momento
+         # udev: criar uma fx no inicio deste ficheiro para nao ser repetitivo esta calculo
+
+         v_cols=$(tput cols)
+
+      # Do total de colunas do terminal, retirar o tamanho que ocupa o logo e dividir por 2
+         v_cols=$(($v_cols-40))
+         v_cols=$(($v_cols/2))
+
+      # Preencher do lado Esq com espacos vazios de forma que o logo fique ao centro
+         for i in $(seq 1 $v_cols)
+         do
+            echo -n " "
+         done
 	}
 
 	tput setaf 28
 	tput bold
-		       echo ""; #-------------------------------------
+		       echo #-------------------------------------
 	f_spaces; echo -e "     ||\`				"
 	f_spaces; echo "     ||				"
 	f_spaces; echo -e " .|''||  '||''| '||  ||\`  '''|.	"
@@ -237,25 +237,8 @@ function f_ascii_icon {
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
 	f_spaces; echo "                  ,  |'		"
 	f_spaces; echo "                    ''		"
-		       echo ""; #-------------------------------------
+		       echo #-------------------------------------
        f_rc
-
-	function f_countDown {
-	# To do: add a while loop to this. To prevent manuall inputs "3... 2... 1... bla bla bla rubish"
-	sleep 1
-	tput sc 
-	echo -n "3"
-	sleep 1
-	tput rc
-	echo -n "2"
-	sleep 1
-	tput rc
-	echo -n	 "1"
-	sleep 1
-	clear
-	}
-	#f_countDown
-	sleep 2
 }
 
 
@@ -284,26 +267,6 @@ function f_clear_space {
 	for i in {1..2}; do echo "hi"; done
 }
 
-function f_fillscreenE {
-	# It fills the screen with "e" characters
-	function f_fillcols {
-		_count=$(tput cols)
-		for i in $(seq $_count); do
-		   	echo -ne "e" 
-		done
-	}
-	_count=$(tput lines)
-	for i in $(seq $_count); do
-		f_fillcols
-	done
-
-	tput cup 2 2
-	sleep 2
-	tput el
-	tput cup 5 5
-	tput eel
-}
-
 function f_horizline {
    # Criar uma linha horizontal do tamanho correto do ecra
 
@@ -317,8 +280,8 @@ function f_horizline {
 }
 
 function f_verticline {
-	_count=$(tput lines)
-	for i in $(seq $_count); do
+	v_count=$(tput lines)
+	for i in $(seq $v_count); do
    	echo -ne "   |\n" 
 	done
 }
@@ -327,7 +290,8 @@ function f_replaceRead {
 	echo "First line..."
 	tput sc
 	read -p "Press any key to overwrite this line... " -n1 -s
-	tput rc 1; tput el
+	tput rc 1
+   tput el
 	echo "Second line. read replaced."
 }
 
@@ -340,26 +304,6 @@ function f_detectOS {
          echo "uname:		$(uname)"
          echo "uname -a: 	$(uname -a)"
          read
-
-	f_menu1
-}
-
-function f_detect_dir {
-	if [ -d "$_DIR_NAME" ]; then
-		# Define a variable to hold a certain state
-		_d=exists
-
-		f_c5; echo $_DIR_NAME
-		f_c3; echo exists
-		f_rc
-	else
-		# Define a variable to hold a certain state
-		_d=missing
-
-		f_c5; echo $_DIR_NAME
-		f_c3; echo not found
-		f_rc
-	fi
 }
 
 function f_detect_file {
@@ -995,12 +939,8 @@ function f_exec {
    # It can be used for other function debugs also:
       # Comment/Uncomment to turn Off/On each to debug accordingly:
 
-      #f_ascii_icon
+      f_ascii_icon
       #f_get_script_current_abs_path
-      #f_fillscreenE
-      #f_master_dryaRC
-
-      f_greet2
       f_talk; echo "Invalid argument(s)"
               echo ' > for help: `drya -h`'
               echo
