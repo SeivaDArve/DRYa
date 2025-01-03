@@ -41,6 +41,12 @@ function f_greet2 {
       tput setaf 6
    }
 
+   function f_c6 { 
+      # Used for ASCII Drya Logo, centered to the screen
+      tput setaf 28
+      tput bold
+   }
+
    function f_rc { 
       # This function is to be used when styles are to be CLEARED
       tput sgr0
@@ -90,6 +96,25 @@ function f_stroken {
          f_c4;   echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
          f_rc;   echo
       fi
+}
+
+function f_horizline {
+   # Criar uma linha horizontal do tamanho correto do ecra
+
+   # Buscar tamanho correto (precisa da dependencia `tput`)
+      v_count=$(tput cols)
+
+   # Escrever uma linha no ecra
+      for i in $(seq $v_count); do
+            echo -ne "-" 
+      done
+}
+
+function f_verticline {
+	v_count=$(tput lines)
+	for i in $(seq $v_count); do
+   	echo -ne "   |\n" 
+	done
 }
 
 function f_git_status {
@@ -227,66 +252,22 @@ function f_ascii_icon {
          done
 	}
 
-	tput setaf 28
-	tput bold
-		       echo #-------------------------------------
-	f_spaces; echo -e "     ||\`				"
-	f_spaces; echo "     ||				"
+
+	    f_c6; echo
+	f_spaces; echo -e "     ||\`		               		"
+	f_spaces; echo    "     ||				                  "
 	f_spaces; echo -e " .|''||  '||''| '||  ||\`  '''|.	"
 	f_spaces; echo -e " ||  ||   ||     \`|..||  .|''||	"
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
-	f_spaces; echo "                  ,  |'		"
-	f_spaces; echo "                    ''		"
-		       echo #-------------------------------------
-       f_rc
+	f_spaces; echo    "                  ,  |'		      "
+	f_spaces; echo    "                    ''		         "
+       f_rc; echo 
 }
 
-
-function f_slideVup {
-	((_V=_V+1))
-	#echo $_V
-}
-		
-function f_slideHup {
-	((_h=_h+1))
-	#echo $_h
-}
-
-function f_slideVdw {
-	((_V=_V-1))
-	#echo $_V
-}
-		
-function f_slideHdw {
-	((_h=_h-1))
-	#echo $_h
-}
-
-function f_clear_space {
-	# Repeat 24x
-	for i in {1..2}; do echo "hi"; done
-}
-
-function f_horizline {
-   # Criar uma linha horizontal do tamanho correto do ecra
-
-   # Buscar tamanho correto (precisa da dependencia `tput`)
-      v_count=$(tput cols)
-
-   # Escrever uma linha no ecra
-      for i in $(seq $v_count); do
-            echo -ne "-" 
-      done
-}
-
-function f_verticline {
-	v_count=$(tput lines)
-	for i in $(seq $v_count); do
-   	echo -ne "   |\n" 
-	done
-}
 
 function f_replaceRead {
+   # Example on how to write 2x or more on the same line
+   # uDev: create better explanation on this tput examples
 	echo "First line..."
 	tput sc
 	read -p "Press any key to overwrite this line... " -n1 -s
@@ -294,7 +275,6 @@ function f_replaceRead {
    tput el
 	echo "Second line. read replaced."
 }
-
 
 function f_detectOS {
          clear
@@ -394,7 +374,7 @@ function f_clone_info {
    echo " > https://github.com/SeivaDArve?tab=repositories"
    echo
    echo " Press Ctrl-C to abort"
-   read -s
+   read -s -n 1
    echo
    f_horizline
    echo " Note: So far, drya can open this link only with Termux"
@@ -574,13 +554,12 @@ function f_dotFiles_install_git {
    clear
 
    echo "attempting git"
-   echo " Copying "
-   echo " > .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-   echo " to"
-   echo -e" > \$HOME"
-   read -s -n 1
-   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-   echo "Done!"
+   echo " Copying .gitconfig file"
+   echo " > from: .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+   echo " > to:   ~"
+   read -s -n 1 -p "Press Any Key "
+
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~ && echo "Done!"
    echo
 }
 
@@ -606,7 +585,7 @@ function f_dotFiles_install_termux_properties {
       read -s -n 1
       cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
       cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
-      echo "Done! (Restart thr terminal is needed)"
+      echo "Done! (Restart the terminal is needed)"
 }
 
 function f_dotFiles_install_dryarc {
@@ -619,8 +598,7 @@ function f_dotFiles_install_netrc {
    # This file allows the user to avoid repetitive autentication (user and password) for github.com
    # In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
    
-   clear
-   figlet DRYa
+   f_greet
 
    echo "Installing Stroken as ~/.netrc"
    echo
