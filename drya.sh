@@ -1727,15 +1727,15 @@ elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na 
       FOLDER_PATH="."
 
    # Loop através dos arquivos na pasta
-      for FILE in "$FOLDER_PATH"/*; do
+      for i in "$FOLDER_PATH"/*; do
         # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
-        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+        if [[ $i == *.jpg || $i == *.jpeg || $i == *.png ]]; then
           # Extrai os metadados EXIF
-          SOFTWARE=$(exiftool -Software "$FILE")
+          SOFTWARE=$(exiftool -Software "$i")
           
           # Verifica se o Software usado foi o Photoshop
           if [[ $SOFTWARE == *"Adobe Photoshop"* ]]; then
-            echo "Imagem editada no Photoshop: $FILE"
+            echo "Imagem editada no Photoshop: $i"
           fi
         fi
       done
@@ -1745,13 +1745,13 @@ elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "clrPSm
       FOLDER_PATH="."
 
    # Loop através dos arquivos na pasta
-      for FILE in "$FOLDER_PATH"/*; do
+      for i in "$FOLDER_PATH"/*; do
         # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
-        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+        if [[ $i == *.jpg || $i == *.jpeg || $i == *.png ]]; then
           # Remove o metadado do software da imagem
-          #exiftool -Software= "$FILE"
-          exiftool -all= "$FILE"
-          echo "Metadado do software removido de: $FILE"
+          #exiftool -Software= "$i"
+          exiftool -all= "$i"
+          echo "Metadado do software removido de: $i"
         fi
       done
 
@@ -1771,11 +1771,11 @@ elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta t
       FOLDER_PATH="."
 
    # Loop através dos arquivos na pasta
-      for FILE in "$FOLDER_PATH"/*; do
+      for i in "$FOLDER_PATH"/*; do
         # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
-        if [[ $FILE == *.jpg || $FILE == *.jpeg || $FILE == *.png ]]; then
+        if [[ $i == *.jpg || $i == *.jpeg || $i == *.png ]]; then
           # Listar todos os metadados da imagem
-          exiftool "$FILE"
+          exiftool "$i"
         fi
       done
 
