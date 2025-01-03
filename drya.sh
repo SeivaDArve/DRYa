@@ -265,7 +265,7 @@ function f_ascii_icon {
 }
 
 
-function f_replaceRead {
+function f_recicle_line {
    # Example on how to write 2x or more on the same line
    # uDev: create better explanation on this tput examples
 	echo "First line..."
@@ -284,24 +284,6 @@ function f_detectOS {
          echo "uname:		$(uname)"
          echo "uname -a: 	$(uname -a)"
          read
-}
-
-function f_detect_file {
-	if [ -f "$_FILE_NAME" ]; then
-		# Define a variable to hold a certain state
-		_f=exists
-
-		f_c5; echo $_FILE_NAME
-		f_c3; echo exists
-		f_rc
-	else
-		# Define a variable to hold a certain state
-		_f=missing
-
-		f_c5; echo $_FILE_NAME
-		f_c3; echo not found
-		f_rc
-	fi
 }
 
 function f_calcular_tempo_decorrido_apos_data {
@@ -639,10 +621,83 @@ function f_dotFiles_install_netrc {
       vim ~/.netrc && echo "Done!"
 }
 
+function f_win_to_linux_pwd {
+   # Convert text Windows Path into text Linux Path
+
+   if [ -z $v_arg2 ]; then 
+
+      f_greet
+      f_talk; echo "Convert text Windows Path into text Linux Path"
+              echo " > feed me 1 or + Windows paths to convert"
+
+      # Make a dir and a file, to paste and convert windows text to linux text
+         mkdir -p ~/.tmp 
+         v_file=~/.tmp/wpwd-rel-path  # Note: Does not work: v_file="~/.tmp/wpwd-rel-path"
+         touch $v_file 
+
+
+      # File the file with some instructions
+         echo >             $v_file
+         echo >>            $v_file
+         echo "# DRYa: Paste an Windows relative path into this vim file (uncommented) and exit with 'ZZ' " >> $v_file
+         echo "# " >>       $v_file
+         echo "# " >>       $v_file
+         echo "# Help with vim commands:" >> $v_file
+         echo "# > uDev" >> $v_file
+         # uDev: finish vim instructions
+
+      # Edit the file, so that the user can paste the C:\<path> and exit
+         vim $v_file
+
+      # Convert the text inside the file
+         sed -i '/^#/d'             $v_file  # Delete all commented lines
+         sed -i '/^$/d'             $v_file  # Delete all empty lines
+
+         sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
+         sed -i 's#c:\\#/mnt/c/#g'  $v_file  # Convert c:\ into /mnt/c
+
+         sed -i 's#D:\\#/mnt/d/#g'  $v_file  # Convert D:\ into /mnt/d
+         sed -i 's#d:\\#/mnt/d/#g'  $v_file  # Convert d:\ into /mnt/d
+
+         sed -i 's#E:\\#/mnt/e/#g'  $v_file  # Convert E:\ into /mnt/e
+         sed -i 's#e:\\#/mnt/e/#g'  $v_file  # Convert e:\ into /mnt/e
+
+         sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
+         sed -i 's/\\/\//g'         $v_file  # Convert \ into /
+         sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
+
+      # Copy text to variable, to test if file/variable is empty
+         v_text=$(cat ~/.tmp/wpwd-rel-path )
+         #v_text=""  # Debug: To test if file is empty
+
+      # Tell if it is empty or print the remaining contents (hopefully with a valid path converted)
+         if [ -z "$v_text" ]; then
+            f_talk; echo "The file is empty"
+         else 
+            echo
+            w=$(cat $v_file)
+            echo $w
+            export w  # Nao funciona quando é lido casualmente por um script
+            #echo "uDev: Perguntar com fzf qual dos links quer navegar (\`D wpwd n\`)"
+         fi
+
+      #echo "uDev: colocar todo esse texto (path) numa variavel \$w"
+      #echo "uDev: Give dir basename into variable \$W so that command '$ op .' can operate"
+      #echo "uDev: Mostrar o antes e o depois"
+
+   else
+      echo 'DRYa: options for w-pwd `windows-$(pwd)`on WSL2'
+      echo
+      echo "DRYa: feed windows 'Path' to a file, to be converted to Linux 'Path'"
+      echo " > D wpwd"
+
+   fi
+}
+
 function f_drya_help {
    # Main help function
   
-   f_greet
+   f_greet2
 
    f_talk; echo "Help"
            echo
@@ -836,20 +891,22 @@ function f_drya_fzf_MM_functionality_pakage {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
-         L5="5. App  | xKill"
-         L4="4. App  | notify"
-         L3="3. Menu | calculadoras"
-         L2="2. Menu | dot-files"
+         L6='6. Script | Win `pwd` to Linux `pwd`'
+         L5="5. App    | xKill"
+         L4="4. App    | notify"
+         L3="3. Menu   | calculadoras"
+         L2="2. Menu   | dot-files"
          L1="1. Cancel" 
 
          L0="DRYA: Fx List:" 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "5. " ]] && echo "uDev"
          [[ $v_list =~ "4. " ]] && echo "uDev"
 
@@ -948,9 +1005,9 @@ function f_exec {
 
 
 
-# ---------------------------------------
-# -- Functions above -- Arguments Below
-# ---------------------------------------
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
 
 
 
@@ -1210,70 +1267,12 @@ elif [ $1 == "config" ]; then
    fi
 
 elif [[ $1 == "wpwd" ]] || [[ $1 == "wPWD" ]]; then 
+   # Convert text Windows Path into text Linux Path
+   
+   # Getting variables from the arguments, from the input
+      v_arg2=$2
 
-   f_greet
-
-   if [ -z $2 ]; then 
-      echo 'DRYa: options for w-pwd `windows-$(pwd)`on WSL2'
-      echo
-      echo "DRYa: feed windows 'Path' to a file, to be converted to Linux 'Path'"
-      echo " > D wpwd p || D wpwd path"
-
-   elif [ $2 == "p" ]; then 
-      clear
-      figlet DRYa
-      echo "DRYa: feed me 1 or + Windows paths to convert"
-      echo
-
-      # Make a dir and a file, to paste and convert windows text to linux text
-         mkdir -p ~/.tmp 
-         v_file=~/.tmp/wpwd-rel-path  # Note: Does not work: v_file="~/.tmp/wpwd-rel-path"
-         touch $v_file 
-
-      # File the file with some instructions
-         echo -e "\n\n# DRYa: Paste an Windows relative path into this vim file and exit with 'ZZ' " > $v_file
-         echo -e "# \n# \n# Help with vim commands:\n# > uDev" >> $v_file
-         # uDev: finish vim instructions
-
-      # Edit the file, so that the user can paste the C:\<path> and exit
-         vim $v_file
-
-      # Convert the text inside the file
-         sed -i '/^#/d'             $v_file  # Delete all commented lines
-         sed -i '/^$/d'             $v_file  # Delete all empty lines
-
-         sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
-         sed -i 's#c:\\#/mnt/c/#g'  $v_file  # Convert c:\ into /mnt/c
-
-         sed -i 's#D:\\#/mnt/d/#g'  $v_file  # Convert D:\ into /mnt/d
-         sed -i 's#d:\\#/mnt/d/#g'  $v_file  # Convert d:\ into /mnt/d
-
-         sed -i 's#E:\\#/mnt/e/#g'  $v_file  # Convert E:\ into /mnt/e
-         sed -i 's#e:\\#/mnt/e/#g'  $v_file  # Convert e:\ into /mnt/e
-
-         sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
-         sed -i 's/\\/\//g'         $v_file  # Convert \ into /
-         sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
-
-      # Copy text to variable, to test if file/variable is empty
-         v_text=$(cat ~/.tmp/wpwd-rel-path )
-         #v_text=""  # Debug: To test if file is empty
-
-      # Tell if it is empty or print the remaining contents (hopefully with a valid path converted)
-         if [ -z "$v_text" ]; then
-            echo "The file is empty"
-         else 
-            w=$(cat $v_file)
-            echo $w
-            export w
-            echo "uDev: Perguntar com fzf qual dos links quer navegar (\`D wpwd n\`)"
-         fi
-
-      echo "Foi colocar todo esse texto (path) numa variavel \$w"
-      echo
-      echo "uDev: Give dir basename into variable \$W so that command '$ op .' can operate"
-      echo "uDev: Mostrar o antes e o depois"
-   fi
+   f_win_to_linux_pwd
 
 elif [ $1 == "backup" ]; then 
 
