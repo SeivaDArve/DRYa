@@ -3,12 +3,6 @@ clear
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 
-# uDev: due to bug which was foun, the next line will fix it
-	touch ~/.bashrc  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did nit exist
-	echo "file created ~/.bashrc"
-	echo " " >> ~/.bashrc  ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
-	read -s -n 1
-
 function f_greet {
    # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
    # echo -e "plain \e[0;32m
@@ -37,6 +31,13 @@ function f_greet_alternative {
 	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
    figlet -f standard.flf DRYa 2>/dev/null
 }
+
+# uDev: due to bug which was found, the next line will fix it
+   f_greet
+	touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
+	echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
+	read -s -n 1 -p " > [Any key to continue]"
+
 
 function f_title {
    echo -e " ( Initial Menu )\n"
