@@ -708,20 +708,34 @@ function f_dot_files_list_available {
            echo " > Files ready to copy from DRYa repo to their Default locations"
 
    # List all files in one array variable
-      v_all_dot_files=(".bashrc" ".bash_logout" ".netrc" ".vimrc" "emacs:init.el" \ 
-                       "emacs:lib" "emacs:lib:upk" "emacs:lib:omni-log" ".gitconfig" \
-                       "xrandr" "keyboard:layout" "manpages" "termux:storage" \
-                       "termux:repos" "termux:properties" \
-                       "termux:colors" \
-                       '~/ln/wsl' \           # Soft link for WSL2 C:\
-                       '~/ln/Repositories' \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
-                       ".dryarc" \
-                       ".tmux.conf" "\$PS1" "browser:bookmarks")  
+      v_all_dot_files=(                \
+         ".bashrc"                     \
+         ".bash_logout"                \
+         ".netrc"                      \
+         ".vimrc"                      \
+         "emacs:init.el"               \
+         "emacs:lib"                   \
+         "emacs:lib:upk"               \
+         "emacs:lib:omni-log"          \
+         ".gitconfig"                  \
+         "xrandr"                      \
+         "keyboard:layout"             \
+         "manpages"                    \
+         "termux:storage"              \
+         "termux:repos"                \
+         "termux:properties"           \
+         "termux:colors"               \
+         '~/ln/wsl'                    \  # Soft link for WSL2 C:\
+         '~/ln/Repositories'           \  # Soft link for WSL2 C:\$USER\Repositories == /mnt/c/$USER/Repositories
+         ".dryarc"                     \
+         ".tmux.conf"                  \
+         '$PS1'                        \
+          "browser:bookmarks"          )  
 
-   # ECHO variable horizontally:
+   # `echo` variable horizontally:
       #echo "Array is: ${v_all_dot_files[@]}"
 
-   # ECHO variable vertically:
+   # `echo` variable vertically:
       echo -e "\nListing all dot files to handle:"
 
       for i in ${v_all_dot_files[@]}
@@ -755,13 +769,14 @@ function f_dot_files_install {
    L5="5. .netrc "
    L4="4. .dryarc "
 
-   L3="3. PRESETS"
-   L2="2. TODOS "
+   L3="3. Install | PRESETS"
+   L2="2. Install | TODOS "
+
    L1="1. Cancel "
 
    L0="SELECT (1 or +) dot-files to install: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_drya_fzf_menu_hist
@@ -780,25 +795,26 @@ function f_dot_files_install {
 function f_dot_files_menu {
    # Main Menu for dot files
       L7="7. Factory Reset"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
-      L6="6. Backup"
-      L5="5. Edit original (at Default DRYa repo) "
-      L4="4. Edit Installed (files across the system) "
-      L3="3. Remove "
-      L2="2. Install" 
-      L1="1. List available and describe (at DRYa repo) "
+      L6="6. Backups Manager"
+      L5="5. Edit (original or installed)"
+      L4="4. Uninstall "
+      L3="3. Install" 
+      L2="2. List available"
+      L1="1. Cancel"
 
       L0="Menu: Manage dot-files: "
 
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1. " ]] && f_dot_files_list_available
-      [[ $v_list =~ "2. " ]] && f_dot_files_install
-      [[ $v_list =~ "3. " ]] && echo "Detetado 3"
-      [[ $v_list =~ "4. " ]] && echo "Detetado 4"
-      [[ $v_list =~ "5. " ]] && echo "Detetado 5"
+      [[ $v_list =~ "8. " ]] && echo "Detetado 8"
+      [[ $v_list =~ "7. " ]] && echo "Detetado 7"
       [[ $v_list =~ "6. " ]] && echo "Detetado 6"
-      [[ $v_list =~ "7. " ]] && echo "Detetado 6"
+      [[ $v_list =~ "5. " ]] && echo "Detetado 5"
+      [[ $v_list =~ "4. " ]] && echo "Detetado 4"
+      [[ $v_list =~ "3. " ]] && f_dot_files_install
+      [[ $v_list =~ "2. " ]] && f_dot_files_list_available
+      [[ $v_list =~ "1. " ]] && echo "Canceled"
    
       unset v_list
 }
@@ -1091,31 +1107,32 @@ elif [ $1 == "verbose" ] || [ $1 == "v" ]; then
    fi
 
 elif [ $1 == "update" ]; then 
-    echo "uDev: Similar to: DD; G v; source ~/.bashrc; apply all dot-files across the system"
+    echo "uDev: Similar to: G v; source ~/.bashrc; apply all dot-files across the system"
 
     f_greet
     f_c4; echo -n "DRYa: "
     f_rc; echo "Downloading updates and applying them"
-         cd ${v_REPOS_CENTER}/DRYa
+          cd ${v_REPOS_CENTER}/DRYa
+   
     f_git_status
     f_git_pull
+
     echo
 
     # Aplly each dot-file in their correct places across the system
-    f_c4; echo -n "DRYa: "
-    f_rc; echo "applying dot-files:"
-    echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-    echo " > termux: colors + properties (uDev)"
-    echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-    echo " > init.el (uDev)"
-    echo " > drya: .bash_logout file"
-    echo
+       f_talk; echo "applying dot-files:"
+               echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+               echo " > termux: colors + properties (uDev)"
+               echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+               echo " > init.el (uDev)"
+               echo " > drya: .bash_logout file"
+               echo
 
     # Reload .bashrc
-    f_c4; echo -n "DRYa: "
-    f_rc; echo "reloading functions, variables, alias at:"
-    echo " > ~/.bashrc"
-          source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
+       f_talk; echo "reloading functions, variables, alias at:"
+               echo " > ~/.bashrc"
+
+       source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
 elif [ $1 == "logout" ]; then 
    # If you made modifications at ...DRYa/all/etc/logout-all-drya-files 
