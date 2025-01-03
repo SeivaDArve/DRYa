@@ -9,17 +9,29 @@ clear
 	echo " " >> ~/.bashrc  ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
 	read -s -n 1
 
-function f_greet_alternative {
+function f_greet {
+   # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
+   # echo -e "plain \e[0;32m
 
-   echo ' ____	______	 __    '
-   echo '|	_ \|  _ \ \ / /_ _ '
-   echo '| | | | |_) \ V / _` |'
-   echo '| |_| |  _ < | | (_| |'
-   echo '|____/|_| \_\|_|\__,_|'
-   echo '					   '
+	echo
+	echo -e " \e[0;32m    ||\`		                   		"
+	echo -e " \e[0;32m    ||				                  "
+	echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
+	echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
+	echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
+	echo -e " \e[0;32m                 ,  |'		         "
+	echo -e " \e[0;32m                   ''		         "
+   echo -e " \e[0m" 
+
+   #echo ' ____  ___ __   __    '
+   #echo '|  _ \|  _ \ \ / /_ _ '
+   #echo '| | | | |_) \ V / _` |'
+   #echo '| |_| |  _ < | | (_| |'
+   #echo '|____/|_| \_\|_|\__,_|'
+   #echo '					   '
 }
 
-function f_greet {
+function f_greet_alternative {
 
    # This script could also ensure the standard.flf font is correctly installed.
 	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
