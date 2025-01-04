@@ -3,6 +3,9 @@
 # Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
   v_title_drya="source-all-drya-files"  # Name of this file
 
+# Demi-fake pin for fzf menus (scare away curious people)
+   pin=000
+
 # uDev: PUT EVERYTHING INSIDE FUNCTIONS AND CREATE f_exec AT THE END
 
 # -------------------------------------------------------
