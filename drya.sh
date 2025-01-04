@@ -814,6 +814,66 @@ function f_dot_files_list_available {
       echo
 }
 
+function f_quick_install_all_upk {
+   # Makes all dependencies for upk repo available
+   # This might be used most likely at in-job phone
+   
+   f_greet
+
+   # Echo a list of things that are going to be installed:
+      # uDev
+      # uDev
+      # uDev
+      # uDev
+      # uDev
+      # uDev
+
+   # Change dir, to avoid changing at every command
+      cd ${v_REPOS_CENTER}
+
+   # Install dependencies (and automatically answering YES to all questions)
+      # uDev: Test if it is windows and install GUI version also
+      f_talk; echo "install emacs figlet vim"
+      yes | pkg install emacs figlet vim 
+
+   # Repo: upk
+      f_talk; echo "Cloning: upK" && git clone https://github.com/SeivaDArve/upK.git
+      
+   # Repo: upk-diario-dv
+      f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+
+      read
+   # Installing .netrc
+      f_dotFiles_install_netrc
+
+
+   # Refresh the terminal
+      #source ~/.bashrc
+
+   #    install: 
+   #             emacs for windows
+   #             instal init.el
+   echo "drya: udev: install all dependencies for upk repo to run"
+}
+
+function f_dot_files_install_presets {
+   Lz='`D dot install presets`'
+
+   L2="2. Quick Install | upk + upkd + dependencies "
+   L1="1. Cancel "
+
+   L0="SELECT (1 or +) dot-files to install: "
+
+   v_list=$(echo -e "$L1 \n$L2 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "$Lz" ]] && echo "$Lz" 
+      [[ $v_list =~ "2. " ]] && f_quick_install_all_upk
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
+      unset v_list
+
+}
+
 function f_dot_files_install {
    Lz='`D dot install`'
 
@@ -834,22 +894,24 @@ function f_dot_files_install {
    v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "\`" ]] && echo "$Lz" >> $v_drya_fzf_menu_hist
-      [[ $v_list =~ "9" ]] && f_dotFiles_install_termux_properties
-      [[ $v_list =~ "8" ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
-      [[ $v_list =~ "7" ]] && f_dotFiles_install_git 
-      [[ $v_list =~ "6" ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "5" ]] && f_dotFiles_install_netrc
-      [[ $v_list =~ "4" ]] && f_dotFiles_install_dryarc
-      [[ $v_list =~ "3" ]] && echo "uDev: PRESETS"
-      [[ $v_list =~ "2" ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
-      [[ $v_list =~ "1" ]] && echo "Canceled: $Lz"
+      [[ $v_list =~ "$Lz" ]] && history -s "$Lz"
+      [[ $v_list =~ "9. " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "8. " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "7. " ]] && f_dotFiles_install_git 
+      [[ $v_list =~ "6. " ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "5. " ]] && f_dotFiles_install_netrc
+      [[ $v_list =~ "4. " ]] && f_dotFiles_install_dryarc
+      [[ $v_list =~ "3. " ]] && f_dot_files_install_presets
+      [[ $v_list =~ "2. " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       unset v_list
 }
 
 function f_dot_files_menu {
    # Main Menu for dot files
-      L7="7. Factory Reset"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
+      #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
+      #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+      L7="7. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L6="6. Backups Manager"
       L5="5. Edit (original or installed)"
       L4="4. Uninstall "
@@ -859,10 +921,9 @@ function f_dot_files_menu {
 
       L0="Menu: Manage dot-files: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "8. " ]] && echo "Detetado 8"
       [[ $v_list =~ "7. " ]] && echo "Detetado 7"
       [[ $v_list =~ "6. " ]] && echo "Detetado 6"
       [[ $v_list =~ "5. " ]] && echo "Detetado 5"
@@ -1517,39 +1578,8 @@ elif [ $1 == "install" ]; then
    elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
       # Makes all dependencies for upk repo available
       # This might be used most likely at in-job phone
-      
-      # Echo a list of things that are going to be installed:
-         # uDev
-         # uDev
-         # uDev
-         # uDev
-         # uDev
-         # uDev
 
-      # Change dir, to avoid changing at every command
-         cd ${v_REPOS_CENTER}
-
-      # Install dependencies (and automatically answering YES to all questions)
-         # uDev: Test if it is windows and install GUI version also
-         yes | pkg install emacs figlet vim 
-
-      # Repo: upk
-         echo "cloning:upK" && git clone https://github.com/SeivaDArve/upK.git
-
-      # Installing .netrc
-         f_dotFiles_install_netrc
-         
-      # Repo: upk-diario-dv
-         echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-
-
-      # Refresh the terminal
-         #source ~/.bashrc
-
-      #    install: 
-      #             emacs for windows
-      #             instal init.el
-      echo "drya: udev: instal all dependencies for upk repo to run"
+      f_quick_install_all_upk
 
    else
       echo "drya: What do you want to install? invalid arg"
