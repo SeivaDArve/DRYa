@@ -1778,7 +1778,8 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
           exit 1
       fi
 
-elif [ $1 == "calculator" ] || [ $1 == "calculadora" ] || [ $1 == "calc" ] || [ $1 == "clc" ] || [ $1 == "ca" ]; then
+elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calculator" ] || [ $1 == "clc" ] || [ $1 == "calculadora" ]; then
+
    # List if calculatores (some modified for Trading)
 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh

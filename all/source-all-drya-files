@@ -284,7 +284,7 @@ function f_repository_moedaz {
 function f_repository_upK {
    # Repository: upK 
 
-   source ${v_REPOS_CENTER}/upK/all/bin/bash/time.sh 2>/dev/null
+   source ${v_REPOS_CENTER}/upK/all/source-all-upk-files
 
    # Open with github sync
    alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
@@ -301,7 +301,7 @@ function f_repository_upK-diario-Dv {
 
    # Open without github sync
       # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
-      alias upk-dv="bash ${v_REPOS_CENTER}/upK-diario-Dv/upk.sh" 
+      alias upk-dv="emacs ${v_REPOS_CENTER}/upK-diario-Dv/dailylog.org" 
 }
 
 function f_repository_112-Shiva-Sutras {
@@ -416,6 +416,9 @@ function f_internal_drya_files_2_2 {
    # List DRYa work directory
       alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+
+   # Fast menu for calculators
+      alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
    # To use in scripts (vim $DRYa/all/.../...)
       DRYa="${v_REPOS_CENTER}/DRYa"

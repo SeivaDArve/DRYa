@@ -22,6 +22,7 @@ function f_gr_soft_DRYa_dependencies {
 
    # Basic dependencies for Default DRYa usage
       pkg install    \
+      git            \
       vim            \  # Editor de Texto do tipo TUI (Terminal User Interface)
       file           \  # Dependency for ezGIT
       man            \  # Usado para ler manuais de instrucoes dos comandos Linux

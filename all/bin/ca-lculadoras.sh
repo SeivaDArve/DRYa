@@ -41,6 +41,19 @@ function f_talk {
 
    touch $v_log
 
+function f_clc_bc {
+   # dee: in Bash there is  very good calculator caled 'bc', but it's command is not very intuitive
+   # Opens `bc` but creates a more verbose intro about itself and what is happening
+      
+   clear
+   figlet Best Calculator
+   echo "Best Calculator (interactive) 'bc':"
+   echo " > Make some math"
+   echo
+   bc --quiet
+}
+
+
 
 function f_calc_regr_3_simples {
    # Utilizado para calcular a formula final da regra de 3 simples
@@ -408,10 +421,10 @@ BTC, mBTC, µBTC (bits) e Satoshis (sat).
 Exemplo Prático
    Se você tiver 0.12345678 BTC na sua carteira:
 
-   Em BTC, será exibido como:            0.12345678 BTC.
-   Em mBTC, será exibido como:           123.45678 mBTC.
-   Em µBTC (bits), será exibido como:    123456.78 µBTC.
-   Em Satoshis (sat), será exibido como: 12,345,678 sat.
+   Em Bitcoin      (BTC),  será exibido como:         0.12345678  BTC.
+   Em MilliBitcoin (mBTC), será exibido como:         123.45678  mBTC.
+   Em MicroBicoin  (µBTC)/ (bits), será exibido como: 123456.78  µBTC.
+   Em Satoshis     (sat),  será exibido como:         12,345,678  sat.
 EOF
 # -# -------------------------------------------------------------------------
 }
@@ -420,16 +433,25 @@ function f_exec_calculadora_conversora {
    # Conversora de 1 unidade para 1 outra unidade
 
    # Info
-      f_info_unidades_de_medida
+      #f_info_unidades_de_medida
 
    # Texto do menu
-      v_list=$(echo -e "1. Converter: de BTC  para... \n2. Converter: de mBTC para... \n3. Converter: de µBIT para... \n4. Converter: de Sat  para... \n5. Info sobre unidades" | fzf --cycle -m --prompt="SELECIONE Converora de 1 unidade para 1 outra: ")
+      L5="5. Info sobre unidades"
+      L4="4. Converter: de Sat  para..."
+      L3="3. Converter: de µBIT para..."
+      L2="2. Converter: de mBTC para..."
+      L1="1. Converter: de BTC  para..."
+
+      L0="SELECIONE Converora de 1 unidade para 1 outra: "
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5" | fzf -m --cycle --prompt="$L0")
                
    # Quando o menu Ã© de Escolha multipla tipo `for` loop
-      [[ $v_list =~ "1." ]] && echo "uDev: 1"
-      [[ $v_list =~ "2." ]] && echo "uDev: 2"
       [[ $v_list =~ "5." ]] && f_info_unidades_de_medida | less
-      unset v_list             # Reset a Variavel
+      [[ $v_list =~ "4." ]] && echo "uDev: 4"
+      [[ $v_list =~ "3." ]] && echo "uDev: 3"
+      [[ $v_list =~ "2." ]] && echo "uDev: 2"
+      [[ $v_list =~ "1." ]] && echo "uDev: 1"
 }
 
 function f_exec_calculadora_cambios {
@@ -542,35 +564,66 @@ function f_exec_calculadora_trim {
 
 
 
+
+
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
+
+
+
+
+
+
+
 if [ -z "$*" ]; then
    # Menu para aceder a todas as calculadoras
 
       # Texto do menu
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L8="8. Historico"
-         L7="7. calculadora-supermercado"
-         L6="6. calculadora-trim-the-hedge"
-         L5="5. calculadora-regra-3-simples"
-         L4="4. calculadora-cambios"
-         L3="3. calculadora-conversora"
-         L2="2. calculadora-registadora"
-         L1="1. Cancel"
+         L15='15. Relogio     | Relogio Mundial'
+         L14='14. Relogio     | Cronometro'
+         L13='13. Relogio     | Temporizador'
+         L12='12. Relogio     | Despertador'
 
-         L0="SELECIONE 1 calculadora: "
+         L11='10. Calculadora | supermercado'
+         L10='10. Calculadora | trim-the-hedge'
+          L9='9.  Calculadora | regra-3-simples'
+          L8='8.  Calculadora | cambios'
+          L7='7.  Calculadora | Conversora de Unidades: Bitcoin'
+          L6='6.  Calculadora | registadora'
+          L5='5.  Calculadora | `bc` (default)'
 
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8\n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+          L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
+          L3='3.  Agenda      | Repo: moedaz'
+          L2='2.  Historico'
+          L1='1.  Cancel'
+
+         L0='DRYa: Calculo: '
+
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                   
       # Quando o menu de Escolha multipla tipo `for` loop
-         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-         [[ $v_list =~ "8. " ]] && vim $v_log
-         [[ $v_list =~ "7. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
-         [[ $v_list =~ "6. " ]] && f_exec_calculadora_trim
-         [[ $v_list =~ "5. " ]] && f_exec_calculadora_regra_de_3
-         [[ $v_list =~ "4. " ]] && f_exec_calculadora_cambios
-         [[ $v_list =~ "3. " ]] && f_exec_calculadora_conversora
-         [[ $v_list =~ "2. " ]] && f_exec_calculadora_registadora
-         [[ $v_list =~ "1. " ]] && sleep 0.1
+         [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
+
+         [[ $v_list =~ "15. " ]] && echo "uDev"
+         [[ $v_list =~ "14. " ]] && echo "uDev"
+         [[ $v_list =~ "13. " ]] && echo "uDev"
+         [[ $v_list =~ "12. " ]] && echo "uDev"
+
+         [[ $v_list =~ "11. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+         [[ $v_list =~ "10. " ]] && f_exec_calculadora_trim
+         [[ $v_list =~ "9.  " ]] && f_exec_calculadora_regra_de_3
+         [[ $v_list =~ "8.  " ]] && f_exec_calculadora_cambios
+         [[ $v_list =~ "7.  " ]] && f_exec_calculadora_conversora
+         [[ $v_list =~ "6.  " ]] && f_exec_calculadora_registadora
+         [[ $v_list =~ "5.  " ]] && f_clc_bc
+
+         [[ $v_list =~ "4.  " ]] && echo "uDev"
+         [[ $v_list =~ "3.  " ]] && echo "uDev"
+         [[ $v_list =~ "2.  " ]] && vim $v_log
+         [[ $v_list =~ "1.  " ]] && sleep 0.1
          unset v_list
 
 elif [ $1 == "h" ]; then
