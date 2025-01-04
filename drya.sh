@@ -894,7 +894,7 @@ function f_drya_fzf_MM_functionality_pakage {
          L6='6. Script | Win `pwd` to Linux `pwd`'
          L5="5. App    | xKill"
          L4="4. App    | notify"
-         L3="3. Menu   | calculadoras"
+         L3="3. Menu   | calculos/calculadoras"
          L2="2. Menu   | dot-files"
          L1="1. Cancel" 
 
