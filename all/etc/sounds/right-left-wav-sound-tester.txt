@@ -1,0 +1,3 @@
+uDev: create or download a sound saying "right" when the right speaker is on, the do the same to the left,
+
+This is needed when using earphones without physica inscription in it of which one is left and right
