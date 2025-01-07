@@ -4,10 +4,16 @@
 # Dependencies: figlet, file, fzf (may bi instaled by typing):
    # '$ pkg install figlet file fzf'
 
+
+
+
 # ---------------------------------
 # uDev list                          {
 # ---------------------------------
-#
+
+
+
+
 # uDev: insert: nppn-looper + '. ?' commands
  
 # uDev: Why not a tput menu for each? (better than select menu)
@@ -20,7 +26,7 @@
 
 #    '. '       ## ls
 #    'V mo'     ## cd moedaz
-#    'DD'      ## cd DRYa
+#    'DD'       ## cd DRYa
 #    'op file.org' detect current emacs (instead of EM, Em, em)
 
 
@@ -28,31 +34,67 @@
 # Leters to be used:
 #     function S     (Sync files before + after editing)
 #     function V     (NaVigate to dirs)
-#     function PNpn  (Replaced with `fzf` + `V`    ---->    `V +`  `V -`  `V .`  `V --`  (To create a tmp favourite list of dirs  @verbose-lines)
-#     function PNpn  (Replaced with `fzf` + `S`    ---->    `S +`  `S -`  `S .`  `S --`  (To create a tmp favourite list of files @Verbose-lines)
+#     function PNpn  (Replaced with `fzf` + `V`    ---->    `V +`  `V -`  `V .`  `V ..`  `V --` (To create a tmp favourite list of dirs  @verbose-lines or @~/.config/h.h/drya/)
+#     function PNpn  (Replaced with `fzf` + `S`    ---->    `S +`  `S -`  `S .`  `S ..`  `S --` (To create a tmp favourite list of files @Verbose-lines or @~/.config/h.h/drya/)
 #     function .
 #     function ..
 #     function ...
 #     function ....
 #     Forbiden function: Function D   ##   Reserved for DRYa
 
+
+# uDev: letra S é melhor para ABRIR ficheiros com SYNC
+#       letra . para abrir ficheiros sem sync
+
+      
+# uDev: Set traitsID_Editor to avoid:
+#       > Open X (with vim)
+#       > Open X (with emacs)
+
+
+# uDev: bind Ctrl-F to F5 (refresh terminal and source files)
+
+
+
 # ---------------------------------
 # uDev list                          }
 # ---------------------------------
 
-function f_cor5 {
+
+
+
+function f_1 {
+   tput setaf 5
+}
+
+
+function f_c5 {
    tput setaf 6
 }
 
+function f_rc { 
+   # This function is to be used when styles are to be CLEARED
+   tput sgr0
+}
+
 function f_done {
-   f_cor5; echo ": Done!"
-   f_resetCor
+   f_r5; echo ": Done!"
+   f_rc
 }
 
 function f_greet { 
    # Avoiding repetition
    clear
+   f_c5
    figlet fluNav
+   f_rc
+}
+      
+function f_talk {
+   # Copied from: ezGIT
+         echo
+   f_c5; echo -n "DRYa: fluNav: "
+   f_rc
 }
 
 function f_mF { 
@@ -174,39 +216,23 @@ function f_emacs_init_vim {
 }
 
 function f_edit_self {
-      clear
-      figlet fluNav 
-      echo "Editing/Opening: fluNav original file"
-      echo " > Parent repo: DRYa"
-      echo
-      echo
-      echo "-------- info --------"
-      echo "Outdated: opening REPOS CENTER with: '. .'"
-      echo " > Updated: '. G' to navigate there"
-      echo 
-      echo "To open fluNav (catalogue of all sync files):"
-      echo " > Function: F ."
-      echo " > Function: . ."
-      echo "----------------------"
-      echo
-      echo
-      echo "Press any key to continue"
-      echo " > To open fluNav.sh in vim editor" 
-      read -s -n 1 -p " "
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
 
-      clear
-      figlet fluNav 
-      echo "Edited/Closed: fluNav original file"
-      echo
-      echo "Do you want to refresh the terminal to apply the changes?"
-      echo " > uDev (it will be alias: 'F 5')"
-      echo " > Press any key to continue"
-      echo " > (Or wait 5 secs to abort)"
-      read -s -n 1 -t 5
+      f_greet
 
-      f_up 
+      # Verbose: Before opening file
+         f_talk; echo "Editing fluNav original file"
+                 echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
 
+                 echo
+                 read -s -n 1 -p "[Press any key to continue] "
+                 echo 
+
+      # Verbose: Actually opening the file
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+
+      # Verbose: After opening the file
+         f_talk; echo "Closed: fluNav original file"
+                 echo
 }
 
 function f_sync_ez_b4_after {
@@ -246,8 +272,7 @@ function f_action {
    elif [ $v_nm == "car" ]; then
       # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
 
-      clear
-      figlet fluNav 
+      f_greet 
 
       # Variables for this task
          v_respective_repo=${v_REPOS_CENTER}/moedaz 
@@ -441,9 +466,16 @@ function . {
          # uDev: this command '. .' is usually issued at the beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
          # uDev: similar to '$ D .' ezGIT could have also an alias to navigate to it's home dir. Use command '$ . G .' to do it
    
-      elif [ $1 == "?" ]; then 
+      elif [ $1 == "?" ] || [ $1 == "h" ]; then 
          # Describe all these navigation alias
-         echo "'. ?' Shows this help menu" 
+
+         f_greet
+         
+         f_talk; echo "Instructions:"
+         echo
+         echo '`. ?` or `. h`  Shows this help menu'
+         echo '`. G`           Navigate to: Repos Center'
+         echo
          echo ".  1x Means: ls"
          echo "..  2x Means: cd .."
          echo "...  3x Means: cd -"
@@ -503,53 +535,44 @@ function ....... {
 
 
 function E {
+   # Escolher editor de texto para pre-definir 
+
    # In fluNav, there is a command to open either a dir or to open a file:
    # '$ . <file>'
    # and if there is no dir or existent file, it will create one,
    # so, this function will decide which text editor will open the file
 
-   # uDev: variable PS3
-   select i in Nano Vim Emacs
-   do 
-      case $i in 
-         Nano)
-            alias v_editor="nano"
-            echo "Nano"
-            break
-         ;;
-         Vim)
-            alias v_editor="vim"
-            echo "Vim"
-            break
-         ;;
-         Emacs)
-            alias v_editor="EM"
-            echo "Emacs"
-            break
-         ;;
-         *)
-            echo "What text editor do you want as default?"
-         ;;
-      esac
-   done
-}
-alias v_editor="vim"  ## This alias goes in combination with function 'E' and '$ . <file>'
+   # uDev: Set traitsID accordingly
 
-# function c_editor {
-#    # 'Command editor' a command/alias to another command to eventually open a file
-#    if [ -z $v_editor ]; then ls
-#    elif [ $v_editor == "vim" ]; then vim $1
-#    elif [ $v_editor == "nano" ]; then nano $1
-#    fi
-# }
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+       L4='4. nano'
+       L3='3. emacs'
+       L2='2. vim'
+       L1='1. Cancel'
+
+      L0="SELECIONE 1 editor de texto para pre-definir: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4\n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "4.  " ]] && alias v_editor="nano" && echo "Nano"
+      [[ $v_list =~ "3.  " ]] && alias v_editor="emacs" && echo "emacs"
+      [[ $v_list =~ "2.  " ]] && alias v_editor="vim" && echo "emacs"
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
 
 function f_trade_interactive_dir {
-      clear
-      figlet Moedaz
-      echo "moedaz: trade: interactive DASHBOARD"
-      echo " > You may use the comand 'ex'"
-      echo
-      ls -1
+   clear
+   figlet Moedaz
+   echo "moedaz: trade: interactive DASHBOARD"
+   echo " > You may use the comand 'ex'"
+   echo
+   ls -1
 }
 
 function hkllhcf {
@@ -626,6 +649,120 @@ function npNP-dir-looper {
 
 
 
+function f_mobile_android {
+   # if [ -z $2 ]; then 
+
+   case $2 in
+      0) # Travel to Internal storage
+         # uDev: clear; pwd; echo "you are in X dir"
+         echo "Internal storage"
+         pwd
+         echo
+
+         f_greet
+         echo "Internal Storage"
+         f_horiz_line
+
+         cd /sdcard && ls
+      ;;
+      1) # Travel to SD Card storage
+
+         v_place_2=/storage/0123-4567
+         v_place_3=/storage/
+
+         f_greet
+
+         echo "SD card storage"
+         echo
+         echo "Termux cannot WRITE to SD card,"
+         echo "but can READ and RUN bash scripts from it"
+         echo "If you have a huge database to store into SD external"
+         echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+         echo "file explorer, MOVE it to the SD card"
+         echo
+
+         echo "Listing: $v_place_2"
+         echo "Listing: $v_place_3"
+         echo
+
+         echo "SD card Storage"
+         f_horiz_line
+
+         cd $v_place_2 && ls
+         f_horiz_line
+         cd $v_place_3 && ls
+
+      ;;
+      2) # Travel to USB storage
+         echo "USB Storage"
+         pwd
+         echo
+
+         f_greet
+         echo "USB Storage"
+         f_horiz_line
+
+         cd /storage/83DB-10EA && ls || cd /storage && ls
+      ;;
+      3) # Travel to the dir where many USB storages are mounted
+         echo "List of options for: USB storage"
+         pwd
+         echo
+
+         f_greet
+         echo "Listing possible USB plugged in"
+         f_horiz_line
+
+         cd /storage && ls
+      ;;
+      4) # Travel to the dir where many USB storages are mounted
+         clear
+         echo "Termux cannot WRITE to SD card,"
+         echo "but can READ and RUN bash scripts from it"
+         echo "If you have a huge database to store into SD external"
+         echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+         echo "file explorer, MOVE it to the SD card"
+         echo
+
+         f_greet
+         echo "SD card Storage"
+         f_horiz_line
+
+         echo "Do you need directories to be created in order to MOVE"
+         echo "internal things to external SD?"
+         echo 
+         echo "If you want a directory called \"Repositories\" in both"
+         echo "External and Internal storage, press ENTER 3x"
+         echo "(or cancel with CTRL + C)"
+         echo
+         echo "#uDev: create an option to ask for custom dir name"
+         echo "(default is /storage/Repositories"
+         read
+         read
+         read
+
+      ;;
+      b) 
+         # Travel to dir at Internal storage called Termux-bridge-Android
+
+         f_greet
+         echo "Directory: Internal Storage: Termux-bridge-Android"
+         f_horiz_line
+
+         cd /sdcard/Termux-bridge-Android && ls
+      ;;
+      *)
+         echo "How to use:"
+         echo "$ V m [0|1|2|3|4|b]"
+         echo '0) # Travel to Internal storage'
+         echo '1) # Travel to SD Card storage'
+         echo '2) # Travel to USB storage'
+         echo '3) # Travel to the dir where many USB storages are mounted'
+         echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
+    #uDev: May be needed termux-setup-storage to access some directories
+      ;;
+   esac
+}
 
 
 
@@ -641,26 +778,26 @@ function npNP-dir-looper {
 
 
 function f_hist_2_fzf {
-#echo "Escolheu 2. Ultimos Ficheiros"
-v_text=$(cat $v_file)
+   #echo "Escolheu 2. Ultimos Ficheiros"
+   v_text=$(cat $v_file)
 
 
-if [[ -z $v_text ]]; then
-   echo "Nao tem nenhum Ficheiro recente na lista"
+   if [[ -z $v_text ]]; then
+      echo "Nao tem nenhum Ficheiro recente na lista"
 
-else 
-   v_escolha=$(cat "$v_file" | fzf --prompt="SELECT ficheiro RECENTE para editar: " )
-   #echo "Escolhido: $v_escolha"
+   else 
+      v_escolha=$(cat "$v_file" | fzf --prompt="SELECT ficheiro RECENTE para editar: " )
+      #echo "Escolhido: $v_escolha"
 
-   # Navega para a pasta que obtem mais ficheiros
-      cd
+      # Navega para a pasta que obtem mais ficheiros
+         cd
 
-   # Se alguma coisa foi escolhido e essa variavel nao estiver vazia, abre com vim
-      [[ ! -z $v_escolha ]] && vim $v_escolha
-   
-   # Volta para a pasta inicial
-      cd - 1>/dev/null
-fi
+      # Se alguma coisa foi escolhido e essa variavel nao estiver vazia, abre com vim
+         [[ ! -z $v_escolha ]] && vim $v_escolha
+      
+      # Volta para a pasta inicial
+         cd - 1>/dev/null
+   fi
 
 }
 
@@ -719,572 +856,426 @@ function H {
 
 
 function V {
-   # Function: "Directory"
+   # Function: "Directory" ou "Place (V)"
    
-   # uDev: why is it that D is not reserved for 'alias D="drya"'? 
-      # sugestion: fluNav will be under F so that D gets to be reserved for drya
-
    # uDev: Se for WSL3, detetar endereços: "C:\Users\$USER\Documents"
-
    # uDev: add: appdata (windows)
-
    # uDev: alias R: listar repositorios por numero para saltar para eles (ou usar menu fzf)
 
-   # Description: 
-      # This function is a combination of:
-         # '$ cd'
-         # '$ ls'
-         # + alias
-         # It finds directories
-         # uDev: to find and edite files, function f needes to be created and needs to ask for the default text editor
-
-
-   # Usage:
-      # Use 1: '$ V             # Complains that there is no destination specified
-      # Use 2: '$ V drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
-      # Use 3: '$ V -p <dir>    # Create new dir and travel to it
-      # Use 4: '$ V -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
-      # Use 5: '$ V -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
-      # Use 6: '$ V ..          # Go to parent dir and ls
-      # Use 7: '$ V .           # Uses `fzf` to search for a file. Then navigate to it's directory
-      # Use 8: '$ V <dir>       # Go to existent dir at current pwd
 
    # Implementation of Use 1:
-   if [ -z $1 ]; then 
-      f_cor1
-      figlet "fluNav"
-      f_resetCor
-      echo " > No arguments. Choose some place to go to"
+      if [ -z $1 ]; then 
+         f_greet
+         f_talk; echo "V: No arguments. Choose some place to go to"
+
+   # Implementation of Use 0:
+      elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
+         echo "uDev: Instructions"
+         # Help and Usage:
+            # This fx finds directories
+
+            # This function is a combination of:
+            #   `cd` ; `ls` ;  + alias ; 
+
+            # Use 0:  '$ V h           # Help and instructions
+            # Use 1:  '$ V             # Complains that there is no destination specified
+            # Use 2:  '$ V drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
+            # Use 3:  '$ V -p <dir>    # Create new dir and travel to it
+            # Use 4:  '$ V -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
+            # Use 5:  '$ V -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+            # Use 6:  '$ V ..          # Search a list of paths to navigate to
+            # Use 7:  '$ V .           # Uses `fzf` to search for a file. Then navigate to it's directory
+            # Use 8:  '$ V <dir>       # Go to existent dir at current pwd
+            # Use 9:  '$ V +           # Store current path to a list of paths
+            # Use 10: '$ V -           # Remove current path to a list of paths
+            # Use 10: '$ V --          # Remove all lines from history file   
+
 
    # Implementation of Use 2:
-   elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
-      cd ${v_REPOS_CENTER}/DRYa && ls
-   
-   # Implementation of Use 2:
-   elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
-      cd ${v_REPOS_CENTER}/moedaz && ls
-   
-   # Implementation of Use 2:
-   elif [ $1 == "trade" ] || [ $1 == "t" ]; then
-      cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot && ls
-      #f_trade_interactive_dir
-   
-   # Implementation of Use 2:
-   elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
-      cd ${v_REPOS_CENTER}/ezGIT && ls
+      elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
+         cd ${v_REPOS_CENTER}/DRYa && ls
       
-   # Implementation of Use 2:
-   elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
-      cd ${v_REPOS_CENTER}/dWiki && ls
+
+      elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
+         cd ${v_REPOS_CENTER}/moedaz && ls
       
-   # Implementation of Use 2:
-   elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
-      cd ${v_REPOS_CENTER}/wikiD && ls
+
+      elif [ $1 == "trade" ] || [ $1 == "t" ]; then
+         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot && ls
+         #f_trade_interactive_dir
       
-   # Implementation of Use 2:
-   elif [ $1 == "upk" ]; then
-      cd ${v_REPOS_CENTER}/upK && ls
+
+      elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
+         cd ${v_REPOS_CENTER}/ezGIT && ls
+         
+
+      elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
+         cd ${v_REPOS_CENTER}/dWiki && ls
+         
+
+      elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
+         cd ${v_REPOS_CENTER}/wikiD && ls
+         
+
+      elif [ $1 == "upk" ]; then
+         cd ${v_REPOS_CENTER}/upK && ls
+         
+
+      elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet fluNav && echo -e "Command used: upk-dv\n" && ls
+         
+
+      elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
+         cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
+         
+
+      elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
+         cd ${v_REPOS_CENTER}/omni-log && ls
+         
+
+      elif [[ $1 == "gps" ]]; then
+         cd ${v_REPOS_CENTER}/mastering-GPS && ls
+
+
+      elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
+         cd ${v_REPOS_CENTER}/verbose-lines && ls
+         
+
+      elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
+         cd ${v_REPOS_CENTER}/yogaBashApp && ls
+         
+
+      elif [[ $1 == "shamb" ]]; then
+         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
       
-   # Implementation of Use 2:
-   elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-      cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet fluNav && echo -e "Command used: upk-dv\n" && ls
-      
-   # Implementation of Use 2:
-   elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
-      cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
-      
-   # Implementation of Use 2:
-   elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-      cd ${v_REPOS_CENTER}/omni-log && ls
-      
-   # Implementation of Use 2:
-   elif [[ $1 == "gps" ]]; then
-      cd ${v_REPOS_CENTER}/mastering-GPS && ls
 
-   # Implementation of Use 2:
-   elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
-      cd ${v_REPOS_CENTER}/verbose-lines && ls
-      
-   # Implementation of Use 2:
-   elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
-      cd ${v_REPOS_CENTER}/yogaBashApp && ls
-      
-   # Implementation of Use 2:
-   elif [[ $1 == "shamb" ]]; then
-      cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
-   
-   # Implementation of Use 2:
-   elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
-      cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
-      
-   # Implementation of Use 2:
-   elif [ $1 == "tmp" ]; then
-      mkdir -p ~/.tmp
-      cd ~/.tmp/ && ls
+      elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
+         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
+         
 
-   # Implementation of Use 2:
-   elif [ $1 == "code" ]; then
-      mkdir -p ~/.code
-      cd ~/.code/ && ls
+      elif [ $1 == "tmp" ]; then
+         mkdir -p ~/.tmp
+         cd ~/.tmp/ && ls
 
-   # Implementation of Use 2:
-   elif [ $1 == "center" ]; then
-      cd ${v_REPOS_CENTER} && ls
 
-   # Implementation of Use 2:
-   elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
-      cd ${v_REPOS_CENTER}/scratch-paper && ls
+      elif [ $1 == "code" ]; then
+         mkdir -p ~/.code
+         cd ~/.code/ && ls
 
-   # Implementation of Use 2:
-   elif [ $1 == "dota" ]; then
-      cd ${v_REPOS_CENTER}/Dota-2-guide && ls
 
-   # Implementation of Use 2:
-   elif [ $1 == "lxm" ]; then
-      cd ${v_REPOS_CENTER}/luxam && ls
+      elif [ $1 == "center" ]; then
+         cd ${v_REPOS_CENTER} && ls
 
-   # Implementation of Use 2:
-   elif [ $1 == "ln" ]; then
-      # Se a pasta ~/ls/ existir, navega para ela e lista os seus conteudos
-      [[ -d ~/ln/ ]] && cd ~/ln/ && ls
 
-   # Implementation of Use 2:
-   elif [ $1 == "m" ]; then
+      elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
+         cd ${v_REPOS_CENTER}/scratch-paper && ls
 
-      case $2 in
-         0) # Travel to Internal storage
-            # uDev: clear; pwd; echo "you are in X dir"
-            echo "Internal storage"
-            pwd
-            echo
 
-            f_greet
-            echo "Internal Storage"
-            f_horiz_line
+      elif [ $1 == "dota" ]; then
+         cd ${v_REPOS_CENTER}/Dota-2-guide && ls
 
-            cd /sdcard && ls
-         ;;
-         1) # Travel to SD Card storage
 
-            v_place_2=/storage/0123-4567
-            v_place_3=/storage/
+      elif [ $1 == "lxm" ]; then
+         cd ${v_REPOS_CENTER}/luxam && ls
 
-            f_greet
 
-            echo "SD card storage"
-            echo
-            echo "Termux cannot WRITE to SD card,"
-            echo "but can READ and RUN bash scripts from it"
-            echo "If you have a huge database to store into SD external"
-            echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
-            echo "file explorer, MOVE it to the SD card"
-            echo
+      elif [ $1 == "ln" ]; then
+         # Se a pasta ~/ls/ existir, navega para ela e lista os seus conteudos
+         [[ -d ~/ln/ ]] && cd ~/ln/ && ls
 
-            echo "Listing: $v_place_2"
-            echo "Listing: $v_place_3"
-            echo
 
-            echo "SD card Storage"
-            f_horiz_line
+      elif [ $1 == "m" ] || [ $1 == "mobile-android" ]; then
+         f_mobile_android
 
-            cd $v_place_2 && ls
-            f_horiz_line
-            cd $v_place_3 && ls
-
-         ;;
-         2) # Travel to USB storage
-            echo "USB Storage"
-            pwd
-            echo
-
-            f_greet
-            echo "USB Storage"
-            f_horiz_line
-
-            cd /storage/83DB-10EA && ls || cd /storage && ls
-         ;;
-         3) # Travel to the dir where many USB storages are mounted
-            echo "List of options for: USB storage"
-            pwd
-            echo
-
-            f_greet
-            echo "Listing possible USB plugged in"
-            f_horiz_line
-
-            cd /storage && ls
-         ;;
-         4) # Travel to the dir where many USB storages are mounted
-            clear
-            echo "Termux cannot WRITE to SD card,"
-            echo "but can READ and RUN bash scripts from it"
-            echo "If you have a huge database to store into SD external"
-            echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
-            echo "file explorer, MOVE it to the SD card"
-            echo
-
-            f_greet
-            echo "SD card Storage"
-            f_horiz_line
-
-            echo "Do you need directories to be created in order to MOVE"
-            echo "internal things to external SD?"
-            echo 
-            echo "If you want a directory called \"Repositories\" in both"
-            echo "External and Internal storage, press ENTER 3x"
-            echo "(or cancel with CTRL + C)"
-            echo
-            echo "#uDev: create an option to ask for custom dir name"
-            echo "(default is /storage/Repositories"
-            read
-            read
-            read
-
-         ;;
-         b) 
-            # Travel to dir at Internal storage called Termux-bridge-Android
-
-            f_greet
-            echo "Directory: Internal Storage: Termux-bridge-Android"
-            f_horiz_line
-
-            cd /sdcard/Termux-bridge-Android && ls
-         ;;
-         *)
-            echo "How to use:"
-            echo "$ V m [0|1|2|3|4|b]"
-            echo '0) # Travel to Internal storage'
-            echo '1) # Travel to SD Card storage'
-            echo '2) # Travel to USB storage'
-            echo '3) # Travel to the dir where many USB storages are mounted'
-            echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
-	    #uDev: May be needed termux-setup-storage to access some directories
-         ;;
-      esac
 
    # Implementation of Use 3:
-   elif [ $1 == "-p" ]; then
-      mkdir -p $2
-      cd $2
-      ls
+      elif [ $1 == "-p" ]; then
+         mkdir -p $2
+         cd $2
+         ls
 
    # Implementation of Use 4:
-   elif [ $1 == "-r" ]; then
-      ls $2
+      elif [ $1 == "-r" ]; then
+         ls $2
 
    # Implementation of Use 5:
-   elif [ $1 == "-R" ]; then
-      rm -rf $2
-      ls
+      elif [ $1 == "-R" ]; then
+         rm -rf $2
+         ls
       
-      # uDev: privide more safety
+      # uDev: provide more safety
 
    # Implementation of Use 6:
-   elif [ $1 == ".." ]; then
-      cd ..
-      ls
+      elif [ $1 == ".." ]; then
+         # uDev: Search a list of stored paths to navigate to
+         echo
 
-      # uDev: add a $2 to insert a number. That number is thr number of time '$ cd ..' will be executed
 
 
    # Implementation of Use 7:
-   elif [ $1 == "." ]; then
-      # From current directory, search other directories with fzf menu and navigate there
-      
-      v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+      elif [ $1 == "." ]; then
+         # From current directory, search other directories with fzf menu and navigate there
+         
+         v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
 
-      if [[ ! -z $v_dir ]]; then
-         # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
-         v_dirname=$(dirname $v_dir)
-         echo "fluNav: A navegar para: $v_dirname"
-         cd $v_dirname
-      fi
+         if [[ ! -z $v_dir ]]; then
+            # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+            v_dirname=$(dirname $v_dir)
+            echo "fluNav: A navegar para: $v_dirname"
+            cd $v_dirname
+         fi
 
    # Implementation of Use 8:
-   else 
-      # mkdir -p ~/.tmp
-      # ls > ~/.tmp/found.txt
-      # grep -n "$1" ~/.tmp/found
-      # wc -l ~/.tmp/found
+      else 
+         # mkdir -p ~/.tmp
+         # ls > ~/.tmp/found.txt
+         # grep -n "$1" ~/.tmp/found
+         # wc -l ~/.tmp/found
 
-      v_found=$(ls | grep $1)
-      echo Found: $v_found
-      if [[ $? == "0" ]]; then
-         cd $v_found && ls
-      fi
-      #uDev: use to command '$ file' to exclude all non directories
-      #uDev: when there are 2 or more items found, allow the user to input a number as $2
+         v_found=$(ls | grep $1)
+         echo Found: $v_found
+         if [[ $? == "0" ]]; then
+            cd $v_found && ls
+         fi
+         #uDev: use to command '$ file' to exclude all non directories
+         #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
 
 }
 
 
+function f_uDev {
+   # Function to remind the user about needed changes (uDev)
+   echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+}
 
+function f_menu_select {
+
+   f_greet 
+
+   echo "SELECT file to edit by Title"
+   echo
+
+
+   # Change the prompt message:
+      PS3="Select a file to edit: "
+      COLUMNS=0
+
+      select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array "1st (emacs)" "1st (vim)" "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
+
+      case $opt in
+         config-bash-alias)
+            vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+            f_greet
+            echo "edited: config-bash-alias"
+            break
+         ;;
+         notes)
+            f_greet
+            f_notes
+            break
+         ;;
+         source-all-drya-files)
+            vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+            f_greet
+            echo "edited: source-all-drya-files"
+            break
+         ;;
+         .bashrc)
+            vim ~/.bashrc
+            f_greet  
+            echo "edited: ~/.bashrc"; f_uDev
+            break
+         ;;
+         source-all-moedaz-files)
+            f_greet
+            vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+            echo "edited: source-all-moedaz-files"
+            break
+         ;;
+         com.list-econ-items.txt)
+            vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
+            f_greet
+            echo "edited: com.list-econ-items.txt"
+            break
+         ;;
+         com.associative-array)
+            vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
+            break
+         ;;
+         .vimrc)
+            vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
+            f_greet
+            echo "edited: .vimrc on DRYa"
+            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+            echo "copied: from DRYa to ~"
+            break
+         ;;
+         Refresh-Reload-Source)
+            #clear
+            source ~/.bashrc
+            f_greet
+            drya update
+            echo "Reload done to: ~/.bashrc by fluNav"
+            # uDev: Fazer reset tambem ao init.el
+            break
+         ;;
+         "1st (emacs)")
+            f_greet
+            echo "Editing the list of 1st apps to install"
+            read -s -t 2
+            EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+            f_greet
+            echo "edited: 1st"
+            break
+         ;;
+         "1st (vim)")
+            f_greet
+            echo "Editing the list of 1st apps to install"
+            read -s -t 2
+            vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+            f_greet
+            echo "edited: 1st"
+            break
+         ;;
+         "emacs-init (emacs)")
+            # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+            # This way we know we can easily upload the file
+               
+               # First we edit the original/centralized file with our favourite text editor
+                  v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+                  emacs $v_init_file 
+
+               # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+               # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+                  f_manage_init_and_libraries_after_mod
+
+                  # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
+                  #         to call the same function "f_manage_init_and_libraries_after_mod"
+
+            break
+         ;;
+         "emacs-init (vim)")
+            f_emacs_init_vim
+            break
+         ;;
+         secundary-files)
+            f_greet
+            echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this fluNav"
+            break
+         ;;
+         quit) 
+            break  
+         ;;
+         ? | help | --help | -h | h) 
+            f_greet
+            echo "fluNav"
+            echo " > Edits files inside 'DRYa repository' then copies those files across the system"
+            echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
+            echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
+            break  
+         ;;
+         *)    
+            echo "fluNav: Invalid option $REPLY"  
+         ;;
+      esac
+   done
+}
+
+function f_menu_fzf_S {
+   # Menu Quick file edit
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L15='15. Edit | config-bash-alias'
+      L14='14. Edit | notes'
+      L13='13. Edit | source-all-drya-files'
+      L12='12. Edit | .bashrc'
+      L11='11. Edit | source-all-moedaz-files'
+      L10='10. Edit | com.list-econ-items.txt'
+       L9='9.  Edit | com.associative-array'
+       L8='8.  Edit | .vimrc'
+       L6='6.  Edit | 1st (emacs)'
+       L5='5.  Edit | 1st (vim)'
+       L4='4.  Edit | emacs-init (emacs)'
+       L3='3.  Edit | emacs-init (vim)'
+       L2='2.  Edit | secundary-files'
+
+       L7='7.  Edit | Refresh Terminal'
+       L1='1.  Edit | Cancel'
+
+      L0="SELECIONE (1 ou +) ficheiros para editar: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "15. " ]] && echo "uDev"
+      [[ $v_list =~ "14. " ]] && echo "uDev"
+      [[ $v_list =~ "13. " ]] && echo "uDev"
+      [[ $v_list =~ "12. " ]] && echo "uDev"
+      [[ $v_list =~ "11. " ]] && echo "uDev"
+      [[ $v_list =~ "10. " ]] && echo "uDev"
+      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "8.  " ]] && echo "uDev"
+      [[ $v_list =~ "7.  " ]] && echo "uDev"
+      [[ $v_list =~ "6.  " ]] && echo "uDev"
+      [[ $v_list =~ "5.  " ]] && echo "uDev"
+      [[ $v_list =~ "4.  " ]] && echo "uDev"
+      [[ $v_list =~ "3.  " ]] && echo "uDev"
+      [[ $v_list =~ "2.  " ]] && echo "uDev"
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
+}
 
 function S {
    # List fav files for edition (fluNav)
    
-   # uDev: letra S é melhor para ABRIR ficheiros com SYNC
-   #       letra . para abrir ficheiros sem sync
 
-      
-      function f_uDev_1 {
-         # Function to remind the user about needed changes (uDev)
-         echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
-      }
 
-      # Reload the amount of '-' are needed to create an horizontal line
-         source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh 1>/dev/null
+   # Reload the amount of '-' are needed to create an horizontal line
+      source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh 1>/dev/null
 
-      # Note: each function in this app will define new values for example to "alias 1", "alias 2", "alias 3"...
-         alias 1="echo Default alias 1"
-
-      function f_unalias_all {
-         # Each time we run function 'F' unset all previous alias that may be set again by 'F'
-            #unalias 0  ## Will be used to unalias all
-            unalias 1
-            unalias 2
-            unalias 3
-            unalias 4
-            unalias 5
-            unalias 6
-            unalias 7
-            unalias 8
-            unalias 9
-            unalias 10
-            unalias 11
-            unalias 12
-      }
-      alias 0="f_unalias_all"
-
-      #f_unalias_all
-            
-      #uDev: Turn these variables into usable arguments for fluNav
-         #   Play with alias
-         #   F 4 2 1
-            # If !-z then for i in $@; do bash $i
-            # a cada 'bash $i' novos alias sao RE-definidos
-            # function 1 { 
-            #    alias 1="do something"
-            # }
-
-         alias F1="uDev: will be used to list of cheat sheets (from Dwiki)"
-         #alias F2
-         #alias F3
-         #alias F4="f_F4"
-         #alias F5="source ~/.bashrc and init.el (refresh)"
-         #alias F6
-
-         #function f_F4 {
-         #   alias 4="f_F4_4"
-         #}
-         
-
+   
+   if [ -z $1 ]; then
       # If there are no arguments, present the fluNav
-         if [ -z $1 ]; then
-
-            function f_menu_fzf {
-               # Menu que usa fzf e HEREDOC
-
-# --------- # Heredoc  {  ------------------------------------------------- 
-            # Passando o HEREDOC para o fzf e capturando a seleção
-
-selecao=$(fzf -m --prompt="SELECIONE um ou + ficheiros para editar: " <<EOF
-config-bash-alias
-notes
-source-all-drya-files
-.bashrc
-source-all-moedaz-files
-com.list-econ-items.txt
-com.associative-array
-.vimrc
-Refresh-Reload-Source
-1st (emacs)
-1st (vim)
-emacs-init (emacs)
-emacs-init (vim)
-secundary-files
-EXIT
-EOF
-)
-
-for i in $selecao; 
-   do
-   echo "Item: $i"
-   echo
-done
-}
-
-# --------- # Heredoc  }  ------------------------------------------------- 
 
 
+      # Escolha 1 de 2 funcoes disponiveis para menu (uDev: passar so para a melhor, para so 1)
+         f_menu_fzf_S
+         #f_menu_select
 
-function f_menu_select {
-            clear
-            figlet fluNav
+   # When function S is presented with arguments (using elif):
+   # And sync with github
+   # Use this menu to MANUALLY add/remove files to be handled
+   # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
+   # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
+   elif [ $1 == "fn-test"  ]; then v_nm="fn-test";             f_action; ## Just test if this file is working
+   elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
+   elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
+   elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+   elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+   elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_emacs_init_vim; f_up
+   elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
+   elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
+   elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
+   elif [ $1 == "19"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
+   elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
+   elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+   elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
+   elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+   elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
+   elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
+   elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
+   elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
+   elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
+   elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
+   elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
+   elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
 
-            echo "SELECT file to edit by Title"
-            echo
-
-
-            # Change the prompt message:
-               PS3="Select a file to edit: "
-               COLUMNS=0
-
-               select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array "1st (emacs)" "1st (vim)" "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
-
-               case $opt in
-                  config-bash-alias)
-                     vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-                     f_greet
-                     echo "edited: config-bash-alias"
-                     break
-                  ;;
-                  notes)
-                     f_greet
-                     f_notes
-                     break
-                  ;;
-                  source-all-drya-files)
-                     vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
-                     f_greet
-                     echo "edited: source-all-drya-files"
-                     break
-                  ;;
-                  .bashrc)
-                     vim ~/.bashrc
-                     f_greet  
-                     echo "edited: ~/.bashrc"; f_uDev_1
-                     break
-                  ;;
-                  source-all-moedaz-files)
-                     f_greet
-                     vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
-                     echo "edited: source-all-moedaz-files"
-                     break
-                  ;;
-                  com.list-econ-items.txt)
-                     vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
-                     f_greet
-                     echo "edited: com.list-econ-items.txt"
-                     break
-                  ;;
-                  com.associative-array)
-                     vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
-                     break
-                  ;;
-                  .vimrc)
-                     vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
-                     f_greet
-                     echo "edited: .vimrc on DRYa"
-                     cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-                     echo "copied: from DRYa to ~"
-                     break
-                  ;;
-                  Refresh-Reload-Source)
-                     #clear
-                     source ~/.bashrc
-                     f_greet
-                     drya update
-                     echo "Reload done to: ~/.bashrc by fluNav"
-                     # uDev: Fazer reset tambem ao init.el
-                     break
-                  ;;
-                  "1st (emacs)")
-                     f_greet
-                     echo "Editing the list of 1st apps to install"
-                     read -s -t 2
-                     EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-                     f_greet
-                     echo "edited: 1st"
-                     break
-                  ;;
-                  "1st (vim)")
-                     f_greet
-                     echo "Editing the list of 1st apps to install"
-                     read -s -t 2
-                     vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-                     f_greet
-                     echo "edited: 1st"
-                     break
-                  ;;
-                  "emacs-init (emacs)")
-                     # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-                     # This way we know we can easily upload the file
-                        
-                        # First we edit the original/centralized file with our favourite text editor
-                           v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
-                           emacs $v_init_file 
-
-                        # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-                        # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-                           f_manage_init_and_libraries_after_mod
-
-                           # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
-                           #         to call the same function "f_manage_init_and_libraries_after_mod"
-
-                     break
-                  ;;
-                  "emacs-init (vim)")
-                     f_emacs_init_vim
-                     break
-                  ;;
-                  secundary-files)
-                     f_greet
-                     echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this fluNav"
-                     break
-                  ;;
-                  quit) 
-                     break  
-                  ;;
-                  ? | help | --help | -h | h) 
-                     f_greet
-                     echo "fluNav"
-                     echo " > Edits files inside 'DRYa repository' then copies those files across the system"
-                     echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
-                     echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
-                     break  
-                  ;;
-                  *)    
-                     echo "fluNav: Invalid option $REPLY"  
-                  ;;
-               esac
-            done
-         }
-
-
-         # Escolha 1 de 2 funcoes disponiveis para menu (uDev: passar so para a melhor, para so 1)
-            #f_menu_fzf
-            f_menu_select
-
-         # When function S is presented with arguments (using elif):
-         # And sync with github
-         # Use this menu to MANUALLY add/remove files to be handled
-         # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
-         # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-            elif [ $1 == "fn-test"  ]; then v_nm="fn-test";             f_action; ## Just test if this file is working
-            elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
-            elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
-            elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-            elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
-            elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_emacs_init_vim; f_up
-            elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
-            elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
-            elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
-            elif [ $1 == "19"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
-            elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
-            elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-            elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
-            elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
-            elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
-            elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
-            elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
-            elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
-            elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
-            elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
-            elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
-            elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
-
-            else echo "fluNav: Please choose a valid arg"    # If arguments are given but they are wrong
-         fi
-   }   
+   else 
+      f_talk; echo "Please choose a valid arg"    # If arguments are given but they are wrong
+   fi
+}   

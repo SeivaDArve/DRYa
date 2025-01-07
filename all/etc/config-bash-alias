@@ -32,29 +32,6 @@ function f_resetCor {
 # Set the keybindings to vi/vim mode:
    #set -o vi
 
-function E {
-
-   PS3="SELECT a file editor to set as default"
-
-   select i in Nano Vim Emacs; do 
-      case $i in 
-         Nano)
-	         if [ $i == "1" ]; then alias e="nano"; fi
-         ;;
-         Vim)
-            if [ $i == "2" ]; then alias e="vim"; fi
-         ;;
-         Emacs)
-            if [ $i == "3" ]; then alias e="emacs"; fi
-         ;;
-         *)
-            # uDev: permitir escolher outro, definindo o seu nome numa variavel $v_editor e depois usando com o comando `eval $v_editor <ficheiro>`
-            echo lol
-         ;;
-      esac
-   done
-	
-}
 
 # uDev: fx para verificar se existem novos bookmark no browser
 
@@ -398,6 +375,11 @@ function Mk {
       read -p "New directory name: " v_dir
       mkdir -p $v_dir
       cd $v_dir
+
+   elif [ $1 == "h" ]; then
+      echo "Instructions for Mk"
+      echo ' > `Mk`      : Ask for new dir && cd $dir'
+      echo ' > `Mk $dir` : Automatically create $dir && cd $dir'
 
    else 
       for i in $*
