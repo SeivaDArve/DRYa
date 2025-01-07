@@ -214,7 +214,9 @@ function bt {
    fi
 }
 
-function dos-2-unix {
+# uDev: fzf menu for: jobs, Ctrl-z, fg, kill $PID, etc
+
+function dos_2_unix {
    clear
    figlet "DRYa: DOS to Unix"
    echo "DRYa: convert a DOS file into Unix"
