@@ -63,7 +63,7 @@
 
 
 
-function f_1 {
+function f_c1 {
    tput setaf 5
 }
 
@@ -73,7 +73,7 @@ function f_c5 {
 }
 
 function f_rc { 
-   # This function is to be used when styles are to be CLEARED
+   # This function is to be used to CLEAR all styles
    tput sgr0
 }
 
@@ -85,8 +85,7 @@ function f_done {
 function f_greet { 
    # Avoiding repetition
    clear
-   f_c5
-   figlet fluNav
+   f_c5; figlet fluNav
    f_rc
 }
       
@@ -95,24 +94,6 @@ function f_talk {
          echo
    f_c5; echo -n "DRYa: fluNav: "
    f_rc
-}
-
-function f_mF { 
-   # Avoiding repetition
-   clear
-   figlet fluNav File
-}
-
-function f_mD { 
-   # Avoiding repetition
-   clear
-   figlet fluNav Dir
-}
-
-function f_mM { 
-   # Avoiding repetition
-   clear
-   figlet fluNav Menu
 }
 
 function f_presenting_DF {
@@ -140,6 +121,7 @@ function f_asking_to_apply_init {
 }   
 
 function f_applying_changes_init {
+   # For emacs init file
 
    # This is for Linux:
       # Copy recursively all files about emacs to the localized machine-specific directory:
@@ -349,8 +331,8 @@ function f_action {
       # 
       #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
 
-      clear
-      figlet fluNav 
+      f_greet 
+
       #f_down
       echo "$v_nm: Menu to support UPK"
       echo 
@@ -1188,30 +1170,37 @@ function f_menu_fzf_S {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L15='15. Edit | config-bash-alias'
-      L14='14. Edit | notes'
-      L13='13. Edit | source-all-drya-files'
-      L12='12. Edit | .bashrc'
-      L11='11. Edit | source-all-moedaz-files'
-      L10='10. Edit | com.list-econ-items.txt'
-       L9='9.  Edit | com.associative-array'
-       L8='8.  Edit | .vimrc'
-       L6='6.  Edit | 1st (emacs)'
-       L5='5.  Edit | 1st (vim)'
-       L4='4.  Edit | emacs-init (emacs)'
-       L3='3.  Edit | emacs-init (vim)'
-       L2='2.  Edit | secundary-files'
+      # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
+         v_editor1="vim  "
+         v_editor2="emacs "
+         L65="65. Edit | $traits_editor   | Example"
 
-       L7='7.  Edit | Refresh Terminal'
-       L1='1.  Edit | Cancel'
+      L16='16. Edit | vim   | config-bash-alias'
+      L15='15. Edit | vim   | notes'
+      L14='14. Edit | vim   | source-all-drya-files'
+      L13='13. Edit | vim   | .bashrc'
+      L12='12. Edit | vim   | source-all-moedaz-files'
+      L11='11. Edit | vim   | com.list-econ-items.txt'
+      L10='10. Edit | vim   | com.associative-array'
+       L9='9.  Edit | vim   | .vimrc'
+       L8='8.  Edit | emacs | 1st'
+       L7='7.  Edit | vim   | 1st'
+       L6='6.  Edit | emacs | emacs-init'
+       L5='5.  Edit | vim   | emacs-init'
+       L4='4.  Edit | vim   | secundary-files'
+
+       L3='3.  Toggle file editor'
+       L2='2.  Refresh Terminal'
+       L1='1.  Cancel'
 
       L0="SELECIONE (1 ou +) ficheiros para editar: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16\n\n$Lz3" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "15. " ]] && echo "uDev"
+      [[ $v_list =~ "16. " ]] && echo "uDev"
+      [[ $v_list =~ "15. " ]] && note  # This is an alias set on config-bash-alias file
       [[ $v_list =~ "14. " ]] && echo "uDev"
       [[ $v_list =~ "13. " ]] && echo "uDev"
       [[ $v_list =~ "12. " ]] && echo "uDev"
@@ -1219,12 +1208,12 @@ function f_menu_fzf_S {
       [[ $v_list =~ "10. " ]] && echo "uDev"
       [[ $v_list =~ "9.  " ]] && echo "uDev"
       [[ $v_list =~ "8.  " ]] && echo "uDev"
-      [[ $v_list =~ "7.  " ]] && echo "uDev"
-      [[ $v_list =~ "6.  " ]] && echo "uDev"
+      [[ $v_list =~ "7.  " ]] && echo "uDev" && emacs
+      [[ $v_list =~ "6.  " ]] && echo "uDev" && vim
       [[ $v_list =~ "5.  " ]] && echo "uDev"
       [[ $v_list =~ "4.  " ]] && echo "uDev"
       [[ $v_list =~ "3.  " ]] && echo "uDev"
-      [[ $v_list =~ "2.  " ]] && echo "uDev"
+      [[ $v_list =~ "2.  " ]] && source ~/.bashrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
