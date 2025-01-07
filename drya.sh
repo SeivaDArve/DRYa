@@ -68,9 +68,35 @@ function f_rc_cursor {
       
 function f_talk {
    # Copied from: ezGIT
-          echo
+         echo
    f_c4; echo -n "DRYa: "
    f_rc
+}
+
+function f_prsK {
+   # Press Any key to continue
+   # Or wait X seconds
+
+   
+   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+      # EXEMPLO:
+      #
+      # v_txt="Vai ser de seguida editado o ficheiro X"
+      # f_prsK
+
+
+   # Set how many seconds to wait before automatically continue
+      v_secs=5
+
+   # Message 
+      v_msg="   > [ PRESS any key || Cancel: Ctrl-C ] "
+
+   # Text to print
+         #echo
+   f_talk; echo "$v_txt"  # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+   f_c5;   echo "$v_msg"
+           read -s -n 1 -p "   > "
+   f_rc;   echo
 }
 
 function f_done {
@@ -337,26 +363,26 @@ function f_clone_info {
    # > List Repositories (public and private)
    # > Automatically redirects Termux to github.com
 
-   echo "DRYa: Must specify a repository to clone"
+   f_talk; echo "Must specify a repository to clone"
    echo
-   echo " You can use:"
-   echo " > '$ drya clone --list-public' or "
-   echo " > '$ drya clone -p' "
-   echo "    to list all public repositories"
+   echo " To list all public repositories"
+   echo "  > '$ drya clone --list-public' or "
+   echo "  > '$ drya clone -p' "
    echo 
-   echo " You can use: "
-   echo " > '$ drya clone --list-private' or"
-   echo " > '$ drya clone -P'"
-   echo "   to list all private repositories"
+   echo " To list all private repositories"
+   echo "  > '$ drya clone --list-private' or"
+   echo "  > '$ drya clone -P'"
    echo
-   echo "To clone DRYa:  "
-   echo " > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+   echo " To clone DRYa:  "
+   echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
    echo
-   echo " Press ENTER to visit a webpage with all repositories:"
-   echo " > https://github.com/SeivaDArve?tab=repositories"
-   echo
-   echo " Press Ctrl-C to abort"
-   read -s -n 1
+   echo " Webpage with all repositories:"
+   echo "  > https://github.com/SeivaDArve?tab=repositories"
+
+   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+      v_txt="Visiting: https://github.com/SeivaDArve?tab=repositories"
+      f_prsK
+
    echo
    f_horizline
    echo " Note: So far, drya can open this link only with Termux"
