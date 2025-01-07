@@ -42,8 +42,11 @@ alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
 
 alias timg="termimage"
 
-alias note="bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/no-tes"
-alias notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
+alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+
+alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 function f_fzf_raw_link_opener {
 
@@ -265,6 +268,14 @@ function data {
       sleep 1
 
    done
+}
+
+function dt {
+   # Imprime 1x a data
+   # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
+
+      v_data=$(date +'%Y-%m-%d_%Hh-%Mm-%Ss')
+      echo -e "Data-Hora_$v_data "
 }
 
 function hora {
