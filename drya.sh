@@ -4,9 +4,12 @@
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 function f_greet {
-   # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
+   # If `figlet` app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
+   # If `figlet` app is not insfalled: print only a message
       clear
-      figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
+
+      figlet DRYa 2>/dev/null \
+      || echo -e "( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
 }
 
 function f_greet2 {
@@ -1128,13 +1131,13 @@ if [ -z "$*" ]; then
 
    # Info when no args are given
       f_talk; echo "is installed!"
-              echo " > Terminal version: e.g. 'D --help'"
-              echo " > Menu fzf version: e.g. 'D +'"
+              echo ' > Use: Terminal: `D --help` '
+              echo ' > Use: fzf Menu: `D .`      '
 
    # Temporized Quick menu
-      f_talk; echo "Temporized Menu (available only for $v_secs secs):"
+      f_talk; echo -n "Temporized Menu (available for "; f_c5; echo -n "$v_secs"; f_rc; echo    " secs):"
               echo -n " > Press '"; f_c5; echo -n "d"; f_rc; echo -n "' or '"; f_c5; echo -n "."; f_rc; echo "' to open DRYa fzf main menu"
-              echo   "   (same as Terminal command: 'D +')"
+              echo    "   (same as Terminal command: 'D +')"
 
    
    # Options available during only few seconds

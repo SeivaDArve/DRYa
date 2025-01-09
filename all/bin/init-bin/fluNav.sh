@@ -7,28 +7,20 @@
 
 
 
-# ---------------------------------
-# uDev list                          {
-# ---------------------------------
-
-
-
-
-# uDev: insert: nppn-looper + '. ?' commands
  
-# uDev: Why not a tput menu for each? (better than select menu)
 
-# uDev: This app should NOT have 3 prefixes: M F and D
-#       Instead: use only: .
-#       But if some reason it does not work, try S (sync file) and V (Pointing to this place)
+# uDev: This app should NOT have 3 prefixes: V, S, E and .....
+#       Instead: use only: `. M` for fluNav menu
+#
+#       letra S para ABRIR ficheiros com SYNC
+#       letra . para abrir ficheiros sem s
 
-# Em vez de NPNP: só P
 
+# uDev: 
 #    '. '       ## ls
 #    'V mo'     ## cd moedaz
 #    'DD'       ## cd DRYa
 #    'op file.org' detect current emacs (instead of EM, Em, em)
-
 
 
 # Leters to be used:
@@ -43,9 +35,6 @@
 #     Forbiden function: Function D   ##   Reserved for DRYa
 
 
-# uDev: letra S é melhor para ABRIR ficheiros com SYNC
-#       letra . para abrir ficheiros sem sync
-
       
 # uDev: Set traitsID_Editor to avoid:
 #       > Open X (with vim)
@@ -54,11 +43,124 @@
 
 # uDev: bind Ctrl-F to F5 (refresh terminal and source files)
 
+# uDev: morse-code-style
+#       Dot="morse ."
+#       Dash="morse ,"
+#       word="morse ..., ,.., .,,"
 
 
-# ---------------------------------
-# uDev list                          }
-# ---------------------------------
+
+
+
+
+
+function f_edit__config_bash_alias {
+   vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+   f_greet
+   echo "edited: config-bash-alias"
+}
+
+function f_edit__notes {
+   f_greet
+   f_notes
+}
+
+function f_edit__source_all_drya_files {
+   vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+   f_greet
+   echo "edited: source-all-drya-files"
+}
+
+function f_edit__bashrc {
+   vim ~/.bashrc
+   f_greet  
+   echo "edited: ~/.bashrc"; f_uDev
+}
+
+function f_edit__source_all_moedaz_files {
+   f_greet
+   vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+   echo "edited: source-all-moedaz-files"
+}
+
+function f_edit__vimrc {
+   vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
+   f_greet
+   echo "edited: .vimrc on DRYa"
+   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+   echo "copied: from DRYa to ~"
+}
+
+function f_edit__1st_emacs {
+   f_greet
+   echo "Editing the list of 1st apps to install"
+   read -s -t 2
+   EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+   f_greet
+   echo "edited: 1st"
+}
+
+function f_edit__1st_vim {
+   f_greet
+   echo "Editing the list of 1st apps to install"
+   read -s -t 2
+   vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+   f_greet
+   echo "edited: 1st"
+}
+
+function f_edit__init_file_emacs__with_emacs {
+   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+   # This way we know we can easily upload the file
+      
+   # First we edit the original/centralized file with our favourite text editor
+      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+      emacs $v_init_file 
+
+   # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+      f_manage_init_and_libraries_after_mod
+
+      # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
+      #         to call the same function "f_manage_init_and_libraries_after_mod"
+
+}
+
+function f_edit__init_file_emacs__with_vim {
+   # Important: fluNav depends on this function
+   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
+   # This way we know we can easily upload the file
+
+   # First we edit the original/centralized file with our favourite text editor
+      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+      vim $v_init_file 
+
+   # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
+   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
+      f_manage_init_and_libraries_after_mod
+
+      # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
+      #         to call the same function "f_manage_init_and_libraries_after_mod"
+}
+
+function f_refresh_terminal_and_drya {
+   source ~/.bashrc
+   drya update
+   echo "Reload done to: ~/.bashrc by fluNav"
+   # uDev: Fazer reset tambem ao init.el
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -113,10 +215,10 @@ function f_asking_to_apply_init {
       # If not, the user has to use this command again afterwards
       # unless the user want to do it manually
       
-      echo "Do you want to apply these changes NOW?"
-      echo " > If not, you may run this command againg later"
-      echo "   or apply manually"
-      echo 
+      f_talk; echo "Do you want to apply these changes NOW?"
+              echo " > If not, you may run this command againg later"
+              echo "   or apply manually"
+              echo 
       read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
 }   
 
@@ -155,7 +257,10 @@ function f_applying_changes_init {
 }
 
 function f_manage_init_and_libraries_after_mod {
-   # This function is used by several select_menus: "emacs-init (emacs)" and "emacs-init (vim)"
+   # This function is used by several select_menus: 
+   #    "emacs-init (emacs)" and 
+   #    "emacs-init (vim)"
+   #
    # Has a function of presentation
    # Has a function of prompting the user wether or not to apply the last changes
 
@@ -169,33 +274,20 @@ function f_manage_init_and_libraries_after_mod {
          echo " > No action taken"
 
       elif [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then 
-         echo -e "\rYour choice was Yes: Do apply\n"; 
+         f_talk; echo "Applying..."; 
+                 echo
+
          f_applying_changes_init; 
 
       elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then 
-         echo "\rYour choise was No: Do not apply"; 
+         f_talk; echo "Not Applying..."; 
+                 echo
 
       else 
          echo "Answers do not match, doing nothing for now. You can run the command again later";
       fi
 }
 
-function f_emacs_init_vim {
-   # Important: fluNav depends on this function
-   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-   # This way we know we can easily upload the file
-
-   # First we edit the original/centralized file with our favourite text editor
-      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
-      vim $v_init_file 
-
-   # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-      f_manage_init_and_libraries_after_mod
-
-      # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
-      #         to call the same function "f_manage_init_and_libraries_after_mod"
-}
 
 function f_edit_self {
 
@@ -341,16 +433,15 @@ function f_action {
       echo "    2. Mostrar horario atual"
       echo 
       echo " 3. Renomear e buscar uma foto do DCIM"
-      echo ""
-      echo ""
-      echo ""
+      echo 
    
    elif [ $v_nm == "self" ]; then
       f_edit_self
 
    elif [ $v_nm == "trade" ]; then
-      clear
-      figlet fluNav 
+
+      f_greet
+
       echo "$v_nm being edited"
       cd ${v_REPOS_CENTER}/moedaz/trade && \
       G v && \
@@ -376,8 +467,8 @@ function f_action {
          v_parent="omni-log"
          #v_editor= Em || Vim
 
-      clear
-      figlet fluNav 
+      f_greet
+
       echo "$v_nm being edited (file: omni-log.org)"
       echo " > Alias: 'F om' (sync)"
       echo
@@ -465,6 +556,8 @@ function . {
          echo ".....  5x Means: save this dir location in var \$h"
          echo "......  6x Means: save previous dir location in var \$v"
          echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
+         echo
+         echo "To visit a file called 'h' use: \`vim h\`"
 
       elif [ ! -z $1 ]; then
          # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
@@ -480,12 +573,10 @@ function . {
 
       fi
 }
-
 function .... {
    echo 'Current location $(pwd)'
    echo " > $(pwd)"
 }
-
 function ..... {
    # Saves current directory location 
    # uDev: If script npNP gets finished, this one function gets useless. Finish that
@@ -529,14 +620,18 @@ function E {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+       L6='6. less --wordwrap'
+       L5='5. cat'
        L4='4. nano'
+
        L3='3. emacs'
        L2='2. vim'
+
        L1='1. Cancel'
 
       L0="SELECIONE 1 editor de texto para pre-definir: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4\n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -556,48 +651,6 @@ function f_trade_interactive_dir {
    echo
    ls -1
 }
-
-function hkllhcf {
-   # (Trasido do config-bash-alias para casar com este ficheiro fluNav)
-   # If if you invoke "cdl" and no dir exists
-   if [ ! -d "./$1" ]; then
-      
-      # A function that is needed to be prepared in case later on the code it is called:
-      function f_cdl_mkdir {
-         # Generate a random number to be used as a key to delete our previous directory if it was  reated by mistake
-         declare v_random=$RANDOM
-
-         # If a new directory is to be created, verbose descriptions will happen
-         echo -n " > That directory "
-         tput setaf 4
-         echo -n $1
-         tput sgr0
-         echo " was not existent"
-         echo "  > Therefore was created"
-         echo -n "  > Delete it by executing "
-         tput setaf 4
-         echo $v_random
-         tput sgr0
-      }
-
-      declare cur_dir=$1
-      mkdir -p $1 
-      f_cdl_mkdir
-      cd $1
-      ls
-
-   else
-      # If you invoke "cdl" and dir exists
-      cd $1
-      ls
-      echo "normal run"
-   fi
-}
-
-# Alias morse-code-style
-   # Dot="morse ."
-   # Dash="morse ,"
-   # word="morse ..., ,.., .,,"
 
 function npNP-dir-looper {
    # Title: next-previous-Negative-Positive
@@ -1003,7 +1056,7 @@ function V {
          if [[ ! -z $v_dir ]]; then
             # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
             v_dirname=$(dirname $v_dir)
-            echo "fluNav: A navegar para: $v_dirname"
+            f_talk; echo "A navegar para: $v_dirname"
             cd $v_dirname
          fi
 
@@ -1047,103 +1100,48 @@ function f_menu_select {
 
       case $opt in
          config-bash-alias)
-            vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-            f_greet
-            echo "edited: config-bash-alias"
+            f_edit__config_bash_alias
             break
          ;;
          notes)
-            f_greet
-            f_notes
+            f_edit__notes
             break
          ;;
          source-all-drya-files)
-            vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
-            f_greet
-            echo "edited: source-all-drya-files"
+
+            f_edit__source_all_drya_files
             break
          ;;
          .bashrc)
-            vim ~/.bashrc
-            f_greet  
-            echo "edited: ~/.bashrc"; f_uDev
+            f_edit__bashrc
             break
          ;;
          source-all-moedaz-files)
-            f_greet
-            vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
-            echo "edited: source-all-moedaz-files"
-            break
-         ;;
-         com.list-econ-items.txt)
-            vim ${v_REPOS_CENTER}/moedaz/all/var/com.list-econ-items.txt
-            f_greet
-            echo "edited: com.list-econ-items.txt"
-            break
-         ;;
-         com.associative-array)
-            vim ${v_REPOS_CENTER}/moedaz/all/var/com.associative-array
+            f_edit__source_all_moedaz_files
             break
          ;;
          .vimrc)
-            vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
-            f_greet
-            echo "edited: .vimrc on DRYa"
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-            echo "copied: from DRYa to ~"
-            break
-         ;;
-         Refresh-Reload-Source)
-            #clear
-            source ~/.bashrc
-            f_greet
-            drya update
-            echo "Reload done to: ~/.bashrc by fluNav"
-            # uDev: Fazer reset tambem ao init.el
+            f_edit__vimrc
             break
          ;;
          "1st (emacs)")
-            f_greet
-            echo "Editing the list of 1st apps to install"
-            read -s -t 2
-            EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-            f_greet
-            echo "edited: 1st"
+            f_edit__1st_emacs
             break
          ;;
          "1st (vim)")
-            f_greet
-            echo "Editing the list of 1st apps to install"
-            read -s -t 2
-            vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-            f_greet
-            echo "edited: 1st"
+            f_edit__1st_vim
             break
          ;;
          "emacs-init (emacs)")
-            # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-            # This way we know we can easily upload the file
-               
-               # First we edit the original/centralized file with our favourite text editor
-                  v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
-                  emacs $v_init_file 
-
-               # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-               # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-                  f_manage_init_and_libraries_after_mod
-
-                  # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
-                  #         to call the same function "f_manage_init_and_libraries_after_mod"
-
+            f_edit__init_file_emacs__with_emacs
             break
          ;;
          "emacs-init (vim)")
-            f_emacs_init_vim
+            f_edit__init_file_emacs__with_vim
             break
          ;;
-         secundary-files)
-            f_greet
-            echo "uDev: all alias like 'drya edit-bash-file' will need to be added to this fluNav"
+         refresh_terminal_and_drya)
+            f_refresh_terminal_and_drya
             break
          ;;
          quit) 
@@ -1173,6 +1171,7 @@ function f_menu_fzf_S {
       # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
          v_editor1="vim  "
          v_editor2="emacs "
+         v_editor3="less --wordwrap"
          L65="65. Edit | $traits_editor   | Example"
 
       L16='16. Edit | vim   | config-bash-alias'
@@ -1180,22 +1179,20 @@ function f_menu_fzf_S {
       L14='14. Edit | vim   | source-all-drya-files'
       L13='13. Edit | vim   | .bashrc'
       L12='12. Edit | vim   | source-all-moedaz-files'
-      L11='11. Edit | vim   | com.list-econ-items.txt'
-      L10='10. Edit | vim   | com.associative-array'
        L9='9.  Edit | vim   | .vimrc'
        L8='8.  Edit | emacs | 1st'
        L7='7.  Edit | vim   | 1st'
        L6='6.  Edit | emacs | emacs-init'
        L5='5.  Edit | vim   | emacs-init'
-       L4='4.  Edit | vim   | secundary-files'
 
-       L3='3.  Toggle file editor'
-       L2='2.  Refresh Terminal'
+       L4='4.  Toggle file editor'
+       L3='3.  Reload  | dot-files + Terminal + DRYa'
+       L2='2.  Reload  | Terminal'
        L1='1.  Cancel'
 
       L0="SELECIONE (1 ou +) ficheiros para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16\n\n$Lz3" | fzf --cycle -m --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16\n\n$Lz3" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -1208,8 +1205,8 @@ function f_menu_fzf_S {
       [[ $v_list =~ "10. " ]] && echo "uDev"
       [[ $v_list =~ "9.  " ]] && echo "uDev"
       [[ $v_list =~ "8.  " ]] && echo "uDev"
-      [[ $v_list =~ "7.  " ]] && echo "uDev" && emacs
-      [[ $v_list =~ "6.  " ]] && echo "uDev" && vim
+      [[ $v_list =~ "7.  " ]] && echo "uDev"
+      [[ $v_list =~ "6.  " ]] && echo "uDev" && f_edit__init_file_emacs__with_emacs
       [[ $v_list =~ "5.  " ]] && echo "uDev"
       [[ $v_list =~ "4.  " ]] && echo "uDev"
       [[ $v_list =~ "3.  " ]] && echo "uDev"
@@ -1242,15 +1239,15 @@ function S {
    # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
    # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
    elif [ $1 == "fn-test"  ]; then v_nm="fn-test";             f_action; ## Just test if this file is working
+   elif [ $1 == "19"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
    elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
    elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
    elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
    elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
-   elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_emacs_init_vim; f_up
+   elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_edit__init_file_emacs__with_vim; f_up
    elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
    elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
    elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
-   elif [ $1 == "19"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
    elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
    elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
    elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
@@ -1265,6 +1262,6 @@ function S {
    elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
 
    else 
-      f_talk; echo "Please choose a valid arg"    # If arguments are given but they are wrong
+      f_talk; echo "Invalid argument. Try again"    # If arguments are given but they are wrong
    fi
 }   
