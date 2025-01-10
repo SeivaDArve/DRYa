@@ -1539,6 +1539,7 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
 
 elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ];  then 
    # Install DRYa and more stuff
+   # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
 
    if [[ -z $2 ]]; then 
       # If there are no args:
