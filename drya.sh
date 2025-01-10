@@ -451,6 +451,10 @@ function f_clone_repos {
          echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
       }
 
+      function f_clone_calc_extention {
+         echo "cloning calc-extention-ROM-APK"; git clone https://github.com/SeivaDArve/calc-extention-ROM-APK.git
+      }
+
       function f_3_sticks_alpha_bravo {
          echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
       }
@@ -459,10 +463,19 @@ function f_clone_repos {
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
          echo "List of public repositories from Seiva D'Arve from GitHub.com:"
-            curl -s https://github.com/SeivaDArve?tab=repositories \
-            | grep "codeRepository" \
-            | sed 's,        <a href="/SeivaDArve/,,g' \
-            | sed 's," itemprop="name codeRepository" >,,g'
+            
+
+         # Saving the list of public repos into a var called $v_list
+            v_list=$(curl -s https://github.com/SeivaDArve?tab=repositories \
+                     | grep "codeRepository" \
+                     | sed 's,        <a href="/SeivaDArve/,,g' \
+                     | sed 's," itemprop="name codeRepository" >,,g')
+
+         # Presenting each item of $v_list with a padding
+            for i in $v_list
+            do
+               echo " > $i"
+            done
       }
 
       function f_clone_repos_private_repos {
@@ -499,6 +512,10 @@ function f_clone_repos {
          f_clone_repos_ezGIT
       ;;
 
+      ROM | rom | calc-extention)
+         f_clone_calc_extention
+      ;;
+
       Tesoro | tesoro | T)          
          f_clone_repos_Tesoro
       ;;
@@ -519,7 +536,7 @@ function f_clone_repos {
          f_clone_repos_omni
       ;;
 
-      shiva-sutras | shiva | ss)    
+      shiva-sutras | shiva | ss | SS | 112 )    
          f_clone_repos_shiva
       ;;
 
@@ -529,23 +546,21 @@ function f_clone_repos {
 
       upk-dv | upkd)   
          f_clone_repos_upk-dv
-
       ;;
 
       3-sticks-alpha-bravo | 3sab)  
          f_3_sticks_alpha_bravo
       ;;
 
-
       setup-internal-dir)          
          f_clone_repos_setup_internal_di
       ;;
 
-      -p | --public-list) 
+      -p | p | --public-list) 
          f_clone_repos_public_repos
       ;;
 
-      -P | --private-list) 
+      -P | P | --private-list) 
          f_clone_repos_private_repos
       ;;
 
@@ -1256,32 +1271,33 @@ elif [ $1 == "verbose" ] || [ $1 == "v" ]; then
    fi
 
 elif [ $1 == "update" ]; then 
-    echo "uDev: Similar to: G v; source ~/.bashrc; apply all dot-files across the system"
+   echo "uDev: Similar to: G v; source ~/.bashrc; apply all dot-files across the system"
+   # uDev: Same as: `S Reload: DRYa + dot-files + Terminal`
 
-    f_greet
-    f_c4; echo -n "DRYa: "
-    f_rc; echo "Downloading updates and applying them"
-          cd ${v_REPOS_CENTER}/DRYa
+   f_greet
+   f_c4; echo -n "DRYa: "
+   f_rc; echo "Downloading updates and applying them"
+         cd ${v_REPOS_CENTER}/DRYa
    
-    f_git_status
-    f_git_pull
+   f_git_status
+   f_git_pull
 
-    echo
+   echo
 
-    # Aplly each dot-file in their correct places across the system
-       f_talk; echo "applying dot-files:"
-               echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
-               echo " > termux: colors + properties (uDev)"
-               echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
-               echo " > init.el (uDev)"
-               echo " > drya: .bash_logout file"
-               echo
+   # Aplly each dot-file in their correct places across the system
+      f_talk; echo "applying dot-files:"
+              echo " > .vimrc" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+              echo " > termux: colors + properties (uDev)"
+              echo " > .gitconfig" && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+              echo " > init.el (uDev)"
+              echo " > drya: .bash_logout file"
+              echo
 
-    # Reload .bashrc
-       f_talk; echo "reloading functions, variables, alias at:"
-               echo " > ~/.bashrc"
+   # Reload .bashrc
+      f_talk; echo "reloading functions, variables, alias at:"
+              echo " > ~/.bashrc"
 
-       source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
+      source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
 elif [ $1 == "logout" ]; then 
    # If you made modifications at ...DRYa/all/etc/logout-all-drya-files 
@@ -1312,12 +1328,12 @@ elif [ $1 == "clone" ]; then
 
    #uDev: Install repo dependencies too
 
-   clear
    f_greet
 
    if [ -z "$2" ]; then
       # If nothing was specified to clone
-         f_clone_info
+
+      f_clone_info
 
    elif [ $2 == "try" ]; then
       f_talk; echo -e "trying to clone: $3 \n"; 
