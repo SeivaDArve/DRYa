@@ -50,8 +50,45 @@
 
 
 
+function f_c1 {
+   tput setaf 5
+}
 
 
+function f_c5 {
+   tput setaf 6
+}
+
+function f_rc { 
+   # This function is to be used to CLEAR all styles
+   tput sgr0
+}
+
+function f_done {
+   f_c5; echo ": Done!"
+   f_rc
+}
+
+function f_greet { 
+   # Avoiding repetition
+   clear
+   f_c5; figlet fluNav
+   f_rc
+}
+      
+function f_talk {
+   # Copied from: ezGIT
+         echo
+   f_c5; echo -n "DRYa: fluNav: "
+   f_rc
+}
+
+
+function f_horiz_line {
+   # Using the in-built horizontal line from DRYa
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
+   echo $v_line
+}
 
 
 function f_edit__config_bash_alias {
@@ -157,58 +194,6 @@ function f_refresh_terminal_and_drya {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function f_c1 {
-   tput setaf 5
-}
-
-
-function f_c5 {
-   tput setaf 6
-}
-
-function f_rc { 
-   # This function is to be used to CLEAR all styles
-   tput sgr0
-}
-
-function f_done {
-   f_c5; echo ": Done!"
-   f_rc
-}
-
-function f_greet { 
-   # Avoiding repetition
-   clear
-   f_c5; figlet fluNav
-   f_rc
-}
-      
-function f_talk {
-   # Copied from: ezGIT
-         echo
-   f_c5; echo -n "DRYa: fluNav: "
-   f_rc
-}
-
-
-function f_horiz_line {
-   # Using the in-built horizontal line from DRYa
-   echo $v_line
-}
 
 
 function f_applying_changes_init {
