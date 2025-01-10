@@ -257,7 +257,7 @@ function f_repository_dWiki {
 function f_repository_QR-walking-stick {
    # Repository: QR-walking-stick (inside dWiki/TODO-apps)
 
-   alias qr="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/QR-walking-stick/store-data-from-QRcodeApp.sh"
+   alias qr="bash ${v_REPOS_CENTER}/DRYa/all/bin/store-data-from-QRcodeApp.sh"
 }
 
 function f_repository_scratch-paper {
