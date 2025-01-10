@@ -720,11 +720,6 @@ alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log"
 function hr {
    # Fx para adicionar novos horarios do trabalho e visual os que ja existem
 
-   clear
-   figlet DRYa
-
-   echo "DRYa: Gerir Horario"
-
    # Lista de diretorios onde é possivel encontrar mais imgs de horarios
    # 
    #   cd /storage/0123-4567
@@ -734,18 +729,22 @@ function hr {
    #
    
    # Lista de opcoes para o menu `fzf`
-      L4="4. Registar  | Horas apos o turno (upK)" 
-      L3="3. Ver       | Todos os Horarios anteriores"
-      L2="2. Adicionar | Horario novo"
-      L1="1. Ver       | Horario atual"
+      L6='6. Abrir     | `upK`' 
+      L5="5. Registar  | Horas apos o turno (upK)" 
+      L4="4. Ver       | Todos os Horarios anteriores"
+      L3="3. Adicionar | Horario novo"
+      L2="2. Ver       | Horario atual"
+      L1="1. Cancelar"
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4" | fzf --cycle --prompt="DRYa: Gerir Horario: ")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6" | fzf --cycle --prompt="DRYa: Gerir Horario upk: ")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "1" ]] && echo " > $L1 (uDev)" 
-      [[ $v_list =~ "2" ]] && echo " > $L2 (uDev)" 
-      [[ $v_list =~ "3" ]] && echo " > $L3 (uDev)" 
-      [[ $v_list =~ "4" ]] && echo " > $L4"; upk
+      [[ $v_list =~ "6" ]] && upk
+      [[ $v_list =~ "5" ]] && echo "uDev: $L5"
+      [[ $v_list =~ "4" ]] && echo "uDev: $L4"
+      [[ $v_list =~ "3" ]] && echo "uDev: $L3"
+      [[ $v_list =~ "2" ]] && echo "uDev: $L2"
+      [[ $v_list =~ "1" ]] && echo 'Canceled: `hr`'
       unset v_list
 
       echo
