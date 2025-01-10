@@ -1104,7 +1104,7 @@ function f_menu_fzf_S {
 
        L5='5.  Help'
        L4='4.  Toggle file editor'
-       L3='3.  Reload  | dot-files + Terminal + DRYa'
+       L3='3.  Reload  | dot-files + DRYa + Terminal'
        L2='2.  Reload  | Terminal'
        L1='1.  Cancel'
 
@@ -1126,7 +1126,7 @@ function f_menu_fzf_S {
       [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
       [[ $v_list =~ "5.  " ]] && f_help
       [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor"
-      [[ $v_list =~ "3.  " ]] && echo "uDev: reload many things"
+      [[ $v_list =~ "3.  " ]] && echo 'uDev: Same as `D update`'
       [[ $v_list =~ "2.  " ]] && source ~/.bashrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
