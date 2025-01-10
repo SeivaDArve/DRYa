@@ -47,8 +47,8 @@ function f_clc_bc {
       
    clear
    figlet Best Calculator
-   echo "Best Calculator (interactive) 'bc':"
-   echo " > Make some math"
+   echo 'Best Calculator (interactive `bc`):'
+   echo " > Make some math now..."
    echo
    bc --quiet
 }
@@ -582,18 +582,20 @@ if [ -z "$*" ]; then
       # Texto do menu
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L15='15. Relogio     | Relogio Mundial'
-         L14='14. Relogio     | Cronometro'
-         L13='13. Relogio     | Temporizador'
-         L12='12. Relogio     | Despertador'
+         L16='16. Relogio     | Relogio Mundial'
+         L15='15. Relogio     | Cronometro'
+         L14='14. Relogio     | Temporizador'
+         L13='13. Relogio     | Despertador'
 
-         L11='11. Calculadora | supermercado'
-         L10='10. Calculadora | trim-the-hedge'
-          L9='9.  Calculadora | regra-3-simples'
-          L8='8.  Calculadora | cambios'
-          L7='7.  Calculadora | Conversora de Unidades: Bitcoin'
-          L6='6.  Calculadora | registadora'
-          L5='5.  Calculadora | `bc` (default)'
+         L12='12. Calculadora | supermercado'
+         L11='11. Calculadora | trim-the-hedge'
+         L10='10. Calculadora | regra-3-simples'
+          L9='9.  Calculadora | cambios'
+          L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
+          L7='7.  Calculadora | registadora'
+
+          L6='6.  Executar    | `bc` (terminal default)'
+          L5='5.  Executar    | apk Texas TI-84 ROM'
 
           L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
           L3='3.  Agenda      | Repo: moedaz'
@@ -602,23 +604,25 @@ if [ -z "$*" ]; then
 
          L0='DRYa: Calculo: '
 
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n\n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                   
       # Quando o menu de Escolha multipla tipo `for` loop
          [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
 
+         [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && echo "uDev"
          [[ $v_list =~ "13. " ]] && echo "uDev"
-         [[ $v_list =~ "12. " ]] && echo "uDev"
 
-         [[ $v_list =~ "11. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
-         [[ $v_list =~ "10. " ]] && f_exec_calculadora_trim
-         [[ $v_list =~ "9.  " ]] && f_exec_calculadora_regra_de_3
-         [[ $v_list =~ "8.  " ]] && f_exec_calculadora_cambios
-         [[ $v_list =~ "7.  " ]] && f_exec_calculadora_conversora
-         [[ $v_list =~ "6.  " ]] && f_exec_calculadora_registadora
-         [[ $v_list =~ "5.  " ]] && f_clc_bc
+         [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+         [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
+         [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3
+         [[ $v_list =~ "9.  " ]] && f_exec_calculadora_cambios
+         [[ $v_list =~ "8.  " ]] && f_exec_calculadora_conversora
+         [[ $v_list =~ "7.  " ]] && f_exec_calculadora_registadora
+      
+         [[ $v_list =~ "6.  " ]] && f_clc_bc
+         [[ $v_list =~ "5.  " ]] && echo "uDev: Open APK on Android"
 
          [[ $v_list =~ "4.  " ]] && echo "uDev"
          [[ $v_list =~ "3.  " ]] && echo "uDev"
