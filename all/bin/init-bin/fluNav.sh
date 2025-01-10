@@ -681,7 +681,7 @@ function npNP-dir-looper {
 function f_mobile_android {
    # if [ -z $2 ]; then 
 
-   case $2 in
+   case $v_arg2 in
       0) # Travel to Internal storage
          # uDev: clear; pwd; echo "you are in X dir"
          echo "Internal storage"
@@ -1014,6 +1014,7 @@ function V {
 
 
       elif [ $1 == "m" ] || [ $1 == "mobile-android" ]; then
+         v_arg2=$2
          f_mobile_android
 
 
