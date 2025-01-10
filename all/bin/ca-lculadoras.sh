@@ -587,7 +587,7 @@ if [ -z "$*" ]; then
          L13='13. Relogio     | Temporizador'
          L12='12. Relogio     | Despertador'
 
-         L11='10. Calculadora | supermercado'
+         L11='11. Calculadora | supermercado'
          L10='10. Calculadora | trim-the-hedge'
           L9='9.  Calculadora | regra-3-simples'
           L8='8.  Calculadora | cambios'
