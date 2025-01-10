@@ -24,7 +24,7 @@
 
 
 # Leters to be used:
-#     function S     (Sync files before + after editing)
+#     function S     (Sync files before/after editing at: DRYa/locally/maybe github)
 #     function V     (NaVigate to dirs)
 #     function PNpn  (Replaced with `fzf` + `V`    ---->    `V +`  `V -`  `V .`  `V ..`  `V --` (To create a tmp favourite list of dirs  @verbose-lines or @~/.config/h.h/drya/)
 #     function PNpn  (Replaced with `fzf` + `S`    ---->    `S +`  `S -`  `S .`  `S ..`  `S --` (To create a tmp favourite list of files @Verbose-lines or @~/.config/h.h/drya/)
@@ -62,7 +62,7 @@ function f_edit__config_bash_alias {
 
 function f_edit__notes {
    f_greet
-   f_notes
+   note  # This is an alias set on config-bash-alias file
 }
 
 function f_edit__source_all_drya_files {
@@ -142,7 +142,13 @@ function f_edit__init_file_emacs__with_vim {
       # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
       #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
-
+function f_help {
+   f_greet
+   echo "fluNav"
+   echo " > Edits files inside 'DRYa repository' then copies those files across the system"
+   echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
+   echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
+}
 function f_refresh_terminal_and_drya {
    source ~/.bashrc
    drya update
@@ -180,7 +186,7 @@ function f_rc {
 }
 
 function f_done {
-   f_r5; echo ": Done!"
+   f_c5; echo ": Done!"
    f_rc
 }
 
@@ -198,36 +204,19 @@ function f_talk {
    f_rc
 }
 
-function f_presenting_DF {
-   # presenting the file for our M fluNav:
-      clear; 
-      figlet "fluNav"
-      echo -e "File closed (after editions):\n > $v_init_file \n"
-}
 
 function f_horiz_line {
    # Using the in-built horizontal line from DRYa
    echo $v_line
 }
 
-function f_asking_to_apply_init {
-   # Ask if the user wants the changes to apply to this machine imediatly
-      # If not, the user has to use this command again afterwards
-      # unless the user want to do it manually
-      
-      f_talk; echo "Do you want to apply these changes NOW?"
-              echo " > If not, you may run this command againg later"
-              echo "   or apply manually"
-              echo 
-      read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
-}   
 
 function f_applying_changes_init {
    # For emacs init file
 
    # This is for Linux:
       # Copy recursively all files about emacs to the localized machine-specific directory:
-         echo "DRYa: copying recursively: "
+         f_talk; echo "copying recursively: "
          echo -n " > Sending \"centralized emacs files\" to \"~/.emacs.d\"" && \
             cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/  && f_done
       
@@ -260,32 +249,37 @@ function f_manage_init_and_libraries_after_mod {
    # This function is used by several select_menus: 
    #    "emacs-init (emacs)" and 
    #    "emacs-init (vim)"
-   #
-   # Has a function of presentation
-   # Has a function of prompting the user wether or not to apply the last changes
 
-   # After defining all 3 last functions (f_presenting_DF f_applying_changes_init f_asking_to_apply_init), let's assemble them:
-      f_presenting_DF
+   f_greet
+   f_talk; echo "Edited file is now closed:"
+           echo " > $v_init_file"
+           echo
 
-   # Asking if the user really want apply changes (with: f_applying_changes_init)
-      f_asking_to_apply_init
-   
-      if [ -z $v_apply]; then 
-         echo " > No action taken"
+   f_talk; echo "Do you want to apply these changes imediatly?"
+           echo 
 
-      elif [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then 
-         f_talk; echo "Applying..."; 
-                 echo
+   read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
+   echo 
 
-         f_applying_changes_init; 
 
-      elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then 
-         f_talk; echo "Not Applying..."; 
-                 echo
+   if [ -z $v_apply ]; then 
+      f_talk; echo " > No action taken"
 
-      else 
-         echo "Answers do not match, doing nothing for now. You can run the command again later";
-      fi
+   elif [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then 
+      f_talk; echo "Applying..." 
+              echo
+
+      f_applying_changes_init 
+
+   elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then 
+      f_talk; echo "Not Applying..." 
+              echo
+              echo " > You may run this command again later"
+              echo "   or apply manually"
+              echo
+   else 
+      f_talk; echo "Invalid answer. Not Applying"
+   fi
 }
 
 
@@ -1084,83 +1078,6 @@ function f_uDev {
    echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
 }
 
-function f_menu_select {
-
-   f_greet 
-
-   echo "SELECT file to edit by Title"
-   echo
-
-
-   # Change the prompt message:
-      PS3="Select a file to edit: "
-      COLUMNS=0
-
-      select opt in $v_line2 config-bash-alias notes source-all-drya-files Refresh-Reload-Source source-all-moedaz-files .bashrc .vimrc "com.list-econ-items.txt" com.associative-array "1st (emacs)" "1st (vim)" "emacs-init (emacs)" "emacs-init (vim)" secundary-files termux.properties help quit $v_line2; do
-
-      case $opt in
-         config-bash-alias)
-            f_edit__config_bash_alias
-            break
-         ;;
-         notes)
-            f_edit__notes
-            break
-         ;;
-         source-all-drya-files)
-
-            f_edit__source_all_drya_files
-            break
-         ;;
-         .bashrc)
-            f_edit__bashrc
-            break
-         ;;
-         source-all-moedaz-files)
-            f_edit__source_all_moedaz_files
-            break
-         ;;
-         .vimrc)
-            f_edit__vimrc
-            break
-         ;;
-         "1st (emacs)")
-            f_edit__1st_emacs
-            break
-         ;;
-         "1st (vim)")
-            f_edit__1st_vim
-            break
-         ;;
-         "emacs-init (emacs)")
-            f_edit__init_file_emacs__with_emacs
-            break
-         ;;
-         "emacs-init (vim)")
-            f_edit__init_file_emacs__with_vim
-            break
-         ;;
-         refresh_terminal_and_drya)
-            f_refresh_terminal_and_drya
-            break
-         ;;
-         quit) 
-            break  
-         ;;
-         ? | help | --help | -h | h) 
-            f_greet
-            echo "fluNav"
-            echo " > Edits files inside 'DRYa repository' then copies those files across the system"
-            echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
-            echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
-            break  
-         ;;
-         *)    
-            echo "fluNav: Invalid option $REPLY"  
-         ;;
-      esac
-   done
-}
 
 function f_menu_fzf_S {
    # Menu Quick file edit
@@ -1174,17 +1091,18 @@ function f_menu_fzf_S {
          v_editor3="less --wordwrap"
          L65="65. Edit | $traits_editor   | Example"
 
-      L16='16. Edit | vim   | config-bash-alias'
-      L15='15. Edit | vim   | notes'
-      L14='14. Edit | vim   | source-all-drya-files'
-      L13='13. Edit | vim   | .bashrc'
-      L12='12. Edit | vim   | source-all-moedaz-files'
-       L9='9.  Edit | vim   | .vimrc'
-       L8='8.  Edit | emacs | 1st'
-       L7='7.  Edit | vim   | 1st'
-       L6='6.  Edit | emacs | emacs-init'
-       L5='5.  Edit | vim   | emacs-init'
+      L15='15. Edit | vim   | config-bash-alias'
+      L14='14. Edit | vim   | notes'
+      L13='13. Edit | vim   | source-all-drya-files'
+      L12='12. Edit | vim   | .bashrc'
+      L11='11. Edit | vim   | source-all-moedaz-files'
+      L10='10. Edit | vim   | .vimrc'
+       L9='9.  Edit | emacs | 1st'
+       L8='8.  Edit | vim   | 1st'
+       L7='7.  Edit | emacs | emacs-init'
+       L6='6.  Edit | vim   | emacs-init'
 
+       L5='5.  Help'
        L4='4.  Toggle file editor'
        L3='3.  Reload  | dot-files + Terminal + DRYa'
        L2='2.  Reload  | Terminal'
@@ -1192,24 +1110,23 @@ function f_menu_fzf_S {
 
       L0="SELECIONE (1 ou +) ficheiros para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16\n\n$Lz3" | fzf --cycle -m --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "16. " ]] && echo "uDev"
-      [[ $v_list =~ "15. " ]] && note  # This is an alias set on config-bash-alias file
-      [[ $v_list =~ "14. " ]] && echo "uDev"
-      [[ $v_list =~ "13. " ]] && echo "uDev"
-      [[ $v_list =~ "12. " ]] && echo "uDev"
-      [[ $v_list =~ "11. " ]] && echo "uDev"
-      [[ $v_list =~ "10. " ]] && echo "uDev"
-      [[ $v_list =~ "9.  " ]] && echo "uDev"
-      [[ $v_list =~ "8.  " ]] && echo "uDev"
-      [[ $v_list =~ "7.  " ]] && echo "uDev"
-      [[ $v_list =~ "6.  " ]] && echo "uDev" && f_edit__init_file_emacs__with_emacs
-      [[ $v_list =~ "5.  " ]] && echo "uDev"
-      [[ $v_list =~ "4.  " ]] && echo "uDev"
-      [[ $v_list =~ "3.  " ]] && echo "uDev"
+      [[ $v_list =~ "15. " ]] && f_edit__config_bash_alias
+      [[ $v_list =~ "14. " ]] && f_edit__notes
+      [[ $v_list =~ "13. " ]] && f_edit__source_all_drya_files 
+      [[ $v_list =~ "12. " ]] && f_edit__bashrc
+      [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
+      [[ $v_list =~ "10. " ]] && f_edit__vimrc
+      [[ $v_list =~ "9.  " ]] && f_edit__1st_emacs
+      [[ $v_list =~ "8.  " ]] && f_edit__1st_vim
+      [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
+      [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
+      [[ $v_list =~ "5.  " ]] && f_help
+      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor"
+      [[ $v_list =~ "3.  " ]] && echo "uDev: reload many things"
       [[ $v_list =~ "2.  " ]] && source ~/.bashrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -1228,10 +1145,7 @@ function S {
    if [ -z $1 ]; then
       # If there are no arguments, present the fluNav
 
-
-      # Escolha 1 de 2 funcoes disponiveis para menu (uDev: passar so para a melhor, para so 1)
-         f_menu_fzf_S
-         #f_menu_select
+      f_menu_fzf_S
 
    # When function S is presented with arguments (using elif):
    # And sync with github
