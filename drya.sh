@@ -146,6 +146,19 @@ function f_verticline {
 	done
 }
 
+function f_install_drya {
+   # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
+
+   f_greet
+
+   f_talk; echo "uDev: Are you sure you want to install DRYa?"; 
+           echo
+           echo "If you want to install drya itself, 3 ways:"
+           echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
+           echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+           echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
+}
+
 function f_git_status {
    # Copied from: ezGIT
          echo
@@ -1524,24 +1537,31 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
 
 
 
-elif [ $1 == "install" ]; then 
+elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ];  then 
    # Install DRYa and more stuff
 
    if [[ -z $2 ]]; then 
       # If there are no args:
-      f_talk; echo "Please specify what to install"
-      echo
-      echo "If you want to install drya itself, 3 ways:"
-      echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
-      echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
-      echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
 
-   elif [[ $2 == "--me" ]] || [ $2 == "DRYa" ]; then 
-      echo "uDev: Are you sure you want to install DRYa?"; 
-      # Install DRYa itself
-      # install dependencies
-      # termux-setup-storage
-      # pkg install termux-api
+      # Lista de opcoes para o menu `fzf`
+         Lz1='Save '; Lz2='D install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+         L2='2. Install: DRYa'; L2c='DRYa'  # `D install DRYa`
+         L1='1. Cancel'
+
+         L0="SELECIONE 1 Opcao: "
+         
+         v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "2. " ]] && f_install_drya
+         [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+         unset v_list
+
+   elif [[ $2 == "--me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
+      f_install_drya
+
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
       # uDev: This is a config to set, not an instalation
