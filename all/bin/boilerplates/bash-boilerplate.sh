@@ -126,6 +126,7 @@ function f_horizontal_line {
    function f_pin {
       # Adicionar codigo para aceder a fx pretendida
       echo
+      #[[ $v_pin == "x" ]] && echo "pin acepted... (uDev)"
 
    }
 
@@ -159,9 +160,9 @@ function f_horizontal_line {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && f_pin && [[ $v_pin == "x" ]] && echo "pin acepted... (uDev)"
-      [[ $v_list =~ "3. " ]] && echo "uDev: 3" && history -s "$L3c" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: 2" && sleep 0.1 
+      [[ $v_list =~ "4. " ]] && f_pin && echo "uDev: $L4"
+      [[ $v_list =~ "3. " ]] && echo "uDev: $L3" && history -s "$L3c" 
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" && sleep 0.1 
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
