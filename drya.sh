@@ -1219,8 +1219,9 @@ elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em apare
    # Ao instalar DRYa, fica autimaticamente ativo
    # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
    # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
-   clear
-   figlet DRYa
+
+   f_greet
+
    echo "DRYa: activate"
    echo
    echo "uDev: Se nao existe nenhuma repo no dispositivo:"
@@ -1230,8 +1231,9 @@ elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ]; then
    # Apos insdalar DRYa, fica possivel desarivar com 'deactivate'
    # Serve para apagar tudo o que existe na pasta ~/Repositories incluindo DRYa, apagando tambem as configs na pasta ~ relativamente a DRYa e deixar no seu lugar um script que volta a clonar do Github 
    # Serve para usar em telemoveis ou dispositivos dos quais SeivaDArve na é o dono, tal como nos dispositivos do trabalho
-   clear
-   figlet DRYa
+
+   f_greet
+
    echo "DRYa: deactivate"
    echo
    echo "uDev: Apagar TUDO em:"

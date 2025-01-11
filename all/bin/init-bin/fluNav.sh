@@ -270,22 +270,22 @@ function f_manage_init_and_libraries_after_mod {
 
 function f_edit_self {
 
-      f_greet
+   f_greet
 
-      # Verbose: Before opening file
-         f_talk; echo "Editing fluNav original file"
-                 echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
+   # Verbose: Before opening file
+      f_talk; echo "Editing fluNav original file"
+              echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
 
-                 echo
-                 read -s -n 1 -p "[Press any key to continue] "
-                 echo 
+              echo
+              read -s -n 1 -p "[Press any key to continue] "
+              echo 
 
-      # Verbose: Actually opening the file
-         vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+   # Verbose: Actually opening the file
+      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
 
-      # Verbose: After opening the file
-         f_talk; echo "Closed: fluNav original file"
-                 echo
+   # Verbose: After opening the file
+      f_talk; echo "Closed: fluNav original file"
+              echo
 }
 
 function f_sync_ez_b4_after {
@@ -312,14 +312,15 @@ function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
    # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence. isso ajuda aos dev que usam git
  
-   if [ $v_nm == "fn-test" ]; then
+   if [ $v_nm == "fx-test" ]; then
       # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
-      clear
-      figlet fluNav 
 
-      # uDev: f_tst_repo: test if correspondant repo is already cloned
-      f_down
+      f_greet
+
+      f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned
+
       echo "$v_nm: Testing fluNav"
+
       f_up
 
    elif [ $v_nm == "car" ]; then
@@ -366,21 +367,26 @@ function f_action {
          # f_up
    
    elif [ $v_nm == "tmux" ]; then
-      clear
-      figlet fluNav 
+
+      f_greet 
+
       cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
 
    elif [ $v_nm == "search-files" ]; then
-     # From current directory, search files with fzf menu and open with vim 
+      # From current directory, search files with fzf menu and open with vim 
 
-     v_file=$(fzf --prompt="EDITE um ficheiro: ")
+      # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
+         v_file=$(fzf --prompt="EDITE um ficheiro: ")
 
-     # Adiconar a um ficheiro temporario fluNav
-         mkdir -p ~/.config/h.h/drya/flunav
-         echo "$v_file" >> ~/.config/h.h/drya/flunav/history-files
+      # Adiconar a um ficheiro temporario fluNav
+         v_dir=~/.config/h.h/drya/flunav
+         v_file_hist=~/.config/h.h/drya/flunav/history-files
 
-     [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+         mkdir -p $v_dir; echo "$v_file" >> $v_file_hist
+
+      # Finalmente, editar o ficheiro
+         [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
 
    elif [ $v_nm == "edit-history-files" ]; then
       # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
@@ -485,10 +491,6 @@ function f_up {
 
 
 
-
-# ---------------------------------
-# Brought by config-bash-alias       {
-# ---------------------------------
 
 
 
@@ -623,8 +625,9 @@ function E {
 
 
 function f_trade_interactive_dir {
-   clear
-   figlet Moedaz
+
+   f_greet 
+
    echo "moedaz: trade: interactive DASHBOARD"
    echo " > You may use the comand 'ex'"
    echo
@@ -658,6 +661,62 @@ function npNP-dir-looper {
          # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
             # These 3 commands allow you to see before, after and around your current line in the current file
 }  ## end of function: npNP-dir-looper
+
+
+
+function f_menu_fzf_S {
+   # Menu Quick file edit (para quando S nao recebe argumentos no terminal)
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
+         v_editor1="vim  "
+         v_editor2="emacs "
+         v_editor3="less --wordwrap"
+         L65="65. Edit | $traits_editor   | Example"
+
+      L15='15. Edit | vim   | config-bash-alias'
+      L14='14. Edit | vim   | notes'
+      L13='13. Edit | vim   | source-all-drya-files'
+      L12='12. Edit | vim   | .bashrc'
+      L11='11. Edit | vim   | source-all-moedaz-files'
+      L10='10. Edit | vim   | .vimrc'
+       L9='9.  Edit | emacs | 1st'
+       L8='8.  Edit | vim   | 1st'
+       L7='7.  Edit | emacs | emacs-init'
+       L6='6.  Edit | vim   | emacs-init'
+
+       L5='5.  Help'
+       L4='4.  Toggle file editor'
+       L3='3.  Reload  | dot-files + DRYa + Terminal'
+       L2='2.  Reload  | Terminal'
+       L1='1.  Cancel'
+
+      L0="SELECIONE (1 ou +) ficheiros para editar: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "15. " ]] && f_edit__config_bash_alias
+      [[ $v_list =~ "14. " ]] && f_edit__notes
+      [[ $v_list =~ "13. " ]] && f_edit__source_all_drya_files 
+      [[ $v_list =~ "12. " ]] && f_edit__bashrc
+      [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
+      [[ $v_list =~ "10. " ]] && f_edit__vimrc
+      [[ $v_list =~ "9.  " ]] && f_edit__1st_emacs
+      [[ $v_list =~ "8.  " ]] && f_edit__1st_vim
+      [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
+      [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
+      [[ $v_list =~ "5.  " ]] && f_help
+      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor"
+      [[ $v_list =~ "3.  " ]] && echo 'uDev: Same as `D update`'
+      [[ $v_list =~ "2.  " ]] && source ~/.bashrc
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
+}
 
 
 
@@ -778,6 +837,11 @@ function f_mobile_android {
    esac
 }
 
+
+function f_uDev {
+   # Function to remind the user about needed changes (uDev)
+   echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
+}
 
 
 
@@ -936,7 +1000,7 @@ function V {
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && clear && figlet fluNav && echo -e "Command used: upk-dv\n" && ls
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && echo -e "Command used: upk-dv\n" && ls
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -1058,110 +1122,48 @@ function V {
 
 }
 
-
-function f_uDev {
-   # Function to remind the user about needed changes (uDev)
-   echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
-}
-
-
-function f_menu_fzf_S {
-   # Menu Quick file edit
-
-   # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-
-      # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
-         v_editor1="vim  "
-         v_editor2="emacs "
-         v_editor3="less --wordwrap"
-         L65="65. Edit | $traits_editor   | Example"
-
-      L15='15. Edit | vim   | config-bash-alias'
-      L14='14. Edit | vim   | notes'
-      L13='13. Edit | vim   | source-all-drya-files'
-      L12='12. Edit | vim   | .bashrc'
-      L11='11. Edit | vim   | source-all-moedaz-files'
-      L10='10. Edit | vim   | .vimrc'
-       L9='9.  Edit | emacs | 1st'
-       L8='8.  Edit | vim   | 1st'
-       L7='7.  Edit | emacs | emacs-init'
-       L6='6.  Edit | vim   | emacs-init'
-
-       L5='5.  Help'
-       L4='4.  Toggle file editor'
-       L3='3.  Reload  | dot-files + DRYa + Terminal'
-       L2='2.  Reload  | Terminal'
-       L1='1.  Cancel'
-
-      L0="SELECIONE (1 ou +) ficheiros para editar: "
-      
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --prompt="$L0")
-
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "15. " ]] && f_edit__config_bash_alias
-      [[ $v_list =~ "14. " ]] && f_edit__notes
-      [[ $v_list =~ "13. " ]] && f_edit__source_all_drya_files 
-      [[ $v_list =~ "12. " ]] && f_edit__bashrc
-      [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
-      [[ $v_list =~ "10. " ]] && f_edit__vimrc
-      [[ $v_list =~ "9.  " ]] && f_edit__1st_emacs
-      [[ $v_list =~ "8.  " ]] && f_edit__1st_vim
-      [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
-      [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
-      [[ $v_list =~ "5.  " ]] && f_help
-      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor"
-      [[ $v_list =~ "3.  " ]] && echo 'uDev: Same as `D update`'
-      [[ $v_list =~ "2.  " ]] && source ~/.bashrc
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
-      unset v_list
-    
-}
-
 function S {
    # List fav files for edition (fluNav)
    
-
-
    # Reload the amount of '-' are needed to create an horizontal line
       source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh 1>/dev/null
 
-   
-   if [ -z $1 ]; then
-      # If there are no arguments, present the fluNav
+   # If there are no arguments, present the fluNav
+      if [ -z $1 ]; then
 
-      f_menu_fzf_S
+      f_menu_fzf_S  # Menu fzf
 
-   # When function S is presented with arguments (using elif):
-   # And sync with github
-   # Use this menu to MANUALLY add/remove files to be handled
-   # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
-   # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-   elif [ $1 == "fn-test"  ]; then v_nm="fn-test";             f_action; ## Just test if this file is working
-   elif [ $1 == "19"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
-   elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
-   elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
-   elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-   elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
-   elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_edit__init_file_emacs__with_vim; f_up
-   elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
-   elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
-   elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
-   elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
-   elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-   elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
-   elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
-   elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
-   elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
-   elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
-   elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
-   elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
-   elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
-   elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
-   elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
+   # When function S is presented with arguments:
+      # Acts on the file, And syncs with github after
+      # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
+      # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
+      elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "-2"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
+      elif [ $1 == "-1"       ]; then v_nm="fx-test";             f_action; ## Just test if this file is working
+      elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
+      elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+      elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+      elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_edit__init_file_emacs__with_vim; f_up
+      elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
+      elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
+      elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
+      elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
+      elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+      elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
+      elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+      elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
+      elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
+      elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
+      elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
+      elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
 
-   else 
-      f_talk; echo "Invalid argument. Try again"    # If arguments are given but they are wrong
-   fi
+   # Caso tenha sido dado um argumento que nao consta na lista
+      else 
+         f_talk; echo "Invalid argument. Try again"    # If arguments are given but they are wrong
+
+
+      fi
 }   
