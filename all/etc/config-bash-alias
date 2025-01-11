@@ -78,6 +78,7 @@ function web {
          # Se nao for dado nenhum argumento, dar o menu: 
    
          # Lista de opcoes
+            L6="6. Online Terminal"  # https://www.terminaltemple.com/
             L5="5. Ir | Google.com"
             L4="4. Ir | $homePage_name"
             L3='3. Ir | Seiva Website'
