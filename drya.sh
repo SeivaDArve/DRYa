@@ -819,6 +819,7 @@ function f_drya_help {
            echo " 7. What is D.R.Y.a. "
            echo " 8. dee-pages: filter real commands from their own script"
            echo " 9. Welcome screen DRYa's instructions"
+           echo " 10. DRYa é como uma luva que acenta no PC ou Phone e sabe o que instalar e como instalar"
 }
 
 function f_dot_files_list_available {
