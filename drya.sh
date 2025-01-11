@@ -55,10 +55,19 @@ function f_greet2 {
       tput sgr0
    }
 
-function f_cursorON {
-	# Show cursor normally. Use "tput civis" to hide
-	tput cnorm
-}
+   function f_colors_without_tput {
+      # Text Colors before discovering '$ tput setaf'
+         _RESTORE=$(echo -en '\001\033[0m\002')
+             _RED=$(echo -en '\001\033[00;31m\002')
+
+      # Example of Text formating before discovering '$ tput'
+      # > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
+   }  
+
+   function f_cursorON {
+      # Show cursor normally. Use "tput civis" to hide
+      tput cnorm
+   }
 
 function f_cursorOFF {
 	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
