@@ -270,11 +270,12 @@ function f_repository_ezGIT {
    # Repository: ezGIT
 
    # Define a key to call the entire program
-      alias G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       # uDev: for some repos, must run a script that searches for updates at terminal startup
 
    # Load all alternative git alias:
-      source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sendinf to dev null because ezGIT may not be installed yet
+      source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
    #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
