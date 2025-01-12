@@ -10,6 +10,11 @@ function f_greet {
 
       figlet DRYa 2>/dev/null \
       || echo -e "( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
+
+      # CORDN_5_10='\033[5;23H'
+      # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
+      # 
+      # uDev: Confirmar se no futuro pode haver problemas com a font
 }
 
 function f_greet2 {
