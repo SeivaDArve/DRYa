@@ -2113,6 +2113,8 @@ elif [ $1 == "wiki" ]; then
    f_talk; echo "Opening: wikiD.org"
            echo " > uDev: Create menu for browser visualization"
 
+   # uDev: Test fist if repo exists
+   
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
 
