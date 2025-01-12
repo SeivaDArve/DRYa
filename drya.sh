@@ -944,6 +944,8 @@ function f_dot_files_install_presets {
 function f_dot_files_install {
    Lz='`D dot install`'
 
+   #uDev: Redefinir browser pre-definido
+   
    L9="9. termux.properties"
    L8="8. .bash_logout"
    L7="7. .gitconfig "
