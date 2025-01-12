@@ -2108,11 +2108,13 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    #  10- EXIT
 
 elif [ $1 == "wiki" ]; then 
-   echo "uDev: Opens wikiD"
-   #v_file="emacs ${v_REPOS_CENTER}/wikiD/wikiD.org"
-   #eval $v_file
+   # Menu to edit locally, visualize in the browser, etc...
+   
+   f_talk; echo "Opening: wikiD.org"
+           echo " > uDev: Create menu for browser visualization"
 
-  cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
+   cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
+
 
 elif [ $1 == ".." ]; then  
    # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
