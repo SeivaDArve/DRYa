@@ -78,7 +78,12 @@ function web {
          # Se nao for dado nenhum argumento, dar o menu: 
    
          # Lista de opcoes
-            L6="6. Online Terminal"  # https://www.terminaltemple.com/
+
+            #L8='8. Saber qual é o browser pre-definido'  # `xdg-settings get default-web-browser`
+            #L7="7. Online Terminal"  # https://www.terminaltemple.com/
+
+            L6="6. Ir | Router Config Page"
+
             L5="5. Ir | Google.com"
             L4="4. Ir | $homePage_name"
             L3='3. Ir | Seiva Website'
@@ -86,8 +91,9 @@ function web {
             L2='2. Abrir | Bookmarks Guardados '
             L1='1. Cancel'
 
-         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
+         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
 
+         [[ $v_ask =~ "6. " ]] && v_URL="firefox http://192.168.1.1"  # 192.168.0.1 ou 192.168.1.1
          [[ $v_ask =~ "5. " ]] && v_URL="https://google.com"
          [[ $v_ask =~ "4. " ]] && v_URL="https://duckduckgo.com"
          [[ $v_ask =~ "3. " ]] && v_URL="https://seiva.yolasite.com"
