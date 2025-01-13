@@ -12,11 +12,11 @@ function f_edit_with_heteronimos {
 # Lista de opcoes para o menu `fzf`
    Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-   L5='5. ToDo | Lista de tarefas'
-   L4='4. Nota | com heteronimos' 
+   L5='5. ToDo | Lista de tarefas | `todo`'
+   L4='4. Nota | com heteronimos  | `no H`' 
 
-   L3='3. Nota | Nova COM titulo'                                      
-   L2='2. Nota | Nova SEM titulo'                                      
+   L3='3. Nota | Nova COM titulo  | `no +`';  L3c="no +"  # uDev: command not ready
+   L2='2. Nota | Nova SEM titulo  | `no -`';  L2c="no -"  # uDev: command not ready
    L1='1. Cancel'
 
    L0="SELECIONE 1 do menu (exemplo): "
