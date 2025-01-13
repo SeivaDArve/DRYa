@@ -324,10 +324,12 @@ function f_repository_upK-diario-Dv {
 function f_repository_112-Shiva-Sutras {
    # Repository: 112-Shiva-Sutras
 
-   alias SS="ss all | less"
+   # Attemple to clear `less` 1st lime alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
    alias Ss="ss all | less"
+   alias SS="ss all | less"
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
    alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
+
    alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/all/exp112.txt"
    alias links="cd ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 
