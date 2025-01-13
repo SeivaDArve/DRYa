@@ -826,7 +826,7 @@ function f_dot_files_list_available {
    # List dot-files available in DRYa repo
 
    f_greet
-   f_talk; echo "drya dot-files list-ready"
+   f_talk; echo '`drya dot list-ready-and-uDev`'
            echo " > Files ready to copy from DRYa repo to their Default locations"
 
    # List all files in one array variable
@@ -944,6 +944,9 @@ function f_dot_files_install_presets {
 function f_dot_files_install {
    Lz='`D dot install`'
 
+   # Endereco MAC (traitsID)
+   # Terminal best font
+
    L9="9. termux.properties"
    L8="8. .bash_logout"
    L7="7. .gitconfig "
@@ -976,19 +979,26 @@ function f_dot_files_install {
 
 function f_dot_files_menu {
    # Main Menu for dot files
+
+      Lz='`D dot`'
+
       #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
       #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L7="7. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L6="6. Backups Manager"
-      L5="5. Edit (original or installed)"
-      L4="4. Uninstall "
-      L3="3. Install" 
-      L2="2. List available"
+      L6="6. Menu | Backups"
+
+      L5="5. Edit | Centralized only @ DRYa"
+      L5='5. Edit | Installed only   @ Host'
+      L5='5. Edit | Centralized > Install'
+
+      L4="4. Menu | Uninstall "
+      L3="3. Menu | Install" 
+      L2="2. List | Available"  # 
       L1="1. Cancel"
 
       L0="Menu: Manage dot-files: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "7. " ]] && echo "Detetado 7"
@@ -1528,7 +1538,7 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
       # Main Menu for dot-files
       f_dot_files_menu  
 
-   elif [[ $2 == "list-ready" ]] || [[ $2 == "list-available" ]]; then 
+   elif [[ $2 == "list-ready-and-uDev" ]] || [[ $2 == "list" ]]; then 
       # List dot-files available in DRYa repo
       f_dot_files_list_available
 
@@ -1900,6 +1910,12 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    # List if calculatores (some modified for Trading)
 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
+
+elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
+   f_talk; echo "uDev: Options to set keyboard"
+    
+elif [ $1 == "set-timezone" ] || [ $1 == "timez" ]; then 
+   f_talk; echo "uDev: Options to set timezone"
     
 elif [ $1 == "vlm" ]; then 
    # Works on termux only
@@ -1917,7 +1933,7 @@ elif [ $1 == "vlm" ]; then
       #termux-reload-settings
 
 elif [ $1 == "no" ] || [ $1 == "note" ] || [ $1 == "notes" ]; then 
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh
    
 elif [ $1 == "QR" ]; then 
    # Options for QR codes
