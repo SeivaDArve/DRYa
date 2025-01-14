@@ -624,7 +624,7 @@ function f_dotFiles_install_termux_properties {
 }
 
 function f_dotFiles_install_dryarc {
-   echo "DRYa: source .dryarc if any exists (uDev)"
+   f_talk; echo "source .dryarc if any exists (uDev)"
 }
 
 
