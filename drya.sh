@@ -1035,6 +1035,10 @@ function f_drya_fzf_MM_functionality_pakage {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
+         
+         # L12='12. Agendar envio SMS && WHATSAPP'
+         # L12='13. SSH-wraper'
+
          L7='7. Menu   | no-tes '
          L6='6. Script | Win `pwd` to Linux `pwd`'
          L5="5. App    | xKill"
