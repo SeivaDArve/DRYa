@@ -22,6 +22,12 @@ function f_greet2 {
       ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
+function f_H_line {
+   #echo $COLUMNS # Debug
+   v_cols=$(tput cols)
+   printf "%*s" $v_cols | tr " " "_"
+}
+
 # Functions for text colors (used usually with `figlet`)
    function f_c1 {	
       # This function is to be used when something is SEARCHED
@@ -245,6 +251,7 @@ function f_troubleshootingPWD {
 
 function f_ascii_icon {
 
+
 	function f_center_to_screen_verbose {
       # Fx to verbosely study the process of creating this logo
 
@@ -300,16 +307,18 @@ function f_ascii_icon {
          done
 	}
 
-
-	    f_c6; echo
-	f_spaces; echo -e "     ||\`		               		"
-	f_spaces; echo    "     ||				                  "
-	f_spaces; echo -e " .|''||  '||''| '||  ||\`  '''|.	"
-	f_spaces; echo -e " ||  ||   ||     \`|..||  .|''||	"
+       f_c6;
+   f_H_line; echo
+             echo
+             echo
+	f_spaces; echo -e  "     ||\` "
+	f_spaces; echo -e  "     ||	"
+	f_spaces; echo -e  " .|''||  '||''| '||  ||\`  '''|.	"
+	f_spaces; echo -e  " ||  ||   ||     \`|..||  .|''||	"
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
 	f_spaces; echo    "                  ,  |'		      "
 	f_spaces; echo    "                    ''		         "
-       f_rc; echo 
+   f_H_line
 }
 
 
@@ -317,7 +326,7 @@ function f_recicle_line {
    # Example on how to write 2x or more on the same line
    # uDev: create better explanation on this tput examples
 	echo "First line..."
-	tput sc
+	f_rc
 	read -p "Press any key to overwrite this line... " -n1 -s
 	tput rc 1
    tput el
@@ -2125,6 +2134,11 @@ elif [ $1 == "wiki" ]; then
    
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
+
+elif [ $1 == "k" ]; then 
+   echo 'uDev: fzf menu for entire keyboard'
+   echo '      Used when keyboard configs are unsolved'
+   cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
 
 elif [ $1 == ".." ]; then  
    # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
