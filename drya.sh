@@ -1017,6 +1017,7 @@ function f_drya_fzf_MM_functionality_pakage {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
+         L8='8. Print  | morse'
          L7='7. Menu   | no-tes '
          L6='6. Script | Win `pwd` to Linux `pwd`'
          L5="5. App    | xKill"
@@ -1027,12 +1028,13 @@ function f_drya_fzf_MM_functionality_pakage {
 
          L0="DRYA: Fx List:" 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "8. " ]] && cat  ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
          [[ $v_list =~ "7. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
          [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "5. " ]] && echo "uDev"
