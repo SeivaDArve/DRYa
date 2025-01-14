@@ -117,6 +117,7 @@ function f_horizontal_line {
    termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav
 
 
+# uDev: fx para testar se pastas (ou repo) existem. (igual para ficheiros).
 
 
 
