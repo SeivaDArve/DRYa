@@ -113,6 +113,15 @@ function f_array_2 {
 f_array_2 1>/dev/null  # O output será envido para o crl... porque serve so para debug
 
 
+function f_detectOS {
+         clear
+	f_c3; echo Detect OS
+	f_rc; echo "whoami: 	$(whoami)"
+         echo "OS type: 	${OSTYPE}"
+         echo "uname:		$(uname)"
+         echo "uname -a: 	$(uname -a)"
+         read
+}
 
 
 
