@@ -1051,10 +1051,10 @@ function f_drya_fzf_MM_functionality_pakage {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "7. " ]] && echo "uDev"
+         [[ $v_list =~ "7. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
          [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "5. " ]] && echo "uDev"
-         [[ $v_list =~ "4. " ]] && echo "uDev"
+         [[ $v_list =~ "4. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
 
          [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
          [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
