@@ -1000,7 +1000,7 @@ function V {
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && echo -e "Command used: upk-dv\n" && ls
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" && ls
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
