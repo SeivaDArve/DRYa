@@ -1019,6 +1019,7 @@ function f_drya_fzf_MM_functionality_pakage {
          # Void: Lv, ...
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='13. SSH-wraper'
+         # L12='13. fzf keyboard (para smartphones partidos)'
 
          L8='8. Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
          L7='7. Menu   | no-tes '
