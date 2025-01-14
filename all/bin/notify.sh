@@ -1,8 +1,26 @@
 #!/bin/bash
 
-function f_talk {
+function f_greet {
    clear
-   figlet "DRYa Notify"
+   figlet "Notify"
+}
+
+function f_c4 { 
+   # Similar to Bold. Used in: f_talk
+   # This function is to be used when something is ASKED
+   tput setaf 4
+}
+
+function f_rc { 
+   # This function is to be used when styles are to be CLEARED
+   tput sgr0
+}
+
+function f_talk {
+   # Copied from: ezGIT
+         echo
+   f_c4; echo -n "DRYa: Notify: "
+   f_rc
 }
 
 function f_notify {
@@ -13,19 +31,17 @@ function f_notify {
          # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
          # Usará um ficheiro em verbose-lines e jarve-sentinel
          # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
-         echo "DRYa: Listener: uDev"
+         f_talk; echo "Listener: uDev"
       }
 
       function falar {
          # uDev: Cria uma notificacao noutro Android, via um ficheiro verbose-lines e jarve-sentinel
-         echo "DRYa: Speaker: uDev"
+         f_talk; echo "Speaker: uDev"
       }
    # --------------------------------------------------------------------
 
-   clear
-   figlet "DRYa Notify"
-   #f_talk; 
-   echo "Notify: Create an Android notification message"
+   f_greet
+   f_talk; echo "Create an Android notification message"
 
    # Creating an history file
       # uDev: enviar antes para omni-log repo
@@ -118,4 +134,33 @@ function f_notify {
      
 }
 
-f_notify
+if [[ -z $1 ]]; then
+   f_notify
+
+elif [[ $1 == "." ]]; then
+   # Menu Simples
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='notify'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Opcao simples'                                      
+      L1='1. Cancel'
+
+      L0="Notify: SELECIONE 1 do menu: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" && sleep 0.1 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+   
+else
+   echo "uDev"
+fi
+
+
