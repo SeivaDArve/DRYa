@@ -1034,7 +1034,7 @@ function f_drya_fzf_MM_functionality_pakage {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "8. " ]] && cat  ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+         [[ $v_list =~ "8. " ]] && clear && cat ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
          [[ $v_list =~ "7. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
          [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "5. " ]] && echo "uDev"
