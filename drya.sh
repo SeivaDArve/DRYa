@@ -2138,6 +2138,8 @@ elif [ $1 == "wiki" ]; then
 elif [ $1 == "k" ]; then 
    echo 'uDev: fzf menu for entire keyboard'
    echo '      Used when keyboard configs are unsolved'
+   read -sn1 -p " > Press enter "
+   clear
    cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
 
 elif [ $1 == ".." ]; then  
