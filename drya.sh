@@ -62,11 +62,11 @@ function f_greet2 {
 
    function f_colors_without_tput {
       # Text Colors before discovering '$ tput setaf'
-         _RESTORE=$(echo -en '\001\033[0m\002')
-             _RED=$(echo -en '\001\033[00;31m\002')
+         RESTORE=$(echo -en '\001\033[0m\002')
+             RED=$(echo -en '\001\033[00;31m\002')
 
       # Example of Text formating before discovering '$ tput'
-      # > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
+      # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`
    }  
 
    function f_cursorON {
@@ -149,7 +149,7 @@ function f_horizline {
 
    # Escrever uma linha no ecra
       for i in $(seq $v_count); do
-            echo -ne "-" 
+         echo -ne "-" 
       done
 }
 
@@ -177,7 +177,7 @@ function f_git_status {
    # Copied from: ezGIT
          echo
    f_c4; echo -n "DRYa/ezGIT: "
-   f_rc; echo "git status"
+   f_rc; echo                "git status"
 
    git status
 }
@@ -186,7 +186,7 @@ function f_git_pull {
    # Copied from: ezGIT
          echo
    f_c4; echo -n "DRYa/ezGIT: "
-   f_rc; echo "git pull"
+   f_rc; echo                "git pull"
 
    git pull
 }
@@ -206,45 +206,41 @@ function f_troubleshootingPWD {
 
    # Calling a function that defines the variable _SCRIPT_DIR:
       f_get_script_current_abs_path
-      echo
+            echo
       f_c4; echo -n _SCRIPT_DIR
       f_rc; echo -n ": "
       f_c3; echo $_SCRIPT_DIR
-      f_rc;
-      echo
+      f_rc; echo
 
    # Informing about our location
-      echo "but we are running it from:"
+            echo "but we are running it from:"
       f_c4; echo -n "pwd"
       f_rc; echo -n ": "
       f_c3; echo $(pwd)
-      echo;
+            echo;
       f_c4; echo -n "saving current "
       f_c3; echo -n "pwd " 
       f_c4; echo -n "into "
       f_c3; echo -n "_BEFORE_CALLING_SCRIPT"; 
-      f_rc;
-      echo;
+      f_rc; echo
 
       _BEFORE_CALLING_SCRIPT=$(pwd)
 
       echo "_BEFORE_CALLING_SCRIPT: $_BEFORE_CALLING_SCRIPT"
-      echo;
+      echo
    
    # Traveling to dir of main script in order to make use of relative file positions (this script is not compiled and this prevents "missing files" or "commands")
-   echo "Now, cd into _SCRIPT_DIR"
-   cd $_SCRIPT_DIR
+      cd $_SCRIPT_DIR
+
+            echo "Now, cd into _SCRIPT_DIR"
       f_c4; echo -n "pwd"
       f_rc; echo -n ": "
       f_c3; echo $(pwd)
-      f_rc
-      echo;
-
-   echo yo!; echo
+      f_rc; echo
+            echo
 
    # If this troubleshooting works, you should be able to cat the following file from any directory:
-   cat ./wiki/testFile
-      sleep 2; clear
+      cat ./wiki/testFile
 }
 
 function f_ascii_icon {
@@ -253,35 +249,31 @@ function f_ascii_icon {
       # Fx to verbosely study the process of creating this logo
 
 		# To messure the screen width:
-		_cols=$(tput cols)
-		echo Total cols: $_cols
+         _cols=$(tput cols)
+         echo Total cols: $_cols
 
 		# To messure hslf the width of the screen:
-		_cols=$((_cols/2))
-		echo Half the sreen is: $_cols
+         _cols=$((_cols/2))
+         echo Half the sreen is: $_cols
 
 		# The ascii logo is 32 characters long (half is 16)
-		echo "The ascii logo is 32 characters long (half is 16)"
+         echo "The ascii logo is 32 characters long (half is 16)"
 
 		# Center to screen
-		echo To center the logo horizontally to the screen we subtract half of the logo cols to half of the screen widht. And that is where we center our cursor
-
-
-		_cols=$((_cols-16))
-		echo -e "\nRemaining cols: $_cols"
-		echo $_cols Is where we put our cursor
-
-
-		echo Example of logo widht:
-		echo "................................"
-
-		echo -e "\nExample of logo centered:"
-		tput cup 13 $_cols
-		echo "................................"
+         echo To center the logo horizontally to the screen we subtract half of the logo cols to half of the screen widht. And that is where we center our cursor
+         _cols=$((_cols-16))
+         echo -e "\nRemaining cols: $_cols"
+         echo $_cols Is where we put our cursor
+         echo Example of logo widht:
+         echo "................................"
+         echo
+         echo "Example of logo centered:"
+         tput cup 13 $_cols
+         echo "................................"
 
 
 		# Now the same for lines:
-		#tput lines
+         #tput lines
 		
 	}
 	#f_center_to_screen_verbose
@@ -330,16 +322,6 @@ function f_recicle_line {
 	tput rc 1
    tput el
 	echo "Second line. read replaced."
-}
-
-function f_detectOS {
-         clear
-	f_c3; echo Detect OS
-	f_rc; echo "whoami: 	$(whoami)"
-         echo "OS type: 	${OSTYPE}"
-         echo "uname:		$(uname)"
-         echo "uname -a: 	$(uname -a)"
-         read
 }
 
 function f_calcular_tempo_decorrido_apos_data {
@@ -394,26 +376,26 @@ function f_clone_info {
    # > Automatically redirects Termux to github.com
 
    f_talk; echo "Must specify a repository to clone"
-   echo
-   echo " To list all public repositories"
-   echo "  > '$ drya clone --list-public' or "
-   echo "  > '$ drya clone -p' "
-   echo 
-   echo " To list all private repositories"
-   echo "  > '$ drya clone --list-private' or"
-   echo "  > '$ drya clone -P'"
-   echo
-   echo " To clone DRYa:  "
-   echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
-   echo
-   echo " Webpage with all repositories:"
-   echo "  > https://github.com/SeivaDArve?tab=repositories"
+           echo
+           echo " To list all public repositories"
+           echo "  > '$ drya clone --list-public' or "
+           echo "  > '$ drya clone -p' "
+           echo 
+           echo " To list all private repositories"
+           echo "  > '$ drya clone --list-private' or"
+           echo "  > '$ drya clone -P'"
+           echo
+           echo " To clone DRYa:  "
+           echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+           echo
+           echo " Webpage with all repositories:"
+           echo "  > https://github.com/SeivaDArve?tab=repositories"
 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
       v_txt="Visiting: https://github.com/SeivaDArve?tab=repositories"
       f_prsK
+      echo
 
-   echo
    f_horizline
    echo " Note: So far, drya can open this link only with Termux"
    echo " > uDev: No other browser found"
@@ -443,7 +425,7 @@ function f_clone_repos {
       }
 
       function f_clone_repos_upk-dv {
-         echo "cloning upK-diario-Dv"; 
+         echo "Cloning upK-diario-Dv"; 
          echo "Link for download is:"; 
          echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
          git clone https://github.com/SeivaDArve/upK-diario-Dv.git
