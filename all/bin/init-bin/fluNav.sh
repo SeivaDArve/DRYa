@@ -895,21 +895,49 @@ function H {
 
 function V {
    # Function: "Directory" ou "Place (V)"
+   # This fx finds directories
    
    # uDev: Se for WSL3, detetar endereços: "C:\Users\$USER\Documents"
    # uDev: add: appdata (windows)
    # uDev: alias R: listar repositorios por numero para saltar para eles (ou usar menu fzf)
 
 
-   # uDev: To replace NPnp looper: Keys
-   #       `V M`  : `V MAIS`  ou `V +`  # Serve para adicionar PWD ao historico de loop
-   #       `V m`  : `V menos` ou `V -`  # Serve para remover   PWD ao historico de loop
-   #       `V n`  : `V Next ` ou `V N`  # Serve para navegar em loop no historio ascendetemente 
-   #       `V n`  : `V menos` ou `V n`  # Serve para navegar em loop no historio descendentemente 
-   #       `V ls` : `V menos` ou `V n`  # List all stored locations as other apps list buffers"
-   #       `V RM` : `V menos` ou `V n`  # Prompt the user if he wants to delete the entire list of locations"
-   #       `V rm` : `V menos` ou `V n`  # Prompt the user if he wants to delete current dir from history file
-
+   function f_help {
+      f_talk; 
+      echo "V: Instructions manual"
+      echo '
+   
+      #  uDev: To replace NPnp looper: Keys
+         `V .`  or `V search`       # Serve para adicionar PWD ao historico de loop
+         `V h`  or `V help`         # 
+         `V M`  or `V Menu`         # Menu fzf
+         `V m`  or `V mobile`       # 
+         `V +`  or `V add`          # Serve para adicionar PWD ao historico de loop
+         `V -`  or `V rm`           # Serve para remover   PWD ao historico de loop
+         `V RM` or `V erase-hist`   # Prompt the user if he wants to delete the entire list of locations
+         `V rm` or `V remove
+         `V ..                      # Edit/Visualize history file
+         `V --                      # Remove all lines from history file   
+         `V n`  or `V next`         # Serve para navegar em loop no historio ascendetemente 
+         `V N`  or `V previous`     # Serve para navegar em loop no historio descendentemente 
+         `V ls` or `V list-storage` # List all stored locations as other apps list buffers
+   
+      # Specific directory navigation
+         `V d`  or `V drya` # Navigates do root of DRYa repo
+         ...
+   
+      # Help and Usage (internal instructions):
+         # Use 0:  `V h      `    # Help and instructions
+         # Use 1:  `V        `    # Complains that there is no destination specified
+         # Use 2:  `V drya   `    # Travels to favorites  # uDev: to be absorved by the 'function . { }'
+         # Use 3:  `V p <dir>`    # Create new dir and travel to it
+         # Use 4:  `V r <dir>`    # finds and lists a dir to remove (use -R to confirm yout choice)
+         # Use 5:  `V R <dir>`    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+         # Use 6:  `V ..     `    # Search a list of paths to navigate to
+         # Use 7:  `V .      `    # Uses `fzf` to search for a file. Then navigate to its directory
+         # Use 8:  `V <dir>  `    # Go to existent dir at current pwd
+   '
+   }
    # Implementation of Use 1:
       if [ -z $1 ]; then 
          f_greet
@@ -917,26 +945,7 @@ function V {
 
    # Implementation of Use 0:
       elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
-         echo "uDev: Instructions"
-         # Help and Usage:
-            # This fx finds directories
-
-            # This function is a combination of:
-            #   `cd` ; `ls` ;  + alias ; 
-
-            # Use 0:  '$ V h           # Help and instructions
-            # Use 1:  '$ V             # Complains that there is no destination specified
-            # Use 2:  '$ V drya        # Travels to favorites  # uDev: to be absorved by the 'function . { }'
-            # Use 3:  '$ V -p <dir>    # Create new dir and travel to it
-            # Use 4:  '$ V -r <dir>    # finds and lists a dir to remove (use -R to confirm yout choice)
-            # Use 5:  '$ V -R <dir>    # Removes dir (recommended to confirm which dir will be removed with the option -r)
-            # Use 6:  '$ V ..          # Search a list of paths to navigate to
-            # Use 7:  '$ V .           # Uses `fzf` to search for a file. Then navigate to it's directory
-            # Use 8:  '$ V <dir>       # Go to existent dir at current pwd
-            # Use 9:  '$ V +           # Store current path to a list of paths
-            # Use 10: '$ V -           # Remove current path to a list of paths
-            # Use 10: '$ V --          # Remove all lines from history file   
-
+         f_help
 
    # Implementation of Use 2:
       elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
@@ -1036,17 +1045,17 @@ function V {
 
 
    # Implementation of Use 3:
-      elif [ $1 == "-p" ]; then
+      elif [ $1 == "p" ]; then
          mkdir -p $2
          cd $2
          ls
 
    # Implementation of Use 4:
-      elif [ $1 == "-r" ]; then
+      elif [ $1 == "r" ]; then
          ls $2
 
    # Implementation of Use 5:
-      elif [ $1 == "-R" ]; then
+      elif [ $1 == "R" ]; then
          rm -rf $2
          ls
       # uDev: provide more safety
