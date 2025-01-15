@@ -112,13 +112,13 @@ function f_prsK {
       v_secs=5
 
    # Message 
-      v_msg="   > [ PRESS any key || Cancel: Ctrl-C ] "
+      v_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
 
    # Text to print
          #echo
    f_talk; echo "$v_txt"  # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-   f_c5;   echo "$v_msg"
-           read -s -n 1 -p "   > "
+   f_c5;   echo -n "$v_msg"
+           read -s -n 1 -p "> "
    f_rc;   echo
 }
 
@@ -610,14 +610,16 @@ function f_dotFiles_install_git {
 function f_dotFiles_install_vim {
    # For vim
 
-   clear 
-   echo "Copying vim dotfile:"
-   echo " > from: .../DRYa/all/etc/dot-files/vim/.vimrc"
-   echo " > To:   ~"
-   read -s -n 1 -p "Press Any Key "
+   v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
+   v_place=~
+   f_greet
+   f_talk; echo "Installing .vimrc:"
+           echo " > from: .../DRYa/all/etc/dot-files/vim/.vimrc"
+           echo " > To:   ~"
+
+   v_txt="Are you sure? " && f_prsK
    
-   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~ && echo "Done!"
-   echo
+   cp $v_file $v_place && f_talk && echo "Done! "
 }
 
 function f_dotFiles_install_termux_properties {
@@ -991,7 +993,7 @@ function f_dot_files_menu {
 
       L4="4. Menu | Uninstall "
       L3="3. Menu | Install" 
-      L2="2. List | Available"  # 
+      L2="2. List | Available"  # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
       L1="1. Cancel"
 
       L0="Menu: Manage dot-files: "
