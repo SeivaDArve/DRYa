@@ -462,6 +462,9 @@ function f_internal_drya_files_2_2 {
 
    # Sourcing config files stored inside DRYa repo created by other machines running DRYa
       source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
+
+   # ... Optional: Replace normal Welcome message with `D seiva-up-time`
+   #   bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
 }
 
 function f_verbose_drya_msgs_end_file {
