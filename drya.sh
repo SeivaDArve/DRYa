@@ -612,6 +612,7 @@ function f_dotFiles_install_vim {
 
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
    v_place=~
+
    f_greet
    f_talk; echo "Installing .vimrc:"
            echo " > from: .../DRYa/all/etc/dot-files/vim/.vimrc"
