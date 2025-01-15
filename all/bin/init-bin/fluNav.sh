@@ -5,10 +5,6 @@
    # '$ pkg install figlet file fzf'
 
 
-
-
- 
-
 # uDev: This app should NOT have 3 prefixes: V, S, E and .....
 #       Instead: use only: `. M` for fluNav menu
 #
@@ -54,7 +50,6 @@ function f_c1 {
    tput setaf 5
 }
 
-
 function f_c5 {
    tput setaf 6
 }
@@ -83,13 +78,11 @@ function f_talk {
    f_rc
 }
 
-
 function f_horiz_line {
    # Using the in-built horizontal line from DRYa
    bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
    echo $v_line
 }
-
 
 function f_edit__config_bash_alias {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
@@ -111,7 +104,8 @@ function f_edit__source_all_drya_files {
 function f_edit__bashrc {
    vim ~/.bashrc
    f_greet  
-   echo "edited: ~/.bashrc"; f_uDev
+   echo "edited: ~/.bashrc"
+   f_uDev
 }
 
 function f_edit__source_all_moedaz_files {
@@ -179,6 +173,7 @@ function f_edit__init_file_emacs__with_vim {
       # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
       #         to call the same function "f_manage_init_and_libraries_after_mod"
 }
+
 function f_help {
    f_greet
    echo "fluNav"
@@ -186,15 +181,13 @@ function f_help {
    echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
    echo "   (Edit those files manually (uDev: in the future there will be an automated otion for that))"
 }
+
 function f_refresh_terminal_and_drya {
    source ~/.bashrc
    drya update
    echo "Reload done to: ~/.bashrc by fluNav"
    # uDev: Fazer reset tambem ao init.el
 }
-
-
-
 
 function f_applying_changes_init {
    # For emacs init file
@@ -266,7 +259,6 @@ function f_manage_init_and_libraries_after_mod {
       f_talk; echo "Invalid answer. Not Applying"
    fi
 }
-
 
 function f_edit_self {
 
@@ -495,98 +487,124 @@ function f_up {
 
 
 
-#alias .="ls"  ## Replaced by the 'function . { }' and the 'function D { }'
-alias ..="cd .."
-alias ...="cd -"
-
 function . {
    # Navigate through the file system stupidly ez
    
+   #       
+   #       
+   #       
+   #  # Note: 
+   #    Before `.` was a function, it was an alias:
+   #    Replaced by the 'function . { }' and the 'function D { }'
+   #
+   #  alias  .="ls   " 
+   #
+   #
+   #
+   #       
+
    # uDev: Include 'function d' to give 'favs' if directory is not found
 
-      if [ -z $1 ]; then 
-         # If no argument is given, lists storage (ls command)
-         ls -p
 
-      elif [ $1 == "." ]; then 
-         f_edit_self
 
-      #elif [ $1 == "-" ]; then 
-         # Open last file edited, because last file opened saved it's absolute path somewhere 
+   if [ -z $1 ]; then 
+      # If no argument is given, lists storage (ls command)
+      ls -p
 
-      elif [ $1 == "G" ]; then 
-         # If arg 1 is 'G' then navigate to the center of seiva's repos
-         cd $v_REPOS_CENTER
-         # uDev: this command '. .' is usually issued at the beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
-         # uDev: similar to '$ D .' ezGIT could have also an alias to navigate to it's home dir. Use command '$ . G .' to do it
-   
-      elif [ $1 == "?" ] || [ $1 == "h" ]; then 
-         # Describe all these navigation alias
+   elif [ $1 == "." ]; then 
+      f_edit_self
 
-         f_greet
-         
-         f_talk; echo "Instructions:"
-         echo
-         echo '`. ?` or `. h`  Shows this help menu'
-         echo '`. G`           Navigate to: Repos Center'
-         echo
-         echo ".  1x Means: ls"
-         echo "..  2x Means: cd .."
-         echo "...  3x Means: cd -"
-         echo "....  4x Means: pwd"
-         echo ".....  5x Means: save this dir location in var \$h"
-         echo "......  6x Means: save previous dir location in var \$v"
-         echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
-         echo
-         echo "To visit a file called 'h' use: \`vim h\`"
+   elif [ $1 == "G" ]; then 
+      # If arg 1 is 'G' then navigate to the center of seiva's repos
+      cd $v_REPOS_CENTER
+      # uDev: this command '. .' is usually issued at the beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
+      # uDev: similar to '$ D .' ezGIT could have also an alias to navigate to it's home dir. Use command '$ . G .' to do it
 
-      elif [ ! -z $1 ]; then
-         # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
-         
-            cd $1 2>/dev/null && \
-            v=$(pwd) && \
-            b=$(basename $v) && \
-            echo "DRYa: fluNav: Listing files at:" && \
-            echo " > ./$b" && \
-            echo && \
-            ls || \
-            for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly  ::  Atempt of c_editor failed here
+   elif [ $1 == "?" ] || [ $1 == "h" ]; then 
+      # Describe all these navigation alias
 
-      fi
+      f_greet
+      
+      f_talk; echo "Instructions:"
+      echo
+      echo '`. ?` or `. h`  Shows this help menu'
+      echo '`. G`           Navigate to: Repos Center'
+      echo
+      echo ".  1x Means: ls"
+      echo "..  2x Means: cd .."
+      echo "...  3x Means: cd -"
+      echo "....  4x Means: pwd"
+      echo ".....  5x Means: save this dir location in var \$h"
+      echo "......  6x Means: save previous dir location in var \$v"
+      echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
+      echo
+      echo "To visit a file called 'h' use: \`vim h\`"
+
+   else
+      # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
+
+      PWD=$(pwd) && \
+      BASENAME=$(basename $PWD) && \
+      cd $1 2>/dev/null \
+      && f_talk\
+      && echo "Listing files at:" \
+      && echo " > ./$BASENAME" \
+      && echo \
+      && ls \
+      || for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly  ::  Atempt of c_editor failed here
+
+   fi
 }
+
+function .. {
+   cd ..
+}
+
+function ... {
+   cd -
+}
+
 function .... {
-   echo 'Current location $(pwd)'
+   f_talk; echo 'Info: Current location `pwd`'
    echo " > $(pwd)"
 }
+
 function ..... {
    # Saves current directory location 
    # uDev: If script npNP gets finished, this one function gets useless. Finish that
-   h=$(pwd)
-   echo 'Current location $(pwd) saved as variable $h'
-   echo " > $(pwd)"
+
+   PWD=$(pwd)
+   f_talk; echo 'Current location `pwd` saved as var $h'
+           echo " > $PWD"
 }
+
 function ...... {
    # This function is usefull when you want to move files to the previous directory
       # 1 - Move to the destination you want to past the files
       # 2 - Move to the origin of the files in one command using absolute path (where they are currently)
       # 3 - press: .....
       # Use command: mv <file1> <file2> <file3> $v
+      
    # uDev: If script npNP gets finished, this one function gets useless. Finish that
-   cd -   1>/dev/null   
-   v=$(pwd)
-   cd -   1>/dev/null   
-   echo 'Last directory $(pwd) saved as variable: $v'
-   echo " > $v"
+
+   # Getting last dir's path
+      cd -   1>/dev/null   
+      v=$(pwd)
+      cd -   1>/dev/null   
+
+   # Verbose
+      f_talk; echo 'Last directory `pwd` saved as var: $v'
+              echo " > $v"
 }
+
 function ....... {
 
-   echo 'Variable $h saved as:'
-   echo " > $h"
-   echo
-   echo 'Variable $v saved as:'
-   echo " > $v"
-}
+   f_talk; echo 'Variable $h saved as:'
+           echo " > $h"
 
+   f_talk; echo 'Variable $v saved as:'
+           echo " > $v"
+}
 
 function E {
    # Escolher editor de texto para pre-definir 
@@ -622,47 +640,6 @@ function E {
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
-
-
-function f_trade_interactive_dir {
-
-   f_greet 
-
-   echo "moedaz: trade: interactive DASHBOARD"
-   echo " > You may use the comand 'ex'"
-   echo
-   ls -1
-}
-
-function npNP-dir-looper {
-   # Title: next-previous-Negative-Positive
-   # (looper app) Save a loop of directories:
-      alias P="Positive dir"  #uDev: Adds current dir to loop
-      alias N="Negative dir"  #uDev: Removes current dir from loop
-      alias p="previous dir"  #uDev: Swap to previous dir present in the loop 
-      alias n="next dir"      #uDev: Swap to next dir present in the loop
-      alias PP="list all stored locations as other apps list buffers"
-      alias NN="Prompt the user if he wants to delete the entire list of locations"
-      # when adding arguments:
-         # Using a number as an argument like: '$ np 1' makes you travel the the location listed first
-         # Using - or + to swap priority of the location listed in the list (example: '$ np +' and '$ np -)
-
-      # np | pn | Np | Pn) list all dirs and current one
-      function P {
-         mkdir -p ~/.config/h.h/nPpN-dir-looper
-         pwd >> ~/.config/h.h/nPpN-dir-looper/nPpN-list.txt
-          
-      }
-
-      # Curiosity: by typing '$ man termux' you can see that by coincidence and also by luck, termux uses the volume key <Up> to perform control over the terminal and over the smartphone.
-         # Two of those Volume Up shorcut control are:
-         # 'Volume key Up + P': Page Up
-         # 'Volume key Up + N': Page Down
-         # To make it even better, remember that the command ZZ in Vim, puts the current line at the middle of the screen.
-            # These 3 commands allow you to see before, after and around your current line in the current file
-}  ## end of function: npNP-dir-looper
-
-
 
 function f_menu_fzf_S {
    # Menu Quick file edit (para quando S nao recebe argumentos no terminal)
@@ -717,10 +694,6 @@ function f_menu_fzf_S {
       unset v_list
     
 }
-
-
-
-
 
 function f_mobile_android {
    # if [ -z $2 ]; then 
@@ -837,23 +810,10 @@ function f_mobile_android {
    esac
 }
 
-
 function f_uDev {
    # Function to remind the user about needed changes (uDev)
    echo -e "\n# uDev: all options MUST edit files inside DRYa repo (for easy upload) and then copy those files across the system"
 }
-
-
-
-
-
-# ---------------------------------
-# Brought by config-bash-alias       }
-# ---------------------------------
-
-
-
-
 
 function f_hist_2_fzf {
    #echo "Escolheu 2. Ultimos Ficheiros"
@@ -941,6 +901,15 @@ function V {
    # uDev: alias R: listar repositorios por numero para saltar para eles (ou usar menu fzf)
 
 
+   # uDev: To replace NPnp looper: Keys
+   #       `V M`  : `V MAIS`  ou `V +`  # Serve para adicionar PWD ao historico de loop
+   #       `V m`  : `V menos` ou `V -`  # Serve para remover   PWD ao historico de loop
+   #       `V n`  : `V Next ` ou `V N`  # Serve para navegar em loop no historio ascendetemente 
+   #       `V n`  : `V menos` ou `V n`  # Serve para navegar em loop no historio descendentemente 
+   #       `V ls` : `V menos` ou `V n`  # List all stored locations as other apps list buffers"
+   #       `V RM` : `V menos` ou `V n`  # Prompt the user if he wants to delete the entire list of locations"
+   #       `V rm` : `V menos` ou `V n`  # Prompt the user if he wants to delete current dir from history file
+
    # Implementation of Use 1:
       if [ -z $1 ]; then 
          f_greet
@@ -980,7 +949,6 @@ function V {
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot && ls
-         #f_trade_interactive_dir
       
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
@@ -1081,7 +1049,6 @@ function V {
       elif [ $1 == "-R" ]; then
          rm -rf $2
          ls
-      
       # uDev: provide more safety
 
    # Implementation of Use 6:
