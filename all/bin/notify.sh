@@ -135,15 +135,12 @@ function f_notify {
 }
 
 if [[ -z $1 ]]; then
-   f_notify
-
-elif [[ $1 == "." ]]; then
    # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='notify'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Opcao simples'                                      
+      L2='2. Nova Mensagem'                                      
       L1='1. Cancel'
 
       L0="Notify: SELECIONE 1 do menu: "
@@ -155,10 +152,14 @@ elif [[ $1 == "." ]]; then
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" && sleep 0.1 
+      [[ $v_list =~ "2. " ]] && f_notify
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
    
+
+elif [[ $1 == "." ]]; then
+   f_notify
+
 else
    echo "uDev"
 fi
