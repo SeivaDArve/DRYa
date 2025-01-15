@@ -943,6 +943,7 @@ function f_dot_files_install {
    # uDev: Redefinir browser pre-definido
    #       Endereco MAC (traitsID)
    #       Terminal best font
+   #       Install: font: Monospace (best for terminal)
    
    L9="9. termux.properties"
    L8="8. .bash_logout"

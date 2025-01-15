@@ -340,7 +340,7 @@ function f_repository_yogaBashApp {
 
    alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
    alias termux-stop="termux-media-player stop"
-   alias shambavi="${v_REPOS_CENTER}/yogaBashApp/shambavi.sh"
+   alias Y="${v_REPOS_CENTER}/yogaBashApp/yoga.sh"
    source ${v_REPOS_CENTER}/yogaBashApp/all/source-all-yoga-files 2>/dev/null
 }
 

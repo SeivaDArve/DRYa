@@ -1019,7 +1019,7 @@ function V {
          cd ${v_REPOS_CENTER}/verbose-lines && ls
          
 
-      elif [[ $1 == "yoga" ]] || [ $1 == "yogab" ] || [ $1 == "yg" ]; then
+      elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
          cd ${v_REPOS_CENTER}/yogaBashApp && ls
          
 
