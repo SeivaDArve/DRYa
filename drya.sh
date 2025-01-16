@@ -100,26 +100,43 @@ function f_prsK {
    # Press Any key to continue
    # Or wait X seconds
 
-   
+
+
+
+
+ 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
       # EXEMPLO:
       #
-      # v_txt="Vai ser de seguida editado o ficheiro X"
+      # v_txt="Editado X"
       # f_prsK
+      #
+      # EFEITO: 
+      # DRYa: Are you sure: "Editar X"
+      #  > Are you sure? (Press ANY key to confirm) 
+
 
 
    # Set how many seconds to wait before automatically continue
       v_secs=5
 
-   # Message 
+   # Message
       v_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
+
+   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $v_txt ]] && v_txt=" ... "
 
    # Text to print
          #echo
-   f_talk; echo "$v_txt"  # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-   f_c5;   echo -n "$v_msg"
-           read -s -n 1 -p "> "
-   f_rc;   echo
+   f_talk; echo -n 'Are you sure? `'
+     f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+     f_rc; echo '`'
+           echo -n "$v_msg"
+           read -sn1
+     f_rc; echo -e "\r\033[K > A Continuar..."
+
+   # Removing variables before the fx finished
+      unset v_txt
 }
 
 function f_done {
@@ -622,7 +639,7 @@ function f_dotFiles_install_vim {
            echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
            echo " > To:     ~"
 
-   v_txt="Are you sure? " && f_prsK
+   _txt="Install .vimrc" && f_prsK
    
    cp $v_file $v_place && f_talk && echo "Done! "
 }
