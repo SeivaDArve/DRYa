@@ -573,9 +573,12 @@ function ..... {
    # Saves current directory location 
    # uDev: If script npNP gets finished, this one function gets useless. Finish that
 
-   PWD=$(pwd)
-   f_talk; echo 'Current location `pwd` saved as var $h'
-           echo " > $PWD"
+   # Getting current dir's path
+      h=$(pwd)
+
+   # Verbose
+      f_talk; echo 'Current location `pwd` saved as var $h'
+              echo " > $h"
 }
 
 function ...... {

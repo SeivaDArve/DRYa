@@ -3,18 +3,25 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
+# Sourcing file with colors 
+   source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
+
 function f_greet {
-   # If `figlet` app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
-   # If `figlet` app is not insfalled: print only a message
-      clear
+   # Presents a Nice visual ascii name/logo for this entire script
 
-      figlet DRYa 2>/dev/null \
-      || echo -e "( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
+   # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
+   # "     "    "  is not insfalled: print only a message
 
-      # CORDN_5_10='\033[5;23H'
-      # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
-      # 
-      # uDev: Confirmar se no futuro pode haver problemas com a font
+   # If figlet not installed, use this message instead
+      v_2nd_option="( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
+
+   # CORDN_5_10='\033[5;23H'
+   # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
+   # 
+   # uDev: Confirmar se no futuro pode haver problemas com a font
+
+   clear
+   figlet DRYa 2>/dev/null || echo -e "$v_2nd_option"
 }
 
 function f_greet2 {
@@ -28,62 +35,6 @@ function f_H_line {
    printf "%*s" $v_cols | tr " " "_"
 }
 
-# Functions for text colors (used usually with `figlet`)
-   function f_c1 {	
-      # This function is to be used when something is SEARCHED
-      tput setaf 5 
-   }
-
-   function f_c2 { 
-      tput setaf 2 
-   }
-
-   function f_c3 { 
-      # Mentioning user input or valiable input
-      # This function is to be used when something is DECLAIRED
-      tput setaf 3
-   }
-
-   function f_c4 { 
-      # Similar to Bold. Used in: f_talk
-      # This function is to be used when something is ASKED
-      tput setaf 4
-   }
-
-   function f_c5 { 
-      # Similar to Bold
-      tput setaf 6
-   }
-
-   function f_c6 { 
-      # Used for ASCII Drya Logo, centered to the screen
-      tput setaf 28
-      tput bold
-   }
-
-   function f_rc { 
-      # This function is to be used when styles are to be CLEARED
-      tput sgr0
-   }
-
-   function f_colors_without_tput {
-      # Text Colors before discovering '$ tput setaf'
-         RESTORE=$(echo -en '\001\033[0m\002')
-             RED=$(echo -en '\001\033[00;31m\002')
-
-      # Example of Text formating before discovering '$ tput'
-      # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`
-   }  
-
-   function f_cursorON {
-      # Show cursor normally. Use "tput civis" to hide
-      tput cnorm
-   }
-
-function f_cursorOFF {
-	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
-	tput civis
-}
 
 function f_rc_cursor {
 	tput cup 25 4
@@ -197,19 +148,19 @@ function f_install_drya {
 }
 
 function f_git_status {
-   # Copied from: ezGIT
-         echo
-   f_c4; echo -n "DRYa/ezGIT: "
-   f_rc; echo                "git status"
+   f_talk; echo
+     f_c4; echo -n '`git status`'
+     f_rc; echo
 
    git status
 }
 
 function f_git_pull {
    # Copied from: ezGIT
-         echo
-   f_c4; echo -n "DRYa/ezGIT: "
-   f_rc; echo                "git pull"
+   f_talk; echo
+     f_c4; echo -n '`git pull`'
+     f_rc; echo
+
 
    git pull
 }

@@ -1,25 +1,44 @@
 #/bin/bash
 # Title: Helper to write notes
 
+function f_create_file_and_name {
+   v_date=$(date +'%Y-%m-%d---%H-%M-%S')
+   v_date="Data-Hora---$v_date)"
+
+   v_tmp_dir=~/.tmp
+   v_tmp_file="note-rn-$v_date"
+
+   v_tmp=$v_tmp_dir/$v_tmp_file
+
+   mkdir -p $v_tmp_dir
+   touch $v_tmp
+   ls $v_tmp_dir
+}
+
 function f_edit_with_heteronimos {
    
    # udev: Se repo omni-log nao existir, perguntar se quer download
+
+   v_place=${v_REPOS_CENTER}/omni-log/all/ex-pressa 
    echo "Editar notas em omni-log/all/ex-pressa" 
-   cd ${v_REPOS_CENTER}/omni-log/all/ex-pressa 
+
+   cd $v_place
    vim .
 }
 
 function f_edit_random_note_no_title {
    v_file=${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
 
-   v_date=$(date +'%Y-%m-%d %H:%M:%S')
-   v_date="Data/Hora $v_date"
+   f_create_file_and_name
 
-   echo                 >> $v_file  # Send one empty line to $v_file
-   echo -n "$v_date { " >> $v_file  # Send Date to $v_file
-   echo -e "\n\n} "            >> $v_file  # Send one empty line to $v_file
+   echo -ne "$v_date { \n" >> $v_tmp  
+   vim $v_tmp
 
-   vim $v_file
+   echo          >> $v_file \
+   && cat $v_tmp >> $v_file \
+   && echo "}"      >> $v_file \
+   && echo "DRYa: no-tes: note added to 'rn'"  \
+   && echo " > uDev: sync omni-log automatically"
 }
 
 function f_main_menu {
@@ -61,6 +80,9 @@ if [ -z $1 ]; then
 elif [ $1 == "-" ]; then
    f_edit_random_note_no_title
       
+elif [ $1 == "H" ]; then
+   f_edit_with_heteronimos
+
 else
    echo 'Option not recognized. Tey `no`'
 fi
