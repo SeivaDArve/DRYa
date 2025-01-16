@@ -5,5 +5,14 @@
 # Use 1: set this variable on ~/.bashrc on at DRYa/all/source-all-drya-files
 # Use 2: source this file (because it has a usable variable)
 
-# $PS1 used at Termux
+# $PS1 (standard prompt) used at Termux
 declare PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+
+# $PS2
+   # uDev
+
+# $PS3
+   # uDev
+
+# $PS4
+   # uDev

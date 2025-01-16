@@ -26,6 +26,7 @@ function f_main_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      #L80= Share Trascrypt from termux (copy paste entire termux output)
       L5='5. ToDo | Lista de tarefas | `todo`'
       L4='4. Nota | com heteronimos  | `no H`' 
 
@@ -33,7 +34,7 @@ function f_main_menu {
       L2='2. Nota | Nova SEM titulo  | `no -`';  L2c="no -"  # uDev: command not ready
       L1='1. Cancel'
 
-      L0="SELECIONE 1 do menu (exemplo): "
+      L0="SELECIONE 1 do menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 

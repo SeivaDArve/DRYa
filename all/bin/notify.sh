@@ -1,5 +1,23 @@
 #!/bin/bash
 
+
+   # uDev: --------------------------------------------------------------
+      function ouvir {
+         # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
+         # Usará um ficheiro em verbose-lines e jarve-sentinel
+         # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
+         f_talk; echo "Listener: uDev"
+      }
+
+      function falar {
+         # uDev: Cria uma notificacao noutro Android, via um ficheiro verbose-lines e jarve-sentinel
+         f_talk; echo "Speaker: uDev"
+      }
+   # --------------------------------------------------------------------
+
+
+
+
 function f_greet {
    clear
    figlet "Notify"
@@ -23,33 +41,10 @@ function f_talk {
    f_rc
 }
 
-function f_notify {
-   # Criar notificacoes via termux
 
-   # uDev: --------------------------------------------------------------
-      function ouvir {
-         # Cria um while loop infinito por exemplo no smartphone Indratena que ouve updates no github, baixa, instala, executa
-         # Usará um ficheiro em verbose-lines e jarve-sentinel
-         # uDev: Criar na wikiD um header que informa todos os sitios onde a DRYa mexe com o github
-         f_talk; echo "Listener: uDev"
-      }
 
-      function falar {
-         # uDev: Cria uma notificacao noutro Android, via um ficheiro verbose-lines e jarve-sentinel
-         f_talk; echo "Speaker: uDev"
-      }
-   # --------------------------------------------------------------------
 
-   f_greet
-   f_talk; echo "Create an Android notification message"
 
-   # Creating an history file
-      # uDev: enviar antes para omni-log repo
-      v_dir=~/.config/h.h/drya/tmp/
-      v_file="termux-notify-output.txt"
-      mkdir -p $v_dir
-      v_file2=${v_dir}${v_file}
-            
    # Create an ID for each notification created
       function f_create_id {
          # It will be a concat of year + month + day + hour + Min + Sec
@@ -69,7 +64,7 @@ function f_notify {
       }
 
    # Input a message
-      function f_notify_message {
+      function f_create_notify_message {
          echo
          echo "What is your message? "
          read -p " > " v_ans
@@ -86,51 +81,47 @@ function f_notify {
          echo " > $v_id"
       }
 
-   # No arg:
-      if [[ -z $1 ]]; then
-         f_change_id
-         f_notify_message
 
-   # If arg -i is given to '$ notify' then, add the change to alter the ID
-      elif [[ $1 == "-i" ]]; then
-         f_change_id
-         echo
-         echo " >> What is your custom notification ID?"
-         echo "     (will overwrite any notification with same ID)"
-         read -p "     > " v_id
-         echo
-         f_change_id
-         f_notify_message
+         function f_custom_id {
+            f_change_id
+            echo
+            echo " >> What is your custom notification ID?"
+            echo "     (will overwrite any notification with same ID)"
+            read -p "     > " v_id
+            echo
+            f_change_id
+            f_create_notify_message
+         }
 
-   # List all DRYa messages (only DRYa)
-      elif [[ $1 == "-l" ]]; then
-         termux-notification-list | grep -B 2 -A 7 "tag"
+         function f_notify_again {
+            echo
 
-   # For each line in 'notify' history file, notify it again. (If you dont want the same history file to come up, delete such line)
-      elif [[ $1 == "again" ]]; then
+            while read i; do
+               v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
+               echo $v_ans
+               f_create_id
+               f_notify_create
+            done < $v_file2
+         }
 
-         echo
 
-         while read i; do
-            v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
-            echo $v_ans
-            f_create_id
-            f_notify_create
-         done < $v_file2
-         
-   # Edit the history file
-      elif [[ $1 == "m" ]] || [[ $1 == "mod" ]] ; then
-         vim $v_file2
-         
-      elif [[ $1 == "-h" ]]; then
-         echo
-         echo "Manipulate ID: "
-         echo " > notify -i"
 
-      elif [[ $1 == "-v" ]]; then
-         less ${v_dir}${v_file}
-      fi
-      
+function f_notify {
+   # Criar notificacoes via termux
+
+
+   f_greet
+   f_talk; echo "Create an Android notification message"
+
+   # Creating an history file
+      # uDev: enviar antes para omni-log repo
+      v_dir=~/.config/h.h/drya/tmp/
+      v_file="termux-notify-output.txt"
+      mkdir -p $v_dir
+      v_file2=${v_dir}${v_file}
+            
+   f_change_id && f_create_notify_message
+
      
 }
 
@@ -160,6 +151,31 @@ if [[ -z $1 ]]; then
 elif [[ $1 == "." ]]; then
    f_notify
 
+elif [[ $1 == "-i" ]]; then
+   # Add a custom ID
+   f_custom_id
+
+elif [[ $1 == "again" ]]; then
+   # For each line in 'notify' history file, notify it again. (If you dont want the same history file to come up, delete such line)
+   f_notify_again
+
+elif [[ $1 == "m" ]] || [[ $1 == "mod" ]] ; then
+   # Edit the history file
+   vim $v_file2
+         
+elif [[ $1 == "-l" ]]; then
+   # List all DRYa messages (only DRYa)
+   termux-notification-list | grep -B 2 -A 7 "tag"
+
+   
+elif [[ $1 == "-h" ]]; then
+   echo
+   echo "Manipulate ID: "
+   echo " > notify -i"
+
+elif [[ $1 == "-v" ]]; then
+   less ${v_dir}${v_file}
+      
 else
    echo "uDev"
 fi

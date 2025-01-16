@@ -1955,6 +1955,9 @@ elif [ $1 == "vlm" ]; then
 elif [ $1 == "no" ] || [ $1 == "note" ] || [ $1 == "notes" ]; then 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh
    
+elif [ $1 == "noty" ] || [ $1 == "notify" ]; then 
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+
 elif [ $1 == "QR" ]; then 
    # Options for QR codes
    

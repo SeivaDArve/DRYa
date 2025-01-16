@@ -799,7 +799,7 @@ function f_mobile_android {
       ;;
       *)
          echo "How to use:"
-         echo "$ V m [0|1|2|3|4|b]"
+         echo "$ V mb [0|1|2|3|4|b]"
          echo '0) # Travel to Internal storage'
          echo '1) # Travel to SD Card storage'
          echo '2) # Travel to USB storage'
@@ -910,8 +910,8 @@ function V {
       #  uDev: To replace NPnp looper: Keys
          `V .`  or `V search`       # Serve para adicionar PWD ao historico de loop
          `V h`  or `V help`         # 
-         `V M`  or `V Menu`         # Menu fzf
-         `V m`  or `V mobile`       # 
+         `V m`  or `V Menu`         # Menu fzf
+         `V mb` or `V mobile`       # 
          `V +`  or `V add`          # Serve para adicionar PWD ao historico de loop
          `V -`  or `V rm`           # Serve para remover   PWD ao historico de loop
          `V RM` or `V erase-hist`   # Prompt the user if he wants to delete the entire list of locations
@@ -1039,7 +1039,7 @@ function V {
          [[ -d ~/ln/ ]] && cd ~/ln/ && ls
 
 
-      elif [ $1 == "m" ] || [ $1 == "mobile-android" ]; then
+      elif [ $1 == "mb" ] || [ $1 == "mobile-android" ]; then
          v_arg2=$2
          f_mobile_android
 
