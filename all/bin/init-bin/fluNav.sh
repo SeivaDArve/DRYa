@@ -300,171 +300,6 @@ function f_sync_ez_b4_after {
       echo Done!
 }
 
-function f_action {
-   # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
-   # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence. isso ajuda aos dev que usam git
- 
-   if [ $v_nm == "fx-test" ]; then
-      # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
-
-      f_greet
-
-      f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned
-
-      echo "$v_nm: Testing fluNav"
-
-      f_up
-
-   elif [ $v_nm == "car" ]; then
-      # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
-
-      f_greet 
-
-      # Variables for this task
-         v_respective_repo=${v_REPOS_CENTER}/moedaz 
-         v_respective_file_dir=${v_REPOS_CENTER}/moedaz/all/viatura/ 
-         v_respective_file=viatura-all-info.org
-
-
-      function f_ask_what_to_do {
-         # Inform "error" if correspondant repo does not exist and then quit
-
-         # Lista de opÃ§Ãµes para o menu `fzf`
-         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'moedaz' does not exist")
-
-         # Perceber qual foi a escolha da lista
-            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'moedaz' and did not open 'car' file"
-            [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
-            unset v_list
-      }
-
-      # If repo does not exist, ask user what to do
-         [[ ! -d $v_respective_repo ]] && f_ask_what_to_do
-
-      # Downloading updates from github
-         #f_down
-
-      function f_edit {
-         # Editing the file
-         
-         echo "$v_nm: Editing one or more files from .../moedaz/viatura/..."
-         cd $v_respective_file_dir && EM $v_respective_file 
-      }
-
-      # If repo does exist, proced and edit the file
-         [[ -d $v_respective_repo ]] && f_edit
-
-
-      # Uploading changes to github
-         # f_up
-   
-   elif [ $v_nm == "tmux" ]; then
-
-      f_greet 
-
-      cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
-
-   elif [ $v_nm == "search-files" ]; then
-      # From current directory, search files with fzf menu and open with vim 
-
-      # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
-         v_file=$(fzf --prompt="EDITE um ficheiro: ")
-
-      # Adiconar a um ficheiro temporario fluNav
-         v_dir=~/.config/h.h/drya/flunav
-         v_file_hist=~/.config/h.h/drya/flunav/history-files
-
-         mkdir -p $v_dir; echo "$v_file" >> $v_file_hist
-
-      # Finalmente, editar o ficheiro
-         [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
-
-   elif [ $v_nm == "edit-history-files" ]; then
-      # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
-
-      # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-   
-      # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
-
-      
-   elif [ $v_nm == "upk" ]; then
-
-      # Esta fx pode e deve usar o nan-D
-      #    Cada smartphone deve ter um ficheiro nD em cada pasta principal (Armazenamento Interno, Cartao SD)
-      #    criados com o explorador do proprio Android para facilitar a busca feita pelo Termux  
-      #    exemplo: .../Armazenamento\ Interno/nD.Arm-Int.txt
-      #    exemplo: .../Cartao\ SD/nD.CartSD.txt
-      # 
-      #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
-
-      f_greet 
-
-      #f_down
-      echo "$v_nm: Menu to support UPK"
-      echo 
-      echo "What would you like to sync?"
-      echo " 1. Horario Novo"
-      echo "    2. Mostrar horario atual"
-      echo 
-      echo " 3. Renomear e buscar uma foto do DCIM"
-      echo 
-   
-   elif [ $v_nm == "self" ]; then
-      f_edit_self
-
-   elif [ $v_nm == "trade" ]; then
-
-      f_greet
-
-      echo "$v_nm being edited"
-      cd ${v_REPOS_CENTER}/moedaz/trade && \
-      G v && \
-      EM all/trade/trade.org && \
-      G ++ b
-
-      v_file="all/trade/trade.org"
-      v_parent="moedaz"
-
-      echo " > Alias: 'S trade'"
-      echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
-      echo 
-      echo "Parent repo: moedaz"
-      echo "Other alias: 'trade' (no sync)"
-      echo 
-
-      f_sync_ez_b4_after
-
-   elif [ $v_nm == "om" ]; then
-
-      # Variables to use on next function (to sync)
-         v_file="omni-log.org"
-         v_parent="omni-log"
-         #v_editor= Em || Vim
-
-      f_greet
-
-      echo "$v_nm being edited (file: omni-log.org)"
-      echo " > Alias: 'F om' (sync)"
-      echo
-      echo "Parent repo: omni-log"
-      echo "Other alias: 'om' (no sync)"
-      echo 
-      echo " > Syncronization available: "
-      echo "   ezGIT (pull + Push all with random comment)"
-      echo 
-
-      f_sync_ez_b4_after
-
-   elif [ $v_nm == "foo" ]; then
-      echo bar
-   fi
-
-   # To download updates:
-      #f_down
-}
 
 function f_down {
    # To download updates:
@@ -1099,6 +934,172 @@ function V {
          #uDev: when there are 2 or more items found, allow the user to input a number as $2
    fi
 
+}
+
+function f_action {
+   # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
+   # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence. isso ajuda aos dev que usam git
+ 
+   if [ $v_nm == "fx-test" ]; then
+      # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
+
+      f_greet
+
+      f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned
+
+      echo "$v_nm: Testing fluNav"
+
+      f_up
+
+   elif [ $v_nm == "car" ]; then
+      # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
+
+      f_greet 
+
+      # Variables for this task
+         v_respective_repo=${v_REPOS_CENTER}/moedaz 
+         v_respective_file_dir=${v_REPOS_CENTER}/moedaz/all/viatura/ 
+         v_respective_file=viatura-all-info.org
+
+
+      function f_ask_what_to_do {
+         # Inform "error" if correspondant repo does not exist and then quit
+
+         # Lista de opÃ§Ãµes para o menu `fzf`
+         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'moedaz' does not exist")
+
+         # Perceber qual foi a escolha da lista
+            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'moedaz' and did not open 'car' file"
+            [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
+            unset v_list
+      }
+
+      # If repo does not exist, ask user what to do
+         [[ ! -d $v_respective_repo ]] && f_ask_what_to_do
+
+      # Downloading updates from github
+         #f_down
+
+      function f_edit {
+         # Editing the file
+         
+         echo "$v_nm: Editing one or more files from .../moedaz/viatura/..."
+         cd $v_respective_file_dir && EM $v_respective_file 
+      }
+
+      # If repo does exist, proced and edit the file
+         [[ -d $v_respective_repo ]] && f_edit
+
+
+      # Uploading changes to github
+         # f_up
+   
+   elif [ $v_nm == "tmux" ]; then
+
+      f_greet 
+
+      cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
+      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
+
+   elif [ $v_nm == "search-files" ]; then
+      # From current directory, search files with fzf menu and open with vim 
+
+      # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
+         v_file=$(fzf --prompt="EDITE um ficheiro: ")
+
+      # Adiconar a um ficheiro temporario fluNav
+         v_dir=~/.config/h.h/drya/flunav
+         v_file_hist=~/.config/h.h/drya/flunav/history-files
+
+         mkdir -p $v_dir; echo "$v_file" >> $v_file_hist
+
+      # Finalmente, editar o ficheiro
+         [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
+
+   elif [ $v_nm == "edit-history-files" ]; then
+      # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
+
+      # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
+         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+   
+      # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
+         [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
+
+      
+   elif [ $v_nm == "upk" ]; then
+
+      # Esta fx pode e deve usar o nan-D
+      #    Cada smartphone deve ter um ficheiro nD em cada pasta principal (Armazenamento Interno, Cartao SD)
+      #    criados com o explorador do proprio Android para facilitar a busca feita pelo Termux  
+      #    exemplo: .../Armazenamento\ Interno/nD.Arm-Int.txt
+      #    exemplo: .../Cartao\ SD/nD.CartSD.txt
+      # 
+      #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
+
+      f_greet 
+
+      #f_down
+      echo "$v_nm: Menu to support UPK"
+      echo 
+      echo "What would you like to sync?"
+      echo " 1. Horario Novo"
+      echo "    2. Mostrar horario atual"
+      echo 
+      echo " 3. Renomear e buscar uma foto do DCIM"
+      echo 
+   
+   elif [ $v_nm == "self" ]; then
+      f_edit_self
+
+   elif [ $v_nm == "trade" ]; then
+
+      f_greet
+
+      echo "$v_nm being edited"
+      cd ${v_REPOS_CENTER}/moedaz/trade && \
+      G v && \
+      EM all/trade/trade.org && \
+      G ++ b
+
+      v_file="all/trade/trade.org"
+      v_parent="moedaz"
+
+      echo " > Alias: 'S trade'"
+      echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
+      echo 
+      echo "Parent repo: moedaz"
+      echo "Other alias: 'trade' (no sync)"
+      echo 
+
+      f_sync_ez_b4_after
+
+   elif [ $v_nm == "om" ]; then
+
+      # Variables to use on next function (to sync)
+         v_file="omni-log.org"
+         v_parent="omni-log"
+         #v_editor= Em || Vim
+
+      f_greet
+
+      echo "$v_nm being edited (file: omni-log.org)"
+      echo " > Alias: 'F om' (sync)"
+      echo
+      echo "Parent repo: omni-log"
+      echo "Other alias: 'om' (no sync)"
+      echo 
+      echo " > Syncronization available: "
+      echo "   ezGIT (pull + Push all with random comment)"
+      echo 
+
+      f_sync_ez_b4_after
+
+   elif [ $v_nm == "foo" ]; then
+      echo bar
+   fi
+
+   # To download updates:
+      #f_down
 }
 
 function S {

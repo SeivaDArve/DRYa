@@ -82,27 +82,27 @@ function f_talk {
       }
 
 
-         function f_custom_id {
-            f_change_id
-            echo
-            echo " >> What is your custom notification ID?"
-            echo "     (will overwrite any notification with same ID)"
-            read -p "     > " v_id
-            echo
-            f_change_id
-            f_create_notify_message
-         }
+   function f_custom_id {
+      f_change_id
+      echo
+      echo " >> What is your custom notification ID?"
+      echo "     (will overwrite any notification with same ID)"
+      read -p "     > " v_id
+      echo
+      f_change_id
+      f_create_notify_message
+   }
 
-         function f_notify_again {
-            echo
+   function f_notify_again {
+      echo
 
-            while read i; do
-               v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
-               echo $v_ans
-               f_create_id
-               f_notify_create
-            done < $v_file2
-         }
+      while read i; do
+         v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
+         echo $v_ans
+         f_create_id
+         f_notify_create
+      done < $v_file2
+   }
 
 
 

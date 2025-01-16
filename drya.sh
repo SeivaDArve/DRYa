@@ -1551,27 +1551,34 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    # Install DRYa and more stuff
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
 
+
    if [[ -z $2 ]]; then 
       # If there are no args:
 
       # Lista de opcoes para o menu `fzf`
          Lz1='Save '; Lz2='D install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L2='2. Install: DRYa'; L2c='DRYa'  # `D install DRYa`
+         L3='3. Install: DRYa (with `fzf`)'
+         L2='2. Install: DRYa (with `select`)'; L2c='DRYa'  # `D install DRYa`
          L1='1. Cancel'
 
          L0="SELECIONE 1 Opcao: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "3. " ]] && echo uDev
          [[ $v_list =~ "2. " ]] && f_install_drya
          [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
          unset v_list
 
    elif [[ $2 == "--me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
       f_install_drya
+
+
+   elif [[ $2 == "." ]]; then 
+      vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
 
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
