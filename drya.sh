@@ -1032,7 +1032,7 @@ function f_drya_fzf_MM_functionality_pakage {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "8. " ]] && clear && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+         [[ $v_list =~ "8. " ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
          [[ $v_list =~ "7. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
          [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "5. " ]] && echo "uDev"
@@ -2122,6 +2122,8 @@ elif [ $1 == "wiki" ]; then
    
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
+elif [ $1 == "morse" ]; then 
+   less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
 elif [ $1 == "k" ]; then 
    echo 'uDev: fzf menu for entire keyboard'
