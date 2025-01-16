@@ -593,30 +593,34 @@ function f_clone_repos {
 }
 
 function f_dotFiles_install_git {
-   # For git
+   # Install .gitconfig on the system
    
-   clear
+   
+   v_file= ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
+   v_place=~
 
-   echo "attempting git"
-   echo " Copying .gitconfig file"
-   echo " > from: .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-   echo " > to:   ~"
-   read -s -n 1 -p "Press Any Key "
+   f_greet
+   f_talk; echo "Installing .gitconfig:"
+           echo " > File 1: .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+           echo " > To:     ~"
 
-   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig ~ && echo "Done!"
-   echo
+   v_txt="Are you sure? " && f_prsK
+
+   cp $v_file $v_place && f_talk && echo "Done! "
 }
 
+
+
 function f_dotFiles_install_vim {
-   # For vim
+   # Install .vimrc on the system
 
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
    v_place=~
 
    f_greet
    f_talk; echo "Installing .vimrc:"
-           echo " > from: .../DRYa/all/etc/dot-files/vim/.vimrc"
-           echo " > To:   ~"
+           echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
+           echo " > To:     ~"
 
    v_txt="Are you sure? " && f_prsK
    
@@ -624,15 +628,24 @@ function f_dotFiles_install_vim {
 }
 
 function f_dotFiles_install_termux_properties {
-   # Colors and properties for Termux
-      echo "attempting termux colors"
-      echo " > Copying .../DRYa/all/etc/dot-files/termux/colors.properties"
-      echo "   and     .../DRYa/all/etc/dot-files/termux/termux.properties"
-      echo "   to      ~/.termux"
-      read -s -n 1
-      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties ~/.termux/
-      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/
-      echo "Done! (Restart the terminal is needed)"
+   # Install Termux colors and properties on the system
+
+   v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties 
+   v_file2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
+   v_place=~/.termux/
+
+   f_greet
+   f_talk; echo "Installing Termux Colors + Termux properties"
+           echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties"
+           echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
+           echo " > To:  ~/.termux"
+
+   v_txt="Are you sure? " && f_prsK
+   
+   cp $v_file1 $v_place && f_talk && echo "File 1: Done! "
+   cp $v_file2 $v_place && f_talk && echo "File 2: Done! "
+
+   echo "Done! (Restart the terminal is needed)"
 }
 
 function f_dotFiles_install_dryarc {
@@ -751,10 +764,10 @@ function f_win_to_linux_pwd {
       #echo "uDev: Mostrar o antes e o depois"
 
    else
-      echo 'DRYa: options for w-pwd `windows-$(pwd)`on WSL2'
-      echo
-      echo "DRYa: feed windows 'Path' to a file, to be converted to Linux 'Path'"
-      echo " > D wpwd"
+      f_talk; echo 'options for w-pwd `windows-$(pwd)`on WSL2'
+              echo
+      f_talk; echo "feed windows 'Path' to a file, to be converted to Linux 'Path'"
+              echo " > D wpwd"
 
    fi
 }
@@ -919,7 +932,7 @@ function f_quick_install_all_upk {
    #    install: 
    #             emacs for windows
    #             instal init.el
-   echo "drya: udev: install all dependencies for upk repo to run"
+   f_talk; echo "udev: install all dependencies for upk repo to run"
 }
 
 function f_dot_files_install_presets {
