@@ -1933,11 +1933,19 @@ elif [ $1 == "no" ] || [ $1 == "note" ] || [ $1 == "notes" ]; then
 elif [ $1 == "noty" ] || [ $1 == "notify" ]; then 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
 
-elif [ $1 == "QR" ]; then 
+elif [ $1 == "QR" ] || [ $1 == "qr" ]; then 
    # Options for QR codes
    
-   echo '`D QR-to-clone-drya` or `QR-clone` '
-   echo " > uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
+   # uDev: 
+   #       echo '`D QR-to-clone-drya` or `QR-clone` '
+   #       echo " > uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
+
+   f_greet
+   f_talk; echo "Criar QR code: Insere o teu texto: "
+           echo -n " > "
+           read v_ans
+           echo
+           curl qrenco.de/$v_ans
 
 elif [ $1 == "logo" ]; then 
    # Presenting DRYa
