@@ -20,7 +20,7 @@ function f_edit_with_heteronimos {
    # udev: Se repo omni-log nao existir, perguntar se quer download
 
    v_place=${v_REPOS_CENTER}/omni-log/all/ex-pressa 
-   echo "Editar notas em omni-log/all/ex-pressa" 
+   echo "Editar notas em .../omni-log/all/ex-pressa" 
 
    cd $v_place
    vim .
