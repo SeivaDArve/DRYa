@@ -47,16 +47,22 @@ function f_refresh_hist_file {
    # Creating an history file
       # uDev: enviar antes para omni-log repo
 
-      v_file="termux-notify-output.txt"
 
+   # Variables for dirs and files
+      v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
+      mkdir -p $v_dir
+
+      v_file="termux-notify-output.txt"
+      v_hist_file=$v_dir/$v_file
+
+
+   # Testing if saving on .../omni-log/ or .config/h.h/
       if [[ -d ${v_REPOS_CENTER}/omni-log ]]; then
          # Se a repo "omni-log" existir, criar la o ficheiro de historico
 
          echo " > File is going to be created at omni-log"
+         # uDev: Mention path: echo " > "
 
-         v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
-         mkdir -p $v_dir
-         v_hist_file=$v_dir/$v_file
       
       else
          # Se a repo "omni-log" nao existir, perguntar se quer clonar
