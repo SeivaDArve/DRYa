@@ -1075,7 +1075,7 @@ function f_drya_fzf_MM {
 
       L1="1. Cancel" 
 
-      L0="DRYA: fzf main Menu:" 
+      L0="DRYA: fzf main Menu: " 
 
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -2204,7 +2204,7 @@ elif [ $1 == ".." ]; then
    f_talk; echo '$v_drya_fzf_menu_hist sera agora substituido por `history -s "<comando>"`'
            echo
 
-elif [[ $1 == "." ]] || [[ $1 == "+" ]]; then  
+elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
    # Open DRYa fzf Main Menu
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
