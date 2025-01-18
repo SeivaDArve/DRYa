@@ -1035,7 +1035,7 @@ function f_drya_fzf_MM_Toolbox {
           L2="2.  Menu   | dot-files"
           L1="1.  Cancel" 
 
-         L0="DRYA: Fx List:" 
+         L0="DRYA: toolbox fx List: " 
 
          v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11\n\n$Lv" | fzf --cycle --prompt="$L0")
 
@@ -2217,6 +2217,11 @@ elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; t
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
    f_drya_fzf_MM
+
+elif [[ $1 == "," ]]; then  
+   # Open DRYa fzf toolbox directly
+
+   f_drya_fzf_MM_Toolbox
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
