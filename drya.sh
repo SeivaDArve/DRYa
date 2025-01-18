@@ -1171,13 +1171,15 @@ if [ -z "$*" ]; then
 
    # Info when no args are given
       f_talk; echo "is installed!"
-              echo ' > Use: Terminal: `D --help` '
-              echo ' > Use: fzf Menu: `D .`      '
+              echo ' > Use: Terminal: `D --help` (for help)'
+              echo ' > Use: fzf Menu: `D .`      (for main menu)'
+              echo
 
    # Temporized Quick menu
-      f_talk; echo -n "Temporized Menu (available for "; f_c5; echo -n "$v_secs"; f_rc; echo    " secs):"
-              echo -n " > Press '"; f_c5; echo -n "d"; f_rc; echo -n "' or '"; f_c5; echo -n "."; f_rc; echo "' to open DRYa fzf main menu"
-              echo    "   (same as Terminal command: 'D +')"
+      f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
+              echo    "       |"
+              echo -n "       |_ To open MAIN fzf menu, press NOW: '"; f_c5; echo -n "d"; f_rc; echo -n "' or '"; f_c5; echo -n "."; f_rc; echo "'"
+              echo -n '       |_ Equivalent Terminal commands: `'; f_c5; echo -n 'D .'; f_rc; echo '`' 
 
    
    # Options available during only few seconds
@@ -1191,7 +1193,7 @@ if [ -z "$*" ]; then
          # ANSII to go to beggining of line and clear endire line after cursor
             echo -ne "\r\033[K"
 
-      elif [ $v_ans == "d" ] || [ $v_ans == "." ]; then
+      elif [ $v_ans == "d" ] || [ $v_ans == "D" ] || [ $v_ans == "." ] || [ $v_ans == "+" ]; then
          # When 'd' is pressed to open DRYa fzf main menu
 
          # ANSII to go to beggining of line and clear endire line after cursor
