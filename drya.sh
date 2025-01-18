@@ -1015,6 +1015,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='13. SSH-wraper'
          # L12='13. fzf keyboard (para smartphones partidos)'
 
+         L11='11. Audio  | Media Player'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
          L10='10. Print  | Previsao do Tempo'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L9='9.  Print  | online man pages'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
@@ -1028,12 +1029,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: Fx List:" 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10\n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11\n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "11. " ]] && echo "uDev: $L11"
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[ $v_list =~ "9. "  ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
          [[ $v_list =~ "8. "  ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
@@ -1685,9 +1687,6 @@ elif [ $1 == "ssh" ]; then
       ARG2=$2
       ARG3=$3
       export ARG1 ARG2 ARG3
-
-   # Para facilitar ao utilizador que pode querer fazer alteracoes ao script, viajamos primeiro para a pasta onde se encontra o script
-      cd ${v_REPOS_CENTER}/DRYa/all/bin/
    
    # Executamos o wrapper do SSHFS
       bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
