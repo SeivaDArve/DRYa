@@ -995,7 +995,7 @@ function f_dot_files_menu {
 }
 
 
-function f_drya_fzf_MM_functionality_pakage {
+function f_drya_fzf_MM_Toolbox {
    # Funcoes inbutidas na Repo DRYa 
 
    function f_void {
@@ -1015,34 +1015,38 @@ function f_drya_fzf_MM_functionality_pakage {
          # L12='13. SSH-wraper'
          # L12='13. fzf keyboard (para smartphones partidos)'
 
-         L8='8. Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-         L7='7. Menu   | no-tes '
-         L6='6. Script | Win `pwd` to Linux `pwd`'
-         L5="5. App    | xKill"
-         L4="4. App    | notify"
-         L3="3. Menu   | calculos/calculadoras"
-         L2="2. Menu   | dot-files"
-         L1="1. Cancel" 
+         L10='10. Print  | Previsao do Tempo'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L9='9.  Print  | online man pages'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L7='7.  Menu   | no-tes '
+          L6='6.  Script | Win `pwd` to Linux `pwd`'
+          L5="5.  App    | xKill"
+          L4="4.  App    | notify"
+          L3="3.  Menu   | calculos/calculadoras"
+          L2="2.  Menu   | dot-files"
+          L1="1.  Cancel" 
 
          L0="DRYA: Fx List:" 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10\n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "8. " ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
-         [[ $v_list =~ "7. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
-         [[ $v_list =~ "6. " ]] && f_win_to_linux_pwd
-         [[ $v_list =~ "5. " ]] && echo "uDev"
-         [[ $v_list =~ "4. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+         [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
+         [[ $v_list =~ "9. "  ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
+         [[ $v_list =~ "8. "  ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+         [[ $v_list =~ "7. "  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
+         [[ $v_list =~ "6. "  ]] && f_win_to_linux_pwd
+         [[ $v_list =~ "5. "  ]] && echo "uDev"
+         [[ $v_list =~ "4. "  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
 
-         [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "3. " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[ $v_list =~ "3. "  ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3. "  ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
-         [[ $v_list =~ "2. " ]] && f_dot_files_menu
-         [[ $v_list =~ "1. " ]] && echo "Canceled"
+         [[ $v_list =~ "2. "  ]] && f_dot_files_menu
+         [[ $v_list =~ "1. "  ]] && echo "Canceled"
 
       # Evitar loops a mais
          # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
@@ -1076,7 +1080,7 @@ function f_drya_fzf_MM {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       [[ $v_list =~ "3. " ]] && f_drya_help
-      [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_functionality_pakage
+      [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
 }
@@ -1940,12 +1944,45 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
    #       echo '`D QR-to-clone-drya` or `QR-clone` '
    #       echo " > uDev: Will present an image to the screen, other devices can scan it to retrieve it's text and run it on the terminal"
 
-   f_greet
-   f_talk; echo "Criar QR code: Insere o teu texto: "
-           echo -n " > "
-           read v_ans
-           echo
-           curl qrenco.de/$v_ans
+   function f_create_qr_from_text {
+      f_greet
+      f_talk; echo "Criar QR code: Insere o teu texto: "
+              echo -n " > "
+              read v_ans
+              echo
+              printf "$v_ans" | curl -F-=\<- qrenco.de/
+   }
+
+   function f_create_qr_from_file {
+      f_greet
+      f_talk; echo "Criar QR code: Insere o nome de um ficheiro: "
+              echo -n " > "
+              v_file=$(ls | fzf)
+              echo $v_file
+              echo
+              v_ans=$(cat $v_file)
+              curl qrenco.de/$v_ans
+   }
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='D QR'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Criar QR code | Apartir de ficheiro'
+      L2='2. Criar QR code | Apartir de texto'
+      L1='1. Cancel'
+
+      L0="SELECIONE 1 Opcao: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_create_qr_from_file
+      [[ $v_list =~ "2. " ]] && f_create_qr_from_text
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+
+
 
 elif [ $1 == "logo" ]; then 
    # Presenting DRYa
