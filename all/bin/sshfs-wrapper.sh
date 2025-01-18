@@ -1,8 +1,23 @@
 #!/bin/bash
 
+# Sourcing file with colors 
+   source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
+   # Usar f_c3 para SERVIDOR
+   # Usar f_c4 para SERVIDOR
+
+
 function f_greet {
    clear
-   figlet SSH / SSHFS
+   figlet DRYa
+
+   f_talk; echo "sshfs-wrapper.sh"
+}
+
+function f_talk {
+   # Copied from: ezGIT
+         echo
+   f_c4; echo -n "DRYa: ssh: "
+   f_rc
 }
 
 # Para Debug:
@@ -623,18 +638,27 @@ function f_create_DRYa_mounting_points {
 }
 
 function f_ser_servidor {
-   
-
    # Perguntar ao servidor, a que pasta quer deixar aceder o cliente
-      while true
-      do
-         v_menu=$(echo -e "1. Pasta raiz do sistema: / \n2. Pasta \$Home do uitlizador: ~ \n3. sair" | fzf --prompt "Para SERVIDOR: A que pasta quer dar acesso?")
 
-         [[ $v_menu =~ "1." ]] && echo "Quer deixar aceder a: /" && v_r_dir=/ && break ## Pasta remota
-         [[ $v_menu =~ "2." ]] && echo "Quer deixar aceder a: ~" && v_r_dir=~ && break ## Pasta remota 
-         [[ $v_menu =~ "3." ]] && break
-         unset v_menu
-      done
+   f_talk; echo "Quero ser: Servidor"
+
+   
+   # Lista de opcoes
+      Lz="DRYa: sshfs-wrapper.sh"
+
+      L3="3. Dar acesso a: /  (raiz do sistema)"
+      L2="2. Dar aceeso a: ~  (documentos do utilizador)"
+      L1="1. Calcelar"
+
+      L0="Para SERVIDOR: A que pasta quer dar acesso?"
+
+      v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --prompt "$L0")
+
+   # Executar escolhas
+      [[ $v_menu =~ "3." ]] && echo "Quer deixar aceder a: /" && v_r_dir=/
+      [[ $v_menu =~ "2." ]] && echo "Quer deixar aceder a: ~" && v_r_dir=~
+      [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh" && exit 0
+      unset v_menu
 
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
@@ -676,176 +700,182 @@ function f_ser_servidor {
 
 function f_ser_cliente {
    # Perguntar: Qual maquina remota quer aceder?
+
+   f_talk; echo "Quero ser: Cliente"
+
+   echo
+   echo "A qual maquina remota quer aceder? (de acordo com pasta pre-definida)"
+   echo
+
+   # Visualizar as pastas criadas atualemte:
+      echo "Visualizar as pastas pre-definidas que estao criadas neste momento:"
+      
+      # iterador contador do 'for' loop
+         e=1
+
+      for i in ${v_array_A_remote_dir[@]};
+      do
+         echo "   $e = $i"
+         e=$((e+1))
+      done
+      read -sn 1 -p " > " v_mach
+      echo -e "\r\r\r > $v_mach"
       echo
-      echo "A qual maquina remota quer aceder? (de acordo com pasta pre-definida)"
+      
+      let "v_o = v_mach - 1"
+      v_client_mount_point=${v_array_A_remote_dir[$v_o]}
+
+      echo "Escolheu: $v_mach:"
+      echo " > $v_parent_dir$v_client_mount_point"
       echo
-
-      # Visualizar as pastas criadas atualemte:
-         echo "Visualizar as pastas pre-definidas que estao criadas neste momento:"
-         
-         # iterador contador do 'for' loop
-            e=1
-
-         for i in ${v_array_A_remote_dir[@]};
-         do
-            echo "   $e = $i"
-            e=$((e+1))
-         done
-         read -sn 1 -p " > " v_mach
-         echo -e "\r\r\r > $v_mach"
-         echo
-         
-         let "v_o = v_mach - 1"
-         v_client_mount_point=${v_array_A_remote_dir[$v_o]}
-
-         echo "Escolheu: $v_mach:"
-         echo " > $v_parent_dir$v_client_mount_point"
-         echo
-         echo " >> Ative 'Ser Servidor' na outra maquina"
-         echo " >> La, vai receber uma mensagem:"
-         echo " >> \"Dados de servidor sincronizados apartir da repo: verbose-lines\""
-         echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
-         echo " >> uDev..."
+      echo " >> Ative 'Ser Servidor' na outra maquina"
+      echo " >> La, vai receber uma mensagem:"
+      echo " >> \"Dados de servidor sincronizados apartir da repo: verbose-lines\""
+      echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
+      echo " >> uDev..."
 }
 
 function f_enable_everything {
-      ##########################################################################
-      # Instalar SSHFS (verificando primeiro se ja está instalado)
+   # Instalar SSHFS (verificando primeiro se ja está instalado)
 
-         # Verificar se ja está instalado:
-            f_check_installed_ssh  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
-            f_check_installed_ssh_key  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
-            f_check_installed_sshfs  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
-         
-         # se nao estiver instalada ssh, vai instalar
-            if [[ $v_ssh_installed == "false" ]]; then 
-               # confirmar com o user se quer instalar:
-                  echo "(y)es para instalar ssh"
-                  read -sn 1 -p " > " v_ans
-                  echo $v_ans
-                  echo 
-
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
-                     f_install_ssh
-                  else
-                     exit 0
-                  fi
-            fi
-
-         # se nao estiver instalada ssh key, vai instalar
-            if [[ $v_ssh_installed_key == "false" ]]; then 
-               # confirmar com o user se quer instalar:
-                  echo "(y)es para instalar ssh key" 
-                  read -sn 1 -p " > " v_ans
-                  echo $v_ans
-                  echo 
-
-                  if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
-                     f_install_ssh_key
-                  else
-                     exit 0
-                  fi
-            fi
-
-
-         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
-            if [[ $v_rooted == "true" ]]; then
-               # Se nao estiver instalada SSHFS, vai instalar
-                  #if [[ $v_sshfs_installed == "true" ]]; then 
-                  #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
-                  #   #f_check_installed_verbose 
-                     
-                  if [[ $v_sshfs_installed == "false" ]]; then 
-                     # Confirmar com o user se quer instalar:
-                        echo "(Y)es para Instalar SSHFS" 
-                        read -sn 1 -p " > " v_ans
-                        echo $v_ans
-                        echo 
-
-                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                           f_install_sshfs
-                        else
-                           exit 0
-                        fi
-                  fi
-            fi
-         
-      ##########################################################################
-      # Criar FUSE group
-
-         # Verificar se ja está existe esse grupo:
-            f_check_if_fuse_exists
+      # Verificar se ja está instalado:
+         f_check_installed_ssh  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+         f_check_installed_ssh_key  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+         f_check_installed_sshfs  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
       
-         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
-            if [[ $v_rooted == "true" ]]; then
-               
-               # Se nao existir, vai criar:
-                  if [[ $v_group == "false" ]]; then 
-                     # Confirmar com o user se quer instalar:
-                        echo "(Y)es para Criar grupo FUSE"
-                        read -n 1 -p " > " v_ans
-                        echo
+      # se nao estiver instalada ssh, vai instalar
+         if [[ $v_ssh_installed == "false" ]]; then 
+            # confirmar com o user se quer instalar:
+               echo "(y)es para instalar ssh"
+               read -sn 1 -p " > " v_ans
+               echo $v_ans
+               echo 
 
-                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                           f_create_fuse_group
-                        else
-                           exit 0
-                        fi
-                  fi
-            fi
-         
+               if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
+                  f_install_ssh
+               else
+                  exit 0
+               fi
+         fi
 
+      # se nao estiver instalada ssh key, vai instalar
+         if [[ $v_ssh_installed_key == "false" ]]; then 
+            # confirmar com o user se quer instalar:
+               echo "(y)es para instalar ssh key" 
+               read -sn 1 -p " > " v_ans
+               echo $v_ans
+               echo 
 
-      ##########################################################################
-      # Adicionar Utilizador ao grupo fuse
-
-         # Verificar se o utilizador ja está adicionado ao grupo:
-            f_check_if_user_is_on_fuse_group
-
-         # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
-            if [[ $v_rooted == "true" ]]; then
-               # Se nao estiver adicionado, vai adicionar:
-                  if [[ $v_ison_fuse == "false" ]]; then 
-                     # Confirmar com o user se quer instalar:
-                        echo "(Y)es para adicionar utilizador ao grupo FUSE"
-                        read -n 1 -p " > " v_ans
-                        echo
-
-                        if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                           f_add_user_to_fuse_group
-                        else
-                           exit 0
-                        fi
-                  fi
-            fi
+               if [[ $v_ans == "y" ]] || [[ $v_ans == "y" ]]; then 
+                  f_install_ssh_key
+               else
+                  exit 0
+               fi
+         fi
 
 
-      ##########################################################################
-      # Criar as pastas onde podem sermontados os  file systems
+      # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+         if [[ $v_rooted == "true" ]]; then
+            # Se nao estiver instalada SSHFS, vai instalar
+               #if [[ $v_sshfs_installed == "true" ]]; then 
+               #   # A proxima fx ja tem output verbose que menciona que não está instalado. É usada para não haver varias frase verbose diferentes
+               #   #f_check_installed_verbose 
+                  
+               if [[ $v_sshfs_installed == "false" ]]; then 
+                  # Confirmar com o user se quer instalar:
+                     echo "(Y)es para Instalar SSHFS" 
+                     read -sn 1 -p " > " v_ans
+                     echo $v_ans
+                     echo 
 
-         # uDev: Verificar se existe neste momento algum sshfs montado, caso nao haja, apagar todas as subpastas do mounting point
-         
-         f_delete_DRYa_mounting_points
-         f_create_DRYa_mounting_points
+                     if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                        f_install_sshfs
+                     else
+                        exit 0
+                     fi
+               fi
+         fi
+      
+   ##########################################################################
+   # Criar FUSE group
 
-         # Questionar qual mounting point o utilizador quer (e de acordo com esse mounting point, ligar à maquina correspondente)
+      # Verificar se ja está existe esse grupo:
+         f_check_if_fuse_exists
+   
+      # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+         if [[ $v_rooted == "true" ]]; then
+            
+            # Se nao existir, vai criar:
+               if [[ $v_group == "false" ]]; then 
+                  # Confirmar com o user se quer instalar:
+                     echo "(Y)es para Criar grupo FUSE"
+                     read -n 1 -p " > " v_ans
+                     echo
+
+                     if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                        f_create_fuse_group
+                     else
+                        exit 0
+                     fi
+               fi
+         fi
       
 
-      ##########################################################################
-      # Perguntar: Cliente ou Servidor?
 
-         while true
-         do
-            v_menu=$(echo -e "1. Quero ser CLIENTE \n2. Quero ser SERVIDOR \n3. Sair" | fzf --prompt "SELECIONE 1 para ligar o servico (ON)")
+   ##########################################################################
+   # Adicionar Utilizador ao grupo fuse
 
-            [[ $v_menu =~ "1." ]] && f_ser_cliente  && echo "Quero ser: Cliente"  && break
-            [[ $v_menu =~ "2." ]] && f_ser_servidor && echo "Quero ser: Servidor" && break
-            [[ $v_menu =~ "3." ]] && break
-            unset v_menu
-         done
+      # Verificar se o utilizador ja está adicionado ao grupo:
+         f_check_if_user_is_on_fuse_group
 
-      ##########################################################################
-      echo "fim..."
+      # Se estiver no termux e nao tiver root, tambem nao vale a pena tentar. A proxima fx faz o bipass à tentativa de instalar sshfs
+         if [[ $v_rooted == "true" ]]; then
+            # Se nao estiver adicionado, vai adicionar:
+               if [[ $v_ison_fuse == "false" ]]; then 
+                  # Confirmar com o user se quer instalar:
+                     echo "(Y)es para adicionar utilizador ao grupo FUSE"
+                     read -n 1 -p " > " v_ans
+                     echo
+
+                     if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
+                        f_add_user_to_fuse_group
+                     else
+                        exit 0
+                     fi
+               fi
+         fi
+
+
+   ##########################################################################
+   # Criar as pastas onde podem sermontados os  file systems
+
+      # uDev: Verificar se existe neste momento algum sshfs montado, caso nao haja, apagar todas as subpastas do mounting point
+      
+      f_delete_DRYa_mounting_points
+      f_create_DRYa_mounting_points
+
+      # Questionar qual mounting point o utilizador quer (e de acordo com esse mounting point, ligar à maquina correspondente)
+   
+
+   ##########################################################################
+   # Perguntar: Cliente ou Servidor?
+         Lz="DRYa: sshfs-wrapper.sh"
+
+         L3="3. Quero ser CLIENTE"
+         L2="2. Quero ser SERVIDOR"
+         L1="1. Cancelar"
+
+         L0="SELECIONE 1 para ligar o servico (ON)"
+
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --prompt "$L0")
+
+         [[ $v_menu =~ "3." ]] && f_ser_cliente  
+         [[ $v_menu =~ "2." ]] && f_ser_servidor 
+         [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
+         unset v_menu
+
+   ##########################################################################
+   echo "fim..."
 
 
 
@@ -921,20 +951,32 @@ function f_disable_everything {
 function f_check_overall_status {
 
    # Impedir aos utilizadores de usarem mais do que um argumento
-      [[ ! -z $ARG2 ]] && echo "DRYa: SSH: arg 2 não reconhecido, por favor nao user argumento 2" && exit 1
+      [[ ! -z $ARG2 ]] && echo "DRYa: sshfs-wrapper: arg 2 não reconhecido, por favor nao user argumento 2" && exit 1
 
    f_greet
-   echo "DRYa: Menu wrap para SSH"
-   echo
+   
+   # List of menu options
+      Lz="DRYa: sshfs-wrapper.sh"
 
-   v_menu=$(echo -e "1. LIGAR:    servico SSH ou SSHFS \n2. DESLIGAR: servico SSH ou SSHFS \n3. VER:      estado atual do sistema \n4. LISTA de: Mounting Points pre-definidos \n5. VER ficheiro verboso no seu estado atual" | fzf --prompt "DRYa: Menu para os servicos SSH")
+      L6="6. VER      | ficheiro verboso no seu estado atual"
+      L5="5. LISTA    | Mounting Points pre-definidos"
+      L4="4. VER      | Estado atual do sistema"
+      L3="3. DESLIGAR | servico SSH ou SSHFS"
+      L2="2. LIGAR    | servico SSH ou SSHFS"
+      L1="1. Cancelar" 
 
-   [[ $v_menu =~ "1." ]] && f_enable_everything
-   [[ $v_menu =~ "2." ]] && f_disable_everything
-   [[ $v_menu =~ "3." ]] && f_verbose_check
-   [[ $v_menu =~ "4." ]] && f_ver_as_pastas_pre_definidas
-   [[ $v_menu =~ "5." ]] && less $v_verbose_line
-   unset v_menu
+      L0="DRYa: Menu para os servicos SSH"
+
+   v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
+
+   # Executar de acordo com o resultado
+      [[ $v_menu =~ "6." ]] && less $v_verbose_line
+      [[ $v_menu =~ "5." ]] && f_ver_as_pastas_pre_definidas
+      [[ $v_menu =~ "4." ]] && f_verbose_check
+      [[ $v_menu =~ "3." ]] && f_disable_everything
+      [[ $v_menu =~ "2." ]] && f_enable_everything
+      [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
+      unset v_menu
 }
 
 
