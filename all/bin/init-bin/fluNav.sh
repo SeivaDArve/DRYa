@@ -5,6 +5,17 @@
    # '$ pkg install figlet file fzf'
 
 
+function f_refresh_S_hist_file {
+# Ficheiro de historico
+   # Ficam no historico os ficheiros apos serem pesquisados com `S .`
+   # Acedemos imediatamente ao ultimo ficheiro com `S ..`
+   # Acedemos a toda a lista de ficheiros no historico com `S ...`
+   #
+   v_dir=~/.config/h.h/drya/flunav
+   mkdir -p $v_dir
+   v_fluNav_hist_file=$v_dir/history-files
+}
+
 # uDev: This app should NOT have 3 prefixes: V, S, E and .....
 #       Instead: use only: `. M` for fluNav menu
 #
@@ -937,7 +948,7 @@ function f_action {
    # When we use any F at the terminal prompt, the $1 arg is going to be evaluated here
    # Nota: Seria util que antes de abrir um ficheiro, fluNav navegasse primeiro para o seu dir relativo. Assim ao fechar o ficheiro, sabemos a qual repo pertence. isso ajuda aos dev que usam git
  
-   if [ $v_nm == "fx-test" ]; then
+   if [ $v_nm == "fx_test" ]; then
       # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
 
       f_greet
@@ -998,31 +1009,64 @@ function f_action {
       cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
 
-   elif [ $v_nm == "search-files" ]; then
+
+
+
+   elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
+
+      # Used only to centralize the history file into one single variable across the file
+         f_refresh_S_hist_file  
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          v_file=$(fzf --prompt="EDITE um ficheiro: ")
 
-      # Adiconar a um ficheiro temporario fluNav
-         v_dir=~/.config/h.h/drya/flunav
-         v_file_hist=~/.config/h.h/drya/flunav/history-files
 
-         mkdir -p $v_dir; echo "$v_file" >> $v_file_hist
+      # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
+         [[ ! -z $v_file ]] \
+            && echo "$v_file" >> $v_fluNav_hist_file \
+            && f_talk \
+            && echo "a Editar: $v_file" \
+            && vim $v_file  
 
-      # Finalmente, editar o ficheiro
-         [[ ! -z $v_file ]] && echo "fluNav: a Editar: $v_file" && vim $v_file  # Editar o ficheiro caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
 
-   elif [ $v_nm == "edit-history-files" ]; then
+   elif [ $v_nm == "edit_last_h_file" ]; then
+      # Editar o ultimo ficheiro de historico
+
+      # Used only to centralize the history file into one single variable across the file
+         f_refresh_S_hist_file  
+
+      # Verificar qual é a ultima linha do ficheiro de historico
+         v_last=$(cat $v_fluNav_hist_file | tail -n 1)
+
+      # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
+         [[ ! -z $v_file ]] && vim $v_last
+
+
+
+   elif [ $v_nm == "fzf_one_hist_file" ]; then
       # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
 
+      # Used only to centralize the history file into one single variable across the file
+         f_refresh_S_hist_file  
+
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         v_hist=$(cat ~/.config/h.h/drya/flunav/history-files | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+         v_hist=$(cat $v_fluNav_hist_file | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
    
-      # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
+      # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
 
+
+
+   elif [ $v_nm == "edit_hist_file" ]; then
+      # Editar o ficheiro de historico
+
+      f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the file
       
+      vim $v_fluNav_hist_file
+
+
+
    elif [ $v_nm == "upk" ]; then
 
       # Esta fx pode e deve usar o nan-D
@@ -1114,20 +1158,23 @@ function S {
       # Acts on the file, And syncs with github after
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-      elif [ $1 == "."        ]; then v_nm="search-files";        f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "."        ]; then v_nm="search_files";        f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";    f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";   f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";      f_action; # Asks in a menu, which file is meant to be sync
       elif [ $1 == "-2"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
-      elif [ $1 == "-1"       ]; then v_nm="fx-test";             f_action; ## Just test if this file is working
+      elif [ $1 == "-1"       ]; then v_nm="fx_test";             f_action; ## Just test if this file is working
       elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
-      elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; f_unalias_all; f_up
+      elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; source ~/.bashrc
       elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-      elif [ $1 == "1."       ]; then v_nm="dryaSH-op-1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_edit__init_file_emacs__with_vim; f_up
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
       elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
       elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
       elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-      elif [ $1 == "links"    ]; then v_nm="ss-links";            f_action; echo "uDev: open shiva sutra links"; f_up
+      elif [ $1 == "links"    ]; then v_nm="ss_links";            f_action; echo "uDev: open shiva sutra links"; f_up
       elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
       elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
       elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
@@ -1135,7 +1182,6 @@ function S {
       elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
       elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
       elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == ".."       ]; then v_nm="edit-history-files";  f_action; # Asks in a menu, which file is meant to be sync
 
    # Caso tenha sido dado um argumento que nao consta na lista
       else 

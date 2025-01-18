@@ -42,6 +42,35 @@ function f_talk {
 }
 
 
+function f_refresh_hist_file {
+
+   # Creating an history file
+      # uDev: enviar antes para omni-log repo
+
+      v_file="termux-notify-output.txt"
+
+      if [[ -d ${v_REPOS_CENTER}/omni-log ]]; then
+         # Se a repo "omni-log" existir, criar la o ficheiro de historico
+
+         echo "File is going to be created at omni-log"
+         read
+
+         v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
+         mkdir -p $v_dir
+         v_hist_file=$v_dir/$v_file
+      
+      else
+         # Se a repo "omni-log" nao existir, perguntar se quer clonar
+         echo "omni-log repo does not exist to place history files there"
+         echo " > Do you want to clone? (uDev)"
+         read 
+
+         v_dir=~/.config/h.h/drya/tmp
+         mkdir -p $v_dir
+         v_hist_file=$v_dir/$v_file
+      fi
+}
+
 
 
 
@@ -101,55 +130,57 @@ function f_talk {
          echo $v_ans
          f_create_id
          f_notify_create
-      done < $v_file2
+      done < $v_hist_file
    }
 
 
 
-function f_notify {
+function f_create_new_notification {
    # Criar notificacoes via termux
 
 
    f_greet
-   f_talk; echo "Create an Android notification message"
+   f_talk; echo "Creating a new Android Notification"
 
-   # Creating an history file
-      # uDev: enviar antes para omni-log repo
-      v_dir=~/.config/h.h/drya/tmp/
-      v_file="termux-notify-output.txt"
-      mkdir -p $v_dir
-      v_file2=${v_dir}${v_file}
+   f_refresh_hist_file
             
    f_change_id && f_create_notify_message
 
      
 }
 
-if [[ -z $1 ]]; then
-   # Menu Simples
+function f_notify_fzf_MM {
+   # Main menu for notify app
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='notify'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Nova Mensagem'                                      
+      L3='3. Nova Notificacao | ID Costumizada'
+      L2='2. Nova Notificacao | Standard ID'
       L1='1. Cancel'
 
       L0="Notify: SELECIONE 1 do menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3\n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "2. " ]] && f_notify
+      [[ $v_list =~ "3. " ]] && echo uDev
+      [[ $v_list =~ "2. " ]] && f_create_new_notification
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
-   
+}
+
+if [[ -z $1 ]]; then
+   # Menu Simples
+
+   [[ $traits_OS == Android ]] && f_notify_fzf_MM || echo "You are not on Android to use notifications"
 
 elif [[ $1 == "." ]]; then
-   f_notify
+   f_create_new_notification
 
 elif [[ $1 == "-i" ]]; then
    # Add a custom ID
@@ -161,7 +192,9 @@ elif [[ $1 == "again" ]]; then
 
 elif [[ $1 == "m" ]] || [[ $1 == "mod" ]] ; then
    # Edit the history file
-   vim $v_file2
+
+   # fx f_refresh_hist_file maybe has to run first
+   vim $v_hist_file
          
 elif [[ $1 == "-l" ]]; then
    # List all DRYa messages (only DRYa)
