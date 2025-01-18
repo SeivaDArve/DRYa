@@ -1023,9 +1023,9 @@ function f_drya_fzf_MM_Toolbox {
          # L12='13. SSH-wraper'
          # L12='13. fzf keyboard (para smartphones partidos)'
 
-         L11='11. Audio  | Media Player'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-         L10='10. Print  | Previsao do Tempo'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-          L9='9.  Print  | online man pages'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+         L11='11. Audio  | Media Player'  
+         L10='10. Print  | Previsao do Tempo'
+          L9='9.  Print  | online man pages'  
           L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L7='7.  Menu   | no-tes '
           L6='6.  Script | Win `pwd` to Linux `pwd`'
