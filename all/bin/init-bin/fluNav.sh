@@ -232,11 +232,9 @@ function f_manage_init_and_libraries_after_mod {
    f_talk; echo "Edited file is now closed:"
            echo " > $v_init_file"
            echo
-
    f_talk; echo "Do you want to apply these changes imediatly?"
-           echo 
 
-   read -s -n 1 -p "Please enter Y/N (yes/no): " v_apply
+   read -s -n 1 -p " > Please enter [y/N]: " v_apply
    echo 
 
 
@@ -267,7 +265,6 @@ function f_edit_self {
    # Verbose: Before opening file
       f_talk; echo "Editing fluNav original file"
               echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
-
               echo
               read -s -n 1 -p "[Press any key to continue] "
               echo 
