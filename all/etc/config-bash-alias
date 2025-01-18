@@ -100,6 +100,10 @@ function web {
          [[ $v_ask =~ "2. " ]] && f_fzf_raw_link_opener 
          [[ $v_ask =~ "1. " ]] && echo "Canceled"
          
+      elif [ $1 == "." ]; then 
+         unset v_URL
+         v_URL="https://seiva.yolasite.com"
+         
       elif [ $1 == "siigo" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
