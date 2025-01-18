@@ -223,8 +223,8 @@ function bt {
       termux-battery-status
    else
       case $1 in 
-         -a) upower -i `upower -e | grep 'BAT'` ;;
-         -p) echo -n "Battery percentage = " && cat /sys/class/power_supply/BAT0/capacity ;;
+         a) upower -i `upower -e | grep 'BAT'` ;;
+         p) echo -n "Battery percentage = " && cat /sys/class/power_supply/BAT0/capacity ;;
          *) upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage" 
          ;;
       esac
