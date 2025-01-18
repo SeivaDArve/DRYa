@@ -52,8 +52,7 @@ function f_refresh_hist_file {
       if [[ -d ${v_REPOS_CENTER}/omni-log ]]; then
          # Se a repo "omni-log" existir, criar la o ficheiro de historico
 
-         echo "File is going to be created at omni-log"
-         read
+         echo " > File is going to be created at omni-log"
 
          v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
          mkdir -p $v_dir
@@ -61,8 +60,8 @@ function f_refresh_hist_file {
       
       else
          # Se a repo "omni-log" nao existir, perguntar se quer clonar
-         echo "omni-log repo does not exist to place history files there"
-         echo " > Do you want to clone? (uDev)"
+         f_talk; echo "omni-log repo does not exist to place history files there"
+                 echo " > Do you want to clone? (uDev)"
          read 
 
          v_dir=~/.config/h.h/drya/tmp
