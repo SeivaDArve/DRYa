@@ -421,6 +421,10 @@ function f_clone_repos {
          echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
       }
 
+      function f_clone_repos_wikiD {
+         echo "cloning dWiki"; git clone https://github.com/SeivaDArve/wikiD.git
+      }
+
       function f_clone_repos_yoga {
          echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
       }
@@ -514,7 +518,11 @@ function f_clone_repos {
          f_clone_repos_yoga
       ;;
 
-      dWiki | wiki | DWiki | Dwiki) 
+      dWiki | DWiki | dw) 
+         f_clone_repos_dWiki
+      ;;
+
+      wikiD | wiki | wd) 
          f_clone_repos_dWiki
       ;;
 
