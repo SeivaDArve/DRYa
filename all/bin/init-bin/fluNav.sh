@@ -5,6 +5,10 @@
    # '$ pkg install figlet file fzf'
 
 
+function f_push_only_hist_file_omni_log {
+   echo uDev
+}
+
 function f_refresh_S_hist_file {
 # Ficheiro de historico
    # Ficam no historico os ficheiros apos serem pesquisados com `S .`
@@ -14,6 +18,9 @@ function f_refresh_S_hist_file {
    v_dir=~/.config/h.h/drya/flunav
    mkdir -p $v_dir
    v_fluNav_hist_file=$v_dir/history-files
+
+   # uDev: Omni log is not receiving files yet
+      #f_push_only_hist_file_omni_log
 }
 
 # uDev: This app should NOT have 3 prefixes: V, S, E and .....
