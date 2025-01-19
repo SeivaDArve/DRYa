@@ -26,24 +26,21 @@ function f_greet {
 
 function f_greet2 {
    # Prints a more verbose output of the ascii text "DRYa" then f_greet
-      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh 2>/dev/null \
+      || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
-function f_H_line {
-   #echo $COLUMNS # Debug
-   v_cols=$(tput cols)
-   printf "%*s" $v_cols | tr " " "_"
-}
-
-
-function f_rc_cursor {
-	tput cup 25 4
-}
-      
 function f_talk {
    # Copied from: ezGIT
          echo
    f_c4; echo -n "DRYa: "
+   f_rc
+}
+
+function f_done {
+   # Copied from: ezGIT
+   f_c5; echo -n ": Done"
    f_rc
 }
 
@@ -90,20 +87,12 @@ function f_prsK {
       unset v_txt
 }
 
-function f_done {
-   # Copied from: ezGIT
-   f_c5; echo -n ": Done"
-   f_rc
-}
-
 function f_stroken {
-   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   # While the app is in beta, this is usefull
+   # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
 
    # If ~/.netrc exists, no need to print the rest
       if [ -f ~/.netrc ]; then
-         #echo "netrc exists"
-         echo "it exists" 1>/dev/null
+         echo ".netrc exists. No github auth needed" 1>/dev/null
 
       else
          f_talk; echo    "stroken"
@@ -115,21 +104,29 @@ function f_stroken {
       fi
 }
 
+function f_Hline {
+   # Prints an horizontal line
+
+   #echo $COLUMNS # Debug
+   v_cols=$(tput cols)
+   printf "%*s" $v_cols | tr " " "_"
+}
+
 function f_horizline {
    # Criar uma linha horizontal do tamanho correto do ecra
 
    # Buscar tamanho correto (precisa da dependencia `tput`)
-      v_count=$(tput cols)
+      v_cols=$(tput cols)
 
    # Escrever uma linha no ecra
-      for i in $(seq $v_count); do
+      for i in $(seq $v_cols); do
          echo -ne "-" 
       done
 }
 
 function f_verticline {
-	v_count=$(tput lines)
-	for i in $(seq $v_count); do
+	v_lines=$(tput lines)
+	for i in $(seq $v_lines); do
    	echo -ne "   |\n" 
 	done
 }
@@ -160,7 +157,6 @@ function f_git_pull {
    f_talk; echo
      f_c4; echo -n '`git pull`'
      f_rc; echo
-
 
    git pull
 }
@@ -276,7 +272,7 @@ function f_ascii_icon {
 	}
 
        f_c6;
-   f_H_line; echo
+   f_Hline; echo
              echo
              echo
 	f_spaces; echo -e  "     ||\` "
@@ -286,7 +282,7 @@ function f_ascii_icon {
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
 	f_spaces; echo    "                  ,  |'		      "
 	f_spaces; echo    "                    ''		         "
-   f_H_line
+   f_Hline
 }
 
 
@@ -1133,7 +1129,8 @@ function f_exec {
    # It can be used for other function debugs also:
       # Comment/Uncomment to turn Off/On each to debug accordingly:
 
-      f_ascii_icon
+      #f_ascii_icon
+      f_greet2
       #f_get_script_current_abs_path
       f_talk; echo "Invalid argument(s)"
               echo ' > for help: `drya -h`'

@@ -115,7 +115,7 @@ function f_is_rooted {
 }
 
 function f_is_rooted_verbose {
-   # Check if ssh command is available (WITH VERBOSE OUTPUT)
+   # Depois de verificado que sim que estamos no termux e verificado se temos root, agora verbalizamos
 
    if [[ -z $v_rooted ]]; then
             echo -n " > Esta no termux: "
@@ -131,10 +131,6 @@ function f_is_rooted_verbose {
             echo -n " > Tem permissoes root: "
       f_c2; echo    "Nao"
       f_rc
-   
-   else
-      echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
-      exit 1
    fi
 }
 

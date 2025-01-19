@@ -38,34 +38,41 @@ function f_array_0 {
    echo 
 }
    
-function f_array_1 {
+function f_trid_001 {
    # Detetar se estamos a operar o Termux
-
-   # Será guardado como: traits_termux
-   # uDev: alterar var para: $trid_termux_running=ON
+   # Será guardado como: trid_001; traits_termux; trid_at_termux
 
    # No termux a variavel $PREFIX nao vem vazia e tras normalmente o conteudo: "/data/data/com.termux/files/usr"
+
    if [[ $PREFIX == "/data/data/com.termux/files/usr" ]]; then
-      #echo "Estamos no termux"  # Debug
-      traits_termux="true"
-      export traits_termux
+      # Debug # Estamos no termux
 
-      traits_1="Is-Termux::$traits_termux"
-      export traits_1
+      traits_termux="true"   # Legacy, sshfs-wrapper uses it yet
+      trid_at_termux="true"      
+      trid_001="atTermux=true"
+      export traits_termux trid_at_termux trid_001
 
-      echo "Var termux:"
-      echo " > $traits_1"
+      # Depois de verificado, enviar para o ficheiro pesquisavel
+      echo 'traits_termux="true"'    >> $v_id_file
+      echo 'trid_at_Termux="true"'   >> $v_id_file      
+      echo 'trid_001="true"' >> $v_id_file
+      echo >> $v_id_file
 
    else
-      traits_termux="false"
-      export traits_termux
+      # Debug # Nao estamos no termux
 
-      traits_1="Is-Termux::$traits_termux"
-      export traits_1
+      traits_termux="false"   # Legacy, sshfs-wrapper uses it yet
+      trid_at_termux="false"      
+      trid_001="atTermux=false"
+      export traits_termux trid_at_termux trid_001
 
-      echo "Var termux:"
-      echo " > $traits_1"
+      # Depois de verificado, enviar para o ficheiro pesquisavel
+      echo 'traits_termux="false"'    >> $v_id_file
+      echo 'trid_at_termux="false"'   >> $v_id_file      
+      echo 'trid_001="false"' >> $v_id_file
+      echo >> $v_id_file
    fi
+
 }
 
 function f_export {
@@ -230,9 +237,9 @@ function f_detectOS_1 {
 
 function f_exec {
 f_set_file
-f_array_1 1>/dev/null  # O output será envido para o crl... porque serve so para debug
-f_array_0 1>/dev/null  # O output será envido para o crl... porque serve so para debug
-f_array_2 1>/dev/null  # O output será envido para o crl... porque serve so para debug
+f_array_0   1>/dev/null  # O output será envido para o crl... porque serve so para debug
+f_trid_001               # Saber true|false se estamos a operar no Termux
+f_array_2   1>/dev/null  # O output será envido para o crl... porque serve so para debug
 f_export
 
 f_detectOS_1

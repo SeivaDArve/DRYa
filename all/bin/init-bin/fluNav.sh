@@ -10,7 +10,9 @@ function f_push_only_hist_file_omni_log {
 }
 
 function f_refresh_S_hist_file {
-# Ficheiro de historico
+   # Ficheiro de historico
+   # uDev: esta fx esta duplicada, ja existe "f_create_fzf_menu_hist" no ficheiro source-all-drya-files
+
    # Ficam no historico os ficheiros apos serem pesquisados com `S .`
    # Acedemos imediatamente ao ultimo ficheiro com `S ..`
    # Acedemos a toda a lista de ficheiros no historico com `S ...`
