@@ -83,7 +83,9 @@ function f_corresponder_local_com_remota {
 
 function f_check_current_user {
    # Get the current username
-   echo " > Your current username is: $v_current_username"
+         echo -n " > Current username is: "
+   f_c1; echo    "$v_current_username"
+   f_rc
 }
 
 function f_is_rooted {
@@ -116,13 +118,19 @@ function f_is_rooted_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
    if [[ -z $v_rooted ]]; then
-      echo " > Detetado que não está no termux"
+            echo -n " > Esta no termux: "
+      f_c2; echo    "Nao!"
+      f_rc
 
    elif [[ $v_rooted == "true" ]]; then
-      echo " > Tem permissoes: root"
+            echo -n " > Tem permissoes root: "
+      f_c2; echo    "Sim"
+      f_rc
 
    elif [[ $v_rooted == "false" ]]; then
-      echo " > Nao tem permissoes: root"
+            echo -n " > Tem permissoes root: "
+      f_c2; echo    "Nao"
+      f_rc
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
@@ -542,7 +550,7 @@ function f_check_mounting_point_parent {
 }
 
 function f_verbose_check {
-      echo "Current status of SSHFS: "
+      f_talk; echo "Current status of SSHFS: "
       f_check_current_user
 
       f_is_rooted
@@ -890,35 +898,58 @@ function f_enable_everything {
 
 
 }
-function f_confirmar_tornar_ssh_offline {
-   if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-      echo "uDev: desligar-se a si proprio de ser servidor"
-
-      # Ver o estado atual do serviço antes de fazer alterações:
-         f_check_ssh_daemon_is_on
-         f_check_ssh_daemon_is_on_verbose
-
-      # Parar o serviço
-
-         # Parar no termux
-         if [ $traits_pkgm == "pkg" ]; then 
-
-            # Detetar qual é o PID do `sshd` 
-               v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
-
-            # Terminar esse processo
-               kill $v_proc
-         fi 
-
-         # Parar noutros OS
-         if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
-         
 
 
-      # Ver o estado atual do serviço apos fazer alterações:
-         f_check_ssh_daemon_is_on
-         f_check_ssh_daemon_is_on_verbose
-   fi
+
+function f_confirmar_turn_ssh_offline {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='Tornar SSH Offline'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Sim | Tenho a certeza, parar o servico'
+      L2='2. Nao | Nao fazer nada'
+      L1='1. Cancel'
+
+      L0="SELECT 1 do menu 'Go offline': "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_confirmado_tornar_ssh_offline
+      [[ $v_list =~ "2. " ]] && echo "Not turning off the ssh service"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
+      unset v_list
+}
+
+
+
+function f_confirmado_tornar_ssh_offline {
+   echo "uDev: desligar-se a si proprio de ser servidor"
+
+   # Ver o estado atual do serviço antes de fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+
+   # Parar o serviço
+
+      # Parar no termux
+      if [ $traits_pkgm == "pkg" ]; then 
+
+         # Detetar qual é o PID do `sshd` 
+            v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
+
+         # Terminar esse processo
+            kill $v_proc
+      fi 
+
+      # Parar noutros OS
+      if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
+      
+
+
+   # Ver o estado atual do serviço apos fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
 }
 
 function f_confirmar_desinstalacao_ssh {
@@ -926,10 +957,10 @@ function f_confirmar_desinstalacao_ssh {
       Lz1='Save '; Lz2='Uninstall ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L3='3. Sim | Tenho a certeza, quero desinstalar tudo'
-      L2='2. Nao | Tenho a certeza, quero desinstalar tudo'
+      L2='2. Nao | Tenho a certeza, cancelar desinstalacao'
       L1='1. Cancel'
 
-      L0="SELECIONE 1 do menu 'Disable': "
+      L0="SELECT 1 do menu 'Disable': "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -956,7 +987,7 @@ function f_disable_ev_1st_menu {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "3. " ]] && f_confirmar_desinstalacao_ssh
-      [[ $v_list =~ "2. " ]] && v_ans="o"
+      [[ $v_list =~ "2. " ]] && f_confirmar_turn_ssh_offline
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
@@ -964,28 +995,6 @@ function f_disable_ev_1st_menu {
 function f_disable_everything {
 
    f_disable_ev_1st_menu
-
-
-
-   if [[ $v_ans == "o" ]] || [[ $v_ans == "O" ]]; then 
-      # Tornar-se Offline
-      
-      echo "Tem a certeza que quer parar (stop) o serviço de servidor ssh nesta maquina?"
-      echo " > (Y)es para desligar-se de servidor SSH" 
-      read -n 1 -p " > " v_ans
-
-      f_confirmar_tornar_ssh_offline
-   fi
-
-
-
-
-
-
-
-
-
-
 
    # remove: f_create_fuse_group
    #f_remove_user_from_fuse_group
