@@ -41,18 +41,26 @@ function f_edit_random_note_no_title {
    && echo " > uDev: sync omni-log automatically"
 }
 
+function f_one_file_bau {
+   echo "uDev: Sync one file"
+   # Test repo existence
+   v_repo=${v_REPOS_CENTER}/oneFile-bau
+   [[ -d $v_repo ]] && echo "exists"
+
+}
+
 function f_main_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       #L80= Share Trascrypt from termux (copy paste entire termux output)
-      L6='6. ToDo | Lista de tarefas | `todo`'
-      L5='5. Nota | com heteronimos  | `no H`' 
+      L6='6. ToDo | Lista de tarefas  | `todo`'
+      L5='5. Nota | com heteronimos   | `no H`' 
 
-      L4='4. Nota | sync COM titulo  | `no ++`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
+      L4='4. Nota | sync one-file-bau | `no ++`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
-      L3='3. Nota | Nova COM titulo  | `no +`';  L3c="no +"  # uDev: command not ready
-      L2='2. Nota | Nova SEM titulo  | `no -`';  L2c="no -"  # uDev: command not ready
+      L3='3. Nota | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
+      L2='2. Nota | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
       L1='1. Cancel'
 
       L0="SELECIONE 1 do menu: "
@@ -66,7 +74,7 @@ function f_main_menu {
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "6. " ]] && echo "uDev: 6"
       [[ $v_list =~ "5. " ]] && f_edit_with_heteronimos
-      [[ $v_list =~ "4. " ]] && echo "uDev: 4"
+      [[ $v_list =~ "4. " ]] && f_one_file_bau
       [[ $v_list =~ "3. " ]] && echo "uDev: 3"
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
