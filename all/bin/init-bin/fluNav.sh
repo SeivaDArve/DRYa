@@ -1024,6 +1024,8 @@ function f_action {
    elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
 
+      # uDev: add: `basename $(pwd)` no ficheiro de historico
+
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
 
