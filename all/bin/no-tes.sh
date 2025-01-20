@@ -46,8 +46,10 @@ function f_main_menu {
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       #L80= Share Trascrypt from termux (copy paste entire termux output)
-      L5='5. ToDo | Lista de tarefas | `todo`'
-      L4='4. Nota | com heteronimos  | `no H`' 
+      L6='6. ToDo | Lista de tarefas | `todo`'
+      L5='5. Nota | com heteronimos  | `no H`' 
+
+      L4='4. Nota | sync COM titulo  | `no ++`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
       L3='3. Nota | Nova COM titulo  | `no +`';  L3c="no +"  # uDev: command not ready
       L2='2. Nota | Nova SEM titulo  | `no -`';  L2c="no -"  # uDev: command not ready
@@ -55,15 +57,16 @@ function f_main_menu {
 
       L0="SELECIONE 1 do menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6\n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "5. " ]] && echo "uDev: 5"
-      [[ $v_list =~ "4. " ]] && f_edit_with_heteronimos
+      [[ $v_list =~ "6. " ]] && echo "uDev: 6"
+      [[ $v_list =~ "5. " ]] && f_edit_with_heteronimos
+      [[ $v_list =~ "4. " ]] && echo "uDev: 4"
       [[ $v_list =~ "3. " ]] && echo "uDev: 3"
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
