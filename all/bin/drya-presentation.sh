@@ -1,4 +1,5 @@
 #!/bin/bash
+# Title: Also adding normal text to figlet ascii text
 clear
 figlet "DRYa"; 
 tput cup 4 23; 

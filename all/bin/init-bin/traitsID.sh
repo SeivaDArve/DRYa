@@ -49,14 +49,14 @@ function f_trid_001 {
 
       traits_termux="true"   # Legacy, sshfs-wrapper uses it yet
       trid_at_termux="true"      
-      trid_001="atTermux=true"
+      trid_001="atTermux::true" # Key + Value pair
       export traits_termux trid_at_termux trid_001
 
       # Depois de verificado, enviar para o ficheiro pesquisavel
-      echo 'traits_termux="true"'    >> $v_id_file
-      echo 'trid_at_Termux="true"'   >> $v_id_file      
-      echo 'trid_001="true"' >> $v_id_file
-      echo >> $v_id_file
+      echo 'traits_termux="true"'   >> $v_id_file
+      echo 'trid_at_Termux="true"'  >> $v_id_file      
+      echo 'trid_001="true"'        >> $v_id_file
+      echo                          >> $v_id_file
 
    else
       # Debug # Nao estamos no termux
@@ -67,10 +67,10 @@ function f_trid_001 {
       export traits_termux trid_at_termux trid_001
 
       # Depois de verificado, enviar para o ficheiro pesquisavel
-      echo 'traits_termux="false"'    >> $v_id_file
-      echo 'trid_at_termux="false"'   >> $v_id_file      
-      echo 'trid_001="false"' >> $v_id_file
-      echo >> $v_id_file
+      echo 'traits_termux="false"'  >> $v_id_file
+      echo 'trid_at_termux="false"' >> $v_id_file      
+      echo 'trid_001="false"'       >> $v_id_file
+      echo                          >> $v_id_file
    fi
 
 }

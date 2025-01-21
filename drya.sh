@@ -1016,15 +1016,17 @@ function f_drya_fzf_MM_Toolbox {
 
          # Void: Lv, ...
          # L12='12. Agendar envio SMS && WHATSAPP'
+         # L12='12. Comboios CP web-scraping
+         # L12='12. Ementas Yummy
          # L12='13. fzf keyboard (para smartphones partidos)'
 
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
          L10='10. Print  | Previsao do Tempo'
-          L9='9.  Print  | online man pages'  
+          L9='9.  Print  | Online man pages'  
           L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L7='7.  Menu   | no-tes '
-          L6='6.  Script | Win `pwd` to Linux `pwd`'
+          L6='6.  Script | Convert `pwd` from Win to Linux'
           L5="5.  App    | xKill"
           L4="4.  App    | notify"
           L3="3.  Menu   | calculos/calculadoras"
@@ -1912,10 +1914,15 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
       fi
 
 elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calculator" ] || [ $1 == "clc" ] || [ $1 == "calculadora" ]; then
+   # List of calculatores (some modified for Trading)
 
-   # List if calculatores (some modified for Trading)
+   if [ -z $2 ]; then 
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
 
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
+   elif [ $2 == "." ]; then 
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh .
+
+   fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
    f_talk; echo "uDev: Options to set keyboard"

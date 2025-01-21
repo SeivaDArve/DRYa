@@ -418,14 +418,18 @@ function Mk {
 }
 
 function lll {
+   # Print for each file in `ls`, its absolute path
+      # Prints to Terminal and to temp file
+
    echo "Printing absolute path for each file:"
 
    for i in $(ls -A -p);
    do
       v_pwd=$(pwd)
       v_ls="$v_pwd/$i"
-      echo $v_ls
-   done
+
+      echo $v_ls 
+   done 
 }
 
 alias tc="touch"
