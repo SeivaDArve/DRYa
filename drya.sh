@@ -26,24 +26,21 @@ function f_greet {
 
 function f_greet2 {
    # Prints a more verbose output of the ascii text "DRYa" then f_greet
-      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh 2>/dev/null \
+      || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
-function f_H_line {
-   #echo $COLUMNS # Debug
-   v_cols=$(tput cols)
-   printf "%*s" $v_cols | tr " " "_"
-}
-
-
-function f_rc_cursor {
-	tput cup 25 4
-}
-      
 function f_talk {
    # Copied from: ezGIT
          echo
    f_c4; echo -n "DRYa: "
+   f_rc
+}
+
+function f_done {
+   # Copied from: ezGIT
+   f_c5; echo -n ": Done"
    f_rc
 }
 
@@ -90,20 +87,12 @@ function f_prsK {
       unset v_txt
 }
 
-function f_done {
-   # Copied from: ezGIT
-   f_c5; echo -n ": Done"
-   f_rc
-}
-
 function f_stroken {
-   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   # While the app is in beta, this is usefull
+   # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
 
    # If ~/.netrc exists, no need to print the rest
       if [ -f ~/.netrc ]; then
-         #echo "netrc exists"
-         echo "it exists" 1>/dev/null
+         echo ".netrc exists. No github auth needed" 1>/dev/null
 
       else
          f_talk; echo    "stroken"
@@ -115,21 +104,29 @@ function f_stroken {
       fi
 }
 
+function f_Hline {
+   # Prints an horizontal line
+
+   #echo $COLUMNS # Debug
+   v_cols=$(tput cols)
+   printf "%*s" $v_cols | tr " " "_"
+}
+
 function f_horizline {
    # Criar uma linha horizontal do tamanho correto do ecra
 
    # Buscar tamanho correto (precisa da dependencia `tput`)
-      v_count=$(tput cols)
+      v_cols=$(tput cols)
 
    # Escrever uma linha no ecra
-      for i in $(seq $v_count); do
+      for i in $(seq $v_cols); do
          echo -ne "-" 
       done
 }
 
 function f_verticline {
-	v_count=$(tput lines)
-	for i in $(seq $v_count); do
+	v_lines=$(tput lines)
+	for i in $(seq $v_lines); do
    	echo -ne "   |\n" 
 	done
 }
@@ -160,7 +157,6 @@ function f_git_pull {
    f_talk; echo
      f_c4; echo -n '`git pull`'
      f_rc; echo
-
 
    git pull
 }
@@ -276,7 +272,7 @@ function f_ascii_icon {
 	}
 
        f_c6;
-   f_H_line; echo
+   f_Hline; echo
              echo
              echo
 	f_spaces; echo -e  "     ||\` "
@@ -286,7 +282,7 @@ function f_ascii_icon {
 	f_spaces; echo -e " \`|..||. .||.        ||  \`|..||.	"
 	f_spaces; echo    "                  ,  |'		      "
 	f_spaces; echo    "                    ''		         "
-   f_H_line
+   f_Hline
 }
 
 
@@ -1020,15 +1016,17 @@ function f_drya_fzf_MM_Toolbox {
 
          # Void: Lv, ...
          # L12='12. Agendar envio SMS && WHATSAPP'
-         # L12='13. SSH-wraper'
+         # L12='12. Comboios CP web-scraping
+         # L12='12. Ementas Yummy
          # L12='13. fzf keyboard (para smartphones partidos)'
 
-         L11='11. Audio  | Media Player'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-         L10='10. Print  | Previsao do Tempo'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-          L9='9.  Print  | online man pages'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+         L12='12. Script | sshfs-wrapper'
+         L11='11. Audio  | Media Player'  
+         L10='10. Print  | Previsao do Tempo'
+          L9='9.  Print  | Online man pages'  
           L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L7='7.  Menu   | no-tes '
-          L6='6.  Script | Win `pwd` to Linux `pwd`'
+          L6='6.  Script | Convert `pwd` from Win to Linux'
           L5="5.  App    | xKill"
           L4="4.  App    | notify"
           L3="3.  Menu   | calculos/calculadoras"
@@ -1037,12 +1035,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11\n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
          [[ $v_list =~ "11. " ]] && echo "uDev: $L11"
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[ $v_list =~ "9. "  ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
@@ -1132,7 +1131,8 @@ function f_exec {
    # It can be used for other function debugs also:
       # Comment/Uncomment to turn Off/On each to debug accordingly:
 
-      f_ascii_icon
+      #f_ascii_icon
+      f_greet2
       #f_get_script_current_abs_path
       f_talk; echo "Invalid argument(s)"
               echo ' > for help: `drya -h`'
@@ -1914,10 +1914,15 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
       fi
 
 elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calculator" ] || [ $1 == "clc" ] || [ $1 == "calculadora" ]; then
+   # List of calculatores (some modified for Trading)
 
-   # List if calculatores (some modified for Trading)
+   if [ -z $2 ]; then 
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
 
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
+   elif [ $2 == "." ]; then 
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh .
+
+   fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
    f_talk; echo "uDev: Options to set keyboard"

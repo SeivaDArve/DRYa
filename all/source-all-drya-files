@@ -281,7 +281,7 @@ function f_repository_ezGIT {
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
 
 
-   echo -e "      > O comando 'ezG' ou 'G v all' atualiza todos os repos"
+   echo -e "      > O comando 'G v all' atualiza todos os repos"
 }
    
 function f_repository_wikiD {

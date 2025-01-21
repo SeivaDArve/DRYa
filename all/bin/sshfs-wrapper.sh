@@ -47,33 +47,33 @@ function f_talk {
    # Print the entire array
       #echo "Array elements: ${v_array_A_remote_dir[@]}"
 
-   function f_corresponder_local_com_remota {
+function f_corresponder_local_com_remota {
 
-      unset $v_current_local
+   unset $v_current_local
 
-      contador=0
-      v_current_local=$(for i in ${v_array_B_this_machine[@]}; do echo "$contador. $i"; ((contador++)); done | fzf --prompt "INDIQUE qual o nome desta maquina local")
+   contador=0
+   v_current_local=$(for i in ${v_array_B_this_machine[@]}; do echo "$contador. $i"; ((contador++)); done | fzf --prompt "INDIQUE qual o nome desta maquina local")
 
 
-      
-      echo "Maquina atual: $v_current_local"
-      echo
+   
+   echo "Maquina atual: $v_current_local"
+   echo
 
-      
-      [[ $v_current_local =~ "0." ]] && v_local=${v_array_A_remote_dir[0]} && echo "Info a dar ao clinte: $v_local"
-      [[ $v_current_local =~ "1." ]] && v_local=${v_array_A_remote_dir[1]} && echo "Info a dar ao clinte: $v_local" 
-      [[ $v_current_local =~ "2." ]] && v_local=${v_array_A_remote_dir[2]} && echo "Info a dar ao clinte: $v_local" 
-      [[ $v_current_local =~ "3." ]] && v_local=${v_array_A_remote_dir[3]} && echo "Info a dar ao clinte: $v_local" 
-      [[ $v_current_local =~ "4." ]] && v_local=${v_array_A_remote_dir[4]} && echo "Info a dar ao clinte: $v_local" 
-      [[ $v_current_local =~ "5." ]] && v_local=${v_array_A_remote_dir[5]} && echo "Info a dar ao clinte: $v_local" 
-      [[ $v_current_local =~ "6." ]] && v_local=${v_array_A_remote_dir[6]} && echo "Info a dar ao clinte: $v_local" 
+   
+   [[ $v_current_local =~ "0." ]] && v_local=${v_array_A_remote_dir[0]} && echo "Info a dar ao clinte: $v_local"
+   [[ $v_current_local =~ "1." ]] && v_local=${v_array_A_remote_dir[1]} && echo "Info a dar ao clinte: $v_local" 
+   [[ $v_current_local =~ "2." ]] && v_local=${v_array_A_remote_dir[2]} && echo "Info a dar ao clinte: $v_local" 
+   [[ $v_current_local =~ "3." ]] && v_local=${v_array_A_remote_dir[3]} && echo "Info a dar ao clinte: $v_local" 
+   [[ $v_current_local =~ "4." ]] && v_local=${v_array_A_remote_dir[4]} && echo "Info a dar ao clinte: $v_local" 
+   [[ $v_current_local =~ "5." ]] && v_local=${v_array_A_remote_dir[5]} && echo "Info a dar ao clinte: $v_local" 
+   [[ $v_current_local =~ "6." ]] && v_local=${v_array_A_remote_dir[6]} && echo "Info a dar ao clinte: $v_local" 
 
-      echo
-      v_dir_to_mount=$v_parent_dir/$v_local/
-      #echo "Ou seja: $v_dir_to_mount"
-      mkdir -p $v_dir_to_mount
-      read
-   }
+   echo
+   v_dir_to_mount=$v_parent_dir/$v_local/
+   #echo "Ou seja: $v_dir_to_mount"
+   mkdir -p $v_dir_to_mount
+   read
+}
  
 # Variaveis que guardam a localização da chave publica SSH
    v_public_key=~/.ssh/id_rsa.pub
@@ -83,7 +83,9 @@ function f_talk {
 
 function f_check_current_user {
    # Get the current username
-   echo " > Your current username is: $v_current_username"
+         echo -n " > Current username is: "
+   f_c1; echo    "$v_current_username"
+   f_rc
 }
 
 function f_is_rooted {
@@ -113,20 +115,22 @@ function f_is_rooted {
 }
 
 function f_is_rooted_verbose {
-   # Check if ssh command is available (WITH VERBOSE OUTPUT)
+   # Depois de verificado que sim que estamos no termux e verificado se temos root, agora verbalizamos
 
    if [[ -z $v_rooted ]]; then
-      echo " > Detetado que não está no termux"
+            echo -n " > Esta no termux: "
+      f_c2; echo    "Nao!"
+      f_rc
 
    elif [[ $v_rooted == "true" ]]; then
-      echo " > Tem permissoes: root"
+            echo -n " > Tem permissoes root: "
+      f_c2; echo    "Sim"
+      f_rc
 
    elif [[ $v_rooted == "false" ]]; then
-      echo " > Nao tem permissoes: root"
-   
-   else
-      echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
-      exit 1
+            echo -n " > Tem permissoes root: "
+      f_c2; echo    "Nao"
+      f_rc
    fi
 }
 
@@ -231,12 +235,12 @@ function f_uninstall_sshfs {
 
 function f_concat_IP { 
    # Concatenar TUDO
-      #echo "Na maquina que quer aceder ao servidor, escreva o comando:"
+      f_talk; echo "Na maquina que quer aceder ao servidor, escreva o comando:"
       v_com_IP_publico="IP publico: 'sshfs $USER@$v_ip:$v_r_dir $v_dir_to_mount'"
-      #echo "$v_com_IP_publico"
-      #echo
+      echo " > $v_com_IP_publico"
+      echo
       v_com_IP_local="IP local: 'sshfs $USER@$v_loc_ip:$v_r_dir $v_dir_to_mount'" 
-      #echo "$v_com_IP_local" 
+      echo " > $v_com_IP_local" 
 }
 
 
@@ -542,7 +546,7 @@ function f_check_mounting_point_parent {
 }
 
 function f_verbose_check {
-      echo "Current status of SSHFS: "
+      f_talk; echo "Current status of SSHFS: "
       f_check_current_user
 
       f_is_rooted
@@ -646,19 +650,29 @@ function f_ser_servidor {
    # Lista de opcoes
       Lz="DRYa: sshfs-wrapper.sh"
 
+      L4="4. Dar acesso a: .  (pasta atual)"
       L3="3. Dar acesso a: /  (raiz do sistema)"
       L2="2. Dar aceeso a: ~  (documentos do utilizador)"
       L1="1. Calcelar"
 
       L0="Para SERVIDOR: A que pasta quer dar acesso?"
 
-      v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz" | fzf --prompt "$L0")
+      v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz" | fzf --prompt "$L0")
 
    # Executar escolhas
-      [[ $v_menu =~ "3." ]] && echo "Quer deixar aceder a: /" && v_r_dir=/
-      [[ $v_menu =~ "2." ]] && echo "Quer deixar aceder a: ~" && v_r_dir=~
+      [[ $v_menu =~ "4." ]] && echo " > Quer deixar aceder a: . "   && v_r_dir=.
+      [[ $v_menu =~ "3." ]] && echo " > Quer deixar aceder a: / "   && v_r_dir=/
+      [[ $v_menu =~ "2." ]] && echo " > Quer deixar aceder a: ~ "   && v_r_dir=~
       [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh" && exit 0
-      unset v_menu
+      #unset v_menu
+      cd $v_r_dir
+
+      v_r=$(pwd)
+      f_talk; echo "Directory path \`pwd\`: $v_r"
+
+      f_talk; echo 'Directory content `ls`:'
+              ls -p
+      read
 
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
@@ -881,62 +895,110 @@ function f_enable_everything {
 
 }
 
+
+
+function f_confirmar_turn_ssh_offline {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='Tornar SSH Offline'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Sim | Tenho a certeza, parar o servico'
+      L2='2. Nao | Nao fazer nada'
+      L1='1. Cancel'
+
+      L0="SELECT 1 do menu 'Go offline': "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_confirmado_tornar_ssh_offline
+      [[ $v_list =~ "2. " ]] && echo "Not turning off the ssh service"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
+      unset v_list
+}
+
+
+
+function f_confirmado_tornar_ssh_offline {
+   echo "uDev: desligar-se a si proprio de ser servidor"
+
+   # Ver o estado atual do serviço antes de fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+
+   # Parar o serviço
+
+      # Parar no termux
+      if [ $traits_pkgm == "pkg" ]; then 
+
+         # Detetar qual é o PID do `sshd` 
+            v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
+
+         # Terminar esse processo
+            kill $v_proc
+      fi 
+
+      # Parar noutros OS
+      if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
+      
+
+
+   # Ver o estado atual do serviço apos fazer alterações:
+      f_check_ssh_daemon_is_on
+      f_check_ssh_daemon_is_on_verbose
+}
+
+function f_confirmar_desinstalacao_ssh {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='Uninstall ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Sim | Tenho a certeza, quero desinstalar tudo'
+      L2='2. Nao | Tenho a certeza, cancelar desinstalacao'
+      L1='1. Cancel'
+
+      L0="SELECT 1 do menu 'Disable': "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_uninstall_sshfs
+      [[ $v_list =~ "2. " ]] && echo "Canceled: Uninstalation of ssh"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
+      unset v_list
+}
+
+function f_disable_ev_1st_menu {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='SSH Disable'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Menu Desinstalar'
+      L2='2. Desligar (colocar Offline)'                                      
+      L1='1. Cancel'
+
+      L0="SELECIONE 1 do menu 'Disable': "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && f_confirmar_desinstalacao_ssh
+      [[ $v_list =~ "2. " ]] && f_confirmar_turn_ssh_offline
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
 function f_disable_everything {
-      # Perguntar: Quer so desligar o Servico ou Desinstalar tudo?
-         echo "Pretende tornar-se (O)ffline ou (D)esinstalar tudinho?"
-         read -n 1 -p " > " v_ans
-         echo 
 
-         # Desinstalar SSHFS (Se escolheu desinstalar)
-            if [[ $v_ans == "d" ]] || [[ $v_ans == "D" ]]; then 
-               echo "Tem a certeza que quer desativar todas as fx e deixar de usar sshfs?"
-               echo " > (Y)es para Desinstalar SSHFS" 
-               read -n 1 -p " > " v_ans
-      
-               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                  f_uninstall_sshfs
-               fi
-            fi
+   f_disable_ev_1st_menu
 
-         # Tornar-se Offline
-            if [[ $v_ans == "o" ]] || [[ $v_ans == "O" ]]; then 
-               echo "Tem a certeza que quer parar (stop) o serviço de servidor ssh nesta maquina?"
-               echo " > (Y)es para desligar-se de servidor SSH" 
-               read -n 1 -p " > " v_ans
-      
-               if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then 
-                  echo "uDev: desligar-se a si proprio de ser servidor"
+   # remove: f_create_fuse_group
+   #f_remove_user_from_fuse_group
+   # Delete dir
 
-                  # Ver o estado atual do serviço antes de fazer alterações:
-                     f_check_ssh_daemon_is_on
-                     f_check_ssh_daemon_is_on_verbose
-
-                  # Parar o serviço
-                     # Parar no termux
-                        if [ $traits_pkgm == "pkg" ]; then 
-
-                           # Detetar qual é o PID do `sshd` 
-                              v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
-
-                           # Terminar esse processo
-                              kill $v_proc
-                        fi 
-
-                     # Parar noutros OS
-                        if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
-                     
-                  # Ver o estado atual do serviço apos fazer alterações:
-                     f_check_ssh_daemon_is_on
-                     f_check_ssh_daemon_is_on_verbose
-               fi
-            fi
-      # remove: f_create_fuse_group
-      #f_remove_user_from_fuse_group
-      # Delete dir
-
-      # Perguntar: 
-      #  > Quer que este dispositivo desconecte do servidor remotamento?
-      #  > Quer que este dispositivo bloqueie os seus servicos de servidor e bloqueie visitas?
+   # Perguntar: 
+   #  > Quer que este dispositivo desconecte do servidor remotamento?
+   #  > Quer que este dispositivo bloqueie os seus servicos de servidor e bloqueie visitas?
 }
 
 
@@ -958,11 +1020,11 @@ function f_check_overall_status {
    # List of menu options
       Lz="DRYa: sshfs-wrapper.sh"
 
-      L6="6. VER      | ficheiro verboso no seu estado atual"
-      L5="5. LISTA    | Mounting Points pre-definidos"
-      L4="4. VER      | Estado atual do sistema"
-      L3="3. DESLIGAR | servico SSH ou SSHFS"
-      L2="2. LIGAR    | servico SSH ou SSHFS"
+      L6="6. Lista    | Mounting Points pre-definidos"
+      L5="5. Ver      | Ficheiro verboso (no seu estado atual)"
+      L4="4. Ver      | Estado atual do sistema"
+      L3="3. Desligar | Servico SSH ou SSHFS"
+      L2="2. Ligar    | Servico SSH ou SSHFS"
       L1="1. Cancelar" 
 
       L0="DRYa: Menu para os servicos SSH"
@@ -970,8 +1032,8 @@ function f_check_overall_status {
    v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
 
    # Executar de acordo com o resultado
-      [[ $v_menu =~ "6." ]] && less $v_verbose_line
-      [[ $v_menu =~ "5." ]] && f_ver_as_pastas_pre_definidas
+      [[ $v_menu =~ "6." ]] && f_ver_as_pastas_pre_definidas
+      [[ $v_menu =~ "5." ]] && less $v_verbose_line
       [[ $v_menu =~ "4." ]] && f_verbose_check
       [[ $v_menu =~ "3." ]] && f_disable_everything
       [[ $v_menu =~ "2." ]] && f_enable_everything

@@ -10,7 +10,9 @@ function f_push_only_hist_file_omni_log {
 }
 
 function f_refresh_S_hist_file {
-# Ficheiro de historico
+   # Ficheiro de historico
+   # uDev: esta fx esta duplicada, ja existe "f_create_fzf_menu_hist" no ficheiro source-all-drya-files
+
    # Ficam no historico os ficheiros apos serem pesquisados com `S .`
    # Acedemos imediatamente ao ultimo ficheiro com `S ..`
    # Acedemos a toda a lista de ficheiros no historico com `S ...`
@@ -860,6 +862,8 @@ function V {
       elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
          cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
          
+      elif [[ $1 == "one" ]] || [[ $1 == "1" ]]; then
+         cd ${v_REPOS_CENTER}/oneFile-bau && ls
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
@@ -1022,6 +1026,9 @@ function f_action {
    elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
 
+      # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
+      
+
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
 
@@ -1030,8 +1037,10 @@ function f_action {
 
 
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
+         v_pwd=$(pwd)
+
          [[ ! -z $v_file ]] \
-            && echo "$v_file" >> $v_fluNav_hist_file \
+            && echo "$v_pwd/$v_file" >> $v_fluNav_hist_file \
             && f_talk \
             && echo "a Editar: $v_file" \
             && vim $v_file  
@@ -1058,7 +1067,11 @@ function f_action {
          f_refresh_S_hist_file  
 
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
+         #v_text=$(sed "s/ / /g" $v_fluNav_hist_file)
+
+         #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
          v_hist=$(cat $v_fluNav_hist_file | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
@@ -1165,8 +1178,12 @@ function S {
       # Acts on the file, And syncs with github after
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-      elif [ $1 == "."        ]; then v_nm="search_files";        f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";    f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "."        ]; then 
+         v_nm="search_files";        f_action; # Asks in a menu, which file is meant to be sync
+
+      elif [ $1 == ".."       ]; then 
+         v_nm="edit_last_h_file";    f_action; # Asks in a menu, which file is meant to be sync
+
       elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";   f_action; # Asks in a menu, which file is meant to be sync
       elif [ $1 == "...."     ]; then v_nm="edit_hist_file";      f_action; # Asks in a menu, which file is meant to be sync
       elif [ $1 == "-2"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
@@ -1189,6 +1206,7 @@ function S {
       elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
       elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
       elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
+
 
    # Caso tenha sido dado um argumento que nao consta na lista
       else 

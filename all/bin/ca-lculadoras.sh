@@ -46,8 +46,9 @@ function f_clc_bc {
    # Opens `bc` but creates a more verbose intro about itself and what is happening
       
    clear
-   figlet Best Calculator
+   figlet Calculator
    echo 'Best Calculator (interactive `bc`):'
+   echo " > To quit press: Ctrl-C"
    echo " > Make some math now..."
    echo
    bc --quiet
@@ -594,7 +595,7 @@ if [ -z "$*" ]; then
           L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
           L7='7.  Calculadora | registadora'
 
-          L6='6.  Executar    | `bc` (terminal default)'
+          L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
           L5='5.  Executar    | apk Texas TI-84 ROM'
 
           L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
@@ -629,6 +630,10 @@ if [ -z "$*" ]; then
          [[ $v_list =~ "2.  " ]] && vim $v_log
          [[ $v_list =~ "1.  " ]] && sleep 0.1
          unset v_list
+
+elif [ $1 == "." ]; then
+   # Entrar diretamente na `bc` 
+   f_clc_bc
 
 elif [ $1 == "h" ]; then
    echo "hit help"

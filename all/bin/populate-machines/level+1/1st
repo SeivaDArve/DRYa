@@ -49,21 +49,22 @@ function f_gr_dependencies {
    # List of DRYa dependencies (to be installed by DRYa installer)
 
    pkg install \
-   figlet  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
-   # tput # Installed by installing the pack `ncurses-utils`
-   less  # Dependency for ezGIT
+   figlet         # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
+   ncurses-utils  # Instals packages like `tput`
+   less           # Dependency for ezGIT
    vim
-   file  # Dependency for ezGIT
-   gpg   # Encryption/Decryption
-   ssh   # Need to connect to raspberry Pi
-   sshfs # Mout ssh as a file system 
-   whiptail # Tool to give GUI menus on Bash
-   dialog # Tool to give GUI menus on Bash (like whiptail but with more options
+   file           # Dependency for ezGIT
+   gpg            # Encryption/Decryption
+   ssh            # Need to connect to raspberry Pi
+   sshfs          # Mout ssh as a file system 
+   whiptail       # Tool to give GUI menus on Bash
+   dialog         # Tool to give GUI menus on Bash (like whiptail but with more options
    man
-   which  # Used to detect the path of installed scripts
-   tsu   # To grant sudo permissions, may be needed to enable phone screenshots
-   upower
-   fzf   # Fuzzyfinder
+   which          # Used to detect the path of installed scripts
+   tsu            # To grant sudo permissions, may be needed to enable phone screenshots
+   upower         # To enable the possibility to read battery status
+   fzf            # Fuzzyfinder
+   termux-api     # Plug-in for termux
 }
 
 # List of usefull apps 
