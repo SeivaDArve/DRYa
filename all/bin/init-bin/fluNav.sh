@@ -660,6 +660,7 @@ function f_mobile_android {
          echo '2) # Travel to USB storage'
          echo '3) # Travel to the dir where many USB storages are mounted'
          echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
+         #echo "wsl C:\"
     #uDev: May be needed termux-setup-storage to access some directories
       ;;
    esac

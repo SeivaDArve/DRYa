@@ -9,7 +9,17 @@
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
 # uDev: Detect Wifi connection name
 
-alias trid="less $v_id_file"
+function trid {
+   # This command is actually loaded to the terminal env
+
+   # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
+   echo "File re-loaded every startup"
+   less $v_id_file
+
+   #echo "File that overwrittes last file"
+   #less .dryarc
+}
+
 
 function f_set_file {
    # File that has a copy of all the environment variables

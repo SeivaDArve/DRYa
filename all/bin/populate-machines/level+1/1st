@@ -104,6 +104,23 @@ function f_gr_dependencies {
       # }
    }
 
+
+
+
+
+# Instalacoes a mao 
+#
+# Emacs:
+#  `M-x package-install` `dracula-theme`
+#
+#
+#  Vim:
+#      ...
+#
+
+
+
+
 # List of usefull apps (at WSL2)
    
    wslview {

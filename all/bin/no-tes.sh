@@ -4,7 +4,7 @@
 # Sourcing f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "
-   source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/intros-boilerplate.sh
+      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
 function f_create_file_and_name {
    v_date=$(date +'%Y-%m-%d---%H-%M-%S')
@@ -125,6 +125,12 @@ if [ -z $1 ]; then
 elif [ $1 == "-" ]; then
    f_edit_random_note_no_title
       
+elif [ $1 == "a" ]; then
+   # Create notes with terminal arguments
+   echo "uDev"
+   shift # Remove 1st argument from the arguments list
+   echo $*
+
 elif [ $1 == "H" ]; then
    f_edit_with_heteronimos
 
