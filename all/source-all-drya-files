@@ -301,7 +301,7 @@ function f_repository_moedaz {
 function f_repository_upK {
    # Repository: upK 
 
-   source ${v_REPOS_CENTER}/upK/all/source-all-upk-files
+   source ${v_REPOS_CENTER}/upK/all/source-all-upk-files 2>/dev/null
 
    # Open with github sync
    alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
