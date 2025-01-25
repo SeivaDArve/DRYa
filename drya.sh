@@ -934,33 +934,37 @@ function f_dot_files_install {
    #       Terminal best font
    #       Install: font: Monospace (best for terminal)
    
-   L9="9. termux.properties"
-   L8="8. .bash_logout"
-   L7="7. .gitconfig "
-   L6="6. .vimrc "
-   L5="5. .netrc "
-   L4="4. .dryarc "
+   #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
 
-   L3="3. Install | PRESETS"
-   L2="2. Install | TODOS "
+   L10="10. .bash_logout"
+    L9="9.  termux.properties"
+    L8="8.  .bash_logout"
+    L7="7.  .gitconfig "
+    L6="6.  .vimrc "
+    L5="5.  .netrc "
+    L4="4.  .dryarc "
 
-   L1="1. Cancel "
+    L3="3.  Install | PRESETS"
+    L2="2.  Install | TODOS "
+
+    L1="1.  Cancel "
 
    L0="SELECT (1 or +) dot-files to install: "
 
    v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "$Lz" ]] && history -s "$Lz"
-      [[ $v_list =~ "9. " ]] && f_dotFiles_install_termux_properties
-      [[ $v_list =~ "8. " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
-      [[ $v_list =~ "7. " ]] && f_dotFiles_install_git 
-      [[ $v_list =~ "6. " ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "5. " ]] && f_dotFiles_install_netrc
-      [[ $v_list =~ "4. " ]] && f_dotFiles_install_dryarc
-      [[ $v_list =~ "3. " ]] && f_dot_files_install_presets
-      [[ $v_list =~ "2. " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
+      [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
+      [[ $v_list =~ "10. " ]] && echo "uDev"
+      [[ $v_list =~ "9.  " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
+      [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "5.  " ]] && f_dotFiles_install_netrc
+      [[ $v_list =~ "4.  " ]] && f_dotFiles_install_dryarc
+      [[ $v_list =~ "3.  " ]] && f_dot_files_install_presets
+      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
       unset v_list
 }
 
@@ -1027,6 +1031,9 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Temporizador: Proximo Maha Kumbh Mela
          # L12='12. Localizacao de telemovel via info de wi-fi disponiveis e via sonora com beeps
          # L12='12. Termux > Jarve > Django
+         # L12='12. Random number generator
+         # L12='12. nanD
+         # L12='12. Change IP and acess banned website
 
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
