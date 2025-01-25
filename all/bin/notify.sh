@@ -56,7 +56,9 @@ function f_refresh_hist_file {
       v_hist_file=$v_dir/$v_file
 
 
+
    # Testing if saving on .../omni-log/ or .config/h.h/
+      # uDev: Assim, faz do omni-log um repositorio magbetico, se existir recebe fucheiros, se nao exiatir, nao recebe
       if [[ -d ${v_REPOS_CENTER}/omni-log ]]; then
          # Se a repo "omni-log" existir, criar la o ficheiro de historico
 
@@ -79,64 +81,64 @@ function f_refresh_hist_file {
 
 
 
-   # Create an ID for each notification created
-      function f_create_id {
-         # It will be a concat of year + month + day + hour + Min + Sec
-         # It will be a concat of  %Y  +  %m   +  %d +  %k  +  %M +  %S
-         v_date=$(date +%Y%m%d%k%M%S)
-         v_id=$v_date
-      }
-
-   # Add a line to history file
-      function f_create_hist {
-            echo "$(date) > $v_ans" >> ${v_dir}${v_file}
-      }
-
-   # Create the message itself
-      function f_notify_create {
-         termux-notification -t "DRYa: Notify:" -c "$v_ans" -i "$v_id" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
-      }
-
-   # Input a message
-      function f_create_notify_message {
-         echo
-         echo "What is your message? "
-         read -p " > " v_ans
-
-         f_create_id
-         f_notify_create
-         f_create_hist
-      }
-
-   # Echo notification ID number
-      function f_change_id {
-         echo
-         echo "Id for this notification will be: "
-         echo " > $v_id"
-      }
-
-
-   function f_custom_id {
-      f_change_id
-      echo
-      echo " >> What is your custom notification ID?"
-      echo "     (will overwrite any notification with same ID)"
-      read -p "     > " v_id
-      echo
-      f_change_id
-      f_create_notify_message
+# Create an ID for each notification created
+   function f_create_id {
+      # It will be a concat of year + month + day + hour + Min + Sec
+      # It will be a concat of  %Y  +  %m   +  %d +  %k  +  %M +  %S
+      v_date=$(date +%Y%m%d%k%M%S)
+      v_id=$v_date
    }
 
-   function f_notify_again {
-      echo
-
-      while read i; do
-         v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
-         echo $v_ans
-         f_create_id
-         f_notify_create
-      done < $v_hist_file
+# Add a line to history file
+   function f_create_hist {
+         echo "$(date) > $v_ans" >> ${v_dir}${v_file}
    }
+
+# Create the message itself
+   function f_notify_create {
+      termux-notification -t "DRYa: Notify:" -c "$v_ans" -i "$v_id" --icon circle_notifications --image-path /data/data/com.termux/files/home/Repositories/DRYa/all/etc/dot-files/termux/termux-icon.png && echo "Sucess!"
+   }
+
+# Input a message
+   function f_create_notify_message {
+      echo
+      echo "What is your message? "
+      read -p " > " v_ans
+
+      f_create_id
+      f_notify_create
+      f_create_hist
+   }
+
+# Echo notification ID number
+   function f_change_id {
+      echo
+      echo "Id for this notification will be: "
+      echo " > $v_id"
+   }
+
+
+function f_custom_id {
+   f_change_id
+   echo
+   echo " >> What is your custom notification ID?"
+   echo "     (will overwrite any notification with same ID)"
+   read -p "     > " v_id
+   echo
+   f_change_id
+   f_create_notify_message
+}
+
+function f_notify_again {
+   echo
+
+   while read i; do
+      v_ans=$(echo "$i" | cut -d ">" -f 2 | sed "s/ //")
+      echo $v_ans
+      f_create_id
+      f_notify_create
+   done < $v_hist_file
+}
 
 
 
@@ -150,8 +152,6 @@ function f_create_new_notification {
    f_refresh_hist_file
             
    f_change_id && f_create_notify_message
-
-     
 }
 
 function f_notify_fzf_MM {
@@ -197,6 +197,9 @@ elif [[ $1 == "again" ]]; then
 
 elif [[ $1 == "m" ]] || [[ $1 == "mod" ]] ; then
    # Edit the history file
+
+   # Sem esta fx, este arg nao funciona interativamente
+      f_refresh_hist_file
 
    # fx f_refresh_hist_file maybe has to run first
    vim $v_hist_file

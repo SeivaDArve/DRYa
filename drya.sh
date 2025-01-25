@@ -4,7 +4,7 @@
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 # Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
 function f_greet {
    # Presents a Nice visual ascii name/logo for this entire script
@@ -677,8 +677,9 @@ function f_win_to_linux_pwd {
    if [ -z $v_arg2 ]; then 
 
       f_greet
-      f_talk; echo "Convert text Windows Path into text Linux Path"
-              echo " > feed me 1 or + Windows paths to convert"
+      f_talk; echo "Convert a Text file with a list of"
+              echo "      Windows Paths into Linux Paths"
+              echo "       > feed me 1 or + Windows paths to convert"
 
       # Make a dir and a file, to paste and convert windows text to linux text
          mkdir -p ~/.tmp 
@@ -722,7 +723,7 @@ function f_win_to_linux_pwd {
 
       # Tell if it is empty or print the remaining contents (hopefully with a valid path converted)
          if [ -z "$v_text" ]; then
-            f_talk; echo "The file is empty"
+            f_talk; echo "The file was empty"
          else 
             echo
             w=$(cat $v_file)
@@ -1018,7 +1019,14 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='12. Comboios CP web-scraping
          # L12='12. Ementas Yummy
-         # L12='13. fzf keyboard (para smartphones partidos)'
+         # L12='12. fzf keyboard (para smartphones partidos)'
+         # L12='12. dir to .jpg
+         # L12='12. Agendar SMS
+         # L12='12. sound record
+         # L12='12. Conversor de texto formal para informal
+         # L12='12. Temporizador: Proximo Maha Kumbh Mela
+         # L12='12. Localizacao de telemovel via info de wi-fi disponiveis e via sonora com beeps
+         # L12='12. Termux > Jarve > Django
 
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
@@ -1077,18 +1085,20 @@ function f_drya_fzf_MM {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3="3. | Help"
+      L4="4. | Help"
+      L3="3. | DRYa: Greet"
       L2="2. | Toolbox" 
 
       L1="1. Cancel" 
 
-      L0="DRYA: fzf main Menu: " 
+      L0='DRYa: `fzf` Main Menu: '
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-      [[ $v_list =~ "3. " ]] && f_drya_help
+      [[ $v_list =~ "4. " ]] && f_drya_help
+      [[ $v_list =~ "3. " ]] && f_greet2
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
