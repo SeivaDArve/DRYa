@@ -455,6 +455,8 @@ alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tr
    alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
    alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
    alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
+   alias madagascar="termux-open-url https://youtu.be/Xe0dChqgTJQ?feature=shared"
+
 
 
 function op {
