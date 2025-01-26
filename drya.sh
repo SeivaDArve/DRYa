@@ -1112,8 +1112,9 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
 
+         L13='13. Menu   | IP options'
          L12='12. Script | sshfs-wrapper'
-         L11='11. Audio  | Media Player'  
+         L11='11. Menu   | Audio Media Player'  
          L10='10. Print  | Previsao do Tempo'
           L9='9.  Print  | Online man pages'  
           L8='8.  Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
@@ -1127,12 +1128,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "13. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh
          [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
          [[ $v_list =~ "11. " ]] && f_menu_audio_media_player
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
@@ -1143,8 +1145,8 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "5. "  ]] && echo "uDev"
          [[ $v_list =~ "4. "  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
 
-         [[ $v_list =~ "3. "  ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "3. "  ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[ $v_list =~ "3.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
          [[ $v_list =~ "2. "  ]] && f_dot_files_menu
          [[ $v_list =~ "1. "  ]] && echo "Canceled"
