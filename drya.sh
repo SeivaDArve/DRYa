@@ -1112,8 +1112,6 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
 
-DRYa/all/etc/sounds/audio-right-left-speakers-sound-test.wav
-
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
          L10='10. Print  | Previsao do Tempo'
