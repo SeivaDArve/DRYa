@@ -712,6 +712,37 @@ function f_dotFiles_install_netrc {
       vim ~/.netrc && echo "Done!"
 }
 
+function f_menu_audio_media_player {
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='Audio-Media-Player'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L7='7. Tests  | Right and Left Speakers test'                                      
+      L6='6. Tests  | Completion Bell sound'                                      
+
+      L5='5. Record | Stop  Mic Recording'                                      
+      L4='4. Record | Status of  Mic Recording'                                      
+      L3='3. Record | Start Mic Recording'                                      
+      
+      L2='2. Play   | Search file at .'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: DRYa: Media Player: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "7. " ]] && echo "uDev: $L7" 
+      [[ $v_list =~ "6. " ]] && echo "uDev: $L6" 
+      [[ $v_list =~ "5. " ]] && echo "uDev: $L5" 
+      [[ $v_list =~ "4. " ]] && echo "uDev: $L4" 
+      [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
+      [[ $v_list =~ "2. " ]] && v_pl=$(ls | fzf) && xdg-open $v_pl
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
 function f_win_to_linux_pwd {
    # Convert text Windows Path into text Linux Path
 
@@ -1081,6 +1112,8 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
 
+DRYa/all/etc/sounds/audio-right-left-speakers-sound-test.wav
+
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
          L10='10. Print  | Previsao do Tempo'
@@ -1103,7 +1136,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
          [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
-         [[ $v_list =~ "11. " ]] && echo "uDev: $L11"
+         [[ $v_list =~ "11. " ]] && f_menu_audio_media_player
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[ $v_list =~ "9. "  ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
          [[ $v_list =~ "8. "  ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
