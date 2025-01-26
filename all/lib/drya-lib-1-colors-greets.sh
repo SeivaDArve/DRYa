@@ -8,102 +8,117 @@
 #
 #
 #  INSTRUCTIONS: 
-#     At every script file in which this script is sourced, place these lines below:
+#     At the top of every script file in which this script needed, place these lines below:
 #
 #
-#  # Sourcing f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline
-#     v_greet="<repo-name>"
-#     v_talk="<script-name>"
-#     source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/intros-boilerplate.sh
-#  
-#
-#  EXAMPLE: 
-#  # Sourcing f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline
-#     v_greet="DRYa"
-#     v_talk="DRYa: no-tes: "
-#     source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/intros-boilerplate.sh
+#     # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+#        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+#           v_greet="DRYa"
+#           v_talk="DRYa: "
+#           v_txt="<text-used-at-f_prsK-fx>"
+#           #v_Hl (uDev)
 #  
 #
 
 
-# Functions for text colors (used usually with `figlet`)
-   function f_c1 {	
-      # This function is to be used when something is SEARCHED
-      tput setaf 5 
-   }
-
-   function f_c2 { 
-      tput setaf 2 
-   }
-
-   function f_c3 { 
-      # Mentioning user input or valiable input
-      # This function is to be used when something is DECLAIRED
-      tput setaf 3
-   }
-
-   function f_c4 { 
-      # Similar to Bold. Used in: f_talk
-      # This function is to be used when something is ASKED
-      tput setaf 4
-   }
-
-   function f_c5 { 
-      # Similar to Bold
-      tput setaf 6
-   }
-
-   function f_c6 { 
-      # Used for ASCII Drya Logo, centered to the screen
-      tput setaf 28
-      tput bold
-   }
-
-   function f_rc { 
-      # This function is to be used when styles are to be CLEARED
-      tput sgr0
-   }
-
-   function f_colors_without_tput {
-      # Text Colors before discovering '$ tput setaf'
-         RESTORE=$(echo -en '\001\033[0m\002')
-             RED=$(echo -en '\001\033[00;31m\002')
-
-      # Example of Text formating before discovering '$ tput'
-      # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`
-   }  
-
-   function f_cursorON {
-      # Show cursor normally. Use "tput civis" to hide
-      tput cnorm
-   }
-
-function f_cursorOFF {
-	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
-	tput civis
-}
-
-
+# uDev: add fx for `date` command
+# uDev: with ANSI, move cursor up one line
 
 # uDev: f_clear_current_line, (Apagar texto da linha atual ate ao fundo com ANSI)
 #       f_count_var_size,     (saber quantas letrar tem `echo ${#variavel}`)
 #       f_create_tmp_file     (dar um nome e saber que esse ficheiro tmp foi criado)
 
 
+
+
+
+function f_c1 {	
+   # Fx for color 1
+
+   # This function is to be used when something is SEARCHED
+   tput setaf 5 
+}
+
+function f_c2 { 
+   # Fx for color 2
+
+   tput setaf 2 
+}
+
+function f_c3 { 
+   # Fx for color 3
+
+   # Mentioning user input or valiable input
+   # This function is to be used when something is DECLAIRED
+   tput setaf 3
+}
+
+function f_c4 { 
+   # Fx for color 4
+
+   # Similar to Bold. Used in: f_talk
+   # This function is to be used when something is ASKED
+   tput setaf 4
+}
+
+function f_c5 { 
+   # Fx for color 5
+
+   # Similar to Bold
+   tput setaf 6
+}
+
+function f_c6 { 
+   # Fx for color 6
+
+   # Used for ASCII Drya Logo, centered to the screen
+   tput setaf 28
+   tput bold
+}
+
+function f_rc { 
+   # Fx for color reset
+
+   # This function is to be used when styles are to be CLEARED
+   tput sgr0
+}
+
+function f_colors_without_tput {
+   # Text Colors before discovering '$ tput setaf'
+      RESTORE=$(echo -en '\001\033[0m\002')
+          RED=$(echo -en '\001\033[00;31m\002')
+
+   # Example of Text formating before discovering '$ tput'
+   # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`
+}  
+
+function f_cON {
+   # Fx for make cursor visible
+
+   tput cnorm
+}
+
+function f_cOFF {
+   # Fx for make cursor invisible
+
+	tput civis
+}
+
 function f_greet {
    # Presents a Nice visual ascii name/logo for this entire script
 
-   # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
-   # "     "    "  is not insfalled: print only a message
+   # uDev: Confirmar se no futuro pode haver problemas com a fon
 
-   # If figlet not installed, use this message instead
+   # If previously no script gave the variable $v_greet, then, assign "DRYa-lib-1" to it
+      [[ -z $v_greet ]] && v_greet="<v_greet>"
+
+   # Creting an alternative message in case figlet is not installed
       v_basename=$(basename $0)
       v_2nd_option="( $v_greet ):\vrunning: $v_basename\v\`figlet\`  Not installed"
 
-   # CORDN_5_10='\033[5;23H'
-   # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
-   # 
-   # uDev: Confirmar se no futuro pode haver problemas com a font
+
+   # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
+   # If figlet app is not insfalled: print only a message
 
    clear
    figlet $v_greet 2>/dev/null || echo -e "$v_2nd_option"
@@ -117,14 +132,21 @@ function f_greet2 {
 }
 
 function f_talk {
-   # Copied from: ezGIT
+   # Colorfull text to preceed any text of any important text line
+
+   # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
+      [[ -z $v_talk ]] && v_talk="<v_talk>"
+
          echo
-   f_c4; echo -n "$v_talk: "
+   f_c4; echo -n "$v_talk"
    f_rc
 }
 
 function f_done {
-   # Copied from: ezGIT
+   # Use this to give confirmation the previous command has sucessfull
+
+   # EXAMPLE: `apt install <command> && f_done
+
    f_c5; echo -n ": Done"
    f_rc
 }
@@ -175,6 +197,9 @@ function f_prsK {
 function f_Hline {
    # Prints an horizontal line
 
+   # uDev: istead of "_" add a variable to it to be used as a library
+   #       variable: $v_Hl
+  
    #echo $COLUMNS # Debug
    v_cols=$(tput cols)
    printf "%*s" $v_cols | tr " " "_"
