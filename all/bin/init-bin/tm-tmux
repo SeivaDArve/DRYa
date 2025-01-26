@@ -42,22 +42,25 @@ function f_session_instructions {
 
 function tm {
    if [ -z $1 ]; then
-      echo "TM: wrap-around para tmux (terminal multiplexer)" 
-      echo " > Para instrucoes: 'tm -h'" 
+      echo "tm-tmux: wrap-around para tmux (terminal multiplexer)" 
+      echo ' > Para instrucoes: `tm h`'
+      echo ' > Para sair:       `tmux kill-session`' 
       echo 
       echo "Vai abrir o comando: tmux. [ENTER] para continuar."
-      read -sn 1 -t 2
+      read -sn 1 
+
       tmux
+      source ~/.bashrc
 
    elif [ $1 == "K" ]; then
-      tmux kill-server && echo "tmux: all sessions (and server) killed"
+      tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
    
    elif [ $1 == "s" ]; then
       echo "tmux: what do you want to do about S (sessions)?" 
       echo " > '$ tm s': prints this message" 
       echo " > '$ tm S': lists all sessions" 
 
-   elif [ $1 == "-h" ]; then
+   elif [ $1 == "h" ]; then
       echo "tmux: uDev list"
       echo 
       echo " |  tm h    -------| prints this message" 
@@ -68,6 +71,6 @@ function tm {
       f_session_instructions
 
    else
-      echo "tmux: opcao nao reconhecida"
+      echo "tm-tmux: opcao nao reconhecida"
    fi
 }
