@@ -4,7 +4,7 @@
 "This is an example of a line of comment 
 
 "Define a GLOBAL variable (across all buffers) the variable of DRYa's Repository center
-" (When DRYa installs this file .vimrc at $HOME, DRYa as to use `sed` replace the variable's content)
+" (When DRYa installs this file .vimrc at $HOME, DRYa has to use `sed` to replace the variable's content)
 let g:dryaREPOS = '<variable-$v_REPOS_CENTER-here>'
 
 "Set the side ruler, allowing to read better which is the current line
