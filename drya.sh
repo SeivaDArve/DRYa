@@ -574,7 +574,7 @@ function f_dotFiles_install_git {
    f_greet
    f_talk; echo "Installing .gitconfig:"
            echo " > File 1: .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-           echo " > To:     ~"
+           echo " > To:     ~/"
 
    v_txt="Are you sure? " && f_prsK
 
@@ -590,13 +590,36 @@ function f_dotFiles_install_vim {
    v_place=~
 
    f_greet
-   f_talk; echo "Installing .vimrc:"
-           echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
-           echo " > To:     ~"
+   f_talk; echo -n "Installing "
+     f_c2; echo ".vimrc"
+     f_rc
 
-   _txt="Install .vimrc" && f_prsK
+   f_talk; echo "STEP 1: Copy .vimrc"
+           echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
+           echo " > To:     ~/"
+
+   f_talk; echo "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
+           echo " > from: \"let g:dryaREPOS = '<variable-\$v_REPOS_CENTER-here>' \" "
+           echo " > to:   \"let g:dryaREPOS = '/home/dv_msi/Repositories' \" "
+
+   v_txt="Install .vimrc" && f_prsK
    
-   cp $v_file $v_place && f_talk && echo "Done! "
+   # Start STEP 1
+      cp $v_file $v_place && f_talk && echo "STEP 1: Done! "
+
+
+   # Start STEP 2
+      v_v1=$v_REPOS_CENTER
+      v_v2="let g:dryaREPOS = '$v_v1' "
+
+      #echo "Final: $v_v2"  # Debug
+      
+      # At sed, we search patterns with /pattern
+      # At sed, we replace entire line with c\
+      # At sed, we replace entire line with variable with c\\
+      # So... /pattern/c\\<variable-here>
+      sed -i "/let g:dryaREPOS/c\\$v_v2" ~/.vimrc && f_talk && echo "STEP 2: Done! "
+
 }
 
 function f_dotFiles_install_termux_properties {
@@ -610,7 +633,7 @@ function f_dotFiles_install_termux_properties {
    f_talk; echo "Installing Termux Colors + Termux properties"
            echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties"
            echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
-           echo " > To:  ~/.termux"
+           echo " > To:  ~/.termux/"
 
    v_txt="Are you sure? " && f_prsK
    
@@ -1034,12 +1057,14 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Random number generator
          # L12='12. nanD
          # L12='12. Change IP and acess banned website
+         # L12='12. See list of saved passwords and correspondant hotspor names
+         # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
 
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
          L10='10. Print  | Previsao do Tempo'
           L9='9.  Print  | Online man pages'  
-          L8='8.  Print  | morse'  # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L8='8.  Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L7='7.  Menu   | no-tes '
           L6='6.  Script | Convert `pwd` from Win to Linux'
           L5="5.  App    | xKill"
@@ -2015,8 +2040,8 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
 
 
 
-elif [ $1 == "logo" ]; then 
-   # Presenting DRYa
+elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
+   # Presenting DRYa with ASCII text
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
