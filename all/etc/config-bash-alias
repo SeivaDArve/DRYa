@@ -429,16 +429,27 @@ function Mk {
 function lll {
    # Print for each file in `ls`, its absolute path
       # Prints to Terminal and to temp file
+      # Also, if you give a number as arg, it will filter the output line. Example: `ls` prints 3 lines, so `lll 2` will print only the absolute path of the second line
 
-   echo "Printing absolute path for each file:"
+   if [ -z $1 ]; then 
+      # Se nao houver mais nenhum arg, imprime todas as linhas
 
-   for i in $(ls -A -p);
-   do
-      v_pwd=$(pwd)
-      v_ls="$v_pwd/$i"
+      echo "Printing absolute path for each file:"
 
-      echo $v_ls 
-   done 
+      for i in $(ls -A -p);
+      do
+         v_pwd=$(pwd)
+         v_ls="$v_pwd/$i"
+
+         echo $v_ls 
+      done 
+
+   elif [ -n $1 ]; then 
+      # Se existir um arg 1, nao forma de numero, esse numero serve de filtro
+      
+      echo "uDev"
+   fi
+
 }
 
 alias tc="touch"
