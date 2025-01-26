@@ -46,6 +46,8 @@ alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 
+alias wsl="cd /mnt/c/"
+
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 function f_fzf_raw_link_opener {
@@ -286,7 +288,7 @@ function data {
       done
 
    elif  [ $1 == "h" ]; then
-      echo 'DRYa: Command `data`'
+      echo 'DRYa: Command `data` with alias `d`'
       echo ' > `data`'
       echo ' > `data h`'
       echo ' > `data hr`'
@@ -361,7 +363,9 @@ function data {
       date +"%d/%m/%Y %H:%M:%S"
 
    fi
+
 }
+alias d=data  # Fx `data` already exists and this is an abreviation
 
 
 #alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
@@ -399,7 +403,7 @@ alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
 alias lh="du -ah" # Lists all file's size
-alias d="cd"
+alias c="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 alias RM="rm -rf"
 

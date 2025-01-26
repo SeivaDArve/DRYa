@@ -68,22 +68,23 @@ function f_gr_dependencies {
 }
 
 # List of usefull apps 
-   dos2unix  ## Or DRYa: dos-2-unix ## When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
+   dos2unix   # Or DRYa: `dos-2-unix` When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
    exiftool
    tree
    linx
    emacs
-   espeak # Text to speach
-   termimage # Terminal images
-   openssl # Encryption
+   espeak     # Text to speach
+   termimage  # Terminal images
+   openssl    # Encryption
    python3
    selenium
    android-tools
-   irssi # IRC client for termux
+   irssi          # IRC client for termux
    youtube-dl
    cmatrix
-   syncthing # To sync files across machines (does not need a cloud, it is decentralized)
-   zenity # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
+   syncthing      # To sync files across machines (does not need a cloud, it is decentralized)
+   zenity         # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
+   vim powerline  # Some vim installations have too little info on the status bar
 
 
 # List of usefull apps (python)

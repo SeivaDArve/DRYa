@@ -867,8 +867,18 @@ function V {
       elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
          cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
          
+
       elif [[ $1 == "one" ]] || [[ $1 == "1" ]]; then
          cd ${v_REPOS_CENTER}/oneFile-bau && ls
+
+
+      elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
+         cd ${v_REPOS_CENTER}/scratch-paper && ls
+
+
+      elif [ $1 == "dota" ]; then
+         cd ${v_REPOS_CENTER}/Dota-2-guide && ls
+
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
@@ -884,16 +894,12 @@ function V {
          cd ${v_REPOS_CENTER} && ls
 
 
-      elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
-         cd ${v_REPOS_CENTER}/scratch-paper && ls
-
-
-      elif [ $1 == "dota" ]; then
-         cd ${v_REPOS_CENTER}/Dota-2-guide && ls
-
-
       elif [ $1 == "lxm" ]; then
          cd ${v_REPOS_CENTER}/luxam && ls
+
+
+      elif [ $1 == "wsl" ] || [ $1 == "win" ] || [ $1 == "W" ]; then
+         cd /mnt/c/ && ls
 
 
       elif [ $1 == "ln" ]; then

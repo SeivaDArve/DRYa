@@ -619,6 +619,7 @@ function f_dotFiles_install_vim {
       # So... /pattern/c\\<variable-here>
       sed -i "/let g:dryaREPOS/c\\$v_v2" ~/.vimrc && f_talk && echo "STEP 2: Done! "
 
+   # uDev: Ask if user want to install vim powerline (or echo out how to do)
 }
 
 function f_dotFiles_install_termux_properties {
