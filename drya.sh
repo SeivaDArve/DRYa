@@ -589,6 +589,10 @@ function f_dotFiles_install_vim {
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
    v_place=~
 
+   v_v1=$v_REPOS_CENTER
+   v_v2="let g:dryaREPOS = '$v_v1' "
+   #echo "Final: $v_v2"; read   # Debug
+
    f_greet
    f_talk; echo -n "Installing "
      f_c2; echo ".vimrc"
@@ -599,21 +603,15 @@ function f_dotFiles_install_vim {
            echo " > To:     ~/"
 
    f_talk; echo "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
-           echo " > from: \"let g:dryaREPOS = '<variable-\$v_REPOS_CENTER-here>' \" "
-           echo " > to:   \"let g:dryaREPOS = '/home/dv_msi/Repositories' \" "
+           echo " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
+           echo " > to:   \"let g:dryaREPOS = '$v_v1' \" "
 
    v_txt="Install .vimrc" && f_prsK
    
    # Start STEP 1
       cp $v_file $v_place && f_talk && echo "STEP 1: Done! "
 
-
    # Start STEP 2
-      v_v1=$v_REPOS_CENTER
-      v_v2="let g:dryaREPOS = '$v_v1' "
-
-      #echo "Final: $v_v2"  # Debug
-      
       # At sed, we search patterns with /pattern
       # At sed, we replace entire line with c\
       # At sed, we replace entire line with variable with c\\
