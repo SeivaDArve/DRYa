@@ -957,18 +957,18 @@ function f_dot_files_install {
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
 
-   L10="10. .bash_logout"
-    L9="9.  termux.properties"
-    L8="8.  .bash_logout"
-    L7="7.  .gitconfig "
-    L6="6.  .vimrc "
-    L5="5.  .netrc "
-    L4="4.  .dryarc "
+    L10="10. termux.properties"
+     L9="9.  .tmux.conf"
+     L8="8.  .bash_logout"
+     L7="7.  .gitconfig "
+     L6="6.  .vimrc "
+     L5="5.  .netrc "
+     L4="4.  .dryarc "
 
-    L3="3.  Install | PRESETS"
-    L2="2.  Install | TODOS "
+     L3="3.  Install | PRESETS"
+     L2="2.  Install | TODOS "
 
-    L1="1.  Cancel "
+     L1="1.  Cancel "
 
    L0="SELECT (1 or +) dot-files to install: "
 
@@ -976,8 +976,8 @@ function f_dot_files_install {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
-      [[ $v_list =~ "10. " ]] && echo "uDev"
-      [[ $v_list =~ "9.  " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "10. " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "9.  " ]] && echo "uDev"
       [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
       [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
