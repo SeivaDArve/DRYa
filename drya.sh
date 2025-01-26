@@ -555,7 +555,8 @@ function f_clone_repos {
       ;;
 
       *)
-         f_talk; echo "Repository not recognized"
+         #f_talk;  # This line is already called at the beginning of the fx
+         echo "Repository \"$v_arg2\" not recognized"
       ;;
    esac
 
@@ -623,6 +624,8 @@ function f_dotFiles_install_vim {
 function f_dotFiles_install_termux_properties {
    # Install Termux colors and properties on the system
 
+   # uDev: Test if it is termux and still allow the user to use both ways
+
    v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties 
    v_file2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
    v_place=~/.termux/
@@ -633,12 +636,28 @@ function f_dotFiles_install_termux_properties {
            echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
            echo " > To:  ~/.termux/"
 
-   v_txt="Are you sure? " && f_prsK
+   v_txt="Install termux configs" && f_prsK
    
    cp $v_file1 $v_place && f_talk && echo "File 1: Done! "
    cp $v_file2 $v_place && f_talk && echo "File 2: Done! "
 
    echo "Done! (Restart the terminal is needed)"
+}
+
+function f_dotFiles_install_tm_tmux {
+   # Install .tmux.conf on the system
+
+   v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/tmux/.tmux.conf
+   v_place=~
+
+   f_greet
+   f_talk; echo "Installing Termux Colors + Termux properties"
+           echo " > File 1: .../DRYa/all/etc/dot-files/tmux/.tmux.conf"
+           echo " > To:  ~/"
+
+   v_txt="Install .tmux.conf" && f_prsK
+   
+   cp $v_file1 $v_place && f_talk && echo "Done! "
 }
 
 function f_dotFiles_install_dryarc {
@@ -957,7 +976,8 @@ function f_dot_files_install {
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
 
-    L10="10. termux.properties"
+    L11="11. termux.properties"
+    L10='10. .emacs.d/'  # uDev: remove from flunav `S 2`
      L9="9.  .tmux.conf"
      L8="8.  .bash_logout"
      L7="7.  .gitconfig "
@@ -972,12 +992,13 @@ function f_dot_files_install {
 
    L0="SELECT (1 or +) dot-files to install: "
 
-   v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
-      [[ $v_list =~ "10. " ]] && f_dotFiles_install_termux_properties
-      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "11. " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "10. " ]] && echo "emacs dot-files: uDev"
+      [[ $v_list =~ "9.  " ]] && f_dotFiles_install_tm_tmux
       [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
       [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
@@ -1057,6 +1078,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Change IP and acess banned website
          # L12='12. See list of saved passwords and correspondant hotspor names
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
+         # L12='12. Script | youtube-dl-wrapper.sh
 
          L12='12. Script | sshfs-wrapper'
          L11='11. Audio  | Media Player'  
