@@ -1,24 +1,29 @@
 #!/bin/bash
+# Title: DRYa: sshfs-wrapper
 
-# Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/bin/boilerplates/colors-boilerplate.sh
-   # Usar f_c3 para SERVIDOR
-   # Usar f_c4 para SERVIDOR
+# Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      v_greet=DRYa-SSH
+      v_talk="DRYa: ssh: "
+      v_txt="<text-used-at-f_prsK-fx>"
+
+      # Usar f_c3 para SERVIDOR
+      # Usar f_c4 para CLIENTE
 
 
-function f_greet {
-   clear
-   figlet DRYa
-
-   f_talk; echo "sshfs-wrapper.sh"
-}
-
-function f_talk {
-   # Copied from: ezGIT
-         echo
-   f_c4; echo -n "DRYa: ssh: "
-   f_rc
-}
+# function f_greet {
+#    clear
+#    figlet DRYa
+# 
+#    f_talk; echo "sshfs-wrapper.sh"
+# }
+# 
+# function f_talk {
+#    # Copied from: ezGIT
+#          echo
+#    f_c4; echo -n "DRYa: ssh: "
+#    f_rc
+# }
 
 # Para Debug:
    # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como ARG1, ARG2, ARG3
