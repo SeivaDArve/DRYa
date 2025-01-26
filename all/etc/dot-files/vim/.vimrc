@@ -1,7 +1,13 @@
 " Title: .vimrc (dot-files by Seiva D'Arve)
 " Description: file that stores all settings for vim CLI app
 
-"This is a comment
+"This is an example of a line of comment 
+
+"Define a GLOBAL variable (across all buffers) the variable of DRYa's Repository center
+" (When DRYa installs this file .vimrc at $HOME, DRYa as to use `sed` replace the variable's content)
+let g:dryaREPOS = '/home/dv_msi/Repositories'
+
+"Set the side ruler, allowing to read better which is the current line
 set number
 set relativenumber
 set nowrap
@@ -41,7 +47,10 @@ autocmd BufReadPost *
 " F7 to close vim from normal mode (equivalent to zz)
 nnoremap <F7> <Esc>ZZ
 
+" F8 to scroll Horizontaly to the left
 nnoremap <F8> zhzhzhzhzhzhzhzh
+
+" F9 to scroll Horizontaly to the right
 nnoremap <F9> zlzlzlzlzlzlzlzl
 
 " Não manter sublinhado a pesquisa de palavras anterio. Esse mapeamento faz com que, quando pressiona Enter no modo normal, o Vim execute o comando :nohlsearch antes de inserir uma nova linha. que apaga o highlight da pesquisa
@@ -50,5 +59,10 @@ nnoremap <silent> <CR> :nohlsearch<CR><CR>
 " Mapear uma tecla de atalho ZX para imitar ':q!' e sair do documento discartando as alteracoes (tal como ZZ faz ao guardar)
 nnoremap ZX :q!<CR>
 
-" Escrever a variavel ${v_REPOS_CENTER}
+" Inserir texto que equivale a variavel: ${v_REPOS_CENTER}
 nnoremap ZD i${v_REPOS_CENTER}/<Esc>
+
+" Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
+" (usa a variavel global 'g:dryaREPOS')
+nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/bin/boilerplates/bash-fzf-1-boilerplate.sh'<CR>
+
