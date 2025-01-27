@@ -712,6 +712,55 @@ function f_dotFiles_install_netrc {
       vim ~/.netrc && echo "Done!"
 }
 
+function f_list_ip_public_n_local {
+   # Mencionar no terminsl qual é o endereço de IP publico e local
+
+   f_greet
+
+   # Obtendo o IP público usando curl e um serviço online
+      PUBLIC_IP=$(curl -s ifconfig.me)
+
+   # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
+      LOCAL_IP=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+
+      # Alternativa 1: 
+         #LOCAL_IP=$(hostname -I | awk '{print $1}')
+
+      # Alternativa 2: 
+         #LOCAL_IP=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+
+   # Imprimindo os resultados
+      echo "IP Público: $PUBLIC_IP"
+      echo "IP Local: $LOCAL_IP"
+}
+
+function f_menu_ip_options {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Assign | New random IP'                                      
+      L3='3. Ver    | IP publico e local'                                      
+   
+      L1='1. Cancel'
+
+      L0="SELECIONE 1 do menu (exemplo): "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh
+      [[ $v_list =~ "2. " ]] && f_list_ip_public_n_local
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
+
+
+}
+
 function f_menu_audio_media_player {
 
    # Lista de opcoes para o menu `fzf`
@@ -1111,6 +1160,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. See list of saved passwords and correspondant hotspor names
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
+         # L12='12. Mount drivers com `lsblk`
 
          L13='13. Menu   | IP options'
          L12='12. Script | sshfs-wrapper'
@@ -1134,7 +1184,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "13. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh
+         [[ $v_list =~ "13. " ]] && f_menu_ip_options
          [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
          [[ $v_list =~ "11. " ]] && f_menu_audio_media_player
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
@@ -1581,25 +1631,7 @@ elif [ $1 == "seiva-up-time" ]; then
 
 
 elif [ $1 == "ip" ]; then 
-   # Mencionar no terminsl qual é o endereço de IP publico e local
-
-   f_greet
-
-   # Obtendo o IP público usando curl e um serviço online
-      PUBLIC_IP=$(curl -s ifconfig.me)
-
-   # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
-      LOCAL_IP=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
-
-      # Alternativa 1: 
-         #LOCAL_IP=$(hostname -I | awk '{print $1}')
-
-      # Alternativa 2: 
-         #LOCAL_IP=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
-
-   # Imprimindo os resultados
-      echo "IP Público: $PUBLIC_IP"
-      echo "IP Local: $LOCAL_IP"
+   f_menu_ip_options
 
 elif [ $1 == "mac" ]; then 
 
@@ -2274,7 +2306,7 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
    #  9-  ASSIGN
    #  10- EXIT
 
-elif [ $1 == "wiki" ]; then 
+elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
    
    f_talk; echo "Opening: wikiD.org"
