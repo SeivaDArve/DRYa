@@ -257,116 +257,7 @@ function dos_2_unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-function data {
-   # Exemplo: "Data atual: (Dia 07 Sex)(Mês 06 jun)(Ano 2024)(03:38:38)"
-   # uDev: fx para print apenas 1x sem loop
-
-   if [ -z $1 ]; then
-      while true
-      do
-         
-         # Instrucoes:
-            # echo -ne "\r"      ## Move o cursor para o inicio da linha
-            # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
-
-         v_texto="Data atual: (Dia"
-         v_dia=$(date +'%d %a')
-         v_texto_dia="$v_texto $v_dia"
-
-         v_texto="$v_texto_dia)(Mês"
-         v_mes=$(date +'%m %b')
-         v_texto_mes="$v_texto $v_mes"
-
-         v_texto="$v_texto_mes)(Ano"
-         v_ano=$(date +'%Y)')
-         v_texto_ano="$v_texto $v_ano"
-
-         v_hora=$(date +'(%H:%M:%S)')
-         v_data="$v_texto_ano$v_hora"
-         echo -ne "\r\033[K$v_data "
-         sleep 1
-      done
-
-   elif  [ $1 == "h" ]; then
-      echo 'DRYa: Command `data` with alias `d`'
-      echo ' > `data`'
-      echo ' > `data h`'
-      echo ' > `data hr`'
-      echo ' > `data v`'
-      echo ' > `data min`'
-      echo ' > `data seg`'
-
-   elif  [ $1 == "v" ]; then
-      # Imprime 1x a data 
-      # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
-
-         v_data=$(date +'%Y-%m-%d_%Hh-%Mm-%Ss')
-         echo -e "Data-Hora_$v_data "
-
-   elif  [ $1 == "hr" ]; then
-      # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
-      # uDev: fx para print apenas 1x sem loop
-      while true
-      do
-         
-         # Instrucoes:
-            # echo -ne "\r"      ## Move o cursor para o inicio da linha
-            # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
-
-         v_data=$(date +'%Y-%m-%d %H:%M:%S')
-         echo -ne "\r\033[KData/Hora: $v_data "
-         sleep 1
-
-      done
-
-
-   elif  [ $1 == "min" ]; then
-      tput setaf 3
-      echo "Data e hora (Durante 1 minuto)"
-      echo " > Cancelar [Ctrl + C]"
-      tput sgr 0
-
-      # Translating to Portuguese and storing in a variable
-      if [ $(date +%A) == "Monday"    ]; then v_dia=Segunda; fi
-      if [ $(date +%A) == "Tuesday"   ]; then v_dia=Terça;   fi
-      if [ $(date +%A) == "Wednesday" ]; then v_dia=Quarta;  fi
-      if [ $(date +%A) == "Thursday"  ]; then v_dia=Quinta;  fi
-      if [ $(date +%A) == "Friday"    ]; then v_dia=Sexta;   fi
-      if [ $(date +%A) == "Saturday"  ]; then v_dia=Sabado;  fi
-      if [ $(date +%A) == "Sunday"    ]; then v_dia=Domingo; fi
-
-      # Output the date and time for 60 seconds
-      for i in {1..60}
-      do
-         echo -n "$v_dia "
-         date +"%d/%m/%Y %H:%M:%S"
-         sleep 1
-      done
-
-
-   elif  [ $1 == "seg" ]; then
-      tput setaf 3
-      echo "Data e hora (Durante 1 segundo)"
-      tput sgr 0
-
-      # Translating to Portuguese and storing in a variable
-      if [ $(date +%A) == "Monday"    ]; then v_dia=Segunda; fi
-      if [ $(date +%A) == "Tuesday"   ]; then v_dia=Terça;   fi
-      if [ $(date +%A) == "Wednesday" ]; then v_dia=Quarta;  fi
-      if [ $(date +%A) == "Thursday"  ]; then v_dia=Quinta;  fi
-      if [ $(date +%A) == "Friday"    ]; then v_dia=Sexta;   fi
-      if [ $(date +%A) == "Saturday"  ]; then v_dia=Sabado;  fi
-      if [ $(date +%A) == "Sunday"    ]; then v_dia=Domingo; fi
-
-      # Output the date and time for 1 second
-      echo -n "$v_dia "
-      date +"%d/%m/%Y %H:%M:%S"
-
-   fi
-
-}
-alias d=data  # Fx `data` already exists and this is an abreviation
-
+alias d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
 #alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
 alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD.org"
@@ -852,6 +743,8 @@ f_emacs
 
 alias a="cd all && ls"
 alias hi="hello!"
+
+alias ipconfig="ifconfig"  # Imitating windows
 
 # uDev: to put under menuFAV F
 alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
