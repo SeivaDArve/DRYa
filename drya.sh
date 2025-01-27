@@ -1054,7 +1054,7 @@ function f_dot_files_install {
    #       Install: font: Monospace (best for terminal)
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
-   #L10="10. stroken"  # It is part of .netrc
+   #L10="10. stroken"  # It is part of .netrc 
 
     L11="11. termux.properties"
     L10='10. .emacs.d/'  # uDev: remove from flunav `S 2`
