@@ -750,7 +750,7 @@ function f_menu_internet_network_ip_options {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh && f_list_ip_public_n_local
+      [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
       [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -1054,6 +1054,7 @@ function f_dot_files_install {
    #       Install: font: Monospace (best for terminal)
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
+   #L10="10. stroken"  # It is part of .netrc
 
     L11="11. termux.properties"
     L10='10. .emacs.d/'  # uDev: remove from flunav `S 2`
@@ -1874,7 +1875,12 @@ elif [ $1 == "edit" ]; then
       ;;
       termux)
          # Will edit termux.properties file at ~/.termux/termux.properties
-         echo uDev
+         echo "Please reverse the args:"
+         echo " > drya dot edit termux"
+      ;;
+      dot)
+         echo "Please reverse the args:"
+         echo " > drya dot edit"
       ;;
       *)
          echo "drya: What do you want to edit?"
