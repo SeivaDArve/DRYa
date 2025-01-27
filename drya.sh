@@ -715,8 +715,6 @@ function f_dotFiles_install_netrc {
 function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
 
-   f_greet
-
    # Obtendo o IP público usando curl e um serviço online
       PUBLIC_IP=$(curl -s ifconfig.me)
 
@@ -731,15 +729,15 @@ function f_list_ip_public_n_local {
 
    # Imprimindo os resultados
       echo "IP Público: $PUBLIC_IP"
-      echo "IP Local: $LOCAL_IP"
+      echo "IP Local:   $LOCAL_IP"
 }
 
-function f_menu_ip_options {
+function f_menu_internet_network_ip_options {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Assign | New random IP'                                      
-      L3='3. Ver    | IP publico e local'                                      
+      L3='3. Assign | New random IP'                                      
+      L2='2. Ver    | IP publico e local'                                      
    
       L1='1. Cancel'
 
@@ -752,8 +750,8 @@ function f_menu_ip_options {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "3. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh
-      [[ $v_list =~ "2. " ]] && f_list_ip_public_n_local
+      [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/new-random-ip.sh && f_list_ip_public_n_local
+      [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
@@ -1162,7 +1160,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Script | youtube-dl-wrapper.sh
          # L12='12. Mount drivers com `lsblk`
 
-         L13='13. Menu   | IP options'
+         L13='13. Menu   | Internet / Network / IP'
          L12='12. Script | sshfs-wrapper'
          L11='11. Menu   | Audio Media Player'  
          L10='10. Print  | Previsao do Tempo'
@@ -1184,7 +1182,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "13. " ]] && f_menu_ip_options
+         [[ $v_list =~ "13. " ]] && f_menu_internet_network_ip_options
          [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
          [[ $v_list =~ "11. " ]] && f_menu_audio_media_player
          [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
@@ -1631,7 +1629,7 @@ elif [ $1 == "seiva-up-time" ]; then
 
 
 elif [ $1 == "ip" ]; then 
-   f_menu_ip_options
+   f_menu_internet_network_ip_options
 
 elif [ $1 == "mac" ]; then 
 
@@ -1670,15 +1668,15 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
       # Main Menu for dot-files
       f_dot_files_menu  
 
-   elif [[ $2 == "list-ready-and-uDev" ]] || [[ $2 == "list" ]]; then 
+   elif [ $2 == "ls" ] || [[ $2 == "list-ready-and-uDev" ]] || [[ $2 == "list" ]]; then 
       # List dot-files available in DRYa repo
       f_dot_files_list_available
 
-   elif [[ $2 == "install" ]]; then 
+   elif [[ $2 == "install" ]] || [ $2 == "I" ]; then 
       # Menu to install dot files
       f_dot_files_install
 
-   elif [[ $2 == "remove" ]]; then 
+   elif [[ $2 == "remove" ]] || [ $2 == "O" ]; then 
       echo "uDev"
 
    elif [[ $2 == "backup" ]]; then 
@@ -1864,7 +1862,7 @@ elif [ $1 == "edit" ]; then
             # Using the alias set on 'source-all-drya-files'
                # '$ ,.' 
       ;;
-      source | source-drya | source-all-drya-files) 
+      src | source | source-drya | source-all-drya-files) 
          vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
 
          # Other ways to open the same file: 
