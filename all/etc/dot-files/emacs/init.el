@@ -244,28 +244,48 @@
     '((python . t)))
 
 
+
+
+
+
+
+
 ;; Installing dracula-theme (From: https://draculatheme.com/emacs)
-   ;; Add these to the init file:
-      (require 'package)
-      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-      ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-      ;; and `package-pinned-packages`. Most users will not need or want to do this.
-      ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-      (package-initialize)
-      ;; Note that you'll need to run M-x package-refresh-contents or M-x package-list-packages to ensure that Emacs has fetched the MELPA package list before you can install packages with M-x package-install or similar.
+   ;;
+   ;; uDev: If dracula-theme is not installed manually inside emacs, this fx at init.el will break the initialization and the remaining if the file will not load after these lines
+   ;;       If is better to comment broken lines than prevent remaining functions to load
+   ;;
+   ;;       (defun add-dracula
+   ;;          ;; Add these to the init file:
+   ;;             (require 'package)
+   ;;             (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+   ;;             ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+   ;;             ;; and `package-pinned-packages`. Most users will not need or want to do this.
+   ;;             ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+   ;;             (package-initialize)
+   ;;             ;; Note that you'll need to run M-x package-refresh-contents or M-x package-list-packages to ensure that Emacs has fetched the MELPA package list before you can install packages with M-x package-install or similar.
 
-   ;; To install dracula-theme:
-      ;; M-x package-install <RET> dracula-theme
+   ;;          ;; To install dracula-theme:
+   ;;             ;; M-x package-install <RET> dracula-theme
 
-      ;;To load a theme add the following to your init.el
-      (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-      (load-theme 'dracula t)
+   ;;             ;;To load a theme add the following to your init.el
+   ;;             (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+   ;;             (load-theme 'dracula t))
+   ;;        
+   ;;       ;; Run previously defined fx:
+   ;;          ;;(add-dracula)
+
+
+
+
+
+
 
 
 ;;; Adding Melpa
-    (add-to-list 'package-archives
-                 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
+;;   (add-to-list 'package-archives
+;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;;
 ;;    
 ;;    ;;(add-to-list 'custom-theme-load-path "c:/Users/Dv-User/AppData/Roaming/.emacs.d/themes")
 ;;    ;;(load-theme 'dracula t)
