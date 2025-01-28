@@ -1097,11 +1097,11 @@ function f_dot_files_menu {
 
       #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
       #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L7="7. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L6="6. Menu | Backups"
+      L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+      L8="8. Menu | Backups"
 
-      L5="5. Edit | Centralized only @ DRYa"
-      L5='5. Edit | Installed only   @ Host'
+      L7='7. Edit | Installed files:   only @ Host'
+      L6="6. Edit | Centralized files: only @ DRYa"
       L5='5. Edit | Centralized > Install'
 
       L4="4. Menu | Uninstall "
@@ -1111,9 +1111,11 @@ function f_dot_files_menu {
 
       L0="Menu: Manage dot-files: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
+      [[ $v_list =~ "9. " ]] && echo "Detetado 9"
+      [[ $v_list =~ "8. " ]] && echo "Detetado 8"
       [[ $v_list =~ "7. " ]] && echo "Detetado 7"
       [[ $v_list =~ "6. " ]] && echo "Detetado 6"
       [[ $v_list =~ "5. " ]] && echo "Detetado 5"
