@@ -1100,6 +1100,8 @@ function f_dot_files_menu {
       L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L8="8. Menu | Backups"
 
+      #L7='7. Menu | Mangage ./termux at Host'
+
       L7='7. Edit | Installed files:   only @ Host'
       L6="6. Edit | Centralized files: only @ DRYa"
       L5='5. Edit | Centralized > Install'
@@ -1162,6 +1164,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
          # L12='12. Mount drivers com `lsblk`
+         # L14='14. Menu   | Termux Menu'
 
          L13='13. Menu   | Internet / Network / IP'
          L12='12. Script | sshfs-wrapper'

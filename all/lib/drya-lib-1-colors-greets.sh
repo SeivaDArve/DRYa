@@ -223,3 +223,14 @@ function f_verticline {
    	echo -ne "   |\n" 
 	done
 }
+
+#  function f_nr_test {
+#     # Testa se a Var fornecida é numero ou nao
+#     # v_nr
+#     
+#     case $v_nr in
+#        1 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0)
+#           v_nr=true
+#           ;;
+#     esac
+#  }
