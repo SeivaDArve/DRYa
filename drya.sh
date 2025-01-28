@@ -6,86 +6,90 @@
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
-function f_greet {
-   # Presents a Nice visual ascii name/logo for this entire script
-
-   # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
-   # "     "    "  is not insfalled: print only a message
-
-   # If figlet not installed, use this message instead
-      v_2nd_option="( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
-
-   # CORDN_5_10='\033[5;23H'
-   # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
-   # 
-   # uDev: Confirmar se no futuro pode haver problemas com a font
-
-   clear
-   figlet DRYa 2>/dev/null || echo -e "$v_2nd_option"
-}
-
-function f_greet2 {
-   # Prints a more verbose output of the ascii text "DRYa" then f_greet
-
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh 2>/dev/null \
-      || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-}
-
-function f_talk {
-   # Copied from: ezGIT
-         echo
-   f_c4; echo -n "DRYa: "
-   f_rc
-}
-
-function f_done {
-   # Copied from: ezGIT
-   f_c5; echo -n ": Done"
-   f_rc
-}
-
-function f_prsK {
-   # Press Any key to continue
-   # Or wait X seconds
+   v_greet="DRYa"
+   v_talk="DRYa: "
 
 
-
-
-
- 
-   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-      # EXEMPLO:
-      #
-      # v_txt="Editado X"
-      # f_prsK
-      #
-      # EFEITO: 
-      # DRYa: Are you sure: "Editar X"
-      #  > Are you sure? (Press ANY key to confirm) 
-
-
-
-   # Set how many seconds to wait before automatically continue
-      v_secs=5
-
-   # Message
-      v_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
-
-   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
-      [[ -z $v_txt ]] && v_txt=" ... "
-
-   # Text to print
-         #echo
-   f_talk; echo -n 'Are you sure? `'
-     f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-     f_rc; echo '`'
-           echo -n "$v_msg"
-           read -sn1
-     f_rc; echo -e "\r\033[K > A Continuar..."
-
-   # Removing variables before the fx finished
-      unset v_txt
-}
+#     function f_greet {
+#        # Presents a Nice visual ascii name/logo for this entire script
+#     
+#        # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
+#        # "     "    "  is not insfalled: print only a message
+#     
+#        # If figlet not installed, use this message instead
+#           v_2nd_option="( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
+#     
+#        # CORDN_5_10='\033[5;23H'
+#        # echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
+#        # 
+#        # uDev: Confirmar se no futuro pode haver problemas com a font
+#     
+#        clear
+#        figlet DRYa 2>/dev/null || echo -e "$v_2nd_option"
+#     }
+#     
+#     function f_greet2 {
+#        # Prints a more verbose output of the ascii text "DRYa" then f_greet
+#     
+#        bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh 2>/dev/null \
+#           || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+#     }
+#     
+#     function f_talk {
+#        # Copied from: ezGIT
+#              echo
+#        f_c4; echo -n "DRYa: "
+#        f_rc
+#     }
+#     
+#     function f_done {
+#        # Copied from: ezGIT
+#        f_c5; echo -n ": Done"
+#        f_rc
+#     }
+#     
+#     function f_prsK {
+#        # Press Any key to continue
+#        # Or wait X seconds
+#     
+#     
+#     
+#     
+#     
+#      
+#        # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+#           # EXEMPLO:
+#           #
+#           # v_txt="Editado X"
+#           # f_prsK
+#           #
+#           # EFEITO: 
+#           # DRYa: Are you sure: "Editar X"
+#           #  > Are you sure? (Press ANY key to confirm) 
+#     
+#     
+#     
+#        # Set how many seconds to wait before automatically continue
+#           v_secs=5
+#     
+#        # Message
+#           v_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
+#     
+#        # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+#           [[ -z $v_txt ]] && v_txt=" ... "
+#     
+#        # Text to print
+#              #echo
+#        f_talk; echo -n 'Are you sure? `'
+#          f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+#          f_rc; echo '`'
+#                echo -n "$v_msg"
+#                read -sn1
+#          f_rc; echo -e "\r\033[K > A Continuar..."
+#     
+#        # Removing variables before the fx finished
+#           unset v_txt
+#     }
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -1335,11 +1339,12 @@ if [ -z "$*" ]; then
    # Temporized Quick menu
       f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
               echo    "       |"
-              echo -n "       |_ To open MAIN fzf menu, press NOW: '"; f_c5; echo -n "d"; f_rc; echo -n "' or '"; f_c5; echo -n "."; f_rc; echo "'"
-              echo -n '       |_ Equivalent Terminal commands: `'; f_c5; echo -n 'D .'; f_rc; echo '`' 
+              echo -n "       |_ To open MAIN fzf menu, press NOW: '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
+              echo -n '       |_ Equivalent Terminal commands: `';         f_c5; echo -n 'D .';     f_rc; echo '`' 
 
    
    # Options available during only few seconds
+                    echo
       f_talk; f_c5; echo -en "listening... "; f_rc
 
       read -sn1 -t $v_secs v_ans
@@ -2059,6 +2064,7 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
+   f_greet
    f_talk; echo "uDev: Options to set keyboard"
     
 elif [ $1 == "set-timezone" ] || [ $1 == "timez" ]; then 
