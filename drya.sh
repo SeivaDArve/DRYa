@@ -6,8 +6,103 @@
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
+<<<<<<< Updated upstream
    v_greet="DRYa"
    v_talk="DRYa: "
+=======
+      figlet DRYa 2>/dev/null \
+      || echo -e "( DRYa ):\vrunning: drya.sh\n         figlet:  Not installed"
+
+      CORDN_5_10='\033[5;23H'
+      echo -e "$CORDN_5_10 Don't Repeat Yourself (app)"
+
+      #uDev: Confirmar se no futuro pode haver problemas com a font
+}
+
+function f_greet2 {
+   # Prints a more verbose output of the ascii text "DRYa" then f_greet
+      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+}
+
+# Functions for text colors (used usually with `figlet`)
+   function f_c1 {	
+      # This function is to be used when something is SEARCHED
+      tput setaf 5 
+   }
+
+   function f_c2 { 
+      tput setaf 2 
+   }
+
+   function f_c3 { 
+      # Mentioning user input or valiable input
+      # This function is to be used when something is DECLAIRED
+      tput setaf 3
+   }
+
+   function f_c4 { 
+      # Similar to Bold. Used in: f_talk
+      # This function is to be used when something is ASKED
+      tput setaf 4
+   }
+
+   function f_c5 { 
+      # Similar to Bold
+      tput setaf 6
+   }
+
+   function f_c6 { 
+      # Used for ASCII Drya Logo, centered to the screen
+      tput setaf 28
+      tput bold
+   }
+
+   function f_rc { 
+      # This function is to be used when styles are to be CLEARED
+      tput sgr0
+   }
+
+   function f_colors_without_tput {
+      # Text Colors before discovering '$ tput setaf'
+         _RESTORE=$(echo -en '\001\033[0m\002')
+             _RED=$(echo -en '\001\033[00;31m\002')
+
+      # Example of Text formating before discovering '$ tput'
+      # > `echo ${_RED}To do something, specify an argument like \"G 2\"${_RESTORE}`
+   }  
+
+   function f_cursorON {
+      # Show cursor normally. Use "tput civis" to hide
+      tput cnorm
+   }
+
+function f_cursorOFF {
+	# Hide cursor to prevent flickering of the screen. Use "tput cnorm" to show again
+	tput civis
+}
+
+function f_rc_cursor {
+	tput cup 25 4
+}
+      
+function f_talk {
+   # Copied from: ezGIT
+         echo
+   f_c4; echo -n "DRYa: "
+   f_rc
+}
+
+function f_prsK {
+   # Press Any key to continue
+   # Or wait X seconds
+
+   
+   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+      # EXEMPLO:
+      #
+      # v_txt="Vai ser de seguida editado o ficheiro X"
+      # f_prsK
+>>>>>>> Stashed changes
 
 
 #     function f_greet {

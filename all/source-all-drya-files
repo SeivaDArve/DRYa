@@ -324,7 +324,11 @@ function f_repository_upK-diario-Dv {
 function f_repository_112-Shiva-Sutras {
    # Repository: 112-Shiva-Sutras
 
+<<<<<<< Updated upstream
    # Attemple to clear `less` 1st lime alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
+=======
+   alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
+>>>>>>> Stashed changes
    alias Ss="ss all | less"
    alias SS="ss all | less"
    alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
