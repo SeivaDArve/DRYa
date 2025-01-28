@@ -125,13 +125,15 @@ function f_one_second_date {
 
 
 if [ -z $1 ]; then
-   f_complete_date
+   f_complete_date 
    echo
 
 elif  [ $1 == "L" ]; then
    # Data completa esclarecida em loop com ASCII
    clear
-   figlet '` data `'
+   figlet 'DRYa'
+   echo "DRYa: data.sh"
+   echo "----------------------------------------------------------"
    f_complete_date_loop
 
 elif  [ $1 == "l" ]; then

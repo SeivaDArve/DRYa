@@ -121,7 +121,9 @@ function f_greet {
    # If figlet app is not insfalled: print only a message
 
    clear
+   f_c2
    figlet $v_greet 2>/dev/null || echo -e "$v_2nd_option"
+   f_rc
 }
 
 function f_greet2 {
@@ -137,17 +139,24 @@ function f_talk {
    # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
       [[ -z $v_talk ]] && v_talk="<v_talk>"
 
-         echo
-   f_c4; echo -n "$v_talk"
+   f_c2; echo -n "$v_talk"
    f_rc
 }
 
-function f_done {
+function f_success {
    # Use this to give confirmation the previous command has sucessfull
+   # EXAMPLE: 
+   #   [[ $? == "0" ]] && v_success="Task nr 1" && f_success
 
-   # EXAMPLE: `apt install <command> && f_done
+   f_talk; echo -n "$v_success"
+     f_c5; echo              ": Done"
+     f_rc
+}
 
-   f_c5; echo -n ": Done"
+function f_done {
+   # Use this after all precesses are finished
+
+   f_talk; echo "Done!"
    f_rc
 }
 
