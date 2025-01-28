@@ -1012,6 +1012,11 @@ function f_dot_files_install {
       unset v_list
 }
 
+function f_dot_files_menu_edit_host_files {
+   #L7='7. Menu | Mangage ./termux at Host'
+   echo "uDev"
+}
+
 function f_dot_files_menu {
    # Main Menu for dot files
 
@@ -1021,8 +1026,6 @@ function f_dot_files_menu {
       #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L8="8. Menu | Backups"
-
-      #L7='7. Menu | Mangage ./termux at Host'
 
       L7='7. Edit | Installed files:   only @ Host'
       L6="6. Edit | Centralized files: only @ DRYa"
@@ -1040,7 +1043,7 @@ function f_dot_files_menu {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "9. " ]] && echo "Detetado 9"
       [[ $v_list =~ "8. " ]] && echo "Detetado 8"
-      [[ $v_list =~ "7. " ]] && echo "Detetado 7"
+      [[ $v_list =~ "7. " ]] && f_dot_files_menu_edit_host_files
       [[ $v_list =~ "6. " ]] && echo "Detetado 6"
       [[ $v_list =~ "5. " ]] && echo "Detetado 5"
       [[ $v_list =~ "4. " ]] && echo "Detetado 4"
@@ -1086,7 +1089,6 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
          # L12='12. Mount drivers com `lsblk`
-         # L14='14. Menu   | Termux Menu'
 
          L13='13. Menu   | Internet / Network / IP'
          L12='12. Script | sshfs-wrapper'
