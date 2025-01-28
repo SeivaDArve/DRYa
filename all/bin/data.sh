@@ -41,6 +41,7 @@ function f_help {
    echo 'DRYa: Command `data` with alias `d`'
    echo ' > `data`      # Output 1x Current time'
    echo ' > `data h`    # Help and Instructions'
+   echo ' > `data L`    # Loop Current time with figlet'
    echo ' > `data l`    # Loop Current time'
    echo ' > `data hr`   # Loop Current hour'
    echo ' > `data v`    # Output 1x variable-like time'
@@ -126,6 +127,12 @@ function f_one_second_date {
 if [ -z $1 ]; then
    f_complete_date
    echo
+
+elif  [ $1 == "L" ]; then
+   # Data completa esclarecida em loop com ASCII
+   clear
+   figlet '` data `'
+   f_complete_date_loop
 
 elif  [ $1 == "l" ]; then
    # Data completa esclarecida em loop
