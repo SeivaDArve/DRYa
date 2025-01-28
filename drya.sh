@@ -1027,9 +1027,9 @@ function f_dot_files_menu {
       L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
       L8="8. Menu | Backups"
 
-      L7='7. Edit | Installed files:   only @ Host'
-      L6="6. Edit | Centralized files: only @ DRYa"
-      L5='5. Edit | Centralized > Install'
+      L7='7. Edit | Installed files   | only @ Host'
+      L6="6. Edit | Centralized files | only @ DRYa"
+      L5='5. Edit | Centralized > then > Install'
 
       L4="4. Menu | Uninstall "
       L3="3. Menu | Install" 
