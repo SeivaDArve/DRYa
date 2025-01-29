@@ -105,20 +105,17 @@ function f_cOFF {
 }
 
 function f_greet {
-   # Presents a Nice visual ascii name/logo for this entire script
+   # Presents a nice visual ascii name/logo if figlet is installed
+   # Presents a text massage with name/logo if figlet is NOT installed
 
-   # uDev: Confirmar se no futuro pode haver problemas com a fon
+   # uDev: Confirmar se no futuro pode haver problemas com a font: Enviar para omni-log
 
-   # If previously no script gave the variable $v_greet, then, assign "DRYa-lib-1" to it
+   # If previously the variable $v_greet was not set by any script, then assign a <Placeholder> to it.
       [[ -z $v_greet ]] && v_greet="<v_greet>"
 
    # Creting an alternative message in case figlet is not installed
       v_basename=$(basename $0)
-      v_2nd_option="( $v_greet ):\vrunning: $v_basename\v\`figlet\`  Not installed"
-
-
-   # If figlet app is installed:     print an ascii version of the text "DRYa" to improve the appearence of the app
-   # If figlet app is not insfalled: print only a message
+      v_2nd_option="<< $v_greet >>\n\n > Running: $v_basename\n > Missing: \`figlet\` \n"
 
    clear
    f_c2
