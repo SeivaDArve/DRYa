@@ -504,8 +504,6 @@ function f_dotFiles_install_git {
    cp $v_file $v_place && f_talk && echo "Done! "
 }
 
-
-
 function f_dotFiles_install_vim {
    # Install .vimrc on the system
 
@@ -586,7 +584,6 @@ function f_dotFiles_install_tm_tmux {
 function f_dotFiles_install_dryarc {
    f_talk; echo "source .dryarc if any exists (uDev)"
 }
-
 
 function f_dotFiles_install_netrc {
    # Installing .netrc at ~
@@ -676,9 +673,6 @@ function f_menu_internet_network_ip_options {
       [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
-    
-
-
 }
 
 function f_menu_audio_media_player {
@@ -1012,9 +1006,53 @@ function f_dot_files_install {
       unset v_list
 }
 
+function f_dot_files_menu_edit_host_files_termux_properties {
+   #Mangage ./termux at Host'
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3='3. Edit       | termux.properties file'                                      
+      L2='2. Manipulate | Termux Properties as menu'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: Edit @ Host files: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "3. " ]] && vim ~/.termux/termux.properties
+      [[ $v_list =~ "2. " ]] && echo "uDev"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
 function f_dot_files_menu_edit_host_files {
-   #L7='7. Menu | Mangage ./termux at Host'
-   echo "uDev"
+   # Edit dot files only @ host system
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Menu | Termux'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: Edit @ Host files: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "2. " ]] && f_dot_files_menu_edit_host_files_termux_properties
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
 }
 
 function f_dot_files_menu {
@@ -1053,7 +1091,6 @@ function f_dot_files_menu {
    
       unset v_list
 }
-
 
 function f_drya_fzf_MM_Toolbox {
    # Funcoes inbutidas na Repo DRYa 
@@ -1197,7 +1234,6 @@ function f_instructions_of_usage {
       exit 1
 }
 
-
 function f_exec {
    # When invalid args are given at the teminal: 
       #f_greet
@@ -1215,7 +1251,6 @@ function f_exec {
    # If no arg was given, also navigate do DRYa's repo directory
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
       cd ${v_REPOS_CENTER}/DRYa
-
 }
 
 
@@ -1997,7 +2032,8 @@ elif [ $1 == "vlm" ]; then
    # Works on termux only
       # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
 
-   echo uDev
+      echo "uDev: Send to Termux menu (that manipulates the entire termux.properties file)"
+      f_dot_files_menu_edit_host_files_termux_properties
 
    #echo "volume keys on Termux toggled. Now they act as X instead of Y"
    # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
