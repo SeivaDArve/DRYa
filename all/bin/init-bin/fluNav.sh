@@ -300,21 +300,21 @@ function f_edit_self {
 function f_sync_ez_b4_after {
    # Sync with ezGIT Before and After the file is opened
 
-      cd ${v_REPOS_CENTER}/$v_parent && \
+   cd ${v_REPOS_CENTER}/$v_parent && \
 
-      echo 
-      echo "Will be syncronized only with ezGIT"
-      echo " > Before + After edition"
-      echo
-      echo "Do you want to continue? (Press any key)"
-      echo " > Press Ctrl-C to land on its dir only"
-      read -s -n 1
+   echo 
+   echo "Will be syncronized only with ezGIT"
+   echo " > Before + After edition"
+   echo
+   echo "Do you want to continue? (Press any key)"
+   echo " > Press Ctrl-C to land on its dir only"
+   read -s -n 1
 
-      G v && \
-      EM $v_file && \
-      G ++ b
-      echo
-      echo Done!
+   G v && \
+   EM $v_file && \
+   G ++ b
+   echo
+   echo Done!
 }
 
 
@@ -461,35 +461,6 @@ function ....... {
            echo " > $v"
 }
 
-function f_fzf_mobile_android {
-   # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='fluNav mobile'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-
-      L6='6. Go | Internal storage'
-      L5='5. Go | SD Card storage'
-      L4='4. Go | USB storage'
-      L3='3. Go | .../mnt/USB (uDev: mounted USB. May use nanD)'
-      L2='2. Go | .../Internal storage/Termux-bridge-Android'
-
-      L1='1. Cancel'
-
-      L0="SELECT 1: Menu X: "
-      
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
-
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
-
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
-      unset v_list
-}
-
 function E {
    # Escolher editor de texto para pre-definir 
 
@@ -579,131 +550,218 @@ function f_menu_fzf_S {
     
 }
 
+function f_fzf_mobile_android {
+   # Navigate to places under `V mb`
+   #    For `V mb` it is the arg $2 "f" or no arguments
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='V mb'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L8='8. Go | WSL: C:\ '
+      L7='7. Go | .../Internal storage/Termux-bridge-Android'
+      L6='6. Go | .../mnt/USB (uDev: mounted USB. May use nanD)'
+      L5='5. Go | external USB storage'
+      L4='4. Go | SD Card storage'
+      L3='3. Go | Internal storage'
+
+      L2='2. Help/ Instructions'
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "8. " ]] && f_mobile_android_going_wsl
+      [[ $v_list =~ "7. " ]] && f_mobile_android_going_termux_bridge_android
+      [[ $v_list =~ "6. " ]] && f_mobile_android_going_USB_mnt_dir
+      [[ $v_list =~ "5. " ]] && f_mobile_android_going_external_USB
+      [[ $v_list =~ "4. " ]] && f_mobile_android_going_SD_card_storage
+      [[ $v_list =~ "3. " ]] && f_mobile_android_going_internal_storage
+      [[ $v_list =~ "2. " ]] && f_mobile_android_instructions
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
+function f_mobile_android_instructions {
+   # Present Help and Instructions for `V mb`
+   #    For `V mb` it is the arg $2 "h"
+
+   echo "How to use:"
+   echo "$ V mb [0|1|2|3|b|w|f|h]"
+   echo '0) # Travel to Internal storage'
+   echo '1) # Travel to SD Card storage'
+   echo '2) # Travel to USB storage'
+   echo '3) # Travel to the dir where many USB storages are mounted'
+   echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
+   echo 'w) # Travel to directories related to wsl like C:\'
+   echo 'f) # Menu fzz about all this'
+   echo 'h) # Help and instructions'
+}
+
+function f_mobile_android_going_internal_storage {
+   # Navigate to Internal Storage
+   #    For `V mb` it is the arg $2 "0"
+
+   # uDev: clear; pwd; echo "you are in X dir"
+   echo "Internal storage"
+   pwd
+   echo
+
+   f_greet
+   echo "Internal Storage"
+   f_horiz_line
+
+   cd /sdcard && ls
+}
+
+function f_mobile_android_going_SD_card_storage {
+   # Navigate to phone SD Card directory
+   #    For `V mb` it is the arg $2 "1"
+
+   v_place_2=/storage/0123-4567
+   v_place_3=/storage/
+
+   f_greet
+
+   echo "SD card storage"
+   echo
+   echo "Termux cannot WRITE to SD card,"
+   echo "but can READ and RUN bash scripts from it"
+   echo "If you have a huge database to store into SD external"
+   echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+   echo "file explorer, MOVE it to the SD card"
+   echo
+
+   echo "Listing: $v_place_2"
+   echo "Listing: $v_place_3"
+   echo
+
+   echo "SD card Storage"
+   f_horiz_line
+
+   cd $v_place_2 && ls
+   f_horiz_line
+   cd $v_place_3 && ls
+}
+
+function f_mobile_android_going_external_USB {
+   # Navigate to External USB (at a phone)
+   #    For `V mb` it is the arg $2 "2"
+
+   echo "USB Storage"
+   pwd
+   echo
+
+   f_greet
+   echo "USB Storage"
+   f_horiz_line
+
+   cd /storage/83DB-10EA && ls || cd /storage && ls
+}
+
+function f_mobile_android_going_USB_mnt_dir {
+   # Navigate to 
+   #    For `V mb` it is the arg $2 "3"
+
+   echo "List of options for: USB storage"
+   pwd
+   echo
+
+   f_greet
+   echo "Listing possible USB plugged in"
+   f_horiz_line
+
+   cd /storage && ls
+
+   read -p "pause..."
+
+   echo "Maybe Termux cannot WRITE to SD card,"
+   echo "but can READ and RUN bash scripts from it"
+   echo "If you have a huge database to store into SD external"
+   echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
+   echo "file explorer, MOVE it to the SD card"
+   echo
+
+   f_greet
+   echo "SD card Storage"
+   f_horiz_line
+
+   echo "Do you need directories to be created in order to MOVE"
+   echo "internal things to external SD?"
+   echo 
+   echo "If you want a directory called \"Repositories\" in both"
+   echo "External and Internal storage, press ENTER 3x"
+   echo "(or cancel with CTRL + C)"
+   echo
+   echo "#uDev: create an option to ask for custom dir name"
+   echo "(default is /storage/Repositories"
+   read
+   read
+   read
+}
+
+function f_mobile_android_going_termux_bridge_android {
+   # Navigate to termux-bridge-android
+   #    For `V mb` it is the arg $2 "b"
+
+   f_greet
+
+   echo "Directory: Internal Storage: Termux-bridge-Android"
+
+   f_horiz_line
+
+   cd /sdcard/Termux-bridge-Android && ls
+}
+
+function f_mobile_android_going_wsl {
+   # Navigate to WSL (Windows subsistem for linux)
+   #   For `V mb` it is the arg $2 "w"
+
+   echo 'uDev: Navigating to C:\\ or Documents'
+}
+
 function f_mobile_android {
-   # if [ -z $2 ]; then 
+   #uDev: May be needed termux-setup-storage to access some directories
 
-    
+   if [ -z $v_arg2 ]; then 
+      # If `V mb` does not come with one more arg ($2) then, menu fzf:
+      f_fzf_mobile_android
 
+   else
+      # If `V mb` come with more args, act accordingly:
 
-
-
-
-   case $v_arg2 in
-      0) # Travel to Internal storage
-         # uDev: clear; pwd; echo "you are in X dir"
-         echo "Internal storage"
-         pwd
-         echo
-
-         f_greet
-         echo "Internal Storage"
-         f_horiz_line
-
-         cd /sdcard && ls
-      ;;
-      1) # Travel to SD Card storage
-
-         v_place_2=/storage/0123-4567
-         v_place_3=/storage/
-
-         f_greet
-
-         echo "SD card storage"
-         echo
-         echo "Termux cannot WRITE to SD card,"
-         echo "but can READ and RUN bash scripts from it"
-         echo "If you have a huge database to store into SD external"
-         echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
-         echo "file explorer, MOVE it to the SD card"
-         echo
-
-         echo "Listing: $v_place_2"
-         echo "Listing: $v_place_3"
-         echo
-
-         echo "SD card Storage"
-         f_horiz_line
-
-         cd $v_place_2 && ls
-         f_horiz_line
-         cd $v_place_3 && ls
-
-      ;;
-      2) # Travel to USB storage
-         echo "USB Storage"
-         pwd
-         echo
-
-         f_greet
-         echo "USB Storage"
-         f_horiz_line
-
-         cd /storage/83DB-10EA && ls || cd /storage && ls
-      ;;
-      3) # Travel to the dir where many USB storages are mounted
-         echo "List of options for: USB storage"
-         pwd
-         echo
-
-         f_greet
-         echo "Listing possible USB plugged in"
-         f_horiz_line
-
-         cd /storage && ls
-      ;;
-      4) # Travel to the dir where many USB storages are mounted
-         clear
-         echo "Termux cannot WRITE to SD card,"
-         echo "but can READ and RUN bash scripts from it"
-         echo "If you have a huge database to store into SD external"
-         echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
-         echo "file explorer, MOVE it to the SD card"
-         echo
-
-         f_greet
-         echo "SD card Storage"
-         f_horiz_line
-
-         echo "Do you need directories to be created in order to MOVE"
-         echo "internal things to external SD?"
-         echo 
-         echo "If you want a directory called \"Repositories\" in both"
-         echo "External and Internal storage, press ENTER 3x"
-         echo "(or cancel with CTRL + C)"
-         echo
-         echo "#uDev: create an option to ask for custom dir name"
-         echo "(default is /storage/Repositories"
-         read
-         read
-         read
-
-      ;;
-      b) 
-         # Travel to dir at Internal storage called Termux-bridge-Android
-
-         f_greet
-         echo "Directory: Internal Storage: Termux-bridge-Android"
-         f_horiz_line
-
-         cd /sdcard/Termux-bridge-Android && ls
-      ;;
-      f) # Menu fzf about `V mb ...` 
-         # uDev: Remove everything and replace with fzf
-         f_fzf_mobile_android
-      ;;
-      *)
-         echo "How to use:"
-         echo "$ V mb [0|1|2|3|4|b|f]"
-         echo '0) # Travel to Internal storage'
-         echo '1) # Travel to SD Card storage'
-         echo '2) # Travel to USB storage'
-         echo '3) # Travel to the dir where many USB storages are mounted'
-         echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
-         echo 'f) # Menu fzz about all this'
-         #echo "wsl C:\"
-    #uDev: May be needed termux-setup-storage to access some directories
-      ;;
-   esac
+      case $v_arg2 in
+         0) # Travel to Internal storage
+            f_mobile_android_going_internal_storage
+         ;;
+         1) # Travel to SD Card storage
+            f_mobile_android_going_SD_card_storage
+         ;;
+         2) # Travel to USB storage
+            f_mobile_android_going_external_USB
+         ;;
+         3) # Travel to the dir where many USB storages are mounted
+            f_mobile_android_going_USB_mnt_dir
+         ;;
+         b) # Travel to dir at Internal storage called Termux-bridge-Android
+            f_mobile_android_going_termux_bridge_android
+         ;;
+         w) # Travel to wsl, C:\ etc..
+            f_mobile_android_going_wsl
+         ;;
+         f) # Menu fzf about `V mb ...`  ## uDev: Remove everything and replace with fzf
+            f_fzf_mobile_android
+         ;;
+         h) # Help and Instructions
+            f_mobile_android_instructions
+         ;;
+         *) # If argument is invalid, present instructions
+            f_mobile_android_instructions
+         ;;
+      esac
+   fi
 }
 
 function f_uDev {
