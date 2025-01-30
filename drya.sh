@@ -9,6 +9,35 @@
    v_greet="DRYa"
    v_talk="DRYa: "
 
+function f_instructions_of_usage {
+   # Função para exibir como usar o script
+
+   f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
+           echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
+           echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
+           echo "            Para o destino, tem de escolher um nome novo"
+           echo 
+           echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
+           echo
+           echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
+           echo 
+   f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
+           echo ' > exemplo: `origem=$(pwd)`'
+           echo ' >> `D sl $origem <novo-caminho-com-nome>`'
+           echo
+           echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
+           echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
+           echo 
+           echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
+           echo 
+   f_talk; echo "Remover um link:"
+           echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
+           echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
+      exit 1
+}
+
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
 
@@ -24,33 +53,6 @@ function f_stroken {
          f_c4;   echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
          f_rc;   echo
       fi
-}
-
-function f_Hline {
-   # Prints an horizontal line
-
-   #echo $COLUMNS # Debug
-   v_cols=$(tput cols)
-   printf "%*s" $v_cols | tr " " "_"
-}
-
-function f_horizline {
-   # Criar uma linha horizontal do tamanho correto do ecra
-
-   # Buscar tamanho correto (precisa da dependencia `tput`)
-      v_cols=$(tput cols)
-
-   # Escrever uma linha no ecra
-      for i in $(seq $v_cols); do
-         echo -ne "-" 
-      done
-}
-
-function f_verticline {
-	v_lines=$(tput lines)
-	for i in $(seq $v_lines); do
-   	echo -ne "   |\n" 
-	done
 }
 
 function f_install_drya {
@@ -1127,43 +1129,46 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Script | youtube-dl-wrapper.sh
          # L12='12. Mount drivers com `lsblk`
 
-         L13='13. Menu   | Internet / Network / IP'
-         L12='12. Script | sshfs-wrapper'
-         L11='11. Menu   | Audio Media Player'  
-         L10='10. Print  | Previsao do Tempo'
-          L9='9.  Print  | Online man pages'  
-          L8='8.  Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-          L7='7.  Menu   | no-tes '
-          L6='6.  Script | Convert `pwd` from Win to Linux'
-          L5="5.  App    | xKill"
-          L4="4.  App    | notify"
-          L3="3.  Menu   | calculos/calculadoras"
-          L2="2.  Menu   | dot-files"
+         L14='14. Menu   | Internet / Network / IP'
+         L13='13. Script | sshfs-wrapper'
+         L12='12. Menu   | Audio Media Player'  
+         L11='11. Print  | Previsao do Tempo'
+         L10='10. Print  | Online man pages'  
+          L9='9.  Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L8='8.  Menu   | no-tes '
+          L7='7.  Script | Convert `pwd` from Win to Linux'
+          L6="6.  App    | xKill"
+          L5="5.  App    | notify"
+          L4="4.  Menu   | calculos/calculadoras"
+          L3="3.  Menu   | dot-files"
+          L2='2.  Script | fluNav'
+
           L1="1.  Cancel" 
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "13. " ]] && f_menu_internet_network_ip_options
-         [[ $v_list =~ "12. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
-         [[ $v_list =~ "11. " ]] && f_menu_audio_media_player
-         [[ $v_list =~ "10. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
-         [[ $v_list =~ "9. "  ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
-         [[ $v_list =~ "8. "  ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
-         [[ $v_list =~ "7. "  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
-         [[ $v_list =~ "6. "  ]] && f_win_to_linux_pwd
-         [[ $v_list =~ "5. "  ]] && echo "uDev"
-         [[ $v_list =~ "4. "  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+         [[ $v_list =~ "14. " ]] && f_menu_internet_network_ip_options
+         [[ $v_list =~ "13. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
+         [[ $v_list =~ "12. " ]] && f_menu_audio_media_player
+         [[ $v_list =~ "11. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
+         [[ $v_list =~ "10. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
+         [[ $v_list =~ "9.  " ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+         [[ $v_list =~ "8.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
+         [[ $v_list =~ "7.  " ]] && f_win_to_linux_pwd
+         [[ $v_list =~ "6.  " ]] && echo "uDev"
+         [[ $v_list =~ "5.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
 
-         [[ $v_list =~ "3.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "3.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
-         [[ $v_list =~ "2. "  ]] && f_dot_files_menu
+         [[ $v_list =~ "3. "  ]] && f_dot_files_menu
+         [[ $v_list =~ "2. "  ]] && echo "uDev"
          [[ $v_list =~ "1. "  ]] && echo "Canceled"
 
       # Evitar loops a mais
@@ -1203,35 +1208,6 @@ function f_drya_fzf_MM {
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
-}
-
-function f_instructions_of_usage {
-   # Função para exibir como usar o script
-
-   f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
-           echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
-           echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
-           echo "            Para o destino, tem de escolher um nome novo"
-           echo 
-           echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
-           echo
-           echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
-           echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
-           echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
-           echo 
-   f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
-           echo ' > exemplo: `origem=$(pwd)`'
-           echo ' >> `D sl $origem <novo-caminho-com-nome>`'
-           echo
-           echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
-           echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
-           echo 
-           echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
-           echo 
-   f_talk; echo "Remover um link:"
-           echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
-           echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
-      exit 1
 }
 
 function f_exec {
@@ -1298,7 +1274,7 @@ if [ -z "$*" ]; then
       f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
               echo    "       |"
               echo -n "       |_ To open MAIN fzf menu, press NOW: '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
-              echo -n '       |_ Equivalent Terminal commands: `';         f_c5; echo -n 'D .';     f_rc; echo '`' 
+              echo -n '          Equivalent Terminal commands: `';         f_c5; echo -n 'D .';     f_rc; echo '`' 
 
    
    # Options available during only few seconds
@@ -2102,180 +2078,9 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
    ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
-   #echo "uDev: Step-by-step guide to create a bootable USB at windows command prompt"
+   # Step-by-step guide to create a bootable USB at windows command prompt"
 
-   function f_usb_tut_2 {  # uDev: rename to: _part_00
-      clear
-      figlet Windows USB
-   }
-
-   function f_example_0 {  # uDev: rename to: _part_0
-      echo "Procedimento para o PC reconhecer o HD"
-      echo " > Também resolve HD retirado de XBOX ONE, DVR, etc..."
-      echo 
-      echo "Para navegar no tutorial:"
-      echo " > Tecla 'S' para o passo Seguinte"
-      echo " > Tecla 'A' para o passo Anterior"
-      echo 
-   }
-
-   function f_example_1 {  # uDev: rename to: _part_1
-            echo
-      f_c1; echo    '(exemplo)'
-            echo    '|--------------------------------------------------------------|'
-            echo    '| Microsoft Windows [Version 10.0.22631.44.60                  |'
-            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-            echo    '|                                                              |'
-            echo -n '| C:\>'
-      f_c2; echo -n       'diskpart'
-      f_c1; echo                  '                                                 |'
-      f_c1; echo    '|                                                              |'
-            echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-            echo    '|                                                              |'
-            echo    '| DISKPART>'
-      f_c1; echo    '|--------------------------------------------------------------|'
-      f_rc; echo
-   }
-
-   function f_example_ask {
-      read -n 1 -p "Press [ENTER]"
-   }
-
-
-   # Greet the user
-      f_usb_tut_2
-      f_example_0 
-      f_example_ask
-
-   # Passo 1
-      # 1- No Prompt digite DISKPART, quando ele abrir aparecera escrito DISKPART a esquerda
-
-      f_usb_tut_2
-   
-      echo "Passo 1: "
-      echo "  No prompt digite DISKPART, quando ele abrir aparecerá escrito DISKPART a esquerda"
-
-      f_example_1
-      f_example_ask
-
-   # Passo 2:
-      # Passo 2: Digite LIST DISK, esse comando ira listar is HD's instalados na maquina, preste muita atencao para nao escolher o HD errado
-      f_usb_tut_2
-
-               echo    "Passo 2:"
-               echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
-               echo
-         f_c1; echo    '(exemplo)'
-               echo    '|--------------------------------------------------------------|'
-               echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-               echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-               echo    '|                                                              |'
-               echo -n '| C:\>'
-         f_c2; echo -n       'diskpart'
-         f_c1; echo                  '                                                 |'
-         f_c1; echo    '|                                                              |'
-               echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-               echo    '|                                                              |'
-               echo    '| Copyright (C) Microsoft Corporation.                         |'
-               echo    '| On computer: YourName                                        |'
-               echo    '|                                                              |'
-               echo -n '| DISKPART>'
-         f_c2; echo -n            'list disk'
-         f_c1; echo    '                                           |'
-               echo    '|                                                              |'
-               echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-               echo    '| --------  -------------  -------  -------  ---  ---          |'
-               echo    '| Disk 0    Online          476 GB      0 B        *           |'
-               echo    '| Disk 1    Online           59 GB    29 MB                    |'
-               echo    '|                                                              |'
-               echo    '| DISKPART>                                                    |'
-               echo    '|--------------------------------------------------------------|'
-         f_rc; echo
-
-      f_example_ask
-
-   # Passo 3:
-      # 3-  Digite SELECT DISK "X", no lugar do X colocar o numero referente ao HD que deseja formatar, colocar sem aspas.
-      f_usb_tut_2
-
-
-      function f_cwusb_passo_3 {
-              echo    "Passo 3:"
-              echo -n '  Digite "SELECT DISK '
-        f_c2; echo -n                       'X'
-        f_rc; echo                           '", mas no lugar do X colocar o numero'
-              echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
-              echo    "  Preste muita atençao para nao escolher o HD errado"
-              echo
-        f_c1; echo    '(exemplo)'
-              echo    '|--------------------------------------------------------------|'
-              echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-              echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-              echo    '|                                                              |'
-              echo -n '| C:\>'
-        f_c2; echo -n       'diskpart'
-        f_c1; echo                  '                                                 |'
-              echo    '|                                                              |'
-              echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-              echo    '|                                                              |'
-              echo    '| Copyright (C) Microsoft Corporation.                         |'
-              echo    '| On computer: YourName                                        |'
-              echo    '|                                                              |'
-              echo -n '| DISKPART>'
-        f_c2; echo -n            'list disk'
-        f_c1; echo                        '                                           |'
-              echo    '|                                                              |'
-              echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-              echo    '| --------  -------------  -------  -------  ---  ---          |'
-              echo    '| Disk 0    Online          476 GB      0 B        *           |'
-              echo    '| Disk 1    Online           59 GB    29 MB                    |'
-              echo    '|                                                              |'
-      }
-
-      f_cwusb_passo_3
-
-              echo    '| DISKPART>                                                    |'
-              echo    '|--------------------------------------------------------------|'
-        f_rc; echo
-        f_c4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
-        f_c1; echo -n '  DISKPART>'
-        f_c2; echo -n            'select disk '
-
-
-      function f_cwusb_passo_3_final {
-              echo -n '| DISKPART>'
-        f_c2; echo               "$v_disk"
-        f_c1; echo    '|--------------------------------------------------------------|'
-      }
-
-            
-
-            read v_disk
-      f_rc; echo
-      f_c4; echo -n " Confirme se vai selecionar o disco "
-      f_c2; echo    "$v_disk"
-      f_rc; echo    '  > "S" sim; "N" nao'
-            echo -n '  > '
-            read v_ans
-
-         v_disk="select disk $v_disk"
-
-         [[ $v_ans == "s" ]] || [[ $v_ans == "S" ]] && clear && f_usb_tut_2 && f_cwusb_passo_3 && f_cwusb_passo_3_final
-         [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]] && echo -e "\nOperacao cancelada: a Sair"; exit 
-         echo
-
-      f_rc
-      f_example_ask
-
-   #  4-  CLEAN
-   #  5-  CREATE PARTITION PRIMARY
-   #  6-  SELECT PARTITION 1
-   #  7-  ACTIVE
-   #  8-  FORMAT FS=NTFS QUICK ou FORMAT FS=FAT QUICK
-   #      (FAT para cartoes de memoria, pendrives, HDs externos e outros dispositivos).
-   #  9-  ASSIGN
-   #  10- EXIT
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
 
 elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
@@ -2331,5 +2136,3 @@ else
    # When invalid arguments are given. (May also be used to debug functions)
    f_exec
 fi
-
-
