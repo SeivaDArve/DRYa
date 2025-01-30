@@ -461,6 +461,35 @@ function ....... {
            echo " > $v"
 }
 
+function f_fzf_mobile_android {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='fluNav mobile'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L6='6. Go | Internal storage'
+      L5='5. Go | SD Card storage'
+      L4='4. Go | USB storage'
+      L3='3. Go | .../mnt/USB (uDev: mounted USB. May use nanD)'
+      L2='2. Go | .../Internal storage/Termux-bridge-Android'
+
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
+
 function E {
    # Escolher editor de texto para pre-definir 
 
@@ -552,6 +581,12 @@ function f_menu_fzf_S {
 
 function f_mobile_android {
    # if [ -z $2 ]; then 
+
+    
+
+
+
+
 
    case $v_arg2 in
       0) # Travel to Internal storage
@@ -652,14 +687,19 @@ function f_mobile_android {
 
          cd /sdcard/Termux-bridge-Android && ls
       ;;
+      f) # Menu fzf about `V mb ...` 
+         # uDev: Remove everything and replace with fzf
+         f_fzf_mobile_android
+      ;;
       *)
          echo "How to use:"
-         echo "$ V mb [0|1|2|3|4|b]"
+         echo "$ V mb [0|1|2|3|4|b|f]"
          echo '0) # Travel to Internal storage'
          echo '1) # Travel to SD Card storage'
          echo '2) # Travel to USB storage'
          echo '3) # Travel to the dir where many USB storages are mounted'
          echo 'b) # Travel to \"Internal storage/Termux-bridge-Android/\"'
+         echo 'f) # Menu fzz about all this'
          #echo "wsl C:\"
     #uDev: May be needed termux-setup-storage to access some directories
       ;;
