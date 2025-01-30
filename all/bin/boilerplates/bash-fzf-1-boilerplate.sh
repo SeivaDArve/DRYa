@@ -12,7 +12,7 @@
       L2='2. Opcao simples'                                      
       L1='1. Cancel'
 
-      L0="SELECIONE 1 do menu (exemplo): "
+      L0="SELECT 1: Menu X: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
