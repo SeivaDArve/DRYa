@@ -575,8 +575,8 @@ function f_dotFiles_install_tm_tmux {
 
    f_greet
    f_talk; echo "Installing Termux Colors + Termux properties"
-           echo " > File 1: .../DRYa/all/etc/dot-files/tmux/.tmux.conf"
-           echo " > To:  ~/"
+           echo " > Copy: .../DRYa/all/etc/dot-files/tmux/.tmux.conf"
+           echo " > To:   ~/"
 
    v_txt="Install .tmux.conf" && f_prsK
    
@@ -589,39 +589,45 @@ function f_dotFiles_install_dryarc {
 
 function f_dotFiles_install_netrc {
    # Installing .netrc at ~
-   # This file allows the user to avoid repetitive autentication (user and password) for github.com
-   # In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
+   #    This file allows the user to avoid repetitive autentication (user and password) for github.com
+   #    In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
    
    f_greet
 
-   echo "Installing Stroken as ~/.netrc"
-   echo
-   echo "Job to be done:"
-   echo " > echo \$stroken > ~/.netrc"
-   echo " > edit ~/.netrc"
-   echo
-   echo "Explanation: This script will install github's personal access token in this machine located at ~/.netrc but with a bug (also called stroken). In the end, this script will also open the file for edition and for manual correction of the token by the user."
-   echo
-   echo "Do you want to continue?"
-   echo " > Press [Any key] to continue"
-   echo " > Press Ctrl-C to exit"
-   read -s -n 1
-   echo
+   f_talk; echo "Installing Stroken as ~/.netrc"
+           echo
+   f_talk; echo "Steps of the process:"
+           echo " > 1: Copy: .../DRYa/all/etc/dot-files/git-github/current-stroken"
+           echo " > 2: To:   ~/.netrc"
+           echo " > 3: Edit: ~/.netrc"
+           echo
+   f_talk; echo "Instructions:"
+           echo "This script will install Current Seiva's github.com"
+           echo "personal access token in this machine at the location"
+           echo "of ~/.netrc but with a bug (also called stroken). "
+           echo "In the end, this script will also open the file"
+           echo "To be manually edited and manually removing the bug"
+           echo "If the bug is fixed, github will not ask for credentials"
+           echo "when uploading new commits"
+           echo
+
+   v_txt="Install .netrc"; f_prsK
+           echo
 
 
    # If DRYa is installed on ~/.bashrc then:
      # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
      # Set an alias "stroken" to read such file
 
-     # We need that stroken message in these 2 variables: 
-       v_username=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
-          v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
+     # We need that stroken message in these 2 variables, username and token: 
+       v_uName=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
+       v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
 
    # Creating a file ~/.netrc with our new stroken info
-      echo            "Machine github.com login $v_username password $v_token" > ~/.netrc
+      echo            "Machine github.com login $v_uName password $v_token" > ~/.netrc
       echo            "File created "
       echo            " > with stroken instead of a token (still contains a bug)"
-      read -s -n 1 -p " > Press [Any key] to continue and edit..."
+      f_prsK
       echo
 
    # Opening the file to edit
@@ -1128,12 +1134,13 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Fork Bomb (overload current RAM until system failure): Will need a pin
          # L12='12. Script | youtube-dl-wrapper.sh
          # L12='12. Mount drivers com `lsblk`
+         # L12='12. `curl` ticks: get current date/time
 
          L14='14. Menu   | Internet / Network / IP'
          L13='13. Script | sshfs-wrapper'
          L12='12. Menu   | Audio Media Player'  
-         L11='11. Print  | Previsao do Tempo'
-         L10='10. Print  | Online man pages'  
+         L11='11. Print  | `curl` tricks: Previsao do Tempo'
+         L10='10. Print  | `curl` tricks: Online man pages'  
           L9='9.  Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L8='8.  Menu   | no-tes '
           L7='7.  Script | Convert `pwd` from Win to Linux'
