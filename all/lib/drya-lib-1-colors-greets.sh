@@ -42,7 +42,7 @@ function f_c1 {
 function f_c2 { 
    # Fx for color 2
 
-   tput setaf 9 
+   tput setaf 12
 }
 
 function f_c3 { 
@@ -170,7 +170,7 @@ function f_suc1 {
    #     echo "Did this message work?" && f_suc1 || f_suc2
 
            echo -n " > "
-     f_c7; echo    "Success!"
+     f_c7; echo       "Success!"
      f_rc
 }
 
@@ -184,7 +184,7 @@ function f_suc2 {
    #     echo "Did this message work?" && f_suc1 || f_suc2
 
            echo -n " > "
-     f_c8; echo    "Failed!"
+     f_c8; echo       "Failed!"
      f_rc
 }
 
