@@ -111,7 +111,7 @@ function f_greet {
    # uDev: Confirmar se no futuro pode haver problemas com a font: Enviar para omni-log
 
    # If previously the variable $v_greet was not set by any script, then assign a <Placeholder> to it.
-      [[ -z $v_greet ]] && v_greet="<v_greet>"
+      [[ -z $v_greet ]] && v_greet="< v_greet >"
 
    # Creting an alternative message in case figlet is not installed
       v_basename=$(basename $0)
@@ -121,6 +121,12 @@ function f_greet {
    f_c2
    figlet $v_greet 2>/dev/null || echo -e "$v_2nd_option"
    f_rc
+}
+
+function f_Greet {
+   # Same as f_greet, but for Text that uses all the ascii space like "g" in "Yoga". This fx only adds another empty line below the ascii "g"
+   f_greet
+   echo
 }
 
 function f_greet2 {
@@ -134,7 +140,7 @@ function f_talk {
    # Colorfull text to preceed any text of any important text line
 
    # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
-      [[ -z $v_talk ]] && v_talk="<v_talk>"
+      [[ -z $v_talk ]] && v_talk="< v_talk > "
 
    f_c2; echo -n "$v_talk"
    f_rc
