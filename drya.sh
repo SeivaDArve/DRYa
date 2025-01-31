@@ -519,20 +519,24 @@ function f_dotFiles_install_vim {
    f_greet
    f_talk; echo -n "Installing "
      f_c2; echo ".vimrc"
-     f_rc
+     f_rc; echo
 
    f_talk; echo "STEP 1: Copy .vimrc"
            echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
            echo " > To:     ~/"
+           echo
 
    f_talk; echo "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
            echo " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
            echo " > to:   \"let g:dryaREPOS = '$v_v1' \" "
+           echo
 
    v_txt="Install .vimrc" && f_prsK
+           echo
    
    # Start STEP 1
       cp $v_file $v_place && f_talk && echo "STEP 1: Done! "
+           echo
 
    # Start STEP 2
       # At sed, we search patterns with /pattern
