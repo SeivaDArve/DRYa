@@ -168,10 +168,14 @@ function f_suc1 {
    # EXAMPLE: 
    #     echo "Did this message work?" && echo "Success!"
    #     echo "Did this message work?" && f_suc1 || f_suc2
+   #     echo "Did this message work?" && f_suc1 || f_suc2 && exit 1
 
            echo -n " > "
      f_c7; echo       "Success!"
      f_rc
+
+   # Set a variable to indicate exit status
+      v_suc=0
 }
 
 function f_suc2 {
@@ -182,10 +186,14 @@ function f_suc2 {
    # EXAMPLE: 
    #     echo "Did this message work?" && echo "Success!"
    #     echo "Did this message work?" && f_suc1 || f_suc2
+   #     echo "Did this message work?" && f_suc1 || f_suc2 && exit 1
 
            echo -n " > "
      f_c8; echo       "Failed!"
      f_rc
+
+   # Set a variable to indicate exit status
+      v_suc=1
 }
 
 function f_done {
@@ -278,3 +286,17 @@ function f_verticline {
 #           ;;
 #     esac
 #  }
+
+
+function f_debug {
+   # Creating a pause in the middle of the script for debugging process
+   
+   # Var to print as debug message: v_debug (do not set this var if not needed)
+   echo "Debuging... $v_debug"
+   echo -n " > 3"
+   read -sn1
+   echo -n ", 2"
+   read -sn1
+   echo -n ", 1... "
+   read -sn1
+}
