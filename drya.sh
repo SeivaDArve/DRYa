@@ -587,7 +587,7 @@ function f_dotFiles_install_dryarc {
    f_talk; echo "source .dryarc if any exists (uDev)"
 }
 
-function f_dotFiles_install_netrc {
+function f_dot_files_install_netrc {
    # Installing .netrc at ~
    #    This file allows the user to avoid repetitive autentication (user and password) for github.com
    #    In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
@@ -610,33 +610,36 @@ function f_dotFiles_install_netrc {
            echo "If the bug is fixed, github will not ask for credentials"
            echo "when uploading new commits"
            echo
-
-   v_txt="Install .netrc"; f_prsK
+           echo "Token:   Correct hashed password"
+           echo "Stroken: Incorrect hashed password (allowing to be pushed to gihub)"
            echo
 
+   v_txt="(Step 1, 2): Install .netrc"; f_prsK
 
-   # If DRYa is installed on ~/.bashrc then:
-     # Everytime the terminal is initiated, DRYa will apply new changes to ~/.config/h.h/drya/current-stroken
-     # Set an alias "stroken" to read such file
 
-     # We need that stroken message in these 2 variables, username and token: 
-       v_uName=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | head -n 1)
-       v_token=$(cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken | tail -n 1)
+   # We need that stroken message in these 2 variables, username and token: 
+      v__file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken"
+
+      v_uName=$(cat $v__file | head -n 1)
+      v_token=$(cat $v__file | tail -n 1)
+
 
    # Creating a file ~/.netrc with our new stroken info
-      echo            "Machine github.com login $v_uName password $v_token" > ~/.netrc
-      echo            "File created "
-      echo            " > with stroken instead of a token (still contains a bug)"
-      f_prsK
+      v_machn="Machine github.com"
+      v_login="login $v_uName"
+      v_stokn="password $v_token"
+
+      v_messg="$v_machn $v_login $v_stokn"
+
+      echo "$v_messg" > ~/.netrc && f_suc1 || f_suc2
       echo
 
    # Opening the file to edit
-      echo "Opening the file ~/.netrc"
-      echo " > (3 seconds to cancel with Ctrl-C)"
+      v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_prsK
+      vim ~/.netrc && f_suc1 || f_suc2
 
-      read -s -n 1 -t 3
-
-      vim ~/.netrc && echo "Done!"
+   # Finished 
+      echo; f_done
 }
 
 function f_list_ip_public_n_local {
@@ -939,7 +942,7 @@ function f_quick_install_all_upk {
 
       read
    # Installing .netrc
-      f_dotFiles_install_netrc
+      f_dot_files_install_netrc
 
 
    # Refresh the terminal
@@ -1006,10 +1009,10 @@ function f_dot_files_install {
       [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
       [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "5.  " ]] && f_dotFiles_install_netrc
+      [[ $v_list =~ "5.  " ]] && f_dot_files_install_netrc
       [[ $v_list =~ "4.  " ]] && f_dotFiles_install_dryarc
       [[ $v_list =~ "3.  " ]] && f_dot_files_install_presets
-      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dotFiles_install_netrc
+      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
       unset v_list
 }

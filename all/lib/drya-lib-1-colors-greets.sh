@@ -42,7 +42,7 @@ function f_c1 {
 function f_c2 { 
    # Fx for color 2
 
-   tput setaf 2 
+   tput setaf 9 
 }
 
 function f_c3 { 
@@ -74,6 +74,20 @@ function f_c6 {
    # Used for ASCII Drya Logo, centered to the screen
    tput setaf 28
    tput bold
+}
+
+function f_c7 {
+   # Fx for ANSI green color
+
+   GREEN='\033[0;32m'
+   echo -en "$GREEN"
+}
+
+function f_c8 {
+   # Fx for ANSI red color
+
+   RED='\033[0;31m'
+   echo -en "$RED"
 }
 
 function f_rc { 
@@ -146,13 +160,31 @@ function f_talk {
    f_rc
 }
 
-function f_success {
-   # Use this to give confirmation the previous command has sucessfull
-   # EXAMPLE: 
-   #   [[ $? == "0" ]] && v_success="Task nr 1" && f_success
+function f_suc1 {
+   # Fx number 1 of 2 
+   # Use this to give confirmation the previous command has successfull
+   # Use it after f_prsK fx
 
-   f_talk; echo -n "$v_success"
-     f_c5; echo              ": Done"
+   # EXAMPLE: 
+   #     echo "Did this message work?" && echo "Success!"
+   #     echo "Did this message work?" && f_suc1 || f_suc2
+
+           echo -n " > "
+     f_c7; echo    "Success!"
+     f_rc
+}
+
+function f_suc2 {
+   # Fx number 2 of 2 
+   # Use this to give confirmation the previous command has successfull
+   # Use it after f_prsK fx
+
+   # EXAMPLE: 
+   #     echo "Did this message work?" && echo "Success!"
+   #     echo "Did this message work?" && f_suc1 || f_suc2
+
+           echo -n " > "
+     f_c8; echo    "Failed!"
      f_rc
 }
 
