@@ -546,8 +546,15 @@ function f_check_mounting_point_parent {
    else
        echo " > Default mounting point '$v_parent_dir' does not exist."
    fi
+
+   echo
 }
 
+function f_check_port_22_open {
+   f_talk; echo "Listing open ports (default for ssh: 22)"
+   sudo firewall-cmd --list-all | grep "ports: "
+}
+      
 function f_verbose_check {
       f_greet
       f_talk; echo "Current status of SSHFS: "
@@ -576,8 +583,9 @@ function f_verbose_check {
       f_check_if_user_is_on_fuse_group_verbose
 
       f_check_mounting_point_parent
+      f_check_port_22_open
 }
-      
+
 function f_iniciar_daemon_ssh {
    # Iniciar o servico (Daemon) do ssh
       if [ $traits_pkgm == "pkg" ]; then 
@@ -710,14 +718,17 @@ function f_ser_servidor {
 function f_ser_cliente {
    # Perguntar: Qual maquina remota quer aceder?
 
-   f_talk; echo "Quero ser: Cliente"
+   f_greet
 
-   echo
-   echo "A qual maquina remota quer aceder? (de acordo com pasta pre-definida)"
-   echo
+   f_talk; echo "Quero ser: Cliente"
+           echo
+
+   f_talk; echo "Qual o nome da maquina remota a que quer aceder?"
+           echo " > (para assegurar criar pasta pre-definida nesta maquina)"
+           echo
 
    # Visualizar as pastas criadas atualemte:
-      echo "Visualizar as pastas pre-definidas que estao criadas neste momento:"
+      echo "Visualizar as pastas pre-definidas guardadas em array neste momento:"
       
       # iterador contador do 'for' loop
          e=1
@@ -734,14 +745,25 @@ function f_ser_cliente {
       let "v_o = v_mach - 1"
       v_client_mount_point=${v_array_A_remote_dir[$v_o]}
 
-      echo "Escolheu: $v_mach:"
+      f_talk; echo -n "Escolheu assegurar que existe a pasta "
+        f_c3; echo -n "$v_mach "
+        f_rc; echo    "nesta maquina:"
       echo " > $v_parent_dir$v_client_mount_point"
+      mkdir -p $v_parent_dir$v_client_mount_point && f_suc1 || f_suc2
       echo
-      echo " >> Ative 'Ser Servidor' na outra maquina"
-      echo " >> La, vai receber uma mensagem:"
-      echo " >> \"Dados de servidor sincronizados apartir da repo: verbose-lines\""
-      echo " >> Depois, Carrege ENTER neste dispositivo (cliente) para aceder a esse servidor"
-      echo " >> uDev..."
+      
+      f_talk; echo "Por fim, configure 'Ser Servidor' na outra maquina. Passos:"
+      echo " > 1. La, Ative 'Ser Servidor' na outra maquina"
+      echo " > 2. La, vai acumular todos os dados de acesso em {repo}/verbose-lines"
+      echo " > 3. La, esses dados da {repo} pode ser sincronizada com o github"
+      echo "          ou Disponibilizados em imagens QR code"
+      echo " > 4. Ca, introduza OU as credenciais manualmente no terminal"
+      echo "                    OU cole o conteudo do QR code no terminal"
+      echo "                    OU sincronize a {repo} neste dispositivo para usar as credenciais"
+      echo " > 5. Ca, é suposto que o aparelho do servidor esteja montado"
+      echo "          diretorio: $v_parent_dir$v_client_mount_point"
+      echo
+      f_done
 }
 
 function f_enable_everything {
