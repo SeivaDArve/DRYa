@@ -5,7 +5,7 @@
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
       v_greet=DRYa-SSH
       v_talk="DRYa: ssh: "
-      v_txt="<text-used-at-f_prsK-fx>"
+      #v_txt="<text-used-at-f_prsK-fx>"
 
       # Usar f_c3 para SERVIDOR
       # Usar f_c4 para CLIENTE
@@ -16,36 +16,50 @@
    #echo $0, $ARG1, $ARG2, $ARG3...
    #read
 
-# Verificar a env variable para o nome de utilizador atual
-   [[ -z $USER ]] && USER=$(whoami) && export USER
-   v_current_username=$USER
+function f_declare_variables {
+   # Se nao existir $USER no env, entao usar o comando `whoami` para o redefinir
+      [[ -z $USER ]] && USER=$(whoami) && export USER
+      v_current_username=$USER
 
-# Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
-   v_parent_dir=~/sshfs
+      #v_debug=$v_current_username; f_debug
 
-   
-# Arrays de Maquina local + Maquina Remota
-   # Par de arrays. o Index 1 de um array (array A) corresponde ao Index 1 do outro array (array B)
-      v_array_A_remote_dir=("remote-sv-Rasp-miau" "remote-sv-Lenovo-Dv" "remote-sv-MSI-dv_msi" "remote-sv-ASUS-indratena" "remote-sv-A6-termux-Dv" "remote-sv-public-device-id-35780065215")
-      v_array_B_this_machine=("local-Raspberry-Miau" "local-Lenovo-Dv" "local-MSI-dv_msi" "local-ASUS-indratena" "local-A6-termux-Dv" "local-public-device-id-35780065215")
+   # Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
+      v_parent_dir=~/sshfs
 
-   # Ao longo do script, pode ser necessario usar `fzf` para detetar uma das opcoes contidas no array
-      #v_list=$(for i in ${v_array_A_remote_dir[@]}; do echo $i; done | fzf --prompt "INDIQUE a que maquina remota se quer ligar")
-      #v_list=$(for i in ${v_array_B_this_machine[@]}; do echo $i; done | fzf --prompt "INDIQUE qual o nome desta maquina local")
+ 
+   # Variaveis que guardam a localização da chave publica SSH
+      v_public_key=~/.ssh/id_rsa.pub
 
-   # uDev: find a solution on traitsID to identify public devices like WORK phones
+      v_verbose_line_repo=${v_REPOS_CENTER}/verbose-lines
+      v_verbose_line_file=$v_verbose_line_repo/all/ssh.txt
 
-   # Print the entire array
-      #echo "Array elements: ${v_array_A_remote_dir[@]}"
+      v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
+      
+   # Arrays de Maquina local + Maquina Remota
+      # Par de arrays. o Index 1 de um array (array A) corresponde ao Index 1 do outro array (array B)
+         v_array_A_remote_dir=("remote-sv-Rasp-miau" "remote-sv-Lenovo-Dv" "remote-sv-MSI-dv_msi" "remote-sv-ASUS-indratena" "remote-sv-A6-termux-Dv" "remote-sv-public-device-id-35780065215")
+         v_array_B_this_machine=("local-Raspberry-Miau" "local-Lenovo-Dv" "local-MSI-dv_msi" "local-ASUS-indratena" "local-A6-termux-Dv" "local-public-device-id-35780065215")
+
+      # Ao longo do script, pode ser necessario usar `fzf` para detetar uma das opcoes contidas no array
+         #v_list=$(for i in ${v_array_A_remote_dir[@]}; do echo $i; done | fzf --prompt "INDIQUE a que maquina remota se quer ligar")
+         #v_list=$(for i in ${v_array_B_this_machine[@]}; do echo $i; done | fzf --prompt "INDIQUE qual o nome desta maquina local")
+
+      # uDev: find a solution on traitsID to identify public devices like WORK phones
+
+      # Print the entire array
+         #echo "Array elements: ${v_array_A_remote_dir[@]}"
+}
 
 function f_corresponder_local_com_remota {
 
    unset $v_current_local
-
    contador=0
-   v_current_local=$(for i in ${v_array_B_this_machine[@]}; do echo "$contador. $i"; ((contador++)); done | fzf --prompt "INDIQUE qual o nome desta maquina local")
+   L0="QUAL o nome desta maquina SERVIDOR (para facilitar no aparelho do CLIENTE): "
 
-
+   v_current_local=$(for i in ${v_array_B_this_machine[@]}; do 
+                        echo "$contador. $i"; 
+                        ((contador++)); 
+                     done  | fzf --prompt "$L0")
    
    echo "Maquina atual: $v_current_local"
    echo
@@ -63,18 +77,12 @@ function f_corresponder_local_com_remota {
    v_dir_to_mount=$v_parent_dir/$v_local/
    #echo "Ou seja: $v_dir_to_mount"
    mkdir -p $v_dir_to_mount
-   read
+   f_prsK
 }
- 
-# Variaveis que guardam a localização da chave publica SSH
-   v_public_key=~/.ssh/id_rsa.pub
-   v_verbose_line=${v_REPOS_CENTER}/verbose-lines/all/ssh
-   v_verbose_line_repo=${v_REPOS_CENTER}/verbose-lines/
-   v_temporary_file=~/.config/h.h/drya/ssh-tmp-file.txt  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
 
 function f_check_current_user {
    # Get the current username
-         echo -n " > Current username is: "
+         echo -n " > Username: "
    f_c1; echo    "$v_current_username"
    f_rc
 }
@@ -132,7 +140,7 @@ function f_menu_para_ver_resumo {
          do
             v_menu=$(echo -e "1. Ver com \`less\` o ficheiro verboso (na repo Verbose-lines) \n2. Ver com \`less\` o ficheiro da chave publica) \n3. Sair" | fzf --prompt "SELECIONE ")
 
-            [[ $v_menu =~ "1." ]] && less $v_verbose_line   && break
+            [[ $v_menu =~ "1." ]] && less $v_verbose_line_file   && break
             [[ $v_menu =~ "2." ]] && less $v_temporary_file && break
             [[ $v_menu =~ "3." ]] && break
             unset v_menu
@@ -257,24 +265,24 @@ function f_send_public_key_to_verbose_line_repo {
       # Comando que o cliente vai introduzir
          v_comando="Comando a ser introduzido no terminal (cliente)"
 
-      echo                          > $v_verbose_line
-      echo "$v_data"               >> $v_verbose_line
-      echo                         >> $v_verbose_line
-      echo "$v_public "            >> $v_verbose_line
-      cat $v_public_key            >> $v_verbose_line  # Despeja a chave publica no nosso ficheiro verboso
-      echo                         >> $v_verbose_line
-      echo "$v_user"               >> $v_verbose_line
-      echo                         >> $v_verbose_line
-      echo "IP publico: $v_ip"     >> $v_verbose_line
-      echo "IP local:   $v_loc_ip" >> $v_verbose_line
-      echo                         >> $v_verbose_line
-      echo "$v_texto_mq_atual"     >> $v_verbose_line
-      echo                         >> $v_verbose_line
-      echo "$v_mont"               >> $v_verbose_line 
-      echo                         >> $v_verbose_line
-      echo "$v_comando"            >> $v_verbose_line 
-      echo "   $v_com_IP_local  "  >> $v_verbose_line 
-      echo "   $v_com_IP_publico"  >> $v_verbose_line
+      echo                          > $v_verbose_line_file
+      echo "$v_data"               >> $v_verbose_line_file
+      echo                         >> $v_verbose_line_file
+      echo "$v_public "            >> $v_verbose_line_file
+      cat $v_public_key            >> $v_verbose_line_file  # Despeja a chave publica no nosso ficheiro verboso
+      echo                         >> $v_verbose_line_file
+      echo "$v_user"               >> $v_verbose_line_file
+      echo                         >> $v_verbose_line_file
+      echo "IP publico: $v_ip"     >> $v_verbose_line_file
+      echo "IP local:   $v_loc_ip" >> $v_verbose_line_file
+      echo                         >> $v_verbose_line_file
+      echo "$v_texto_mq_atual"     >> $v_verbose_line_file
+      echo                         >> $v_verbose_line_file
+      echo "$v_mont"               >> $v_verbose_line_file 
+      echo                         >> $v_verbose_line_file
+      echo "$v_comando"            >> $v_verbose_line_file 
+      echo "   $v_com_IP_local  "  >> $v_verbose_line_file 
+      echo "   $v_com_IP_publico"  >> $v_verbose_line_file
 
       # Enviar o mesmo tempo para um ficheiro tmp (para quem nao tem a repo 'verbose-lines' 
          cat $v_public_key > $v_temporary_file  ## Foi definido no inicio deste script
@@ -283,7 +291,7 @@ function f_send_public_key_to_verbose_line_repo {
 function f_check_installed_ssh_key {
    # Check if ssh key is available (WITHOUT VERBOSE OUTPUT)
 
-   # variaveis definidas no inicio do fucheiro: v_public_key, v_verbose_line
+   # variaveis definidas no inicio do fucheiro: v_public_key, v_verbose_line_file
 
    # Se existir chave public, envia tambem para a repo: verbose-line
    if [ -f $v_public_key ]; then
@@ -298,10 +306,14 @@ function f_check_installed_ssh_key_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_ssh_installed_key == "true" ]]; then
-      echo " > SSH key is installed."
+            echo -n " > SSH key: "
+      f_c3; echo    "installed."
+      f_rc; echo 
 
    elif [[ $v_ssh_installed_key == "false" ]]; then
-      echo " > SSH key is not installed."
+            echo -n " > SSH key: "
+      f_c3; echo    "not installed."
+      f_rc; echo 
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
@@ -393,8 +405,7 @@ function f_check_if_user_is_on_fuse_group_verbose {
 function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
 
-   echo
-   echo "- Vai ser verificado o Status do Daemon:"
+   f_talk; echo "Verificado o Status do Daemon:"
    
    if [ $traits_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
@@ -434,14 +445,15 @@ function f_check_ssh_daemon_is_on {
 
 function f_ver_as_pastas_pre_definidas {
    # Verbose: Pastas pre-definidas para mounting points
-      echo "Escolheu a opcao:"
-      echo " > Listar pastas pre-definidas"
-      echo
-      echo "Instrucao:"
-      echo " > No interior do script, pode alterar:"
-      echo " >> o array de pastas (mounting point para cada servidor)"
-      echo " >> o 'parent directory' onde residem todas essas"
-      echo 
+      f_greet
+      f_talk; echo "Escolheu a opcao:"
+              echo " > Listar pastas pre-definidas"
+              echo
+              echo "Instrucao:"
+              echo " > No interior do script, pode alterar:"
+              echo " >> o array de pastas (mounting point para cada servidor)"
+              echo " >> o 'parent directory' onde residem todas essas"
+              echo 
 
       f_check_mounting_point_array
 }
@@ -456,7 +468,7 @@ function f_check_ssh_daemon_is_on_verbose {
 function f_cat_this_public_key {
    # Mostra ao utilizador o ssh key publica desta maquina
       f_send_public_key_to_verbose_line_repo
-      #tail -n 4 $v_verbose_line  # Esta linha n é precisa porque ja existe um menu fzf que faz isto
+      #tail -n 4 $v_verbose_line_file  # Esta linha n é precisa porque ja existe um menu fzf que faz isto
 }
 
 
@@ -537,7 +549,9 @@ function f_check_mounting_point_parent {
 }
 
 function f_verbose_check {
+      f_greet
       f_talk; echo "Current status of SSHFS: "
+
       f_check_current_user
 
       f_is_rooted
@@ -562,16 +576,6 @@ function f_verbose_check {
       f_check_if_user_is_on_fuse_group_verbose
 
       f_check_mounting_point_parent
-      echo
-      echo "Options:"
-      echo " > 'on'  to enable everything"
-      echo " > 'off' to disable everything"
-      echo " > 'dir' See all Default dir mounting points"
-      echo " > 'no option' for instructions (uDev)"
-      echo
-      echo "Example: "
-      echo " > '$ bash sshfs-wrapper.sh on'"
-      echo " > '$ D ssh on'"
 }
       
 function f_iniciar_daemon_ssh {
@@ -663,8 +667,8 @@ function f_ser_servidor {
 
       f_talk; echo 'Directory content `ls`:'
               ls -p
-      read
 
+      f_prsK
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
       f_check_ssh_daemon_is_on; f_check_ssh_daemon_is_on_verbose; echo
@@ -994,51 +998,87 @@ function f_disable_everything {
 
 
 
-
-
-
-
-
-
-
-function f_check_overall_status {
-
-   # Impedir aos utilizadores de usarem mais do que um argumento
-      [[ ! -z $ARG2 ]] && echo "DRYa: sshfs-wrapper: arg 2 não reconhecido, por favor nao user argumento 2" && exit 1
-
+function f_help {
    f_greet
+   f_talk; echo "Help and instructions:"
+           echo 
+           echo "When the USER wants to be a CLIENT ans acess another SERVER"
+           echo " > uses ~/ssfhs/default-dir as mounting point"
+           echo 
+           echo "When the USER wants to a SERVE and allow other machine as CLIENT"
+           echo " > Writes credentials at:"
+           echo "   - Verbose-lines (repository, if exists)"
+           echo "   - ~/.config     (if repo does not exist)"
+           echo "   - Creates a QR code for the CLIENT to acess easily"
+}
+
+
+
+
+
+
+function f_main_menu {
+   # Main menu for this entire script
    
-   # List of menu options
-      Lz="DRYa: sshfs-wrapper.sh"
+   if [ -z $1 ]; then
+      # If no arguments are given, present the main menu
 
-      L6="6. Lista    | Mounting Points pre-definidos"
-      L5="5. Ver      | Consult Output file"
+      # List of menu options
+         Lz="DRYa: sshfs-wrapper.sh"
 
-      L3="3. Desligar | Servico SSH ou SSHFS"
-      L2="2. Ligar    | Servico SSH ou SSHFS"
+         L7="7. Help"
+         L6="6. Lista    | Mounting Points pre-definidos"
+         L5="5. Ver      | Consult Output file"
 
-      L4="4. Ver      | Estado atual do sistema"
-      L1="1. Cancelar" 
+         L4="4. Desligar | Servico SSH ou SSHFS"
+         L3="3. Ligar    | Servico SSH ou SSHFS"
 
-      L0="DRYa: Menu para os servicos SSH"
+         L2="2. Ver      | Estado atual do sistema"
+         L1="1. Cancelar" 
 
-   v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
+         L0="DRYa: Menu para os servicos SSH"
 
-   # Executar de acordo com o resultado
-      [[ $v_menu =~ "6." ]] && f_ver_as_pastas_pre_definidas
-      [[ $v_menu =~ "5." ]] && less $v_verbose_line
-      [[ $v_menu =~ "4." ]] && f_verbose_check
-      [[ $v_menu =~ "3." ]] && f_disable_everything
-      [[ $v_menu =~ "2." ]] && f_enable_everything
-      [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
-      unset v_menu
+         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf --prompt "$L0")
+
+      # Executar de acordo com o resultado
+         [[ $v_menu =~ "7." ]] && f_help
+         [[ $v_menu =~ "6." ]] && f_ver_as_pastas_pre_definidas
+         [[ $v_menu =~ "5." ]] && less $v_verbose_line_file
+         [[ $v_menu =~ "4." ]] && f_disable_everything
+         [[ $v_menu =~ "3." ]] && f_enable_everything
+         [[ $v_menu =~ "2." ]] && f_verbose_check
+         [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
+         unset v_menu
+
+   elif [ $1 == "." ]; then
+      # See the current state
+      f_verbose_check
+      
+   elif [ $1 == "on" ]; then
+      # Go directly to the ON option
+      f_enable_everything
+
+   elif [ $1 == "off" ]; then
+      # Go directly to the OFF option
+      f_disable_everything
+
+   elif [ $1 == ".." ]; then
+      # See last output file
+      less $v_verbose_line_file
+
+   elif [ $1 == "dir" ]; then
+      # See default Seiva directories as mounting points
+      f_ver_as_pastas_pre_definidas
+
+   fi
 }
 
 
 
 function f_exec {
 
-  f_check_overall_status
+   f_declare_variables
+   f_main_menu
 
    # Status (each fx separate, for debug)
       #f_check_current_user
