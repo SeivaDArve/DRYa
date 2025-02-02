@@ -118,17 +118,17 @@ function f_is_rooted_verbose {
 
    if [[ -z $v_rooted ]]; then
             echo -n " > Esta no termux: "
-      f_c2; echo    "Nao!"
+      f_c8; echo    "Nao!"
       f_rc
 
    elif [[ $v_rooted == "true" ]]; then
             echo -n " > Tem permissoes root: "
-      f_c2; echo    "Sim"
+      f_c7; echo    "Sim"
       f_rc
 
    elif [[ $v_rooted == "false" ]]; then
             echo -n " > Tem permissoes root: "
-      f_c2; echo    "Nao"
+      f_c8; echo    "Nao"
       f_rc
    fi
 }
@@ -307,12 +307,12 @@ function f_check_installed_ssh_key_verbose {
 
    if [[ $v_ssh_installed_key == "true" ]]; then
             echo -n " > SSH key: "
-      f_c3; echo    "installed."
+      f_c7; echo    "installed."
       f_rc; echo 
 
    elif [[ $v_ssh_installed_key == "false" ]]; then
             echo -n " > SSH key: "
-      f_c3; echo    "not installed."
+      f_c8; echo    "not installed."
       f_rc; echo 
    
    else
@@ -335,10 +335,14 @@ function f_check_installed_ssh_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_ssh_installed == "true" ]]; then
-      echo " > SSH is installed."
+            echo -n " > SSH is:  "
+      f_c7; echo    "installed."
+      f_rc
 
    elif [[ $v_ssh_installed == "false" ]]; then
-      echo " > SSH is not installed."
+            echo -n " > SSH is:  "
+      f_c8; echo    "not installed."
+      f_rc
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH devido a um erro"
@@ -359,18 +363,35 @@ function f_check_installed_sshfs {
 function f_check_installed_sshfs_verbose {
    # Check if sshfs command is available (WITH VERBOSE OUTPUT)
 
+   v_termux=$TERMUX_VERSION
+   v_info="   (Para termux precisa: root)"
+   v_erro="Erro: O software nao conseguiu detetar se está ou nao está instalado SSHFS"
+
    if [[ $v_sshfs_installed == "true" ]]; then
-      echo " > SSHFS is installed."
-      if [ -n "$TERMUX_VERSION" ]; then echo "   > Para termux precisa: root"; fi
+
+            echo -n " > SSHFS: "
+      f_rc; echo
+      f_rc
+
+      if [ -n "$v_termux" ]; then echo "$v_info"; fi
+
 
    elif [[ $v_sshfs_installed == "false" ]]; then
-      echo " > SSHFS is not installed."
-      if [ -n "$TERMUX_VERSION" ]; then echo "   > Para termux precisa: root"; fi
+
+            echo -n " > SSHFS: "
+      f_c8; echo    "is not installed."
+      f_rc 
+
+      if [ -n "$v_termux" ]; then echo "$v_info"; fi
    
+
    else
-      echo "O software nao conseguiu detetar se está ou nao está instalado SSHFS devido a um erro"
+      echo -e "$v_erro \n"
       exit 1
+
    fi
+
+   echo
 }
 
 function f_check_if_user_is_on_fuse_group {
@@ -532,6 +553,8 @@ function f_check_if_fuse_exists_verbose {
       echo "O software nao conseguiu detetar se existe ou nao um grupo FUSE devido a um erro"
       exit 1
    fi
+
+   echo
 }
 
 function f_check_mounting_point_parent {
@@ -542,9 +565,12 @@ function f_check_mounting_point_parent {
    ls $v_parent_dir &>/dev/null
 
    if [ $? -eq 0 ]; then
-       echo " > Default mounting point exists: $v_parent_dir"
+       echo " > Default mounting point exists:"
+       echo "   $v_parent_dir"
    else
-       echo " > Default mounting point '$v_parent_dir' does not exist."
+       echo " > Default mounting point: "
+       echo "   $v_parent_dir"
+       echo "   does not exist."
    fi
 
    echo
