@@ -695,12 +695,12 @@ function f_menu_audio_media_player {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='Audio-Media-Player'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L7='7. Tests  | Right and Left Speakers test'                                      
+      L7='7. Tests  | Right and Left Speakers audio'                                      
       L6='6. Tests  | Completion Bell sound'                                      
 
-      L5='5. Record | Stop  Mic Recording'                                      
-      L4='4. Record | Status of  Mic Recording'                                      
-      L3='3. Record | Start Mic Recording'                                      
+      L5='5. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
+      L4='4. Min Record | Status'
+      L3='3. Min Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
       L2='2. Play   | Search file at .'                                      
       L1='1. Cancel'
