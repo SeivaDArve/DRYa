@@ -11,28 +11,14 @@
       # Usar f_c4 para CLIENTE
 
 
-# function f_greet {
-#    clear
-#    figlet DRYa
-# 
-#    f_talk; echo "sshfs-wrapper.sh"
-# }
-# 
-# function f_talk {
-#    # Copied from: ezGIT
-#          echo
-#    f_c4; echo -n "DRYa: ssh: "
-#    f_rc
-# }
-
 # Para Debug:
-   # Escte script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como ARG1, ARG2, ARG3
+   # Este script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como ARG1, ARG2, ARG3
    #echo $0, $ARG1, $ARG2, $ARG3...
    #read
 
 # Verificar a env variable para o nome de utilizador atual
-   v_current_username=$USER
    [[ -z $USER ]] && USER=$(whoami) && export USER
+   v_current_username=$USER
 
 # Definir neste array, qual o conjunto de diretorios que queremos como pre-definidas para os nossos 'mounting point'
    v_parent_dir=~/sshfs
@@ -1026,10 +1012,12 @@ function f_check_overall_status {
       Lz="DRYa: sshfs-wrapper.sh"
 
       L6="6. Lista    | Mounting Points pre-definidos"
-      L5="5. Ver      | Ficheiro verboso (no seu estado atual)"
-      L4="4. Ver      | Estado atual do sistema"
+      L5="5. Ver      | Consult Output file"
+
       L3="3. Desligar | Servico SSH ou SSHFS"
       L2="2. Ligar    | Servico SSH ou SSHFS"
+
+      L4="4. Ver      | Estado atual do sistema"
       L1="1. Cancelar" 
 
       L0="DRYa: Menu para os servicos SSH"
