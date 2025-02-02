@@ -480,6 +480,7 @@ function E {
 
        L3='3. emacs'
        L2='2. vim'
+       #L2='2. vim (easy mode)'  # `vim -y`
 
        L1='1. Cancel'
 
