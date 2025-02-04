@@ -492,18 +492,25 @@ function f_clone_repos {
 function f_dotFiles_install_git {
    # Install .gitconfig on the system
    
-   
-   v_file= ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
+   v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
    v_place=~
 
    f_greet
    f_talk; echo "Installing .gitconfig:"
-           echo " > File 1: .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-           echo " > To:     ~/"
+           echo " > File 1 : .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+           echo " > Goes to: ~/"
+           echo
 
-   v_txt="Are you sure? " && f_prsK
+   f_talk; echo "uDev: Test if there is any diff between files"
+           echo "      (avoids double installation)"
+           echo
 
-   cp $v_file $v_place && f_talk && echo "Done! "
+   v_txt="Install .gitconfig file " && f_prsK
+
+   cp $v_file $v_place && f_suc1 || f_suc2
+
+           echo
+   f_talk; echo "Done! "
 }
 
 function f_dotFiles_install_vim {
@@ -1070,9 +1077,22 @@ function f_dot_files_menu_edit_host_files {
     
 }
 
+function f_test_L3_available_updates {
+   # Antes do menu dos dot-files, testar se existe diferenca entre os ficheiros centralizados e os ficheiros instalados, se houver diferenca, indica que ha atualizacoes
+
+   # Se existe atualizacoes
+      L3b=" (Existe diferenca nos ficheiros instalados)"
+
+   # Se nao existe atualizacoes
+      #L3b=""
+}
+
 function f_dot_files_menu {
    # Main Menu for dot files
 
+   f_test_L3_available_updates
+
+   # List of options
       Lz='`D dot`'
 
       #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
@@ -1085,11 +1105,11 @@ function f_dot_files_menu {
       L5='5. Edit | Centralized > then > Install'
 
       L4="4. Menu | Uninstall "
-      L3="3. Menu | Install" 
-      L2="2. List | Available"  # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+      L3="3. Menu | Install $L3b" # Variable L3b may be set and may be empty to give more info to the user
+      L2="2. List | Available"    # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
       L1="1. Cancel"
 
-      L0="Menu: Manage dot-files: "
+      L0="DRYa: dot-files menu: "
 
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
@@ -1656,16 +1676,18 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Save '; Lz2='D install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+         L4='4. Install: Dependencies only'
          L3='3. Install: DRYa (with `fzf`)'
-         L2='2. Install: DRYa (with `select`)'; L2c='DRYa'  # `D install DRYa`
+         L2='2. Install: DRYa (with `select`) (legacy)'
          L1='1. Cancel'
 
          L0="SELECIONE 1 Opcao: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "4. " ]] && echo uDev
          [[ $v_list =~ "3. " ]] && echo uDev
          [[ $v_list =~ "2. " ]] && f_install_drya
          [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
