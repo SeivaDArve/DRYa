@@ -96,47 +96,6 @@ function f_trap {
 	https://www.linuxjournal.com/content/bash-trap-command
 }
 
-function f_troubleshootingPWD {
-
-   # Calling a function that defines the variable _SCRIPT_DIR:
-      f_get_script_current_abs_path
-            echo
-      f_c4; echo -n _SCRIPT_DIR
-      f_rc; echo -n ": "
-      f_c3; echo $_SCRIPT_DIR
-      f_rc; echo
-
-   # Informing about our location
-            echo "but we are running it from:"
-      f_c4; echo -n "pwd"
-      f_rc; echo -n ": "
-      f_c3; echo $(pwd)
-            echo;
-      f_c4; echo -n "saving current "
-      f_c3; echo -n "pwd " 
-      f_c4; echo -n "into "
-      f_c3; echo -n "_BEFORE_CALLING_SCRIPT"; 
-      f_rc; echo
-
-      _BEFORE_CALLING_SCRIPT=$(pwd)
-
-      echo "_BEFORE_CALLING_SCRIPT: $_BEFORE_CALLING_SCRIPT"
-      echo
-   
-   # Traveling to dir of main script in order to make use of relative file positions (this script is not compiled and this prevents "missing files" or "commands")
-      cd $_SCRIPT_DIR
-
-            echo "Now, cd into _SCRIPT_DIR"
-      f_c4; echo -n "pwd"
-      f_rc; echo -n ": "
-      f_c3; echo $(pwd)
-      f_rc; echo
-            echo
-
-   # If this troubleshooting works, you should be able to cat the following file from any directory:
-      cat ./wiki/testFile
-}
-
 function f_ascii_icon {
 
 
@@ -245,20 +204,6 @@ function f_calcular_tempo_decorrido_apos_data {
    # Imprimir o resultado
       echo "Tempo passado desde $STARTINGDATE:"
       echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
-}
-
-function f_get_script_current_abs_path {
-
-	# no matter from where we will execute this script, $SCRIPT_DIR will indicate the correct directory where this script is located
-	_SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-	f_c3; echo "This script is written/located at:"; 
-	f_rc; echo $_SCRIPT_DIR;
-	
-	function f_test1 {
-		# This does not work, it is subjective to change. it depends from where you ryn the script
-		_drya_pwd=$(pwd)
-		echo $_drya_pwd
-	}
 }
 
 function f_drya_plus {
@@ -1348,6 +1293,26 @@ elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "h" ] || [ $1 == "-h" ] || [
    # Help menu  ::  rtfm: Read the Fucking Manual
    
    f_drya_help
+
+elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
+   # Edit first file in DRYa's instalation sequence
+
+   vim ~/.bashrc
+
+elif [ $1 == "1" ] || [ $1 == "edit-source-all-drya-files" ]; then 
+   # Edit second file in DRYa's instalation sequence
+
+   vim $DRYa/all/source-all-drya-files
+
+elif [ $1 == "2" ] || [ $1 == "edit-drya-sh" ]; then 
+   # Edit third file in DRYa's instalation sequence
+
+   vim $DRYa/all/etc/config-bash-alias
+
+elif [ $1 == "3" ] || [ $1 == "edit-fluNav" ]; then 
+   # Edit forth file in DRYa's instalation sequence
+
+   echo uDev
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
