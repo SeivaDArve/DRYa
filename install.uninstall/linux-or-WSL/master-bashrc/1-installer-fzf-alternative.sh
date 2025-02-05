@@ -7,22 +7,30 @@ function f_greet {
    # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
    # echo -e "plain \e[0;32m
 
-	echo
-	echo -e " \e[0;32m    ||\`		                   		"
-	echo -e " \e[0;32m    ||				                  "
-	echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
-	echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
-	echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
-	echo -e " \e[0;32m                 ,  |'		         "
-	echo -e " \e[0;32m                   ''		         "
-   echo -e " \e[0m" 
+   function f_ascii_v1 {
+      echo
+      echo -e " \e[0;32m    ||\`		                   		"
+      echo -e " \e[0;32m    ||				                  "
+      echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
+      echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
+      echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
+      echo -e " \e[0;32m                 ,  |'		         "
+      echo -e " \e[0;32m                   ''		         "
+      echo -e " \e[0m" 
+   }
 
-   #echo ' ____  ___ __   __    '
-   #echo '|  _ \|  _ \ \ / /_ _ '
-   #echo '| | | | |_) \ V / _` |'
-   #echo '| |_| |  _ < | | (_| |'
-   #echo '|____/|_| \_\|_|\__,_|'
-   #echo '					   '
+   function f_ascii_v2 {
+
+      echo ' ____  ___ __   __    '
+      echo '|  _ \|  _ \ \ / /_ _ '
+      echo '| | | | |_) \ V / _` |'
+      echo '| |_| |  _ < | | (_| |'
+      echo '|____/|_| \_\|_|\__,_|'
+      echo '					   '
+   }
+
+   f_ascii_v1
+   #f_ascii_v2
 }
 
 function f_greet_alternative {
