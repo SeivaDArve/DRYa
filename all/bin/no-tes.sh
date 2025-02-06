@@ -17,18 +17,18 @@ function f_create_file_and_name {
 
    mkdir -p $v_tmp_dir
    touch $v_tmp
-   ls $v_tmp_dir
+   #ls $v_tmp_dir
 }
 
 function f_edit_with_heteronimos {
    
    # udev: Se repo omni-log nao existir, perguntar se quer download
 
-   v_place=${v_REPOS_CENTER}/omni-log/all/ex-pressa 
-   echo "Editar notas em .../omni-log/all/ex-pressa" 
+   v_place=${v_REPOS_CENTER}/omni-log/all/ex-pressa
+   v_file=$(ls ${v_REPOS_CENTER}/omni-log/all/ex-pressa | fzf)
+   f_talk; echo "Notas em: .../omni-log/all/ex-pressa" 
 
-   cd $v_place
-   vim .
+   [[ -n $v_file ]] && vim $v_place/$v_file
 }
 
 function f_edit_ToDo_note_no_title {
@@ -47,7 +47,8 @@ function f_edit_random_note_no_title {
    echo          >> $v_file \
    && cat $v_tmp >> $v_file \
    && echo "}"   >> $v_file \
-   && echo "DRYa: no-tes: note added to 'rn'"  \
+   && f_talk                \
+   && echo "note added to file 'rn'"  \
    && echo " > uDev: sync omni-log automatically"
 }
 
@@ -88,9 +89,10 @@ function f_main_menu {
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       #L80= Share Trascrypt from termux (copy paste entire termux output)
-      L6='6. ToDo | Lista de tarefas  | `no t`'
-      L5='5. Nota | com heteronimos   | `no H`' 
+      L7='7. Info | com het. random   | `no x <txt no terminal>`' 
+      L6='6. Nota | com heteronimos   | `no H`' 
 
+      L5='5. ToDo | Lista de tarefas  | `no t`'
       L4='4. Nota | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
       L3='3. Nota | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
@@ -99,15 +101,16 @@ function f_main_menu {
 
       L0="SELECIONE 1 do menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6\n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "6. " ]] && f_edit_ToDo_note_no_title
-      [[ $v_list =~ "5. " ]] && f_edit_with_heteronimos
+      [[ $v_list =~ "7. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
+      [[ $v_list =~ "6. " ]] && f_edit_with_heteronimos
+      [[ $v_list =~ "5. " ]] && f_edit_ToDo_note_no_title
       [[ $v_list =~ "4. " ]] && f_one_file_bau
       [[ $v_list =~ "3. " ]] && echo
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
@@ -137,6 +140,16 @@ elif [ $1 == "H" ]; then
 elif [ $1 == "t" ]; then
    # Edit ToDo list
    f_edit_ToDo_note_no_title
+
+elif [ $1 == "x" ]; then
+   # Save all arguments as the note itself, directly from the terminal and without any text editor
+
+   # Exclude argument 1
+      shift
+
+   v_text=$*
+   f_talk; echo "Text sent to file 'rn':"
+   echo "$v_text"
 
 elif [ $1 == "rn" ]; then
    vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn

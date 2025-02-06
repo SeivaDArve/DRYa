@@ -426,11 +426,6 @@ function f_internal_drya_files_2_2 {
       #       Para programar scripts temporarios de teste é melhor usar a pasta ~/.code/
       
 
-   # Sourcing DRYa's own configs
-      source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-      alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
-      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
       alias D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
@@ -438,6 +433,11 @@ function f_internal_drya_files_2_2 {
    # List DRYa work directory
       alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+
+   # Sourcing DRYa's own configs
+      source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+      alias ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"
+      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
 
    # Fast menu for calculators
       alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"

@@ -641,7 +641,7 @@ function f_check_mounting_point_array {
       echo "Visualizar as pastas que estao criadas neste momento:"
       for i in $(ls $v_parent_dir);
       do
-         echo " > $i"
+         echo " > $v_parent_dir/$i"
       done
 }
 
