@@ -2057,16 +2057,21 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D QR'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3='3. Criar QR code | Apartir de ficheiro'
+      L5='5. Obter QR text | Abrir Android App, get clipboard'
+         
+      L4='4. Criar QR code | Apartir de 1 linha de 1 ficheiro'
+      L3='3. Criar QR code | Apartir de ficheiro inteiro'
       L2='2. Criar QR code | Apartir de texto'
       L1='1. Cancel'
 
       L0="SELECIONE 1 Opcao: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "5. " ]] && bash $v_REPOS_CENTER/DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
+      [[ $v_list =~ "4. " ]] && echo uDev
       [[ $v_list =~ "3. " ]] && f_create_qr_from_file
       [[ $v_list =~ "2. " ]] && f_create_qr_from_text
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
