@@ -160,5 +160,9 @@ elif  [ $1 == "seg" ]; then
    # Imprime 1 linha com a hora durante 1 seg
    f_one_second_date
 
+elif  [ $1 == "g" ]; then
+   # Imprime a data no formato grupo Data Hora (ao estilo militar)
+   # 09FEB25 0930
+   echo "uDev: GDH"
 fi
 
