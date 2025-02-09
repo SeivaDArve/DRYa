@@ -54,8 +54,6 @@ function f_clc_bc {
    bc --quiet
 }
 
-
-
 function f_calc_regr_3_simples {
    # Utilizado para calcular a formula final da regra de 3 simples
    
@@ -65,6 +63,106 @@ function f_calc_regr_3_simples {
    echo
 }
 
+function f_modificadores_de_texto {
+   # Modificar o texto do input. Modificadores matematicos + variaveis + incognitas
+   # Exemplo: substituir virgulas por pontos finais: , .
+
+   # substituir 'x' por '*'
+      v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
+
+   # substituir ':' por '/'
+      v_input=${v_input//:/\/}  # Usa a substituição de parametros do Bash
+
+   # substituir 'pi' por '3.1415'
+      v_input=${v_input//pi/3.1415}  # usa a substituição de parametros do bash
+
+   # substituir 'tk' por '* 0.05' para multiplicacoes (taxa de Market Taker na corretora binance que é de 0.0500% de comissoes
+      v_input=${v_input//tkc/* 0.05}  # usa a substituição de parametros do bash
+
+   # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
+      v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
+     
+   # substituir virgulas por pontos finais
+      v_input=${v_input//,/\.}  # usa a substituição de parametros do bash
+
+   # substituir 'ans' pelo resultado do loop anterior
+      v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
+
+   ########################################################################
+   # Com apoio do chatGPT que fornece uma "PCRE" (Perl Compatible Regular Expression) para utilizar no ´grep´
+      # Encontrar e modificar ']tk'
+         # Extrai o conteúdo entre '[' e ']tk' e armazena em uma variável separada por espaços
+         # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
+            CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]tk)' | tr '\n' ' ')
+            #echo "Conteudo: $CONTEUDO"; read  # Debug
+
+         # Remove o espaço final
+            CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
+
+         # Exibe o resultado (debug)
+            #echo "Conteúdo dentro de '[' e ']tk': $CONTEUDO"
+
+         #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
+         #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
+            for i in $CONTEUDO
+            do
+               #echo
+
+               # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
+                  #echo "Conteudo é: $i"  # (para debug)
+                  v_input=${v_input//]tk/ - ($i * 0.05))}  # usa a substituição de parametros do bash
+                  #echo "Portanto: $v_input"  # (para debug)
+                  #echo
+            done
+            #echo "Input atual: $v_input"; read
+
+
+      # Encontrar e modificar ']mk'
+         # Extrai o conteúdo entre '[' e ']mk' e armazena em uma variável separada por espaços
+         # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
+            CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]mk)' | tr '\n' ' ')
+            #echo "Conteudo: $CONTEUDO"; read  # Debug
+
+         # Remove o espaço final
+            CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
+
+         # Exibe o resultado (debug)
+            #echo "Conteúdo dentro de '[' e ']mk': $CONTEUDO"
+
+         #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
+         #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
+            for i in $CONTEUDO
+            do
+               #echo
+
+               # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
+                  #echo "Conteudo é: $i"  # (para debug)
+                  v_input=${v_input//]mk/ - ($i * 0.02))}  # usa a substituição de parametros do bash
+                  #echo "Portanto: $v_input"  # (para debug)
+                  #echo
+            done
+
+
+      # Modificar globalmente '[' por '(' que só pode ser feito no final de entrontrar todos os ]tk e ]mk
+         v_input=$(echo "$v_input" | sed "s/\[/\(/g")
+         #echo "Melhor: $v_input"  # (para debug)
+   ########################################################################
+
+
+      # Se o padrao ']tk' foi encontrado pelo menos 1x, proceder à extracao do numero que estiver entre '[' e ']tk'
+      # Modificar todos os parenteses quadrados '[' por parenteses curvos '(' para poder proceder ao calculo
+         v_input=${v_input//\[/(}  # usa a substituição de parametros do bash
+
+
+}
+
+function f_avaliar_calculo {
+   # Tentar diferenciar entre comando dado a este script e conta para calcular
+   # Se o Resultado ($v_result) do calculo der errado, será igual a zero '0' e não dá mensagem de erro que bloqueie o funcionamento normal do script
+   # E assim, o input de Entrada ($v_input) tem uma oportunidade de ser avaliado 
+
+   v_result=$(echo "scale=$v_decimal; $v_input" | bc)
+}
 
 function f_exec_calculadora_registadora {
    # Calculadora dedicaca a contas básicas e a calculos de comissoes
@@ -221,98 +319,9 @@ EOF
          # Concatenar o texto "<" com o input "$v_input" para ser enviado para um ficheiro de registo (historico)
             v_long_input=" < $v_input" 
 
-      # Permitir: modificadores matematicos + variaveis + incognitas
-         # substituir 'x' por '*'
-            v_input=${v_input//x/*}  # Usa a substituição de parametros do Bash
+      f_modificadores_de_texto
 
-         # substituir ':' por '/'
-            v_input=${v_input//:/\/}  # Usa a substituição de parametros do Bash
-
-         # substituir 'pi' por '3.1415'
-            v_input=${v_input//pi/3.1415}  # usa a substituição de parametros do bash
-
-         # substituir 'tk' por '* 0.05' para multiplicacoes (taxa de Market Taker na corretora binance que é de 0.0500% de comissoes
-            v_input=${v_input//tkc/* 0.05}  # usa a substituição de parametros do bash
-
-         # substituir 'mk' por '* 0.02' para multiplicacoes (taxa de Market Maker na corretora binance que é de 0.02% de comisso0es
-            v_input=${v_input//mkc/* 0.02}  # usa a substituição de parametros do bash
-
-         # substituir 'ans' pelo resultado do loop anterior
-            v_input=${v_input//ans/$v_result}  # usa a substituição de parametros do bash
-           
-
-         ########################################################################
-         # Com apoio do chatGPT que fornce uma "PCRE" (Perl Compatible Regular Expression) para utilizar no ´grep´
-            # Encontrar e modificar ']tk'
-               # Extrai o conteúdo entre '[' e ']tk' e armazena em uma variável separada por espaços
-               # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
-                  CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]tk)' | tr '\n' ' ')
-                  #echo "Conteudo: $CONTEUDO"; read  # Debug
-
-               # Remove o espaço final
-                  CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
-
-               # Exibe o resultado (debug)
-                  #echo "Conteúdo dentro de '[' e ']tk': $CONTEUDO"
-
-               #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
-               #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
-                  for i in $CONTEUDO
-                  do
-                     #echo
-
-                     # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
-                        #echo "Conteudo é: $i"  # (para debug)
-                        v_input=${v_input//]tk/ - ($i * 0.05))}  # usa a substituição de parametros do bash
-                        #echo "Portanto: $v_input"  # (para debug)
-                        #echo
-                  done
-                  #echo "Input atual: $v_input"; read
-
-
-            # Encontrar e modificar ']mk'
-               # Extrai o conteúdo entre '[' e ']mk' e armazena em uma variável separada por espaços
-               # A variavel $CONTEUDO irá ser uma frase cujo numero de palavras é igual ao resultado da pesquisa REGEX
-                  CONTEUDO=$(echo "$v_input" | grep -oP '\[\K[^\]]+(?=\]mk)' | tr '\n' ' ')
-                  #echo "Conteudo: $CONTEUDO"; read  # Debug
-
-               # Remove o espaço final
-                  CONTEUDO=$(echo "$CONTEUDO" | sed 's/ $//' )
-
-               # Exibe o resultado (debug)
-                  #echo "Conteúdo dentro de '[' e ']mk': $CONTEUDO"
-
-               #  Vai ler quantas palavras existem na variavel $CONTEUDO e vai fazer essa mesma quantidade de loops
-               #  Em cada loop 'i' assumirá a o mesmo significado que a palavra encontrada para depois ser isubstituida seu novo significado
-                  for i in $CONTEUDO
-                  do
-                     #echo
-
-                     # Para cada ']tk' encontrado, sustituir por: '$i * 0.05)'
-                        #echo "Conteudo é: $i"  # (para debug)
-                        v_input=${v_input//]mk/ - ($i * 0.02))}  # usa a substituição de parametros do bash
-                        #echo "Portanto: $v_input"  # (para debug)
-                        #echo
-                  done
-
-
-            # Modificar globalmente '[' por '(' que só pode ser feito no final de entrontrar todos os ]tk e ]mk
-               v_input=$(echo "$v_input" | sed "s/\[/\(/g")
-               #echo "Melhor: $v_input"  # (para debug)
-         ########################################################################
-
-
-            # Se o padrao ']tk' foi encontrado pelo menos 1x, proceder à extracao do numero que estiver entre '[' e ']tk'
-            # Modificar todos os parenteses quadrados '[' por parenteses curvos '(' para poder proceder ao calculo
-               v_input=${v_input//\[/(}  # usa a substituição de parametros do bash
-
-      function f_calcular {
-         # Tentar diferenciar entre comando dado a este script e conta para calcular
-         # Se o Resultado ($v_result) do calculo der errado, será igual a zero '0' e não dá mensagem de erro que bloqueie o funcionamento normal do script
-         # E assim, o input de Entrada ($v_input) tem uma oportunidade de ser avaliado 
-            v_result=$(echo "scale=$v_decimal; $v_input" | bc)
-      }
-      f_calcular
+      f_avaliar_calculo
 
       # Dar estes input para sair da app:
          [[ $v_input == "sair" ]] || [[ $v_input == "exit" ]] || [[ $v_input == "quit" ]] || [[ $v_input == "Q" ]] || [[ $v_input == "q" ]] || [[ $v_input == "ZZ" ]] \
@@ -466,11 +475,13 @@ function f_exec_calculadora_regra_de_3 {
    echo "
                               |
    ---------------------------|
+     |                        |
      |  Regra de 3 Simples:   | 
      |                        |
      |       A     C          |
      |      --- = ---         |
      |       B     X          |
+     |                        |
      |                        |
      |    X = (B x C) / A     |
      |                        |
@@ -495,6 +506,10 @@ function f_exec_calculadora_regra_de_3 {
    echo "B = $vB"
    echo "C = $vC"
 
+   v_input=$vA && f_modificadores_de_texto && vA=$v_input
+   v_input=$vB && f_modificadores_de_texto && vB=$v_input
+   v_input=$vC && f_modificadores_de_texto && vC=$v_input
+
    f_calc_regr_3_simples 
 
    echo "X = $vX"
@@ -510,11 +525,13 @@ function f_exec_calculadora_trim {
    echo "
                               |
    ---------------------------|
+     |                        |
      |  Regra de 3 Simples:   | 
      |                        |
      |       A     C          |
      |      --- = ---         |
      |       B     X          |
+     |                        |
      |                        |
      |    X = (B x C) / A     |
      |                        |
