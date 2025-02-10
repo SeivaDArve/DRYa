@@ -2107,6 +2107,10 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
    
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
+elif [ $1 == "out" ]; then 
+   source ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
+   exit 0
+
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
