@@ -393,7 +393,7 @@ EOF
             # Enviar ambas as variaves input e output para um ficheiro de historico
                echo "            " >> $v_log
                echo $v_long_input  >> $v_log
-               [[ ! -z $v_new ]] && echo $v_old >> $v_log && echo $v_new >> $v_log && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
+               [[ -n $v_new ]] && echo $v_old >> $v_log && echo $v_new >> $v_log && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
                echo $v_long_result >> $v_log
          fi
    done
@@ -478,13 +478,14 @@ function f_exec_calculadora_regra_de_3 {
      |                        |
      |  Regra de 3 Simples:   | 
      |                        |
-     |       A     C          |
-     |      --- = ---         |
-     |       B     X          |
+     |        A     C         |
+     |       --- = ---        |
+     |        B     X         |
      |                        |
      |                        |
-     |    X = (B x C) / A     |
-     |                        |
+     |          B x C         |
+     |    X = ---------       |
+     |            A           |
      |---------------------------
      |
 
@@ -492,7 +493,6 @@ function f_exec_calculadora_regra_de_3 {
     - A está para B
          assim como C está para... ... X
 
-      uDev: Por enquanto usa numeros decimais com '.' em vez de ','
    _______________________________________
 
    "
@@ -501,24 +501,24 @@ function f_exec_calculadora_regra_de_3 {
    read -p "Introduza B: " vB
    read -p "Introduza C: " vC
 
+   v_input=$vA && f_modificadores_de_texto && vA=$v_input
+   v_input=$vB && f_modificadores_de_texto && vB=$v_input
+   v_input=$vC && f_modificadores_de_texto && vC=$v_input
+
    echo
    echo "A = $vA"
    echo "B = $vB"
    echo "C = $vC"
 
-   v_input=$vA && f_modificadores_de_texto && vA=$v_input
-   v_input=$vB && f_modificadores_de_texto && vB=$v_input
-   v_input=$vC && f_modificadores_de_texto && vC=$v_input
-
    f_calc_regr_3_simples 
 
    echo "X = $vX"
    echo
-   echo "$vA está para $vB, assim como $vC está para $vX"
+   echo "$vA está para $vB assim como $vC está para $vX"
 }
 
 function f_exec_calculadora_trim {
-  echo "hit" 
+   
    f_greet
    f_talk; echo "Calculadora Trim the HEDGE"
 
@@ -553,10 +553,15 @@ function f_exec_calculadora_trim {
 
    "
 
-   read -p "Introduza A (valor negativo): " vA
-   read -p "Introduza B (tamanho BTC do negativo): " vB
-   read -p "Introduza C (valor positivo): " vC
-   read -p "Introduza P (preço atual (facultativo)): " vP
+   v_input_1="Introduza A (valor negativo): " 
+   v_input_2="Introduza B (tamanho BTC do negativo): " 
+   v_input_3="Introduza C (valor positivo): "
+   v_input_4="Introduza P (preço atual (facultativo)): "
+
+   read -p "$v_input_1" vA
+   read -p "$v_input_2" vB
+   read -p "$v_input_3" vC
+   read -p "$v_input_4" vP
    # uDev: read -p "Introduza O (Operacao negativa a cortar (L)ong ou (S)hort (facultativo)): " vO
    echo
 
@@ -567,11 +572,11 @@ function f_exec_calculadora_trim {
    echo "B = $vB"
    echo "C = $vC"
    echo "X = $vX"
-   [[ ! -z $vP ]] && echo "P = $vP"  
+   [[ -n $vP ]] && echo "P = $vP"  
    echo
 
    # Caso o utilizador queira especificar a que preco estava quando quis ver as contas, entao, tambem escreve esse preco no ecra (para mais facil compreensao)
-      [[ ! -z $vP ]] && echo "Se a operação negativa for long: Fechar mais acima possivel" && echo "--- Preco atual: $vP" && echo "Se a operação negativa for short: Fechar mais abaixo possivel" 
+      [[ -n $vP ]] && echo "Se a operação negativa for long: Fechar mais acima possivel" && echo "--- Preco atual: $vP" && echo "Se a operação negativa for short: Fechar mais abaixo possivel" 
    
       echo
 
