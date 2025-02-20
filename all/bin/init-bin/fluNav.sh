@@ -974,6 +974,7 @@ function V {
 
 
       elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
+         # uDev: `V - sc` to remove the repo
          cd ${v_REPOS_CENTER}/scratch-paper && ls
 
 
