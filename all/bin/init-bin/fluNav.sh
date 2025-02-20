@@ -903,6 +903,8 @@ function V {
          f_help
 
    # Implementation of Use 2:
+      # uDev: If correspondent repo does not exist, ask to clone intead of the error message
+
       elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
          cd ${v_REPOS_CENTER}/DRYa && ls
       
