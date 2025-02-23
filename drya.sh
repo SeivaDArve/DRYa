@@ -989,17 +989,17 @@ function f_dot_files_install {
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
    #L10="10. stroken"  # It is part of .netrc         
 
-    L11="11. termux.properties"
-    L10='10. .emacs.d/'  # uDev: remove from flunav `S 2`
-     L9="9.  .tmux.conf"
-     L8="8.  .bash_logout"
-     L7="7.  .gitconfig "
-     L6="6.  .vimrc "
-     L5="5.  .netrc "
-     L4="4.  .dryarc "
+    L11="11. | termux  | termux.properties"
+    L10='10. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
+     L9="9.  | tmux    | .tmux.conf"
+     L8="8.  | bash    | .bash_logout"
+     L7="7.  | git     | .gitconfig "
+     L6="6.  | git     | .netrc "
+     L5="5.  | vim     | .vimrc "
+     L4="4.  | DRYa    | .dryarc "
 
-     L3="3.  Install | PRESETS"
-     L2="2.  Install | TODOS "
+     L3="3.  | Install | PRESETS"
+     L2="2.  | Install | ALL "
 
      L1="1.  Cancel "
 
@@ -1014,8 +1014,8 @@ function f_dot_files_install {
       [[ $v_list =~ "9.  " ]] && f_dotFiles_install_tm_tmux
       [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
-      [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "5.  " ]] && f_dot_files_install_netrc
+      [[ $v_list =~ "6.  " ]] && f_dot_files_install_netrc
+      [[ $v_list =~ "5.  " ]] && f_dotFiles_install_vim
       [[ $v_list =~ "4.  " ]] && f_dotFiles_install_dryarc
       [[ $v_list =~ "3.  " ]] && f_dot_files_install_presets
       [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
@@ -1076,7 +1076,7 @@ function f_test_L3_available_updates {
    # Antes do menu dos dot-files, testar se existe diferenca entre os ficheiros centralizados e os ficheiros instalados, se houver diferenca, indica que ha atualizacoes
 
    # Se existe atualizacoes
-      L3b=" (Existe diferenca nos ficheiros instalados)"
+      L3b=" (uDev: Existe diferenca nos ficheiros instalados)"
 
    # Se nao existe atualizacoes
       #L3b=""
