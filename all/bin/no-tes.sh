@@ -37,6 +37,9 @@ function f_edit_ToDo_note_no_title {
 }
 
 function f_edit_random_note_no_title {
+
+   # uDev: Ask if user wants to download repo (if enixistent)
+
    v_file=${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
 
    f_create_file_and_name
@@ -50,6 +53,8 @@ function f_edit_random_note_no_title {
    && f_talk                \
    && echo "note added to file 'rn'"  \
    && echo " > uDev: sync omni-log automatically"
+
+   # uDev: After sync the repo with new info, ask if user wants to delete repo again
 }
 
 function f_one_file_bau {
