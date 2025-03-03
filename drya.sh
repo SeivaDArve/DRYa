@@ -1158,6 +1158,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Mount drivers com `lsblk`
          # L12='12. `curl` ticks: get current date/time
          # L12='12. See the total size (bit, Kb, Mb, Gb) of a directory
+         # L12='12. `D ping` test continuously if there is internet
 
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
