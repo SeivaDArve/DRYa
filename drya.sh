@@ -1158,7 +1158,9 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Mount drivers com `lsblk`
          # L12='12. `curl` ticks: get current date/time
          # L12='12. See the total size (bit, Kb, Mb, Gb) of a directory
+         # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
 
+         L16='16. Menu   | Metadata'
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
          L13='13. Menu   | Audio Media Player'  
@@ -1178,12 +1180,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
          [[ $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
          [[ $v_list =~ "13. " ]] && f_menu_audio_media_player
@@ -1937,6 +1940,45 @@ elif [ $1 == "news" ]; then
    # Runs a script inside DRYa directories that continuously rolls information
    bash ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
 
+elif [ $1 == "todo" ] || [ $1 == "t" ]; then  
+   # Lista de tarefas
+   echo "uDev: ToDo list: "
+   echo "@ Android Notifications"
+   echo "@ scratch-paper"
+   echo "@ omni-log"
+   echo "@ moedaz"
+   echo "@ wikiD"
+   echo "@ wikiD"
+   echo "@ verbose-lines"
+
+elif [ $1 == "list-all-file-metadata" ] || [ $1 == "lsmeta" ]; then  # mostra os seu metadados da imagem fornecida
+   
+   if [ -z $2 ]; then
+      # Caminho para a imagem
+         echo "Introduza o nome do ficheiro do qual quer ver os metadados"
+         read -p " > " v_file
+
+         exiftool "$v_file"
+
+   else
+         exiftool $2
+   fi
+
+
+elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta todas as fotos do dir atual e mostra os seus metadados
+
+   # Caminho para a pasta com as imagens
+      FOLDER_PATH="."
+
+   # Loop através dos arquivos na pasta
+      for i in "$FOLDER_PATH"/*; do
+        # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
+        if [[ $i == *.jpg || $i == *.jpeg || $i == *.png ]]; then
+          # Listar todos os metadados da imagem
+          exiftool "$i"
+        fi
+      done
+
 elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na pasta atual, identifica todas as fotos editadas pelo Photoshop (com apoio do chatGPT)
    # uDev: Existem mais campos que mencionam 'Photoshop' sem ser so o campo '-Software', é necessario completar
 
@@ -1972,41 +2014,10 @@ elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "clrPSm
         fi
       done
 
-elif [ $1 == "todo" ] || [ $1 == "t" ]; then  # Lista de tarefas
-   echo "uDev: ToDo list: "
-   echo "@ Android Notifications"
-   echo "@ scratch-paper"
-   echo "@ omni-log"
-   echo "@ moedaz"
-   echo "@ wikiD"
-   echo "@ wikiD"
-   echo "@ verbose-lines"
-
-elif [ $1 == "list-all-file-metadata" ] || [ $1 == "lsmeta" ]; then  # mostra os seu metadados da imagem fornecida
-   # Caminho para a imagem
-      echo "Introduza o nome do ficheiro do qual quer ver os metadados"
-      read -p " > " v_file
-
-      exiftool "$v_file"
-
-elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta todas as fotos do dir atual e mostra os seus metadados
-
-   # Caminho para a pasta com as imagens
-      FOLDER_PATH="."
-
-   # Loop através dos arquivos na pasta
-      for i in "$FOLDER_PATH"/*; do
-        # Verifica se o arquivo é uma imagem (extensões .jpg, .jpeg, .png)
-        if [[ $i == *.jpg || $i == *.jpeg || $i == *.png ]]; then
-          # Listar todos os metadados da imagem
-          exiftool "$i"
-        fi
-      done
-
 
 elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
    echo "uDev: Idenfiticação de photos criando um nome com ID"
-   # uDev: criar fx que busca TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
+   # uDev: criar fx que busca em TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
 
 elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
    # uDev: criar também hard links para ficheiros e pastas
@@ -2044,9 +2055,11 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    # List of calculatores (some modified for Trading)
 
    if [ -z $2 ]; then 
+      # Opens menu "calculadoras"
       bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
 
    elif [ $2 == "." ]; then 
+      # Opens interactive calculadora
       bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh .
 
    fi
@@ -2055,6 +2068,15 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
    f_greet
    f_talk; echo "uDev: Options to set keyboard"
     
+elif [ $1 == "k" ]; then 
+   echo 'uDev: fzf menu for entire keyboard'
+   echo '      Used when keyboard configs are unsolved'
+   read -sn1 -p " > Press enter "
+   clear
+   cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
+
+   # uDev: Set a keybing like Ctrl-... to open this fzf file while writting text to allow adding some special charter like: ? _ " + ) -
+
 elif [ $1 == "set-timezone" ] || [ $1 == "timez" ]; then 
    f_talk; echo "uDev: Options to set timezone"
     
@@ -2082,11 +2104,8 @@ elif [ $1 == "noty" ] || [ $1 == "notify" ]; then
 
 elif [ $1 == "QR" ] || [ $1 == "qr" ]; then 
    # Options for QR codes
-   
 
    f_QR_code_fzf_menu
-
-
 
 elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
    # Presenting DRYa with ASCII text
@@ -2113,13 +2132,6 @@ elif [ $1 == "out" ]; then
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
-
-elif [ $1 == "k" ]; then 
-   echo 'uDev: fzf menu for entire keyboard'
-   echo '      Used when keyboard configs are unsolved'
-   read -sn1 -p " > Press enter "
-   clear
-   cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
 
 elif [ $1 == ".." ]; then  
    # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
