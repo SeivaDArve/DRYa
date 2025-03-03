@@ -24,6 +24,9 @@ set expandtab
 "Enable Mouse scrolling and selecting
 set mouse=a
 
+" Dentro do vim, pesquisar texto com insensibilidade a letras maiusculas e minusculas quando pesquisamos com a vim keybing: /
+set ignorecase
+
 "Display indentation
 ":set noexpandtab | retab! 4
 
@@ -65,4 +68,3 @@ nnoremap ZD i${v_REPOS_CENTER}/<Esc>
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " (usa a variavel global 'g:dryaREPOS')
 nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/bin/boilerplates/bash-fzf-1-boilerplate.sh'<CR>
-
