@@ -622,6 +622,7 @@ function f_menu_internet_network_ip_options {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L4='4. Ver    | User info (saved @ host system)'
       L3='3. Assign | New random IP'                                      
       L2='2. Ver    | IP publico e local'                                      
    
@@ -636,6 +637,7 @@ function f_menu_internet_network_ip_options {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
       [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
       [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
@@ -1160,6 +1162,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. See the total size (bit, Kb, Mb, Gb) of a directory
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
 
+         L17='17. Menu   | Clone Repositories (github)'
          L16='16. Menu   | Metadata'
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
@@ -1180,12 +1183,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "17. " ]] && echo "uDev"
          [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
          [[ $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
