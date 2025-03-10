@@ -11,12 +11,13 @@
 #     At the top of every script file in which this script needed, place these lines below:
 #
 #
-#     # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+#     # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 #        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-#           v_greet="DRYa"
-#           v_talk="DRYa: "
-#           v_txt="<text-used-at-f_prsK-fx>"
-#           #v_Hl (uDev)
+#
+#        v_greet="DRYa"
+#        v_talk="DRYa: "
+#        v_txt="<text-used-at-f_prsK-fx>"
+#        v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
 #
 
@@ -246,15 +247,14 @@ function f_prsK {
 
 
 
-function f_Hline {
+function f_hzl {
    # Prints an horizontal line
 
-   # uDev: istead of "_" add a variable to it to be used as a library
-   #       variable: $v_Hl
-  
-   #echo $COLUMNS # Debug
+   # If the script that used this library does not set the variable that fills the line, then the character is set as default here
+      [[ -z $v_hzl ]] && v_hzl="-"
+      
    v_cols=$(tput cols)
-   printf "%*s" $v_cols | tr " " "_"
+   printf "%*s" $v_cols | tr " " "$v_hzl"
 }
 
 function f_horizline {
