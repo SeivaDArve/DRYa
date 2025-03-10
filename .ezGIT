@@ -1,0 +1,2 @@
+# Title: ezGIT executable
+# Description: Place a .ezGIT file at each git repo at the working dir, to allow ezGIT.sh to run the script (if existent) after the command `G v`
