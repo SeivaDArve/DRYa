@@ -434,6 +434,129 @@ function f_clone_repos {
       unset v_pwd
 }
 
+function f_dotFiles_install_git_set_machine_name {
+   # For .gitconfig, tell default user.name variable and ask yhe user if he wants to change
+
+   function f_about_centralized_gitconfig {
+      # About centralized .gitconfig file @ DRYa
+         # Path to file
+            v_gitconfig="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig"
+            #less $v_gitconfig # debug
+
+         # Inform the user about default git name:
+            v_default_name=$(grep "name =" $v_gitconfig)
+            v_default_name=$(echo "$v_default_name" | cut -d " " -f 3)
+            
+            f_talk; echo "Default git name (@ centralized DRYa) is:" 
+                    echo " > $v_default_name"
+                    echo
+   }
+
+   function f_about_host_machine {
+      # Inform about host machine current git name
+         v_current_name=$(git config --global user.name)
+
+         # If name is empty, tell it very clearly:
+            [[ -z $v_current_name ]] && v_current_name="(empty)"
+
+            f_talk; echo "Current git name (@ host machine) is:"
+                 echo " > $v_current_name"
+                 echo
+   }
+
+   function f_test_if_exact_name_exists {
+      # Adding new name to list if it does not exist there already
+      
+      # uDev: Very likely this fx has bugs (must check)
+
+      function f_add_name {
+         # Add name to list
+         echo "$v_mach" >> $v_list_of_machines 
+      }
+
+      function f_test_success {
+         # If this fx runns successfully, next line of code will not run
+            grep -x "$v_mach" $v_list_of_machines
+            [[ $? == 0 ]] && f_suc1
+      }
+
+      f_test_success
+
+      # If last line did not run successfully, run fx to add name and try last fx again (or say "failure")
+         grep -x "$v_mach" $v_list_of_machines
+         [[ $? == 1 ]] && f_add_name && f_test_success || f_suc2
+   }
+
+   function f_choose_a_name_from_list {
+      # Ask what name to change to (and tell dedault, if user do not choose)
+         v_txt="Press ENTER to choose a name"; f_prsK
+         echo
+
+      # Path to the list of preset possible machine names
+         v_list_of_machines="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/list-machine-names.txt"
+
+      # Creating fzf menu
+         v_prompt="DRYa: Git: Qual é o nome que quer dar a maquina atual: "
+         v_ask_for_another_name=" > Inserir outro nome..."
+
+         v_mach=$( (echo "$v_ask_for_another_name"; cat $v_list_of_machines) | fzf --prompt "$v_prompt")
+         
+      # If user asked in the menu to insert a different name:
+         if [[ $v_mach == "$v_ask_for_another_name" ]]; then
+            f_talk; echo    "What other name do you want to add?"
+                    echo -n " > "
+
+            read v_mach
+            echo
+
+            f_talk; echo "Do you want to add that name to the list?"
+                    echo " > Path: $v_list_of_machines"
+                    echo
+                    echo " > Press [Y]:       (Set name + add to list)"
+                    echo " > Press [any key]: (Set name + do not add to list)"
+                    echo -n " > "
+
+            read -n1 v_ans
+
+                    echo
+                    echo
+
+            v_msg="Name will be added to list of possible names"
+
+            [[ $v_ans == "y" ]] && f_talk && echo "$v_msg" && echo " > $v_mach" && f_test_if_exact_name_exists && echo
+            [[ $v_ans == "Y" ]] && f_talk && echo "$v_msg" && echo " > $v_mach" && f_test_if_exact_name_exists && echo
+
+            [[ $v_ans != "y" ]] && [[ $v_ans != "Y" ]] && f_talk && echo "Name will not be added to list of possible names" && echo 
+         fi
+   }
+
+   function f_finish_by_setting_choosen_name {
+
+      # Inform about the result of the fzf menu
+         f_talk; echo "New name to set:"
+                 echo " > $v_mach"
+
+      # Do not allow name to be empty (in case fzf menu is aborted)
+         [[ -z $v_mach ]] && echo && echo "Aborting... Name is empty" && exit 1
+         
+      # Apply changes
+         git config --global user.name "$v_mach"
+
+      # Making sure all changes were applied (If $v_mach is equal to $v_ask_for_another_name)
+         v_confirmation=$(git config --global user.name)
+         [[ $v_mach == $v_confirmation ]] && f_suc1 || f_suc2
+   
+      echo
+   }
+
+   # Sequence
+      f_about_centralized_gitconfig
+      f_about_host_machine
+      #f_test_if_exact_name_exists  # This fx was not made to rub by itself (other fx will call it)
+      f_choose_a_name_from_list
+      f_finish_by_setting_choosen_name 
+}
+
 function f_dotFiles_install_git {
    # Install .gitconfig on the system
    
@@ -441,20 +564,44 @@ function f_dotFiles_install_git {
    v_place=~
 
    f_greet
-   f_talk; echo "Installing .gitconfig:"
-           echo " > File 1 : .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-           echo " > Goes to: ~/"
-           echo
 
-   f_talk; echo "uDev: Test if there is any diff between files"
-           echo "      (avoids double installation)"
+
+   f_talk; echo -n "Installing "
+     f_c2; echo    ".gitconfig"
+     f_rc; echo
+
+   f_talk; echo    "STEP 1: Copy .gitconfig"
+           echo    " > File 1 : .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+           echo    " > To:      ~/"
+           echo
+   f_talk; echo    "STEP 2: Change Machine name"
+           echo    " > Either insert New name or choose from Default name list"
            echo
 
    v_txt="Install .gitconfig file " && f_prsK
+   echo
 
-   cp $v_file $v_place && f_suc1 || f_suc2
+   f_hzl
+   echo
+   echo
 
-           echo
+   # Start STEP 1
+      f_talk; echo "Starting STEP 1:"
+      cp $v_file $v_place && f_suc1 || f_suc2
+      echo
+
+   # Start STEP 2
+      f_talk; echo "Starting STEP 2:"
+      echo
+
+      # Para verificar o nome atual:
+      #  > `git config --global user.name` 
+      #
+      # Para alterar o nome atual:
+      #  > `git config --global user.name "novo-nome"` 
+
+      f_dotFiles_install_git_set_machine_name
+
    f_talk; echo "Done! "
 }
 
@@ -470,17 +617,15 @@ function f_dotFiles_install_vim {
 
    f_greet
    f_talk; echo -n "Installing "
-     f_c2; echo ".vimrc"
+     f_c2; echo    ".vimrc"
      f_rc; echo
-
-   f_talk; echo "STEP 1: Copy .vimrc"
-           echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
-           echo " > To:     ~/"
+   f_talk; echo    "STEP 1: Copy .vimrc"
+           echo    " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
+           echo    " > To:     ~/"
            echo
-
-   f_talk; echo "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
-           echo " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
-           echo " > to:   \"let g:dryaREPOS = '$v_v1' \" "
+   f_talk; echo    "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
+           echo    " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
+           echo    " > to:   \"let g:dryaREPOS = '$v_v1' \" "
            echo
 
    v_txt="Install .vimrc" && f_prsK
@@ -510,10 +655,13 @@ function f_dotFiles_install_termux_properties {
    v_place=~/.termux/
 
    f_greet
-   f_talk; echo "Installing Termux Colors + Termux properties"
+   f_talk; echo "Installing:"
+           echo " > Termux Colors + Termux properties"
+           echo
+   f_talk; echo "STEP 1: Copy:"
            echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties"
            echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
-           echo " > To:  ~/.termux/"
+           echo " > To:     ~/.termux/"
 
    v_txt="Install termux configs" && f_prsK
    
@@ -1078,7 +1226,7 @@ function f_test_L3_available_updates {
    # Antes do menu dos dot-files, testar se existe diferenca entre os ficheiros centralizados e os ficheiros instalados, se houver diferenca, indica que ha atualizacoes
 
    # Se existe atualizacoes
-      L3b=" (uDev: Existe diferenca nos ficheiros instalados)"
+      L3b="(uDev: Detetar se existe diferenca nos ficheiros instalados)" # Atencao: .gitconfig vai ter user.name de acordo com traitsID, de acordo com a maquina
 
    # Se nao existe atualizacoes
       #L3b=""
@@ -1101,9 +1249,9 @@ function f_dot_files_menu {
       L6="6. Edit | Centralized files | only @ DRYa"
       L5='5. Edit | Centralized > then > Install'
 
-      L4="4. Menu | Uninstall "
-      L3="3. Menu | Install $L3b" # Variable L3b may be set and may be empty to give more info to the user
-      L2="2. List | Available"    # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+      L4="4. Menu | Uninstall |"
+      L3="3. Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+      L2="2. List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
       L1="1. Cancel"
 
       L0="DRYa: dot-files menu: "
@@ -1172,8 +1320,8 @@ function f_drya_fzf_MM_Toolbox {
          L10='10. Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L9='9.  Menu   | no-tes '
           L8='8.  Script | Convert `pwd` from Win to Linux'
-          L7="7.  App    | xKill"
-          L6="6.  App    | notify"
+          L7="7.  Script | xKill"
+          L6="6.  Script | notify"
           L5="5.  Menu   | QR code"
           L4="4.  Menu   | calculos/calculadoras"
           L3="3.  Menu   | dot-files"

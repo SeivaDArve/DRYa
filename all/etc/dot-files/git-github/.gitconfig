@@ -1,3 +1,7 @@
+# Title: .gitconfig file
+
+# Este é um exemplo de comentario
+
 [user]
 	name = seivaDArve
 	email = flowreshe.seiva.d.arve@gmail.com
@@ -18,6 +22,6 @@
 [core]
 	editor = vim
 [alias]
-   please = push --force-with-lease
+   please = push --force-with-lease  # lease is: only push updates that do not overwrite other user's updates. The command --force overrites other user's updates
 [pull]
    rebase = false
