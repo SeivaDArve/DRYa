@@ -1311,6 +1311,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. `D ping` test continuously if there is internet
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
+         # L12='12. info: set phonecalls recorder automatically
 
          L17='17. Menu   | Clone Repositories (github)'
          L16='16. Menu   | Metadata'
