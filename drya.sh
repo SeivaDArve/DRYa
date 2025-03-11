@@ -852,6 +852,8 @@ function f_QR_code_fzf_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D QR'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L6='6. Info: Website valido para criar QR codes'
+
       L5='5. Obter QR text | Abrir Android App, get clipboard'
          
       L4='4. Criar QR code | Apartir de 1 linha de 1 ficheiro'
@@ -861,10 +863,11 @@ function f_QR_code_fzf_menu {
 
       L0="SELECIONE 1 Opcao: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "6. " ]] && echo uDev
       [[ $v_list =~ "5. " ]] && bash $v_REPOS_CENTER/DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
       [[ $v_list =~ "4. " ]] && echo uDev
       [[ $v_list =~ "3. " ]] && f_create_qr_from_file
@@ -1813,7 +1816,7 @@ elif [ $1 == "mac" ]; then
       echo
 
 
-elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == "dot" ]]; then 
+elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == ".dot" ]]; then 
    # Installing all configuration files
 
    if [[ -z $2 ]]; then 
@@ -1826,7 +1829,9 @@ elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || 
 
    elif [[ $2 == "install" ]] || [ $2 == "I" ]; then 
       # Menu to install dot files
-      f_dot_files_install
+
+      [[ -z $3                ]] && f_dot_files_install
+      [[    $3 == "gitconfig" ]] && f_dotFiles_install_git
 
    elif [[ $2 == "remove" ]] || [ $2 == "O" ]; then 
       echo "uDev"
