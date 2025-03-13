@@ -206,9 +206,11 @@ function f_calcular_tempo_decorrido_apos_data {
       echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
 }
 
-function f_drya_plus {
+function f_drya_welcome {
    clear
-   echo "uDev: will cat a file under ~/.config/h.h/drya/drya-welcome"
+
+   v_file=~/.config/h.h/drya/drya-welcome
+   echo "uDev: will cat a file under $v_file"
 }
 
 function f_clone_info {
@@ -1503,10 +1505,27 @@ if [ -z "$*" ]; then
 
       fi
 
-elif [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "h" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
-   # Help menu  ::  rtfm: Read the Fucking Manual
+elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
+   # Help menu
+   # rtfm: Read the Fucking Manual
+
+   # uDev: drya h    # 1st Level of help
+   # uDev: drya hh   # 2nd level of help
+   # uDev: drya hhh  # 3rd level of help
+   # uDev: drya hhhh # 4th level of help ... instead of "msgs"
    
-   f_drya_help
+   if [ -z "$2" ]; then
+      f_drya_help
+
+   elif [ $2 == "welcome" ]; then 
+      # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
+      f_drya_welcome
+
+   elif [ $2 == "msgs" ]; then 
+      # Option to read the $DRYa_MESSAGES file
+         # They are stored at: ~/.config/h.h/drya/.dryaMessages
+         less ~/.config/h.h/drya/drya-msgs
+   fi
 
 elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
    # Edit first file in DRYa's instalation sequence
@@ -1586,26 +1605,6 @@ elif [ $1 == "location" ]; then
       # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
       termux-location -p GPS
 
-   fi
-
-
-elif [ $1 == "verbose" ] || [ $1 == "v" ]; then 
-   # Function found at: source-all-drya-files which is the first file on DRYa repository to run
-   # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
-
-   # uDev: drya h    # 1st Level of help
-   # uDev: drya hh   # 2nd level of help
-   # uDev: drya hhh  # 3rd level of help
-   # uDev: drya hhhh # 4th level of help ... instead of "msgs"
-   
-   if [ -z "$2" ]; then
-      echo "uDev"
-      f_drya_plus
-
-   elif [ $2 == "msgs" ]; then 
-      # Option to read the $DRYa_MESSAGES file
-         # They are stored at: ~/.config/h.h/drya/.dryaMessages
-         less ~/.config/h.h/drya/drya-msgs
    fi
 
 elif [ $1 == "update" ]; then 
