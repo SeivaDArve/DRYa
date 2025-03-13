@@ -63,7 +63,7 @@ nnoremap <silent> <CR> :nohlsearch<CR><CR>
 nnoremap ZX :q!<CR>
 
 " Inserir texto que equivale a variavel: ${v_REPOS_CENTER}
-nnoremap ZD i${v_REPOS_CENTER}/<Esc>
+nnoremap ZD i ${v_REPOS_CENTER}/<Esc>
 
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " (usa a variavel global 'g:dryaREPOS')
