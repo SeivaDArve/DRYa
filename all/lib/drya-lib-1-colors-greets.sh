@@ -300,3 +300,15 @@ function f_debug {
    echo -n ", 1... "
    read -sn1
 }
+
+function f_pin {
+   # Adicionar pin aos pedidos de certas fx
+   
+   v_df_pin=0000
+
+   read -p "Introduz um PIN: " v_pin
+
+   [[ $v_pin == $v_df_pin ]] && f_suc1 || f_suc2 && exit 1
+
+}
+
