@@ -1247,32 +1247,35 @@ function f_dot_files_menu {
 
       #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
       #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L8="8. Menu | Backups"
+      L10="10. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+       L9="9.  Menu | Backups"
 
-      L7='7. Edit | Installed files   | only @ Host'
-      L6="6. Edit | Centralized files | only @ DRYa"
-      L5='5. Edit | Centralized > then > Install'
+       L8="8.  View | Dependencies Checklist"
 
-      L4="4. Menu | Uninstall |"
-      L3="3. Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
-      L2="2. List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
-      L1="1. Cancel"
+       L7='7.  Edit | Installed files   | only @ Host'
+       L6="6.  Edit | Centralized files | only @ DRYa"
+       L5='5.  Edit | Centralized > then > Install'
+
+       L4="4.  Menu | Uninstall |"
+       L3="3.  Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+       L2="2.  List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+       L1="1.  Cancel"
 
       L0="DRYa: dot-files menu: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "9. " ]] && echo "Detetado 9"
-      [[ $v_list =~ "8. " ]] && echo "Detetado 8"
-      [[ $v_list =~ "7. " ]] && f_dot_files_menu_edit_host_files
-      [[ $v_list =~ "6. " ]] && echo "Detetado 6"
-      [[ $v_list =~ "5. " ]] && echo "Detetado 5"
-      [[ $v_list =~ "4. " ]] && echo "Detetado 4"
-      [[ $v_list =~ "3. " ]] && f_dot_files_install
-      [[ $v_list =~ "2. " ]] && f_dot_files_list_available
-      [[ $v_list =~ "1. " ]] && echo "Canceled"
+      [[ $v_list =~ "10. " ]] && echo "Detetado 10"
+      [[ $v_list =~ "9.  " ]] && echo "Detetado 9"
+      [[ $v_list =~ "8.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+      [[ $v_list =~ "7.  " ]] && f_dot_files_menu_edit_host_files
+      [[ $v_list =~ "6.  " ]] && echo "Detetado 6"
+      [[ $v_list =~ "5.  " ]] && echo "Detetado 5"
+      [[ $v_list =~ "4.  " ]] && echo "Detetado 4"
+      [[ $v_list =~ "3.  " ]] && f_dot_files_install
+      [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
+      [[ $v_list =~ "1.  " ]] && echo "Canceled"
    
       unset v_list
 }
