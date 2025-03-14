@@ -50,10 +50,9 @@ function f_refresh_hist_file {
 
    # Variables for dirs and files
       v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
-      mkdir -p $v_dir
-
       v_file="termux-notify-output.txt"
-      v_hist_file=$v_dir/$v_file
+      mkdir -p $v_dir
+      v_hist_file="$v_dir/$v_file"
 
 
 
@@ -74,7 +73,7 @@ function f_refresh_hist_file {
 
          v_dir=~/.config/h.h/drya/tmp
          mkdir -p $v_dir
-         v_hist_file=$v_dir/$v_file
+         v_hist_file="$v_dir/$v_file"
       fi
 }
 
@@ -91,7 +90,7 @@ function f_refresh_hist_file {
 
 # Add a line to history file
    function f_create_hist {
-         echo "$(date) > $v_ans" >> ${v_dir}${v_file}
+         echo "$(date) > $v_ans" >> ${v_dir}/${v_file}
    }
 
 # Create the message itself
