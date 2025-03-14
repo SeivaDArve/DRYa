@@ -223,11 +223,11 @@ function f_clone_info {
            echo
            echo " To list all public repositories"
            echo "  > '$ drya clone --list-public' or "
-           echo "  > '$ drya clone -p' "
+           echo "  > '$ drya clone p' "
            echo 
            echo " To list all private repositories"
            echo "  > '$ drya clone --list-private' or"
-           echo "  > '$ drya clone -P'"
+           echo "  > '$ drya clone P'"
            echo
            echo " To clone DRYa:  "
            echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
@@ -236,7 +236,7 @@ function f_clone_info {
            echo "  > https://github.com/SeivaDArve?tab=repositories"
 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-      v_txt="Visiting: https://github.com/SeivaDArve?tab=repositories"
+      v_txt="Go: https://github.com/SeivaDArve?tab=repositories"
       f_prsK
       echo
 
@@ -245,7 +245,9 @@ function f_clone_info {
    echo " > uDev: No other browser found"
    echo
    echo "Opening URL with Termux (terminal)"
-   termux-open-url https://github.com/SeivaDArve?tab=repositories
+   
+   v_link="https://github.com/SeivaDArve?tab=repositories"
+   termux-open-url $v_link
 }
 
 function f_init_clone_repos {
@@ -262,6 +264,13 @@ function f_clone_repos {
 
    function f_improve_readability {
       # These next functions are to improve the reading of `case-esac` below them
+
+      function f_refresh_terminal_after_clone {
+         # Some repositories have files to be sourced (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
+         echo
+         v_txt="Refreshing Entire Terminal?"; f_prsK
+         source ~/.bashrc
+      }
 
       function f_clone_repos_upk {
          echo "cloning upK"
@@ -298,6 +307,7 @@ function f_clone_repos {
 
       function f_clone_repos_moedaz {
          echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
+         #f_refresh_terminal_after_clone
       }
 
       function f_clone_repos_Tesoro {
@@ -1464,6 +1474,13 @@ if [ -z "$*" ]; then
    # Set Available time (in seconds) for Temporized quick menu
       v_secs=2
 
+   # Info: nome do dispositivo atual
+      v_user=$(git config --get user.name)
+
+      f_talk; echo -n "Device Name: "
+        f_c3; echo $v_user
+        f_rc; echo 
+
    # Info when no args are given
       f_talk; echo "is installed!"
               echo ' > Use: Terminal: `D --help` (for help)'
@@ -1666,9 +1683,6 @@ elif [ $1 == "clone" ]; then
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
-   # uDev: Some repositories have files to be sourcer (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
-
-   #uDev: Install repo dependencies too
 
    f_greet
 
@@ -1677,20 +1691,29 @@ elif [ $1 == "clone" ]; then
 
       f_clone_info
 
+   elif [ $2 == "." ]; then
+      # Open fzf to help clone by the correct name
+
+      f_talk; echo "uDev: fzf will list all public repos to clone"
+
    elif [ $2 == "try" ]; then
+      # When trying to clone those repos not predicted and already manipulated by drya.sh (this script)
+
       f_talk; echo -e "trying to clone: $3 \n"; 
 
-      f_init_clone_repos  ## Commun functionality shared with: drya clone $2
+      f_init_clone_repos  
 
       git clone https://github.com/SeivaDArve/$3.git
 
    else  
+      # if arg $2 is something elsrs, try to cline such name
+
       v_arg2=$2
 
-      f_init_clone_repos  ## Commun functionality shared with: drya clone try $3
-
+      f_init_clone_repos 
       f_clone_repos 
    fi
+
 
 elif [ $1 == "config" ]; then 
 
