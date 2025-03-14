@@ -304,12 +304,13 @@ function f_debug {
 function f_pin {
    # Adicionar pin aos pedidos de certas fx
    # v_pin is defined at source-all-drya-files
-   v_pin=$(grep "v_pin" ${v_REPOS_CENTER}/DRYa/all/source-all-drya-file)
+   # v_pin=$(grep "v_pin" ${v_REPOS_CENTER}/DRYa/all/source-all-drya-file)
+   v_pin=0000
 
-   echo "Pim is $v_pin"
-   read -p "Introduz um PIN: " v_ans
+   read -sp "Introduz um PIN: " v_ans
 
-   [[ $v_ans == $v_pin ]] && f_suc1 || f_suc2 && exit 1
+   [[ $v_ans != $v_pin ]] && f_suc2 && exit 1
+   [[ $v_ans == $v_pin ]] && f_suc1
 
 }
 
