@@ -183,8 +183,15 @@ function f_exec_calculadora_registadora {
    f_start
 
    function f_clc_help {
-      # HereDoc com instruçoes de utilização
+      # Help and instructions
 
+
+      # uDev: Use the --preview option of `fzf`
+      #       example: Place this in the terminal to test `cat` on documents: 
+      #                fzf --preview 'cat {}' --preview-window=right:60%
+
+
+      # HereDoc com instruçoes de utilização
 # --- # -------------------------------------------------------------------------
    cat <<EOF
 uDev: Criar menu fzf para este Doc
