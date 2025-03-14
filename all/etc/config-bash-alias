@@ -46,7 +46,16 @@ alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 
-alias wsl="cd /mnt/c/"
+function wsl {
+   # fx that uses `cd` to navigate to windows directories (when using WSL2)
+
+   if [ -z $2 ]; then
+      cd /mnt/c/
+
+   elif [ $2 == "." ]; then
+      cd /mnt/$3
+   fi
+}
 
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
