@@ -1146,13 +1146,13 @@ function f_action {
          f_refresh_S_hist_file  
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
-         v_file=$(fzf --prompt="EDITE um ficheiro: ")
-
+         unset v_list
+         v_file=$(fzf --prompt="fluNav: edite 1 ficheiro: " --preview 'cat {}' --preview-window=right:60%)
 
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
          v_pwd=$(pwd)
 
-         [[ ! -z $v_file ]] \
+         [[ -n $v_file ]] \
             && echo "$v_pwd/$v_file" >> $v_fluNav_hist_file \
             && f_talk \
             && echo "a Editar: $v_file" \
