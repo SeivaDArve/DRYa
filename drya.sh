@@ -2112,21 +2112,26 @@ elif [ $1 == "todo" ] || [ $1 == "t" ]; then
    echo "@ wikiD"
    echo "@ verbose-lines"
 
-elif [ $1 == "list-all-file-metadata" ] || [ $1 == "lsmeta" ]; then  # mostra os seu metadados da imagem fornecida
+elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ]; then  # mostra os seu metadados da imagem fornecida
    
    if [ -z $2 ]; then
       # Caminho para a imagem
-         echo "Introduza o nome do ficheiro do qual quer ver os metadados"
-         read -p " > " v_file
 
-         exiftool "$v_file"
+      # Lista de opcoes para o menu `fzf`
+
+         L0="DRYa: Para visualizar metadata, selecione o ficheiro: "
+         
+         unset v_list
+         v_list=$(ls | fzf --cycle --prompt="$L0")
+
+         [[ -n $v_list ]] && exiftool "$v_list"
 
    else
          exiftool $2
    fi
 
 
-elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta todas as fotos do dir atual e mostra os seus metadados
+elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "meta-ps-ls-dir" ]; then  # Junta todas as fotos do dir atual e mostra os seus metadados
 
    # Caminho para a pasta com as imagens
       FOLDER_PATH="."
@@ -2140,7 +2145,7 @@ elif [ $1 == "list-all-dir-metadata" ] || [ $1 == "lsDirmeta" ]; then  # Junta t
         fi
       done
 
-elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na pasta atual, identifica todas as fotos editadas pelo Photoshop (com apoio do chatGPT)
+elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "meta-ps-ls-r-jpg" ]; then  # Na pasta atual, identifica todas as fotos editadas pelo Photoshop (com apoio do chatGPT)
    # uDev: Existem mais campos que mencionam 'Photoshop' sem ser so o campo '-Software', é necessario completar
 
    # Caminho para a pasta com as imagens
@@ -2160,7 +2165,7 @@ elif [ $1 == "list-photoshop-edited-imgs" ] || [ $1 == "lsPSmeta" ]; then  # Na 
         fi
       done
 
-elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "clrPSmeta" ]; then  # Na pasta atual, elimina os campos onde diz que a foto foi editada por algum software 
+elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "meta-ps-clr" ]; then  # Na pasta atual, elimina os campos onde diz que a foto foi editada por algum software 
    # Caminho para a pasta com as imagens
       FOLDER_PATH="."
 
