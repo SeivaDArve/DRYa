@@ -307,7 +307,7 @@ function f_pin {
    # v_pin=$(grep "v_pin" ${v_REPOS_CENTER}/DRYa/all/source-all-drya-file)
    v_pin=0000
 
-   read -sp "Introduz um PIN: " v_ans
+   read -sp " > Introduz um PIN: " v_ans
 
    [[ $v_ans != $v_pin ]] && f_suc2 && exit 1
    [[ $v_ans == $v_pin ]] && f_suc1
