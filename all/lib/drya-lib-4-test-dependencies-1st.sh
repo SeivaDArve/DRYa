@@ -2,8 +2,12 @@
 # Title: Test dependencies existence
 
 # Test the existence of DRYa dependencies like: fzf, figlet, ncurses-utils, etc
+#   (See dependencies on file '1st' somewhere in DRYa repo)
 #
-# See dependencies on file '1st' somewhere in DRYa repo
+# Test the existence of DRYa repositories
+# 
+# Test and clone Repo dependencies too
+
 
 
 #
@@ -24,7 +28,7 @@
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="DRYa"
-   v_talk="DRYa: Lib 4: "
+   v_talk="DRYa-lib-4: "
 
 
 
