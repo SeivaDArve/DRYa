@@ -813,8 +813,8 @@ function f_menu_audio_media_player {
       L6='6. Tests  | Completion Bell sound'                                      
 
       L5='5. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
-      L4='4. Min Record | Status'
-      L3='3. Min Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
+      L4='4. Mic Record | Status'
+      L3='3. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
       L2='2. Play   | Search file at .'                                      
       L1='1. Cancel'
@@ -1337,7 +1337,7 @@ function f_drya_fzf_MM_Toolbox {
          L16='16. Menu   | Metadata'
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
-         L13='13. Menu   | Audio Media Player'  
+         L13='13. Menu   | Audio (Media Player + Voice Recorder)'  
          L12='12. Print  | `curl` tricks: Previsao do Tempo'
          L11='11. Print  | `curl` tricks: Online man pages'  
          L10='10. Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
