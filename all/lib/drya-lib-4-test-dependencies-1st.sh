@@ -71,13 +71,16 @@ function f_testing_either_repo_or_directory {
 }
 
 function f_test_pkg_git_installed {
-   # See if git is installed on the machine
+   # See if git is installed on the machine. If not installed, proceed to instalation
 
+   # uDev: traitsID must test package manager
+   
    git --version  &>/dev/null
 
    v_status=$?
 
-   [[ $v_status == 1 ]] && pkg install git
+    [[ $v_status == 1 ]] && pkg install git
+   #[[ $v_status == 0 ]] && echo 'Package `git` is installed'  # Debug
 
 }
 
@@ -86,31 +89,43 @@ function f_ensure_repo_existence {
    # Needs var: v_ensure
 
    # uDev: ensure `git` is also installed to clone repo if needed
+   
+   # Example: 
+   #     v_ensure="repoX"
+   #     f_ensure_repo_existence
 
    v_repo=${v_REPOS_CENTER}/$v_ensure
+   
+   if [ -z $v_ensure ]; then
+      # When using this scriptnl as a Lib, then variable $v_ensure must exist, an error will be mentioned if not set
 
-   [[ -z $v_ensure ]] \
-      && f_talk \
-      && echo "Could not test repo existence without specifying its name as \$v_ensure" \
-      && exit 1
+      f_talk; echo 'Could not test repo existence, variable not set'
+              echo ' > Specifying variable $v_ensure'
+      exit 1
+   fi
 
-   if [ -d $v_ensure ]; then
 
-      f_talk \
-         && echo "Directory $v_ensure already exists"
+   if [ -d $v_repo ]; then
+      # Testing if directory corresponding to the repo exists
 
-      f_talk \
-         && echo "Now we test if it is a repo:"
+      f_talk; echo "Directory already exists:"
+              echo " > $v_ensure"
+              echo
+
+      f_talk; echo "Testing if it is a repo:"
+
+      f_test_pkg_git_installed
 
       f_testing_either_repo_or_directory
 
    else
 
-      f_talk \
-         && echo "Directory it does not exist"
+      f_talk; echo "Directory does not exist"
 
       f_test_pkg_git_installed
 
-      git clone https://github.com/SeivaDArve/$v_ensure.git
+      cd ${v_REPOS_CENTER}/ 
+      v_cloned="https://github.com/SeivaDArve/$v_ensure.git"
+      git clone $v_cloned
    fi
 }
