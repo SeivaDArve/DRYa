@@ -592,6 +592,20 @@ function f_exec_calculadora_trim {
       echo "Vai reduzir $vX BTC da operação que esta neste momento negativa"
 }
 
+function f_eletricidade {
+   echo "Eletricidade:"
+   echo
+   echo "Formulas"
+   echo " > I=P/V ; I=V/R ; I=√(P/R)"
+   echo
+   echo " > R=V/I ; R=V^2/P ; V=P/I^2"
+   echo
+   echo " > V=IxR ; V=P/I ; V=√(PxR)"
+   echo
+   echo " > P=V^2/R ; P=RxI^2 ; P=VxI"
+   echo
+}
+
 
 
 
@@ -651,7 +665,7 @@ if [ -z "$*" ]; then
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && echo "uDev"
 
-         [[ $v_list =~ "13. " ]] && echo "uDev: Eletricidade"
+         [[ $v_list =~ "13. " ]] && f_eletricidade
          [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
          [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
          [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3
