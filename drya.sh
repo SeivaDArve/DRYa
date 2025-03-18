@@ -1325,7 +1325,7 @@ function f_drya_fzf_MM_Toolbox {
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
          L13='13. Menu   | Audio Media Player'  
-         L12='12. Print  | `curl` tricks: Previsao do Tempo'
+         L12='12. Print  | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
          L11='11. Print  | `curl` tricks: Online man pages'  
          L10='10. Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
           L9='9.  Menu   | no-tes '
