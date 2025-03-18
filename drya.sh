@@ -816,7 +816,7 @@ function f_menu_audio_media_player {
       L4='4. Mic Record | Status'
       L3='3. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
-      L2='2. Play   | Search file at .'                                      
+      L2='2. Play Music | Search file at .'                                      
       L1='1. Cancel'
 
       L0="SELECT 1: DRYa: Media Player: "
