@@ -1332,7 +1332,9 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. info: set phonecalls recorder automatically
          # L12='12. Raspberry: GPIO
          # L12='12. Record mouse and keyboard activity
-         # ANSI converter: https://dom111.github.io/image-to-ansi/
+         # L12='12. criar links de imagens com suport github (partilhar fotos ou videos)
+         # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
+         #
 
          L17='17. Menu   | Clone Repositories (github)'
          L16='16. Menu   | Metadata'
