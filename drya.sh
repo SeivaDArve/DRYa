@@ -1194,8 +1194,8 @@ function f_dot_files_menu_edit_host_files_termux_properties {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3='3. Edit       | termux.properties file'                                      
-      L2='2. Manipulate | Termux Properties as menu'                                      
+      L3='3. Edit       | termux.properties file'
+      L2='2. Manipulate | Termux Properties as menu (uDev)'
       L1='1. Cancel'
 
       L0="SELECT 1: Edit @ Host files: "

@@ -592,6 +592,35 @@ function f_exec_calculadora_trim {
       echo "Vai reduzir $vX BTC da operação que esta neste momento negativa"
 }
 
+function f_eletricidade {
+   echo "clc: Eletricidade"
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L5='5. I=P/V   ; I=V/R   ; I=√(P/R)'
+      L4='4. R=V/I   ; R=V^2/P ; V=P/I^2'
+      L3='3. V=IxR   ; V=P/I   ; V=√(PxR)'
+      L2='2. P=V^2/R ; P=RxI^2 ; P=VxI'
+      L1='1. Cancel'
+
+      L0="SELECT 1: Formulas Eletricidade: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5\n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "5. " ]] && echo "uDev: $L5"
+      [[ $v_list =~ "4. " ]] && echo "uDev: $L4"
+      [[ $v_list =~ "3. " ]] && echo "uDev: $L3"
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
+
+
+}
+
 
 
 
@@ -651,7 +680,7 @@ if [ -z "$*" ]; then
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && echo "uDev"
 
-         [[ $v_list =~ "13. " ]] && echo "uDev: Eletricidade"
+         [[ $v_list =~ "13. " ]] && f_eletricidade
          [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
          [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
          [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3

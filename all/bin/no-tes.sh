@@ -6,6 +6,10 @@
    v_talk="DRYa: no-tes: "
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
+   
+# Sourcing f_ensure_repo_existence
+      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-test-dependencies-1st.sh
+   
 function f_create_file_and_name {
    v_date=$(date +'%Y-%m-%d---%H-%M-%S')
    v_date="Data-Hora---$v_date)"
@@ -36,24 +40,43 @@ function f_edit_ToDo_note_no_title {
    vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/toDo
 }
 
+function f_vars_edit_random_note_no_title {
+   v_repo_name="omni-log"
+   v_repo=${v_REPOS_CENTER}/$v_repo_name
+   v_file=$v_repo/all/ex-pressa/rn
+}
+
 function f_edit_random_note_no_title {
+   # Creating new random note as tmp file, then sending to omni-log
 
-   # uDev: Ask if user wants to download repo (if enixistent)
+   # Defining what file to use
+      f_vars_edit_random_note_no_title
 
-   v_file=${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
+   # Ensuring omni-log is installed (using drya-lib-4)
+      unset v_green_light  # var given after drya-lib-4 that tells this main script either to proceed or not
+      v_ensure="omni-log"
+      f_ensure_repo_existence
 
    f_create_file_and_name
 
-   echo -ne "$v_date { \n" >> $v_tmp  
-   vim $v_tmp
+   function f_edit_temporary_file {
+      # If drya-lib-4 returns green light that repo existence is fixed, proceed
 
-   echo          >> $v_file \
-   && cat $v_tmp >> $v_file \
-   && echo "}"   >> $v_file \
-   && f_talk                \
-   && echo "note added to file 'rn'"  \
-   && echo " > uDev: sync omni-log automatically"
+      echo -ne "$v_date { \n" >> $v_tmp  
+      vim $v_tmp
 
+      echo          >> $v_file \
+      && cat $v_tmp >> $v_file \
+      && echo "}"   >> $v_file \
+      && f_talk                \
+      && echo "note added to file 'rn'"  \
+      && echo " > uDev: sync omni-log automatically"
+   }
+
+   # If drya-lib-4 returns green light that repo existence is fixed, proceed
+      [[ $v_green_light == 0 ]] && f_edit_temporary_file
+      [[ $v_green_light == 1 ]] && echo "Could not proceed, no green light from drya-lib-4"
+      
    # uDev: After sync the repo with new info, ask if user wants to delete repo again
 }
 
@@ -131,7 +154,18 @@ if [ -z $1 ]; then
    f_main_menu
  
 elif [ $1 == "-" ]; then
-   f_edit_random_note_no_title
+   if [ -z $2 ]; then
+      f_edit_random_note_no_title
+
+   elif [ $2 == "." ]; then
+      # Getting file name
+         f_vars_edit_random_note_no_title
+
+      # Ensuring omni-log is installed (using drya-lib-4)
+         v_ensure="omni-log"
+         f_ensure_repo_existence
+         vim $v_file
+   fi
       
 elif [ $1 == "a" ]; then
    # Create notes with terminal arguments
