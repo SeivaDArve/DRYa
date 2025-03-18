@@ -223,11 +223,11 @@ function f_clone_info {
            echo
            echo " To list all public repositories"
            echo "  > '$ drya clone --list-public' or "
-           echo "  > '$ drya clone -p' "
+           echo "  > '$ drya clone p' "
            echo 
            echo " To list all private repositories"
            echo "  > '$ drya clone --list-private' or"
-           echo "  > '$ drya clone -P'"
+           echo "  > '$ drya clone P'"
            echo
            echo " To clone DRYa:  "
            echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
@@ -236,7 +236,7 @@ function f_clone_info {
            echo "  > https://github.com/SeivaDArve?tab=repositories"
 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-      v_txt="Visiting: https://github.com/SeivaDArve?tab=repositories"
+      v_txt="Go: https://github.com/SeivaDArve?tab=repositories"
       f_prsK
       echo
 
@@ -245,7 +245,9 @@ function f_clone_info {
    echo " > uDev: No other browser found"
    echo
    echo "Opening URL with Termux (terminal)"
-   termux-open-url https://github.com/SeivaDArve?tab=repositories
+   
+   v_link="https://github.com/SeivaDArve?tab=repositories"
+   termux-open-url $v_link
 }
 
 function f_init_clone_repos {
@@ -262,6 +264,13 @@ function f_clone_repos {
 
    function f_improve_readability {
       # These next functions are to improve the reading of `case-esac` below them
+
+      function f_refresh_terminal_after_clone {
+         # Some repositories have files to be sourced (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
+         echo
+         v_txt="Refreshing Entire Terminal?"; f_prsK
+         source ~/.bashrc
+      }
 
       function f_clone_repos_upk {
          echo "cloning upK"
@@ -298,6 +307,7 @@ function f_clone_repos {
 
       function f_clone_repos_moedaz {
          echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
+         #f_refresh_terminal_after_clone
       }
 
       function f_clone_repos_Tesoro {
@@ -803,8 +813,8 @@ function f_menu_audio_media_player {
       L6='6. Tests  | Completion Bell sound'                                      
 
       L5='5. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
-      L4='4. Min Record | Status'
-      L3='3. Min Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
+      L4='4. Mic Record | Status'
+      L3='3. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
       L2='2. Play   | Search file at .'                                      
       L1='1. Cancel'
@@ -1247,32 +1257,35 @@ function f_dot_files_menu {
 
       #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
       #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L9="9. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L8="8. Menu | Backups"
+      L10="10. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+       L9="9.  Menu | Backups"
 
-      L7='7. Edit | Installed files   | only @ Host'
-      L6="6. Edit | Centralized files | only @ DRYa"
-      L5='5. Edit | Centralized > then > Install'
+       L8="8.  View | Dependencies Checklist"
 
-      L4="4. Menu | Uninstall |"
-      L3="3. Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
-      L2="2. List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
-      L1="1. Cancel"
+       L7='7.  Edit | Installed files   | only @ Host'
+       L6="6.  Edit | Centralized files | only @ DRYa"
+       L5='5.  Edit | Centralized > then > Install'
+
+       L4="4.  Menu | Uninstall |"
+       L3="3.  Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+       L2="2.  List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+       L1="1.  Cancel"
 
       L0="DRYa: dot-files menu: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "9. " ]] && echo "Detetado 9"
-      [[ $v_list =~ "8. " ]] && echo "Detetado 8"
-      [[ $v_list =~ "7. " ]] && f_dot_files_menu_edit_host_files
-      [[ $v_list =~ "6. " ]] && echo "Detetado 6"
-      [[ $v_list =~ "5. " ]] && echo "Detetado 5"
-      [[ $v_list =~ "4. " ]] && echo "Detetado 4"
-      [[ $v_list =~ "3. " ]] && f_dot_files_install
-      [[ $v_list =~ "2. " ]] && f_dot_files_list_available
-      [[ $v_list =~ "1. " ]] && echo "Canceled"
+      [[ $v_list =~ "10. " ]] && echo "Detetado 10"
+      [[ $v_list =~ "9.  " ]] && echo "Detetado 9"
+      [[ $v_list =~ "8.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+      [[ $v_list =~ "7.  " ]] && f_dot_files_menu_edit_host_files
+      [[ $v_list =~ "6.  " ]] && echo "Detetado 6"
+      [[ $v_list =~ "5.  " ]] && echo "Detetado 5"
+      [[ $v_list =~ "4.  " ]] && echo "Detetado 4"
+      [[ $v_list =~ "3.  " ]] && f_dot_files_install
+      [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
+      [[ $v_list =~ "1.  " ]] && echo "Canceled"
    
       unset v_list
 }
@@ -1319,12 +1332,13 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. info: set phonecalls recorder automatically
          # L12='12. Raspberry: GPIO
          # L12='12. Record mouse and keyboard activity
+         # ANSI converter: https://dom111.github.io/image-to-ansi/
 
          L17='17. Menu   | Clone Repositories (github)'
          L16='16. Menu   | Metadata'
          L15='15. Menu   | Internet / Network / IP'
          L14='14. Script | sshfs-wrapper'
-         L13='13. Menu   | Audio Media Player'  
+         L13='13. Menu   | Audio (Media Player + Voice Recorder)'  
          L12='12. Print  | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
          L11='11. Print  | `curl` tricks: Online man pages'  
          L10='10. Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
@@ -1460,6 +1474,13 @@ if [ -z "$*" ]; then
 
    # Set Available time (in seconds) for Temporized quick menu
       v_secs=2
+
+   # Info: nome do dispositivo atual
+      v_user=$(git config --get user.name)
+
+      f_talk; echo -n "Device Name: "
+        f_c3; echo $v_user
+        f_rc; echo 
 
    # Info when no args are given
       f_talk; echo "is installed!"
@@ -1663,9 +1684,6 @@ elif [ $1 == "clone" ]; then
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
-   # uDev: Some repositories have files to be sourcer (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
-
-   #uDev: Install repo dependencies too
 
    f_greet
 
@@ -1674,20 +1692,29 @@ elif [ $1 == "clone" ]; then
 
       f_clone_info
 
+   elif [ $2 == "." ]; then
+      # Open fzf to help clone by the correct name
+
+      f_talk; echo "uDev: fzf will list all public repos to clone"
+
    elif [ $2 == "try" ]; then
+      # When trying to clone those repos not predicted and already manipulated by drya.sh (this script)
+
       f_talk; echo -e "trying to clone: $3 \n"; 
 
-      f_init_clone_repos  ## Commun functionality shared with: drya clone $2
+      f_init_clone_repos  
 
       git clone https://github.com/SeivaDArve/$3.git
 
    else  
+      # if arg $2 is something elsrs, try to cline such name
+
       v_arg2=$2
 
-      f_init_clone_repos  ## Commun functionality shared with: drya clone try $3
-
+      f_init_clone_repos 
       f_clone_repos 
    fi
+
 
 elif [ $1 == "config" ]; then 
 

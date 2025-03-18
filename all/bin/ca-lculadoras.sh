@@ -619,6 +619,7 @@ if [ -z "$*" ]; then
          L15='15. Relogio     | Temporizador'
          L14='14. Relogio     | Despertador'
 
+         #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
          #L13='13. Calculadora | Percentagens'
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
