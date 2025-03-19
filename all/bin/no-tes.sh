@@ -37,7 +37,7 @@ function f_edit_with_heteronimos {
 
 function f_edit_ToDo_note_no_title {
    # Edit ToDo list
-   vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/toDo
+   vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
 }
 
 function f_vars_edit_random_note_no_title {
@@ -117,10 +117,13 @@ function f_main_menu {
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       #L80= Share Trascrypt from termux (copy paste entire termux output)
+
+      #L7='7. Script | Upload to omni-log | `no ^`
+
       L7='7. Info | com het. random   | `no x <txt no terminal>`' 
       L6='6. Nota | com heteronimos   | `no H`' 
 
-      L5='5. ToDo | Lista de tarefas  | `no t`'
+      L5='5. ToDo | Lista de tarefas  | `no td`'
       L4='4. Nota | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
       L3='3. Nota | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
@@ -176,7 +179,7 @@ elif [ $1 == "a" ]; then
 elif [ $1 == "H" ]; then
    f_edit_with_heteronimos
 
-elif [ $1 == "t" ]; then
+elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # Edit ToDo list
    f_edit_ToDo_note_no_title
 
@@ -189,6 +192,9 @@ elif [ $1 == "x" ]; then
    v_text=$*
    f_talk; echo "Text sent to file 'rn':"
    echo "$v_text"
+
+elif [ $1 == "^" ]; then
+   echo "uDev: Upload to omni-log"
 
 elif [ $1 == "rn" ]; then
    vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
