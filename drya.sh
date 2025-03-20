@@ -2321,9 +2321,53 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
    
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
 
-elif [ $1 == "out" ]; then 
-   source ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
-   exit 0
+elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
+   # Several ways to exit the terminal
+
+
+   # uDev: Fazer um script equivslente a `getopts` para esta fx
+   #     exemplo: `D quit -Huc -r`
+   #              -H (apagar historico)
+   #              -u (Uninstal softwares)
+   #              -c (Delete specific configs)
+   #              -r (Delete specific repo by name)
+
+
+   # File to run as last script before exit terminal
+      v_quit=${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
+
+   # Specific repos to delete
+      v_repo1=${v_REPOS_CENTER}/scratch-paper
+
+   if [ -z $2 ]; then 
+      # File to run as last script before exit terminal
+      source $v_quit
+      exit 0
+
+   elif [ $2 == "1" ]; then 
+      # When exit, delete specific repositories too
+      [ -d $v_repo1 ] && cd && rm -rf $v_repo1 && echo "Sc removed"
+
+   elif [ $2 == "2" ]; then 
+      # When exit, delete specific configs 
+      echo "uDev"
+      
+   elif [ $2 == "3" ]; then 
+      # When exit, uninstall specific softwares too
+      echo "uDev"
+
+   elif [ $2 == "4" ]; then 
+      # When exit, delete browser history and other trails of activity
+      echo "uDev"
+
+   elif [ $2 == "5" ]; then 
+      # When exit, delete DRYa entirely
+      echo "uDev"
+         
+   else
+      echo "uDev"
+
+   fi
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
