@@ -92,6 +92,7 @@ function web {
 
             #L8='8. Saber qual é o browser pre-definido'  # `xdg-settings get default-web-browser`
             #L7="7. Online Terminal"  # https://www.terminaltemple.com/
+            #L7="Pagina do historico Google
 
             L6="6. Ir | Router Config Page"
 
