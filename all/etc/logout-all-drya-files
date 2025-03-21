@@ -8,7 +8,7 @@ figlet DRYa
 echo "DRYa: Restoring files and configs before terminal exit"
 
 # Create a separation line to distinguish changes easier
-   f_horizontal_line
+   f_hzl
    echo $v_line
 
 # Restoring termux touch keybord to omni-key's default key
