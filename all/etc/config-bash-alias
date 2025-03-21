@@ -59,6 +59,8 @@ function wsl {
 
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
+alias xdg=xdg-open
+
 function f_fzf_raw_link_opener {
 
    # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
