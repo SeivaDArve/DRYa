@@ -4,6 +4,18 @@
 # Use: Whenever you develop a script with flags like: --flag-example, White at the line right below it, what that flag means. This way, this script allows you to avoid unecessary time writting and installing a specific man page for each script
 #
 #        
+
+
+
+
+
+# uDev: the BEST documentation happens if you can open the source code and read it
+#       Therefore: uDev: Create a grep function to grep all 'if [' and 'elif' in this document and along with that, search one more line below with the comment that tells what that function does
+
+
+
+
+
    #   uDev: Visualizacao grafica que um possivel output do dee-pages:
    #
    #   #+name: tree
