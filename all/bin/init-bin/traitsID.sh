@@ -14,7 +14,10 @@ function trid {
 
    # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
    echo "File re-loaded every startup"
-   less $v_id_file
+   echo 
+   
+   # From the file created by traitsID, print at the terminal to help copy/paste
+      cat $v_id_file | fzf
 
    #echo "File that overwrittes last file"
    #less .dryarc
