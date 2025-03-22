@@ -400,7 +400,7 @@ function f_clone_repos {
       ;;
 
       wikiD | wiki | wd) 
-         f_clone_repos_dWiki
+         f_clone_repos_wikiD
       ;;
 
       omni-log | omni | log | om)   
@@ -1571,6 +1571,9 @@ elif [ $1 == "3" ] || [ $1 == "edit-fluNav" ]; then
    # Edit forth file in DRYa's instalation sequence
 
    echo uDev
+
+elif [ $1 == "config-drya-hh-files" ] || [ $1 == "hh" ]; then 
+   echo 'Navigate to ~/.config/h.h/ with the alias `hh`'
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
