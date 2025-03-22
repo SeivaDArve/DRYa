@@ -782,6 +782,9 @@ function f_menu_internet_network_ip_options {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L6='6. Print  | javascript tricks (for browser console)'
+      L5='5. Menu   | `web` (navegar na internet)'
+
       L4='4. Ver    | User info (saved @ host system)'
       L3='3. Assign | New random IP'                                      
       L2='2. Ver    | IP publico e local'                                      
@@ -790,13 +793,15 @@ function f_menu_internet_network_ip_options {
 
       L0="SELECIONE 1 do menu (exemplo): "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "6. " ]] && echo "uDev: copiar/scrape do wikiD.org para aqui"
+      [[ $v_list =~ "5. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/web.sh
       [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
       [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
       [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
@@ -1260,7 +1265,8 @@ function f_dot_files_menu {
       L10="10. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
        L9="9.  Menu | Backups"
 
-       L8="8.  View | Dependencies Checklist"
+       #L8="8.  View | Dependencies Checklist"
+       L8="8.  View | 1st Packages"
 
        L7='7.  Edit | Installed files   | only @ Host'
        L6="6.  Edit | Centralized files | only @ DRYa"
@@ -1282,7 +1288,7 @@ function f_dot_files_menu {
       [[ $v_list =~ "7.  " ]] && f_dot_files_menu_edit_host_files
       [[ $v_list =~ "6.  " ]] && echo "Detetado 6"
       [[ $v_list =~ "5.  " ]] && echo "Detetado 5"
-      [[ $v_list =~ "4.  " ]] && echo "Detetado 4"
+      [[ $v_list =~ "4.  " ]] && echo "Detetado 4"  # Options to uninstall DRYa itself also
       [[ $v_list =~ "3.  " ]] && f_dot_files_install
       [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
       [[ $v_list =~ "1.  " ]] && echo "Canceled"
@@ -2371,6 +2377,10 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       echo "uDev"
 
    fi
+
+elif [ $1 == "web" ]; then 
+   # All options for web
+   f_menu_internet_network_ip_options
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
