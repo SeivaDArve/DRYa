@@ -46,6 +46,12 @@ alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
 
+alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
+
+alias xdg=xdg-open
+
+alias hh="cd ~/.config/h.h"
+
 function wsl {
    # fx that uses `cd` to navigate to windows directories (when using WSL2)
 
@@ -57,9 +63,6 @@ function wsl {
    fi
 }
 
-alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
-
-alias xdg=xdg-open
 
 function f_fzf_raw_link_opener {
 
