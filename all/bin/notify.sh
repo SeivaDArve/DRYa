@@ -43,6 +43,7 @@ function f_talk {
 
 
 function f_refresh_hist_file {
+   # uDev: use drya-lib-4 to ensure omni-log existence
 
    # Creating an history file
       # uDev: enviar antes para omni-log repo
