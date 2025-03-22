@@ -49,8 +49,8 @@ function f_refresh_hist_file {
 
 
    # Variables for dirs and files
-      v_dir=${v_REPOS_CENTER}/omni-log/all/notify-history
-      v_file="termux-notify-output.txt"
+      v_dir=${v_REPOS_CENTER}/omni-log/all/notify
+      v_file="termux-notify-output-history.txt"
       mkdir -p $v_dir
       v_hist_file="$v_dir/$v_file"
 
