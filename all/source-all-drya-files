@@ -131,29 +131,6 @@ function f_drya_msgs {
 
 }
 
-function f_create_fzf_menu_hist {
-   # uDev: send this dir and file to source-al-drya-files
-
-   mkdir -p ~/.config/h.h/drya/tmp/ 
-
-   # File for canceled fzf menus
-      v_drya_fzf_menu_hist=~/.config/h.h/drya/tmp/drya-fzf-menu-hist
-
-   # File for fluNav: V
-      v_drya_fluNav_V=~/.config/h.h/drya/tmp/drya-fluNav-V-hist
-
-   # File for fluNav: S
-      v_drya_fluNav_S=~/.config/h.h/drya/tmp/drya-fluNav-S-hist
-
-   touch $v_fzf_menu_hist 
-   touch $v_drya_fluNav_V
-   touch $v_drya_fluNav_S
-
-   export v_drya_fzf_menu_hist
-   export v_drya_fluNav_V
-   export v_drya_fluNav_S
-}
-
 function f_termux_welcome {
    # Display the standard welcome termux message
       # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
