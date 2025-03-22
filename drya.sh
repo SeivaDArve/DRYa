@@ -1711,6 +1711,8 @@ elif [ $1 == "clone" ]; then
    elif [ $2 == "try" ]; then
       # When trying to clone those repos not predicted and already manipulated by drya.sh (this script)
 
+      # uDev: It is possible to clone repos with case insensitivity, so, the real repo name from the website must be read and use that name instead of our prompt that is case insensitive
+
       f_talk; echo -e "trying to clone: $3 \n"; 
 
       f_init_clone_repos  
@@ -1718,7 +1720,7 @@ elif [ $1 == "clone" ]; then
       git clone https://github.com/SeivaDArve/$3.git
 
    else  
-      # if arg $2 is something elsrs, try to cline such name
+      # Clone pre-defined repositories, without menu fzf
 
       v_arg2=$2
 
