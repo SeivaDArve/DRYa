@@ -32,6 +32,10 @@ function f_complete_date_loop {
    do
       f_complete_date
       sleep 1
+
+      #read -t 1 -s v_key
+      #[[ $v_key == "q" ]] && exit
+      #[[ $v_key == "Q" ]] && exit
    done
 }
 
