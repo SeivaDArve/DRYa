@@ -120,25 +120,28 @@ function f_main_menu {
 
       #L7='7. Script | Upload to omni-log | `no ^`
 
-      L7='7. Info | com het. random   | `no x <txt no terminal>`' 
-      L6='6. Nota | com heteronimos   | `no H`' 
+      L8='8. script | notify.sh         | `notify`' 
 
-      L5='5. ToDo | Lista de tarefas  | `no td`'
-      L4='4. Nota | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
+      L7='7. Info   | com het. random   | `no x <txt no terminal>`' 
+      L6='6. Nota   | com heteronimos   | `no H`' 
 
-      L3='3. Nota | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
-      L2='2. Nota | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
+      L5='5. ToDo   | Lista de tarefas  | `no td`'
+      L4='4. Nota   | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
+
+      L3='3. Nota   | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
+      L2='2. Nota   | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
       L1='1. Cancel'
 
       L0="SELECIONE 1 do menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "8. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
       [[ $v_list =~ "7. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
       [[ $v_list =~ "6. " ]] && f_edit_with_heteronimos
       [[ $v_list =~ "5. " ]] && f_edit_ToDo_note_no_title
