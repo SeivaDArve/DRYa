@@ -5,25 +5,6 @@
    # '$ pkg install figlet file fzf'
 
 
-function f_push_only_hist_file_omni_log {
-   echo uDev
-}
-
-function f_refresh_S_hist_file {
-   # Ficheiro de historico
-   # uDev: esta fx esta duplicada, ja existe "f_create_fzf_menu_hist" no ficheiro source-all-drya-files
-
-   # Ficam no historico os ficheiros apos serem pesquisados com `S .`
-   # Acedemos imediatamente ao ultimo ficheiro com `S ..`
-   # Acedemos a toda a lista de ficheiros no historico com `S ...`
-   #
-   v_dir=~/.config/h.h/drya/flunav
-   mkdir -p $v_dir
-   v_fluNav_hist_file=$v_dir/history-files
-
-   # uDev: Omni log is not receiving files yet
-      #f_push_only_hist_file_omni_log
-}
 
 # uDev: This app should NOT have 3 prefixes: V, S, E and .....
 #       Instead: use only: `. M` for fluNav menu
@@ -63,6 +44,35 @@ function f_refresh_S_hist_file {
 #       Dot="morse ."
 #       Dash="morse ,"
 #       word="morse ..., ,.., .,,"
+
+
+function f_push_only_hist_file_omni_log {
+   echo "uDev: Will be used drya-lib-4 here to work with omni-log"
+}
+
+function f_refresh_S_hist_file {
+   # Ficheiro de historico com lista de ficheiros
+
+   v_dir=~/.config/h.h/drya/flunav/tmp
+   mkdir -p $v_dir
+   v_file="drya-fluNav-S-hist" 
+   v_fluNav_S_hist_file=$v_dir/$v_file
+
+   # uDev: Omni log is not receiving files yet
+   #   #f_push_only_hist_file_omni_log
+}
+
+function f_refresh_V_hist_file {
+   # Ficheiro de historico com lista de diretorios
+
+   v_dir=~/.config/h.h/drya/flunav/tmp
+   mkdir -p $v_dir
+   v_file="drya-fluNav-V-hist" 
+   v_fluNav_V_hist_file=$v_dir/$v_file
+
+   # uDev: Omni log is not receiving files yet 
+   #   #f_push_only_hist_file_omni_log
+}
 
 
 
@@ -319,21 +329,12 @@ function f_sync_ez_b4_after {
 
 
 function f_down {
-   # To download updates:
-   echo "uDev: Download from github (before opening file)"
-   echo " > Code-Name of file to sync: $v_nm"
-   bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh count^
+   echo "uDev: To download updates will use drya-lib-4 (before opening file)"
 }
 
 function f_up {
-   echo 
-   echo "uDev: Upload to github (after closing file)"
+   echo "uDev: To upload updates will use drya-lib-4 (after closing file)"
 }
-
-
-
-
-
 
 
 
@@ -888,15 +889,16 @@ function V {
          # Use 3:  `V p <dir>`    # Create new dir and travel to it
          # Use 4:  `V r <dir>`    # finds and lists a dir to remove (use -R to confirm yout choice)
          # Use 5:  `V R <dir>`    # Removes dir (recommended to confirm which dir will be removed with the option -r)
-         # Use 6:  `V ..     `    # Search a list of paths to navigate to
-         # Use 7:  `V .      `    # Uses `fzf` to search for a file. Then navigate to its directory
-         # Use 8:  `V <dir>  `    # Go to existent dir at current pwd
+         # Use 6:  `V .      `    # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
+         # Use 7:  `V ..     `    # Navigate to last dir in the history list
+         # Use 8:  `V ...    `    # Read the history file and select one path from there
+         # Use 9:  `V <dir>  `    # Go to existent dir at current pwd
    '
    }
    # Implementation of Use 1:
       if [ -z $1 ]; then 
          f_greet
-         f_talk; echo "V: No arguments. Choose some place to go to"
+         f_talk; echo 'V: No arguments. Choose some place to go to with `V .`'
 
    # Implementation of Use 0:
       elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
@@ -1030,27 +1032,62 @@ function V {
          ls
       # uDev: provide more safety
 
-   # Implementation of Use 6:
-      elif [ $1 == ".." ]; then
-         # uDev: Search a list of stored paths to navigate to
-         echo
 
+
+   # Implementation of Use 6:
+      elif [ $1 == "." ]; then
+         # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
+         
+         # Refresh the variable that stores the path
+            f_refresh_V_hist_file  
+
+         # Info adicional durante o menu 
+            Lh=$(pwd); Lh=$(basename $Lh); LH="Searching dirs at: .../$Lh/"
+
+         # Menu fzf que procura subpastas 
+            v_dir=$(fzf --header="$LH" --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+
+         # Se tiver havido alguma escolha (que vem na var $v_dir) entaom navegar para la
+            if [[ -n $v_dir ]]; then
+               v_dirname=$(dirname $v_dir)
+               v_pwd=$(pwd)
+
+               v_last="$v_pwd/$v_dir"
+               v_last=$(dirname $v_last)
+
+               f_talk; echo "A navegar para: $v_dirname"
+               #echo "$v_pwd/$v_dir" >> $v_fluNav_V_hist_file
+               echo "$v_last" >> $v_fluNav_V_hist_file
+               cd $v_dirname 
+            fi
 
 
    # Implementation of Use 7:
-      elif [ $1 == "." ]; then
-         # From current directory, search other directories with fzf menu and navigate there
-         
-         v_dir=$(fzf --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+      elif [ $1 == ".." ]; then
+         # Navigate to last dir in the history list
 
-         if [[ ! -z $v_dir ]]; then
-            # navegar para a pasta caso não esteja vazio devido ao ESC (utilizadopara sair do menu)
-            v_dirname=$(dirname $v_dir)
-            f_talk; echo "A navegar para: $v_dirname"
-            cd $v_dirname
-         fi
+         # Refresh the variable that stores the path
+            f_refresh_V_hist_file  
+
+         v_go=$(tail -n 1 $v_fluNav_V_hist_file)
+         cd $v_go
 
    # Implementation of Use 8:
+      elif [ $1 == "..." ]; then
+         # Read the history file and select one path from there
+
+         # Used only to centralize the history file into one single variable across the file
+            f_refresh_V_hist_file  
+
+         # Criar um menu apartir do historico  
+            # uDev: apagar linhas repetidas
+            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "SELECT 1 do Historico de pastas para EDITAR: ")
+      
+         # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
+            [[ -n $v_hist ]] && cd $v_hist && ls && unset $v_hist
+
+
+   # Implementation of Use 9:
       else 
          # mkdir -p ~/.tmp
          # ls > ~/.tmp/found.txt
@@ -1140,7 +1177,6 @@ function f_action {
       # From current directory, search files with fzf menu and open with vim 
 
       # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
-      
 
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
@@ -1154,7 +1190,7 @@ function f_action {
          v_pwd=$(pwd)
 
          [[ -n $v_file ]] \
-            && echo "$v_pwd/$v_file" >> $v_fluNav_hist_file \
+            && echo "$v_pwd/$v_file" >> $v_fluNav_S_hist_file \
             && f_talk \
             && echo "a Editar: $v_file" \
             && vim $v_file  
@@ -1167,10 +1203,10 @@ function f_action {
          f_refresh_S_hist_file  
 
       # Verificar qual é a ultima linha do ficheiro de historico
-         v_last=$(cat $v_fluNav_hist_file | tail -n 1)
+         v_last=$(cat $v_fluNav_S_hist_file | tail -n 1)
 
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ ! -z $v_file ]] && vim $v_last
+         [[ -n $v_file ]] && vim $v_last
 
 
 
@@ -1181,14 +1217,14 @@ function f_action {
          f_refresh_S_hist_file  
 
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         #v_text=$(sed "s/ / /g" $v_fluNav_hist_file)
+         #v_text=$(sed "s/ / /g" $v_fluNav_S_hist_file)
 
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-         v_hist=$(cat $v_fluNav_hist_file | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+         v_hist=$(cat $v_fluNav_S_hist_file | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
 
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ ! -z $v_hist ]] && vim $v_hist && unset $v_hist
+         [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
 
 
 
@@ -1197,7 +1233,7 @@ function f_action {
 
       f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the file
       
-      vim $v_fluNav_hist_file
+      vim $v_fluNav_S_hist_file
 
 
 
