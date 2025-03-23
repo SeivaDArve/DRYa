@@ -1171,7 +1171,17 @@ function f_action {
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
 
 
+   elif [ $v_nm == "search_history_files" ]; then
+      # Search files with fzf menu and open with vim (but only those who are already listed in the history file)
 
+      # Used only to centralize the history file into one single variable across the file
+         f_refresh_S_hist_file  
+
+      # Menu fzf that lists recent files
+         unset v_list
+         v_file=$(cat $v_fluNav_S_hist_file | fzf --prompt="fluNav: S: Searching history files: ")
+
+         [[ -n $v_file ]] && vim $v_file 
 
    elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
@@ -1328,34 +1338,31 @@ function S {
       # Acts on the file, And syncs with github after
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-      elif [ $1 == "."        ]; then 
-         v_nm="search_files";        f_action; # Asks in a menu, which file is meant to be sync
-
-      elif [ $1 == ".."       ]; then 
-         v_nm="edit_last_h_file";    f_action; # Asks in a menu, which file is meant to be sync
-
-      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";   f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";      f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == "-2"       ]; then v_nm="test";                f_action; echo "Test is working for 19"; f_up
-      elif [ $1 == "-1"       ]; then v_nm="fx_test";             f_action; ## Just test if this file is working
-      elif [ $1 == "S"        ]; then v_nm="self";                f_action; ## Edit this file itself 
-      elif [ $1 == "0"        ]; then v_nm="unalias";             f_action; source ~/.bashrc
-      elif [ $1 == "1"        ]; then v_nm="dryaSH";              f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
-      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";         f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
-      elif [ $1 == "2"        ]; then v_nm="initVIM";             f_action; f_edit__init_file_emacs__with_vim; f_up
-      elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";      f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
-      elif [ $1 == "4"        ]; then v_nm="traitsID";            f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
-      elif [ $1 == "5"        ]; then v_nm="F5";                  f_action; # Refresh the entire terminal 
-      elif [ $1 == "wd"       ]; then v_nm="wikiD";               f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
-      elif [ $1 == "cv"       ]; then v_nm="curriculum";          f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
-      elif [ $1 == "links"    ]; then v_nm="ss_links";            f_action; echo "uDev: open shiva sutra links"; f_up
-      elif [ $1 == "luxam"    ]; then v_nm="luxam";               f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
-      elif [ $1 == "trade"    ]; then v_nm="trade";               f_action; # Sync the trade.org wikipedia
-      elif [ $1 == "om"       ]; then v_nm="om";                  f_action; # Sync the omni-log.org file 
-      elif [ $1 == "note"     ]; then v_nm="note";                f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
-      elif [ $1 == "car"      ]; then v_nm="car";                 f_action; # Sync a file with Everything about the car
-      elif [ $1 == "upk"      ]; then v_nm="upk";                 f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == "tm"       ]; then v_nm="tmux";                f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "."        ]; then v_nm="search_files";         f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";     f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";    f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";       f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == ","        ]; then v_nm="search_history_files"; f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "-2"       ]; then v_nm="test";                 f_action; echo "Test is working for 19"; f_up
+      elif [ $1 == "-1"       ]; then v_nm="fx_test";              f_action; ## Just test if this file is working
+      elif [ $1 == "S"        ]; then v_nm="self";                 f_action; ## Edit this file itself 
+      elif [ $1 == "0"        ]; then v_nm="unalias";              f_action; source ~/.bashrc
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";               f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";          f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+      elif [ $1 == "2"        ]; then v_nm="initVIM";              f_action; f_edit__init_file_emacs__with_vim; f_up
+      elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";       f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
+      elif [ $1 == "4"        ]; then v_nm="traitsID";             f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
+      elif [ $1 == "5"        ]; then v_nm="F5";                   f_action; # Refresh the entire terminal 
+      elif [ $1 == "wd"       ]; then v_nm="wikiD";                f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
+      elif [ $1 == "cv"       ]; then v_nm="curriculum";           f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+      elif [ $1 == "links"    ]; then v_nm="ss_links";             f_action; echo "uDev: open shiva sutra links"; f_up
+      elif [ $1 == "luxam"    ]; then v_nm="luxam";                f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+      elif [ $1 == "trade"    ]; then v_nm="trade";                f_action; # Sync the trade.org wikipedia
+      elif [ $1 == "om"       ]; then v_nm="om";                   f_action; # Sync the omni-log.org file 
+      elif [ $1 == "note"     ]; then v_nm="note";                 f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
+      elif [ $1 == "car"      ]; then v_nm="car";                  f_action; # Sync a file with Everything about the car
+      elif [ $1 == "upk"      ]; then v_nm="upk";                  f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "tm"       ]; then v_nm="tmux";                 f_action; # Asks in a menu, which file is meant to be sync
 
 
    # Caso tenha sido dado um argumento que nao consta na lista
