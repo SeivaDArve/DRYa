@@ -17,11 +17,22 @@
 #
 #
 #     # Sourcing DRYa Lib 4
-#        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-test-dependencies-1st.sh
+#        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #
 #        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_ensure_repo_existence
 #
 #
+
+
+# List of relatable functions between 'main script' + 'library script':
+#
+#     # f_ensure_repo_existence
+#     #     main calls:  $v_ensure; f_ensure_repo_existence
+#     #     lib returns: $v_green_light
+#
+#     # uDev: f_git_stash_then_pull_then_unstash_then_merge
+#     # uDev: f_git_push
+
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
@@ -29,8 +40,6 @@
 
    v_greet="DRYa"
    v_talk="DRYa-lib-4: "
-
-
 
 function f_rename_directory_with_same_name_as_original_repo {
    f_talk

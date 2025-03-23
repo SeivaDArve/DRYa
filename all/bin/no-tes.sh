@@ -8,7 +8,7 @@
 
    
 # Sourcing f_ensure_repo_existence
-      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-test-dependencies-1st.sh
+      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
    
 function f_create_file_and_name {
    v_date=$(date +'%Y-%m-%d---%H-%M-%S')
