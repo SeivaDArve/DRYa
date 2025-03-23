@@ -32,6 +32,7 @@
 #
 #     # uDev: f_git_stash_then_pull_then_unstash_then_merge
 #     # uDev: f_git_push
+#     # uDev: allow different commit messages
 
 
 

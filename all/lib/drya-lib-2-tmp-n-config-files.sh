@@ -18,6 +18,8 @@
 #  
 #
 
+# uDev: Provide loop of tmp files 0, 1, 2, 3, 4, to normal and small scripts. Example: `D qr new <text>`
+
 function f_tmp_file {
    # Creates a temporary file and returns a variable with it's path $v_tmp_file
 
