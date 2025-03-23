@@ -18,7 +18,6 @@
 #  
 #
 
-# uDev: Provide loop of tmp files 0, 1, 2, 3, 4, to normal and small scripts. Example: `D qr new <text>`
 
 function f_tmp_file {
    # Creates a temporary file and returns a variable with it's path $v_tmp_file
@@ -26,7 +25,7 @@ function f_tmp_file {
    # Use: 1. At the first lines of your scripts, source this library file entirely
    #      2. In the middle of your scripts when you want a tmp file, just invoke `f_tmp_file`
    #      3. In the next code line, the varibale v_tmp_file will be a path to a new temporary file 
-   #      4. If you want to save multiple tmp files, you can,in another variable names like $var1 $var2 after each f_tmp_file call
+   #      4. If you want to save multiple tmp files, you can, in another variable names like $var1 $var2 after each f_tmp_file call
 
    # Reset as variaveis que possam vir de outros scripts
       unset v_dir v_tmp_file
@@ -46,4 +45,15 @@ function f_tmp_file {
 
       touch $v_tmp_file
 }
-f_tmp_file
+
+function f_loop_01234_tmp_files {
+   # Provide loop of tmp files 0, 1, 2, 3, 4, to normal and small scripts. Example: `D qr new <text>`
+   # When a command calls this fx, content of file 3 will go to file 4, file 2 to 3, file 1 to 2, and the output to 1, using file 0 as a mechanism to store initial data before sending to 1. File 0 can be deleted after
+   echo "uDev: A loop of tmp files"
+}
+
+
+function f_exec {
+   f_tmp_file
+}
+#f_exec  # Uncomment to debug
