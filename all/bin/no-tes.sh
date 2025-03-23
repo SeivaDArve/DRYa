@@ -184,8 +184,13 @@ elif [ $1 == "H" ]; then
 
 elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # Edit ToDo list
-   f_edit_ToDo_note_no_title
 
+   # Ensuring omni-log is installed (using drya-lib-4)
+      v_ensure="omni-log"
+      f_ensure_repo_existence
+
+   f_edit_ToDo_note_no_title
+      
 elif [ $1 == "x" ]; then
    # Save all arguments as the note itself, directly from the terminal and without any text editor
 
