@@ -494,8 +494,6 @@ function op {
 
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
-#alias car="Abre uma copia da imagem GPS-view-casa para marcar na imagem onde ficou o carro (apagando a imagem anterior)" # Serve para quando se estaciona o carro em casa (na cidade, porque nunca se estaciona no mesmo sitio)
-
 alias all="cd all; ls"
 alias   A="cd all; ls"
 

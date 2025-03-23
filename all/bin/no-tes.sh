@@ -185,6 +185,8 @@ elif [ $1 == "H" ]; then
 elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # Edit ToDo list
 
+   # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
+
    # Ensuring omni-log is installed (using drya-lib-4)
       v_ensure="omni-log"
       f_ensure_repo_existence
