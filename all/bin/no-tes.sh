@@ -6,7 +6,6 @@
    v_talk="DRYa: no-tes: "
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
-   
 # Sourcing f_ensure_repo_existence
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
    
@@ -33,11 +32,6 @@ function f_edit_with_heteronimos {
    f_talk; echo "Notas em: .../omni-log/all/ex-pressa" 
 
    [[ -n $v_file ]] && vim $v_place/$v_file
-}
-
-function f_edit_ToDo_note_no_title {
-   # Edit ToDo list
-   vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
 }
 
 function f_vars_edit_random_note_no_title {
@@ -112,6 +106,11 @@ function f_one_file_bau {
 
 }
 
+function f_ensure_omni_log {
+   v_ensure="omni-log"
+   f_ensure_repo_existence
+}
+
 function f_main_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -120,12 +119,14 @@ function f_main_menu {
 
       #L7='7. Script | Upload to omni-log | `no ^`
 
-      L8='8. script | notify.sh         | `notify`' 
+      L9='9. script | notify.sh         | `notify`' 
 
-      L7='7. Info   | com het. random   | `no x <txt no terminal>`' 
-      L6='6. Nota   | com heteronimos   | `no H`' 
+      L8='8. Info   | com het. random   | `no x <txt no terminal>`' 
+      L7='7. Nota   | com heteronimos   | `no H`' 
 
+      L6='6. ToDo   | Lista de tarefas  | `no td e`'
       L5='5. ToDo   | Lista de tarefas  | `no td`'
+
       L4='4. Nota   | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
       L3='3. Nota   | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
@@ -134,17 +135,18 @@ function f_main_menu {
 
       L0="SELECIONE 1 do menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "8. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
-      [[ $v_list =~ "7. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
-      [[ $v_list =~ "6. " ]] && f_edit_with_heteronimos
-      [[ $v_list =~ "5. " ]] && f_edit_ToDo_note_no_title
+      [[ $v_list =~ "9. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+      [[ $v_list =~ "8. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
+      [[ $v_list =~ "7. " ]] && f_edit_with_heteronimos
+      [[ $v_list =~ "6. " ]] && f_ensure_omni_log && emacs ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+      [[ $v_list =~ "5. " ]] && f_ensure_omni_log && vim   ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
       [[ $v_list =~ "4. " ]] && f_one_file_bau
       [[ $v_list =~ "3. " ]] && echo
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
@@ -168,8 +170,7 @@ elif [ $1 == "-" ]; then
          f_vars_edit_random_note_no_title
 
       # Ensuring omni-log is installed (using drya-lib-4)
-         v_ensure="omni-log"
-         f_ensure_repo_existence
+         f_ensure_omni_log
          vim $v_file
    fi
       
@@ -188,10 +189,14 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
    # Ensuring omni-log is installed (using drya-lib-4)
-      v_ensure="omni-log"
-      f_ensure_repo_existence
+      f_ensure_omni_log
 
-   f_edit_ToDo_note_no_title
+   if [ -z $2 ]; then
+      vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+
+   elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
+      emacs ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+   fi
       
 elif [ $1 == "x" ]; then
    # Save all arguments as the note itself, directly from the terminal and without any text editor
