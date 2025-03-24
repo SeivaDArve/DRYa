@@ -8,64 +8,99 @@
 
 # Sourcing f_lib4_ensure_repo_existence
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+
    
-function f_create_file_and_name {
-   v_date=$(date +'%Y-%m-%d---%H-%M-%S')
-   v_date="Data-Hora---$v_date)"
 
-   v_tmp_dir=~/.tmp
-   v_tmp_file="note-rn-$v_date"
 
-   v_tmp=$v_tmp_dir/$v_tmp_file
+function f_define_files_as_vars {
 
-   mkdir -p $v_tmp_dir
+   # Default Log repository
+      v_df_repo="omni-log"
+      v_df_repo_pwd=${v_REPOS_CENTER}/$v_default_repo
+
+   # Directory of all Heteronimos
+      v_dir_expressa=$v_df_repo_pwd/all/ex-pressa
+
+   # File 'random' = 'rn'
+      v_file_rn=$v_dir_expressa/rn
+
+   # File 'ToDo'
+     # ... 
+
+}
+f_define_files_as_vars
+
+
+
+
+function f_create_tmp_file_with_date_as_name {
+   # Get current day and hour; Create a tmp file with it
+
+   # Get date values
+      v_date=$(date +'%Y-%m-%d---%H-%M-%S')
+
+      # To date values, add Prefix
+         v_date="note-rn-Data-Hora---$v_date)"
+
+   # Defining a dir to save many files like this
+      v_dir=~/.tmp
+      mkdir -p $v_dir
+
+   # Defining final file (already mentioning dir)
+      v_tmp=$v_dir/$v_date
+
    touch $v_tmp
-   #ls $v_tmp_dir
+}
+   
+function f_ensure_omni_log {
+   # Using drya-lib-4 to ensure omni-log exists and is updated
+
+   unset v_green_light    # var given after drya-lib-4 that tells this main script either to proceed or not
+   v_ensure="$v_df_repo"  # Ensure default repo (the one this script uses the most)
+   f_lib4_ensure_repo_existence
+
+   # uDev: ensure it is updated
 }
 
 function f_edit_with_heteronimos {
    
-   # udev: Se repo omni-log nao existir, perguntar se quer download
+   # Using drya-lib-4 to ensure omni-log exists and is updated
+      f_ensure_omni_log
 
-   v_place=${v_REPOS_CENTER}/omni-log/all/ex-pressa
-   v_file=$(ls ${v_REPOS_CENTER}/omni-log/all/ex-pressa | fzf)
-   f_talk; echo "Notas em: .../omni-log/all/ex-pressa" 
+   # Verbose notification
+      f_talk; echo "Notas em: .../omni-log/all/ex-pressa/" 
 
-   [[ -n $v_file ]] && vim $v_place/$v_file
+   # Menu that allows user to choose an Heteronimo file to edit
+      v_file=$(ls $v_dir_expressa | fzf --prompt="no-tes: Edit 1 file with Heteronimo: ")
+
+   # If any file was choosen, edit such file
+      [[ -n $v_file ]] && vim $v_dir_expressa/$v_file
 }
 
-function f_vars_edit_random_note_no_title {
-   v_repo_name="omni-log"
-   v_repo=${v_REPOS_CENTER}/$v_repo_name
-   v_file=$v_repo/all/ex-pressa/rn
+function f_edit_temporary_file {
+   # If drya-lib-4 returns green light that repo existence is fixed, proceed
+
+   echo -ne "$v_date { \n" >> $v_tmp  
+   vim $v_tmp
+
+   echo          >> $v_file_rn \
+   && cat $v_tmp >> $v_file_rn \
+   && echo "}"   >> $v_file_rn \
+   && f_talk                \
+   && echo "note added to file 'rn'"  \
+   && echo " > uDev: sync omni-log automatically"
 }
+
 
 function f_edit_random_note_no_title {
    # Creating new random note as tmp file, then sending to omni-log
-
-   # Defining what file to use
-      f_vars_edit_random_note_no_title
+   # File to use: $v_file_rn
 
    # Ensuring omni-log is installed (using drya-lib-4)
-      unset v_green_light  # var given after drya-lib-4 that tells this main script either to proceed or not
-      v_ensure="omni-log"
-      f_lib4_ensure_repo_existence
+      f_ensure_omni_log
 
-   f_create_file_and_name
-
-   function f_edit_temporary_file {
-      # If drya-lib-4 returns green light that repo existence is fixed, proceed
-
-      echo -ne "$v_date { \n" >> $v_tmp  
-      vim $v_tmp
-
-      echo          >> $v_file \
-      && cat $v_tmp >> $v_file \
-      && echo "}"   >> $v_file \
-      && f_talk                \
-      && echo "note added to file 'rn'"  \
-      && echo " > uDev: sync omni-log automatically"
-   }
+   # Create temporary file at ~/.tmp/<date-as-name>
+      f_create_tmp_file_with_date_as_name
 
    # If drya-lib-4 returns green light that repo existence is fixed, proceed
       [[ $v_green_light == 0 ]] && f_edit_temporary_file
@@ -104,11 +139,6 @@ function f_one_file_bau {
       fi
       
 
-}
-
-function f_ensure_omni_log {
-   v_ensure="omni-log"
-   f_lib4_ensure_repo_existence
 }
 
 function f_main_menu {
@@ -166,20 +196,13 @@ elif [ $1 == "-" ]; then
       f_edit_random_note_no_title
 
    elif [ $2 == "." ]; then
-      # Getting file name
-         f_vars_edit_random_note_no_title
+      # Edit file 'rn' with vim
 
       # Ensuring omni-log is installed (using drya-lib-4)
          f_ensure_omni_log
-         vim $v_file
+         vim $v_file_rn
    fi
       
-elif [ $1 == "a" ]; then
-   # Create notes with terminal arguments
-   echo "uDev"
-   shift # Remove 1st argument from the arguments list
-   echo $*
-
 elif [ $1 == "H" ]; then
    f_edit_with_heteronimos
 
