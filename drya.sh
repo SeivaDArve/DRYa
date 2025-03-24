@@ -322,8 +322,12 @@ function f_clone_repos {
          echo "cloning calc-extention-ROM-APK"; git clone https://github.com/SeivaDArve/calc-extention-ROM-APK.git
       }
 
-      function f_3_sticks_alpha_bravo {
+      function f_clone_3_sticks_alpha_bravo {
          echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
+      }
+
+      function f_clone_scratch_paper {
+         echo "cloning scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
       }
 
       function f_clone_repos_public_repos {
@@ -420,7 +424,11 @@ function f_clone_repos {
       ;;
 
       3-sticks-alpha-bravo | 3sab)  
-         f_3_sticks_alpha_bravo
+         f_clone_3_sticks_alpha_bravo
+      ;;
+
+      sc)
+         f_clone_scratch_paper
       ;;
 
       setup-internal-dir)          
@@ -2357,7 +2365,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 
    elif [ $2 == "1" ]; then 
       # When exit, delete specific repositories too
-      [ -d $v_repo1 ] && cd && rm -rf $v_repo1 && echo "Sc removed"
+      [ -d $v_repo1 ] && cd && rm -rf $v_repo1 && f_talk && echo "Sc removed"
 
    elif [ $2 == "2" ]; then 
       # When exit, delete specific configs 
