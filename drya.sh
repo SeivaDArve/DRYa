@@ -1691,7 +1691,7 @@ elif [ $1 == "logout" ]; then
       echo "Option not recognized"
    fi
 
-elif [ $1 == "clone" ]; then 
+elif [ $1 == "clone" ] || [ $1 == "cl" ]; then 
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
