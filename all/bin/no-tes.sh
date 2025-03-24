@@ -7,7 +7,7 @@
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    
-# Sourcing f_ensure_repo_existence
+# Sourcing f_lib4_ensure_repo_existence
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
    
 function f_create_file_and_name {
@@ -55,7 +55,7 @@ function f_edit_random_note_no_title {
    # Ensuring omni-log is installed (using drya-lib-4)
       unset v_green_light  # var given after drya-lib-4 that tells this main script either to proceed or not
       v_ensure="omni-log"
-      f_ensure_repo_existence
+      f_lib4_ensure_repo_existence
 
    f_create_file_and_name
 
@@ -169,7 +169,7 @@ elif [ $1 == "-" ]; then
 
       # Ensuring omni-log is installed (using drya-lib-4)
          v_ensure="omni-log"
-         f_ensure_repo_existence
+         f_lib4_ensure_repo_existence
          vim $v_file
    fi
       
@@ -189,7 +189,7 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
 
    # Ensuring omni-log is installed (using drya-lib-4)
       v_ensure="omni-log"
-      f_ensure_repo_existence
+      f_lib4_ensure_repo_existence
 
    f_edit_ToDo_note_no_title
       

@@ -19,21 +19,22 @@
 #     # Sourcing DRYa Lib 4
 #        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #
-#        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_ensure_repo_existence
+#        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
 #
 #
 
 
 # List of relatable functions between 'main script' + 'library script':
 #
-#     # f_ensure_repo_existence
-#     #     main calls:  $v_ensure; f_ensure_repo_existence
+#     # f_lib4_ensure_repo_existence
+#     #     main calls:  $v_ensure; f_lib4_ensure_repo_existence
 #     #     lib returns: $v_green_light
 #
 #     # uDev: f_git_stash_then_pull_then_unstash_then_merge
 #     # uDev: f_git_push
 #     # uDev: allow different commit messages
 #     # uDev: delete repo in the end
+#     # uDev: encrypt before push, decrypt after pull (using 3sab)
 
 
 
@@ -76,7 +77,7 @@ function f_testing_either_repo_or_directory {
          L2='2. Renomear pasta existente e Clonar Original'                                      
          L1='1. Cancelar alteracoes (com erro 1)'
 
-         L0="drya-lib-4: f_ensure_repo_existence: $v_ensure: "
+         L0="drya-lib-4: f_lib4_ensure_repo_existence: $v_ensure: "
          LH="Pasta ja existe e nao é repo, o que pretende fazer?"
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0" --header="$LH")
@@ -103,14 +104,14 @@ function f_test_pkg_git_installed {
 
 }
 
-function f_ensure_repo_existence {
+function f_lib4_ensure_repo_existence {
    # Tests if a repository exists. If it does not, it clones it
    # Needs var: v_ensure
 
    # Example: 
    #     unset v_green_light       # var given after drya-lib-4 that tells this main script either to proceed or not
    #     v_ensure="repoX"          # Repo name we want to ensure its existence
-   #     f_ensure_repo_existence   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
+   #     f_lib4_ensure_repo_existence   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
 
 
    # Path + Name of the repo
@@ -144,6 +145,14 @@ function f_ensure_repo_existence {
       fi
 
       # uDev: Git Pull, otherwise, files can be edited in outdated versions
+}
+
+function f_lib4_git_pull {
+   # Git Pull sem abrir o editor e editar a commit message quando faz Merge
+
+   f_talk; echo 'A fazer download `git pull --no-edit`'
+   git pull --no-edit
+   echo
 }
 
 # uDev: git push
