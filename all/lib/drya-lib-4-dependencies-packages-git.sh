@@ -37,6 +37,23 @@
 #     # uDev: allow different commit messages
 #     # uDev: delete repo in the end
 #     # uDev: encrypt before push, decrypt after pull (using 3sab)
+#
+#
+#     # `upk` fxs: 
+#             Data de inicio
+#             Verbose: nome da repo
+#             ficheiro a ser editado
+#             git pull
+#             git status
+#             uDev: trigger, to stop multiple files to work on same file at once
+#             open file ...
+#             ... close file
+#             nome do ficheiro acabado de editar
+#             git push
+#             git status
+#             data de fim
+#             done
+#       
 
 
 
