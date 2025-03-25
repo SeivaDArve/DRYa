@@ -16,7 +16,7 @@ function f_define_files_as_vars {
 
    # Default Log repository
       v_df_repo="omni-log"
-      v_df_repo_pwd=${v_REPOS_CENTER}/$v_default_repo
+      v_df_repo_pwd=${v_REPOS_CENTER}/$v_df_repo
 
    # Directory of all Heteronimos
       v_dir_expressa=$v_df_repo_pwd/all/ex-pressa
@@ -187,6 +187,7 @@ function f_main_menu {
 
 
 
+f_greet 
 
 if [ -z $1 ]; then
    f_main_menu
