@@ -30,7 +30,9 @@
 #     #     main calls:  $v_ensure; f_lib4_ensure_repo_existence
 #     #     lib returns: $v_green_light
 #
-#     # uDev: f_git_stash_then_pull_then_unstash_then_merge
+#     # uDev: f_git_stash
+#     # uDev: f_pull
+#     # uDev: unstash
 #     # uDev: f_git_push
 #     # uDev: allow different commit messages
 #     # uDev: delete repo in the end
