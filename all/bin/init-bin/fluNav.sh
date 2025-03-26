@@ -1213,10 +1213,10 @@ function f_action {
          f_refresh_S_hist_file  
 
       # Verificar qual é a ultima linha do ficheiro de historico
-         v_last=$(cat $v_fluNav_S_hist_file | tail -n 1)
+         [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
 
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ -n $v_file ]] && vim $v_last
+         [[ -n $v_last ]] && vim $v_last || echo "fluNav: Nothing written in history file to edit"
 
 
 
@@ -1241,11 +1241,9 @@ function f_action {
    elif [ $v_nm == "edit_hist_file" ]; then
       # Editar o ficheiro de historico
 
-      f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the file
+      f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the script
       
       vim $v_fluNav_S_hist_file
-
-
 
    elif [ $v_nm == "upk" ]; then
 
@@ -1338,11 +1336,11 @@ function S {
       # Acts on the file, And syncs with github after
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
-      elif [ $1 == "."        ]; then v_nm="search_files";         f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";     f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";    f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";       f_action; # Asks in a menu, which file is meant to be sync
-      elif [ $1 == ","        ]; then v_nm="search_history_files"; f_action; # Asks in a menu, which file is meant to be sync
+      elif [ $1 == "."        ]; then v_nm="search_files";         f_action; # Asks i
+      elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";     f_action; # Asks i
+      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";    f_action; # Asks i
+      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";       f_action; # Asks i
+      elif [ $1 == ","        ]; then v_nm="search_history_files"; f_action; # Asks i
       elif [ $1 == "-2"       ]; then v_nm="test";                 f_action; echo "Test is working for 19"; f_up
       elif [ $1 == "-1"       ]; then v_nm="fx_test";              f_action; ## Just test if this file is working
       elif [ $1 == "S"        ]; then v_nm="self";                 f_action; ## Edit this file itself 
