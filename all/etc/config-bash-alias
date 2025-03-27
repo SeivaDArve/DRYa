@@ -186,6 +186,7 @@ function web {
    alias gpt="eval web gpt"
    alias lojas="eval web lojas"
    alias yt="eval web yt"
+   alias ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
 
 
 

@@ -1345,13 +1345,12 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
          # L12='12. info: set phonecalls recorder automatically
          # L12='12. zip | unzip
-         # L12='12. Youtube download   
          # L12='12. Raspberry: GPIO
          # L12='12. Record mouse and keyboard activity
          # L12='12. criar links de imagens com suport github (partilhar fotos ou videos)
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
-         #
-
+         
+         L18='18. Script | Youtube download (with `yt-dlp`)'
          L17='17. Menu   | Clone Repositories (github)'
          L16='16. Menu   | Metadata'
          L15='15. Menu   | Internet / Network / IP'
@@ -1373,12 +1372,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n\n$Lv" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans
          [[ $v_list =~ "17. " ]] && echo "uDev"
          [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
