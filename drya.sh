@@ -330,6 +330,10 @@ function f_clone_repos {
          echo "cloning scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
       }
 
+      function f_clone_garpho {
+         echo "cloning garpho"; git clone https://github.com/SeivaDArve/garpho.git
+      }
+
       function f_clone_repos_public_repos {
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
@@ -429,6 +433,10 @@ function f_clone_repos {
 
       sc)
          f_clone_scratch_paper
+      ;;
+
+      ga | garpho)
+         f_clone_garpho
       ;;
 
       setup-internal-dir)          

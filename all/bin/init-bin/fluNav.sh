@@ -983,6 +983,9 @@ function V {
       elif [ $1 == "dota" ]; then
          cd ${v_REPOS_CENTER}/Dota-2-guide && ls
 
+      elif [ $1 == "ga" ] || [ $1 == "garpho" }; then
+         cd ${v_REPOS_CENTER}/garpho && ls
+
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
