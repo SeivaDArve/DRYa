@@ -25,3 +25,5 @@
    please = push --force-with-lease  # lease is: only push updates that do not overwrite other user's updates. The command --force overrites other user's updates
 [pull]
    rebase = false
+[init]
+	defaultBranch = main
