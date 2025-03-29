@@ -21,6 +21,12 @@
 #
 #        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
 #
+#     
+#     
+#
+#
+#     # Using drya.sh
+#        uDev: `D lib4 <file-to-open-sync-close-sync>`
 #
 
 
