@@ -2394,6 +2394,24 @@ elif [ $1 == "web" ]; then
    # All options for web
    f_menu_internet_network_ip_options
 
+elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then 
+   f_greet
+   f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
+           echo '      Or use `G s <file>` instead'
+           echo
+
+   if [ -z $2 ]; then 
+      f_talk; echo "You can sync a file with github (pull, edit file, push again) if you provide a name as arg 2"
+
+   else
+      shift
+      for i in $*; do
+         echo "uDev: git pull $i repo"
+         echo "edit $i"
+         echo "uDev: git push $i repo"
+      done
+   fi
+   
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
