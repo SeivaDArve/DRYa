@@ -1,48 +1,19 @@
 #!/bin/bash
 # Title: source-all-drya-files
+
+
+
 # Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
   v_title_drya="source-all-drya-files"  # Name of this file
 
 # Demi-fake pin for fzf menus (scare away curious people)
-   v_pin=000
+   v_pin=0000
+
+
+
+# -------------------------------------------------------
 
 # uDev: PUT EVERYTHING INSIDE FUNCTIONS AND CREATE f_exec AT THE END
-
-# -------------------------------------------------------
-# Reserved alias/variables for DRYa
-# uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
-#
-# 2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
-# 24685  = DRYa's Repository Center --------------- (cd ~/Repositories)
-# 246851 = Move to DRYa directory ----------------- (cd ~/Repositories/DRYa/)
-# 246852 = Move to DRYa's most usefull parallel app (cd ~/Repositories/ezGIT/)
-# 24681  = DRYa's function 1 (Currently: menu 1)
-# 24682  = DRYa's function 2 (Currently: menu 2)
-# 246811 = DRYa Refresh ALL (just like F5 does + refresh dot-files)
-#
-# -------------------------------------------------------
-
-function f_drya_msgs_init {
-   # drya-messages: Verbose file (variables and outputs)
-      echo "DRYa: File started loading: DRYa's $v_title_drya"
-      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection"
-      echo "      > running from: ${DRYa_HEART}"
-      # udev: echo "Installed at.."
-
-
-# drya-messages: | 1. A file like neofetch for DRYa
-# > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
-#                     At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
-#                | 3. We cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
-
-# drya-plus:     | 1. Instead of printing a lot of text on the Termux welcoke screen, lets hide under the function: drya +
-#  > drya +      | 2. It has: DRYa welcome message, termux welcome message (if running on Android). Neofetch. More info
-
-# drya-info      | 1. It's Neofetch-like info retrieved by DRYa
-#                | 2. It sets variables too like: 'drya --os' (for operative system)
-
-}  >> $v_MSGS 2>/dev/null
-
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
 
@@ -52,6 +23,47 @@ function f_drya_msgs_init {
 # uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
 # uDev: Set windows time and date automaticaly with batch scripts
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
+
+
+# uDev: 
+#     -------------------------------------------------------
+#     Reserved alias/variables for DRYa
+#     uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
+#
+#     2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
+#     24685  = DRYa's Repository Center --------------- (cd ~/Repositories)
+#     246851 = Move to DRYa directory ----------------- (cd ~/Repositories/DRYa/)
+#     246852 = Move to DRYa's most usefull parallel app (cd ~/Repositories/ezGIT/)
+#     24681  = DRYa's function 1 (Currently: menu 1)
+#     24682  = DRYa's function 2 (Currently: menu 2)
+#     246811 = DRYa Refresh ALL (just like F5 does + refresh dot-files)
+#
+# -------------------------------------------------------
+
+
+
+
+function f_drya_msgs_init {
+   # drya-messages: Verbose file (variables and outputs)
+      echo "DRYa: File started loading: DRYa's $v_title_drya"
+      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection"
+      echo "      > running from: ${DRYa_HEART}"
+      # udev: echo "Installed at.."
+
+
+   # drya-messages: | 1. A file like neofetch for DRYa
+   # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
+   #                     At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
+   #                | 3. We cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
+
+   # drya-plus:     | 1. Instead of printing a lot of text on the Termux welcoke screen, lets hide under the function: drya +
+   #  > drya +      | 2. It has: DRYa welcome message, termux welcome message (if running on Android). Neofetch. More info
+
+   # drya-info      | 1. It's Neofetch-like info retrieved by DRYa
+   #                | 2. It sets variables too like: 'drya --os' (for operative system)
+
+}  >> $v_MSGS 2>/dev/null
+
 
 function f_traitsID {
    # Deteta variaveis de software e hardware, para permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
@@ -458,6 +470,11 @@ function f_verbose_drya_msgs_end_file {
          alias dmsgs="f_pre_help; less $v_preMSGS; less $v_MSGS"
 }
 
+function f_temporary {
+   # Memorizar os Shiva Sutras (temporario)
+      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
+}
+
 function f_exec { 
    f_drya_msgs
    f_create_fzf_menu_hist
@@ -495,8 +512,7 @@ function f_exec {
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
    f_neofetch
 
-   # Memorizar os Shiva Sutras (temporario)
-      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
+   f_temporary 
 }
 f_exec
 
