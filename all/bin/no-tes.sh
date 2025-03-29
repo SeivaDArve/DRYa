@@ -201,6 +201,7 @@ elif [ $1 == "-" ]; then
 
       # Ensuring omni-log is installed (using drya-lib-4)
          f_ensure_omni_log
+         f_lib4_git_pull
          vim $v_file_rn
    fi
       

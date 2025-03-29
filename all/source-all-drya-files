@@ -477,7 +477,6 @@ function f_temporary {
 
 function f_exec { 
    f_drya_msgs
-   f_create_fzf_menu_hist
    f_internal_drya_files_1_2
    f_drya_msgs_init     >> $v_MSGS 2>/dev/null
    f_traitsID           

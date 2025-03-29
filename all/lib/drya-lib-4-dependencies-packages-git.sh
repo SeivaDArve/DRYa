@@ -37,7 +37,9 @@
 #     #     lib returns: $v_green_light
 #
 #     # uDev: f_git_stash
-#     # uDev: f_pull
+#
+#     # f_lib4_git_pull
+#
 #     # uDev: unstash
 #     # uDev: f_git_push
 #     # uDev: allow different commit messages
