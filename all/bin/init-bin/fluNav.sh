@@ -343,41 +343,22 @@ function f_up {
 function . {
    # Navigate through the file system stupidly ez
    
-   #       
-   #       
-   #       
-   #  # Note: 
-   #    Before `.` was a function, it was an alias:
-   #    Replaced by the 'function . { }' and the 'function D { }'
-   #
-   #  alias  .="ls   " 
-   #
-   #
-   #
-   #       
-
-   # uDev: Include 'function d' to give 'favs' if directory is not found
-
-
-
    if [ -z $1 ]; then 
       # If no argument is given, lists storage (ls command)
       ls -p
 
    elif [ $1 == "." ]; then 
+      # Edit this script (fluNav)
       f_edit_self
 
    elif [ $1 == "G" ]; then 
       # If arg 1 is 'G' then navigate to the center of seiva's repos
       cd $v_REPOS_CENTER
-      # uDev: this command '. .' is usually issued at the beggining of the day when the user is going to start the coding session. Therefore: Echo once a day to REMEMBER to git pull
-      # uDev: similar to '$ D .' ezGIT could have also an alias to navigate to it's home dir. Use command '$ . G .' to do it
 
    elif [ $1 == "?" ] || [ $1 == "h" ]; then 
       # Describe all these navigation alias
 
       f_greet
-      
       f_talk; echo "Instructions:"
       echo
       echo '`. ?` or `. h`  Shows this help menu'
@@ -399,12 +380,12 @@ function . {
       PWD=$(pwd) && \
       BASENAME=$(basename $PWD) && \
       cd $1 2>/dev/null \
-      && f_talk\
+      && f_talk \
       && echo "Listing files at:" \
       && echo " > ./$BASENAME" \
       && echo \
       && ls \
-      || for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly  ::  Atempt of c_editor failed here
+      || for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly 
 
    fi
 }
@@ -419,7 +400,7 @@ function ... {
 
 function .... {
    f_talk; echo 'Info: Current location `pwd`'
-   echo " > $(pwd)"
+           echo " > $(pwd)"
 }
 
 function ..... {
@@ -457,7 +438,7 @@ function ....... {
 
    f_talk; echo 'Variable $h saved as:'
            echo " > $h"
-
+           echo
    f_talk; echo 'Variable $v saved as:'
            echo " > $v"
 }
@@ -1271,6 +1252,7 @@ function f_action {
       echo 
    
    elif [ $v_nm == "self" ]; then
+      # Edit this script (fluNav)
       f_edit_self
 
    elif [ $v_nm == "trade" ]; then
