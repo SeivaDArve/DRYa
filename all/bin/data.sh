@@ -168,5 +168,9 @@ elif  [ $1 == "g" ]; then
    # Imprime a data no formato grupo Data Hora (ao estilo militar)
    # 09FEB25 0930
    echo "uDev: GDH"
+
+elif  [ $1 == "alarm" ]; then
+   echo "uDev: quando chegar a hora pretendida, soar alarme"
+
 fi
 
