@@ -458,6 +458,12 @@ function f_verbose_drya_msgs_end_file {
          alias dmsgs="f_pre_help; less $v_preMSGS; less $v_MSGS"
 }
 
+function f_async {
+   if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
+      bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A 1>/dev/null && echo "Done"
+   fi
+} 
+
 function f_exec { 
    f_drya_msgs
    f_internal_drya_files_1_2
@@ -496,6 +502,9 @@ function f_exec {
 
    # Memorizar os Shiva Sutras (temporario)
       bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
+
+   # If ezGIT exists, run async fx: Mention if there are github updates
+      f_async &
 }
 f_exec
 
