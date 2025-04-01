@@ -182,4 +182,60 @@ function f_lib4_git_pull {
    echo
 }
 
-# uDev: git push
+
+
+# Copiado de ezGIT:
+
+function f_lib4_git_pull_2 {
+   f_talk; echo -n 'Receiving from Github: '
+     f_c3; echo    '`git pull`'
+     f_rc; echo
+
+   git pull
+}
+
+function f_lib4_git_add_all {
+   f_talk; echo -n 'Staging all files: '
+     f_c3; echo    '`git add --all`'
+     f_rc
+
+   git add --all
+           echo
+}
+
+function f_lib4_git_commit {
+   # Git commit -m ""
+
+   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
+
+   f_talk; echo -en "Adding a commit message "
+     f_c1; echo -n                          "i"
+     f_rc; echo                              " (to staged files):"
+           echo -n ' > `git commit -m "'
+     f_c1; echo -n                    "i"
+     f_rc; echo                        '" `'
+           echo
+           echo    " > What is your commit message?"
+           echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
+     f_c1; read -p " > " v_ans
+     f_rc; echo
+   f_talk; echo -n 'git commit -m "'
+     f_c1; echo -n               "$v_ans"
+     f_rc; echo                        '"'
+
+   git commit -m "$v_ans"  # uDev: Add f_sucess
+
+           echo
+
+}
+
+function f_lib4_git_push {
+   f_talk; echo -n 'Sending to Github: '
+     f_c3; echo    '`git push`'
+     f_rc
+
+   git push
+           echo
+}
+
+

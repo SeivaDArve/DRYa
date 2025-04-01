@@ -203,6 +203,9 @@ elif [ $1 == "-" ]; then
          f_ensure_omni_log
          f_lib4_git_pull
          vim $v_file_rn
+         f_lib4_git_add_all
+         f_lib4_git_commit
+         f_lib4_git_push
    fi
       
 elif [ $1 == "H" ]; then
