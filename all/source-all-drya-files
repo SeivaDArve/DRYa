@@ -484,7 +484,7 @@ function f_temporary_fx {
       } 
 
       # Run last fx now
-         f_async &
+         f_async &> /dev/null &
 }
 
 function f_exec { 
