@@ -480,6 +480,7 @@ function f_temporary_fx {
       function f_async {
          if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
             bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A 1>/dev/null && echo "Done"
+            # uDev: Se houver commits para upload, entao fazer tambem upload
          fi
       } 
 
