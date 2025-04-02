@@ -641,15 +641,18 @@ if [ -z "$*" ]; then
       # Texto do menu
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
 
-         L19='19. Relogio     | Tempo decorrido entre 2 datas'
-         L18='18. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L17='17. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L16='16. Relogio     | Cronometro'
+         L20='20. Relogio     | Cronometro | multi datas < ficheiro.txt '
+         L19='19. Relogio     | Cronometro'
+         L18='18. Relogio     | Calculo entre 2 datas'
+         L17='17. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+         L16='16. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
          L15='15. Relogio     | Temporizador'
          L14='14. Relogio     | Despertador'
 
          #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
          #L13='13. Calculadora | Percentagens'
+         #L13='13. Calculadora | L/min > m^3/h
+         #L13='13. Calculadora | Graus Celcius > Farenheit
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
          L11='11. Calculadora | trim-the-hedge'
@@ -668,13 +671,14 @@ if [ -z "$*" ]; then
 
          L0='DRYa: Calculo: '
 
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                   
       # Quando o menu de Escolha multipla tipo `for` loop
          [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
 
-         [[ $v_list =~ "19. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
-         [[ $v_list =~ "18. " ]] && echo "uDev"
+         [[ $v_list =~ "20. " ]] && echo "uDev"
+         [[ $v_list =~ "19. " ]] && echo "uDev"
+         [[ $v_list =~ "18. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
          [[ $v_list =~ "17. " ]] && echo "uDev"
          [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && echo "uDev"
