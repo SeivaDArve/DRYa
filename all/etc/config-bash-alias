@@ -453,37 +453,51 @@ function op {
       #  echo "'non_links' array: ${non_links[@]}"
       #  #read; clear; exit 0  # For testing only
 
-   # Try to find the file opener at each OS:
-      if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
-         /mnt/c/windows/explorer.exe $*  # Original script, without a for loop
    
-           # uDev: For links and non_links open accordingly:   
-           #   # open each link
-           #      for i in ${links[@]}
-           #      do 
-           #         /mnt/c/windows/explorer.exe $links  #Error: windows explorer does not open links
-           #      done
-           #
-           #   # open each non_link
-           #      for i in ${non_links[@]}
-           #      do 
-           #         /mnt/c/windows/explorer.exe $non_links
-           #      done
+   if [ -z $1 ]; then
+      # Search file to open with `fzf`
 
-      elif [[ $v_uname =~ "Android" ]]; then  # If it finds "Android" then it should be working at Termux terminal
-            xdg-open $*
-            # uDev: usar `termux-open --chooser`
+      # Buscar um ficheiro apartir da pasta atual até todas as subpastas
+         unset v_item
+         v_item=$(fzf -m --prompt="DRYa: op: Select ficheiros para abrir com xdg-open: ")
 
-      elif [[ $v_uname =~ "Linux" ]]; then  # If it is Any kind of Linux, try to open as standard
-            xdg-open $*
-      else
-         echo "DRYa: 'op' command failed to open the arguments"
-      fi
+      # So se houver algum nome na variavel $v_item, tenta abrir com xdg (evita `xdg-open` de reclamar erro por falta de argumentos)
+         [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
+
+   else
+      echo hit
+      # Try to find the file opener at each OS (for the given files, given as arguments):
+         if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
+            /mnt/c/windows/explorer.exe $*  # Original script, without a for loop
       
-      # uDev: Add 'termux-open $* --chooser' as an option
+              # uDev: For links and non_links open accordingly:   
+              #   # open each link
+              #      for i in ${links[@]}
+              #      do 
+              #         /mnt/c/windows/explorer.exe $links  #Error: windows explorer does not open links
+              #      done
+              #
+              #   # open each non_link
+              #      for i in ${non_links[@]}
+              #      do 
+              #         /mnt/c/windows/explorer.exe $non_links
+              #      done
 
-      # uDev: '$ op grep 20240114_094706.jpg' para procurar 'grep' pela foto certa
-      #       '$ op grep mv 20240114_094706.jpg' para mover a foto encontrada (precisa de um menu interativo)
+         elif [[ $v_uname =~ "Android" ]]; then  # If it finds "Android" then it should be working at Termux terminal
+               xdg-open $*
+               # uDev: usar `termux-open --chooser`
+
+         elif [[ $v_uname =~ "Linux" ]]; then  # If it is Any kind of Linux, try to open as standard
+               xdg-open $*
+         else
+            echo "DRYa: 'op' command failed to open the arguments"
+         fi
+         
+         # uDev: Add 'termux-open $* --chooser' as an option
+
+         # uDev: '$ op grep 20240114_094706.jpg' para procurar 'grep' pela foto certa
+         #       '$ op grep mv 20240114_094706.jpg' para mover a foto encontrada (precisa de um menu interativo)
+      fi
 }
 
 
