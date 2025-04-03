@@ -472,9 +472,6 @@ function f_verbose_drya_msgs_end_file {
 
 function f_temporary_fx {
    # Temporary fx to use the principle of GOD "Indra". The web of events of life, where the things thar are needes, bump constantly into your eyes until you dont need
-   
-   # Memorizar os Shiva Sutras (temporario)
-      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
 
    # If ezGIT exists, run async fx: Mention if there are github updates
       function f_async {
@@ -483,8 +480,11 @@ function f_temporary_fx {
          fi
       } 
 
-      # Run last fx now
+      # Run last fx
          f_async &> /dev/null &
+   
+   # Memorizar os Shiva Sutras (temporario)
+      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
 }
 
 function f_exec { 
