@@ -486,6 +486,7 @@ function f_temporary_fx {
    
    # Memorizar os Shiva Sutras (temporario)
       bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
+      echo
 }
 
 function f_exec { 
