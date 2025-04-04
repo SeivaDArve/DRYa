@@ -1331,8 +1331,8 @@ function S {
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
       elif [ $1 == "."        ]; then 
-         if [ -z $2 ]; then v_nm="search_files";                     f_action; fi; # Search Files with fzf, then open
-         if [ -n $2 ]; then v_nm="search_files_with_query";          f_action; fi; # For each argument given after first argument, filter with grep as if it is a fuzzy finder like fzf
+         if   [ -z $2 ]; then v_nm="search_files";                     f_action; # Search Files with fzf, then open
+         elif [ -n $2 ]; then unset e; shift; for i in $@; do e="$e$i"; done; v=$(fzf --prompt="Automatic query: " --query="$e" --select-1 --exit-0); echo "Result: $v";fi  # For each argument given after first argument, filter with grep as if it is a fuzzy finder like fzf
       elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";       f_action;     # Asks i
       elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";      f_action;     # Asks i
       elif [ $1 == "...."     ]; then v_nm="edit_hist_file";         f_action;     # Asks i
