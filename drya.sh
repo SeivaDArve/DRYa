@@ -234,6 +234,7 @@ function f_clone_info {
            echo
            echo " Webpage with all repositories:"
            echo "  > https://github.com/SeivaDArve?tab=repositories"
+           echo
 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
       v_txt="Go: https://github.com/SeivaDArve?tab=repositories"
@@ -273,65 +274,63 @@ function f_clone_repos {
       }
 
       function f_clone_repos_upk {
-         echo "cloning upK"
+         echo "cloning: upK"
          git clone https://github.com/SeivaDArve/upK.git
       }
 
       function f_clone_repos_upk-dv {
-         echo "Cloning upK-diario-Dv"; 
-         echo "Link for download is:"; 
-         echo " > https://github.com/SeivaDArve/upK-diario-Dv.git"; 
+         echo "Cloning: upK-diario-Dv"; 
          git clone https://github.com/SeivaDArve/upK-diario-Dv.git
 
       }
 
       function f_clone_repos_shiva {
-         echo "cloning 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git
+         echo "cloning: 112-Shiva-Sutras"; git clone https://github.com/SeivaDArve/112-Shiva-Sutras.git
       }
 
       function f_clone_repos_omni {
-         echo "cloning omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
+         echo "cloning: omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
       }
 
       function f_clone_repos_dWiki {
-         echo "cloning dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
+         echo "cloning: dWiki"; git clone https://github.com/SeivaDArve/dWiki.git
       }
 
       function f_clone_repos_wikiD {
-         echo "cloning dWiki"; git clone https://github.com/SeivaDArve/wikiD.git
+         echo "cloning: dWiki"; git clone https://github.com/SeivaDArve/wikiD.git
       }
 
       function f_clone_repos_yoga {
-         echo "cloning yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
+         echo "cloning: yogaBashApp"; git clone https://github.com/SeivaDArve/yogaBashApp.git
       }
 
       function f_clone_repos_moedaz {
-         echo "cloning moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
+         echo "cloning: moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
          #f_refresh_terminal_after_clone
       }
 
       function f_clone_repos_Tesoro {
-         echo "cloning Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git
+         echo "cloning: Tesoro"; git clone https://github.com/SeivaDArve/Tesoro.git
       }
 
       function f_clone_repos_ezGIT {
-         echo "cloning ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
+         echo "cloning: ezGIT"; git clone https://github.com/SeivaDArve/ezGIT.git
       }
 
       function f_clone_calc_extention {
-         echo "cloning calc-extention-ROM-APK"; git clone https://github.com/SeivaDArve/calc-extention-ROM-APK.git
+         echo "cloning: calc-extention-ROM-APK"; git clone https://github.com/SeivaDArve/calc-extention-ROM-APK.git
       }
 
       function f_clone_3_sticks_alpha_bravo {
-         echo "cloning 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
+         echo "cloning: 3-sticks-alpha-bravo"; git clone https://github.com/SeivaDArve/3-sticks-alpha-bravo.git
       }
 
       function f_clone_scratch_paper {
-         echo "cloning scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
+         echo "cloning: scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
       }
 
       function f_clone_garpho {
-         echo "cloning garpho"; git clone https://github.com/SeivaDArve/garpho.git
+         echo "cloning: garpho"; git clone https://github.com/SeivaDArve/garpho.git
       }
 
       function f_clone_repos_public_repos {
@@ -1429,7 +1428,7 @@ function f_drya_fzf_MM {
       Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L4="4. | Help"
-      L3="3. | DRYa: Greet"
+      L3="3. | DRYa: Greet & Present itself"
       L2="2. | Toolbox" 
 
       L1="1. Cancel" 
@@ -1441,7 +1440,7 @@ function f_drya_fzf_MM {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       [[ $v_list =~ "4. " ]] && f_drya_help
-      [[ $v_list =~ "3. " ]] && f_greet2
+      [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Installed and ready!"
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
