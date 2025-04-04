@@ -31,8 +31,7 @@ function f_tmp_file {
       unset v_dir v_tmp_file
 
    # Criar pasta oculta com o nome .tmp  (O ficheiro .bash_logout editado por DRYa apaga essa pasta ao encerrar o terminal)
-      v_dir=~/.tmp
-      mkdir -p $v_dir
+      v_dir=~/.tmp  &&  mkdir -p $v_dir
    
    # O nome do ficheiro temporario será a data/hora atual
       v_tmp_file=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh v)
@@ -41,9 +40,11 @@ function f_tmp_file {
       #echo "$v_tmp_file"  # Debug
 
    # Criar o ficheiro temporario
-      v_tmp_file="$v_dir/$v_tmp_file"
+      i="$v_dir/$v_tmp_file"
 
-      touch $v_tmp_file
+      touch $i
+
+      $v_tmp_file=$i
 }
 
 function f_loop_01234_tmp_files {
@@ -53,7 +54,63 @@ function f_loop_01234_tmp_files {
 }
 
 
-function f_exec {
-   f_tmp_file
+
+function f_remove_duplicated_lines_from_file {
+   # Removes duplicated lines from the given file (like log files, history files etc)
+   #
+   # Creates another temporary file too to do the job: ${v_original_name}.tmp
+   #
+   # Requirements:
+   #   THE MAIN SCRIPT must give a variable "$v_file" with the name of the file (with absolute path) to whom to remove duplicates
+   
+   # variable for the file names
+      # Original file name (given by main script to this lib)
+      v_original=$v_file
+
+      # Temporary file name
+      v_temporary=${v_original}.tmp
+
+   
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(tac $v_original)
+      do 
+         # If original line does not exist already in the tmp file, copy it to tmp once
+         grep "$i" $v_temporary &>/dev/null
+         [[ $? == 1 ]] && echo $i >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      tac $v_temporary > $v_original
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
 }
-#f_exec  # Uncomment to debug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#f_tmp_file  # Uncomment to debug
