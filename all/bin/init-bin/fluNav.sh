@@ -46,25 +46,95 @@ function f_push_only_hist_file_omni_log {
 function f_refresh_S_hist_file {
    # Ficheiro de historico com lista de ficheiros
 
-   v_dir=~/.config/h.h/drya/flunav/tmp
-   mkdir -p $v_dir
-   v_file="drya-fluNav-S-hist" 
-   v_fluNav_S_hist_file=$v_dir/$v_file
+   v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
 
-   # uDev: Omni log is not receiving files yet
-   #   #f_push_only_hist_file_omni_log
+   v_file="drya-fluNav-S-hist" 
+
+   i=$v_dir/$v_file
+
+   v_fluNav_S_hist_file=$i
+
+   # uDev: Omni log is not receiving files yet (use drya-lib-4)
+   #       f_push_only_hist_file_omni_log
 }
 
 function f_refresh_V_hist_file {
    # Ficheiro de historico com lista de diretorios
 
-   v_dir=~/.config/h.h/drya/flunav/tmp
-   mkdir -p $v_dir
-   v_file="drya-fluNav-V-hist" 
-   v_fluNav_V_hist_file=$v_dir/$v_file
+   v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
 
-   # uDev: Omni log is not receiving files yet 
-   #   #f_push_only_hist_file_omni_log
+   v_file="drya-fluNav-V-hist" 
+
+   i=$v_dir/$v_file
+
+   v_fluNav_V_hist_file=$i
+
+   # uDev: Omni log is not receiving files yet (use drya-lib-4)
+   #       f_push_only_hist_file_omni_log
+}
+
+function f_remove_duplicated_lines_S_history_file {
+   # Removes duplicated lines from the history files using a temporary file
+
+   # Note: This fx is meant to run only after history file's name was refreshed with f_refresh_S_hist_file
+   
+   # variable for the file names
+      # Original file name (this var was created at f_refresh_S_hist_file)
+      v_original=$v_fluNav_S_hist_file  
+
+      # Temporary file name
+      v_temporary=${v_original}.tmp
+
+   
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(tac $v_original)
+      do 
+         # If original line does not exist already in the tmp file, copy it to tmp once
+         grep "$i" $v_temporary &>/dev/null
+         [[ $? == 1 ]] && echo $i >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      tac $v_temporary > $v_original
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
+}
+
+function f_remove_duplicated_lines_V_history_file {
+   # Removes duplicated lines from the history files using a temporary file
+
+   # Note: This fx is meant to run only after history file's name was refreshed with f_refresh_S_hist_file
+   
+   # variable for the file names
+      # Original file name (this var was created at f_refresh_V_hist_file)
+      v_original=$v_fluNav_V_hist_file 
+
+      # Temporary file name
+      v_temporary=${v_original}.tmp
+
+   
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(tac $v_original)
+      do 
+         # If original line does not exist already in the tmp file, copy it to tmp once
+         grep "$i" $v_temporary &>/dev/null
+         [[ $? == 1 ]] && echo $i >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      tac $v_temporary > $v_original
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
 }
 
 function f_c1 {
@@ -287,6 +357,7 @@ function f_edit_self {
               echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
               echo
               read -s -n 1 -p "[Press any key to continue] "
+              echo 
               echo 
 
    # Verbose: Actually opening the file
@@ -1020,6 +1091,7 @@ function V {
          
          # Refresh the variable that stores the path
             f_refresh_V_hist_file  
+            f_remove_duplicated_lines_V_history_file
 
          # Info adicional durante o menu 
             Lh=$(pwd); Lh=$(basename $Lh); LH="Searching dirs at: .../$Lh/"
@@ -1048,6 +1120,7 @@ function V {
 
          # Refresh the variable that stores the path
             f_refresh_V_hist_file  
+            f_remove_duplicated_lines_V_history_file
 
          v_go=$(tail -n 1 $v_fluNav_V_hist_file)
          cd $v_go
@@ -1058,10 +1131,11 @@ function V {
 
          # Used only to centralize the history file into one single variable across the file
             f_refresh_V_hist_file  
+            f_remove_duplicated_lines_V_history_file
 
          # Criar um menu apartir do historico  
             # uDev: apagar linhas repetidas
-            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "SELECT 1 do Historico de pastas para EDITAR: ")
+            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")
       
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls && unset $v_hist
@@ -1093,8 +1167,7 @@ function f_action {
       # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
 
       f_greet
-
-      f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned
+      f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned (with drya-lib-4)
 
       echo "$v_nm: Testing fluNav"
 
@@ -1153,9 +1226,11 @@ function f_action {
 
    elif [ $v_nm == "search_history_files" ]; then
       # Search files with fzf menu and open with vim (but only those who are already listed in the history file)
+      # `S ,`
 
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
+         f_remove_duplicated_lines_S_history_file
 
       # Menu fzf that lists recent files
          unset v_list
@@ -1165,11 +1240,13 @@ function f_action {
 
    elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
+      # `S .`
 
       # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
 
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
+         f_remove_duplicated_lines_S_history_file
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
@@ -1201,9 +1278,11 @@ function f_action {
 
    elif [ $v_nm == "edit_last_h_file" ]; then
       # Editar o ultimo ficheiro de historico
+      # `S ..` 
 
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
+         f_remove_duplicated_lines_S_history_file
 
       # Verificar qual é a ultima linha do ficheiro de historico
          [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
@@ -1215,15 +1294,17 @@ function f_action {
 
    elif [ $v_nm == "fzf_one_hist_file" ]; then
       # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
+      # `S ...`
 
       # Used only to centralize the history file into one single variable across the file
          f_refresh_S_hist_file  
+         f_remove_duplicated_lines_S_history_file
 
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
          #v_text=$(sed "s/ / /g" $v_fluNav_S_hist_file)
 
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-         v_hist=$(cat $v_fluNav_S_hist_file | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+         v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
 
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
@@ -1233,8 +1314,10 @@ function f_action {
 
    elif [ $v_nm == "edit_hist_file" ]; then
       # Editar o ficheiro de historico
+      # `S ....`
 
       f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the script
+      f_remove_duplicated_lines_S_history_file
       
       vim $v_fluNav_S_hist_file
 
