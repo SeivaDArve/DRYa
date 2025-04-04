@@ -876,10 +876,16 @@ function V {
          # Use 9:  `V <dir>  `    # Go to existent dir at current pwd
    '
    }
+
+   function f_error_cd {
+      # If `V` could not navigate to a certain dir beacuse it does not exist, then mention
+      f_talk; echo "V: Such directory does not exist (or repo not cloned yet)"
+   }
+
    # Implementation of Use 1:
       if [ -z $1 ]; then 
          f_greet
-         f_talk; echo 'V: No arguments. Choose some place to go to with `V .`'
+         f_talk; echo 'flunav: V: No arguments. Choose some place to go to with `V .`'
 
    # Implementation of Use 0:
       elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
@@ -957,8 +963,8 @@ function V {
 
 
       elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
-         # uDev: `V - sc` to remove the repo
-         cd ${v_REPOS_CENTER}/scratch-paper && ls
+         # uDev: `D q 1` to remove the repo
+         cd ${v_REPOS_CENTER}/scratch-paper 2>/dev/null && ls || f_error_cd
 
 
       elif [ $1 == "dota" ]; then
