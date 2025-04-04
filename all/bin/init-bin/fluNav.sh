@@ -4,21 +4,17 @@
 # Dependencies: figlet, file, fzf (may bi instaled by typing):
    # '$ pkg install figlet file fzf'
 
-
-
 # uDev: This app should NOT have 3 prefixes: V, S, E and .....
 #       Instead: use only: `. M` for fluNav menu
 #
 #       letra S para ABRIR ficheiros com SYNC
 #       letra . para abrir ficheiros sem s
 
-
 # uDev: 
 #    '. '       ## ls
 #    'V mo'     ## cd moedaz
 #    'DD'       ## cd DRYa
 #    'op file.org' detect current emacs (instead of EM, Em, em)
-
 
 # Leters to be used:
 #     function S     (Sync files before/after editing at: DRYa/locally/maybe github)
@@ -31,12 +27,9 @@
 #     function ....
 #     Forbiden function: Function D   ##   Reserved for DRYa
 
-
-      
 # uDev: Set traitsID_Editor to avoid:
 #       > Open X (with vim)
 #       > Open X (with emacs)
-
 
 # uDev: bind Ctrl-F to F5 (refresh terminal and source files)
 
@@ -74,8 +67,6 @@ function f_refresh_V_hist_file {
    #   #f_push_only_hist_file_omni_log
 }
 
-
-
 function f_c1 {
    tput setaf 5
 }
@@ -103,7 +94,6 @@ function f_greet {
       
 function f_talk {
    # Copied from: ezGIT
-         echo
    f_c5; echo -n "DRYa: fluNav: "
    f_rc
 }
@@ -895,71 +885,71 @@ function V {
       # uDev: If correspondent repo does not exist, ask to clone intead of the error message
 
       elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
-         cd ${v_REPOS_CENTER}/DRYa && ls
+         cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls || f_error_cd
       
 
       elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
-         cd ${v_REPOS_CENTER}/jarve && ls
+         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls || f_error_cd
       
 
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
-         cd ${v_REPOS_CENTER}/moedaz && ls
+         cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls || f_error_cd
       
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
-         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot && ls
+         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls || f_error_cd
       
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
-         cd ${v_REPOS_CENTER}/ezGIT && ls
+         cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls || f_error_cd
          
 
       elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
-         cd ${v_REPOS_CENTER}/dWiki && ls
+         cd ${v_REPOS_CENTER}/dWiki 2>/dev/null && ls || f_error_cd
          
 
       elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
-         cd ${v_REPOS_CENTER}/wikiD && ls
+         cd ${v_REPOS_CENTER}/wikiD 2>/dev/null && ls || f_error_cd
          
 
       elif [ $1 == "upk" ]; then
-         cd ${v_REPOS_CENTER}/upK && ls
+         cd ${v_REPOS_CENTER}/upK 2>/dev/null && ls || f_error_cd
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" && ls
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
-         cd ${v_REPOS_CENTER}/112-Shiva-Sutras && ls
+         cd ${v_REPOS_CENTER}/112-Shiva-Sutras 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-         cd ${v_REPOS_CENTER}/omni-log && ls
+         cd ${v_REPOS_CENTER}/omni-log 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "gps" ]]; then
-         cd ${v_REPOS_CENTER}/mastering-GPS && ls
+         cd ${v_REPOS_CENTER}/mastering-GPS 2>/dev/null && ls || f_error_cd
 
 
       elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
-         cd ${v_REPOS_CENTER}/verbose-lines && ls
+         cd ${v_REPOS_CENTER}/verbose-lines 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp && ls
+         cd ${v_REPOS_CENTER}/yogaBashApp 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "shamb" ]]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ && ls
+         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ 2>/dev/null && ls || f_error_cd
       
 
       elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
-         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo && ls
+         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo 2>/dev/null && ls || f_error_cd
          
 
       elif [[ $1 == "one" ]] || [[ $1 == "1" ]]; then
-         cd ${v_REPOS_CENTER}/oneFile-bau && ls
+         cd ${v_REPOS_CENTER}/oneFile-bau 2>/dev/null && ls || f_error_cd
 
 
       elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
@@ -968,10 +958,10 @@ function V {
 
 
       elif [ $1 == "dota" ]; then
-         cd ${v_REPOS_CENTER}/Dota-2-guide && ls
+         cd ${v_REPOS_CENTER}/Dota-2-guide 2>/dev/null && ls || f_error_cd
 
       elif [ $1 == "ga" ] || [ $1 == "garpho" ]; then
-         cd ${v_REPOS_CENTER}/garpho && ls
+         cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls || f_error_cd
 
 
       elif [ $1 == "tmp" ]; then
@@ -989,11 +979,11 @@ function V {
 
 
       elif [ $1 == "lxm" ]; then
-         cd ${v_REPOS_CENTER}/luxam && ls
+         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls || f_error_cd
 
 
       elif [ $1 == "wsl" ] || [ $1 == "win" ] || [ $1 == "W" ]; then
-         cd /mnt/c/ && ls
+         cd /mnt/c/ 2>/dev/null && ls || f_error_cd
 
 
       elif [ $1 == "ln" ]; then
