@@ -185,7 +185,13 @@ function f_lib4_git_pull {
 
 
 
-# Copiado de ezGIT:
+
+
+    
+
+
+
+# Copiado de ezGIT {
 
 function f_lib4_git_pull_2 {
    f_talk; echo -n 'Receiving from Github: '
@@ -204,7 +210,8 @@ function f_lib4_git_add_all {
            echo
 }
 
-function f_lib4_git_commit {
+function f_git_commit {
+   # Introduzir mensagem manualmente
    # Git commit -m ""
 
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
@@ -239,4 +246,36 @@ function f_lib4_git_push {
            echo
 }
 
+# Copiado de ezGIT }
 
+
+
+
+
+
+
+
+function f_lib4_git_commit {
+   # Menu Simples
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L4='4. Mensagem automatica: blind'
+      L3='3. Mensagem automatica: uDev comments'                                      
+
+      L2='2. Introduzir mensagem manualmemte'                                      
+      L1='1. Cancel'
+
+      L0="drya-lib-4: Que tipo de commit message pretende? "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "4. " ]] && git commit -m "drya-lib-4: Pushed to github.com automatically" && echo
+      [[ $v_list =~ "3. " ]] && git commit -m "drya-lib-4: Improvements made only around uDev comments (added/modify/etc..)" && echo
+      [[ $v_list =~ "2. " ]] && f_git_commit
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
