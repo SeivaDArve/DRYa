@@ -57,7 +57,8 @@ function f_variables_date {
    # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
 
       v_data=$(date +'%Y-%m-%d_%Hh-%Mm-%Ss')
-      echo -e "Data-Hora_$v_data"
+      v_data="Data-Hora_$v_data"
+      echo "$v_data"
 }
 
 function f_hour_date {
@@ -132,6 +133,42 @@ if [ -z $1 ]; then
    f_complete_date 
    echo
 
+elif  [ $1 == "." ]; then
+   # Menu with all the options
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L10='10. L     | Data completa esclarecida em loop com ASCII'
+       L9='9.  l     | Data completa esclarecida em loop'
+       L8='8.  h     | Instructions / Help'
+       L7='7.  v     | Imprime 1x a data em um formato util para variaveis'
+       L6='6.  hr    | Data que foca na hora'
+       L5='5.  min   | Imprime linhas com a hora durante 1 min'
+       L4='4.  seg   | Imprime 1 linha com a hora durante 1 seg'
+       L3='3.  g     | Grupo Data Hora (ao estilo militar)'
+       L2='2.  alarm | '
+
+       L1='1.  Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "10. " ]] && f_complete_date_loop
+      [[ $v_list =~ "9.  " ]] && f_complete_date_loop
+      [[ $v_list =~ "8.  " ]] && f_help
+      [[ $v_list =~ "7.  " ]] && f_variables_date 
+      [[ $v_list =~ "6.  " ]] && f_hour_date
+      [[ $v_list =~ "5.  " ]] && f_one_minute_date
+      [[ $v_list =~ "4.  " ]] && f_one_second_date
+      [[ $v_list =~ "3.  " ]] && echo "uDev: GDH"
+      [[ $v_list =~ "2.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+    
 elif  [ $1 == "L" ]; then
    # Data completa esclarecida em loop com ASCII
    clear
