@@ -17,7 +17,8 @@
 #
 #
 #     # Sourcing DRYa Lib 4
-#        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+#        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+#        [[ -f $v_lib4 ]] && source $v_lib4 || read -s -n 1 -p "Error: drya-lib-4 does not exist"
 #
 #        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
 #
