@@ -621,7 +621,47 @@ function f_eletricidade {
 
 }
 
+function f_cronometro_multi_datas {
+   # - Permite enviar a data atual para um ficheiro log (com notas daquilo que se trata)
+   # - Permite ler/visualizar/editar esse ficheiro
+   # - Permite pegar nesse ficheiro e calcular cada data, para ver quanto tempo passou desde entao
 
+   # Make sure some file exists (uDev: send to omni-log with drya-lib-4)
+      mkdir -p ~/.config/h.h/drya/calc
+
+   # Feed a variable to calculate time elapse until now
+      STARTINGDATE="1992-04-11"  
+
+
+
+
+   function f_calcular_tempo_decorrido_apos_data {
+      # Data de aniversário no formato YYYY-MM-DD
+         #STARTINGDATE="1992-04-11"  # Variavel que é preciso alimentar a este script
+
+      # Converter a data de aniversário para um timestamp
+         BIRTH_TIMESTAMP=$(date -d "$STARTINGDATE" +%s)
+
+      # Obter o timestamp atual
+         CURRENT_TIMESTAMP=$(date +%s)
+
+      # Calcular a diferença em segundos
+         DIFF_SECONDS=$(( CURRENT_TIMESTAMP - BIRTH_TIMESTAMP ))
+
+      # Converter a diferença para dias, meses e anos
+         DIFF_DAYS=$(( DIFF_SECONDS / 86400 ))
+
+      # Calcular a diferença em anos e meses
+         YEARS=$(( DIFF_DAYS / 365 ))
+         MONTHS=$(( (DIFF_DAYS % 365) / 30 ))
+         DAYS=$(( (DIFF_DAYS % 365) % 30 ))
+
+      # Imprimir o resultado
+         echo "Tempo passado desde $STARTINGDATE:"
+         echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
+   }
+   f_calcular_tempo_decorrido_apos_data
+}
 
 
 
@@ -676,7 +716,7 @@ if [ -z "$*" ]; then
       # Quando o menu de Escolha multipla tipo `for` loop
          [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
 
-         [[ $v_list =~ "20. " ]] && echo "uDev"
+         [[ $v_list =~ "20. " ]] && f_cronometro_multi_datas
          [[ $v_list =~ "19. " ]] && echo "uDev"
          [[ $v_list =~ "18. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
          [[ $v_list =~ "17. " ]] && echo "uDev"
