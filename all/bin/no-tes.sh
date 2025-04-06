@@ -35,6 +35,7 @@ f_define_files_as_vars
 
 function f_create_tmp_file_with_date_as_name {
    # Get current day and hour; Create a tmp file with it
+   # udev: drya-lib-2 already has a similar fx, this one could be removed
 
    # Get date values
       v_date=$(date +'%Y-%m-%d---%H-%M-%S')
