@@ -1440,7 +1440,7 @@ function f_drya_fzf_MM {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
       [[ $v_list =~ "4. " ]] && f_drya_help
-      [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Installed and ready!"
+      [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!"
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       #unset v_list
