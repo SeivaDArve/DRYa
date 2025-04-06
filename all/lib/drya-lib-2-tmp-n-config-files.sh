@@ -57,14 +57,13 @@ function f_create_tmp_file {
       v_tmp=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh v)
       v_tmp="$v_tmp.txt"
 
-      #echo "$v_tmp"  # Debug
 
    # Criar o ficheiro temporario
       i="$v_dir/$v_tmp"
 
       touch $i
 
-      $v_tmp=$i
+      v_tmp=$i
 }
 
 function f_loop_01234_tmp_files {
