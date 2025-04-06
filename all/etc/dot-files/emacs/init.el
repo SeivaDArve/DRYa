@@ -667,9 +667,11 @@ sera acrescentado +1 ao numero do dia; +1 ao dia da semana; +1 ao mes, se necess
 
 
 (defun dv-insert-new-day-upk () 
-  "Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
+  " Fx usada no Cascais shopping;
+Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
 
 uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
+
   (interactive)
 
   ;; Prompting user for values
@@ -759,6 +761,63 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
                 (string-equal v_turno "fg"))
                 (progn (end-of-line)(insert "\n")
                        (message "Dv: Não esquecer de verificar a data deste dia de folga")))  )
+
+
+
+(defun dv-insert-new-day-upk-2 () 
+  " Fx usada no Vasco da Gama;
+Insere no final do buffer mais 1 Header que indica qual o dia e turno a que os proximos textos correspondem
+
+uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
+
+  (interactive)
+
+  ;; Prompting user for values
+     (setq v_turno (read-string "Turno do dia de hoje: "))
+
+  ;; Criacao do Header principal
+     ;; Criar variaveis com a traducao de EN para PT dos dias da semana (antes de serem usados)
+        (dv-translate-weak-days) ;; Se existir alguma variavle do emacs que faca esta Fx, entao esta Fx criada manualmente torna-se inutil
+
+     ;; Introdução de Header, independentemente se é Folga ou Turno
+        (end-of-buffer) (insert "\n") (insert "**** Dia ")
+
+     ;; Detetar se a Fx está a ser chamada num turno N antes da hora (porque as 22h e as 23h iriam introduzir uma data errada, iriam introduzir a data do turno anterior
+        ;; Usar apenas 1 destas 3 linhas de codigo (nunca as mais que 1 em simultaneo):
+           ;;(insert (format-time-string "<%Y-%m-%d %a> "))
+           ;;(insert (format-time-string "<%Y-%m-%d ") v-dia "> ")  
+           (dv-detetar-dia-correto-no-inicio-de-turnos-N)
+
+     ;; Preenchero com o texto correspondente ao turno
+        (insert "(Turno: ") (insert v_turno) (insert ")") ;; uDev: create a holliday day list and present it here
+
+  ;; Quando é dia de turno (B, C, N) excluindo (Fg e outros):
+     (when (or (string-equal v_turno "N") (string-equal v_turno "B") (string-equal v_turno "C")))
+         
+             
+
+         ;; Fechar convenientemente o texto entre :PROPERTIES: e :END: de todo o turno
+            (u)
+
+   ;; Quando é dia de folga
+      (when (or (string-equal v_turno "Fg")
+                (string-equal v_turno "fg"))
+                (progn (end-of-line)(insert "\n")
+                       (message "Dv: Não esquecer de verificar a data deste dia de folga")))  
+
+   ;;
+      (insert "\n\n\n"))
+
+
+
+
+
+
+
+
+
+
+
 
 
 ;;; dv- properties/end/properties-end
