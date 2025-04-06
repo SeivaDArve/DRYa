@@ -963,7 +963,7 @@ function V {
          cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls || f_error_cd
       
 
-      elif [ $1 == "moedaz" ] || [ $1 == "mo" ] ; then
+      elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
          cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls || f_error_cd
       
 
@@ -1310,6 +1310,8 @@ function f_action {
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
 
+      # Se a variavel nao vier vazia do menu fzf, tambem envia a ultima selacao para o fim do documento de historico
+         [[ -n $v_hist ]] && echo "$v_hist" >> $v_fluNav_S_hist_file
 
 
    elif [ $v_nm == "edit_hist_file" ]; then
