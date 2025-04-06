@@ -201,6 +201,7 @@ elif [ $1 == "-" ]; then
       # Edit file 'rn' with vim
 
       # Ensuring omni-log is installed (using drya-lib-4)
+         # uDev: para o verbose output falta: mencionar que vem do script: `no - .`
          f_ensure_omni_log
          f_lib4_git_pull
          vim $v_file_rn
