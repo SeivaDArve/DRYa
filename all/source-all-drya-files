@@ -262,6 +262,13 @@ function f_repository_moedaz {
    source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
 }
 
+function f_repository_garpho {
+   # Repository: garpho
+   # Cooking repo
+
+   alias ga="bash ${v_REPOS_CENTER}/garpho/garpho.sh"
+}
+
 function f_repository_upK {
    # Repository: upK 
 
@@ -494,6 +501,7 @@ function f_exec {
       f_repository_ezGIT   
       f_repository_wikiD
       f_repository_moedaz  
+      f_repository_garpho
       f_repository_upK  
       f_repository_upK-diario-Dv 
       f_repository_112-Shiva-Sutras
