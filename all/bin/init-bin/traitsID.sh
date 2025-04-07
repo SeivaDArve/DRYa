@@ -8,6 +8,8 @@
 # uDev: Detetar WM (window manager, se estar a usar GNOME, KDE...
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
 # uDev: Detect Wifi connection name
+# uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
+# uDev: Set windows time and date automaticaly with batch scripts
 
 function trid {
    # This command is actually loaded to the terminal env

@@ -19,25 +19,9 @@
 
 # uDev: Function f_talk should be sourced here to enable it to be used across the system
 # uDev: if doom emacs is installed, export it's PATH
-# uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
-# uDev: Set windows time and date automaticaly with batch scripts
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
 
-# uDev: 
-#     -------------------------------------------------------
-#     Reserved alias/variables for DRYa
-#     uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
-#
-#     2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
-#     24685  = DRYa's Repository Center --------------- (cd ~/Repositories)
-#     246851 = Move to DRYa directory ----------------- (cd ~/Repositories/DRYa/)
-#     246852 = Move to DRYa's most usefull parallel app (cd ~/Repositories/ezGIT/)
-#     24681  = DRYa's function 1 (Currently: menu 1)
-#     24682  = DRYa's function 2 (Currently: menu 2)
-#     246811 = DRYa Refresh ALL (just like F5 does + refresh dot-files)
-#
-# -------------------------------------------------------
 
 
 

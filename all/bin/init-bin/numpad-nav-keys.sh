@@ -62,3 +62,21 @@ function f_fzf_power_options {
 
    alias    48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
    alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+
+
+
+
+# uDev: 
+#     -------------------------------------------------------
+#     Reserved alias/variables for DRYa
+#     uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
+#
+#     2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
+#     24685  = DRYa's Repository Center --------------- (cd ~/Repositories)
+#     246851 = Move to DRYa directory ----------------- (cd ~/Repositories/DRYa/)
+#     246852 = Move to DRYa's most usefull parallel app (cd ~/Repositories/ezGIT/)
+#     24681  = DRYa's function 1 (Currently: menu 1)
+#     24682  = DRYa's function 2 (Currently: menu 2)
+#     246811 = DRYa Refresh ALL (just like F5 does + refresh dot-files)
+#
+# -------------------------------------------------------
