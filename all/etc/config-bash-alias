@@ -1,12 +1,7 @@
 #!bin/bash
-
 # Title: config-bash-alias
 # Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
-# 
-# Install this file
-#   1. open ~/.bashrc
-#   2. paste: "source ~/Repositories/DRYa/all/source-all-drya-files"
 
 # Verbose file (variables and outputs)
    v_title="config-bash-alias"  # Name of this file
