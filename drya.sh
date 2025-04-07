@@ -1427,7 +1427,8 @@ function f_drya_fzf_MM {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4="4. | Help"
+      L5="5. | Help"
+      L4="4. | DRYa: Output Messages"
       L3="3. | DRYa: Greet & Present itself"
       L2="2. | Toolbox" 
 
@@ -1435,11 +1436,12 @@ function f_drya_fzf_MM {
 
       L0='DRYa: `fzf` Main Menu: '
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-      [[ $v_list =~ "4. " ]] && f_drya_help
+      [[ $v_list =~ "5. " ]] && f_drya_help
+      [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!"
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"

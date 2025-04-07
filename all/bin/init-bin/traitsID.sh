@@ -11,6 +11,19 @@
 # uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
 # uDev: Set windows time and date automaticaly with batch scripts
 
+function f_set_file {
+   # File that has a copy of all the environment variables
+
+      v_dir=~/.config/h.h/drya
+      v_file="traitsID"
+      v_id_file="$v_dir/$v_file"
+
+   # Create the file from scratch at every terminal startup
+      mkdir -p $v_dir
+      rm       $v_id_file 2>/dev/null
+      touch    $v_id_file
+}
+
 function trid {
    # This command is actually loaded to the terminal env
 
@@ -26,18 +39,6 @@ function trid {
 }
 
 
-function f_set_file {
-   # File that has a copy of all the environment variables
-
-      v_dir=~/.config/h.h/drya/
-      v_file="traitsID"
-      v_id_file="${v_dir}${v_file}"
-
-   # Create the file from scratch at every terminal startup
-      mkdir -p $v_dir
-      rm       $v_id_file 2>/dev/null
-      touch    $v_id_file
-}
 
 
 function f_array_0 {

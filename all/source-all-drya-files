@@ -1,29 +1,23 @@
 #!/bin/bash
 # Title: source-all-drya-files
+# Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
 
 
-
-# Description: 1st DRYa file to run. This Initializes all other apps and initiate persistent functions
-  v_title_drya="source-all-drya-files"  # Name of this file
-
-# Demi-fake pin for fzf menus (scare away curious people)
-   v_pin=0000
-
-
-
-# -------------------------------------------------------
-
-# uDev: PUT EVERYTHING INSIDE FUNCTIONS AND CREATE f_exec AT THE END
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
-
 # uDev: Function f_talk should be sourced here to enable it to be used across the system
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
 
 
+function f_basic_variables {
+   # Include this file name in a variable
+     v_title_drya="source-all-drya-files"
 
+   # Demi-fake pin for fzf menus (scare away curious people)
+     v_pin=0000
+}
 
 
 function f_drya_msgs_init {
@@ -49,8 +43,11 @@ function f_drya_msgs_init {
 
 
 function f_traitsID {
-   # Deteta variaveis de software e hardware, para permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
-   # Este ficheiro é lido 2x porque a pasta onde pertence é de ficheiros que sao sempre lidos, e também porque tem de ser o primeiro de todos a ser lido
+   # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
+
+   # Este ficheiro é lido 2x em:
+   #   1. A pasta onde pertence (.../init-bin/) é de ficheiros que sao sempre lidos no arranque do terminal
+   #   2. Também lido aqui porque tem de ser o primeiro de todos a ser lido
 
    # Nome do ficheiro e ver se ele existe
       v_dir="${v_REPOS_CENTER}/DRYa/all/bin/init-bin"
@@ -60,31 +57,31 @@ function f_traitsID {
       traits_0="Source-of-traitsID-script::$traits_file"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
       if [[ -f $traits_file ]]; then
-         #echo "file $v_file exists"  # Debug
          export traits_file
          export traits_0    # Igual a $traits_file mas com numero do ID
       fi
-
-      # Debug:
-         #echo "env: $traits_file"; read
 
    source $traits_file # 1>/dev/null && echo "Sorced $i" >> $v_MSGS
 
    # Debug
       #source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh 1>/dev/null && echo "Sorced $i" >> $v_MSGS
-      #source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh 
 }
 
 
 function f_dv_PS1 {
    # Defining the favourite Terminal PS1 variable:
+   # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
+
+   echo "DRYa: PS1 defined as per the user Dv"
+   echo -n " > Last PS1: "
+   echo    "$PS1"
 
    PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-   #echo
-   echo "DRYa: PS1 defined as per the user Dv"
+
+   echo -n " > New  PS1: "
+   echo    "$PS1"
    echo
-   # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
-   # uDev: Create alias to define diferent PS1's
+
 }  >> $v_MSGS
 
 
@@ -135,8 +132,8 @@ function f_termux_welcome {
 }
 
 function f_neofetch {
-   # Neofetch is not needed... It is just for fun
-      neofetch 2>/dev/null
+   # Neofetch is not needed... It is just for fun. And if it does not exist, do not print it's error message
+   neofetch 2>/dev/null
 }
    
 function f_test_1 {
@@ -476,6 +473,7 @@ function f_temporary_fx {
 }
 
 function f_exec { 
+   f_basic_variables
    f_drya_msgs
    f_internal_drya_files_1_2
    f_drya_msgs_init     >> $v_MSGS 2>/dev/null
