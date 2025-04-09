@@ -901,9 +901,8 @@ function V {
 
 
    function f_help {
-      f_talk; 
-      echo "V: Instructions manual"
-      echo '
+      f_talk; echo "V: Instructions manual"
+              echo '
    
       #  uDev: To replace NPnp looper: Keys
          `V .`  or `V search`       # Serve para adicionar PWD ao historico de loop
@@ -950,7 +949,7 @@ function V {
 
    # Implementation of Use 0:
       elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
-         f_help
+         f_help | less
 
    # Implementation of Use 2:
       # uDev: If correspondent repo does not exist, ask to clone intead of the error message
