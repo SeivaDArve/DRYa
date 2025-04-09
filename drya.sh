@@ -1385,7 +1385,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans
+         [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
          [[ $v_list =~ "17. " ]] && echo "uDev"
          [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
