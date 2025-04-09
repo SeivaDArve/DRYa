@@ -1294,7 +1294,7 @@ function f_dot_files_menu {
 
       L0="DRYa: dot-files menu: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n\n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "10. " ]] && echo "Detetado 10"
