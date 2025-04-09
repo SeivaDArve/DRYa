@@ -18,6 +18,10 @@ function f_define_files_as_vars {
       v_df_repo="omni-log"
       v_df_repo_pwd=${v_REPOS_CENTER}/$v_df_repo
 
+   # Default text editor
+   # uDev: Use traitsID to choose the editor
+      v_default_editor=vim  
+
    # Directory of all Heteronimos
       v_dir_expressa=$v_df_repo_pwd/all/ex-pressa
 
@@ -25,7 +29,8 @@ function f_define_files_as_vars {
       v_file_rn=$v_dir_expressa/rn
 
    # File 'ToDo'
-     # ... 
+      v_file_td=${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+   
 
 }
 f_define_files_as_vars
@@ -193,6 +198,9 @@ f_greet
 if [ -z $1 ]; then
    f_main_menu
  
+elif [ $1 == "H" ]; then
+   f_edit_with_heteronimos
+
 elif [ $1 == "-" ]; then
    if [ -z $2 ]; then
       f_edit_random_note_no_title
@@ -210,11 +218,9 @@ elif [ $1 == "-" ]; then
          f_lib4_git_push
    fi
       
-elif [ $1 == "H" ]; then
-   f_edit_with_heteronimos
-
 elif [ $1 == "td" ] || [ $1 == "t" ]; then
-   # Edit ToDo list
+   # Edit file: "To Do list"
+   # File to be edited: $v_file_td (variable set at the top of this script)
 
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
@@ -222,10 +228,14 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
       f_ensure_omni_log
 
    if [ -z $2 ]; then
-      vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+      # If no arg are given, use the dedault file editor
+      eval "$v_default_editor $v_file_td" 
 
    elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
-      emacs ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+      emacs $v_file_td
+
+   elif [ $2 == "vim" ] || [ $2 == "v" ]; then
+      emacs $v_file_td
    fi
       
 elif [ $1 == "x" ]; then

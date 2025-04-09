@@ -202,6 +202,7 @@ function f_lib4_git_pull_2 {
 }
 
 function f_lib4_git_add_all {
+   # uDev: Run only if there are files to stage
    f_talk; echo -n 'Staging all files: '
      f_c3; echo    '`git add --all`'
      f_rc
@@ -214,6 +215,7 @@ function f_git_commit {
    # Introduzir mensagem manualmente
    # Git commit -m ""
 
+   # uDev: Run only if there are files to commit
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
 
    f_talk; echo -en "Adding a commit message "
@@ -238,6 +240,8 @@ function f_git_commit {
 }
 
 function f_lib4_git_push {
+   # uDev: Run only if there are files to push
+
    f_talk; echo -n 'Sending to Github: '
      f_c3; echo    '`git push`'
      f_rc
@@ -256,6 +260,8 @@ function f_lib4_git_push {
 
 
 function f_lib4_git_commit {
+   # uDev: Run only if there are files to commit
+
    # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
