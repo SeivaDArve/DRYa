@@ -1,5 +1,6 @@
 #!/bin/bash
-# Title: Script to echo/store the name of the running script
+# Title: Detecting info about the argument 0
+# Description: By running this script, it will echo and store it's own name, absolute path, relative path from where you are callinh it, etc...
 
 function f_1 {
    # Gives the terminal's current directory name (the directory from where, the user is calling a script. This script)
