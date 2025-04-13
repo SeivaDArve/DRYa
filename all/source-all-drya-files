@@ -332,9 +332,11 @@ function f_repository_omni-log {
 
    # If windows with graphical interface is available, we will prefer that to the terminal version
 
-   # Using command 'log' to open our file
+   # Using command 'om' to open our file
    function om {
       
+      # uDev: use drya-lib-4
+
       # Defining the name of the file as a variable
          v_dir="${v_REPOS_CENTER}/omni-log/"
          v_file="omni-log.org "
@@ -419,14 +421,19 @@ function f_internal_drya_files_2_2 {
    
    # Drya start-up bin files (init-bin)
       # Sourcing all stand-alone scripts
-         # uDev: tell $v_MSGS the 'ls' found at 'bin/init-bin/"
-         v_list_of_scripts=$(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
-         echo -e "\nDRYa: List of scripts found in: \n > .../DRYa/all/bin/init-bin/ \n$v_list_of_scripts \n > Let's try to source all of them... \n" >> $v_MSGS
+         v_init=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
 
-         for i in $(ls ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/)
-         do 
-            source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/$i 1>/dev/null && echo "Sorced $i" >> $v_MSGS
-         done 
+         echo                                          >> $v_MSGS
+         echo "DRYa: List of scripts found in:"        >> $v_MSGS
+         echo " > .../DRYa/all/bin/init-bin/"          >> $v_MSGS
+         echo                                          >> $v_MSGS
+
+         for i in $(ls $v_init)
+         do
+            source $v_init/$i 1>/dev/null && echo " > Sorced $i" >> $v_MSGS
+         done
+
+         echo                                          >> $v_MSGS
 
       # Sourcing a specific list of scripts
          alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"

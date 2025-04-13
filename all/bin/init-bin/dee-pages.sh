@@ -101,11 +101,17 @@
 #
 
 
+# If drya-msgs are not ready, we may use this fx (info this file is loading)
+#
+#     # Verbose file (variables and outputs)
+#        v_title="dee-pages"  # Name of this file
+#        echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
+#        echo "      > dee-pages: man pages you find by reading the source files" >> $v_MSGS
 
-# Verbose file (variables and outputs)
-   v_title="dee-pages"  # Name of this file
-   echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
-   echo "      > dee-pages: man pages you find by reading the source files" >> $v_MSGS
+
+
+
+
 
 # Setup at terminal startup:
    alias dee="dee-pages: Choose a source file to extract instructiona (uDev)"
@@ -117,6 +123,16 @@
 # Filter the script and 1 more line after the pattern found
    # cat $v_file |  grep -A 1 "--flags..." ## uDev: Add one more line to this search
 
-# Verbose file (variables and outputs)
-   echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
 
+
+
+
+
+
+
+
+# If drya-msgs are not ready, we may use this fx (info this file ended loading)
+#    
+#    # Verbose file (variables and outputs)
+#       echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
+#    
