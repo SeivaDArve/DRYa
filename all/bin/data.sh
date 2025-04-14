@@ -1,6 +1,41 @@
 #!/bin/bash
 # Title: data.sh
 
+function f_c2 { 
+   # Fx for color 2
+   # Used: f_talk
+
+   tput setaf 12
+}
+
+function f_rc { 
+   # Fx for color reset
+
+   # This function is to be used when styles are to be CLEARED
+   tput sgr0
+}
+
+function f_background_process {
+   echo "data test hit" >> $v_MSGS
+
+   function f_bg {
+      while true
+      do
+         echo
+         f_c2; echo -n "Data.sh: "
+         f_rc; echo "data test hit"
+         echo
+         sleep 60
+      done
+   }
+
+   f_bg & 
+   
+   v_pid=$?
+
+   echo "PID is: $v_pid"
+}
+
 function f_complete_date {
    # Exemplo: "Data atual: (Dia 07 Sex)(Mês 06 jun)(Ano 2024)(03:38:38)"
 
@@ -37,6 +72,14 @@ function f_complete_date_loop {
       #[[ $v_key == "q" ]] && exit
       #[[ $v_key == "Q" ]] && exit
    done
+}
+
+function f_complete_date_loop_plus_figlet {
+   clear
+   figlet 'DRYa'
+   echo "DRYa: data.sh"
+   echo "----------------------------------------------------------"
+   f_complete_date_loop
 }
 
 function f_help {
@@ -139,8 +182,10 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L10='10. L     | Data completa esclarecida em loop com ASCII'
-       L9='9.  l     | Data completa esclarecida em loop'
+      L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
+      L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
+      L10='10. L     | Data completa esclarecida com loop com LOGO'
+       L9='9.  l     | Data completa esclarecida com loop'
        L8='8.  h     | Instructions / Help'
        L7='7.  v     | Imprime 1x a data em um formato util para variaveis'
        L6='6.  hr    | Data que foca na hora'
@@ -153,11 +198,13 @@ elif  [ $1 == "." ]; then
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "10. " ]] && f_complete_date_loop
+      [[ $v_list =~ "12. " ]] && f_background_process
+      [[ $v_list =~ "11. " ]] && f_complete_date && echo
+      [[ $v_list =~ "10. " ]] && f_complete_date_loop_plus_figlet
       [[ $v_list =~ "9.  " ]] && f_complete_date_loop
       [[ $v_list =~ "8.  " ]] && f_help
       [[ $v_list =~ "7.  " ]] && f_variables_date 
@@ -168,14 +215,17 @@ elif  [ $1 == "." ]; then
       [[ $v_list =~ "2.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
+
+elif  [ $1 == "b" ]; then
+   # Data num processo em segundo plano
+   # Usa drya-msgs para enviar info do PID do processo
+   
+   f_background_process
     
 elif  [ $1 == "L" ]; then
    # Data completa esclarecida em loop com ASCII
-   clear
-   figlet 'DRYa'
-   echo "DRYa: data.sh"
-   echo "----------------------------------------------------------"
-   f_complete_date_loop
+
+   f_complete_date_loop_plus_figlet
 
 elif  [ $1 == "l" ]; then
    # Data completa esclarecida em loop
