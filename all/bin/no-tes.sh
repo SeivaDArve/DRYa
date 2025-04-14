@@ -224,8 +224,9 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
 
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
-   # Ensuring omni-log is installed (using drya-lib-4)
-      f_ensure_omni_log
+   
+   f_ensure_omni_log  # Ensuring omni-log is installed (using drya-lib-4)
+   f_lib4_git_pull
 
    if [ -z $2 ]; then
       # If no arg are given, use the dedault file editor
@@ -238,6 +239,10 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
       emacs $v_file_td
    fi
       
+   f_lib4_git_add_all
+   f_lib4_git_commit
+   f_lib4_git_push
+
 elif [ $1 == "x" ]; then
    # Save all arguments as the note itself, directly from the terminal and without any text editor
 
