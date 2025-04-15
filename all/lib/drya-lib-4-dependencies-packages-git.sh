@@ -264,24 +264,33 @@ function f_lib4_git_commit {
 
    # Menu Simples
 
+   # Variables to improve txt
+      v_blind__msg="drya-lib-4: Pushed to github.com automatically"
+      v_udev___msg="drya-lib-4: Improvements made only around uDev comments (added/modify/etc..)"
+      v_auto___msg="drya-lib-4: automatic commit"
+      v_cancel_msg="Canceled: Adding a commit message to last changes"
+      v_unfini_msg=" > Unfinished uploads: repo $v_df_repo (uDev)"
+
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      L5='5. Mensagem automatica: blind commit'
+      L4='4. Mensagem automatica: uDev comments'                                      
+      L3='3. Mensagem nova (Introduzir manualmente)'                                      
 
-      L4='4. Mensagem automatica: blind'
-      L3='3. Mensagem automatica: uDev comments'                                      
-
-      L2='2. Introduzir mensagem manualmemte'                                      
-      L1='1. Cancel'
+      L2='2. Cancel'
+      L1='1. Mensagem automatica: "drya-lib-4: automatic commit"'
 
       L0="drya-lib-4: Que tipo de commit message pretende? "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && git commit -m "drya-lib-4: Pushed to github.com automatically" && echo
-      [[ $v_list =~ "3. " ]] && git commit -m "drya-lib-4: Improvements made only around uDev comments (added/modify/etc..)" && echo
-      [[ $v_list =~ "2. " ]] && f_git_commit
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[    $v_list =~ "5. " ]] && git commit -m "$v_blind__msg" && echo
+      [[    $v_list =~ "4. " ]] && git commit -m "$v_udev___msg" && echo
+      [[    $v_list =~ "3. " ]] && f_git_commit
+      [[    $v_list =~ "2. " ]] && echo          "$v_cancel_msg"
+      [[    $v_list =~ "1. " ]] && git commit -m "$v_auto___msg" && echo
+      [[ -z $v_list          ]] && echo          "$v_cancel_msg" && f_c8 && echo "$v_unfini_msg" && f_rc && echo
+
       unset v_list
 }
