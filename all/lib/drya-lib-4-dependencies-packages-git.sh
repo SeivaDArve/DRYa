@@ -16,6 +16,15 @@
 #     At the top of every script file in which this script needed, place these lines below:
 #
 #
+#     # Using drya.sh
+#        uDev: `D lib4 <file-to-open-sync-close-sync>`
+#
+
+
+#
+#
+#  INSTALLING (this library on main scripts):
+#
 #     # Sourcing DRYa Lib 4
 #        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #        [[ -f $v_lib4 ]] && source $v_lib4 || read -s -n 1 -p "Error: drya-lib-4 does not exist"
@@ -24,11 +33,6 @@
 #
 #     
 #     
-#
-#
-#     # Using drya.sh
-#        uDev: `D lib4 <file-to-open-sync-close-sync>`
-#
 
 
 # List of relatable functions between 'main script' + 'library script':
@@ -71,6 +75,27 @@
 
    v_greet="DRYa"
    v_talk="DRYa-lib-4: "
+   # uDev: perguntar ao chat gpt se usar libliotecas dentro de bibliotecas se nao da conflito
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------
+# -- Above: Set up this library itself --+-- Below: functions not to be externally called
+# ----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 function f_rename_directory_with_same_name_as_original_repo {
    f_talk
@@ -132,6 +157,57 @@ function f_test_pkg_git_installed {
 
 }
 
+
+
+
+
+function f_git_commit {
+   # Introduzir mensagem manualmente
+   # Git commit -m ""
+
+   # uDev: Run only if there are files to commit
+   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
+
+   f_talk; echo -en "Adding a commit message "
+     f_c1; echo -n                          "i"
+     f_rc; echo                              " (to staged files):"
+           echo -n ' > `git commit -m "'
+     f_c1; echo -n                    "i"
+     f_rc; echo                        '" `'
+           echo
+           echo    " > What is your commit message?"
+           echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
+     f_c1; read -p " > " v_ans
+     f_rc; echo
+   f_talk; echo -n 'git commit -m "'
+     f_c1; echo -n               "$v_ans"
+     f_rc; echo                        '"'
+
+   git commit -m "$v_ans"  # uDev: Add f_sucess
+
+           echo
+
+}
+
+
+
+
+
+
+# -----------------------------------------------------------------------------------------------------------------
+# -- Above: functions not to be externally called  --+--  Below: functions to be called externally by main scripts
+# -----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 function f_lib4_ensure_repo_existence {
    # Tests if a repository exists. If it does not, it clones it
    # Needs var: v_ensure
@@ -184,15 +260,6 @@ function f_lib4_git_pull {
 }
 
 
-
-
-
-    
-
-
-
-# Copiado de ezGIT {
-
 function f_lib4_git_pull_2 {
    f_talk; echo -n 'Receiving from Github: '
      f_c3; echo    '`git pull`'
@@ -202,42 +269,27 @@ function f_lib4_git_pull_2 {
 }
 
 function f_lib4_git_add_all {
-   # uDev: Run only if there are files to stage
-   f_talk; echo -n 'Staging all files: '
-     f_c3; echo    '`git add --all`'
-     f_rc
 
-   git add --all
-           echo
+   # Get current `git status` without verbose, only the intresting part.
+      v_status=$(git status --short)
+
+      cd $v_df_repo_pwd
+
+   # Only if there is anything to commit or to finish, only then, changes are added to Staging Are
+      if [ -n $v_status ]; then
+         # uDev: Run only if there are files to stage
+         f_talk; echo -n 'Staging all files: '
+           f_c3; echo    '`git add --all`'
+           f_rc
+                 git add --all
+                 echo
+      else
+         f_talk; echo 'Nothing needes to be done'
+         exit 0
+
+      fi
 }
 
-function f_git_commit {
-   # Introduzir mensagem manualmente
-   # Git commit -m ""
-
-   # uDev: Run only if there are files to commit
-   # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
-
-   f_talk; echo -en "Adding a commit message "
-     f_c1; echo -n                          "i"
-     f_rc; echo                              " (to staged files):"
-           echo -n ' > `git commit -m "'
-     f_c1; echo -n                    "i"
-     f_rc; echo                        '" `'
-           echo
-           echo    " > What is your commit message?"
-           echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
-     f_c1; read -p " > " v_ans
-     f_rc; echo
-   f_talk; echo -n 'git commit -m "'
-     f_c1; echo -n               "$v_ans"
-     f_rc; echo                        '"'
-
-   git commit -m "$v_ans"  # uDev: Add f_sucess
-
-           echo
-
-}
 
 function f_lib4_git_push {
    # uDev: Run only if there are files to push
@@ -249,11 +301,6 @@ function f_lib4_git_push {
    git push
            echo
 }
-
-# Copiado de ezGIT }
-
-
-
 
 
 
