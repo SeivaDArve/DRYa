@@ -1427,7 +1427,7 @@ function f_drya_fzf_MM {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L5="5. | Help"
+      L5="5. | Help Menu"
       L4="4. | DRYa: Output Messages"
       L3="3. | DRYa: Greet & Present itself"
       L2="2. | Toolbox" 
@@ -1440,7 +1440,7 @@ function f_drya_fzf_MM {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-      [[ $v_list =~ "5. " ]] && f_drya_help
+      [[ $v_list =~ "5. " ]] && f_drya_help_menu  
       [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!"
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
@@ -1468,7 +1468,50 @@ function f_exec {
 }
 
 
+function f_seiva_up_time {
+   f_greet
 
+   echo "DRYa: seiva-up-time"
+   echo
+   echo "Seiva D'Arve iniciou estudos em Linux:"
+   echo " > 2021-03-25"
+   echo
+
+   # Variavel com a data
+      STARTINGDATE="2021-03-25"  
+
+   # Data de aniversário no formato YYYY-MM-DD
+      f_calcular_tempo_decorrido_apos_data
+
+   # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
+}
+
+function f_drya_help_menu {
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L5='5. seiva-up-time'
+      L4='4. Read drya-msgs'  
+      L3='3. Welcome Screen'
+      L2='2. Print All' 
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
+
+   # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "5. " ]] && f_seiva_up_time
+      [[ $v_list =~ "4. " ]] && less ~/.config/h.h/drya/drya-msgs
+      [[ $v_list =~ "3. " ]] && f_drya_welcome
+      [[ $v_list =~ "2. " ]] && f_drya_help
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      unset v_list
+}
 
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
@@ -1559,12 +1602,20 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    # Help menu
    # rtfm: Read the Fucking Manual
 
-   # uDev: drya h    # 1st Level of help
-   # uDev: drya hh   # 2nd level of help
-   # uDev: drya hhh  # 3rd level of help
-   # uDev: drya hhhh # 4th level of help ... instead of "msgs"
+   # uDev: `drya h  `  # 1st Level of help
+   # uDev: `drya h 2`  # 2nd level of help
+   # uDev: `drya h 3`  # 3rd level of help
+   # uDev: `drya h 4`  # 4th level of help ... instead of "msgs"
    
+
+
+
    if [ -z "$2" ]; then
+      # Menu Simples: Help
+
+      f_drya_help_menu  
+
+   elif [ $2 == "all" ]; then 
       f_drya_help
 
    elif [ $2 == "welcome" ]; then 
@@ -1826,22 +1877,7 @@ elif [ $1 == "eysek" ]; then
 elif [ $1 == "seiva-up-time" ]; then 
    # uDev: Tells how long the Linux experience started for Seiva
    
-   f_greet
-
-   echo "DRYa: seiva-up-time"
-   echo
-   echo "Seiva D'Arve iniciou estudos em Linux:"
-   echo " > 2021-03-25"
-   echo
-
-   # Variavel com a data
-      STARTINGDATE="2021-03-25"  
-
-   # Data de aniversário no formato YYYY-MM-DD
-      f_calcular_tempo_decorrido_apos_data
-
-   # uDev: Add: seiva-trade-up-time para indicar esta data importante, ou entao incluir no moedaz como data de aniversario
-
+   f_seiva_up_time
 
 elif [ $1 == "ip" ]; then 
    f_menu_internet_network_ip_options
