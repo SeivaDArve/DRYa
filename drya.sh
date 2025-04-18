@@ -2458,6 +2458,31 @@ elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then
 elif [ $1 == "copy" ]; then 
    echo "uDev: Use fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
 
+   if [ -z $2 ]; then 
+      # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
+
+      v_files=$(fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+
+      if [[ -n $v_files ]]; then
+         for i in $v_files
+         do
+            echo $i
+         done
+      fi
+
+   elif [ $2 == "." ]; then 
+      # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
+
+      v_files=$(find . -maxdepth 1 | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+
+      if [[ -n $v_files ]]; then
+         for i in $v_files
+         do
+            echo $i
+         done
+      fi
+   fi
+
 elif [ $1 == "paste" ]; then 
    echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
 
