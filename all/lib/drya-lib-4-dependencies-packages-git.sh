@@ -308,6 +308,7 @@ function f_lib4_git_push {
 
 function f_lib4_git_commit {
    # uDev: Run only if there are files to commit
+   # uDev: Nas commit messagem, incluir o nome do ficheiro modificado
 
    # Menu Simples
 
