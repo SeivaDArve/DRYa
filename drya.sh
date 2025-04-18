@@ -1488,7 +1488,7 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L5='5. seiva-up-time'
+      L5='5. About the Developer: seiva-up-time'
       L4='4. Read drya-msgs'  
       L3='3. Welcome Screen'
       L2='2. Print All' 
