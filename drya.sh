@@ -2455,6 +2455,12 @@ elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then
       done
    fi
    
+elif [ $1 == "copy" ]; then 
+   echo "uDev: Use fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
+
+elif [ $1 == "paste" ]; then 
+   echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
