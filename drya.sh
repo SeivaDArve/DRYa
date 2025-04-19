@@ -2473,12 +2473,20 @@ elif [ $1 == "copy" ]; then
    elif [ $2 == "." ]; then 
       # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
 
+      less $v_clip
+      read
+      
+      [[ -f $v_clip ]] && rm $v_clip && touch $v_clip
+
       v_files=$(find . -maxdepth 1 | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
 
       if [[ -n $v_files ]]; then
+
          for i in $v_files
          do
-            echo $i
+            [[ -f $i ]] && echo "file: $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+            [[ -d $i ]] && echo "dir:  $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+
          done
       fi
    fi
