@@ -183,6 +183,7 @@ function web {
    alias yt="eval web yt"
    alias ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
 
+   alias whatsapp="xdg-open https://web.whatsapp.com"
 
 
 
