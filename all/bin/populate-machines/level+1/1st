@@ -85,7 +85,18 @@ function f_gr_dependencies {
    syncthing      # To sync files across machines (does not need a cloud, it is decentralized)
    zenity         # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
    vim powerline  # Some vim installations have too little info on the status bar
+   mpv            # Terminal Media Player
 
+
+# installing `mpv` on fedora
+   Ao executar `sudo dnf repolist` no fedora linux, tem de aparecer rpmfusion-free e rpmfusion-nonfree.
+   Se nao aparecer, tem de ser instalado com:
+      `sudo dnf install \
+          https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+          https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm`
+
+   Depois ja pode instala `mpv` com: `sudo dnf install mpv`
+      
 
 # List of usefull apps (python)
 

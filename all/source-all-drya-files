@@ -17,6 +17,14 @@ function f_basic_variables {
 
    # Demi-fake pin for fzf menus (scare away curious people)
      v_pin=0000
+
+   # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
+      v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip
+
+   # Sound effects:
+      v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
+      v_snd_1=$v_snd/example-sound-completion-bell.wav
+      v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 }
 
 
@@ -484,6 +492,11 @@ function f_temporary_fx {
 
    # uDev: if drya-mail-box is ready, use it here!  
    #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
+  
+
+   # Sound effect in the end
+      v_test=$(mpv --version) 2>/dev/null
+      [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 &
 }
 
 function f_traitsID_autorun {

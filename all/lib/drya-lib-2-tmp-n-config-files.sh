@@ -38,6 +38,18 @@
 #  
 #
 
+# uDev: Entender "Substituição de processo (Process Substitution)" que é nativo do bash
+#
+#     O que é?
+#        A substituição de processo permite que você use a saída de um comando como se fosse um arquivo. Isso é útil quando um comando espera arquivos como entrada, mas você quer passar a saída de outro comando sem criar arquivos temporários
+#
+#
+#     Sintaxe:
+#        <(comando)
+#
+#
+#     Exemplo:
+#        diff <(ls dir1) <(ls dir2)
 
 function f_create_tmp_file {
    # Creates a temporary file and returns a variable with it's path $v_tmp

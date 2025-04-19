@@ -14,7 +14,7 @@
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"

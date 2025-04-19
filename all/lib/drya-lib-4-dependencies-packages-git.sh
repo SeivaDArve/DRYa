@@ -276,7 +276,7 @@ function f_lib4_git_add_all {
       cd $v_df_repo_pwd
 
    # Only if there is anything to commit or to finish, only then, changes are added to Staging Are
-      if [ -n $v_status ]; then
+      if [[ -n $v_status ]]; then
          # uDev: Run only if there are files to stage
          f_talk; echo -n 'Staging all files: '
            f_c3; echo    '`git add --all`'
@@ -308,6 +308,7 @@ function f_lib4_git_push {
 
 function f_lib4_git_commit {
    # uDev: Run only if there are files to commit
+   # uDev: Nas commit messagem, incluir o nome do ficheiro modificado
 
    # Menu Simples
 

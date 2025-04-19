@@ -1427,8 +1427,7 @@ function f_drya_fzf_MM {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L5="5. | Help Menu"
-      L4="4. | DRYa: Output Messages"
+      L4="4. | Help Menu"
       L3="3. | DRYa: Greet & Present itself"
       L2="2. | Toolbox" 
 
@@ -1436,12 +1435,11 @@ function f_drya_fzf_MM {
 
       L0='DRYa: `fzf` Main Menu: '
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-      [[ $v_list =~ "5. " ]] && f_drya_help_menu  
-      [[ $v_list =~ "4. " ]] && less $v_MSGS
+      [[ $v_list =~ "4. " ]] && f_drya_help_menu  
       [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!"
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
@@ -1490,7 +1488,7 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L5='5. seiva-up-time'
+      L5='5. About the Developer: seiva-up-time'
       L4='4. Read drya-msgs'  
       L3='3. Welcome Screen'
       L2='2. Print All' 
@@ -1506,7 +1504,7 @@ function f_drya_help_menu {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "5. " ]] && f_seiva_up_time
-      [[ $v_list =~ "4. " ]] && less ~/.config/h.h/drya/drya-msgs
+      [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_drya_welcome
       [[ $v_list =~ "2. " ]] && f_drya_help
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
@@ -1625,7 +1623,7 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    elif [ $2 == "msgs" ]; then 
       # Option to read the $DRYa_MESSAGES file
          # They are stored at: ~/.config/h.h/drya/.dryaMessages
-         less ~/.config/h.h/drya/drya-msgs
+         less $v_MSGS
    fi
 
 elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
@@ -2457,6 +2455,45 @@ elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then
       done
    fi
    
+elif [ $1 == "copy" ]; then 
+   echo "uDev: Use fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
+
+   if [ -z $2 ]; then 
+      # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
+
+      v_files=$(fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+
+      if [[ -n $v_files ]]; then
+         for i in $v_files
+         do
+            echo $i
+         done
+      fi
+
+   elif [ $2 == "." ]; then 
+      # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
+
+      less $v_clip
+      read
+      
+      [[ -f $v_clip ]] && rm $v_clip && touch $v_clip
+
+      v_files=$(find . -maxdepth 1 | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+
+      if [[ -n $v_files ]]; then
+
+         for i in $v_files
+         do
+            [[ -f $i ]] && echo "file: $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+            [[ -d $i ]] && echo "dir:  $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+
+         done
+      fi
+   fi
+
+elif [ $1 == "paste" ]; then 
+   echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
