@@ -510,7 +510,7 @@ function f_remote_controller {
    # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
 
    # Apagar um ficheiro secreto (de teste) em outros dispositivos
-      [[ -d ${v_REPOS_CENTER}/teste ]] && rm -rf ${v_REPOS_CENTER}/teste    
+      [[ -d ${v_REPOS_CENTER}/A ]] && rm -rf ${v_REPOS_CENTER}/A && eval 'S 0'
 }
 
 function f_exec { 
