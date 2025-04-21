@@ -4,6 +4,13 @@
 "This is an example of a line of comment 
 
 
+" uDev: See what CTRL-o and CTRL-O do. If it is useless, replace for 'o' and 'O' (creating new lines below and above, but without entering insert mode)
+
+
+"Define a GLOBAL variable (across all buffers) the variable of DRYa's Repository center
+" (When DRYa installs this file .vimrc at $HOME, DRYa has to use `sed` to replace the variable's content)
+let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
+
 " Instructuons: Usefull tools to know:
 "    Escape: <Esc>
 "    CTRL-L: <C-L>
