@@ -997,6 +997,13 @@ function f_drya_help {
            echo "   and work like a 2nd brain"
            echo "   written in Bash (Cross-Platform)"
            echo
+           echo " > A sub-operative system"
+           echo "   Cloud-stored-app, that when downloaded"
+           echo "   makes any host-operative-system"
+           echo "   feel like your own."
+           echo "   After using DRYa, upload changes, and"
+           echo "   delete again from the host-system"
+           echo
            echo "Developer Intentions (on DRYa):"
            echo " > The most light weight app possible "
            echo "   that each command is performed very fast"
