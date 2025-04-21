@@ -699,7 +699,7 @@ if [ -z "$*" ]; then
          L10='10. Calculadora | regra-3-simples'
           L9='9.  Calculadora | cambios'
           L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
-          L7='7.  Calculadora | registadora'
+          L7='7.  Calculadora | registadora | `D ca ,` ' 
 
           L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
           L5='5.  Executar    | apk Texas TI-84 ROM'
@@ -745,6 +745,10 @@ elif [ $1 == "." ]; then
    # Entrar diretamente na `bc` 
    f_clc_bc
 
+elif [ $1 == "," ]; then
+   # Entrar na Calculadora Registadora
+   f_exec_calculadora_registadora
+   
 elif [ $1 == "h" ]; then
    echo "hit help"
 
