@@ -2477,6 +2477,21 @@ elif [ $1 == "web" ]; then
    # All options for web
    f_menu_internet_network_ip_options
 
+elif [ $1 == "lib" ]; then 
+   # Print with `ls` all the drya-lib file names
+
+   f_greet
+   f_talk; echo "Info about libraries file at:"
+           echo ' > ${v_REPOS_CENTER}/DRYa/all/lib/'
+           echo
+   f_talk; echo "Listing names:"
+
+   ls -1 ${v_REPOS_CENTER}/DRYa/all/lib
+
+           echo
+   f_talk; echo "Listing how each can be installed"
+           echo " > uDev"
+
 elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then 
    f_greet
    f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
