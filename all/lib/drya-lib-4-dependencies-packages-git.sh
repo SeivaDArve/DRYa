@@ -18,7 +18,10 @@
 #
 #     # Using drya.sh
 #        uDev: `D lib4 <file-to-open-sync-close-sync>`
+# 
+#     # uDev: o script main fornece Abs Path to file only, then this lib finds out with is the current repo (finding .git) and storing both variables
 #
+
 
 
 #
@@ -253,6 +256,8 @@ function f_lib4_ensure_repo_existence {
 
 function f_lib4_git_pull {
    # Git Pull sem abrir o editor e editar a commit message quando faz Merge
+
+   # uDev: perguntar char GPT: testar `git pull` so por 10 secs, e editar à mesma se Offline.
 
    f_talk; echo 'A fazer download `git pull --no-edit`'
    git pull --no-edit
