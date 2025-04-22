@@ -2502,7 +2502,15 @@ elif [ $1 == "lib" ]; then
            echo " > uDev"
 
 elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then 
+   # Make drya-lib-4 available on current terminal and use it for some purpouse
+
+   # Source lib 4
+      v_greet="DRYa"
+      v_talk="DRYa-lib-4: "
+      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+
    f_greet
+
    f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
            echo '      Or use `G s <file>` instead'
            echo
@@ -2557,6 +2565,16 @@ elif [ $1 == "copy" ]; then
 
 elif [ $1 == "paste" ]; then 
    echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+
+elif [ $1 == "line" ]; then 
+   # Para imprimir apenas a linha X de um documento
+
+   # Exemplo: `D line <numero-da-linha> <nome-do-ficheiro>`
+
+   v_line=$2
+   v_file=$3
+
+   sed -n "${v_line}p" $v_file
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
