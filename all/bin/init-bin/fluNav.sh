@@ -939,7 +939,7 @@ function V {
 
    function f_error_cd {
       # If `V` could not navigate to a certain dir beacuse it does not exist, then mention
-      f_talk; echo "V: Such directory does not exist (or repo not cloned yet)"
+      f_talk; echo "V: Such Dir does not exist (or repo not cloned)"
    }
 
    # Implementation of Use 1:
