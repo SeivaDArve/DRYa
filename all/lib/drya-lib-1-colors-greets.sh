@@ -270,6 +270,8 @@ function f_horizline {
       done
 }
 
+
+
 function f_verticline {
 	v_lines=$(tput lines)
 	for i in $(seq $v_lines); do

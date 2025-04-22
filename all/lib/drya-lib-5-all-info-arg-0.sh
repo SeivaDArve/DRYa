@@ -1,5 +1,5 @@
 #!/bin/bash
-# Title: Detecting info about the argument 0
+# Title: Detecting info about the argument 0 (about the running script)
 # Description: By running this script, it will echo and store it's own name, absolute path, relative path from where you are callinh it, etc...
 
 function f_1 {
