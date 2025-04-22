@@ -207,6 +207,11 @@ function f_git_commit {
 
 
 
+function f_lib4_welcome {
+   # Use this just to know if drya-lib-4 is intalled/available/sourced/ready
+
+   f_talk; echo "Ready!"
+}
 
 
 
