@@ -829,28 +829,30 @@ function f_menu_audio_media_player {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='Audio-Media-Player'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L7='7. Tests  | Right and Left Speakers audio'                                      
-      L6='6. Tests  | Completion Bell sound'                                      
+      L8='8. Tests  | Right and Left Speakers audio'                                      
+      L7='7. Tests  | Completion Bell sound'                                      
 
-      L5='5. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
-      L4='4. Mic Record | Status'
-      L3='3. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
+      L6='6. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
+      L5='5. Mic Record | Status'
+      L4='4. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
-      L2='2. Play Music | Search file at .'                                      
+      L3='3. Play Music | mpv | Search file at .'                                      
+      L2='2. Play Music | xdg | Search file at .'                                      
       L1='1. Cancel'
 
       L0="SELECT 1: DRYa: Media Player: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "8. " ]] && echo "uDev: $L8" 
       [[ $v_list =~ "7. " ]] && echo "uDev: $L7" 
       [[ $v_list =~ "6. " ]] && echo "uDev: $L6" 
       [[ $v_list =~ "5. " ]] && echo "uDev: $L5" 
       [[ $v_list =~ "4. " ]] && echo "uDev: $L4" 
-      [[ $v_list =~ "3. " ]] && echo "uDev: $L3" 
-      [[ $v_list =~ "2. " ]] && v_pl=$(ls | fzf) && xdg-open $v_pl
+      [[ $v_list =~ "3. " ]] && v_pl=$(ls | fzf --prompt='Choose media to play (with `mpv`): ')      && mpv      $v_pl
+      [[ $v_list =~ "2. " ]] && v_pl=$(ls | fzf --prompt='Choose media to play (with `xdg-open`): ') && xdg-open $v_pl
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
