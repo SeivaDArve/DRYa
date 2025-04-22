@@ -23,6 +23,7 @@ function f_basic_variables {
 
    # Sound effects:
       v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
+
       v_snd_1=$v_snd/example-sound-completion-bell.wav
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 }
