@@ -315,3 +315,52 @@ function f_pin {
 
 }
 
+
+# {----------------------------------------------------------------------
+# Material do center text (vertically, horizontally) found in source-all-drya-files
+#
+#  # For the lines: 
+#     # Count number of lines in the terminal:
+#        v_tLines=$(stty size | cut -d ' ' -f 1)
+#          #echo "current number of lines in the terminal is: $v_tLines"
+#
+#     # Dividing that number into 2
+#        v_half_tLines=$(expr $v_tLines / 2)
+#         #echo "Half of that is (rounded number): $v_half_tLines"
+#
+#     # And the into 2
+#        v_half_half_tLines=$(expr $v_half_tLines / 2)
+#        v_lines=$v_half_half_tLines
+#
+#
+#
+#
+#
+#  # For the Columns: 
+#     # Count number of lines in the terminal:
+#        v_tCols=$COLUMNS
+#          #echo "current number of columns in the terminal is: $v_tCols"
+#
+#     # Removing the number of characters from the text variables:
+#        v_tCols=$(expr $v_tCols - $v_char) 
+#
+#     # Dividing that number into 2
+#        v_half_tCols=$(expr $v_tCols / 2)
+#        #echo "Half of that is (rounded number): $v_half_tCols"
+#
+#     v_cols=$v_half_tCols
+#
+#
+#
+#  # Center Vertically 
+#     for i in $(seq 1 $v_lines)
+#     do
+#        # Filling a file with empty lines
+#        echo -e "\n" >> $v_preMSGS
+#     done
+#
+#  # Center Horizontally
+#     echo "${v_cols}$v_msg_1" >> $v_preMSGS
+#     echo "${v_cols}$v_msg_2" >> $v_preMSGS
+#
+# }----------------------------------------------------------------------
