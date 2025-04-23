@@ -3,14 +3,19 @@
 # Description: Using only the Numapad to do the same as commands. Improving speed
 
 # For DRYa:
-   alias 5="drya"
+   alias 0="drya"
+   alias 01="drya ."
+   alias 02="drya ,"
+   alias 03="drya kbd"
 
 # For ezGIT
    alias 1="G"
+
    alias 11="G ."
    alias 111="G . A"
 
-   alias 12="G v A ."
+   alias 12="G v"
+   alias 121="G v A ."
 
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts

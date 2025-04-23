@@ -2342,7 +2342,7 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
    # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
    #  Instrucoes: Para usar 'ç' na palacra 'caça', com a variavel $c_1 que contem o valor 'ç', usa o `eval` no terminal: `eval ca${c_1}a`
 	#
@@ -2358,19 +2358,18 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
 
 	  
-      L2='2. Opcao simples'                                      
+      L3='3. DRYa emergency keyboard'
+      L2='2. Set configs for keyboard layout'                                      
       L1='1. Cancel'
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
-
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" && sleep 0.1 
+      [[ $v_list =~ "3. " ]] && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+      [[ $v_list =~ "2. " ]] && echo "uDev: $L2"
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
