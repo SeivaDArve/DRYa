@@ -7,6 +7,7 @@
    alias 01="drya ."
    alias 02="drya ,"
    alias 03="drya kbd"
+   #alias 00="cd ${v_REPOS_CENTER} && ls"  # Set on source-all-drya-files
 
 # For ezGIT
    alias 1="G"
