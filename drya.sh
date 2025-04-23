@@ -999,6 +999,8 @@ function f_drya_help {
            echo "   and work like a 2nd brain"
            echo "   written in Bash (Cross-Platform)"
            echo
+           echo "Developer Intentions (on DRYa):"
+           echo
            echo " > A sub-operative system"
            echo "   Cloud-stored-app, that when downloaded"
            echo "   makes any host-operative-system"
@@ -1006,18 +1008,37 @@ function f_drya_help {
            echo "   After using DRYa, upload changes, and"
            echo "   delete again from the host-system"
            echo
-           echo "Developer Intentions (on DRYa):"
+           echo " > The version evoluition is:"
+           echo "   'rolling-rolling releases'"
+           echo "   making use of the fact that is very unlikely"
+           echo "   for somebody else to be using it at the same"
+           echo "   time, sometimes the file changes made to a"
+           echo "   file X, is finished in another device by"
+           echo "   the Dev. On the current edited line it"
+           echo "   says: 'uDev: This line is lacking Y"
+           echo "   content' "
+           echo 
+           echo "   The next Dev (most likely the same Dev)" 
+           echo "   will finish such line in some other ocasion"
+           echo "   Developing DRYa is a on-going process," 
+           echo "   small steps. DRYa is made available"
+           echo "   by tiny pauses in daily life, and made"
+           echo "   by the CURRENT MINUTE need."
+           echo
            echo " > The most light weight app possible "
            echo "   that each command is performed very fast"
+           echo "   a TUI app"
            echo
            echo " > Works on any device after proper config"
-           echo "   Windows, Linux, Mac, Android, iPhone"
+           echo "   (by feeding the depedencies)"
+           echo "   Windows, Linux, Mac, Android, iPhone,"
+           echo "   Raspberry Pi"
            echo
            echo " > All burocracy around the user of the app"
            echo "   is taken care of, without spy or malware"
            echo   
            echo "   possible because the code is not compiled"
-           echo "   abd any user non-developer is able to open"
+           echo "   and any user non-developer is able to open"
            echo "   each script and actually read every command"
            echo "   that is going to run, and change it"
            echo
