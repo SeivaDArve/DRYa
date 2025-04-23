@@ -112,8 +112,8 @@ function f_drya_msgs_welcome {
 function f_drya_msgs {
    # Configuring variable for DRYa messages
       v_cfg="$HOME/.config/h.h/drya"  &&  mkdir -p $v_cfg
-
-      v_MSGS="$v_cfg/drya-msgs"  &&  export v_MSGS
+      v_name="drya-msgs"
+      v_MSGS="$v_cfg/$v_name"  &&  export v_MSGS
 
    # Populating file with standard text
       v_text1="# Title: DRYa Messages (verbose output for apps under DRYa)"
