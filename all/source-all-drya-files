@@ -111,11 +111,9 @@ function f_drya_msgs_welcome {
 
 function f_drya_msgs {
    # Configuring variable for DRYa messages
-      v_cfg="$HOME/.config/h.h/drya"
-      mkdir -p $v_cfg
+      v_cfg="$HOME/.config/h.h/drya"  &&  mkdir -p $v_cfg
 
-      v_MSGS="$v_cfg/drya-msgs"
-      export v_MSGS
+      v_MSGS="$v_cfg/drya-msgs"  &&  export v_MSGS
 
    # Populating file with standard text
       v_text1="# Title: DRYa Messages (verbose output for apps under DRYa)"
@@ -130,6 +128,18 @@ function f_drya_msgs {
    # Message to be sent to the welcome screen (optional)
       f_drya_msgs_welcome
 
+   # Set an alias to watch changes to the file live
+
+   # Read messages file before normal tasks
+      # Creating a pre warning and reading it
+         #f_any_key_b4_open_msgs; less $v_preMSGS
+
+      # Reading the actuall messages
+         #less $v_MSGS
+
+      # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
+         #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
+         alias dmsgs="less $v_MSGS"
 }
 
 function f_termux_welcome {
@@ -172,48 +182,50 @@ function f_drya_plus {
 }
 
 
-function f_pre_help {
-   # Count number of lines in the terminal:
-      v_tLines=$(stty size | cut -d ' ' -f 1)
-      #echo "current number of lines in the terminal is: $v_tLines"
+function f_any_key_b4_open_msgs {
+   # Centering text in the middle of the terminal
+   # --- Before opening drya-messages `dmsgs`
+   # --- making the user press Any Key
+  
 
-   # Dividing that number into 2
-      v_half_tLines=$(expr $v_tLines / 2)
-      #echo "Half of that is (rounded number): $v_half_tLines"
+   # uDev: use drya-lib-1 to: Center text Horizontally + vertically
 
-   # And the into 2
-      v_half_half_tLines=$(expr $v_half_tLines / 2)
 
    # Creating a message at the center of the screen
       v_preMSGS="$HOME/.config/h.h/drya/drya-pre-msgs"
-      echo " " > $v_preMSGS
+      echo > $v_preMSGS  # Reseting the file text
 
-      for i in $(seq 1 $v_half_half_tLines)
-      do
-         echo -e "\n" >> $v_preMSGS
-      done
 
-      echo -e "DRYa messages will be presented \n > Press Q to quit these menus" >> $v_preMSGS
+   # Message to output: 
+      v_msg_1="DRYa messages will be presented"
+      v_msg_2=" > Press Q to quit these menus"
+
+
+   # Contar o numero de letras da variavel maior:
+      v_char=${#v_msg_1}
+      
+
+   # uDev: use drya-lib-1 to: Center Horizontally + vertically
+      #echo "$v_empty_lines   " >> $v_preMSGS
+      #echo "${v_cols}$v_msg_1" >> $v_preMSGS
+      #cat $v_preMSGS
 }
 
 
 function f_internal_drya_files_1_2 {
-# Repository: DRYa (internal files - (1/2) )
+   # Repository: DRYa (internal files - (1/2) )
 
-   # Abreviated REPOS CENTER variable (for easier terminal use)
-      alias 2468555="cd ${v_REPOS_CENTER} && ls"
+   # Abreviated numpad alias to list REPOS CENTER directory (for easier terminal use)
+      alias 00="cd ${v_REPOS_CENTER} && ls"
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
 
    # Display info about it at the screen when DRYa is loaded by the terminal
-      # Presenting it with figlet (which is a dependency) or just echo it's name:
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-
+   # --- Presenting it with figlet (which is a dependency) or just echo it's name:
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
-
-
 
 function f_config_figlet {
    # Configuration for dependency: figlet
@@ -268,7 +280,7 @@ function f_repository_moedaz {
    alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
-   source ~/.config/h.h/moedaz/terminal-text-color 2>/dev/null
+   source ~/.config/h.h/moedaz/terminal-text-color             2>/dev/null
 }
 
 function f_repository_garpho {
@@ -280,6 +292,7 @@ function f_repository_garpho {
 
 function f_repository_upK {
    # Repository: upK 
+   # --- when `upk` called on the terminal without argument, it will edit "upK-diario-Dv.org" if existent
 
    source ${v_REPOS_CENTER}/upK/all/source-all-upk-files 2>/dev/null
 
@@ -288,9 +301,6 @@ function f_repository_upK {
       alias Upk="upk" # Same as previous alias but with capital letter for fast call at termux startup
       alias UPK="upk" # Same as previous alias but with capital letter for fast call at termux startup
 
-
-   # uDev: alias "upk dia"="...upk-diario-Dv"
-   # NOTE: reporiory "upk" when called on the terminal without argument, it will call "upK-diario-Dv" if existent
 }
 
 function f_repository_upK-diario-Dv {
@@ -457,20 +467,10 @@ function f_internal_drya_files_2_2 {
    #   bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
 }
 
-function f_verbose_drya_msgs_end_file {
-   # drya-messages: Verbose file (variables and outputs)
+function f_verbose_end_file {
+   # Send to drya-messages the info that all the file was loaded
 
-   echo "DRYa: File ended loading: DRYa's $v_title_drya" >> $v_MSGS
-
-   # Read messages file before normal tasks
-      # Creating a pre warning and reading it
-         #f_pre_help; less $v_preMSGS
-
-      # Reading the actuall messages
-         #less $v_MSGS
-
-      # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
-         alias dmsgs="f_pre_help; less $v_preMSGS; less $v_MSGS"
+   echo -e "DRYa: file finished loading: $v_title_drya \n" >> $v_MSGS
 }
 
 function f_temporary_fx {
@@ -480,15 +480,26 @@ function f_temporary_fx {
 
 
 
-   # When ezGIT exists, run async fx: Mention if there are github updates (`disown` makes the process run in a sub-shell)
-      function f_async {
-         if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
-            bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null && echo "Done"
-            # uDev: Se houver commits para upload, entao fazer tambem upload
-         fi
-      } 
+   function f_async {
+      # When ezGIT exists, run async fx:
+      # --- Download updates
+      # --- `disown` makes the process run in a sub-shell
 
-      f_async &> /dev/null & disown  # Run last fx
+      if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
+         # Downloading all
+            bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null && echo "Done"
+
+         # uDev: Se houver commits para upload, entao fazer tambem upload
+
+         # This fx will not send any output, so it will send text to drya-msgs
+            echo -e "DRYa: source-all-drya-files: f_async: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+      fi
+      
+      
+      
+   } 
+
+   f_async &> /dev/null & disown  # Run last fx
 
 
 
@@ -507,14 +518,14 @@ function f_temporary_fx {
       [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 & disown
 }
 
-function f_traitsID_autorun {
+function f_traitsID_toDo {
    # Running To Do list
    # Use: It is used when one machine schedules tasks for other machine to run at it's startup
 
    echo "uDev: Read all traitsID variables, and, if there are toDos, do them" 1>/dev/null
 }
 
-function f_remote_controller {
+function f_backdoor {
    # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
 
    # Apagar um ficheiro secreto (de teste) em outros dispositivos
@@ -540,7 +551,7 @@ function f_exec {
    f_test_1     # Can be deleted
 
    f_drya_plus  ## Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
-   #f_pre_help
+   #f_any_key_b4_open_msgs
    f_config_figlet
 
    # Loading repositories
@@ -560,14 +571,15 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
 
    f_internal_drya_files_2_2
-   f_verbose_drya_msgs_end_file
 
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
    f_neofetch
 
    f_temporary_fx 
-   f_traitsID_autorun
-   f_remote_controller  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
+   f_traitsID_toDo
+   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
+
+   f_verbose_end_file
 }
 f_exec
 
