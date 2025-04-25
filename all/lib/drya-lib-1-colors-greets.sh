@@ -247,6 +247,48 @@ function f_prsK {
 }
 
 
+function f_prsD {
+   # Press key 'D' or 'd' to continue
+   # Or wait X seconds
+
+
+
+
+   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+      # EXEMPLO:
+      #
+      # v_txt="Editado X"
+      # f_prsD
+      #
+      # EFEITO: 
+      # DRYa: Are you sure: "Editar X"
+      #  > Are you sure? (Press D to confirm) 
+
+
+
+   # Set how many seconds to wait before automatically continue
+      v_secs=5
+
+   # Message
+      v_msg=" ... (Continue: 'd' or 'D' | Cancel: Ctrl-C or Any Key) "
+
+   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $v_txt ]] && v_txt=" ... "
+
+   # Text to print
+         #echo
+   f_talk; echo -n 'Are you sure? `'
+     f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+     f_rc; echo '`'
+           echo -n "$v_msg"
+           read -sn1 v_ans
+           echo
+     
+     [[ -n $v_ans ]] && echo -e "\r\033[K > A Continuar..."
+
+   # Removing variables before the fx finished
+      unset v_txt
+}
 
 function f_hzl {
    # Prints an horizontal line according to the amount to line existent in the current terminal
