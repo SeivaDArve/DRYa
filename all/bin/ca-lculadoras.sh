@@ -700,7 +700,7 @@ if [ -z "$*" ]; then
           L9='9.  Calculadora | cambios'
           L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
           L7='7.  Calculadora | registadora | `D ca ,` ' 
-          #L7='7.  Calculadora | registadora | `D ca , x` '   ## Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
+         #L7='7.  Calculadora | registadora | `D ca x` '   ## (at drya.sh): Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
 
           L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
           L5='5.  Executar    | apk Texas TI-84 ROM'

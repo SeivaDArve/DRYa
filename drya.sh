@@ -2355,6 +2355,11 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    elif [ $2 == "," ]; then 
       # Opens calculadora registadora
       bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh ,
+
+   elif [ $2 == "x" ]; then 
+      # Calculations directly on the prompt: `D ca x "3 + 3"`
+      [[ -n $3 ]] && echo "$3" | bc
+
    fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
