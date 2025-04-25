@@ -2586,7 +2586,7 @@ elif [ $1 == "copy" ]; then
 elif [ $1 == "paste" ]; then 
    echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
 
-elif [ $1 == "line" ]; then 
+elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
    # Para imprimir apenas a linha X de um documento
 
    # Exemplo: `D line <numero-da-linha> <nome-do-ficheiro>`
@@ -2594,7 +2594,13 @@ elif [ $1 == "line" ]; then
    v_line=$2
    v_file=$3
 
-   sed -n "${v_line}p" $v_file
+   # Run the command only if all args were given
+      [[ -z $2 ]] && echo "DRYa: You need to provide a line number"
+      [[ -z $3 ]] && echo "DRYa: You need to provide a file name"
+      [[ -n $3 ]] && sed -n "${v_line}p" $v_file  
+
+   # uDev: `D line v <arg>`  To read only the top    half of the file, strating at the line '<arg>'
+   # uDev: `D line ^ <arg>`  To read only the bottom half of the file, strating at the line '<arg>'
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
