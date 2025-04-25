@@ -30,6 +30,7 @@
 #       f_create_tmp_file     (dar um nome e saber que esse ficheiro tmp foi criado)
 
 
+# uDev: add fx to test if a given variable is number, letter or others
 
 
 
