@@ -258,6 +258,7 @@ function f_repository_ezGIT {
 
    # Define a key to call the entire program
       alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
       # uDev: for some repos, must run a script that searches for updates at terminal startup
