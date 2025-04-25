@@ -991,39 +991,42 @@ function f_drya_help {
 
    f_talk; echo "Help"
            echo
-           echo "What is DRYa:"
+           echo "What is DRYa (the name):"
            echo " > D.R.Y.a. "
            echo "   (Don't Repeat Yourself app)"
            echo "   is a CLI software intended"
            echo "   to prevent repetitive tasks"
            echo "   and work like a 2nd brain"
            echo "   written in Bash (Cross-Platform)"
+           echo "   The important knowledge the Dev"
+           echo "   needs to be absorbed in life"
+           echo "   It is absorbed either by DRYa or by"
+           echo "   Some other Repo, centralized on DRYa."
            echo
            echo "Developer Intentions (on DRYa):"
            echo
-           echo " > A sub-operative system"
+           echo " > A sub-operative system:"
            echo "   Cloud-stored-app, that when downloaded"
            echo "   makes any host-operative-system"
            echo "   feel like your own."
            echo "   After using DRYa, upload changes, and"
            echo "   delete again from the host-system"
            echo
-           echo " > The version evoluition is:"
-           echo "   'rolling-rolling releases'"
-           echo "   making use of the fact that is very unlikely"
-           echo "   for somebody else to be using it at the same"
-           echo "   time, sometimes the file changes made to a"
+           echo " > WIP Releases:"
+           echo "   New versions come in the 'work in progress' model"
+           echo "   Sometimes the file changes made to a"
            echo "   file X, is finished in another device by"
            echo "   the Dev. On the current edited line it"
            echo "   says: 'uDev: This line is lacking Y"
-           echo "   content' "
+           echo "   content'. Then, when partial releases are done "
+           echo '   the Dev `git squashes` many commits to 1 version'
            echo 
            echo "   The next Dev (most likely the same Dev)" 
-           echo "   will finish such line in some other ocasion"
+           echo "   will finish such line in some other occasion."
            echo "   Developing DRYa is a on-going process," 
            echo "   small steps. DRYa is made available"
            echo "   by tiny pauses in daily life, and made"
-           echo "   by the CURRENT MINUTE need."
+           echo "   by the CURRENT MINUTE needed script."
            echo
            echo " > The most light weight app possible "
            echo "   that each command is performed very fast"
@@ -1528,16 +1531,13 @@ function f_drya_help_menu {
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
-
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "5. " ]] && f_seiva_up_time
       [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_drya_welcome
       [[ $v_list =~ "2. " ]] && f_drya_help
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2" 
       unset v_list
 }
 
@@ -2600,6 +2600,26 @@ elif [ $1 == "msg" ]; then
    # Read the log file to events (DRYa)
    less $v_MSGS
    
+elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar"] ; then 
+   # Fornecendo dois nomes de ficheiros, informa se sao iguais ou tem diferencas
+
+   # Se os argumentos $2 e $3 nao foram fornecidos, o programa termina
+      if [[ -z "$2" || -z "$3" ]]; then
+          echo "Uso: $0 <qualquer_coisa> <ficheiro1> <ficheiro2>"
+          exit 1
+      fi
+
+   # Compara os ficheiros silenciosa (sem o output standard)
+      if cmp -s "$2" "$3"; then
+          f_talk; echo "Os ficheiros são iguais."
+                  echo " > $2"
+                  echo " > $3"
+      else
+          f_talk; echo "Os ficheiros são diferentes."
+                  echo " > $2"
+                  echo " > $3"
+      fi
+
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
