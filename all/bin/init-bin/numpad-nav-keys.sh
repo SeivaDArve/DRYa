@@ -48,25 +48,25 @@ function f_fzf_power_options {
 }
 
 
-   # uDev: Vai have uma fx para cada comando e os alias numerios + os alias escritos chamam essa fx.
-      # Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
-   alias           exe="/mnt/c/Windows/System32/cmd.exe /c"
-   alias        5="f_fzf_power_options"
-   alias        246855="echo 'Lock Screen'"
-   alias        246852="echo 'Shutdown'; shutdown now"
-   alias        246858="echo 'Restart'; shutdown -r now"
-   alias        246850="echo 'Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
-   alias        246851="echo 'Suspend'"
-   alias      shutdown="shutdown -r now"
-   alias        reboot="shutdown -r now"
-   alias       restart="shutdown -r now"
-   alias   lock-screen="shutdown -r now"
-   alias     hibernate="shutdown -r now"
-   alias        reboot="shutdown -r now"
-   alias         xkill="echo 'Activate gnome xKill to force GUI apps to close'"
+   # uDev: Criar uma fx para cada comando e os alias "numeros" + alias "escritos" chamam essas fx.
+   # ----- Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
+   alias         exe="/mnt/c/Windows/System32/cmd.exe /c"
+   alias           5="f_fzf_power_options"
+   alias      246855="echo 'Lock Screen'"
+   alias      246852="echo 'Shutdown'; shutdown now"
+   alias      246858="echo 'Restart'; shutdown -r now"
+   alias      246850="echo 'Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
+   alias      246851="echo 'Suspend'"
+   alias    shutdown="shutdown -r now"
+   alias      reboot="shutdown -r now"
+   alias     restart="shutdown -r now"
+   alias lock-screen="shutdown -r now"
+   alias   hibernate="shutdown -r now"
+   alias      reboot="shutdown -r now"
+   alias       xkill="echo 'Activate gnome xKill to force GUI apps to close'"
 
    alias    48256="termux-microphone-record -d 1>/dev/null" # Starts voice recording without any terminal output
-   alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops voice recording without any terminal output
+   alias "48256."="termux-microphone-record -q 1>/dev/null" # Stops  voice recording without any terminal output
 
 
 
