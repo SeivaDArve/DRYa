@@ -2459,7 +2459,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    # Several ways to exit the terminal
 
 
-   # uDev: Fazer um script equivslente a `getopts` para esta fx
+   # uDev: Fazer um script equivalente a `getopts` para esta fx. Ou fzf com --multiple
    #     exemplo: `D quit -Huc -r`
    #              -H (apagar historico)
    #              -u (Uninstal softwares)
@@ -2476,7 +2476,6 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    if [ -z $2 ]; then 
       # File to run as last script before exit terminal
       source $v_quit
-      exit 0
 
    elif [ $2 == "1" ]; then 
       # When exit, delete specific repositories too
@@ -2502,6 +2501,9 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       echo "uDev"
 
    fi
+   
+   # Independent of the activity before closing, it still closes in the end
+      exit 0
 
 elif [ $1 == "web" ]; then 
    # All options for web
