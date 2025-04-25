@@ -31,9 +31,10 @@ function f_basic_variables {
 
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
-      echo "DRYa: File started loading: DRYa's $v_title_drya"
-      echo "      > $v_title_drya 1st File to load, after ~/.bashrc redirection"
-      echo "      > running from: ${DRYa_HEART}"
+      echo "DRYa: Sub-Operative System"
+      echo " > $v_title_drya 1st File to load, after ~/.bashrc redirection"
+      echo " > running from: ${DRYa_HEART}"
+      echo " > drya-msgs file located at: $v_MSGS"
       # udev: echo "Installed at.."
 
 
