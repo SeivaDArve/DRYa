@@ -1537,8 +1537,9 @@ function f_drya_help_menu {
       [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_drya_welcome
       [[ $v_list =~ "2. " ]] && f_drya_help
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2" 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2" echo "linha g" >> ~/.bash_history 
       unset v_list
+      history -r
 }
 
 # -------------------------------------------
