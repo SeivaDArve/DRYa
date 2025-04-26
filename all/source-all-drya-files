@@ -23,7 +23,7 @@ function f_basic_variables {
      v_pin=0000
 
    # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
-      v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip
+      v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
 
    # Sound effects:
       v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
