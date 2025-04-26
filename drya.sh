@@ -2517,56 +2517,62 @@ elif [ $1 == "web" ]; then
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
-   f_greet
-   f_talk; echo "Info about libraries file at:"
-           echo ' > ${v_REPOS_CENTER}/DRYa/all/lib/'
-           echo
-   f_talk; echo "Listing names:"
-
-   ls -1 ${v_REPOS_CENTER}/DRYa/all/lib
-
-           echo
-   f_talk; echo "Listing how each can be installed"
-           echo " > uDev"
-
-elif [ $1 == "lib4" ] || [ $1 == "L4" ]; then 
-   # Make drya-lib-4 available on current terminal and use it for some purpouse
-
-   # Source lib 4
-      v_greet="DRYa"
-      v_talk="DRYa-lib-4: "
-      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
-
-   f_greet
-
-   f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
-           echo '      Or use `G s <file>` instead'
-           echo
-
    if [ -z $2 ]; then 
-      f_talk; echo "You can sync a file with github (pull, edit file, push again) if you provide a name as arg 2"
+      f_greet
+      f_talk; echo "Info about libraries file at:"
+              echo ' > ${v_REPOS_CENTER}/DRYa/all/lib/'
+              echo
+      f_talk; echo "Listing names:"
 
-   else
-      shift
-      for i in $*; do
-         echo "uDev: git pull $i repo"
-         echo "edit $i"
-         echo "uDev: git push $i repo"
-      done
+      ls -1 ${v_REPOS_CENTER}/DRYa/all/lib
+
+              echo
+      f_talk; echo "Listing how each can be installed"
+              echo " > uDev"
+
+   elif [ $2 == "4" ]; then 
+      # Make drya-lib-4 available on current terminal and use it for some purpouse
+
+      # Source lib 4
+         v_greet="DRYa"
+         v_talk="DRYa-lib-4: "
+         source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+
+      f_greet
+
+      f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
+              echo '      Or use `G s <file>` instead'
+              echo
+
+      if [ -z $3 ]; then 
+         f_talk; echo "You can sync a file with github (pull, edit file, push again) if you provide a name as arg 3"
+
+      else
+         shift
+         shift
+         for i in $*; do
+            echo "uDev: git pull $i repo"
+            echo "edit $i"
+            echo "uDev: git push $i repo"
+         done
+      fi
    fi
    
 elif [ $1 == "copy" ]; then 
-   echo "uDev: Use fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
+   #Using fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
 
    if [ -z $2 ]; then 
       # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
 
-      v_files=$(fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+      v_files=$(ls -1F | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+      v_pwd=$(pwd)
+ 
+      echo > $v_clip   # Variable already set on file: 'source-all-drya-files'
 
       if [[ -n $v_files ]]; then
          for i in $v_files
          do
-            echo $i
+            echo "$v_pwd/$i" >> $v_clip
          done
       fi
 
@@ -2592,7 +2598,16 @@ elif [ $1 == "copy" ]; then
    fi
 
 elif [ $1 == "paste" ]; then 
-   echo "uDev: Use fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+   #Using fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+
+   for i in $(cat $v_clip)
+   do
+      cp $i .
+   done
+
+elif [ $1 == "clip" ]; then 
+   # Ler/Visitar o ficheiro de clipboard
+   less $v_clip
 
 elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
    # Para imprimir apenas a linha X de um documento
