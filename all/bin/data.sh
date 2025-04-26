@@ -184,13 +184,13 @@ elif  [ $1 == "." ]; then
 
       L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
       L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
-      L10='10. L     | Data completa esclarecida com loop com LOGO'
+      L10='10. r     | Data completa esclarecida com loop com LOGO'
        L9='9.  l     | Data completa esclarecida com loop'
        L8='8.  h     | Instructions / Help'
        L7='7.  v     | Imprime 1x a data em um formato util para variaveis'
        L6='6.  hr    | Data que foca na hora'
-       L5='5.  min   | Imprime linhas com a hora durante 1 min'
-       L4='4.  seg   | Imprime 1 linha com a hora durante 1 seg'
+       L5='5.  m     | Imprime linhas com a hora durante 1 min'
+       L4='4.  s     | Imprime 1 linha com a hora durante 1 seg'
        L3='3.  g     | Grupo Data Hora (ao estilo militar)'
        L2='2.  alarm | '
 
@@ -222,7 +222,7 @@ elif  [ $1 == "b" ]; then
    
    f_background_process
     
-elif  [ $1 == "L" ]; then
+elif  [ $1 == "r" ]; then
    # Data completa esclarecida em loop com ASCII
 
    f_complete_date_loop_plus_figlet
@@ -243,11 +243,11 @@ elif  [ $1 == "hr" ]; then
    # Data que foca na hora
    f_hour_date
 
-elif  [ $1 == "min" ]; then
+elif  [ $1 == "m" ]; then
    # Imprime linhas com a hora durante 1 min
    f_one_minute_date
 
-elif  [ $1 == "seg" ]; then
+elif  [ $1 == "s" ]; then
    # Imprime 1 linha com a hora durante 1 seg
    f_one_second_date
 
