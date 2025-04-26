@@ -11,12 +11,12 @@
 #     At the top of every script file in which this script needed, place these lines below:
 #
 #
-#     # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+#     # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 #        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 #
 #        v_greet="DRYa"
 #        v_talk="DRYa: "
-#        v_txt="<text-used-at-f_prsK-fx>"
+#        v_txt="<text-used-at-f_anyK-fx>"
 #        v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
 #
@@ -165,7 +165,7 @@ function f_talk {
 function f_suc1 {
    # Fx number 1 of 2 
    # Use this to give confirmation the previous command has successfull
-   # Use it after f_prsK fx
+   # Use it after f_anyK fx
 
    # EXAMPLE: 
    #     echo "Did this message work?" && echo "Success!"
@@ -183,7 +183,7 @@ function f_suc1 {
 function f_suc2 {
    # Fx number 2 of 2 
    # Use this to give confirmation the previous command has successfull
-   # Use it after f_prsK fx
+   # Use it after f_anyK fx
 
    # EXAMPLE: 
    #     echo "Did this message work?" && echo "Success!"
@@ -205,7 +205,7 @@ function f_done {
    f_rc
 }
 
-function f_prsK {
+function f_anyK {
    # Press Any key to continue
    # Or wait X seconds
 
@@ -216,7 +216,7 @@ function f_prsK {
       # EXEMPLO:
       #
       # v_txt="Editado X"
-      # f_prsK
+      # f_anyK
       #
       # EFEITO: 
       # DRYa: Are you sure: "Editar X"

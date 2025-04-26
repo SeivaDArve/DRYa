@@ -4,7 +4,7 @@
 # Sourcing f_lib4_ensure_repo_existence
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 
-# Sourcing f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline
+# Sourcing f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh

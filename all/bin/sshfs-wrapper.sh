@@ -1,11 +1,11 @@
 #!/bin/bash
 # Title: DRYa: sshfs-wrapper
 
-# Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_prsK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+# Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
       v_greet=DRYa-SSH
       v_talk="DRYa: ssh: "
-      #v_txt="<text-used-at-f_prsK-fx>"
+      #v_txt="<text-used-at-f_anyK-fx>"
 
       # Usar f_c3 para SERVIDOR
       # Usar f_c4 para CLIENTE
@@ -80,7 +80,7 @@ function f_corresponder_local_com_remota {
    v_dir_to_mount=$v_parent_dir/$v_local/
    #echo "Ou seja: $v_dir_to_mount"
    mkdir -p $v_dir_to_mount
-   f_prsK
+   f_anyK
 }
 
 function f_check_current_user {
@@ -705,7 +705,7 @@ function f_ser_servidor {
       f_talk; echo 'Directory content `ls`:'
               ls -p
 
-      f_prsK
+      f_anyK
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
       f_check_ssh_daemon_is_on; f_check_ssh_daemon_is_on_verbose; echo

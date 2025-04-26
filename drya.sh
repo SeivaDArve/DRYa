@@ -238,7 +238,7 @@ function f_clone_info {
 
    # A variavel $v_txt tem de ser definida antes desta fx ser chamada
       v_txt="Go: https://github.com/SeivaDArve?tab=repositories"
-      f_prsK
+      f_anyK
       echo
 
    f_horizline
@@ -269,7 +269,7 @@ function f_clone_repos {
       function f_refresh_terminal_after_clone {
          # Some repositories have files to be sourced (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
          echo
-         v_txt="Refreshing Entire Terminal?"; f_prsK
+         v_txt="Refreshing Entire Terminal?"; f_anyK
          source ~/.bashrc
       }
 
@@ -516,7 +516,7 @@ function f_dotFiles_install_git_set_machine_name {
 
    function f_choose_a_name_from_list {
       # Ask what name to change to (and tell dedault, if user do not choose)
-         v_txt="Press ENTER to choose a name"; f_prsK
+         v_txt="Press ENTER to choose a name"; f_anyK
          echo
 
       # Path to the list of preset possible machine names
@@ -605,7 +605,7 @@ function f_dotFiles_install_git {
            echo    " > Either insert New name or choose from Default name list"
            echo
 
-   v_txt="Install .gitconfig file " && f_prsK
+   v_txt="Install .gitconfig file " && f_anyK
    echo
 
    f_hzl
@@ -655,7 +655,7 @@ function f_dotFiles_install_vim {
            echo    " > to:   \"let g:dryaREPOS = '$v_v1' \" "
            echo
 
-   v_txt="Install .vimrc" && f_prsK
+   v_txt="Install .vimrc" && f_anyK
            echo
    
    # Start STEP 1
@@ -690,7 +690,7 @@ function f_dotFiles_install_termux_properties {
            echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
            echo " > To:     ~/.termux/"
 
-   v_txt="Install termux configs" && f_prsK
+   v_txt="Install termux configs" && f_anyK
    
    cp $v_file1 $v_place && f_talk && echo "File 1: Done! "
    cp $v_file2 $v_place && f_talk && echo "File 2: Done! "
@@ -709,7 +709,7 @@ function f_dotFiles_install_tm_tmux {
            echo " > Copy: .../DRYa/all/etc/dot-files/tmux/.tmux.conf"
            echo " > To:   ~/"
 
-   v_txt="Install .tmux.conf" && f_prsK
+   v_txt="Install .tmux.conf" && f_anyK
    
    cp $v_file1 $v_place && f_talk && echo "Done! "
 }
@@ -745,7 +745,7 @@ function f_dot_files_install_netrc {
            echo "Stroken: Incorrect hashed password (allowing to be pushed to gihub)"
            echo
 
-   v_txt="(Step 1, 2): Install .netrc"; f_prsK
+   v_txt="(Step 1, 2): Install .netrc"; f_anyK
 
 
    # We need that stroken message in these 2 variables, username and token: 
@@ -766,7 +766,7 @@ function f_dot_files_install_netrc {
       echo
 
    # Opening the file to edit
-      v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_prsK
+      v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_anyK
       vim ~/.netrc && f_suc1 || f_suc2
 
    # Finished 
