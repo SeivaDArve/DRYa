@@ -12,8 +12,9 @@
 # uDev: Set windows time and date automaticaly with batch scripts
 
 function f_set_file {
-   # File that has a copy of all the environment variables
+   # File that has a copy of all variables sent to environment
 
+   # Giving it a name
       v_dir=~/.config/h.h/drya
       v_file="traitsID"
       v_id_file="$v_dir/$v_file"
@@ -229,6 +230,7 @@ function f_detectOS_1 {
       )
       echo "${v_tid[0]}${v_tid[1]}" >> $v_id_file
 
+
    # Create a script at DRYa/all/bin/ for drya-neofetch
       # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
       # uDev: Detecte personal/safe device from job/public/unsafe device
@@ -247,7 +249,25 @@ function f_detectOS_1 {
 
 }
 
+function f_gitconfig_current_machine_name {
+   # Deteta qual é o nome usado pelo `git` e que coloca nos `git commits`
+   # --- Se encontrar o nome standard 'seivadarve', pede para configurar/instalar o nome correto
 
+   v_user=$(git config --get user.name)
+   [[ $v_user == "seivaDArve" ]] && echo 'DRYa: task pendent: `D dot install git` to fix standard machine name' >> $v_MSGS
+   
+   traits_git_machine_name=$v_user
+
+   export traits_git_machine_name
+
+   # Send one empty line to the file
+      echo "" >> $v_id_file
+
+   echo "traits_git_machine_name=\"$traits_git_machine_name\"" >> $v_id_file
+   
+   
+   
+}
 
 
 
@@ -257,6 +277,7 @@ f_array_0   1>/dev/null  # O output será envido para o crl... porque serve so p
 f_trid_001               # Saber true|false se estamos a operar no Termux
 f_array_2   1>/dev/null  # O output será envido para o crl... porque serve so para debug
 f_export
+f_gitconfig_current_machine_name
 
 f_detectOS_1
 #f_detectOS_2
