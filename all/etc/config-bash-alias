@@ -338,6 +338,8 @@ function lll {
       # Prints to Terminal and to temp file
       # Also, if you give a number as arg, it will filter the output line. Example: `ls` prints 3 lines, so `lll 2` will print only the absolute path of the second line
 
+   # udev: a pasta atual pode nao conter nenhum ficheiro do qual dar o abs path. Adicionar tambem opcao "Current ./"
+
    #  if [ -z $1 ]; then 
    #     # Se nao houver mais nenhum arg, imprime todas as linhas
 
