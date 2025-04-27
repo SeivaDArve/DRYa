@@ -584,9 +584,10 @@ function f_dotFiles_install_git_set_machine_name {
       f_finish_by_setting_choosen_name 
 }
 
-function f_dotFiles_install_git {
+function f_dot_files_install_git {
    # Install .gitconfig on the system
-   
+   # uDev: test if `git` itself is installed
+
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
    v_place=~
 
@@ -1196,7 +1197,7 @@ function f_dot_files_install_presets {
 
 }
 
-function f_dot_files_install {
+function f_menu_install_dot_files {
    Lz='`D dot install`'
 
    # uDev: Redefinir browser pre-definido
@@ -1231,12 +1232,12 @@ function f_dot_files_install {
       [[ $v_list =~ "10. " ]] && echo "emacs dot-files: uDev"
       [[ $v_list =~ "9.  " ]] && f_dotFiles_install_tm_tmux
       [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
-      [[ $v_list =~ "7.  " ]] && f_dotFiles_install_git 
+      [[ $v_list =~ "7.  " ]] && f_dot_files_install_git 
       [[ $v_list =~ "6.  " ]] && f_dot_files_install_netrc
       [[ $v_list =~ "5.  " ]] && f_dotFiles_install_vim
       [[ $v_list =~ "4.  " ]] && f_dotFiles_install_dryarc
       [[ $v_list =~ "3.  " ]] && f_dot_files_install_presets
-      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dotFiles_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
+      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
       unset v_list
 }
@@ -1337,7 +1338,7 @@ function f_dot_files_menu {
       [[ $v_list =~ "6.  " ]] && echo "Detetado 6"
       [[ $v_list =~ "5.  " ]] && echo "Detetado 5"
       [[ $v_list =~ "4.  " ]] && echo "Detetado 4"  # Options to uninstall DRYa itself also
-      [[ $v_list =~ "3.  " ]] && f_dot_files_install
+      [[ $v_list =~ "3.  " ]] && f_menu_install_dot_files
       [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
       [[ $v_list =~ "1.  " ]] && echo "Canceled"
    
@@ -1955,8 +1956,8 @@ elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [
    elif [[ $2 == "install" ]] || [ $2 == "I" ]; then 
       # Menu to install dot files
 
-      [[ -z $3                ]] && f_dot_files_install
-      [[    $3 == "gitconfig" ]] && f_dotFiles_install_git
+      [[ -z $3          ]] && f_menu_install_dot_files
+      [[    $3 == "git" ]] && f_dot_files_install_git
 
    elif [[ $2 == "remove" ]] || [ $2 == "O" ]; then 
       echo "uDev"
