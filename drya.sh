@@ -2577,6 +2577,10 @@ elif [ $1 == "copy" ]; then
          done
       fi
 
+      # Verbose info: Show what was sent to .../drya-clipboard file
+         f_talk; echo "Clipboard content: "
+         cat $v_clip
+
    elif [ $2 == "." ]; then 
       # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
 
