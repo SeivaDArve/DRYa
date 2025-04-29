@@ -484,7 +484,7 @@ function f_temporary_fx {
 
 
 
-   function f_async {
+   function f_startup_async {
       # When ezGIT exists, run async fx:
       # --- Download updates
       # --- `disown` makes the process run in a sub-shell
@@ -496,14 +496,14 @@ function f_temporary_fx {
          # uDev: Se houver commits para upload, entao fazer tambem upload
 
          # This fx will not send any output, so it will send text to drya-msgs
-            echo -e "DRYa: source-all-drya-files: f_async: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+            echo -e "DRYa: source-all-drya-files: f_startup_async: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
       fi
       
       
       
    } 
 
-   f_async &> /dev/null & disown  # Run last fx
+   f_startup_async &> /dev/null & disown  # Run last fx
 
 
 
@@ -527,6 +527,10 @@ function f_traitsID_toDo {
    # Use: It is used when one machine schedules tasks for other machine to run at it's startup
 
    echo "uDev: Read all traitsID variables, and, if there are toDos, do them" 1>/dev/null
+
+   # uDev: Corrigir `git user.name` destas maquinas:
+      #Seiva_MSI_Lenovo_330
+      #Seiva_MSI_ASUS_15_OLED
 }
 
 function f_backdoor {
