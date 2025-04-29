@@ -78,6 +78,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 
 " Mapear uma tecla de atalho ZX para imitar ':q!' e sair do documento discartando as alteracoes (tal como ZZ faz ao guardar)
    nnoremap ZX :q!<CR>
+   " (O `vim` ja tem uma tecla de atalho para esta fx: `ZQ`, mas esta continua a ser util)
 
 " Inserir texto que equivale a variavel: ${v_REPOS_CENTER}
    nnoremap ZD i ${v_REPOS_CENTER}/<Esc>
@@ -86,6 +87,9 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 " --- usa a variavel global 'g:dryaREPOS'
    nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/bin/boilerplates/bash-fzf-1-boilerplate.sh'<CR>
 
+" uDev: bug fix para esta fx. Introduzir no local do ponteiro, o texto equivalente a data e hora
+   nnoremap ZH :r!date +"%Y-%m-%d"<CR>          
+   "nnoremap ZH :put =strftime("%Y-%m-%d")<CR>
 
 " Mapear `CTRL-o` e `CTRL-O` para que abram novas linhas de texto (abaixo do cursor e acima do cursor, respetivamente) sem entrar em INSERT mode
    " uDev
