@@ -3,14 +3,18 @@
 # Description: file that runs all functions from every app before shell logs out
 
 
-#if [ $traits_OS == "Android" ]; then
-if [ $traits_OS == "linux" ]; then
+if [ $traits_OS == "Android" ]; then
    # Run at termux android at terminal logout
 
-   clear
-   figlet DRYa
+   # Present a brief title
+      clear
+      figlet DRYa
 
-   echo "DRYa: Restoring files and configs before terminal exit"
+   # Create a separation line to distinguish changes easier
+      f_hzl
+
+   # Message to show at last minite
+      echo "DRYa: Restoring files and configs before terminal exit"
 
    # Create a separation line to distinguish changes easier
       f_hzl
@@ -21,3 +25,4 @@ if [ $traits_OS == "linux" ]; then
    # Time to allow the user to read
       sleep 1
 fi
+
