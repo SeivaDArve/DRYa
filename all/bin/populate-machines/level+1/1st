@@ -85,7 +85,7 @@ function f_gr_dependencies {
    syncthing      # To sync files across machines (does not need a cloud, it is decentralized)
    zenity         # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
    vim powerline  # Some vim installations have too little info on the status bar
-   mpv            # Terminal Media Player
+   mpv            # Terminal Media Player (pode precisar da biblioteca 'libxml2': `pkg install libxml2`)
 
 
 # installing `mpv` on fedora
