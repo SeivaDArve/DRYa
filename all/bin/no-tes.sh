@@ -258,6 +258,7 @@ elif [ $1 == "^" ]; then
 
 elif [ $1 == "rn" ]; then
    vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
+
 else
    f_talk; echo 'Option not recognized. try `no`'
 fi
