@@ -31,6 +31,7 @@ function f_talk {
 # Criar ficheiro de historico
    #uDev: Enviar para verbose-lines APENAS quando repo existe, senao, apos algum registo forcado nesse nome, nao sera possivel colonar verbose-lines repo
    #uDev: Criar menu fzf para configurar uma lista de ficheiros com pwd absoluto para onde queremos enviar historico
+   #uDev: enviar antes para omni-log com drya-lib-4
 
    #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
    v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
