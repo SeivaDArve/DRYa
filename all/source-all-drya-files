@@ -9,7 +9,7 @@
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
-function f_escape_time {
+function f_startup_escape_time {
    # Function with the timer of 1 second, to allow the chance of the user to avoid DRYa to start loading
 
    read -s -n 1 -t 1
@@ -547,7 +547,7 @@ function f_backdoor {
 function f_exec { 
    # Running all functions by sequence
 
-   f_escape_time
+   f_startup_escape_time
    f_basic_variables
    f_drya_msgs
    f_internal_drya_files_1_of_2
