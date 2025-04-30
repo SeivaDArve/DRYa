@@ -220,7 +220,8 @@ elif [ $1 == "-" ]; then
       
 elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # Edit file: "To Do list"
-   # File to be edited: $v_file_td (variable set at the top of this script)
+   # --- File to be edited: $v_file_td (variable set at the top of this script)
+   # --- Alias also defined as `td` in 'source-all-drya-files'
 
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
