@@ -88,7 +88,7 @@ function f_help {
    echo 'DRYa: Command `data` with alias `d`'
    echo ' > `data`      # Output 1x Current time'
    echo ' > `data h`    # Help and Instructions'
-   echo ' > `data L`    # Loop Current time with figlet'
+   echo ' > `data r`    # Loop Current time with figlet'
    echo ' > `data l`    # Loop Current time'
    echo ' > `data hr`   # Loop Current hour'
    echo ' > `data v`    # Output 1x variable-like time'
@@ -102,6 +102,17 @@ function f_variables_date {
       v_data=$(date +'%Y-%m-%d_%Hh-%Mm-%Ss')
       v_data="Data-Hora_$v_data"
       echo "$v_data"
+}
+
+function f_variables_date_to_file {
+   # Envia so a data para ficheiro (sem output)
+   # uDev: Enviar output apenas para $v_MSGS
+   # Exemplo: "<2024-06-07>"
+
+   v_date_now=~/.config/h.h/drya/drya-date-now
+
+   v_data=$(date +'<%Y-%m-%d>')
+   echo "$v_data" > $v_date_now
 }
 
 function f_hour_date {
@@ -182,6 +193,7 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L13='13. f     | Data para ficheiro (sem verbose)'
       L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
       L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
       L10='10. r     | Data completa esclarecida com loop com LOGO'
@@ -198,10 +210,11 @@ elif  [ $1 == "." ]; then
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "13. " ]] && f_variables_date_to_file
       [[ $v_list =~ "12. " ]] && f_background_process
       [[ $v_list =~ "11. " ]] && f_complete_date && echo
       [[ $v_list =~ "10. " ]] && f_complete_date_loop_plus_figlet
@@ -259,5 +272,8 @@ elif  [ $1 == "g" ]; then
 elif  [ $1 == "alarm" ]; then
    echo "uDev: quando chegar a hora pretendida, soar alarme"
 
+elif  [ $1 == "f" ]; then
+   # Data para ficheiro, sem verbose output
+   f_variables_date_to_file
 fi
 
