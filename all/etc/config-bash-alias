@@ -516,6 +516,8 @@ alias   A="cd all; ls"
 alias notify="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
 alias nt="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
 
+alias slither="clear; cat ${v_REPOS_CENTER}/wikiD/all/slither; echo; echo"
+
 function nfc {
    # Read and write NFC on termux
       clear
