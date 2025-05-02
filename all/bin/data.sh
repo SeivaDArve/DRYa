@@ -106,13 +106,13 @@ function f_variables_date {
 
 function f_variables_date_to_file {
    # Envia so a data para ficheiro (sem output)
-   # uDev: Enviar output apenas para $v_MSGS
    # Exemplo: "<2024-06-07>"
 
    v_date_now=~/.config/h.h/drya/drya-date-now
 
    v_data=$(date +'<%Y-%m-%d>')
-   echo "$v_data" > $v_date_now
+   echo "$v_data" >  $v_date_now
+   echo -e "\nScript 'data.sh': nova data '$v_data' inserida no ficheiro $v_date_now\n" >> $v_MSGS
 }
 
 function f_hour_date {
