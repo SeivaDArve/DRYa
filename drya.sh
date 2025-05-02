@@ -2634,7 +2634,7 @@ elif [ $1 == "msg" ]; then
    # Read the log file to events (DRYa)
    less $v_MSGS
    
-elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar"] ; then 
+elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then 
    # Fornecendo dois nomes de ficheiros, informa se sao iguais ou tem diferencas
 
    # Se os argumentos $2 e $3 nao foram fornecidos, o programa termina
