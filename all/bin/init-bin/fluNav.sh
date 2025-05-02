@@ -436,7 +436,12 @@ function . {
       echo "To visit a file called 'h' use: \`vim h\`"
 
    else
-      # If argument is given and it is a dir, cd into it, otherwise if it a file, edit it
+      # If argument is given, do the following:
+      #  1. If arg is a directory: `cd`  into it
+      #  2. If arg is a file:      `vim` to edit the file
+      #  3. Also runs a script that fills a file $v_date_now = ~/.config/h.h/drya/drya_date_now that `vim` with '.vimrc' can use to paste into files with the command `Z..`
+
+      f_date_now  # Creates a file with the current date on it
 
       PWD=$(pwd) && \
       BASENAME=$(basename $PWD) && \
