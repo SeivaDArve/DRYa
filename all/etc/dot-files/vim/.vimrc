@@ -81,7 +81,10 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    " (O `vim` ja tem uma tecla de atalho para esta fx: `ZQ`, mas esta continua a ser util)
 
 " Inserir texto que equivale a variavel: ${v_REPOS_CENTER}
-   nnoremap ZD i ${v_REPOS_CENTER}/<Esc>
+   nnoremap ZR i ${v_REPOS_CENTER}/<Esc>
+
+" Inserir o texto que estiver no ficheiro 'drya-date-now'
+   nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
 
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
@@ -93,9 +96,5 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 
 " Mapear `CTRL-o` e `CTRL-O` para que abram novas linhas de texto (abaixo do cursor e acima do cursor, respetivamente) sem entrar em INSERT mode
    " uDev
-
-
-
-
 
 
