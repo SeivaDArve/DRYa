@@ -382,6 +382,10 @@ function lll {
 
 }
 
+# Fast acess for notes (to do list)
+   alias td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
+
+
 alias tc="touch"
 alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tree ."
 

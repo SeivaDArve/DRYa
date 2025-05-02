@@ -439,9 +439,6 @@ function f_internal_drya_files_2_of_2 {
    # Fast menu for calculators
       alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
-   # Fast acess for notes (to do list)
-      alias td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
-
    # To use in scripts (vim $DRYa/all/.../...)
       DRYa="${v_REPOS_CENTER}/DRYa"
    
