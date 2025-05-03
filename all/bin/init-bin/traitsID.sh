@@ -275,7 +275,34 @@ function f_gitconfig_current_machine_name {
    
 }
 
+function f_detect_package_manager {
+   # Deteta qual é o package manager do OS e coloca numa variavel 'v_pkg'
 
+   if command -v apt &>/dev/null; then
+      echo "apt" 
+
+   elif command -v dnf &>/dev/null; then
+      echo "dnf"
+
+   elif command -v yum &>/dev/null; then
+      echo "yum"
+
+   elif command -v pacman &>/dev/null; then
+      echo "pacman"
+
+   elif command -v zypper &>/dev/null; then
+      echo "zypper"
+
+   elif command -v apk &>/dev/null; then
+      echo "apk"
+
+   # uDev: falta `pkg` do termux
+
+   else
+      echo "unknown"
+
+   fi
+} 
 
 function f_exec {
 f_set_file
