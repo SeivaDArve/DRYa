@@ -28,19 +28,22 @@ function f_set_file {
 function trid {
    # This command is actually loaded to the terminal env
 
+   v_file="${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh"
+
    if [ -z $1 ]; then
       # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
-      echo "File re-loaded every startup"
+      echo "DRYa: traitsID: file of found variables (at terminal startup):"
+      echo " > $v_file"
       echo 
       
       # From the file created by traitsID, print at the terminal to help copy/paste
-         cat $v_id_file | fzf
+         cat $v_id_file
 
       #echo "File that overwrittes last file"
       #less .dryarc
 
    elif [ $1 == "." ]; then
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh
+      vim $v_file
 
    fi
 }

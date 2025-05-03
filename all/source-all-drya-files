@@ -518,7 +518,8 @@ function f_temporary_fx {
   
 
    # Sound effect in the end (`disown` makes the process run in a sub-shell)
-      v_test=$(mpv --version) 2>/dev/null
+      v_test=$(type mpv) &>/dev/null
+      
       [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 & disown
 }
 

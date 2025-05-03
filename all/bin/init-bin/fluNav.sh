@@ -441,7 +441,8 @@ function . {
       #  2. If arg is a file:      `vim` to edit the file
       #  3. Also runs a script that fills a file $v_date_now = ~/.config/h.h/drya/drya_date_now that `vim` with '.vimrc' can use to paste into files with the command `Z..`
 
-      f_date_now  # Creates a file with the current date on it
+      # Create a file with the current date on it
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh f
 
       PWD=$(pwd) && \
       BASENAME=$(basename $PWD) && \
