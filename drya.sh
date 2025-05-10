@@ -154,7 +154,7 @@ function f_ascii_icon {
          done
 	}
 
-       f_c6;
+      f_c6;
    f_Hline; echo
              echo
              echo
