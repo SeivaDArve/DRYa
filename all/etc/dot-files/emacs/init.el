@@ -1377,6 +1377,11 @@ This is used only for \"tipo:\""
     (message "\n\nnot ready yet\n\nOnly fx 'temp' is ready"))
 
 
+(defun dv-display-absolute-line-numbers-mode ()
+  (interactive)
+  (display-line-numbers-mode))
+  ;; uDev: Adicionar tambem numeros relativos como no `vim`
+  
 
 
 (defun dv-add-ot-just-text ()

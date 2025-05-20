@@ -1011,13 +1011,12 @@ function f_drya_help {
            echo "   Some other Repo, centralized on DRYa."
            echo
            echo "Developer Intentions (on DRYa):"
-           echo
            echo " > A sub-operative system:"
-           echo "   Cloud-stored-app, that when downloaded"
-           echo "   makes any host-operative-system"
-           echo "   feel like your own."
-           echo "   After using DRYa, upload changes, and"
-           echo "   delete again from the host-system"
+           echo "   Cloud-Stored-APP, that when in sync"
+           echo "   makes any host operative system"
+           echo "   feel like your own. After downloading"
+           echo "   and after used, upload changes and"
+           echo "   delete again from the host system"
            echo
            echo " > WIP Releases:"
            echo "   New versions come in the 'work in progress' model"
@@ -1035,11 +1034,13 @@ function f_drya_help {
            echo "   by tiny pauses in daily life, and made"
            echo "   by the CURRENT MINUTE needed script."
            echo
-           echo " > The most light weight app possible "
+           echo " > Lightweight:"
+           echo "   The most light weight app possible"
            echo "   that each command is performed very fast"
            echo "   a TUI app"
            echo
-           echo " > Works on any device after proper config"
+           echo " > Cross-platform:"
+           echo "   Works on any device after proper config"
            echo "   (by feeding the depedencies)"
            echo "   Windows, Linux, Mac, Android, iPhone,"
            echo "   Raspberry Pi"
@@ -1549,6 +1550,63 @@ function f_drya_help_menu {
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2" echo "linha g" >> ~/.bash_history 
       unset v_list
       history -r
+}
+
+function f_partial_file_reader {
+   # Para ler partes de documentos
+
+   # uDev:
+   #      [ -z $2     ]  # Print todas estas opcoes/help
+   #
+   #      [ $2 == g   ]  # Usa `grep` e as pesquisas apresentam o nunero da linha
+   #                       grep -n <pesquisa> <ficheiro>
+   #
+   #      [ $2 == n   ]  # Imprime so a linha numero X correspondente
+   #                       exemplo: linha 1:
+   #                       sed -n '1p' <nome-do-ficheiro>
+   #
+   #      [ $2 == ^   ]  # Imprime so a linha numero X para cima
+   #                       sed -n '1,76p' <nome-do-ficheiro>
+   #
+   #      [ $2 == v   ]  # Imprime so a linha numero X para baixo
+   #                       exemplo: linha 5 ate 11:
+   #                       sed -n '5,$p' <nome-do-ficheiro>
+   #
+   #      [ $2 == "nn 5 11" ]  # Imprime desde a linha X a Y
+   #                             exemplo: linha 5 ate 11:
+   #                             sed -n '5,11p' <nome-do-ficheiro>
+   #
+   #      [ $2 == "gg <pesquisa> <pesquisa> " ]  # Imprime da linha X a Y, mas em vez de alimentar o numero da linha, alimenta 2 pesquisas de texto
+   #
+   #      [ $2 == "org <grep-ogr-header>" ]      # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
+   #
+   #      [ $2 == "org" "-z $3" ]                # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
+   #                                               exemplo, pesquisar TODOS os headers:
+   #                                               grep -n "^\*" <nome-do-ficheiro>
+
+
+
+   #
+   #   # Set Variables
+   #      v_opti=$2
+   #      v_line=$3
+   #      v_file=$4
+   #
+   #      v_msg_miss_opti="DRYa: You need to provide an option"
+   #      v_msg_miss_line="DRYa: You need to provide a line number"
+   #      v_msg_miss_file="DRYa: You need to provide a file name"
+   #
+   #   # Exit on error:
+   #      [[ -z $2 ]] && echo $v_msg_miss_opti && exit 1
+   #      [[ -z $3 ]] && echo $v_msg_miss_line && exit 1
+   #      [[ -z $4 ]] && echo $v_msg_miss_file && exit 1
+   #
+   #   # Run the command only if all args were given
+   #      [[ -n $3 ]] && sed -n "${v_line}p" $v_file  
+   #
+   #
+
+   echo
 }
 
 # -------------------------------------------
@@ -2639,24 +2697,30 @@ elif [ $1 == "paste" ]; then
    done
 
 elif [ $1 == "clip" ]; then 
-   # Ler/Visitar o ficheiro de clipboard
+   echo "Ler/Visitar o ficheiro de clipboard"
    less $v_clip
 
 elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
-   # Para imprimir apenas a linha X de um documento
+   # Partial File Reader: Para imprimir apenas a linha X de um documento
+   # Exemplo: `D linha <opcao> <numero-da-linha> <nome-do-ficheiro>`
 
-   # Exemplo: `D line <numero-da-linha> <nome-do-ficheiro>`
+   # Save Arguments as variables
+      v_1=$1
+      v_2=$2
+      v_3=$3
+      v_4=$4
+      v_5=$5
+      v_6=$6
+      v_7=$7
+      v_8=$8
+      v_9=$9
 
-   v_line=$2
-   v_file=$3
+   f_partial_file_reader
 
-   # Run the command only if all args were given
-      [[ -z $2 ]] && echo "DRYa: You need to provide a line number"
-      [[ -z $3 ]] && echo "DRYa: You need to provide a file name"
-      [[ -n $3 ]] && sed -n "${v_line}p" $v_file  
-
-   # uDev: `D line v <arg>`  To read only the top    half of the file, strating at the line '<arg>'
-   # uDev: `D line ^ <arg>`  To read only the bottom half of the file, strating at the line '<arg>'
+# Alternativa (uDev)
+#   echo "script: ${BASH_SOURCE[0]}"
+#   echo $0
+#   bash  ${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh 
 
 elif [ $1 == "msg" ]; then 
    # Read the log file to events (DRYa)

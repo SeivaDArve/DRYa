@@ -599,6 +599,8 @@ function f_eletricidade {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L6='6. Resistencias: Esquema de cores'
+
       L5='5. I=P/V   ; I=V/R   ; I=√(P/R)'
       L4='4. R=V/I   ; R=V^2/P ; V=P/I^2'
       L3='3. V=IxR   ; V=P/I   ; V=√(PxR)'
@@ -607,10 +609,11 @@ function f_eletricidade {
 
       L0="SELECT 1: Formulas Eletricidade: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5\n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "6. " ]] && echo "uDev: $L6"
       [[ $v_list =~ "5. " ]] && echo "uDev: $L5"
       [[ $v_list =~ "4. " ]] && echo "uDev: $L4"
       [[ $v_list =~ "3. " ]] && echo "uDev: $L3"
@@ -682,6 +685,7 @@ if [ -z "$*" ]; then
       # Texto do menu
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
 
+         #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
          L20='20. Relogio     | Cronometro | multi datas < ficheiro.txt '
          L19='19. Relogio     | Cronometro'
          L18='18. Relogio     | Calculo entre 2 datas'

@@ -115,6 +115,8 @@ function f_drya_msgs_welcome {
 }  >> $v_MSGS 2>/dev/null
 
 function f_drya_msgs {
+   # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
+
    # Configuring variable for DRYa messages
       v_cfg="$HOME/.config/h.h/drya"  &&  mkdir -p $v_cfg
       v_name="drya-msgs"
@@ -537,12 +539,10 @@ function f_traitsID_toDo {
 function f_backdoor {
    # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
 
-   # Apagar um ficheiro secreto (de teste) em outros dispositivos
-      #v_rm="A"
-      v_rm="scratch-paper"
-
-      cd ~ \
-         && [[ -d ${v_REPOS_CENTER}/$v_rm ]] && rm -rf ${v_REPOS_CENTER}/$v_rm   # && eval 'S 0'
+   # Lista de repos a apagar no startup (incluindo em outros dispositivos)
+      # Repo 1
+         v_rm="scratch-paper"
+         rm -rf ${v_REPOS_CENTER}/$v_rm 2>/dev/null 
 }
 
 function f_exec { 
@@ -588,7 +588,7 @@ function f_exec {
 
    f_temporary_fx 
    f_traitsID_toDo
-   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
+   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    f_verbose_end_file
 }
