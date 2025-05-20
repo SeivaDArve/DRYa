@@ -204,6 +204,7 @@ Historico/Registadora --------------------------------------------"
  > Ver ultimas linhas:  (software: less) : 'U'
 
  > Editar manualmente um input anterior falhado: 'f'
+ > uDev: Para cada calculo, pedir texto descritivo para registar
 
 
 
