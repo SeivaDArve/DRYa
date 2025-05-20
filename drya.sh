@@ -2367,7 +2367,7 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
    f_greet
-   f_talk; echo "uDev: Options to set keyboard"
+   f_talk; echo "Keyboard options"
     
    # Menu Simples
 
@@ -2388,19 +2388,27 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
 
 	  
-      L3='3. DRYa emergency keyboard'
-      L2='2. Set configs for keyboard layout'                                      
-      L1='1. Cancel'
+      L6='6. DRYa emergency keyboard'
 
-      L0="SELECT 1: Menu X: "
+      L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
+      L4='4. Config keyboard layout: Kali   Linux (sess atual)'
+      L3='3. Config keyboard layout: Ubuntu Linux (sess atual)'
+
+      L2='2. Verificar teclado atual' 
+      L1='1. Cancel + Instructions'
+
+      L0="DRYa: Keyboard: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "3. " ]] && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2"
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "6. " ]] && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+      [[ $v_list =~ "5. " ]] && echo "uDev: $L4"
+      [[ $v_list =~ "4. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
+      [[ $v_list =~ "3. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
+      [[ $v_list =~ "2. " ]] && localectl status 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
       unset v_list
     
 

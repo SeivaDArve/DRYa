@@ -1,0 +1,84 @@
+#!/bin/bash
+# Title: DRYa fzf keyboard alternative
+
+# Description: Binding a keyboard key (Ctrl-X) to open a menu in the middle of a terminal prompt to present all available keyboard keys, simbols, numbers, etc and pasting them in the middle of the prompt. Use this when your machine keyboard is sevirery misconfigured
+#              Solução viável com bash + bind + readline
+#              Usado chatGPT como apoio
+
+# Dependencias: fzf
+
+# Use case: 
+#  1. Estás no meio de um comando no bash.
+#  2. Pressionas um atalho (Ctrl-x)
+#  3. Um script é chamado e te mostra letras para escolher (ex: A, B, C).
+#  4. Escolhes uma letra.
+#  5. Essa letra é inserida no prompt, onde o cursor estava.
+
+
+
+
+
+
+# Passo 1: ----------------------------------------------------------------------------------------------------
+
+   # Exemplo de script BASH que CONTEM as letras: (ficheiro em ~/v_ficheiro)
+   #
+   #     #!/bin/bash
+   #     CHOICE=$(printf "a\nb\nc\n" | fzf --prompt="Escolhe uma letra: ")
+   #     echo -n "$CHOICE"#
+   #
+
+   # Ficheiro BASH que CONTEM as letras
+     drya_fzf_kbd_alternative=${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/run-fzf-keyboard.sh
+
+# -------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+# Passo 2: ----------------------------------------------------------------------------------------------------
+
+   function f_insert_letter {
+      # Função para chamar o script BASH e injetar a letra com READLINE
+      
+      #
+      # Info sobre 'readline':
+      #
+      # Readline é o que permite que uses as setas, delete, Ctrl+R (buscar histórico), tab-complete, etc., ao digitar comandos no terminal.
+      #          é quem está "intermediando" o que escreves. Ele mantém:
+      #           > A linha atual       (READLINE_LINE)  | # contém o texto completo da linha que estás a editar
+      #           > A posição do cursor (READLINE_POINT) | # posição do cursor dentro da linha
+      #
+      # A biblioteca Readline permite criar atalhos com bind, associando uma combinação de teclas a uma ação.
+      #
+
+      local v_letter
+      v_letter=$($drya_fzf_kbd_alternative)
+
+      if [[ -n $v_letter ]]; then
+        READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$v_letter${READLINE_LINE:$READLINE_POINT}"
+        ((READLINE_POINT++))
+      fi
+   }
+
+# -------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+# Passo 3: ----------------------------------------------------------------------------------------------------
+
+   # Associar a função a um atalho com comando BIND
+      bind -x '"\C-x":f_insert_letter'
+
+# -------------------------------------------------------------------------------------------------------------
