@@ -32,8 +32,8 @@ function f_resetCor {
 
 alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 
-alias start-termux-gui="vncserver -localhost :1"  # Inicia o servidor VNC no ecra :1
-alias stop-termux-gui="vncserver -kill :1"  # Inicia o servidor VNC no ecra :1
+alias start-termux-gui="vncserver -localhost :1"  # Inicia  o servidor VNC no ecra :1
+alias stop-termux-gui="vncserver -kill :1"        # Termina o servidor VNC no ecra :1
 
 alias timg="termimage"
 
@@ -58,24 +58,12 @@ function wsl {
    fi
 }
 
-
-function f_fzf_raw_link_opener {
-
-   # Navegar para a pasta que contem o backup de bookmarks e também o script que filtra esses bookmarks
-      cd ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/
-      bash ${v_REPOS_CENTER}/omni-log/all/browser-bookmarks/raw-link-opener.sh
-      cd -
-   
-   # Como o script anterior já vai abrir o link que encontrar no browser, entao neste script informamos às proximas fx que nao haverá URL  
-}
-
 function web {
    # dee: T: `web`  ::  D: Fx que abre websites corretamente de acordo com o dispositivo/maquina atual  #HashTag:987657897
    # Simply opening a browser (args may be given)
    # Note: after this fx, some shortcuts will be created also
    
-   # uDev: Usar metodo de desconectar o precesso por completo do terminal atual
-   # uDev: Filtrar os "browser-bookmarks" e fornecer uma opcao para isso
+   # uDev: Usar metodo de desconectar o processo por completo do terminal atual
 
    # Homepage pre-definida
       homePage_name="Duckduckgo.com"
@@ -84,33 +72,87 @@ function web {
    # Reset à variavel
       unset v_URL
 
+
+
+   function f_detetar_browsers_instalados_e_pre_definido {
+      # Faz uma lista de browsers instalados, diz tambem qual é o pre-definido
+     
+      # Listar Browers
+         echo "DRYa: Browsers Instalados:"
+   
+         for i in firefox google-chrome chromium brave opera vivaldi epiphany; do
+           if command -v $i >/dev/null 2>&1; then
+             echo " > $i em: $(command -v $i)"
+           fi
+         done
+
+
+      # Verbose: Informar browser pre-definido
+         v_default=$(xdg-settings get default-web-browser)
+
+         echo
+         echo "DRYa: Browser Pre-Definido:"
+         echo " > $v_default"
+   }
+
+
+
+
+
+   function f_fzf_raw_link_opener {
+      # Navegar para a pasta que contem o backup de bookmarks, depois FILTRA esses bookmarks. "Raw" significa "Extrair so texto dos links, sem os <div> do HTML"
+
+      v_dir=${v_REPOS_CENTER}/omni-log/all/browser-bookmarks
+
+      if [[ -d $v_dir ]]; then
+         cd $v_dir
+         bash $v_dir/raw-link-opener.sh
+         cd -
+      else
+         echo "DRYa: Repo omni-log (que contem os bookmarks) nao esta no sistema"
+      fi
+      
+   }
+
+
+
+
    # Identificar os argumentos que se enviam para esta fx
       if [ -z $1 ]; then 
          # Se nao for dado nenhum argumento, dar o menu: 
    
          # Lista de opcoes
+            L12='12. Pesquisa online (com browser pre-definido + google.com)'
 
-            #L8='8. Saber qual é o browser pre-definido'  # `xdg-settings get default-web-browser`
-            #L7="7. Online Terminal"  # https://www.terminaltemple.com/
-            #L7="Pagina do historico Google
+            L11="11. Experimentar Terminal Online"  
+            L10="10. Experimentar Distros Linux Online" 
+             L9="9.  Pagina do historico Google" 
 
-            L6="6. Ir | Router Config Page"
+             L8='8.  Detetar | Browser pre-definido + Browsers instalados' 
+             L7="7.  Navegar | Router Config Page"
 
-            L5="5. Ir | Google.com"
-            L4="4. Ir | $homePage_name"
-            L3='3. Ir | Seiva Website'
+             L6="6.  Ir | Google.com"
+             L5="5.  Ir | $homePage_name"
+             L4='4.  Ir | Seiva Website'
+             L3='3.  Ir | Seiva Github.com'
 
-            L2='2. Abrir | Bookmarks Guardados '
-            L1='1. Cancel'
+             L2='2.  Abrir | Bookmarks Guardados '
+             L1='1.  Cancel'
 
-         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
+         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n\n$L12" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
 
-         [[ $v_ask =~ "6. " ]] && v_URL="firefox http://192.168.1.1"  # 192.168.0.1 ou 192.168.1.1
-         [[ $v_ask =~ "5. " ]] && v_URL="https://google.com"
-         [[ $v_ask =~ "4. " ]] && v_URL="https://duckduckgo.com"
-         [[ $v_ask =~ "3. " ]] && v_URL="https://seiva.yolasite.com"
-         [[ $v_ask =~ "2. " ]] && f_fzf_raw_link_opener 
-         [[ $v_ask =~ "1. " ]] && echo "Canceled"
+         [[ $v_ask =~ "12. " ]] && read -p "DRYa: Pesquisa web (google): " v_ans && xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
+         [[ $v_ask =~ "11. " ]] && v_URL="https://www.terminaltemple.com"
+         [[ $v_ask =~ "10. " ]] && v_URL="https://distrosea.com/pt"
+         [[ $v_ask =~ "9.  " ]] && v_URL="https://myactivity.google.com"
+         [[ $v_ask =~ "8.  " ]] && f_detetar_browsers_instalados_e_pre_definido 
+         [[ $v_ask =~ "7.  " ]] && v_URL="firefox http://192.168.1.1"  # 192.168.0.1 ou 192.168.1.1  # uDev: firefox pode nao ser o browser pre-definido
+         [[ $v_ask =~ "6.  " ]] && v_URL="https://google.com"
+         [[ $v_ask =~ "5.  " ]] && v_URL="https://duckduckgo.com"
+         [[ $v_ask =~ "4.  " ]] && v_URL="https://seiva.yolasite.com"
+         [[ $v_ask =~ "3.  " ]] && v_URL="https://github.com/SeivaDArve"
+         [[ $v_ask =~ "2.  " ]] && f_fzf_raw_link_opener 
+         [[ $v_ask =~ "1.  " ]] && echo "Canceled"
          
       elif [ $1 == "." ]; then 
          unset v_URL
@@ -132,7 +174,13 @@ function web {
          v_URL="https://www.youtube.com"
 
       elif [ $1 == "bm" ]; then 
+         # Abrir bookmarks guardados
          f_fzf_raw_link_opener
+
+      elif [ $1 == "s" ]; then 
+         # Web Search (browser pre-definido + google.com)
+         read -p "DRYa: Pesquisa web (google): " v_ans
+         xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
 
       else
          echo "DRYa: web: Tem de inserir um link valido"
@@ -161,11 +209,11 @@ function web {
       
       elif [[ $traits_OS == "Linux" ]]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
-         xdg-open $v_URL & 
+         xdg-open $v_URL & disown
 
       elif [[ $traits_OS == "Windows" ]]; then    # Maybe using windows 
          echo "DRYa: A abrir com Windows: $v_URL"
-         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" &
+         "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & disown
 
       else
          echo "DRYa: Erro a abrir o link"
