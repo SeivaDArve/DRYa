@@ -686,7 +686,7 @@ function f_dotFiles_install_termux_properties {
 
    # uDev: Test if it is termux and still allow the user to use both ways
 
-   v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties 
+   v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties.1
    v_file2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
    v_place=~/.termux/
 
@@ -695,16 +695,21 @@ function f_dotFiles_install_termux_properties {
            echo " > Termux Colors + Termux properties"
            echo
    f_talk; echo "STEP 1: Copy:"
-           echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties"
+           echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties.1"
+           echo " > To:     ~/.termux/color.properties"
+           echo
+   f_talk; echo "STEP 2: Copy:"
            echo " > File 2: .../DRYa/all/etc/dot-files/termux/termux.properties"
            echo " > To:     ~/.termux/"
+           echo
 
    v_txt="Install termux configs" && f_anyK
    
-   cp $v_file1 $v_place && f_talk && echo "File 1: Done! "
-   cp $v_file2 $v_place && f_talk && echo "File 2: Done! "
+   echo
 
-   echo "Done! (Restart the terminal is needed)"
+   cp $v_file1 $v_place/color.properties && f_talk && echo "Step 1: Done! "
+   cp $v_file2 $v_place                  && f_talk && echo 'Step 2: Done! (Restart the terminal or `termux-reload-setting`)'
+   echo
 }
 
 function f_dotFiles_install_tm_tmux {
