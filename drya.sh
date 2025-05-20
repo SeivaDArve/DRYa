@@ -2648,6 +2648,10 @@ elif [ $1 == "lib" ]; then
 elif [ $1 == "copy" ]; then 
    #Using fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
 
+   # uDev: Options to addd to `D copy`:
+   #        > `Copy + to clip`: Add more items to clipboard (do not overwrite current clipboard items)
+   #        > `Steath Copy`:    Call repo 'scratch-paper' if it does not exist, then paste all the items in the clioboard, then delete the repo again
+
    if [ -z $2 ]; then 
       # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
 
