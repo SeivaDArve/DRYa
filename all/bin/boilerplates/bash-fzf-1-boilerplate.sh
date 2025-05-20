@@ -14,18 +14,19 @@
 
       L0="SELECT 1: Menu X: "
       
+   # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
-
-   # Perceber qual foi a escolha da lista
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "4. " ]] && f_pin && echo "uDev: $L4"
       [[ $v_list =~ "3. " ]] && echo "uDev: $L3" && history -s "$L3c" 
       [[ $v_list =~ "2. " ]] && echo "uDev: $L2" && sleep 0.1 
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
-    
+      
+   # uDev: Corrigir a atualizacao do ficheiro que guarda o historico de comandos executados pelo prompt
+      #echo "comando" >> ~/.bash_history && history -n
+      #history -s "echo 'Olá, mundo!'"
 
 
