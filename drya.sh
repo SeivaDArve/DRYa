@@ -333,6 +333,10 @@ function f_clone_repos {
          echo "cloning: garpho"; git clone https://github.com/SeivaDArve/garpho.git
       }
 
+      function f_clone_typescript {
+         echo "cloning: garpho"; git clone https://github.com/SeivaDArve/typescript-berg-house.git
+      }
+
       function f_clone_repos_public_repos {
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
@@ -436,6 +440,10 @@ function f_clone_repos {
 
       ga | garpho)
          f_clone_garpho
+      ;;
+
+      ts | typescript | typescript-berg-house)
+         f_clone_typescript
       ;;
 
       setup-internal-dir)          
@@ -1801,33 +1809,45 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
    f_greet
 
    if [ -z "$2" ]; then
-      # If nothing was specified to clone
-
+      # If nothing was specified to clone, give some instructions
       f_clone_info
 
    elif [ $2 == "." ]; then
       # Open fzf to help clone by the correct name
-
       f_talk; echo "uDev: fzf will list all public repos to clone"
 
    elif [ $2 == "try" ]; then
-      # When trying to clone those repos not predicted and already manipulated by drya.sh (this script)
+      # To clone repos when we are not exactly sure how it's name is written 
+      #                when shortcuts were not already set or predictrd
 
-      # uDev: It is possible to clone repos with case insensitivity, so, the real repo name from the website must be read and use that name instead of our prompt that is case insensitive
+      if [ -z $3 ]; then
+         # Using menu fzf
+         echo "uDev: It is less easy to clone repos with case insensitivity, so fzf could filter github public repo names"
 
-      f_talk; echo -e "trying to clone: $3 \n"; 
+      else
+         # Avoiding menu fzf and trying to type manually
 
-      f_init_clone_repos  
+         # Verbose:
+            f_talk; echo -e "DRYa: Trying to clone: $3 \n"; 
 
-      git clone https://github.com/SeivaDArve/$3.git
+         # Save current PWD + Navigate to Repos Center + Call f_stroken
+            f_init_clone_repos 
+
+         # Actually try to clone
+            git clone https://github.com/SeivaDArve/$3.git
+      fi
 
    else  
       # Clone pre-defined repositories, without menu fzf
 
-      v_arg2=$2
+      # Saving Terminal argument into internal variable
+         v_arg2=$2
 
-      f_init_clone_repos 
-      f_clone_repos 
+      # Save current PWD + Navigate to Repos Center + Call f_stroken
+         f_init_clone_repos 
+
+      # Actually clone known repos. (In case repo is not recognized, it is also mentioned)
+         f_clone_repos 
    fi
 
 
