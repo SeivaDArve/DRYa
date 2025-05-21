@@ -64,7 +64,7 @@ function wsl {
 # Shortcuts for fx `web`
    # dee: HashTag:987657897
    alias siigo="eval web siigo"
-   alias gpt="eval web gpt"
+   alias gpt="eval web gpt & disown"
    alias lojas="eval web lojas"
    alias yt="eval web yt"
    alias ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"

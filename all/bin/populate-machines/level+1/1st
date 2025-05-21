@@ -86,6 +86,7 @@ function f_gr_dependencies {
    zenity         # Script that prompts the user for info using GUI windows and then returns to the CLI with the array of answers given by clicks
    vim powerline  # Some vim installations have too little info on the status bar
    mpv            # Terminal Media Player (pode precisar da biblioteca 'libxml2': `pkg install libxml2`)
+   nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
 
 
 # installing `mpv` on fedora
