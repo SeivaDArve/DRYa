@@ -1825,3 +1825,7 @@ This is used only for \"tipo:\""
    (setq v_km        (concat (read-string "Quantos KM marcava o painel?: ") " Km;"))
    (setq v_dia       (read-string "Que dia foi? (Em Branco = Hoje): "))
    (insert "Gazol: " v-time " " v_litros " " v_posto " " v_preco " " v_km " " v_tipo_comb " " v_preco-pr-litro " " v_dia))
+
+
+
+(message "DRYa: init.el: File ended loading")
