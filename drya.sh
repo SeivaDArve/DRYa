@@ -185,9 +185,12 @@ function f_calcular_tempo_decorrido_apos_data {
       #STARTINGDATE="1992-04-01"  # Variavel que é preciso alimentar a este script
 
    # Converter a data de aniversário para um timestamp
+   # Nota: [ -d, --date=STRING ] display time described by STRING, not 'now'
+   # Nota: [ %s ]                seconds since the Epoch (1970-01-01 00:00 UTC)
       BIRTH_TIMESTAMP=$(date -d "$STARTINGDATE" +%s)
 
    # Obter o timestamp atual
+   # Nota: [ %s ] seconds since the Epoch (1970-01-01 00:00 UTC)
       CURRENT_TIMESTAMP=$(date +%s)
 
    # Calcular a diferença em segundos
@@ -218,37 +221,41 @@ function f_clone_info {
    # > Tell how to clone DRYa
    # > List Repositories (public and private)
    # > Automatically redirects Termux to github.com
+   
+   v_clone_drya='git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa'
+   v_github_seiva='https://github.com/SeivaDArve?tab=repositories'
 
    f_talk; echo "Must specify a repository to clone"
            echo
            echo " To list all public repositories"
-           echo "  > '$ drya clone --list-public' or "
-           echo "  > '$ drya clone p' "
+           echo '  > `drya clone --list-public` '
+           echo '     or'
+           echo '  > `drya clone p`'
            echo 
            echo " To list all private repositories"
-           echo "  > '$ drya clone --list-private' or"
-           echo "  > '$ drya clone P'"
+           echo '  > `drya clone --list-private`'
+           echo '     or'
+           echo '  > `drya clone P`'
            echo
-           echo " To clone DRYa:  "
-           echo "  > git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa"
+   f_talk; echo " To clone DRYa:  "
+           echo "  > $v_clone_drya" 
+           printf "$v_clone_drya" | curl -F-=\<- qrenco.de/
            echo
-           echo " Webpage with all repositories:"
-           echo "  > https://github.com/SeivaDArve?tab=repositories"
+   f_talk; echo "Visit github.com Webpage with all Seiva D'Arve Repositories:"
+           echo "  > $v_github_seiva"
+           echo '  > uDev: add command: `D web github all`'
+           printf "$v_github_seiva" | curl -F-=\<- qrenco.de/
            echo
-
-   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
-      v_txt="Go: https://github.com/SeivaDArve?tab=repositories"
-      f_anyK
-      echo
 
    f_horizline
    echo " Note: So far, drya can open this link only with Termux"
    echo " > uDev: No other browser found"
    echo
-   echo "Opening URL with Termux (terminal)"
-   
-   v_link="https://github.com/SeivaDArve?tab=repositories"
-   termux-open-url $v_link
+
+   # uDev: Add menu em para estas opcoes (em vez de ser obrigatorio para o utilizador)
+      #echo "Opening URL with Termux (terminal)"
+      #v_link="https://github.com/SeivaDArve?tab=repositories"
+      #termux-open-url $v_link
 }
 
 function f_init_clone_repos {
@@ -494,7 +501,7 @@ function f_dotFiles_install_git_set_machine_name {
          # If name is empty, tell it very clearly:
             [[ -z $v_current_name ]] && v_current_name="(empty)"
 
-            f_talk; echo "Current git name (@ host machine) is:"
+            f_talk; echo "Current git name (@host machine) is:"
                  echo " > $v_current_name"
                  echo
    }
@@ -686,6 +693,7 @@ function f_dotFiles_install_termux_properties {
 
    # uDev: Test if it is termux and still allow the user to use both ways
 
+   v_orig1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/
    v_file1=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/colors.properties.1
    v_file2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
    v_place=~/.termux/
@@ -695,7 +703,7 @@ function f_dotFiles_install_termux_properties {
            echo " > Termux Colors + Termux properties"
            echo
    f_talk; echo "STEP 1: Copy:"
-           echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties.1"
+           echo " > File 1: .../DRYa/all/etc/dot-files/termux/colors.properties\*"
            echo " > To:     ~/.termux/color.properties"
            echo
    f_talk; echo "STEP 2: Copy:"
@@ -703,13 +711,25 @@ function f_dotFiles_install_termux_properties {
            echo " > To:     ~/.termux/"
            echo
 
-   v_txt="Install termux configs" && f_anyK
-   
+   v_txt="(Step 1, 2) Install termux configs" && f_anyK
    echo
 
-   cp $v_file1 $v_place/color.properties && f_talk && echo "Step 1: Done! "
-   cp $v_file2 $v_place                  && f_talk && echo 'Step 2: Done! (Restart the terminal or `termux-reload-setting`)'
-   echo
+   # STEP 1: 
+      # Prompt de `fzf` para escolher o perfil de cores
+         L0="DRYa: Qual ficheiro 'color.properties' quer usar? (CTRL-C para saltar passo)"
+         
+      # Ordem de Saida das opcoes durante run-time
+         unset v_list
+         v_list=$(cd $v_orig1 && ls colors* | fzf --pointer=">" --cycle --prompt="$L0")
+
+      # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+         [[ -n $v_list ]] && cp $v_orig1/$v_list $v_place/color.properties && f_talk && echo "Step 1: Done! (Copiado: $v_list)"
+
+
+
+   # STEP 2: 
+      cp $v_file2 $v_place && f_talk && echo 'Step 2: Done! (Restart the terminal or `termux-reload-setting`)'
+      echo
 }
 
 function f_dotFiles_install_tm_tmux {
@@ -814,7 +834,7 @@ function f_menu_internet_network_ip_options {
       L6='6. Print  | javascript tricks (for browser console)'
       L5='5. Menu   | `web` (navegar na internet)'
 
-      L4='4. Ver    | User info (saved @ host system)'
+      L4='4. Ver    | User info (saved @host system)'
       L3='3. Assign | New random IP'                                      
       L2='2. Ver    | IP publico e local'                                      
    
@@ -1220,7 +1240,7 @@ function f_menu_install_dot_files {
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
    #L10="10. stroken"  # It is part of .netrc         
 
-    L11="11. | termux  | termux.properties"
+    L11="11. | termux  | termux.properties + colors.termux"
     L10='10. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
      L9="9.  | tmux    | .tmux.conf"
      L8="8.  | bash    | .bash_logout"
@@ -1255,7 +1275,7 @@ function f_menu_install_dot_files {
 }
 
 function f_dot_files_menu_edit_host_files_termux_properties {
-   #Mangage ./termux at Host'
+   # Mangage ./termux @Host (at the machine, not at the repo)
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -1264,7 +1284,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
       L2='2. Manipulate | Termux Properties as menu (uDev)'
       L1='1. Cancel'
 
-      L0="SELECT 1: Edit @ Host files: "
+      L0="SELECT 1: Edit @Host files: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -1280,7 +1300,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
 }
 
 function f_dot_files_menu_edit_host_files {
-   # Edit dot files only @ host system
+   # Edit dot files only @host system
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -1288,12 +1308,9 @@ function f_dot_files_menu_edit_host_files {
       L2='2. Menu | Termux'                                      
       L1='1. Cancel'
 
-      L0="SELECT 1: Edit @ Host files: "
+      L0="DRYa: Edit @Host files: "
       
       v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
-
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
@@ -1329,8 +1346,8 @@ function f_dot_files_menu {
        #L8="8.  View | Dependencies Checklist"
        L8="8.  View | 1st Packages"
 
-       L7='7.  Edit | Installed files   | only @ Host'
-       L6="6.  Edit | Centralized files | only @ DRYa"
+       L7='7.  Edit | Installed files   | only @Host'
+       L6="6.  Edit | Centralized files | only @DRYa"
        L5='5.  Edit | Centralized > then > Install'
 
        L4="4.  Menu | Uninstall |"
@@ -1402,6 +1419,7 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Record mouse and keyboard activity
          # L12='12. criar links de imagens com suport github (partilhar fotos ou videos)
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
+         # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
          L19='19. Script | Datas (menu)'
          L18='18. Script | Youtube download (with `yt-dlp`)'
@@ -2731,10 +2749,14 @@ elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then
 #   echo $0
 #   bash  ${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh 
 
-elif [ $1 == "msg" ]; then 
-   # Read the log file to events (DRYa)
+elif [ $1 == "dmsg" ]; then 
+   # Read the log file to events (drya-messages)
    less $v_MSGS
    
+elif [ $1 == "call" ]; then 
+   # Opcoes para chamadas (usa `termux-telephony-call` da Termux:API)
+   echo "uDev: Criar reencaminhamento de chamadas e tambem retirar esses reencaminhamentos"
+
 elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then 
    # Fornecendo dois nomes de ficheiros, informa se sao iguais ou tem diferencas
 

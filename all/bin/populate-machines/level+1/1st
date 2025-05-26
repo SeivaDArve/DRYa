@@ -17,7 +17,17 @@
       # uDev: Call this file and execute one group of instalations. Example: f_gr_soft_DRYa_dependencies
 
 
-function f_gr_soft_DRYa_dependencies {
+function f_gr_1_installing_terminal {
+   # Para DRYa poder funcionar, primeiro precisa de terminal
+
+   # uDev: 
+   #        windows:        Instrucoes/Script para Instalar WLS2 + Ubuntu
+   #        Android/iPhone: Instrucoes/Links para instalar Termux + Termux:API
+
+   echo "uDev: Instalar terminal Base"
+}
+
+function f_gr_2_soft_DRYa_dependencies {
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
 
    # Basic dependencies for Default DRYa usage
@@ -34,6 +44,7 @@ function f_gr_soft_DRYa_dependencies {
       bc             \  # Best Calculator. "DRYa" needs it to use `D clc`
       jp2a           \  # Convert jpg images yo ascii
       imagemagick    \  # Can use the command `concert img.png img.jpg` and converts images
+      emacs          \  # Poderoso editor de texto e itrepretador de eLisp 
       neofetch
 
    # Figlet command
@@ -134,7 +145,7 @@ function f_gr_dependencies {
 
 
 
-# List of usefull apps (at WSL2)
+function f_list_of_usefull_apps_at_WSL2 {
    
    wslview {
       # Binary to open files directly from WSL (windows terminal) like .jpg or .xlsx
@@ -144,6 +155,7 @@ function f_gr_dependencies {
       # Example: 
          wslview /mnt/c/Repositories/Software-resources/all/icon.png 
    }
+}
 
 # For termux, may be needed:
    # uDev: Put these on wikiD

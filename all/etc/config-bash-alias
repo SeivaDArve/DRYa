@@ -70,6 +70,8 @@ function wsl {
    alias ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
    alias whatsapp="xdg-open https://web.whatsapp.com"
 
+# Para Javascript
+   alias node="node -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/node/.drya.node.rc"
 
 
 #alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
@@ -196,6 +198,7 @@ alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a 
 alias RM="rm -rf"
 
 alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
+ #uDev: `mk ..` to go to last created dir
 function Mk {
 
    if [[ -z $* ]]; then
@@ -266,6 +269,8 @@ function lll {
 
 
 }
+
+alias sql="sqlite3"
 
 # Fast acess for notes (to do list)
    alias td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"

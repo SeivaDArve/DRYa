@@ -10,6 +10,7 @@
 # uDev: Detect Wifi connection name
 # uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
 # uDev: Set windows time and date automaticaly with batch scripts
+# uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 
 function f_set_file {
    # File that has a copy of all variables sent to environment

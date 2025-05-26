@@ -1,0 +1,13 @@
+const repl = require('repl');
+repl.start({ prompt: '> ' });
+console.clear
+console.log('DRYa: Bem-vindo ao REPL dentro do Node.js');
+console.log(' > REPL: Read-Eval-Print-Loop');
+
+function ss(...args) {
+   console.log("ss", ...args)
+}
+
+global.ola = () => console.log('DRYa. Olá do RC!');
+
+

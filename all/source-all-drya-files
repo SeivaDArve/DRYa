@@ -480,7 +480,7 @@ function f_verbose_end_file {
 }
 
 function f_temporary_fx {
-   # Temporary fx to use the principle of GOD "Indra". The web of events of life, where the things thar are needes, bump constantly into your eyes until you dont need
+   # Temporary fx to use the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
 
 
 
@@ -488,7 +488,7 @@ function f_temporary_fx {
 
    function f_startup_async {
       # When ezGIT exists, run async fx:
-      # --- Download updates
+      # --- Download repository updates
       # --- `disown` makes the process run in a sub-shell
 
       if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
@@ -517,12 +517,24 @@ function f_temporary_fx {
 
    # uDev: if drya-mail-box is ready, use it here!  
    #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
+   #
+   #       instead of `mpv` to make sounds, use termux-toast-message instead
   
 
    # Sound effect in the end (`disown` makes the process run in a sub-shell)
       v_test=$(type mpv) &>/dev/null
       
       [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 & disown
+}
+
+function f_temporary_fx_2 {
+   # Forçar a aprendizagemnde Javascript ou Python ou SQLite
+   v_opt=$(shuf -i 1-4 -n 1)
+
+   [[ $v_opt == "1" ]] && node    # Foi criado um alias em 'config-bash-alias'
+   [[ $v_opt == "2" ]] && python
+   [[ $v_opt == "3" ]] && sqlite3
+   [[ $v_opt == "4" ]] && echo "bash" 1>/dev/null
 }
 
 function f_traitsID_toDo {
@@ -591,6 +603,7 @@ function f_exec {
    f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    f_verbose_end_file
+   f_temporary_fx_2
 }
 f_exec
 

@@ -88,7 +88,7 @@
 
 
 # ----------------------------------------------------------------------------------------
-# -- Above: Set up this library itself --+-- Below: functions not to be externally called
+# -- Above: Set up this library itself --+-- Below: functions to be internally called
 # ----------------------------------------------------------------------------------------
 
 
@@ -198,7 +198,7 @@ function f_git_commit {
 
 
 # -----------------------------------------------------------------------------------------------------------------
-# -- Above: functions not to be externally called  --+--  Below: functions to be called externally by main scripts
+# -- Above: functions to be internally called  --+--  Below: functions to be called externally by main scripts
 # -----------------------------------------------------------------------------------------------------------------
 
 
@@ -266,6 +266,9 @@ function f_lib4_git_pull {
 
    f_talk; echo 'A fazer download `git pull --no-edit`'
    git pull --no-edit
+
+   # uDev: Se a fx anterior der erro, questionar o utilizador se quer continuar a edtar o ficheiro em modo offline com a ultima versao do ficheiro possivelmente desatualizada
+
    echo
 }
 
