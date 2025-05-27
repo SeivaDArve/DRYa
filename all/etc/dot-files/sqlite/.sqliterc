@@ -1,0 +1,6 @@
+-- Titulo: Ficheiro de init para sqlite3
+-- Description: No sqlite interativo, podemos querer ver todo o conteudo de uma tabela. Por pre-definicao as tabelas imprimem o output sem mencionar o nome da coluna. O comando `.header on` resolvia esse problema, mas temos de inserir esse comando de cada vez que abrirmos uma databese. Para eliminar esse processo repetitivo, colocamos essa definicao neste documento e fazemos o sqlite interativo ler este ficheiro. é lido a cada vez que o sql abrir (init)
+-- Use: Pode chamar este ficheiro diretamento no prompt interativo do sqlite ou entao, colocar em ~/sqliterc
+
+.headers on   
+.mode column
