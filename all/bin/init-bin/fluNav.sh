@@ -575,7 +575,7 @@ function f_menu_fzf_S {
        L2='2.  Reload  | Terminal'
        L1='1.  Cancel'
 
-      L0="SELECIONE (1 ou +) ficheiros para editar: "
+      L0="fluNav: S: SELECT (1 ou +) ficheiros para editar: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --prompt="$L0")
 
@@ -931,7 +931,7 @@ function V {
    
       # Help and Usage (internal instructions):
          # Use 0:  `V h      `    # Help and instructions
-         # Use 1:  `V        `    # Complains that there is no destination specified
+         # Use 1:  `V        `    # Present a Menu
          # Use 2:  `V drya   `    # Travels to favorites  # uDev: to be absorved by the 'function . { }'
          # Use 3:  `V p <dir>`    # Create new dir and travel to it
          # Use 4:  `V r <dir>`    # finds and lists a dir to remove (use -R to confirm yout choice)
@@ -950,8 +950,24 @@ function V {
 
    # Implementation of Use 1:
       if [ -z $1 ]; then 
-         f_greet
-         f_talk; echo 'flunav: V: No arguments. Choose some place to go to with `V .`'
+         # Se nao for dado nenhum comando, abre o menu principal
+
+         # Lista de opcoes para o menu `fzf`
+            Lz1='Save '; Lz2='V'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+            L2='2. Apagar historico de pastas apresentadas por `V ...` (uDev)'                                      
+            L1='1. Cancel'
+
+            L0="fluNav: V: Menu de opcoes de Nav para Pastas: "
+            
+         # Ordem de Saida das opcoes durante run-time
+            v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+
+         # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+            [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+            [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
+            [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
+            unset v_list
 
    # Implementation of Use 0:
       elif [ $1 == "h" ] || [ $1 == "help" ] || [ $1 == "?" ]; then
@@ -1125,14 +1141,31 @@ function V {
 
    # Implementation of Use 7:
       elif [ $1 == ".." ]; then
-         # Navigate to last dir in the history list
+         if [ -z $2 ]; then
+            # If no 'number' is given as 2nd arg: Navigate to last dir in the history list
 
-         # Refresh the variable that stores the path
-            f_refresh_V_hist_file  
-            f_remove_duplicated_lines_V_history_file
+            # Refresh the variable that stores the path
+               f_refresh_V_hist_file  
+               f_remove_duplicated_lines_V_history_file
 
-         v_go=$(tail -n 1 $v_fluNav_V_hist_file)
-         cd $v_go
+            v_go=$(tail -n 1 $v_fluNav_V_hist_file)
+            cd $v_go
+
+         else
+            # If 'number' is given as 2nd arg: Filter history file and Navigate to corresponding line (from most recent to oldest)
+            # HISTORY FILE will not be updated on purpouse
+
+            # Testar se o arg dado foi um numero
+               if [[ "$2" =~ ^-?[0-9]+$ ]]; then
+                  echo "É um número inteiro" 1>/dev/null  # Debug
+                  f_remove_duplicated_lines_V_history_file
+                  v_line=$(tail -n $2 $v_fluNav_V_hist_file | head -n 1 )
+                  f_talk; echo "V: Navigating to: $v_line"
+                  cd $v_line
+               else
+                  echo "Arg: 2: Tem de ser número inteiro (para navegar para a linha de historico de pastas correspondente"
+               fi
+         fi
 
    # Implementation of Use 8:
       elif [ $1 == "..." ]; then
