@@ -3,32 +3,28 @@
 # Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 
+
+
 # Verbose file (variables and outputs)
    v_title="config-bash-alias"  # Name of this file
    echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
    echo "      > $v_title after internal software is loaded, I load the alias and extras" >> $v_MSGS
 
 
-function f_cor1 { 
-   tput setaf 5
-}
 
-function f_cor2 { 
-   tput setaf 6 
-}
-function f_cor3 { 
-   tput setaf 8 
-}
-function f_resetCor { 
-   tput sgr0 
-}
+
+# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+
+   v_greet="DRYa"
+   v_talk="DRYa: "
+
 
 
 # Set the keybindings to vi/vim mode:
    #set -o vi
 
 
-# uDev: fx para verificar se existem novos bookmark no browser
 
 alias foto="am start -a android.media.action.IMAGE_CAPTURE"
 
@@ -270,7 +266,26 @@ function lll {
 
 }
 
-alias sql="sqlite3"
+# Options for SQLite
+   # Path to the init file
+      v_init_sql=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/sqlite/init.sql
+
+   # Open any database file with the init file configurations
+      alias sql="sqlite3"
+
+   # Para cada database fornecida como arg, mostrar todas as suas tabelas em output
+      function sql-t {
+         f_talk; echo "Mencionando todas as tabelas presentes em cada database fornecida como argumento"
+                 echo
+
+         for i in $@
+         do 
+            sqlite3 $i ".tables"
+            echo
+         done 
+
+      }
+   
 
 # Fast acess for notes (to do list)
    alias td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
