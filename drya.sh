@@ -828,6 +828,8 @@ function f_list_ip_public_n_local {
 }
 
 function f_menu_internet_network_ip_options {
+   # uDev: criar fx para verificar se existem novos bookmark no browser
+
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
@@ -2569,6 +2571,12 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
    # uDev: Test fist if repo exists
    
    cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
+
+elif [ $1 == "omni" ] || [ $1 == "om" ]; then 
+   f_talk; echo "Opening: omni-log.org"
+
+   # uDev: Test fist if repo exists
+   cd ${v_REPOS_CENTER}/omni-log/ && emacs omni-log.org
 
 elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
    # Several ways to exit the terminal
