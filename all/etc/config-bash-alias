@@ -838,6 +838,8 @@ function hist {
 
 function arco {
    clear
+
+   if [ -z $1 ]; then
    echo '
 |-----------------------+---------------------------|
 | Arco-Iris             | Significado               |
@@ -857,5 +859,32 @@ function arco {
 | Codigo 115            | Vigilante em Apuros       |
 |-----------------------+---------------------------|
 '
+
+elif [ $1 = "verde" ]; then
+   clear
+   echo "Arco-iris [verde] : [Evacuacao]"
+
+elif [ $1 = "evacuacao" ]; then
+   clear
+   echo "Arco iris evacuacao: Verde"
+
+
+elif [ $1 = "vermelho" ]; then
+   clear
+   echo "Arco iris verde: Incendio"
+
+elif [ $1 = "incendio" ]; then
+   clear
+   echo "Arco iris incendio: vermelho"
+
+elif [ $1 = "verde" ]; then
+   clear
+   echo "Arco iris verde: Laranja"
+
+elif [ $1 = "explosao" ]; then
+   clear
+   echo "Arco iris verde: Laranja"
+
+fi
 }
 
