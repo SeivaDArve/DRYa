@@ -836,10 +836,7 @@ function hist {
 # Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
 
-function arco {
-   clear
-
-   if [ -z $1 ]; then
+function f_arco {
    echo '
 |-----------------------+---------------------------|
 | Arco-Iris             | Significado               |
@@ -859,35 +856,16 @@ function arco {
 | Codigo 115            | Vigilante em Apuros       |
 |-----------------------+---------------------------|
 '
+}
 
-elif [ $1 = "verde" ]; then
+function arco {
    clear
-   echo "Arco-iris [verde] : [Evacuacao]"
 
-elif [ $1 = "evacuacao" ]; then
-   clear
-   echo "Arco iris evacuacao: Verde"
+   if [ -z $1 ]; then
+      f_arco
 
-
-elif [ $1 = "vermelho" ]; then
-   clear
-   echo "Arco iris vermelho: Incendio"
-
-elif [ $1 = "incendio" ]; then
-   clear
-   echo "Arco iris incendio: vermelho"
-
-elif [ $1 = "verde" ]; then
-   clear
-   echo "Arco iris verde: Laranja"
-
-elif [ $1 = "explosao" ]; then
-   clear
-   echo "Arco iris explosao: laranja"
-
-elif [ $1 = "laranja" ]; then
-   clear
-   echo "Arco iris laranja: explosao "
-fi
+   else
+      f_arco | grep -i "$1"
+   fi
 }
 
