@@ -1057,7 +1057,7 @@ function V {
          cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls || f_error_cd
 
       elif [ $1 == "ts" ] || [ $1 == "typescript" ] || [ $1 == "typescript-berg-house" ]; then
-         cd ${v_REPOS_CENTER}/typescript-berg-house 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/typescript-berg-house 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "tmp" ]; then
