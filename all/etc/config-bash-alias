@@ -835,3 +835,27 @@ function hist {
 
 # Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
+
+function arco {
+   clear
+   echo '
+|-----------------------+---------------------------|
+| Arco-Iris             | Significado               |
+|-----------------------+---------------------------|
+| Branco                | Silêncio nas comunicações |
+| Laranja               | Explosão                  |
+| Vermelho (Alfa India) | Fogo                      |
+| Amarelo               | Bomba                     |
+| Roxo                  | Terrorismo                |
+| Castanho              | Gás                       |
+| Cinza                 | Derrame                   |
+| Preto                 | Objeto Suspeito           |
+| Magenta               | Tsunami                   |
+| Turquesa              | Inoperacionalidade do PS  |
+| Azul                  | Sismo                     |
+| Verde                 | Evacuacao                 |
+| Codigo 115            | Vigilante em Apuros       |
+|-----------------------+---------------------------|
+'
+}
+
