@@ -871,7 +871,7 @@ elif [ $1 = "evacuacao" ]; then
 
 elif [ $1 = "vermelho" ]; then
    clear
-   echo "Arco iris verde: Incendio"
+   echo "Arco iris vermelho: Incendio"
 
 elif [ $1 = "incendio" ]; then
    clear
@@ -883,8 +883,11 @@ elif [ $1 = "verde" ]; then
 
 elif [ $1 = "explosao" ]; then
    clear
-   echo "Arco iris verde: Laranja"
+   echo "Arco iris explosao: laranja"
 
+elif [ $1 = "laranja" ]; then
+   clear
+   echo "Arco iris laranja: explosao "
 fi
 }
 
