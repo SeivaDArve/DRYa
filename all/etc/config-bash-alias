@@ -845,6 +845,7 @@ function arco {
 | Branco                | Silêncio nas comunicações |
 | Laranja               | Explosão                  |
 | Vermelho (Alfa India) | Fogo                      |
+| Verde                 | Evacuacao e pre-evacuacao |
 | Amarelo               | Bomba                     |
 | Roxo                  | Terrorismo                |
 | Castanho              | Gás                       |
@@ -853,7 +854,6 @@ function arco {
 | Magenta               | Tsunami                   |
 | Turquesa              | Inoperacionalidade do PS  |
 | Azul                  | Sismo                     |
-| Verde                 | Evacuacao                 |
 | Codigo 115            | Vigilante em Apuros       |
 |-----------------------+---------------------------|
 '
