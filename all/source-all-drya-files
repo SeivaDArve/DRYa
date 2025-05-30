@@ -602,7 +602,7 @@ function f_exec {
 
    #f_temporary_fx 
    f_traitsID_toDo
-   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
+   #f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    f_verbose_end_file
    #f_temporary_fx_2
