@@ -3,6 +3,10 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
+: '
+  Multi comment example
+'
+
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
@@ -347,7 +351,8 @@ function f_clone_repos {
       function f_clone_repos_public_repos {
          # This function scrapes the webpage of Seiva D'arve repositories on GitHub and lists all that is found
 
-         echo "List of public repositories from Seiva D'Arve from GitHub.com:"
+         echo "Listing public repositories" 
+         echo " (from Seiva D'Arve at GitHub.com)"
             
 
          # Saving the list of public repos into a var called $v_list
@@ -364,11 +369,8 @@ function f_clone_repos {
       }
 
       function f_clone_repos_private_repos {
-         echo "# uDev: listing of all repositories including private ones is not ready yet"
-         : '
-           Multi comment example
-           :D
-         '
+         echo "uDev: listing of all repositories"
+         echo " (including private ones)"
 
          : '
          # Example on: How to curl a list of private repositories at github if they are invisible and you need to login:
@@ -377,10 +379,6 @@ function f_clone_repos {
                -X GET \
                https://mygithuburl.com/user/repos?visibility=private
          '
-      }
-
-      function f_clone_repos_setup_internal_dir {
-         echo "uDev"  #uDev: create a dir at internal storage named Repositories to then be moved to external storage by the file explorer. There are no write permissions for termux at SD Card, but can read bash from it... in the other hand, File explorers can Write/move stuff into SD Card
       }
    }
 
@@ -393,11 +391,12 @@ function f_clone_repos {
       # uDev: Print their webpage link
       
       ezGIT | ezgit | ez)         
-         # Runs the fx that clones ezGIT
+         # Clones "ezGIT" to help with `git` commands
          f_clone_repos_ezGIT
       ;;
 
       ROM | rom | calc-extention)
+         # Clones "Texas Instruments" Emulator for graphic calulators + "TI-84 Plus" ROM, to run as an Android .apk
          f_clone_calc_extention
       ;;
 
@@ -457,11 +456,11 @@ function f_clone_repos {
          f_clone_repos_setup_internal_di
       ;;
 
-      -p | p | --public-list) 
+      -p | p | --list-public) 
          f_clone_repos_public_repos
       ;;
 
-      -P | P | --private-list) 
+      -P | P | --list-private) 
          f_clone_repos_private_repos
       ;;
 
