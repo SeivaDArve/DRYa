@@ -292,7 +292,6 @@ function f_clone_repos {
       function f_clone_repos_upk-dv {
          echo "Cloning: upK-diario-Dv"; 
          git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-
       }
 
       function f_clone_repos_shiva {
@@ -346,6 +345,10 @@ function f_clone_repos {
 
       function f_clone_typescript {
          echo "cloning: garpho"; git clone https://github.com/SeivaDArve/typescript-berg-house.git
+      }
+
+      function f_clone_curriculum_vitae {
+         echo "cloning: Curriculum-Vitae"; git clone https://github.com/SeivaDArve/Curriculum-Vitae.git
       }
 
       function f_clone_repos_public_repos {
@@ -450,6 +453,10 @@ function f_clone_repos {
 
       ts | typescript | typescript-berg-house)
          f_clone_typescript
+      ;;
+      
+      cv | curruculum | curriculum-vitae)
+         f_clone_curriculum_vitae
       ;;
 
       setup-internal-dir)          
@@ -1885,7 +1892,6 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
-
    f_greet
 
    if [ -z "$2" ]; then
@@ -2787,6 +2793,24 @@ elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
+elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then 
+   
+   f_greet
+   f_talk; echo "Repos com Curriculum-Vitae:"
+           echo " > moedaz"
+           echo " > Curriculum-Vitae"
+           echo 
+           echo "Moedaz: "
+           echo " > guarda os ficheiros e apontamentos offline"
+           echo " > Navegue para a pasta ´CV´com: \`V mo cv\`"
+           echo " > Edite o ficheiro de apontamentos com: \`cv\`"
+           echo 
+           echo "Curriculum-Vitae: "
+           echo " > Mostra o mais atualizado CV em Website"
+           echo " > https://seivadarve.github.io/Curriculum-Vitae/"
+           echo " > Navegue para a repo com: \`V cv\`"
+           echo " > Visite website com: \`web cv\`"
+            
 elif [ $1 == ".." ]; then  
    # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
    

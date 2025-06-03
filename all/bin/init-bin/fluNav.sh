@@ -987,6 +987,7 @@ function V {
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
          cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls || f_error_cd
       
+         [[ $2 == "cv" ]] && cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls || f_error_cd
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls || f_error_cd
@@ -1056,8 +1057,13 @@ function V {
       elif [ $1 == "ga" ] || [ $1 == "garpho" ]; then
          cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls || f_error_cd
 
+
       elif [ $1 == "ts" ] || [ $1 == "typescript" ] || [ $1 == "typescript-berg-house" ]; then
          cd ${v_REPOS_CENTER}/typescript-berg-house 2>/dev/null && ls -p || f_error_cd
+
+
+      elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
+         cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "tmp" ]; then

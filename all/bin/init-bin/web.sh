@@ -82,34 +82,36 @@ function web {
          # Se nao for dado nenhum argumento, dar o menu: 
    
          # Lista de opcoes
-            L12='12. Pesquisa online (com browser pre-definido + google.com)'
+            L13='13. Pesquisa online (com browser pre-definido + google.com)'
 
-            L11="11. Experimentar Terminal Online"  
-            L10="10. Experimentar Distros Linux Online" 
-             L9="9.  Pagina do historico Google" 
+            L12="12. Experimentar Terminal Online"  
+            L11="11. Experimentar Distros Linux Online" 
+            L10="10. Pagina do historico Google" 
 
-             L8='8.  Detetar | Browser pre-definido + Browsers instalados' 
-             L7="7.  Navegar | Router Config Page"
+             L9='9.  Detetar | Browser pre-definido + Browsers instalados' 
+             L8="8.  Navegar | Router Config Page"
 
-             L6="6.  Ir | Google.com"
-             L5="5.  Ir | $homePage_name"
-             L4='4.  Ir | Seiva Website'
-             L3='3.  Ir | Seiva Github.com'
+             L7="7.  Ir | Google.com"
+             L6="6.  Ir | $homePage_name"
+             L5='5.  Ir | Seiva | Website (yola.com)'
+             L4="4.  Ir | Seiva | Curriculum-Vitae (github)"
+             L3='3.  Ir | Seiva | Github.com'
 
              L2='2.  Abrir | Bookmarks Guardados '
              L1='1.  Cancel'
 
-         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n\n$L12" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
+         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$L13" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
 
-         [[ $v_ask =~ "12. " ]] && read -p "DRYa: Pesquisa web (google): " v_ans && xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
-         [[ $v_ask =~ "11. " ]] && v_URL="https://www.terminaltemple.com"
-         [[ $v_ask =~ "10. " ]] && v_URL="https://distrosea.com/pt"
-         [[ $v_ask =~ "9.  " ]] && v_URL="https://myactivity.google.com"
-         [[ $v_ask =~ "8.  " ]] && f_detetar_browsers_instalados_e_pre_definido 
-         [[ $v_ask =~ "7.  " ]] && v_URL="firefox http://192.168.1.1"  # 192.168.0.1 ou 192.168.1.1  # uDev: firefox pode nao ser o browser pre-definido
-         [[ $v_ask =~ "6.  " ]] && v_URL="https://google.com"
-         [[ $v_ask =~ "5.  " ]] && v_URL="https://duckduckgo.com"
-         [[ $v_ask =~ "4.  " ]] && v_URL="https://seiva.yolasite.com"
+         [[ $v_ask =~ "13. " ]] && read -p "DRYa: Pesquisa web (google): " v_ans && xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
+         [[ $v_ask =~ "12. " ]] && v_URL="https://www.terminaltemple.com"
+         [[ $v_ask =~ "11. " ]] && v_URL="https://distrosea.com/pt"
+         [[ $v_ask =~ "10. " ]] && v_URL="https://myactivity.google.com"
+         [[ $v_ask =~ "9.  " ]] && f_detetar_browsers_instalados_e_pre_definido 
+         [[ $v_ask =~ "8.  " ]] && v_URL="firefox http://192.168.1.1"  # 192.168.0.1 ou 192.168.1.1  # uDev: firefox pode nao ser o browser pre-definido
+         [[ $v_ask =~ "7.  " ]] && v_URL="https://google.com"
+         [[ $v_ask =~ "6.  " ]] && v_URL="https://duckduckgo.com"
+         [[ $v_ask =~ "5.  " ]] && v_URL="https://seiva.yolasite.com"
+         [[ $v_ask =~ "4.  " ]] && v_URL="https://seivadarve.github.io/Curriculum-Vitae"
          [[ $v_ask =~ "3.  " ]] && v_URL="https://github.com/SeivaDArve"
          [[ $v_ask =~ "2.  " ]] && f_fzf_raw_link_opener 
          [[ $v_ask =~ "1.  " ]] && echo "Canceled"
@@ -132,6 +134,9 @@ function web {
 
       elif [ $1 == "yt" ]; then 
          v_URL="https://www.youtube.com"
+
+      elif [ $1 == "cv" ]; then 
+         v_URL="https://seivadarve.github.io/Curriculum-Vitae"
 
       elif [ $1 == "bm" ]; then 
          # Abrir bookmarks guardados
