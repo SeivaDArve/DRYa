@@ -297,7 +297,7 @@ function f_lib4_git_add_all {
                  git add --all
                  echo
       else
-         f_talk; echo 'Nothing needes to be done'
+         f_talk; echo 'Nothing needs to be done'
          exit 0
 
       fi

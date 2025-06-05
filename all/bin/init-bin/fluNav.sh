@@ -326,25 +326,27 @@ function f_manage_init_and_libraries_after_mod {
 
    read -s -n 1 -p " > Please enter [y/N]: " v_apply
    echo 
+   echo 
 
 
    if [ -z $v_apply ]; then 
-      f_talk; echo " > No action taken"
+      echo " > No action taken"
+      echo
 
    elif [ $v_apply == "y" ] || [ $v_apply == "Y" ]; then 
-      f_talk; echo "Applying..." 
-              echo
+      echo " > Applying..." 
+      echo
 
       f_applying_changes_init 
 
    elif [ $v_apply == "n" ] || [ $v_apply == "N" ]; then 
-      f_talk; echo "Not Applying..." 
-              echo
-              echo " > You may run this command again later"
-              echo "   or apply manually"
-              echo
+      echo "Not Applying..." 
+      echo " > You may run this command again later"
+      echo "   or apply manually"
+      echo
+
    else 
-      f_talk; echo "Invalid answer. Not Applying"
+      echo "Invalid answer. Not Applying"
    fi
 }
 
@@ -390,11 +392,11 @@ function f_sync_ez_b4_after {
 
 
 function f_down {
-   echo "uDev: To download updates will use drya-lib-4 (before opening file)"
+   f_talk; echo "uDev: Download updates using drya-lib-4 (before opening file)"
 }
 
 function f_up {
-   echo "uDev: To upload updates will use drya-lib-4 (after closing file)"
+   f_talk; echo "uDev: Upload updates using drya-lib-4 (after closing file)"
 }
 
 
@@ -976,7 +978,7 @@ function V {
    # Implementation of Use 2:
       # uDev: If correspondent repo does not exist, ask to clone intead of the error message
 
-      elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "D" ]; then
+      elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "dd" ] || [ $1 == "D" ]; then
          cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls || f_error_cd
       
 
@@ -985,9 +987,10 @@ function V {
       
 
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
-         cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls || f_error_cd
-      
-         [[ $2 == "cv" ]] && cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls || f_error_cd
+         if   [ -z $2      ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls
+         elif [ $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls
+         else f_error_cd
+         fi
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls || f_error_cd
