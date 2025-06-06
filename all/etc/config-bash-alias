@@ -862,7 +862,9 @@ function arco {
    clear
 
    if [ -z $1 ]; then
-      f_arco
+      v=$(f_arco | fzf --layout=reverse --no-info --prompt="Arco-Iris: Pesquise na Tabela de Codigos: ")
+      
+      [[ -n $v ]] && echo "Results: $v" 
 
    else
       f_arco | grep -i "$1"
