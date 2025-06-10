@@ -1287,19 +1287,20 @@ function f_dot_files_menu_edit_host_files_termux_properties {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L5='5. Toggle     | (uDev) termux Extra Keys On/Off'
+      L4='4. Toggle     | (uDev) termux.properties volume keys'
       L3='3. Edit       | termux.properties file'
       L2='2. Manipulate | Termux Properties as menu (uDev)'
       L1='1. Cancel'
 
       L0="SELECT 1: Edit @Host files: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
-
-      #echo "comando" >> ~/.bash_history && history -n
-      #history -s "echo 'Olá, mundo!'"
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "5. " ]] && echo "uDev"
+      [[ $v_list =~ "4. " ]] && echo "uDev"
       [[ $v_list =~ "3. " ]] && vim ~/.termux/termux.properties
       [[ $v_list =~ "2. " ]] && echo "uDev"
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
