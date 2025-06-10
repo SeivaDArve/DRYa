@@ -1057,6 +1057,10 @@ function V {
          cd ${v_REPOS_CENTER}/Dota-2-guide 2>/dev/null && ls || f_error_cd
 
 
+      elif [ $1 == "luxam" ]; then
+         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls || f_error_cd
+
+
       elif [ $1 == "ga" ] || [ $1 == "garpho" ]; then
          cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls || f_error_cd
 
