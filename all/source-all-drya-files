@@ -59,26 +59,53 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
 
+
    # Este ficheiro é lido 2x em:
    #   1. A pasta onde pertence (.../init-bin/) é de ficheiros que sao sempre lidos no arranque do terminal
    #   2. Também lido aqui porque tem de ser o primeiro de todos a ser lido
 
-   # Nome do ficheiro e ver se ele existe
-      v_dir="${v_REPOS_CENTER}/DRYa/all/bin/init-bin"
-      v_file="traitsID.sh"
 
-      traits_file="$v_dir/$v_file"
-      traits_0="Source-of-traitsID-script::$traits_file"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+   # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
+      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-      if [[ -f $traits_file ]]; then
-         export traits_file
-         export traits_0    # Igual a $traits_file mas com numero do ID
-      fi
+   # Nome do ficheiro SCRIPT traitsID.sh
+      trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
+      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-   source $traits_file # 1>/dev/null && echo "Sorced $i" >> $v_MSGS
+   # Nome do ficheiro OUTPUT com as variaveis
+      trid_dir=~/.config/h.h/drya/
+      trid_file=traitsID
+      trid_output=$trid_dir/$trid_file
+      trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-   # Debug
-      #source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh 1>/dev/null && echo "Sorced $i" >> $v_MSGS
+   # Sempre que o terminal inicia, recria o ficheiro de output
+      mkdir -p $trid_dir
+      rm       $trid_output 2>/dev/null
+      touch    $trid_output
+
+   # Guardar no "env" e em "trid_output" todas as var
+
+      echo "trid_source=$trid_source" >> $trid_output
+      echo "trid_0=$trid_0"           >> $trid_output
+      echo "trid_script=$trid_script" >> $trid_output
+      echo "trid_1=$trid_1"           >> $trid_output
+      echo "trid_output=$trid_output" >> $trid_output
+      echo "trid_2=$trid_2"           >> $trid_output
+      echo "trid_dir=$trid_dir"       >> $trid_output
+      echo "trid_file=$trid_file"     >> $trid_output
+      echo "                        " >> $trid_output
+
+      bash $trid_script fetch 
+
+      set -a               # Ativa auto-exportação
+      source $trid_output  # Todas as var de $trid_output seram exportadas para o env
+      set +a               # Desativa auto-exportação
+
+   # Registar a conclusao em drya_msgs
+      echo "traitsID: Variaveis encontradas/exportadas no ficheiro \$trid_output" >> $v_MSGS
+
+   alias trid="bash $trid_script"
 }
 
 
@@ -481,55 +508,49 @@ function f_verbose_end_file {
    echo -e "DRYa: file finished loading: $v_title_drya \n" >> $v_MSGS
 }
 
-function f_temporary_fx {
-   # Temporary fx to use the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
+function f_startup_async_ezGIT_pull_All {
+   # When ezGIT is installed, run async fx at startup (downloading repository updates):
+   # --- `disown` makes the process run in a sub-shell
+
+   if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
+      # Downloading all
+         bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null && echo "Done"
+
+      # uDev: Se houver commits para upload, entao fazer tambem upload
+
+      # This fx will not send any output, so it will send text to drya-msgs
+         echo -e "DRYa: source-all-drya-files: f_startup_async_ezGIT_pull_All: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+   fi
 
 
-
-
-
-   function f_startup_async {
-      # When ezGIT exists, run async fx:
-      # --- Download repository updates
-      # --- `disown` makes the process run in a sub-shell
-
-      if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
-         # Downloading all
-            bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null && echo "Done"
-
-         # uDev: Se houver commits para upload, entao fazer tambem upload
-
-         # This fx will not send any output, so it will send text to drya-msgs
-            echo -e "DRYa: source-all-drya-files: f_startup_async: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
-      fi
-      
-      
-      
-   } 
-
-   f_startup_async &> /dev/null & disown  # Run last fx
-
-
-
-
-   
-   # Memorizar os Shiva Sutras (temporario)
-      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
-      echo
 
    # uDev: if drya-mail-box is ready, use it here!  
    #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
    #
    #       instead of `mpv` to make sounds, use termux-toast-message instead
-  
+
+
 
    # Sound effect in the end (`disown` makes the process run in a sub-shell)
       v_test=$(type mpv) &>/dev/null
       
       [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 & disown
+
+} 
+
+function f_temporary_fx_memor_sutras {
+   # Temporary fx
+   # Memorize Shiva Sutras
+   # Uses the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
+
+
+
+   # Fx que tras um Sutra aleatorio
+      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r
+      echo
 }
 
-function f_temporary_fx_2 {
+function f_temporary_fx_open_random_shells_py_node_sql {
    # Forçar a aprendizagemnde Javascript ou Python ou SQLite
    v_opt=$(shuf -i 1-4 -n 1)
 
@@ -558,6 +579,10 @@ function f_backdoor {
          v_rm="scratch-paper"
          rm -rf ${v_REPOS_CENTER}/$v_rm 2>/dev/null 
 }
+
+function f_traitsID_print {
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh A
+} 
 
 function f_exec { 
    # Running all functions by sequence
@@ -597,16 +622,21 @@ function f_exec {
 
    f_internal_drya_files_2_of_2
 
+   # Jarve pode ser uma fx que corre tudo o resto async
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
-   f_neofetch
 
-   #f_temporary_fx 
-   f_traitsID_toDo
-   #f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
+   #f_neofetch  # uDev: Substituir por TraitsID
+   #f_traitsID_print
+   #f_traitsID_toDo
+
+   #f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
+   #f_temporary_fx_memor_sutras
+   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    f_verbose_end_file
-   #f_temporary_fx_2
-   clear
+   #f_temporary_fx_open_random_shells_py_node_sql {
+   # uDev: f_assync `td` using GPS
+   #clear
 }
 f_exec
 

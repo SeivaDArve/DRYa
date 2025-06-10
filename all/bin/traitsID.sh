@@ -12,42 +12,28 @@
 # uDev: Set windows time and date automaticaly with batch scripts
 # uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 
-function f_set_file {
+function f_set_output_file {
    # File that has a copy of all variables sent to environment
 
-   # Giving it a name
-      v_dir=~/.config/h.h/drya
-      v_file="traitsID"
-      v_id_file="$v_dir/$v_file"
+   # NOTE: FILE ALREADY SET AT source-all-drya-files as:
+   #       `$trid_output`
 
-   # Create the file from scratch at every terminal startup
-      mkdir -p $v_dir
-      rm       $v_id_file 2>/dev/null
-      touch    $v_id_file
-}
+   if [ -z $trid_output ]; then
+      # Se a var de output nao esteja ja definida em source-all-drya-files, define agora
 
-function trid {
-   # This command is actually loaded to the terminal env
+      trid_dir=~/.config/h.h/drya/
+      trid_file=traitsID
+      trid_output=$trid_dir/$trid_file
+      trid_2="traitsID_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-   v_file="${v_REPOS_CENTER}/DRYa/all/bin/init-bin/traitsID.sh"
-
-   if [ -z $1 ]; then
-      # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
-      echo "DRYa: traitsID: file of found variables (at terminal startup):"
-      echo " > $v_file"
-      echo 
-      
-      # From the file created by traitsID, print at the terminal to help copy/paste
-         cat $v_id_file
-
-      #echo "File that overwrittes last file"
-      #less .dryarc
-
-   elif [ $1 == "." ]; then
-      vim $v_file
+      mkdir -p $trid_dir
+      rm       $trid_output 2>/dev/null
+      touch    $trid_output
 
    fi
+
 }
+
 
 
 
@@ -57,47 +43,47 @@ function f_array_0 {
 
    # Como na versão atual de Bash não da para exportar arrays, será usado um metodo mais arcaico
    echo "Este ficheiro é:"
-   echo "> $traits_file"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
+   echo "> $trid_script"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
    echo 
    echo "Elemento [0] do array arcaico:"
    echo " > Cujo 'Key' + 'Pair' estao separados por '::'"
-   echo " >> $traits_0"   # esta variavel foi criada e exportada em 'source-all-drya-file'
+   echo " >> $trid_0"   # esta variavel foi criada e exportada em 'source-all-drya-file'
    echo 
 }
    
-function f_trid_001 {
+function f_trid_3 {
    # Detetar se estamos a operar o Termux
-   # Será guardado como: trid_001; traits_termux; trid_at_termux
+   # Será guardado como: trid_3; trid_termux; trid_atTermux
 
    # No termux a variavel $PREFIX nao vem vazia e tras normalmente o conteudo: "/data/data/com.termux/files/usr"
 
    if [[ $PREFIX == "/data/data/com.termux/files/usr" ]]; then
       # Debug # Estamos no termux
 
-      traits_termux="true"   # Legacy, sshfs-wrapper uses it yet
-      trid_at_termux="true"      
-      trid_001="atTermux::true" # Key + Value pair
-      export traits_termux trid_at_termux trid_001
+      trid_termux="true"   # Legacy, sshfs-wrapper uses it yet
+      trid_atTermux="true"      
+      trid_3="atTermux::true" # Key + Value pair
+      export trid_termux trid_atTermux trid_3
 
       # Depois de verificado, enviar para o ficheiro pesquisavel
-      echo 'traits_termux="true"'   >> $v_id_file
-      echo 'trid_at_Termux="true"'  >> $v_id_file      
-      echo 'trid_001="true"'        >> $v_id_file
-      echo                          >> $v_id_file
+      echo 'trid_termux="true"'   >> $trid_output
+      echo 'trid_atTermux="true"' >> $trid_output      
+      echo 'trid_3="true"'        >> $trid_output
+      echo                        >> $trid_output
 
    else
       # Debug # Nao estamos no termux
 
-      traits_termux="false"   # Legacy, sshfs-wrapper uses it yet
-      trid_at_termux="false"      
-      trid_001="atTermux=false"
-      export traits_termux trid_at_termux trid_001
+      trid_termux="false"   # Legacy, sshfs-wrapper uses it yet
+      trid_atTermux="false"      
+      trid_3="atTermux=false"
+      export trid_termux trid_atTermux trid_3
 
       # Depois de verificado, enviar para o ficheiro pesquisavel
-      echo 'traits_termux="false"'  >> $v_id_file
-      echo 'trid_at_termux="false"' >> $v_id_file      
-      echo 'trid_001="false"'       >> $v_id_file
-      echo                          >> $v_id_file
+      echo 'trid_termux="false"'  >> $trid_output
+      echo 'trid_atTermux="false"' >> $trid_output      
+      echo 'trid_3="false"'       >> $trid_output
+      echo                          >> $trid_output
    fi
 
 }
@@ -117,7 +103,7 @@ function f_export {
 
 }
    
-function f_array_2 {
+function f_array_3 {
    # Verificar o package manager atual (pkg, apt, brew, pacman)
    # Será exportada a variavel: traits_pkgm; pkgm; traits_2
 
@@ -182,27 +168,31 @@ function f_detectOS_2 {
 
 
 
-function f_detectOS_1 {
-   # Detect OS
+function f_detect_OS {
+   # Detect Operative System
+   
+   #echo Detect
+   #cat $trid_output
+   #read
 
    # Using command 'uname'
       v_uname=$(uname -a)
 
    # Filter the info to Detect OS
-   # SIGLA for $v_arr1: tid:A???? (A)ndroid (Wi)ndows (L)inux (R)aspberry (U)nknown
+   # SIGLA for $v_arr1: 'trid=A'? (A)ndroid (W)indows (L)inux (R)aspberry (U)nknown
 
    if [[ $v_uname =~ "Android" ]]; then 
       echo "DRYa: Running on: Android"
-      echo 'traits_OS="Android"' >> $v_id_file 
+      echo 'trid_OS="Android"' >> $trid_output 
 
-      traits_OS="Android"; export traits_OS
+      trid_OS="Android"; export trid_OS
       v_arr1=A
       
    elif  [[ $v_uname =~ "Microsoft" ]]; then 
       echo "DRYa: Running on: Windows"
-      echo 'traits_OS="Windows"' >> $v_id_file
+      echo 'trid_OS="Windows"' >> $trid_output
 
-      traits_OS="Microsoft"; export traits_OS
+      trid_OS="Microsoft"; export trid_OS
       v_arr1=W
 
       # uDev: Verificar se o sistema está no WSL2
@@ -210,22 +200,22 @@ function f_detectOS_1 {
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
       echo "DRYa: Running on: Linux (Raspberry Pi)"
-      echo 'traits_OS="Linux-Rasp"' >> $v_id_file
+      echo 'trid_OS="Linux-Rasp"' >> $trid_output
 
-      traits_OS="RaspberryPi"; export traits_OS
+      trid_OS="RaspberryPi"; export trid_OS
       v_arr1=R
 
    elif [[ $v_uname =~ "Linux" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
       echo "DRYa: Running on: Linux"
-      echo 'traits_OS="Linux"' >> $v_id_file
+      echo 'trid_OS="Linux"' >> $trid_output
 
-      traits_OS="Linux"; export traits_OS
+      trid_OS="Linux"; export trid_OS
       v_arr1=L
 
    else
       echo "DRYa: Running on: NOT DETECTED"
-      traits_OS="NotDetected"; export traits_OS
+      trid_OS="NotDetected"; export trid_OS
       v_arr1=U
    fi 
 
@@ -234,11 +224,11 @@ function f_detectOS_1 {
 
 
    # Create a single string with all info (as a code):
-      declare -a v_tid=(
-         [0]="tid="
+      declare -a v_trid=(
+         [0]="trid="
          [1]=$v_arr1
       )
-      echo "${v_tid[0]}${v_tid[1]}" >> $v_id_file
+      echo "${v_trid[0]}${v_trid[1]}" >> $trid_output
 
 
    # Create a script at DRYa/all/bin/ for drya-neofetch
@@ -255,7 +245,7 @@ function f_detectOS_1 {
    # Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
 
 # Source file After writting with all variables for traitsID
-   source $v_id_file
+   source $trid_output
 
 }
 
@@ -268,12 +258,13 @@ function f_gitconfig_current_machine_name {
    
    traits_git_machine_name=$v_user
 
-   export traits_git_machine_name
+   export trid_git_machine_name
 
    # Send one empty line to the file
-      echo "" >> $v_id_file
+      echo "" >> $trid_output
 
-   echo "traits_git_machine_name=\"$traits_git_machine_name\"" >> $v_id_file
+   echo "trid_git_machine_name=\"$traits_git_machine_name\"" >> $trid_output
+   echo "trid_gmn=\"$traits_git_machine_name\"" >> $trid_output
    
    
    
@@ -308,22 +299,67 @@ function f_detect_package_manager {
    fi
 } 
 
-function f_exec {
-f_set_file
-f_array_0   1>/dev/null  # O output será envido para o crl... porque serve so para debug
-f_trid_001               # Saber true|false se estamos a operar no Termux
-f_array_2   1>/dev/null  # O output será envido para o crl... porque serve so para debug
-f_export
-f_gitconfig_current_machine_name
+function f_trid_print_all {
 
-f_detectOS_1
-#f_detectOS_2
-
+   echo "trid: (uDev) Print a list of all vars like neofetch"
+   cat $trid_output
 }
-f_exec
 
 
 
 
-      
 
+
+
+function f_fetch {
+   f_array_0   1>/dev/null  # O output será envido para o crl... porque serve so para debug
+   f_trid_3                 # Saber true|false se estamos a operar no Termux
+   f_array_3   1>/dev/null  # O output será envido para o crl... porque serve so para debug
+   f_export
+   f_gitconfig_current_machine_name
+
+   f_detect_OS
+   #f_detectOS_2
+   #f_detect_OS_verbose
+}
+
+
+f_set_output_file
+
+# uDev: `export` provavelmente nao e preciso.
+if [ -z $1 ];then
+   echo "uDev: fzf menu"
+
+elif [ $1 == "h" ]; then
+   # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
+   echo "DRYa: traitsID: Main Script Location:"
+   echo " > $trid_script"
+   echo 
+   echo "DRYa: traitsID: Output file Location:"
+   echo " > $trid_output"
+   echo 
+
+elif [ $1 == "." ]; then
+   vim $trid_script
+
+elif [ $1 == ".." ]; then
+   vim $trid_output
+
+elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
+   # Start a new search of all variables and store them in a file
+   f_fetch
+
+elif [ $1 == "printenv" ] || [ $1 == "env" ]; then
+   printenv | grep --color="auto" "trid"
+
+elif [ $1 == "print" ] || [ $1 == "A" ]; then
+   # Print all variables
+
+   if [ -z $2 ]; then
+      f_trid_print_all
+
+   elif [ $2 == "greet" ] || [ $2 == "gr" ]; then
+      figlet traitsID
+      f_trid_print_all
+   fi
+fi
