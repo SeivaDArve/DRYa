@@ -67,6 +67,7 @@ function f_traitsID {
       trid_file=traitsID
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      export trid_dir trid_file trid_output
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
