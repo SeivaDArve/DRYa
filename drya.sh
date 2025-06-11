@@ -1287,6 +1287,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L6='6. Toggle     | .hushlogin termux verbose output at terminal startup'
       L5='5. Toggle     | (uDev) termux Extra Keys On/Off'
       L4='4. Toggle     | (uDev) termux.properties volume keys'
       L3='3. Edit       | termux.properties file'
@@ -1295,10 +1296,11 @@ function f_dot_files_menu_edit_host_files_termux_properties {
 
       L0="SELECT 1: Edit @Host files: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "6. " ]] && f_toggle_termux_hushlogin
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && echo "uDev"
       [[ $v_list =~ "3. " ]] && vim ~/.termux/termux.properties
@@ -1640,9 +1642,31 @@ function f_partial_file_reader {
    echo
 }
 
+function f_toggle_termux_hushlogin {
+   # O ficheiro .hushlogin que Liga/Desliga o ouptup:
+   #     Vai ser removido se existir.
+   #     Vai ser adicionado se nao existir
+
+   v_hush=.hushlogin
+   v_msgA="Ficheiro $v_hush removido"
+   v_msgB="Ficheiro $v_hush adicionado"
+
+   [[   -f ~/$v_hush ]] && rm    ~/$v_hush && f_talk && echo "$v_msgA" && exit
+   [[ ! -f ~/$v_hush ]] && touch ~/$v_hush && f_talk && echo "$v_msgB" && exit
+}
+
+
+
+
+
+
+
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
 # -------------------------------------------
+
+
+
 
 
 
@@ -2789,6 +2813,11 @@ elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then
                   echo " > $2"
                   echo " > $3"
       fi
+
+elif [ $1 == "hush" ]; then 
+   # Ligar/Desligar o output verboso do Termux. 
+
+   f_toggle_termux_hushlogin 
 
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
