@@ -64,6 +64,7 @@ function f_traitsID {
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
+      bash $trid_script startup-message
 
    # Guardar no "env" todas as var
       set -a               # Ativa auto-exportação
@@ -72,8 +73,13 @@ function f_traitsID {
 
    # Registar a conclusao em drya_msgs
       echo "traitsID: Variaveis encontradas/exportadas no ficheiro \$trid_output" >> $v_MSGS
+      cat $trid_output >> $v_MSGS
 
    alias trid="bash $trid_script"
+
+   function f_traitsID_print {
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh A
+   } 
 }
 
 
@@ -173,8 +179,8 @@ function f_drya_plus {
       
    # List and execution of function under drya_plus:
       #echo
-      echo "      > view more DRYa options with: 'drya help' "
-      echo "      > DRYa extended menu with fzf: 'D +'"
+      f_talk; echo "Startup Help:"
+              echo "      DRYa:  Aceder ao menu principal: \`D .\`"
       f_drya_msgs
       f_dv_PS1
       #f_termux_welcome
@@ -271,7 +277,7 @@ function f_repository_ezGIT {
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
 
 
-   echo -e "      > O comando 'G v all' atualiza todos os repos"
+   echo -e "      ezGIT: Atualizar todos os repos: \`G v A\`"
 }
    
 function f_repository_wikiD {
@@ -406,7 +412,7 @@ function f_repository_3_sticks_alpha_bravo {
 function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
-   echo "      > O comando 'jarve', 'J' inicia o sentinela"
+   echo "      jarve: Iniciar o sentinela manualmente: \`J\`"
    echo
 }
 
@@ -548,10 +554,6 @@ function f_backdoor {
          rm -rf ${v_REPOS_CENTER}/$v_rm 2>/dev/null 
 }
 
-function f_traitsID_print {
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh A
-} 
-
 function f_exec { 
    # Running all functions by sequence
 
@@ -593,7 +595,7 @@ function f_exec {
    # Jarve pode ser uma fx que corre tudo o resto async
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
 
-   #f_neofetch  # uDev: Substituir por TraitsID
+   f_neofetch  # uDev: Substituir por TraitsID
    #f_traitsID_print
    #f_notes_toDo
 
