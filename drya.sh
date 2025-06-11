@@ -1564,7 +1564,8 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L5='5. About the Developer: seiva-up-time'
+      L6='6. About the Developer: seiva-up-time'
+      L5='5. About DRYa extentions (ezGIT, trid, jarve, ...)'  
       L4='4. Read drya-msgs'  
       L3='3. Welcome Screen'
       L2='2. Print All' 
@@ -1572,11 +1573,12 @@ function f_drya_help_menu {
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6\n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "5. " ]] && f_seiva_up_time
+      [[ $v_list =~ "6. " ]] && f_seiva_up_time
+      [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_drya_welcome
       [[ $v_list =~ "2. " ]] && f_drya_help

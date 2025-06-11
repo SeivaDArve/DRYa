@@ -187,8 +187,10 @@ function f_drya_plus {
       
    # List and execution of function under drya_plus:
       #echo
-      f_talk; echo "Startup Help:"
-              echo "      DRYa:  Aceder ao menu principal: \`D .\`"
+      f_talk; echo "Startup Help..."
+              echo "      Aceder ao menu principal    : \`D .\`"
+              echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
+              echo
       f_drya_msgs
       f_dv_PS1
       #f_termux_welcome
@@ -285,7 +287,6 @@ function f_repository_ezGIT {
    #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
 
 
-   echo -e "      ezGIT: Atualizar todos os repos: \`G v A\`"
 }
    
 function f_repository_wikiD {
@@ -420,8 +421,6 @@ function f_repository_3_sticks_alpha_bravo {
 function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
-   echo "      jarve: Iniciar o sentinela manualmente: \`J\`"
-   echo
 }
 
 function f_internal_drya_files_2_of_2 {
