@@ -30,13 +30,7 @@ function f_trid_0_1_2 {
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
       trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-   # Nome do ficheiro OUTPUT com as variaveis
-      trid_dir=~/.config/h.h/drya/
-      trid_file=traitsID
-      trid_output=$trid_dir/$trid_file
-      trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-
-   # Sempre que o terminal inicia, recria o ficheiro de output
+   # Recriar o ficheiro OUTPUT (Sempre que o terminal inicia). variaveis iniciadas em $trid_source
       mkdir -p $trid_dir
       rm       $trid_output 2>/dev/null
       touch    $trid_output
@@ -85,7 +79,7 @@ function f_trid_4 {
          # Encontrada a familia Arch
          trid_pkgm="pacman"
 
-      elif command -v dnf || command -v yum >/dev/null 2>&1; then
+      elif [ $ID == "fedora" ] || command -v yum >/dev/null 2>&1; then
          # Encontrada a familia Red Hat
          trid_pkgm="dnf"
 
@@ -147,9 +141,9 @@ function f_trid_5 {
 
    # Depois de verificado, enviar para o ficheiro pesquisavel
       echo "trid_5=\"trid_atTermux::$trid_atTermux\"" >> $trid_output
-      echo "trid_atTermux=$trid_termux"              >> $trid_output      
-      echo "trid_termux=$trid_termux"                >> $trid_output
-      echo                                           >> $trid_output
+      echo "trid_atTermux=$trid_termux"               >> $trid_output      
+      echo "trid_termux=$trid_termux"                 >> $trid_output
+      echo                                            >> $trid_output
 
 }
 
@@ -169,45 +163,37 @@ function f_trid_6 {
 
    if [[ $v_uname =~ "Android" ]]; then 
       # Detetar se é Android
-
       trid_OS="Android"
       trid_os=A
       
    elif  [[ $v_uname =~ "Microsoft" ]]; then 
       # Detetar se é Windows
       # uDev: Verificar se o sistema está no WSL2
-
       trid_OS="Microsoft"
       trid_os=W
-      echo 'trid_OS="Windows"' >> $trid_output
 
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
-
       trid_OS="RaspberryPi"
       trid_os=R
-      echo 'trid_OS="Linux-RaspberryPi"' >> $trid_output
 
    elif [[ $v_uname =~ "Linux" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
-
       trid_OS="Linux"
       trid_os=L
-      echo 'trid_OS="Linux"' >> $trid_output
 
    else
       # Se nao for detetado nenhum dos anteriores, entao é desconhecido
-
       trid_OS="NotDetected"
       trid_os=U
-      echo 'trid_OS="NotDetected"' >> $trid_output
 
    fi 
 
    # Send out results
       echo "trid_6=\"trid_OS::$trid_OS\"" >> $trid_output 
-      echo "trid_OS=\"$trid_OS\"" >> $trid_output 
-      echo "trid_os=$trid_os" >> $trid_output
+      echo "trid_OS=\"$trid_OS\""         >> $trid_output 
+      echo "trid_os=$trid_os"             >> $trid_output
+      echo                                >> $trid_output
 }
 
 function f_trid_print_all {
@@ -253,6 +239,7 @@ function f_startup {
 
 
 function f_fetch {
+   #echo " === Debug === $trid_output"; read
    f_trid_0_1_2   # Procurar "source","script", "output"
    f_trid_3       # Procurar "git name"
    f_trid_4       # Procurar "Package Manager"

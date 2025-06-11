@@ -62,6 +62,12 @@ function f_traitsID {
    # Nome do ficheiro SCRIPT traitsID.sh
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
 
+   # Nome do ficheiro OUTPUT com as variaveis
+      trid_dir=~/.config/h.h/drya
+      trid_file=traitsID
+      trid_output=$trid_dir/$trid_file
+      trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
       bash $trid_script startup-message
