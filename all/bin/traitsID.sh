@@ -319,11 +319,27 @@ elif [ $1 == "print" ] || [ $1 == "A" ]; then
    elif [ $2 == "nice" ] || [ $2 == "n" ]; then
       # Do not simply dump all vars, nstead, print them in a nice order
 
-      [[ -n $trid_source ]] && v=$(basename $(echo $trid_source)) && echo "trid_source > Set  > .../$v"
-      [[ -n $trid_script ]] && v=$(basename $(echo $trid_script)) && echo "trid_script > Set  > .../$v"
-      [[ -n $trid_output ]] && v=$(basename $(echo $trid_output)) && echo "trid_output > Set  > .../$v"
-      [[ -n $trid_termux ]] && echo "trid_termux > Set  > $trid_termux"
-      [[ -n $trid_gmn    ]] && echo "trid_gmn    > Set  > $trid_gmn"
-      [[ -n $trid_OS     ]] && echo "trid_OS     > Set  > $trid_OS"
+      # Declaring a variable with blank spaces
+         B="     "
+
+      f_talk
+       
+      # Verbose $trid_source 
+         v=$(basename $(echo $trid_source)) && echo "trid_source : .../$v"
+
+      # Verbose $trid_script 
+         v=$(basename $(echo $trid_script)) && echo "$B trid_script : .../$v"
+
+      # Verbose $trid_output 
+         v=$(basename $(echo $trid_output)) && echo "$B trid_output : .../$v"
+
+      # Verbose $trid_termux 
+         echo "$B trid_termux : $trid_termux"
+
+      # Verbose $trid_gmn 
+        echo "$B trid_gmn    : $trid_gmn"
+
+      # Verbose $trid_OS]
+        echo "$B trid_OS     : $trid_OS"
    fi
 fi
