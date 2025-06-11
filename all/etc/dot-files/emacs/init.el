@@ -1605,7 +1605,40 @@ This is used only for \"tipo:\""
 (put 'dired-find-alternate-file 'disabled nil)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(defun dv-copy-next-http-to-clipboard ()
+  (interactive)
+  "Na linha atual, procura texto do cursor para a frente com http(s). Vai té ao proximo espaço em branco ou até ao final da linha e copia esse link para o clipboard. Se nao encontrar, volta ao inicio da linha e volta a tentar "
+  
+  (let ((start-point (point))
+        (found nil)
+        (search-start (point))
+        (line-end (line-end-position)))
+    ;; Tenta primeiro da posição atual
+    (save-excursion
+      (when (re-search-forward "\\(https?://[^ ]+\\)" line-end t)
+        (kill-new (match-string 1))
+        (message "URL copiada: %s" (match-string 1))
+        (setq found t)))
+    ;; Se não encontrou, tenta de novo do início da linha
+    (unless found
+      (save-excursion
+        (move-beginning-of-line nil)
+        (setq search-start (point))
+        (when (re-search-forward "\\(https?://[^ ]+\\)" line-end t)
+          (kill-new (match-string 1))
+          (message "URL copiada (segunda tentativa): %s" (match-string 1))
+          (setq found t))))
+    (unless found
+      (message "Nenhuma URL http encontrada nesta linha."))))
+
+
+(global-set-key (kbd "C-c M-o") 'dv-copy-next-http-to-clipboard)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
