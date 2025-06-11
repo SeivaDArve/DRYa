@@ -59,12 +59,6 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema
 
-
-   # Este ficheiro é lido 2x em:
-   #   1. A pasta onde pertence (.../init-bin/) é de ficheiros que sao sempre lidos no arranque do terminal
-   #   2. Também lido aqui porque tem de ser o primeiro de todos a ser lido
-
-
    # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
       trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
       trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
@@ -560,7 +554,7 @@ function f_temporary_fx_open_random_shells_py_node_sql {
    [[ $v_opt == "4" ]] && echo "bash" 1>/dev/null
 }
 
-function f_traitsID_toDo {
+function f_notes_toDo {
    # Running To Do list
    # Use: It is used when one machine schedules tasks for other machine to run at it's startup
 
@@ -627,7 +621,7 @@ function f_exec {
 
    #f_neofetch  # uDev: Substituir por TraitsID
    #f_traitsID_print
-   #f_traitsID_toDo
+   #f_notes_toDo
 
    #f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
    #f_temporary_fx_memor_sutras

@@ -92,20 +92,20 @@ function f_export {
    # Apos ser detetada a familia Linux Correta, esta fx exporta as variaveis para o Env
 
    # Copiar a variavel encontrada para cada uma das Var que pretendemos
-      traits_pkgm=$v_found
-      traits_2=$v_found
+      trid_pkgm=$v_found
+      trid_4=$v_found
       pkgm=$v_found
 
    # Exportar todas as Var para o Env (É possivel ler o Env com o comando `printenv`)
-      export traits_pkgm
-      export traits_2
+      export trid_pkgm
+      export trid_4
       export pkgm
 
 }
    
 function f_array_3 {
    # Verificar o package manager atual (pkg, apt, brew, pacman)
-   # Será exportada a variavel: traits_pkgm; pkgm; traits_2
+   # Será exportada a variavel: trid_pkgm; pkgm; trid_4
 
    if [ -f /etc/os-release ]; then
       source /etc/os-release
@@ -256,15 +256,15 @@ function f_gitconfig_current_machine_name {
    v_user=$(git config --get user.name)
    [[ $v_user == "seivaDArve" ]] && echo 'DRYa: task pendent: `D dot install git` to fix standard machine name' >> $v_MSGS
    
-   traits_git_machine_name=$v_user
+   trid_git_machine_name=$v_user
 
    export trid_git_machine_name
 
    # Send one empty line to the file
       echo "" >> $trid_output
 
-   echo "trid_git_machine_name=\"$traits_git_machine_name\"" >> $trid_output
-   echo "trid_gmn=\"$traits_git_machine_name\"" >> $trid_output
+   echo "trid_git_machine_name=\"$trid_git_machine_name\"" >> $trid_output
+   echo "trid_gmn=\"$trid_git_machine_name\"" >> $trid_output
    
    
    
@@ -327,6 +327,7 @@ function f_fetch {
 f_set_output_file
 
 # uDev: `export` provavelmente nao e preciso.
+
 if [ -z $1 ];then
    echo "uDev: fzf menu"
 
