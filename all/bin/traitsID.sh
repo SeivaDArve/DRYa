@@ -12,26 +12,38 @@
 # uDev: Set windows time and date automaticaly with batch scripts
 # uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 
-function f_set_output_file {
+function f_set_vars_source_script_output {
    # File that has a copy of all variables sent to environment
 
-   # NOTE: FILE ALREADY SET AT source-all-drya-files as:
-   #       `$trid_output`
+   # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
+      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
-   if [ -z $trid_output ]; then
-      # Se a var de output nao esteja ja definida em source-all-drya-files, define agora
+   # Nome do ficheiro SCRIPT traitsID.sh
+      trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
+      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
+   # Nome do ficheiro OUTPUT com as variaveis
       trid_dir=~/.config/h.h/drya/
       trid_file=traitsID
       trid_output=$trid_dir/$trid_file
-      trid_2="traitsID_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
+   # Sempre que o terminal inicia, recria o ficheiro de output
       mkdir -p $trid_dir
       rm       $trid_output 2>/dev/null
       touch    $trid_output
 
-   fi
-
+   # Guardar em "trid_output" todas as var
+      echo "trid_source=$trid_source" >> $trid_output
+      echo "trid_0=$trid_0"           >> $trid_output
+      echo "trid_script=$trid_script" >> $trid_output
+      echo "trid_1=$trid_1"           >> $trid_output
+      echo "trid_output=$trid_output" >> $trid_output
+      echo "trid_2=$trid_2"           >> $trid_output
+      echo "trid_dir=$trid_dir"       >> $trid_output
+      echo "trid_file=$trid_file"     >> $trid_output
+      echo "                        " >> $trid_output
 }
 
 
@@ -312,6 +324,7 @@ function f_trid_print_all {
 
 
 function f_fetch {
+   f_set_vars_source_script_output
    f_array_0   1>/dev/null  # O output será envido para o crl... porque serve so para debug
    f_trid_3                 # Saber true|false se estamos a operar no Termux
    f_array_3   1>/dev/null  # O output será envido para o crl... porque serve so para debug
@@ -324,7 +337,6 @@ function f_fetch {
 }
 
 
-f_set_output_file
 
 # uDev: `export` provavelmente nao e preciso.
 
