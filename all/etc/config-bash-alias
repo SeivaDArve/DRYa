@@ -836,8 +836,14 @@ function hist {
 # Verbose file (variables and outputs)
    echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
 
-function f_arco {
-   echo '
+
+function arco {
+   # Codigos de emergencia "Arco-Iris" para cominicacoes via radio
+   clear
+
+   function f_arco {
+      # Especie de "heredoc" com a tabela
+      echo '
 |-----------------------+---------------------------|
 | Arco-Iris             | Significado               |
 |-----------------------+---------------------------|
@@ -856,10 +862,7 @@ function f_arco {
 | Codigo 115            | Vigilante em Apuros       |
 |-----------------------+---------------------------|
 '
-}
-
-function arco {
-   clear
+   }
 
    if [ -z $1 ]; then
       v=$(f_arco | fzf --layout=reverse --no-info --prompt="Arco-Iris: Pesquise na Tabela de Codigos: ")
@@ -867,7 +870,11 @@ function arco {
       [[ -n $v ]] && echo "Results: $v" 
 
    else
-      f_arco | grep -i "$1"
+      # Se os argumentos forem diferentes do esperado, filtra esse texto do argumento no texto da tabela
+      for i in $@;
+      do
+         f_arco | grep -i "$i"
+      done
    fi
 }
 
