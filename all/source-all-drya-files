@@ -166,7 +166,8 @@ function f_termux_welcome {
 
 function f_neofetch {
    # Neofetch is not needed... It is just for fun. And if it does not exist, do not print it's error message
-   neofetch 2>/dev/null
+   #neofetch 2>/dev/null
+   neofetch -L 2>/dev/null
 }
    
 function f_test {
@@ -601,7 +602,7 @@ function f_exec {
    # Jarve pode ser uma fx que corre tudo o resto async
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
 
-   #f_neofetch  # uDev: Substituir por TraitsID
+   f_neofetch  # uDev: Substituir por TraitsID
    #f_traitsID_print
    #f_notes_toDo
 
