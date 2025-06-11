@@ -595,7 +595,7 @@ function f_exec {
    # Jarve pode ser uma fx que corre tudo o resto async
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
 
-   f_neofetch  # uDev: Substituir por TraitsID
+   #f_neofetch  # uDev: Substituir por TraitsID
    #f_traitsID_print
    #f_notes_toDo
 
