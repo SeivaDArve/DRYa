@@ -29,7 +29,7 @@ function f_drya_libs {
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: Sub-Operative System"
-      echo " > $v_drya_source 1st File to load, after ~/.bashrc redirection"
+      echo " > $v_name_drya_source 1st File to load, after ~/.bashrc redirection"
       echo " > running from: ${DRYa_HEART}"
       echo " > drya-msgs file located at: $v_MSGS"
       # udev: echo "Installed at.."
@@ -140,9 +140,9 @@ function f_drya_status_msgs {
       # Reading the actuall messages
          #less $v_MSGS
 
-      # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
-         #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
-         alias dmsgs="less $v_MSGS"
+   # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
+      #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
+      alias dmsgs="less $v_MSGS"
 }
 
 function f_termux_welcome {
@@ -155,6 +155,7 @@ function f_termux_welcome {
 
 function f_drya_welcome_screen {
    # In order to uncluter the welcome screen, we use this function
+   # (Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not)
 
    # uDev: At `D .` add an option to see the welcome screen again 
    # uDev: send to drya-messages too
@@ -215,10 +216,40 @@ function f_internal_drya_files_1_of_2 {
    # Repository: DRYa (internal files - (1/2) )
 
    # Include this file name in a variable
-     v_drya_source="source-all-drya-files"
+     v_name_drya_source="source-all-drya-files"
+     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/source-all-drya-files 
+
+     v_name_drya_alias="config-bash-alias"
+     v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+
+     #v_name_dryarc
+     #v_path_dryarc
+
+     #v_name_drya_root
+     #v_path_drya_root
 
    # Demi-fake pin for fzf menus (scare away curious people)
      v_pin=0000
+
+   # DRYa executable
+      alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+      alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+            DRYa="${v_REPOS_CENTER}/DRYa/"  # To use in scripts (vim $DRYa/all/.../...)
+
+   # List DRYa work directory
+      alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
+      alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+
+   # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
+      alias   ,.="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      alias  ,..="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"  
+      alias ,...="echo .dryarc"  
+
+   # Abreviated numpad alias to list REPOS CENTER directory (for easier terminal use)
+      alias 00="cd ${v_REPOS_CENTER} && ls"
+
+   # Fast menu for calculators
+      alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
    # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
       v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
@@ -229,21 +260,15 @@ function f_internal_drya_files_1_of_2 {
       v_snd_1=$v_snd/example-sound-completion-bell.wav
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
-   # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
-      alias  ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"  # Iniciado mais a frente em f_internal_drya_files_2_of_2
-      alias ,..="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-
-   # Abreviated numpad alias to list REPOS CENTER directory (for easier terminal use)
-      alias 00="cd ${v_REPOS_CENTER} && ls"
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
-      export PATH=$PATH:${v_REPOS_CENTER}/DRYa
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
 
 }
 
 function f_config_figlet {
    # Configuration for dependency: figlet
+   # (figlet is a dependency)
 
    # Not every instalation of figlet comes with the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
@@ -432,20 +457,6 @@ function f_internal_drya_files_2_of_2 {
       #       Para programar scripts temporarios de teste é melhor usar a pasta ~/.code/
       
 
-   # DRYa executable
-      alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-      alias D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-
-   # List DRYa work directory
-      alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
-      alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
-
-   # Fast menu for calculators
-      alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
-
-   # To use in scripts (vim $DRYa/all/.../...)
-      DRYa="${v_REPOS_CENTER}/DRYa"
-   
    # Drya start-up bin files (init-bin)
       # Sourcing all stand-alone scripts
          v_init=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
@@ -481,7 +492,7 @@ function f_internal_drya_files_2_of_2 {
 function f_verbose_end_file {
    # Send to drya-messages the info that all the file was loaded
 
-   echo -e "DRYa: file finished loading: $v_drya_source \n" >> $v_MSGS
+   echo -e "DRYa: file finished loading: $v_name_drya_source \n" >> $v_MSGS
 }
 
 function f_startup_async_ezGIT_pull_All {
@@ -566,16 +577,16 @@ function f_backdoor {
 function f_exec { 
    # Running all functions by sequence
 
-   f_startup_escape_time
-   f_test                # Can be deleted
-   f_internal_drya_files_1_of_2
-   f_drya_libs
-   f_drya_status_msgs
-   f_traitsID           
-   f_dv_PS1             >> $v_MSGS
-   f_config_figlet  # It is a dependency
-   f_drya_welcome_screen  ## Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
-   #f_any_key_b4_open_msgs
+   # Config Internal scripts and settings
+      f_startup_escape_time
+      f_internal_drya_files_1_of_2
+      f_drya_libs
+      f_drya_status_msgs
+      f_traitsID           
+      f_dv_PS1    
+      f_config_figlet  
+      f_drya_welcome_screen  
+      f_test  # Can be deleted
 
    # Loading repositories
       f_repository_dWiki   

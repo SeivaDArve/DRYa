@@ -306,7 +306,13 @@ elif [ $1 == "startup-message" ] || [ $1 == "s" ]; then
    f_startup
 
 elif [ $1 == "printenv" ] || [ $1 == "env" ]; then
+   f_talk; echo "Printing env variables:"
+
    printenv | grep --color="auto" "trid"
+   v_count=$(printenv | grep "trid" | wc -l)
+
+           echo
+   f_talk; echo "Total de linhas encontradas: $v_count"
 
 elif [ $1 == "print" ] || [ $1 == "A" ]; then
    # Print all variables
