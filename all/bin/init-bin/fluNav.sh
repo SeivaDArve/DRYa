@@ -527,6 +527,7 @@ function E {
        L5='5. cat'
        L4='4. nano'
 
+       #L3='3. ed'   # Antigo editor de texto da Unix/Linux 
        L3='3. emacs'
        L2='2. vim'
        #L2='2. vim (easy mode)'  # `vim -y`

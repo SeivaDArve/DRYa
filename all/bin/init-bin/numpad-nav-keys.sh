@@ -8,10 +8,11 @@
    alias 02="drya ,"
    alias 03="drya kbd"
    alias 5="drya"
-   #alias 00="cd ${v_REPOS_CENTER} && ls"  # Set on source-all-drya-files
+   # uDev: alias for Windows WSL2: home/Documents
 
 # For ezGIT
    alias 1="G"
+  #alias 10="cd ${v_REPOS_CENTER} && ls"  # Set on source-all-drya-files
 
    alias 11="G ."
    alias 111="G . A"

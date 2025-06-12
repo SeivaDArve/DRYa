@@ -25,17 +25,23 @@
    #set -o vi
 
 
+alias hi="echo hello!"
 
-alias foto="am start -a android.media.action.IMAGE_CAPTURE"
+
+
+# For .../bin scripts
+   alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
+
+   alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+   alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+   alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+
+alias cam="am start -a android.media.action.IMAGE_CAPTURE"
 
 alias start-termux-gui="vncserver -localhost :1"  # Inicia  o servidor VNC no ecra :1
 alias stop-termux-gui="vncserver -kill :1"        # Termina o servidor VNC no ecra :1
 
-alias timg="termimage"
-
-alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
-alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
-alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+alias timg="termimage" # App to print any img on the terminal in an ascii style
 
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
@@ -59,12 +65,12 @@ function wsl {
 
 # Shortcuts for fx `web`
    # dee: HashTag:987657897
-   alias siigo="eval web siigo"
-   alias gpt="eval web gpt & disown"
-   alias lojas="eval web lojas"
-   alias yt="eval web yt"
-   alias ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
    alias whatsapp="xdg-open https://web.whatsapp.com"
+   alias    siigo="eval web siigo"
+   alias      gpt="eval web gpt & disown"
+   alias    lojas="eval web lojas"
+   alias       yt="eval web yt"
+   alias      ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
 
 # Para Javascript
    alias node="node -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/node/.drya.node.rc"
@@ -681,25 +687,31 @@ alias sh="bash"
 function f_emacs {
    # Attempt to untangle emacs alias (due to so many versions)
    
-   alias em="emacs"
-   alias Em="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
-   alias Emacs="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" # Opens emacs GUI on windows OS
-   alias ems="emacs --script"
+   # Path to binary emacs .exe for windows
+      v_emacs_gui="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" 
+
+   # Alias for TUI emacs (on Linux, Windows)
+      alias emacs="emacs"
+      alias    em="emacs"
+      alias   ems="emacs --script"
+
+   # Alias for GUI emacs (on windows only)
+      alias Emacs="$v_emacs_gui" 
+      alias    Em="$v_emacs_gui"
 
    # Decide for alias EM which emacs corresponds best with the System
-      if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then 
+      if [ -f $v_emacs_gui ]; then 
          # If emacs GUI exists (on windows), then
-         alias EM="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" 
+         alias EM="$v_emacs_gui" 
 
       else 
-         ## If emacs GUI does not exist, then set it for terminal emacs
+         # If emacs GUI does not exist, then set it for terminal emacs
          alias EM="emacs"
       fi
 }
 f_emacs
 
 alias a="cd all && ls"
-alias hi="hello!"
 
 alias ipconfig="ifconfig"  # Imitating windows
 

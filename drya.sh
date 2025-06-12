@@ -1590,6 +1590,8 @@ function f_drya_help_menu {
 function f_partial_file_reader {
    # Para ler partes de documentos
 
+   # uDev: O primeiro argumento convem ser logo o nome do ficheiro, so depois adicionar argumentos com opcoes
+
    # uDev:
    #      [ -z $2     ]  # Print todas estas opcoes/help
    #
@@ -1618,6 +1620,8 @@ function f_partial_file_reader {
    #      [ $2 == "org" "-z $3" ]                # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
    #                                               exemplo, pesquisar TODOS os headers:
    #                                               grep -n "^\*" <nome-do-ficheiro>
+   #
+   #      [ $2 == "r" ]  # Read a random line from a file
 
 
 
