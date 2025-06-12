@@ -182,7 +182,7 @@ function f_notify_fzf_MM {
 if [[ -z $1 ]]; then
    # Menu Simples
 
-   [[ $traits_OS == Android ]] && f_notify_fzf_MM || echo "You are not on Android to use notifications"
+   [[ $trid_OS == Android ]] && f_notify_fzf_MM || echo "You are not on Android to use notifications"
 
 elif [[ $1 == "." ]]; then
    f_create_new_notification
