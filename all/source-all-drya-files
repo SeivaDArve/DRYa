@@ -508,15 +508,22 @@ function f_startup_async_ezGIT_pull_All {
    # uDev: if drya-mail-box is ready, use it here!  
    #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
    #
-   #       instead of `mpv` to make sounds, use termux-toast-message instead
 
+   function f_make_sound {
+      # Function to actually open the media player and play a sound
+      mpv --really-quiet $v_snd_2 & disown
+   }
 
+   function f_make_toast {
+      # Function to use termux:API fx to display a toast message in the middle of the screen
+      termux-toast "ezGIT: \`git pull recursive\` done!"
+   }
 
    # Sound effect in the end (`disown` makes the process run in a sub-shell)
       v_test=$(type mpv) &>/dev/null
       
-      [[ -n $v_test ]] && mpv --really-quiet $v_snd_2 & disown
-
+      [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
+      [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_toast || f_make_sound
 } 
 
 function f_temporary_fx_memor_sutras {
