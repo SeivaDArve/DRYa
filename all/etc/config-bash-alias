@@ -15,7 +15,6 @@
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-
    v_greet="DRYa"
    v_talk="DRYa: "
 
@@ -31,10 +30,14 @@ alias hi="echo hello!"
 
 # For .../bin scripts
    alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
+   alias  ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
    alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
    alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
    alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
+   alias    td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
+
+   alias d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
 alias cam="am start -a android.media.action.IMAGE_CAPTURE"
 
@@ -158,7 +161,6 @@ function dos_2_unix {
 
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-alias d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
 #alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
 alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD.org"
@@ -293,8 +295,6 @@ function lll {
       }
    
 
-# Fast acess for notes (to do list)
-   alias td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
 
 
 alias tc="touch"
@@ -421,8 +421,6 @@ function op {
 
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
-alias all="cd all; ls"
-alias   A="cd all; ls"
 
 alias notify="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
 alias nt="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
@@ -677,12 +675,16 @@ alias src="go gnome-terminal; exit"
 alias f5="source ~/.bashrc"
 
 
-alias ,="cd"
-alias ,,="clear; tput cnorm" # Also resets the blinking cursor if it was hidden
-alias ,,,=", ; ,," # Same as both 2 previous commands put together
-alias .,="ls -Ap" # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
-alias CLEAR="cd; clear; figlet 'Clear'; tput cnorm" # Also resets the blinking cursor if it was hidden
-alias sh="bash"
+alias     ,="cd"
+alias    ,,="tput cnorm; clear" # Also resets the blinking cursor if it was hidden
+alias   ,,,=", ; ,,"            # Same as both 2 previous commands put together
+alias    .,="ls -Ap"            # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
+alias CLEAR="cd; tput cnorm; clear; figlet 'Clear'" # Also resets the blinking cursor if it was hidden
+alias    sh="bash"
+
+alias all="cd all && ls"
+alias   a="cd all && ls"
+alias   A="cd all && ls"
 
 function f_emacs {
    # Attempt to untangle emacs alias (due to so many versions)
@@ -699,19 +701,16 @@ function f_emacs {
       alias Emacs="$v_emacs_gui" 
       alias    Em="$v_emacs_gui"
 
-   # Decide for alias EM which emacs corresponds best with the System
-      if [ -f $v_emacs_gui ]; then 
-         # If emacs GUI exists (on windows), then
-         alias EM="$v_emacs_gui" 
-
+   # Alias 'EM' to adapt for the best emacs executable. Will TRY to set GUI first. If GUI is not existent, set as TUI instead (Usually the best alias to use)
+      if [[ -f $v_emacs_gui ]]; then 
+         alias EM="$v_emacs_gui"  # If emacs GUI exists (on windows), then
       else 
-         # If emacs GUI does not exist, then set it for terminal emacs
-         alias EM="emacs"
+         alias EM="emacs"         # If emacs GUI does not exist, then set it for terminal emacs
       fi
 }
 f_emacs
 
-alias a="cd all && ls"
+
 
 alias ipconfig="ifconfig"  # Imitating windows
 
@@ -721,7 +720,6 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 # Pandoc app to create man pages
 
-alias ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
 
 # Acessing emacs-wiki.org
    alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
@@ -845,8 +843,6 @@ function hist {
    # Link tutorial: https://youtu.be/wIsGXkxXZzE
    alias start-fork-bomb=":() { :|: & };:"
 
-# Verbose file (variables and outputs)
-   echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
 
 
 function arco {
@@ -889,3 +885,11 @@ function arco {
       done
    fi
 }
+
+
+
+
+
+
+# Verbose file (variables and outputs)
+   echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS

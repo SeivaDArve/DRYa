@@ -122,7 +122,6 @@ function f_drya_status_msgs {
    # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
 
    # Configuring variable for DRYa messages
-      v_cfg="$HOME/.config/h.h/drya"  &&  mkdir -p $v_cfg
       v_name="drya-msgs"
       v_MSGS="$v_cfg/$v_name"  &&  export v_MSGS
 
@@ -151,6 +150,11 @@ function f_drya_status_msgs {
    # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
       #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
       alias dmsgs="less $v_MSGS"
+}
+
+function f_drya_fzf_history {
+   # Set an history file to be used in all `fzf` menus who need
+   echo  1>/dev/null
 }
 
 function f_termux_welcome {
@@ -260,6 +264,9 @@ function f_internal_drya_files_1_of_2 {
 
      v_name_drya_script="drya.sh"
      v_path_drya_script=${v_REPOS_CENTER}/DRYa/$v_name_drya_script
+
+     v_cfg="$HOME/.config/h.h/drya"
+     mkdir -p $v_cfg
 
    # Main alias for the most important DRYa files of all
      f_alias_to_enforce
@@ -594,6 +601,7 @@ function f_exec {
       f_internal_drya_files_1_of_2
       f_drya_libs
       f_drya_status_msgs
+      f_drya_fzf_history
       f_traitsID           
       f_dv_PS1    
       f_config_figlet  
