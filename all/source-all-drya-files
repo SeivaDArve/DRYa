@@ -19,23 +19,6 @@ function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
 
-function f_basic_variables {
-   # Include this file name in a variable
-     v_drya_source="source-all-drya-files"
-
-   # Demi-fake pin for fzf menus (scare away curious people)
-     v_pin=0000
-
-   # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
-      v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
-
-   # Sound effects:
-      v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
-
-      v_snd_1=$v_snd/example-sound-completion-bell.wav
-      v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
-}
-
 function f_drya_libs {
    # Sourcing drya-lib-1: File with colors 
       source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
@@ -127,7 +110,7 @@ function f_drya_msgs_welcome {
       echo
 }  >> $v_MSGS 2>/dev/null
 
-function f_drya_msgs {
+function f_drya_status_msgs {
    # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
 
    # Configuring variable for DRYa messages
@@ -170,12 +153,6 @@ function f_termux_welcome {
       if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux welcome message:"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
 }
 
-function f_neofetch {
-   # Neofetch is not needed... It is just for fun. And if it does not exist, do not print it's error message
-   #neofetch 2>/dev/null
-   neofetch -L 2>/dev/null
-}
-   
 function f_drya_welcome_screen {
    # In order to uncluter the welcome screen, we use this function
 
@@ -201,7 +178,8 @@ function f_drya_welcome_screen {
               echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
               echo
 
-   #f_neofetch
+   # Apresentar apenas o icon ASCII do `neofetch`
+      neofetch -L 2>/dev/null
 }
 
 function f_any_key_b4_open_msgs {
@@ -235,6 +213,21 @@ function f_any_key_b4_open_msgs {
 
 function f_internal_drya_files_1_of_2 {
    # Repository: DRYa (internal files - (1/2) )
+
+   # Include this file name in a variable
+     v_drya_source="source-all-drya-files"
+
+   # Demi-fake pin for fzf menus (scare away curious people)
+     v_pin=0000
+
+   # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
+      v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
+
+   # Sound effects:
+      v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
+
+      v_snd_1=$v_snd/example-sound-completion-bell.wav
+      v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
       alias  ,.="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"  # Iniciado mais a frente em f_internal_drya_files_2_of_2
@@ -575,18 +568,14 @@ function f_exec {
 
    f_startup_escape_time
    f_test                # Can be deleted
-   f_basic_variables
-   f_drya_libs
-   f_drya_msgs
    f_internal_drya_files_1_of_2
-   f_drya_msgs_init     >> $v_MSGS 2>/dev/null
+   f_drya_libs
+   f_drya_status_msgs
    f_traitsID           
-   # uDev: `G cf i` caso o nome definido no `git` seja o pre-definido.
    f_dv_PS1             >> $v_MSGS
-   f_drya_msgs_welcome  >> $v_MSGS 2>/dev/null
+   f_config_figlet  # It is a dependency
    f_drya_welcome_screen  ## Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
    #f_any_key_b4_open_msgs
-   f_config_figlet  # It is a dependency
 
    # Loading repositories
       f_repository_dWiki   
@@ -609,7 +598,6 @@ function f_exec {
    # Jarve pode ser uma fx que corre tudo o resto async
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
 
-   f_neofetch  # uDev: Substituir por TraitsID
    #f_notes_toDo
 
    f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
