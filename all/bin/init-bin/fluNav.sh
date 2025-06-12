@@ -47,7 +47,6 @@ function f_refresh_S_hist_file {
    # Ficheiro de historico com lista de ficheiros
 
    v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
-
    v_file="drya-fluNav-S-hist" 
 
    i=$v_dir/$v_file
@@ -62,7 +61,6 @@ function f_refresh_V_hist_file {
    # Ficheiro de historico com lista de diretorios
 
    v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
-
    v_file="drya-fluNav-V-hist" 
 
    i=$v_dir/$v_file

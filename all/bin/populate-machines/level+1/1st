@@ -98,6 +98,7 @@ function f_gr_dependencies {
    vim powerline  # Some vim installations have too little info on the status bar
    mpv            # Terminal Media Player (pode precisar da biblioteca 'libxml2': `pkg install libxml2`)
    nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
+   lf             # Terminal file explorer
 
 
 # installing `mpv` on fedora

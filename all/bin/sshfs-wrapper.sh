@@ -34,9 +34,9 @@ function f_declare_variables {
       v_verbose_line_file=$v_verbose_line_repo/all/ssh.txt
 
       v_tmp_dir=~/.config/h.h/drya/ssh && mkdir -p $v_tmp_dir
-      v_temporary_file=ssh-tmp-file.txt 
+      v_tmp_file=ssh-tmp-file.txt 
 
-      v_temporary_file=$v_tmp_dir/$v_temporary_file  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
+      v_temporary_file=$v_tmp_dir/$v_tmp_file  # Para quem nao tem a repo 'verbose-lines' é usada a alternativa deste ficheiro temporario que guarda o ultimo 'set-up' de cliente ou servidor 
       
    # Arrays de Maquina local + Maquina Remota
       # Par de arrays. o Index 1 de um array (array A) corresponde ao Index 1 do outro array (array B)
