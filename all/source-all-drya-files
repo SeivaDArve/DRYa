@@ -3,16 +3,26 @@
 # Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
 
 
-
 # uDev: $HOME on WSL2 must go to $HOME on windows
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
 
 function f_startup_escape_time {
-   # Function with the timer of 1 second, to allow the chance of the user to avoid DRYa to start loading
+   # Allowing the user to escape DRYa for 1 second
+   # It is best to use any key to 'escape' rather than 'Ctrl-C' directly, because 'Ctrl-C' are 2 keys, and 'Ctrl' key might not be enabled on termux "extra keys" at all
 
-   read -s -n 1 -t 1
+   unset v_escape
+   read -sn 1 -t 1 v_escape
+
+   if [[ -n $v_escape ]]; then 
+      echo    "DRYa: escaped main DRYa loader..."
+      echo    " > Press 'Ctrl-C' to stop loading DRYa"
+      echo    " > Press 'ENTER'  to load DRYa normally"
+      echo -n " > "
+      read -s 
+      echo
+   fi
 }
 
 function f_test {
@@ -77,7 +87,6 @@ function f_traitsID {
    alias trid="bash $trid_script"
 }
 
-
 function f_dv_PS1 {
    # Defining the favourite Terminal PS1 variable:
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
@@ -93,7 +102,6 @@ function f_dv_PS1 {
    echo
 
 }  >> $v_MSGS
-
 
 function f_drya_msgs_welcome {
       echo
@@ -216,21 +224,21 @@ function f_any_key_b4_open_msgs {
 function f_internal_drya_files_1_of_2 {
    # Repository: DRYa (internal files - (1/2) )
 
-   # Include this file name in a variable
-     v_name_drya_source="source-all-drya-files"
-     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/source-all-drya-files 
-
-     v_name_drya_alias="config-bash-alias"
-     v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-
-     #v_name_dryarc
-     #v_path_dryarc
-
-     #v_name_drya_root
-     #v_path_drya_root
-
    # Demi-fake pin for fzf menus (scare away curious people)
      v_pin=0000
+
+   # Include this file name in a variable
+     v_name_drya_source="source-all-drya-files"
+     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_drya_source
+
+     v_name_drya_alias="config-bash-alias"
+     v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/$v_name_drya_alias
+
+     v_name_dryarc=".dryarc"
+     v_path_dryarc=~/.config/h.h/drya/$v_name_dryarc
+
+     v_name_drya_script="drya.sh"
+     v_path_drya_script=${v_REPOS_CENTER}/DRYa/$v_name_drya_script
 
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
@@ -242,9 +250,9 @@ function f_internal_drya_files_1_of_2 {
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
-      alias   ,.="vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-      alias  ,..="vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias"  
-      alias ,...="echo .dryarc"  
+      alias   ,.="vim $v_path_drya_source"
+      alias  ,..="vim $v_path_drya_alias"
+      alias ,...="vim $v_path_dryarc"
 
    # Abreviated numpad alias to list REPOS CENTER directory (for easier terminal use)
       alias 00="cd ${v_REPOS_CENTER} && ls"
@@ -257,14 +265,11 @@ function f_internal_drya_files_1_of_2 {
 
    # Sound effects:
       v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
-
       v_snd_1=$v_snd/example-sound-completion-bell.wav
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
-
    # Add script drya.sh to PATH variable (try: echo $PATH) 
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
-
 }
 
 function f_config_figlet {
@@ -451,6 +456,8 @@ function f_repository_jarve {
 function f_internal_drya_files_2_of_2 {
    # Repository: DRYa (internal files - (2/2) )
 
+   # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
+
    # Remove temporary dir created by DRYa's other scripts
       rm -rf ~/.tmp/  
 
@@ -478,17 +485,11 @@ function f_internal_drya_files_2_of_2 {
 
          echo                                          >> $v_MSGS
 
-      # Sourcing a specific list of scripts
-         alias master-emacs="${v_REPOS_CENTER}/DRYa/all/bin/master-emacs.sh"
-
-   # Sourcing the temporary local configs for DRYa (if they do not exist, send err: /dev/null)) It can store temporary variables for debugging process of some app
-      source ~/.config/h.h/drya/.dryarc 2>/dev/null
-
-   # Sourcing config files stored inside DRYa repo created by other machines running DRYa
-      source ${v_REPOS_CENTER}/DRYa/all/var/appended-from-dryarc 2>/dev/null
-
-   # Sourcing DRYa's own configs (overlaps other repos, internal drya binaries, etc). Used to test things
+   # Sourcing 'config-bash-alias' last configs to overwrite other Repos configs (@DRYa repo)
       source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+
+   # Sourcing 'dryarc' last configs to overwrite other configs (Machine specific @Host, does not get centralized and uploaded @DRYa)
+      source $v_path_dryarc 2>/dev/null
 }
 
 function f_verbose_end_file {
@@ -607,20 +608,24 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
 
-   f_internal_drya_files_2_of_2
+   # Last default configs (again, if needed will overwriting configs, for safety)
+      f_internal_drya_files_2_of_2
 
-   # Jarve pode ser uma fx que corre tudo o resto async
+   # Start loading background tasks 
+      # Jarve 
+         # pode ser uma fx que corre tudo o resto async
+         # uDev: f_assync `td` using GPS
+         #f_notes_toDo
 
-   #f_notes_toDo
+      f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
+      f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
-   f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
-   #f_temporary_fx_memor_sutras
-   f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
+   # For practice, fun, entetainment:
+      #f_temporary_fx_memor_sutras
+      #f_temporary_fx_open_random_shells_py_node_sql {
 
-   f_verbose_end_file
-   #f_temporary_fx_open_random_shells_py_node_sql {
-   # uDev: f_assync `td` using GPS
-   #clear
+   # Last Verbose output for drya-status-messages
+      f_verbose_end_file
 }
 f_exec
 
