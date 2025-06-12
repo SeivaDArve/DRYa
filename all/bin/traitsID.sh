@@ -12,11 +12,13 @@
 # uDev: Set windows time and date automaticaly with batch scripts
 # uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 
+
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="traitsID"
    v_talk="trid: "
+
 
 function f_trid_0_1_2 {
    # f_set_vars_source_script_output

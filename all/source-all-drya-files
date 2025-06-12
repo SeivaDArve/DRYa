@@ -5,9 +5,9 @@
 
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
-# uDev: Function f_talk should be sourced here to enable it to be used across the system
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
+
 
 function f_startup_escape_time {
    # Function with the timer of 1 second, to allow the chance of the user to avoid DRYa to start loading
@@ -15,9 +15,13 @@ function f_startup_escape_time {
    read -s -n 1 -t 1
 }
 
+function f_test {
+   alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
+}
+
 function f_basic_variables {
    # Include this file name in a variable
-     v_title_drya="source-all-drya-files"
+     v_drya_source="source-all-drya-files"
 
    # Demi-fake pin for fzf menus (scare away curious people)
      v_pin=0000
@@ -32,11 +36,17 @@ function f_basic_variables {
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 }
 
+function f_drya_libs {
+   # Sourcing drya-lib-1: File with colors 
+      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      v_greet="DRYa"
+      v_talk="DRYa: "
+}
 
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: Sub-Operative System"
-      echo " > $v_title_drya 1st File to load, after ~/.bashrc redirection"
+      echo " > $v_drya_source 1st File to load, after ~/.bashrc redirection"
       echo " > running from: ${DRYa_HEART}"
       echo " > drya-msgs file located at: $v_MSGS"
       # udev: echo "Installed at.."
@@ -71,7 +81,6 @@ function f_traitsID {
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
-      bash $trid_script startup-message
 
    # Guardar no "env" todas as var
       set -a               # Ativa auto-exportação
@@ -83,10 +92,6 @@ function f_traitsID {
       cat $trid_output >> $v_MSGS
 
    alias trid="bash $trid_script"
-
-   function f_traitsID_print {
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh A
-   } 
 }
 
 
@@ -171,32 +176,32 @@ function f_neofetch {
    neofetch -L 2>/dev/null
 }
    
-function f_test {
-   alias test1='echo "Testing sourcing alias inside functions, result: also works!"'
-}
-
-function f_drya_plus {
+function f_drya_welcome_screen {
    # In order to uncluter the welcome screen, we use this function
-      # Building '$ drya +' command used on the welcome screen
-      # uDev: send to drya-messages too
-      # uDev: set function: drya --os (traitsID info)
-      # uDev: set environment variable: drya-os to be used by other functions like '$ op'
+
+   # uDev: At `D .` add an option to see the welcome screen again 
+   # uDev: send to drya-messages too
+   # uDev: set function: drya --os (traitsID info)
+   # uDev: set environment variable: drya-os to be used by other functions like '$ op'
+   # uDev: Ask if the user want to see more than just the OS that is running
+   # uDev: Make ezGIT ask if the user wants: G v all
       
-      # uDev: Ask if the user want to see more than just the OS that is running
-      # uDev: Make ezGIT ask if the user wants: G v all
-      
-   # List and execution of function under drya_plus:
-      #echo
+   # Display info about it at the screen when DRYa is loaded by the terminal
+   # --- Presenting it with figlet (which is a dependency) or just echo it's name:
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   #f_termux_welcome
+
+   # Using traitsID startup message
+      bash $trid_script startup-message
+
+   # Verbose Initial DRYa Message
       f_talk; echo "Startup Help..."
               echo "      Aceder ao menu principal    : \`D .\`"
               echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
               echo
-      f_drya_msgs
-      f_dv_PS1
-      #f_termux_welcome
-      #f_neofetch
-      f_test
-   
+
+   #f_neofetch
 }
 
 function f_any_key_b4_open_msgs {
@@ -242,9 +247,6 @@ function f_internal_drya_files_1_of_2 {
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
 
-   # Display info about it at the screen when DRYa is loaded by the terminal
-   # --- Presenting it with figlet (which is a dependency) or just echo it's name:
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
 function f_config_figlet {
@@ -486,7 +488,7 @@ function f_internal_drya_files_2_of_2 {
 function f_verbose_end_file {
    # Send to drya-messages the info that all the file was loaded
 
-   echo -e "DRYa: file finished loading: $v_title_drya \n" >> $v_MSGS
+   echo -e "DRYa: file finished loading: $v_drya_source \n" >> $v_MSGS
 }
 
 function f_startup_async_ezGIT_pull_All {
@@ -572,8 +574,9 @@ function f_exec {
    # Running all functions by sequence
 
    f_startup_escape_time
-   f_test  # Can be deleted
+   f_test                # Can be deleted
    f_basic_variables
+   f_drya_libs
    f_drya_msgs
    f_internal_drya_files_1_of_2
    f_drya_msgs_init     >> $v_MSGS 2>/dev/null
@@ -581,10 +584,7 @@ function f_exec {
    # uDev: `G cf i` caso o nome definido no `git` seja o pre-definido.
    f_dv_PS1             >> $v_MSGS
    f_drya_msgs_welcome  >> $v_MSGS 2>/dev/null
-   #f_termux_welcome
-   #f_neofetch
-
-   f_drya_plus  ## Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
+   f_drya_welcome_screen  ## Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not
    #f_any_key_b4_open_msgs
    f_config_figlet  # It is a dependency
 
@@ -610,7 +610,6 @@ function f_exec {
       f_repository_jarve  # After loading all configs, ask if user want to run this first script
 
    f_neofetch  # uDev: Substituir por TraitsID
-   #f_traitsID_print
    #f_notes_toDo
 
    f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
