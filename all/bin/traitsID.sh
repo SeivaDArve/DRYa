@@ -24,13 +24,18 @@ function f_trid_0_1_2 {
    # f_set_vars_source_script_output
    # File that has a copy of all variables sent to environment
 
+
+
    # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
-      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      # (Definido em source-all-drya-files)
 
    # Nome do ficheiro SCRIPT traitsID.sh
-      trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
-      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      # (Definido em source-all-drya-files)
+
+   # Nome do ficheiro OUTPUT traitsID.sh
+      # (Definido em source-all-drya-files)
+
+
 
    # Recriar o ficheiro OUTPUT (Sempre que o terminal inicia). variaveis iniciadas em $trid_source
       mkdir -p $trid_dir

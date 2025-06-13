@@ -62,15 +62,25 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema. Semelhante a `neofetch`
 
+
+   # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
+      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      export trid_source trid_0
+
    # Nome do ficheiro SCRIPT traitsID.sh
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
+      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+      export trid_script trid_1
 
    # Nome do ficheiro OUTPUT com as variaveis
       trid_dir=~/.config/h.h/drya/traitsID
       trid_file=trid_output.txt
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_dir trid_file trid_output
+      export trid_dir trid_file trid_output trid_2
+
+
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
