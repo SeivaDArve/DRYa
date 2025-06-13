@@ -675,10 +675,6 @@ alias src="go gnome-terminal; exit"
 alias f5="source ~/.bashrc"
 
 
-alias     ,="cd"
-alias    ,,="tput cnorm; clear" # Also resets the blinking cursor if it was hidden
-alias   ,,,=", ; ,,"            # Same as both 2 previous commands put together
-alias    .,="ls -Ap"            # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
 alias CLEAR="cd; tput cnorm; clear; figlet 'Clear'" # Also resets the blinking cursor if it was hidden
 alias    sh="bash"
 

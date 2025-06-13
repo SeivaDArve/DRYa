@@ -458,6 +458,8 @@ function . {
 }
 
 function .. {
+   # uDev: if there are an arg $2 with a number like `.. 3` navigate updir as many times as the number given
+
    cd ..
 }
 
@@ -510,6 +512,27 @@ function ....... {
            echo " > $v"
 }
 
+function , {
+   cd
+}
+
+function ,, {
+   # Also resets the blinking cursor if it was hidden
+   tput cnorm
+   clear 
+}  
+
+function ,,, {
+   # Same as both 2 previous commands put together
+   , 
+   ,,
+}
+
+function ., {
+   # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
+   ls -Ap
+}
+
 function E {
    # Escolher editor de texto para pre-definir 
 
@@ -527,7 +550,7 @@ function E {
        L5='5. cat'
        L4='4. nano'
 
-       #L3='3. ed'   # Antigo editor de texto da Unix/Linux 
+      #L3='3. ed'   # Antigo editor de texto da Unix/Linux 
        L3='3. emacs'
        L2='2. vim'
        #L2='2. vim (easy mode)'  # `vim -y`
