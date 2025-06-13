@@ -38,6 +38,7 @@ function f_trid_0_1_2 {
 
 
    # Recriar o ficheiro OUTPUT (Sempre que o terminal inicia). variaveis iniciadas em $trid_source
+      [[ -f    $trid_dir ]] && rm $trid_dir  # Se existir um ficheiro com o mesmo nome que o dir que tentamos criar, dir nao sera criado antes desse ficheiro ser removido
       mkdir -p $trid_dir
       rm       $trid_output 2>/dev/null
       touch    $trid_output
