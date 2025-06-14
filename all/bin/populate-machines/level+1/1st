@@ -56,10 +56,11 @@ function f_gr_2_soft_DRYa_dependencies {
 
 }
 
-function f_gr_dependencies {
+function f_gr_hard_dependencies {
    # List of DRYa dependencies (to be installed by DRYa installer)
 
    pkg install \
+   awk            # Serve para procurar e substituir texto
    figlet         # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
    ncurses-utils  # Instals packages like `tput`
    less           # Dependency for ezGIT
@@ -181,7 +182,7 @@ function f_exec {
       # uDev: Run tutorial how to install DRYa
 
    # After DRYa
-      f_gr_dependencies
+      f_gr_hard_dependencies
 }
 f_exec
 

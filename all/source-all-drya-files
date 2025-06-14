@@ -20,7 +20,7 @@ function f_startup_escape_time {
       echo    " > Press 'Ctrl-C' to stop loading DRYa"
       echo    " > Press 'ENTER'  to load DRYa normally"
       echo -n " > "
-      read -s 
+      read -s  # Existe oportunidade para codigos secretos aqui, carregar DRYa de forma especial
       echo
    fi
 }
@@ -317,8 +317,15 @@ function f_internal_drya_files_1_of_2 {
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
-      # uDev: fix $PATH with duplicated lines (try `echo $PATH` and see if it is not the case that some directories are mentioned more than once)
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
+
+   # Remover linhas duplicadas de $PATH com `awk`
+      #export PATH=$(echo "$PATH" | awk -v RS=':' '!a[$1]++' | paste -sd:)
+         # Explicacao Chat GPT
+         #    RS=':'     : Define o separador de registros como : (delimitador do $PATH).
+         #    !a[$1]++   : Garante que cada diretório só apareça uma vez.
+         #    paste -sd: : Junta os diretórios novamente com :.
+      
 }
 
 function f_config_figlet {
