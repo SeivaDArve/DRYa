@@ -95,7 +95,7 @@ function f_traitsID {
       cat $trid_output >> $v_MSGS
 
    # Adicionar mais fx ao env
-      source ${v_REPOS_CENTER}/DRYa/all/bin/traitsID_pk.sh
+      #source ${v_REPOS_CENTER}/DRYa/all/bin/traitsID_pk.sh
 
    alias trid="bash $trid_script"
 }
