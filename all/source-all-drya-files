@@ -317,6 +317,7 @@ function f_internal_drya_files_1_of_2 {
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
    # Add script drya.sh to PATH variable (try: echo $PATH) 
+      # uDev: fix $PATH with duplicated lines (try `echo $PATH` and see if it is not the case that some directories are mentioned more than once)
       export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
 }
 
