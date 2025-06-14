@@ -546,26 +546,32 @@ function E {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-       L6='6. less --wordwrap'
-       L5='5. cat'
-       L4='4. nano'
+       L9='9. less '
+       L8='8. less --wordwrap'
+       L7='7. cat'
+       L6='6. nano'
+       L5='5. vim (easy mode)'  # `vim -y`
 
-      #L3='3. ed'   # Antigo editor de texto da Unix/Linux 
+       L4='4. ed'   # Antigo editor de texto da Unix/Linux 
        L3='3. emacs'
        L2='2. vim'
-       #L2='2. vim (easy mode)'  # `vim -y`
 
        L1='1. Cancel'
 
-      L0="SELECIONE 1 editor de texto para pre-definir: "
+      L0="fluNav: E: SELECT 1 editor de texto para pre-definir em \`e\`: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4.  " ]] && alias v_editor="nano" && echo "Nano"
+      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "8.  " ]] && echo "uDev"
+      [[ $v_list =~ "7.  " ]] && echo "uDev"
+      [[ $v_list =~ "6.  " ]] && echo "uDev"
+      [[ $v_list =~ "5.  " ]] && echo "uDev"
+      [[ $v_list =~ "4.  " ]] && alias v_editor="ed" && echo "ed"
       [[ $v_list =~ "3.  " ]] && alias v_editor="emacs" && echo "emacs"
-      [[ $v_list =~ "2.  " ]] && alias v_editor="vim" && echo "emacs"
+      [[ $v_list =~ "2.  " ]] && alias v_editor="vim" && echo "vim"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
@@ -1494,7 +1500,7 @@ function S {
       elif [ $1 == "-1"       ]; then v_nm="fx_test";                f_action; ## Just test if this file is working
       elif [ $1 == "S"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
       elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; source ~/.bashrc
-      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; f_up
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; #f_up
       elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="initVIM";                f_action; f_edit__init_file_emacs__with_vim; f_up
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up

@@ -1501,11 +1501,11 @@ function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4="4. | Help Menu"
-      L3="3. | DRYa: Greet & Present itself"
-      L2="2. | Toolbox" 
+      L4="4. | Help Menu";                    L4c="drya help"
+      L3="3. | DRYa: Greet & Present itself"; L3c="D p"
+      L2="2. | Toolbox"
 
       L1="1. Cancel" 
 
@@ -1513,12 +1513,15 @@ function f_drya_fzf_MM {
 
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
+   # Atualizar historico fzf automaticamente
+      echo "$Lz2" >> $Lz4
+
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" >> $Lz4
-      [[ $v_list =~ "4. " ]] && f_drya_help_menu  
-      [[ $v_list =~ "3. " ]] && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!"
+      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ "4. " ]] && echo "$L4c" >> $Lz4 && f_drya_help_menu 
+      [[ $v_list =~ "3. " ]] && echo "$Lc3" >> $Lz4 && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!" 
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
+      [[ $v_list =~ "1. " ]] && echo "Canceled" 
       #unset v_list
 }
 
@@ -2110,18 +2113,17 @@ elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [
 
 
 
-elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ];  then 
+elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ];  then 
    # Install DRYa and more stuff
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
-
 
    if [[ -z $2 ]]; then 
       # If there are no args:
 
       # Lista de opcoes para o menu `fzf`
-         Lz1='Save '; Lz2='D install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Save '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L4='4. Install: Dependencies only'
+         L4='4. Install: DRYa Dependencies only'
          L3='3. Install: DRYa (with `fzf`)'
          L2='2. Install: DRYa (with `select`) (legacy)'
          L1='1. Cancel'
@@ -2138,13 +2140,15 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
          unset v_list
 
-   elif [[ $2 == "--me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
+   elif [[ $2 == "me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
       f_install_drya
 
+   #elif [[ $2 == "dependencies" ]] || [ $2 == "dep" ]; then 
+   #   # uDev: Read file '1st' and exec instalation of selected group of dependencies
 
    elif [[ $2 == "." ]]; then 
+      # Edit script "DRYa fzf installer"
       vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
-
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
       # uDev: This is a config to set, not an instalation
@@ -2177,7 +2181,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # installing Doom Emacs on Windows
       echo "uDev: Tutorial here:"
       echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
-
 
    elif [[ $2 == "doom-emacs" ]]; then 
       # installing Doom Emacs on Linux
@@ -2216,14 +2219,12 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo "Now run emacs like you normally would"
          echo "Done!"
 
-
    elif [[ $2 == "xrandr" ]] || [ $2 == "" ]; then 
       # Config the correct screen resolution with `xrandr`
       # uDev: This is a config to set, not an instalation
 
       echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
       echo " > 1360x768 "
-
 
    elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
       # Makes all dependencies for upk repo available
@@ -2845,25 +2846,29 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > https://seivadarve.github.io/Curriculum-Vitae/"
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
-            
-elif [ $1 == ".." ]; then  
-   # After using any fzf menu and choosen to click on the `command` given there, a variable is saved on the environment. So `D ..` can go directly to that menu
-   
-   ### Estas fx com o ficheiro de historico $v_drya_fzf_menu_hist vao ser descontinuadas para se passar a usar `history -s "command"` que coloca no historico do bash o texto que quisermos
-   #
-   #    # Acess history of visited menus
-   #       echo "Cancel" >> $v_drya_fzf_menu_hist
-   #       v_list=$(cat "$v_drya_fzf_menu_hist" | fzf --tac --cycle --prompt="DRYa: SELECT 1 to repeat from: fzf sub-menus History: ")
-   #  
-   #    # Attempt to run such menu
-   #       [[ $v_list != "Cancel" ]] && echo "$v_list" | sed 's/`//g'
-   #       [[ $v_list =~ "Cancel" ]] && echo "Canceled"
-   #  
-   #    # Remove all text 'Cancel' from the previous file
-   #       sed -i "/Cancel/d" $v_drya_fzf_menu_hist
 
-   f_talk; echo '$v_drya_fzf_menu_hist sera agora substituido por `history -s "<comando>"`'
-           echo
+elif [ $1 == "..." ]; then  
+   # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
+   # uDev: Remover linhas duplicadas
+
+   vim $v_drya_fzf_menu_hist
+
+elif [ $1 == ".." ]; then  
+   # Do ficheiro de historico dos menus fzf, filtrar uma linha para repetir o comando escrito nessa linha
+   # uDev: Remover linhas duplicadas
+   
+
+
+   # Do ficheiro de historico, buscar apenas 1 linha
+      v_line=$(cat $v_drya_fzf_menu_hist | fzf)
+
+   # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
+      v_line=$(sed "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+      v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+
+   # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
+      bash $v_line
+
 
 elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
    # Open DRYa fzf Main Menu

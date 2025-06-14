@@ -62,25 +62,31 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema. Semelhante a `neofetch`
 
+   # Para debug
+      function f_debug {
+         for i in $(printenv | grep "trid" | cut -f 1 -d "=")
+         do
+            echo $i
+            unset $i
+         done
 
-   # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
-      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
-      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_source trid_0
+         for i in $(printenv | grep "trid" | cut -f 1 -d "=")
+         do
+            echo $i
+         done
+         read
+      }
+      #f_debug
 
    # Nome do ficheiro SCRIPT traitsID.sh
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
-      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_script trid_1
 
    # Nome do ficheiro OUTPUT com as variaveis
       trid_dir=~/.config/h.h/drya/traitsID
       trid_file=trid_output.txt
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_dir trid_file trid_output trid_2
-
-
+      export trid_dir trid_file trid_output
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
@@ -241,16 +247,17 @@ function f_alias_to_enforce {
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
       alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-            DRYa="${v_REPOS_CENTER}/DRYa/"  # To use in scripts (vim $DRYa/all/.../...)
+            DRYa=${v_REPOS_CENTER}/DRYa  # To use in scripts (vim $DRYa/all/.../...)
 
    # List DRYa work directory
       alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
       alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
-      alias   ,.="vim $v_path_drya_source"
-      alias  ,..="vim $v_path_drya_alias"
-      alias ,...="vim $v_path_dryarc"
+      alias    ,.="vim ~/.bashrc"
+      alias   ,..="vim $v_path_drya_source"
+      alias  ,...="vim $v_path_drya_alias"
+      alias ,....="vim $v_path_dryarc"
 
    # Numpad alias to list REPOS CENTER directory (for easier terminal use)
       alias 10="cd ${v_REPOS_CENTER} && ls"
@@ -278,6 +285,22 @@ function f_internal_drya_files_1_of_2 {
      v_cfg="$HOME/.config/h.h/drya"
      mkdir -p $v_cfg
 
+
+   # For fzf menu history
+     v_name_fzf_H="drya-fzf-hist.txt"
+     v_dirc_fzf_H=$v_cfg/drya-fzf
+
+     v_file_fzf_H=$v_dirc_fzf_H/$v_name_fzf_H
+     v_drya_fzf_menu_hist=$v_file_fzf_H  # Legacy
+     #$v_drya_fzf_menu_hist              # Legacy
+
+     mkdir -p $v_dirc_fzf_H
+     touch    $v_file_fzf_H $v_drya_fzf_menu_hist
+     export    v_file_fzf_H  v_drya_fzf_menu_hist
+
+
+
+      
    # Main alias for the most important DRYa files of all
      f_alias_to_enforce
 
@@ -653,7 +676,6 @@ function f_exec {
    # For practice, fun, entetainment:
       #f_temporary_fx_memor_sutras
       #f_temporary_fx_open_random_shells_py_node_sql {
-      # Yoga: som continuo de respurar
 
    # Last Verbose output for drya-status-messages
       f_verbose_end_file

@@ -203,6 +203,7 @@ alias RM="rm -rf"
 
 alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
  #uDev: `mk ..` to go to last created dir
+ #uDev: `mk dir1 . dir2 dir3` to make all dirs and navigate do dir2
 function Mk {
 
    if [[ -z $* ]]; then
