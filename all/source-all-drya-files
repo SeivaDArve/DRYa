@@ -281,6 +281,7 @@ function f_internal_drya_files_1_of_2 {
 
      v_name_dryarc=".dryarc"
      v_path_dryarc=~/.config/h.h/drya/$v_name_dryarc
+     # Exemplos: Quando em um PC especifico, um comando especifico da erro, pode ser usado .dryarc para overwrite desse comando. Por exemplo para facilitar outros utilizadores
 
      v_name_drya_script="drya.sh"
      v_path_drya_script=${v_REPOS_CENTER}/DRYa/$v_name_drya_script
