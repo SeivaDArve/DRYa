@@ -610,10 +610,11 @@ function f_exec_calculadora_percentagens {
    f_greet
    f_talk; echo "Calculadora de percentagens"
            echo "      (com 3 casas decimais)"
-
            echo 
-           echo "Exemplo: 1% de 100 = 1"
-           echo "         A% de  B  = X"
+           echo "|-------------------------|"
+           echo "| Exemplo: 1% de 100 = 1  |"
+           echo "|          A% de  B  = X  |"
+           echo "|-------------------------|"
            echo
            read -p "Introduza A: " vA
            read -p "Introduza B: " vB
