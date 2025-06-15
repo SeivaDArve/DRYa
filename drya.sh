@@ -2502,7 +2502,17 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
 
    elif [ $2 == "p" ]; then
       # Entrar na Calculadora de Percentagens
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p
+
+      # Perguntar quantas casas decimais?
+         v_ask=no
+
+      if [ -z $3 ]; then
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p
+
+      elif [ $3 == "d" ]; then
+         v_ask=yes
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p d
+      fi
 
    elif [ $2 == "x" ]; then 
       # Calculations directly on the prompt: `D ca x "3 + 3"`

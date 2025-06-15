@@ -45,6 +45,12 @@ function f_talk {
 
    touch $v_log
 
+function f_decimais {
+   # Definir o numero de casas decimais a aplicar nos calculos
+      #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
+      v_decimal=3                 # Alterar este numero para alterar a pre-definicao
+}
+
 function f_clc_bc {
    # dee: in Bash there is  very good calculator caled 'bc', but it's command is not very intuitive
    # Opens `bc` but creates a more verbose intro about itself and what is happening
@@ -62,8 +68,8 @@ function f_calc_regr_3_simples {
    # Utilizado para calcular a formula final da regra de 3 simples
    
    #v_result=$(echo "scale=$v_decimal; $v_input" | bc)
-   v_multip=$(echo "scale=3; $vB * $vC" | bc)
-   vX=$(echo "scale=3; $v_multip / $vA" | bc)
+   v_multip=$(echo "scale=$v_decimal; $vB * $vC" | bc)
+         vX=$(echo "scale=$v_decimal; $v_multip / $vA" | bc)
    echo
 }
 
@@ -71,8 +77,9 @@ function f_calc_percentagens {
    # Utilizado para calcular a formula final da percentagem
    #echo "Debug: $vA $vB"
 
-   v_parcela=$(echo "scale=3; $vB / 100" | bc)
-   v_multip=$(echo "scale=3; $v_parcela * $vA" | bc)
+   v_parcela=$(echo "scale=$v_decimal; $vB / 100" | bc)
+    v_multip=$(echo "scale=$v_decimal; $v_parcela * $vA" | bc)
+
    vX=$v_multip
 }
    
@@ -182,16 +189,13 @@ function f_exec_calculadora_registadora {
 
    f_greet
 
-   # Definir o numero de casas decimais a aplicar aos resultados das contas
-      #alias bc="bc <<< scale=2"  # Colocar este alias no ~/.bashrc para configurar 'bc' para usar sempre 2 casas decimais
-      v_decimal=3                 # Alterar este numero para alterar a pre-definicao
-   
+   f_decimais 
 
    function f_start {
       f_talk; echo "Calculadora Basica (extendida)"
-      echo " > Instruções: h"
-      echo " > Casas decimais: $v_decimal"
-      echo
+              echo " > Instruções: h"
+              echo " > Casas decimais: $v_decimal"
+              echo
    }
    f_start
 
@@ -609,13 +613,17 @@ function f_exec_calculadora_trim {
 function f_exec_calculadora_percentagens {
    f_greet
    f_talk; echo "Calculadora de percentagens"
-           echo "      (com 3 casas decimais)"
+           echo "       > Casas decimais: $v_decimal"
+           echo "         Para alterar:  \`D ca p d\`"
            echo 
            echo "|-------------------------|"
            echo "| Exemplo: 1% de 100 = 1  |"
            echo "|          A% de  B  = X  |"
            echo "|-------------------------|"
            echo
+
+           [[ $v_ask == "yes" ]] && read -p "Introduzir novo nr de Casas decimais: " v_decimal
+
            read -p "Introduza A: " vA
            read -p "Introduza B: " vB
 
@@ -629,7 +637,7 @@ function f_exec_calculadora_percentagens {
            echo "B: $vB"
            echo "X: $vX"
 
-   f_talk; echo "$vA porcento de $vB é igual a $vX"
+   f_talk; echo "${vA}% de $vB é igual a $vX"
 
 
 
@@ -720,6 +728,8 @@ function f_cronometro_multi_datas {
 
 
 
+# Pre-definir numero das casas decimais
+   f_decimais
 
 if [ -z "$1" ]; then
    # Menu para aceder a todas as calculadoras
@@ -805,7 +815,17 @@ elif [ $1 == "3" ]; then
 
 elif [ $1 == "p" ]; then
    # Entrar na Calculadora de Percentagens
-   f_exec_calculadora_percentagens
+
+   # Perguntar quantas casas decimais?
+      v_ask=no
+
+   if [ -z $2 ]; then
+      f_exec_calculadora_percentagens
+
+   elif [ $2 == "d" ]; then
+      v_ask=yes
+      f_exec_calculadora_percentagens
+   fi
 
 elif [ $1 == "h" ]; then
    echo "hit help"
