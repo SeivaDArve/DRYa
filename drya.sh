@@ -2854,20 +2854,41 @@ elif [ $1 == "..." ]; then
    vim $v_drya_fzf_menu_hist
 
 elif [ $1 == ".." ]; then  
-   # Do ficheiro de historico dos menus fzf, filtrar uma linha para repetir o comando escrito nessa linha
-   # uDev: Remover linhas duplicadas
-   
+   # Aceder ao historico drya-fzf-menu e repetir esse comando
+   # 1. Verificar existencia desse ficheiro
+   # 2. Remover linhas duplicadas
+   # 3. Eliminar linhas a mais (para impedir ficheiros gisgantes). Variavel $v_max_lines
+   # 4. Permitir ao utilizador escolher um comando para repetir
+   # 5. No texto, Substituir 'alias' de comandos por 'abs path' desses comandos (evitar erros de falta de reconhecimento da sub-shell) 
+   # 6. Executar esse comando
 
+   # Definir max de linhas no ficheiro de historico
+      v_max_lines=10
 
-   # Do ficheiro de historico, buscar apenas 1 linha
-      v_line=$(cat $v_drya_fzf_menu_hist | fzf)
+   if [[ -f $v_drya_fzf_menu_hist ]]; then
+      # Para quando o ficheiro existe
+      
+      # Remover linhas duplicadas
+         # uDev
 
-   # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
-      v_line=$(sed "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
-      v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+      # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+         # uDev
 
-   # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
-      bash $v_line
+      # Do ficheiro de historico, buscar apenas 1 linha
+         v_line=$(cat $v_drya_fzf_menu_hist | fzf)
+
+      # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
+         v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+         v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+
+      # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
+         [[ -n $v_line ]] && bash "$v_line"
+
+   else
+      # Para quando o ficheiro nao existe
+      f_talk; echo "ficheiro de historico AINDA nao existe. Abs Path:"
+              echo "      > $v_drya_fzf_menu_hist"
+   fi
 
 
 elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
