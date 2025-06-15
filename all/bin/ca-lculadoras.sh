@@ -749,7 +749,7 @@ if [ -z "$1" ]; then
          #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
          #L13='13. Calculadora | L/min > m^3/h
          #L13='13. Calculadora | Graus Celcius > Farenheit
-         L14='14. Calculadora | Percentagens'
+         L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
          L11='11. Calculadora | trim-the-hedge'
