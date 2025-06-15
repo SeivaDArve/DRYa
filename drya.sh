@@ -2496,6 +2496,10 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
       # Opens calculadora registadora
       bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh ,
 
+   elif [ $2 == "3" ]; then
+      # Entrar na Calculadora da Regra de 3 Simples
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 3
+
    elif [ $2 == "x" ]; then 
       # Calculations directly on the prompt: `D ca x "3 + 3"`
       [[ -n $3 ]] && echo "$3" | bc

@@ -680,7 +680,7 @@ function f_cronometro_multi_datas {
 
 
 
-if [ -z "$*" ]; then
+if [ -z "$1" ]; then
    # Menu para aceder a todas as calculadoras
 
       # Texto do menu
@@ -757,6 +757,7 @@ elif [ $1 == "," ]; then
    f_exec_calculadora_registadora
    
 elif [ $1 == "3" ]; then
+   # Entrar na Calculadora da Regra de 3 Simples
    f_exec_calculadora_regra_de_3
 
 elif [ $1 == "h" ]; then
