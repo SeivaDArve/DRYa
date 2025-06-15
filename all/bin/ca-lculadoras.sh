@@ -702,7 +702,7 @@ if [ -z "$*" ]; then
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
          L11='11. Calculadora | trim-the-hedge'
-         L10='10. Calculadora | regra-3-simples'
+         L10='10. Calculadora | regra-3-simples | `D ca 3`'
           L9='9.  Calculadora | cambios'
           L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
           L7='7.  Calculadora | registadora | `D ca ,` ' 
@@ -756,6 +756,9 @@ elif [ $1 == "," ]; then
    # Entrar na Calculadora Registadora
    f_exec_calculadora_registadora
    
+elif [ $1 == "3" ]; then
+   f_exec_calculadora_regra_de_3
+
 elif [ $1 == "h" ]; then
    echo "hit help"
 
