@@ -229,25 +229,25 @@ function f_clone_info {
    v_clone_drya='git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa'
    v_github_seiva='https://github.com/SeivaDArve?tab=repositories'
 
-   f_talk; echo "Must specify a repository to clone"
+   f_talk; echo   "Must specify a repository to clone"
            echo
-           echo " To list all public repositories"
-           echo '  > `drya clone --list-public` '
-           echo '     or'
-           echo '  > `drya clone p`'
-           echo 
-           echo " To list all private repositories"
-           echo '  > `drya clone --list-private`'
-           echo '     or'
-           echo '  > `drya clone P`'
+           echo   " To list all public repositories"
+           echo   '  > `drya clone --list-public` or:'
+           echo   '    `drya clone p` or:'
+           echo   '    `D cl p`'
+           echo   
+           echo   " To list all private repositories"
+           echo   '  > `drya clone --list-private` or:'
+           echo   '    `drya clone P` or:'
+           echo   '    `D cl P`'
            echo
-   f_talk; echo " To clone DRYa:  "
-           echo "  > $v_clone_drya" 
+   f_talk; echo   "To clone DRYa:  "
+           echo   "  > $v_clone_drya" 
            printf "$v_clone_drya" | curl -F-=\<- qrenco.de/
            echo
-   f_talk; echo "Visit github.com Webpage with all Seiva D'Arve Repositories:"
-           echo "  > $v_github_seiva"
-           echo '  > uDev: add command: `D web github all`'
+   f_talk; echo   "Visit github.com Webpage with all Seiva D'Arve Repositories:"
+           echo   "  > $v_github_seiva"
+           echo   '  > uDev: add command: `D web github all`'
            printf "$v_github_seiva" | curl -F-=\<- qrenco.de/
            echo
 
