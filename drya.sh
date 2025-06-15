@@ -2500,6 +2500,10 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
       # Entrar na Calculadora da Regra de 3 Simples
       bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 3
 
+   elif [ $2 == "p" ]; then
+      # Entrar na Calculadora de Percentagens
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p
+
    elif [ $2 == "x" ]; then 
       # Calculations directly on the prompt: `D ca x "3 + 3"`
       [[ -n $3 ]] && echo "$3" | bc

@@ -5,6 +5,9 @@
 
    # Prompt de calculadora da DRYa que faz wrap-around ao pkg 'bc' e que dá exemplos no inicio do prompt para relembrar ao utilizador como se usa
 
+# uDev: criar fx que verifica se os valores introduzidos sao mesmo numeros
+# uDev: Opcao de config para o numero de casas decimais
+
 function f_greet {
    # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
       clear
@@ -64,6 +67,15 @@ function f_calc_regr_3_simples {
    echo
 }
 
+function f_calc_percentagens {
+   # Utilizado para calcular a formula final da percentagem
+   #echo "Debug: $vA $vB"
+
+   v_parcela=$(echo "scale=3; $vB / 100" | bc)
+   v_multip=$(echo "scale=3; $v_parcela * $vA" | bc)
+   vX=$v_multip
+}
+   
 function f_modificadores_de_texto {
    # Modificar o texto do input. Modificadores matematicos + variaveis + incognitas
    # Exemplo: substituir virgulas por pontos finais: , .
@@ -594,6 +606,34 @@ function f_exec_calculadora_trim {
       echo "Vai reduzir $vX BTC da operação que esta neste momento negativa"
 }
 
+function f_exec_calculadora_percentagens {
+   f_greet
+   f_talk; echo "Calculadora de percentagens"
+           echo "      (com 3 casas decimais)"
+
+           echo 
+           echo "Exemplo: 1% de 100 = 1"
+           echo "         A% de  B  = X"
+           echo
+           read -p "Introduza A: " vA
+           read -p "Introduza B: " vB
+
+   v_input=$vA && f_modificadores_de_texto && vA=$v_input
+   v_input=$vB && f_modificadores_de_texto && vB=$v_input
+
+   f_calc_percentagens
+
+           echo
+           echo "A: $vA"
+           echo "B: $vB"
+           echo "X: $vX"
+
+   f_talk; echo "$vA porcento de $vB é igual a $vX"
+
+
+
+}
+
 function f_eletricidade {
    echo "clc: Eletricidade"
 
@@ -687,18 +727,18 @@ if [ -z "$1" ]; then
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
 
          #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
-         L20='20. Relogio     | Cronometro | multi datas < ficheiro.txt '
-         L19='19. Relogio     | Cronometro'
-         L18='18. Relogio     | Calculo entre 2 datas'
-         L17='17. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L16='16. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L15='15. Relogio     | Temporizador'
-         L14='14. Relogio     | Despertador'
+         L21='21. Relogio     | Cronometro | multi datas < ficheiro.txt '
+         L20='20. Relogio     | Cronometro'
+         L19='19. Relogio     | Calculo entre 2 datas'
+         L18='18. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+         L17='17. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+         L16='16. Relogio     | Temporizador'
+         L15='15. Relogio     | Despertador'
 
          #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
-         #L13='13. Calculadora | Percentagens'
          #L13='13. Calculadora | L/min > m^3/h
          #L13='13. Calculadora | Graus Celcius > Farenheit
+         L14='14. Calculadora | Percentagens'
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
          L11='11. Calculadora | trim-the-hedge'
@@ -707,6 +747,7 @@ if [ -z "$1" ]; then
           L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
           L7='7.  Calculadora | registadora | `D ca ,` ' 
          #L7='7.  Calculadora | registadora | `D ca x` '   ## (at drya.sh): Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
+         #L4='4.  Alterar numero de casas decimais (usado nas calculadoras)
 
           L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
           L5='5.  Executar    | apk Texas TI-84 ROM'
@@ -718,18 +759,19 @@ if [ -z "$1" ]; then
 
          L0='DRYa: Calculo: '
 
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                   
       # Quando o menu de Escolha multipla tipo `for` loop
          [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
 
-         [[ $v_list =~ "20. " ]] && f_cronometro_multi_datas
-         [[ $v_list =~ "19. " ]] && echo "uDev"
-         [[ $v_list =~ "18. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
+         [[ $v_list =~ "21. " ]] && f_cronometro_multi_datas
+         [[ $v_list =~ "20. " ]] && echo "uDev"
+         [[ $v_list =~ "19. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
+         [[ $v_list =~ "18. " ]] && echo "uDev"
          [[ $v_list =~ "17. " ]] && echo "uDev"
          [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && echo "uDev"
-         [[ $v_list =~ "14. " ]] && echo "uDev"
+         [[ $v_list =~ "14. " ]] && f_exec_calculadora_percentagens
 
          [[ $v_list =~ "13. " ]] && f_eletricidade
          [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
@@ -759,6 +801,10 @@ elif [ $1 == "," ]; then
 elif [ $1 == "3" ]; then
    # Entrar na Calculadora da Regra de 3 Simples
    f_exec_calculadora_regra_de_3
+
+elif [ $1 == "p" ]; then
+   # Entrar na Calculadora de Percentagens
+   f_exec_calculadora_percentagens
 
 elif [ $1 == "h" ]; then
    echo "hit help"
