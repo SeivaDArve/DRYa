@@ -25,6 +25,10 @@ function f_startup_escape_time {
    fi
 }
 
+function db {
+   read -p " ------> Debug <------ "
+}
+
 function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
@@ -62,7 +66,7 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema. Semelhante a `neofetch`
 
-   # Para debug
+   # Para debug (e para aplicacao permanente no futuro)
       function f_debug {
          for i in $(printenv | grep "trid" | cut -f 1 -d "=")
          do
@@ -86,7 +90,7 @@ function f_traitsID {
       trid_file=trid_output.txt
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_dir trid_file trid_output
+      export trid_dir trid_file trid_output trid_script
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
@@ -640,6 +644,9 @@ function f_backdoor {
 
 function f_exec { 
    # Running all functions by sequence
+
+   # Default debug fx
+      #db
 
    # Config Internal scripts and settings
       f_startup_escape_time
