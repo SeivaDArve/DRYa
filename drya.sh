@@ -340,6 +340,10 @@ function f_clone_repos {
       }
 
       function f_clone_repos_moedaz {
+         # uDev: Criar menu fzf para questionar se tambem quer clonar
+         #       dv-cv-public
+         #       dv-cv-private
+
          echo "cloning: moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
          #f_refresh_terminal_after_clone
       }
@@ -2037,7 +2041,14 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
    elif [ $2 == "." ]; then
       # Open fzf to help clone by the correct name
-      f_talk; echo "uDev: fzf will list all public repos to clone"
+      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+
+      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+      for i in $v_multiple
+      do
+         echo $i
+      done
 
    elif [ $2 == "try" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
