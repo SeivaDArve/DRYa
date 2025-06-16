@@ -1666,6 +1666,57 @@ function f_toggle_termux_hushlogin {
 
 
 
+function f_remove_duplicated_lines_drya_fzf_history_file {
+   # Removes duplicated lines from the history files using a temporary file
+
+   # Note: This fx is meant to run only if some History file exists
+   #       But such fx was already set before
+   
+   # variable for the file names
+      # Original file name (this var was created at source-all-drya-files)
+      v_original=$v_drya_fzf_menu_hist
+
+      # Temporary file name
+      v_temporary=${v_original}.tmp
+
+   # Apagar as linhas em branco do ficheiro original
+      sed -i '/^$/d' $v_original
+
+   # Contar numero de linhas existentes no documento. Sera criado um `for` loop que vai repetir esse mesmo numero de vezes
+      v_nr_lines=$(wc -l $v_original | cut -f 1 -d " ")  # O comando `wc -l` tem dois Outputs na mesma linha: o numero correspondente a contagem de linhas e tambem o nome do ficheiro, por isso, usamos o `cut` para filtrar apenas a parte do numero
+
+   # Se o ficheiro tiver zero linhas: exit
+      [[ $v_nr_lines == "0" ]] && echo "DRYa: fzf history file: file has no written lines to recall" && exit 1
+
+   # Variable $v_max_lines was already set before (to cut excessive lines, avoiding creating huge files)
+
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(seq 1 $v_nr_lines)
+      do 
+         # Ler apenas a primeira linha do documento a flag `-r` do comando `read` faz ignorar barras de escape `\`
+            #read -r v_linha < $v_original  # Nao chegou a ser preciso ou utilizado. Fica aqui como nota/comentario para estudo
+
+         # Para cada volta do loop `for` vai buscar a proxima linha e colocar numa variavel
+            v_line=$(head -n $i $v_original | tail -n 1)
+
+         # Testar se essa linha da variavel ja existe no ficheiro temporario
+            grep --fixed-strings "$v_line" $v_temporary &>/dev/null
+
+         # Se o ultimo comando falhar, vai dar o codigo de erro de "1" que o bash guarda na variavel `$?` e se der erro, ainda nao existe essa linha la no ficheiro temporario e sera para la enviada essa linha
+            [[ $? == 1 ]] && echo $v_line >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      #cat $v_temporary > $v_original                   # Mater TODAS as linhas
+       tail -n $v_max_lines $v_temporary > $v_original  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
+}
 
 
 
@@ -2873,8 +2924,11 @@ elif [ $1 == "..." ]; then
 
 elif [ $1 == ".." ]; then  
    # Aceder ao historico drya-fzf-menu e repetir esse comando
+
    # 1. Verificar existencia desse ficheiro
-   # 2. Remover linhas duplicadas
+   # 3. Apagar linhas em branco
+   # 2. Verificar exiatencia de linhas escritas nesse ficheiro. Abortar se nao existirem linhas
+   # 3. Remover linhas duplicadas
    # 3. Eliminar linhas a mais (para impedir ficheiros gisgantes). Variavel $v_max_lines
    # 4. Permitir ao utilizador escolher um comando para repetir
    # 5. No texto, Substituir 'alias' de comandos por 'abs path' desses comandos (evitar erros de falta de reconhecimento da sub-shell) 
@@ -2887,20 +2941,17 @@ elif [ $1 == ".." ]; then
       # Para quando o ficheiro existe
       
       # Remover linhas duplicadas
-         # uDev
-
-      # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
-         # uDev
+         f_remove_duplicated_lines_drya_fzf_history_file
 
       # Do ficheiro de historico, buscar apenas 1 linha
-         v_line=$(cat $v_drya_fzf_menu_hist | fzf)
+         v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choode a command to repeat (from fzf history): ")
 
       # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
          v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
          v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
 
       # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
-         [[ -n $v_line ]] && bash "$v_line"
+         [[ -n $v_line ]] && bash $v_line
 
    else
       # Para quando o ficheiro nao existe
