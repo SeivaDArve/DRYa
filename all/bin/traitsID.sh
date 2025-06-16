@@ -244,6 +244,15 @@ function f_startup {
            echo
 }
 
+function f_printenv {
+   f_talk; echo "Printing env variables:"
+
+   printenv | grep --color="auto" "trid"
+   v_count=$(printenv | grep "trid" | wc -l)
+
+           echo
+   f_talk; echo "Total de linhas encontradas: $v_count"
+}
 
 
 
@@ -275,6 +284,15 @@ function f_fetch {
 
 
 
+
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
+
+
+
+
+
 if [ -z $1 ];then
    echo "uDev: fzf menu"
 
@@ -302,7 +320,7 @@ elif [ $1 == "h" ]; then
 elif [ $1 == "." ]; then
    vim $trid_script
 
-elif [ $1 == ".." ]; then
+elif [ $1 == "o" ]; then
    vim $trid_output
 
 elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
@@ -312,22 +330,33 @@ elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
 elif [ $1 == "startup-message" ] || [ $1 == "s" ]; then
    f_startup
 
-elif [ $1 == "printenv" ] || [ $1 == "env" ]; then
-   f_talk; echo "Printing env variables:"
+elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
 
-   printenv | grep --color="auto" "trid"
-   v_count=$(printenv | grep "trid" | wc -l)
+   function f_printenv_recursive {
+      # se houver mais args para alem de `e` em $1, entao vai buscar cada um ao `printenv` com `grep`
 
-           echo
-   f_talk; echo "Total de linhas encontradas: $v_count"
+      # Copiar todos os arg para uma variavel
+         var="$@"
 
-elif [ $1 == "print" ] || [ $1 == "A" ]; then
+      # Transforma a string em um array
+         arr=($var)
+
+      # Remove o primeiro elemento (simulando shift)
+         arr=("${arr[@]:1}")
+
+      # Ver resultado
+         echo "${arr[@]}"
+   }
+
+   f_printenv
+
+elif [ $1 == "print" ] || [ $1 == "p" ]; then
    # Print all variables
 
    if [ -z $2 ]; then
       f_trid_print_all
 
-   elif [ $2 == "greet" ] || [ $2 == "gr" ]; then
+   elif [ $2 == "greet" ] || [ $2 == "g" ]; then
       figlet traitsID
       f_trid_print_all
 
