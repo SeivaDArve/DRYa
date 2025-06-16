@@ -1,4 +1,12 @@
-function pk {
+#!/bin/bash
+# Title: pk
+# Description: Abreviation to command 'pkg-manager' 
+
+# Use: After 'traitsID.sh' detects sysrem variables like package manager, independently of what it is the package manager stored in $trid_pkgm (dnf, apt, pkg) this script `pk` will wrap around it
+#
+#      Example with `dnf install <package-X>`: `pk + <package-X>`
+#      Example with `pacman -S   <package-X>`: `pk + <package-X>`
+
    [[ -z $1        ]] && echo 'Help: `pk --help`'
    [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && echo "sudo apt install" 
    [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && echo "sudo pacman -S" 
@@ -8,5 +16,4 @@ function pk {
    [[    $1 == "+" ]] && [[ $trid_pkgm == "pkg"    ]] && echo "pkg install" 
    [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && echo "brew install" 
    [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
-}
 
