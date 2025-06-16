@@ -613,8 +613,7 @@ function f_exec_calculadora_trim {
 function f_exec_calculadora_percentagens {
    f_greet
    f_talk; echo "Calculadora de percentagens"
-           echo "       > Casas decimais: $v_decimal"
-           echo "         Para alterar:  \`D ca p d\`"
+           echo "       > Casas decimais: $v_decimal   (alterar: \`D ca p d\`)"
            echo 
            echo "|-------------------------|"
            echo "| Exemplo: 1% de 100 = 1  |"
