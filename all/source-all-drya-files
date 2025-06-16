@@ -25,6 +25,10 @@ function f_startup_escape_time {
    fi
 }
 
+function db {
+   read -p " ------> Debug <------ "
+}
+
 function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
@@ -62,7 +66,7 @@ function f_drya_msgs_init {
 function f_traitsID {
    # Deteta variaveis de sistema (software e hardware). Permitir a DRYa que se torne cross-platform, adaptando-se ao dispositivo em que está instalada e sabe o que fazer de acordo com esse sistema. Semelhante a `neofetch`
 
-   # Para debug
+   # Para debug (e para aplicacao permanente no futuro)
       function f_debug {
          for i in $(printenv | grep "trid" | cut -f 1 -d "=")
          do
@@ -78,6 +82,10 @@ function f_traitsID {
       }
       #f_debug
 
+   # Nome do ficheiro SOURCE 
+      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
+
    # Nome do ficheiro SCRIPT traitsID.sh
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
 
@@ -86,7 +94,7 @@ function f_traitsID {
       trid_file=trid_output.txt
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_dir trid_file trid_output
+      export trid_dir trid_file trid_output trid_script trid_source
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
@@ -355,20 +363,18 @@ function f_repository_scratch-paper {
 function f_repository_ezGIT {
    # Repository: ezGIT
 
-   # Define a key to call the entire program
-      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
-      # uDev: for some repos, must run a script that searches for updates at terminal startup
-
    # Load all alternative git alias:
       source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
-   #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
-   #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+   # Define a key to call the entire program
+      # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso))
+      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
+      alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
-
+   # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
+   #       `f_startup_async_ezGIT_pull_All`
 }
    
 function f_repository_wikiD {
@@ -641,6 +647,9 @@ function f_backdoor {
 function f_exec { 
    # Running all functions by sequence
 
+   # Default debug fx
+      #db
+
    # Config Internal scripts and settings
       f_startup_escape_time
       f_internal_drya_files_1_of_2
@@ -681,6 +690,12 @@ function f_exec {
          # uDev: Create jarve-mail-box instead of drya-mail-box 
          # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
          #f_notes_toDo
+         #
+         # uDev: automatic comunications deve ser em jarve, nao em ezGIT
+         #       uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
+         #       uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+
+
 
       f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID

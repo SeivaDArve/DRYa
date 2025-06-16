@@ -1743,6 +1743,34 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
       rm $v_temporary
 }
 
+function f_recall_one_command_from_fzf_hist_file {
+   # Aceder ao historico drya-fzf-menu e repetir esse comando
+
+   # 1. Verificar existencia desse ficheiro
+   # 3. Apagar linhas em branco
+   # 2. Verificar exiatencia de linhas escritas nesse ficheiro. Abortar se nao existirem linhas
+   # 3. Remover linhas duplicadas
+   # 3. Eliminar linhas a mais (para impedir ficheiros gisgantes). Variavel $v_max_lines
+   # 4. Permitir ao utilizador escolher um comando para repetir
+   # 5. No texto, Substituir 'alias' de comandos por 'abs path' desses comandos (evitar erros de falta de reconhecimento da sub-shell) 
+   # 6. Executar esse comando
+
+   # Definir max de linhas no ficheiro de historico
+      v_max_lines=10
+
+   # Remover linhas duplicadas
+      f_remove_duplicated_lines_drya_fzf_history_file
+
+   # Do ficheiro de historico, buscar apenas 1 linha
+      v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
+
+   # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
+      v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+      v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+
+   # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
+      [[ -n $v_line ]] && bash $v_line 
+}
 
 
 
@@ -2948,42 +2976,48 @@ elif [ $1 == "..." ]; then
    vim $v_drya_fzf_menu_hist
 
 elif [ $1 == ".." ]; then  
-   # Aceder ao historico drya-fzf-menu e repetir esse comando
+   # Se existir ficheiro de historico drya-fzf-menu, o utilizador pode:
+   # `D ..`   repetir comandos desse ficheiro  
+   #
+   # `D .. s` salvar uma copia desse ficheiro de historico
+   # `D .. S` substituir o ficheiro de historico original pela copia guardada desse ficheiro
+   #          Isso permite ao utilizador navegar a vontade sem se importar com o ficheiro de historico (enquanto procura os menus certos) e depois restaurar para a versao anterior
+   #          Assim o user consegue escolher como e quanto vai para o ficheiro de historico
 
-   # 1. Verificar existencia desse ficheiro
-   # 3. Apagar linhas em branco
-   # 2. Verificar exiatencia de linhas escritas nesse ficheiro. Abortar se nao existirem linhas
-   # 3. Remover linhas duplicadas
-   # 3. Eliminar linhas a mais (para impedir ficheiros gisgantes). Variavel $v_max_lines
-   # 4. Permitir ao utilizador escolher um comando para repetir
-   # 5. No texto, Substituir 'alias' de comandos por 'abs path' desses comandos (evitar erros de falta de reconhecimento da sub-shell) 
-   # 6. Executar esse comando
+   # Se o ficheiro que queremos manipular nao existir, abortar todo o script
+      if [[ -f $v_drya_fzf_menu_hist ]]; then
+         # Para quando o ficheiro existe
+         echo "ficheiro existe" 1>/dev/null
+         
+      else
+         # Para quando o ficheiro nao existe
+         f_talk; echo "ficheiro de historico AINDA nao existe. Abs Path:"
+                 echo "      > $v_drya_fzf_menu_hist"
+         exit 1
+      fi
 
-   # Definir max de linhas no ficheiro de historico
-      v_max_lines=10
 
-   if [[ -f $v_drya_fzf_menu_hist ]]; then
-      # Para quando o ficheiro existe
-      
-      # Remover linhas duplicadas
-         f_remove_duplicated_lines_drya_fzf_history_file
+   # Buscar os argumentos do prompt e manipular o ficheiro
+      if [ -z $2 ]; then
+         f_recall_one_command_from_fzf_hist_file
 
-      # Do ficheiro de historico, buscar apenas 1 linha
-         v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
+      elif [ $2 == "s" ]; then
+         # Guardar copia do ficheiro de historico)
+         cp $v_drya_fzf_menu_hist ${v_drya_fzf_menu_hist}.copia
+         echo "DRYa: criada uma copia do ficheiro de historico dos menus fzf"
 
-      # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
-         v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
-         v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
+      elif [ $2 == "S" ]; then
+         # Substituir o original pela copia
+         [[ -f ${v_drya_fzf_menu_hist}.copia ]] \
+            && cp ${v_drya_fzf_menu_hist}.copia $v_drya_fzf_menu_hist
 
-      # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
-         [[ -n $v_line ]] && bash $v_line
+         echo "DRYa: a copia do ficheiro de historico dos menus fzf foi APLICADO como original"
 
-   else
-      # Para quando o ficheiro nao existe
-      f_talk; echo "ficheiro de historico AINDA nao existe. Abs Path:"
-              echo "      > $v_drya_fzf_menu_hist"
-   fi
+      elif [ $2 == "c" ]; then
+         echo "DRYa: a visualizar o ficheiro de historico dos menus fzf"
+         [[ -f ${v_drya_fzf_menu_hist}.copia ]] && vim ${v_drya_fzf_menu_hist}.copia || echo " > Nao existe ficheiro nenhum"
 
+      fi
 
 elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
    # Open DRYa fzf Main Menu
