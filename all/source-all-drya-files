@@ -43,9 +43,12 @@ function f_drya_libs {
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: Sub-Operative System"
-      echo " > $v_name_drya_source 1st File to load, after ~/.bashrc redirection"
-      echo " > running from: ${DRYa_HEART}"
-      echo " > drya-msgs file located at: $v_MSGS"
+      echo " > ~/.bashrc redirected to DRYa's 1st file to load: $v_name_drya_source, it's path:"
+      echo "   ${DRYa_HEART}"
+      echo 
+      echo " > drya-status-msgs file located at:"
+      echo "   $v_MSGS"
+      echo
       # udev: echo "Installed at.."
 
 
@@ -685,7 +688,8 @@ function f_exec {
    # Start loading background tasks 
       # Jarve 
          # (Drya: foreground tasks, Jarve: Background tasks)
-         # pode ser uma fx que corre tudo o resto async
+         # Executa as fx async
+         # Calendario com scripts
          # uDev: f_assync `td` using GPS
          # uDev: Create jarve-mail-box instead of drya-mail-box 
          # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
