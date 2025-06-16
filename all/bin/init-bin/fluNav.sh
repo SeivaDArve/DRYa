@@ -92,7 +92,7 @@ function f_remove_duplicated_lines_S_history_file {
       for i in $(tac $v_original)
       do 
          # If original line does not exist already in the tmp file, copy it to tmp once
-         grep "$i" $v_temporary &>/dev/null
+         grep --fixed-strings "$i" $v_temporary &>/dev/null
          [[ $? == 1 ]] && echo $i >> $v_temporary
       done
 
@@ -124,7 +124,7 @@ function f_remove_duplicated_lines_V_history_file {
       for i in $(tac $v_original)
       do 
          # If original line does not exist already in the tmp file, copy it to tmp once
-         grep "$i" $v_temporary &>/dev/null
+         grep --fixed-strings "$i" $v_temporary &>/dev/null
          [[ $? == 1 ]] && echo $i >> $v_temporary
       done
 
@@ -1223,6 +1223,13 @@ function V {
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls && unset $v_hist
 
+      elif [ $1 == "...." ]; then
+         # Used only to centralize the history file into one single variable across the file
+            f_refresh_V_hist_file  
+            f_remove_duplicated_lines_V_history_file
+
+         # Edit file manually 
+            vim $v_fluNav_V_hist_file
 
    # Implementation of Use 9:
       else 
