@@ -363,20 +363,17 @@ function f_repository_scratch-paper {
 function f_repository_ezGIT {
    # Repository: ezGIT
 
-   # Define a key to call the entire program
-      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
-      # uDev: for some repos, must run a script that searches for updates at terminal startup
-
    # Load all alternative git alias:
       source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
-   #uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
-   #uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+   # Define a key to call the entire program
+      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        # uDev: add tambem em .../ezGIT/all/etc/config-bash-alias
+      alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
-
+      # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
+      #       `f_startup_async_ezGIT_pull_All`
 }
    
 function f_repository_wikiD {
@@ -692,6 +689,12 @@ function f_exec {
          # uDev: Create jarve-mail-box instead of drya-mail-box 
          # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
          #f_notes_toDo
+         #
+         # uDev: automatic comunications deve ser em jarve, nao em ezGIT
+         #       uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
+         #       uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+
+
 
       f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
