@@ -2969,7 +2969,7 @@ elif [ $1 == ".." ]; then
          f_remove_duplicated_lines_drya_fzf_history_file
 
       # Do ficheiro de historico, buscar apenas 1 linha
-         v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choode a command to repeat (from fzf history): ")
+         v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
 
       # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
          v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
