@@ -162,7 +162,7 @@ function web {
       if [[ -z $v_URL ]]; then
          echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
 
-      elif [[ $traits_OS == "Android" ]]; then     # When using Termux
+      elif [[ $trid_OS == "Android" ]]; then     # When using Termux
          echo "DRYa: A abrir com Termux: "
          echo " > $v_URL"
 
@@ -172,11 +172,14 @@ function web {
          nohup termux-open-url "$v_URL" & disown
          cd -
       
-      elif [[ $traits_OS == "Linux" ]]; then      # When using Linux 
+      elif [[ $trid_OS == "Linux" ]]; then      # When using Linux 
          echo "DRYa: A abrir com Linux: $v_URL"
-         xdg-open $v_URL & disown
 
-      elif [[ $traits_OS == "Windows" ]]; then    # Maybe using windows 
+         # Pode ser escolhida qualquer 1 das opcoes
+         termux-open-url $v_URL & disown  
+         #xdg-open $v_URL & disown
+
+      elif [[ $trid_OS == "Windows" ]]; then    # Maybe using windows 
          echo "DRYa: A abrir com Windows: $v_URL"
          "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & disown
 
