@@ -1607,6 +1607,9 @@ function f_drya_help_menu {
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6\n\n$Lz3" | fzf --cycle --prompt="$L0")
 
+   # Atualizar historico fzf automaticamente
+      echo "$Lz2" >> $Lz4
+
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
@@ -1730,7 +1733,7 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
             #read -r v_linha < $v_original  # Nao chegou a ser preciso ou utilizado. Fica aqui como nota/comentario para estudo
 
          # Para cada volta do loop `for` vai buscar a proxima linha e colocar numa variavel
-            v_line=$(head -n $i $v_original | tail -n 1)
+            v_line=$(tail -n $i $v_original | head -n 1)
 
          # Testar se essa linha da variavel ja existe no ficheiro temporario
             grep --fixed-strings "$v_line" $v_temporary &>/dev/null
@@ -1740,8 +1743,8 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
       done
 
    # Overwrite original file with the content of temporary file
-      #cat $v_temporary > $v_original                   # Mater TODAS as linhas
-       tail -n $v_max_lines $v_temporary > $v_original  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+      cat $v_temporary > $v_original                    # Mater TODAS as linhas
+      #tail -n $v_max_lines $v_temporary > $v_original  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
    
    # Removing the tmp file in the end to clean dir
       rm $v_temporary
@@ -1766,7 +1769,7 @@ function f_recall_one_command_from_fzf_hist_file {
       f_remove_duplicated_lines_drya_fzf_history_file
 
    # Do ficheiro de historico, buscar apenas 1 linha
-      v_line=$(tac $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
+      v_line=$(cat $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
 
    # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
       v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
@@ -1867,17 +1870,13 @@ if [ -z "$*" ]; then
       fi
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
-   # Help menu
-   # rtfm: Read the Fucking Manual
+   # Help menu. [rtfm: "Read the Fucking Manual"]
 
    # uDev: `drya h  `  # 1st Level of help
    # uDev: `drya h 2`  # 2nd level of help
    # uDev: `drya h 3`  # 3rd level of help
    # uDev: `drya h 4`  # 4th level of help ... instead of "msgs"
    
-
-
-
    if [ -z "$2" ]; then
       # Menu Simples: Help
 
@@ -1890,34 +1889,40 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
       # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
       f_drya_welcome
 
-   elif [ $2 == "msgs" ]; then 
+   elif [ $2 == "status-messages" ] || [ $2 == "msgs" ] || [ $2 == "ssms" ]; then 
       # Option to read the $DRYa_MESSAGES file
          # They are stored at: ~/.config/h.h/drya/.dryaMessages
          less $v_MSGS
    fi
 
 elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
-   # Edit first file in DRYa's instalation sequence
-
+   # Edit the file that starts DRYa's loading sequence
    vim ~/.bashrc
 
 elif [ $1 == "1" ] || [ $1 == "edit-source-all-drya-files" ]; then 
-   # Edit second file in DRYa's instalation sequence
+   # Edit first file in DRYa's loading sequence
+   vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
 
-   vim $DRYa/all/source-all-drya-files
+elif [ $1 == "2" ] || [ $1 == "config-bash-alias" ]; then 
+   # Edit second file in DRYa's loading sequence
+   vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
 
-elif [ $1 == "2" ] || [ $1 == "edit-drya-sh" ]; then 
-   # Edit third file in DRYa's instalation sequence
-
-   vim $DRYa/all/etc/config-bash-alias
-
-elif [ $1 == "3" ] || [ $1 == "edit-fluNav" ]; then 
-   # Edit forth file in DRYa's instalation sequence
-
+elif [ $1 == "3" ] || [ $1 == "dryarc" ]; then 
+   # Edit third file in DRYa's loading sequence
    echo uDev
 
-elif [ $1 == "config-drya-hh-files" ] || [ $1 == "hh" ]; then 
+elif [ $1 == "4" ] || [ $1 == "fluNav" ]; then 
+   # Edit forth file in DRYa's loading sequence
+   echo uDev
+
+elif [ $1 == "5" ] || [ $1 == "drya.sh" ]; then 
+   # Edit fifth file in DRYa's loading sequence
+   echo uDev
+
+elif [ $1 == "6" ] || [ $1 == "config-drya-hh" ] || [ $1 == "hh" ]; then 
+   # Instructions on how to navigate to the directory where all D'Arve repos save configs
    echo 'Navigate to ~/.config/h.h/ with the alias `hh`'
+
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
@@ -2041,18 +2046,32 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
    elif [ $2 == "." ]; then
       # Open fzf to help clone by the correct name
-      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+      f_talk; echo "Cloning Multiple Repositories"
+              echo " > Listing all public repos (by web search)"
+              echo " > Listing private repos    (from offline file)"
 
-      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+      v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
+      v_combine="$v_list_private $v_list_public"
+      v_multiple=$(echo $v_combine | sed 's/ /\n/g' | fzf -m --cycle --prompt="DRYa: SELECT multiple: Repositories to clone: ")
 
       # uDev: Adicionar manualmente uma lista com as repos privadas, append na lista publica, depois meter no fzf
 
-      for i in $v_multiple
-      do
-         echo $i
-         [[ $i == "dv-cv-public" ]] && echo "Quer clonar tambem 'dv-cv-private' que se comunica com a anterior?"
-      done
+      if [[ -n $v_multiple ]]; then
+
+                 echo
+         f_talk; echo "Repos selecionados:"
+
+         for i in $v_multiple
+         do
+            echo " > $i"
+            #[[ $i == "dv-cv-public" ]] && echo "Quer clonar tambem 'dv-cv-private' que se comunica com a anterior?"
+         done
+
+      else
+                 echo
+         f_talk; echo "Nenhum repo selecionado"
+      fi
 
    elif [ $2 == "try" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
