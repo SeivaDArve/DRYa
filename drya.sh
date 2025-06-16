@@ -229,25 +229,25 @@ function f_clone_info {
    v_clone_drya='git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa'
    v_github_seiva='https://github.com/SeivaDArve?tab=repositories'
 
-   f_talk; echo "Must specify a repository to clone"
+   f_talk; echo   "Must specify a repository to clone"
            echo
-           echo " To list all public repositories"
-           echo '  > `drya clone --list-public` '
-           echo '     or'
-           echo '  > `drya clone p`'
-           echo 
-           echo " To list all private repositories"
-           echo '  > `drya clone --list-private`'
-           echo '     or'
-           echo '  > `drya clone P`'
+           echo   " To list all public repositories"
+           echo   '  > `drya clone --list-public` or:'
+           echo   '    `drya clone p` or:'
+           echo   '    `D cl p`'
+           echo   
+           echo   " To list all private repositories"
+           echo   '  > `drya clone --list-private` or:'
+           echo   '    `drya clone P` or:'
+           echo   '    `D cl P`'
            echo
-   f_talk; echo " To clone DRYa:  "
-           echo "  > $v_clone_drya" 
+   f_talk; echo   "To clone DRYa:  "
+           echo   "  > $v_clone_drya" 
            printf "$v_clone_drya" | curl -F-=\<- qrenco.de/
            echo
-   f_talk; echo "Visit github.com Webpage with all Seiva D'Arve Repositories:"
-           echo "  > $v_github_seiva"
-           echo '  > uDev: add command: `D web github all`'
+   f_talk; echo   "Visit github.com Webpage with all Seiva D'Arve Repositories:"
+           echo   "  > $v_github_seiva"
+           echo   '  > uDev: add command: `D web github all`'
            printf "$v_github_seiva" | curl -F-=\<- qrenco.de/
            echo
 
@@ -272,6 +272,30 @@ function f_init_clone_repos {
       f_stroken
 }
 
+function f_drya_mail_box__check_mail {
+
+   # uDev: drya-mail-box
+   #       Alguns scripts podem criar ficheiros offline em .../h.h/ por inexistencia de internet ou inexistencia deste repo
+   #       Se esta repo omni-log existisse ao mesmo tempo que nao existisse internet, o output desses scripts (exemplo: calculadora-registadora) seriam dentro dest Repo omni-log em vez do local pre-definido dessa calculadora
+   #
+   #       Antes de iniciar a clonagem, verificar se existe o diretorio .../h.h/drya-mail-box/omni-log/<some-file> ao qual haja a intencao de aplicar `append`
+   #       Ou seja, udev: criar um menu antes de clonar que:
+   #       1. Verifica se ha correio em h.h para esta repo que vai ser clonada
+   #       2. Se houver, a peguntar: 
+   #
+   #          Quer `append` do correio apos clonar?
+   #           > sim?
+   #           > nao?
+   #
+   #          exemplo de `sim`: (`D clc append-registo-da-registadora`)   
+
+   echo "uDev" 1>/dev/null
+}
+
+function f_drya_mail_box__append_mail {
+   echo "Para quando na fx 'f_drya_mail_box__check_mail' o user disse que quer juntar o mail com a repo"
+}
+
 function f_clone_repos {
 
    function f_improve_readability {
@@ -290,8 +314,7 @@ function f_clone_repos {
       }
 
       function f_clone_repos_upk-dv {
-         echo "Cloning: upK-diario-Dv"; 
-         git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+         echo "Cloning: upK-diario-Dv"; git clone https://github.com/SeivaDArve/upK-diario-Dv.git
       }
 
       function f_clone_repos_shiva {
@@ -299,7 +322,9 @@ function f_clone_repos {
       }
 
       function f_clone_repos_omni {
+         #f_drya_mail_box__check_mail
          echo "cloning: omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
+         #f_drya_mail_box__append_mail
       }
 
       function f_clone_repos_dWiki {
