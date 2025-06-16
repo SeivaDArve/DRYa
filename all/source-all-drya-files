@@ -656,6 +656,7 @@ function f_exec {
    # Config Internal scripts and settings
       f_startup_escape_time
       f_internal_drya_files_1_of_2
+      #f_check_missing_dependencies
       f_drya_libs
       f_drya_status_msgs
       f_drya_fzf_history
