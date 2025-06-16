@@ -367,13 +367,14 @@ function f_repository_ezGIT {
       source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
    # Define a key to call the entire program
+      # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso))
       alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        # uDev: add tambem em .../ezGIT/all/etc/config-bash-alias
+      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
       alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
-      # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
-      #       `f_startup_async_ezGIT_pull_All`
+   # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
+   #       `f_startup_async_ezGIT_pull_All`
 }
    
 function f_repository_wikiD {
