@@ -7,8 +7,8 @@
 
 # Verbose file (variables and outputs)
    v_title="config-bash-alias"  # Name of this file
-   echo "DRYa: File started loading: DRYa's $v_title" >> $v_MSGS
-   echo "      > $v_title after internal software is loaded, I load the alias and extras" >> $v_MSGS
+   echo "DRYa: File Started loading: $v_title" >> $v_MSGS
+   echo "      (for extra alias and configs not belonging to any app yet)" >> $v_MSGS
 
 
 
@@ -889,4 +889,5 @@ function arco {
 
 
 # Verbose file (variables and outputs)
-   echo "DRYa: File ended loading: DRYa's $v_title" >> $v_MSGS
+   echo "      File Finished loading: $v_title" >> $v_MSGS
+   echo >> $v_MSGS
