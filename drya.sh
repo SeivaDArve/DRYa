@@ -2045,9 +2045,13 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
       v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+
+      # uDev: Adicionar manualmente uma lista com as repos privadas, append na lista publica, depois meter no fzf
+
       for i in $v_multiple
       do
          echo $i
+         [[ $i == "dv-cv-public" ]] && echo "Quer clonar tambem 'dv-cv-private' que se comunica com a anterior?"
       done
 
    elif [ $2 == "try" ]; then
