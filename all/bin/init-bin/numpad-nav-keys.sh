@@ -2,12 +2,15 @@
 # Title: Numpad navigation keys
 # Description: Using only the Numapad to do the same as commands. Improving speed
 
+# Tempo para leitura, antes de executar o comando
+   v_time=20
+
 # For DRYa:
    alias 0="drya"
    alias 01="drya ."
    alias 02="drya ,"
    alias 03="drya kbd"
-   alias 5="drya"
+   # alias 5: Power options
    # uDev: alias for Windows WSL2: home/Documents
 
 # For ezGIT
@@ -20,32 +23,45 @@
    alias 12="G v"
    alias 121="G v A ."
 
+
+function f_shutdown {
+   # Desligar a maquina
+
+   # Fedora Linux
+      sleep $v_time && shutdown --poweroff
+}
+
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
    # Menu
-      L9="A. Abort (Restart and Shutdown)          "
-      L8="T. Temporizar acções                     "
-      
-      L7="6. Refresh   | (F5)                      "
-      L6="8. Reiniciar | Reeboot  | Restart        "
-      L5="2. Hibernar                              "
-      L4="4. Suspender                             "
-      L3="0. Desligar  | Encerrar | Shutdown | OFF "
-      L2="5. Bloquear ecra                         "
-      L1="1. Cancel                                "
+      L10="A. Abort (Restart and Shutdown)          "
+       L9="T. Temporizar acções                     "
+       
+       L8="6. Refresh   | (F5)                      "
+       L7="8. Reiniciar | Reeboot  | Restart        "
+       L6="2. Hibernar                              "
+       L5="4. Suspender                             "
+       L4="0. Desligar  | Encerrar | Shutdown | OFF "
+       L3="5. Bloquear ecra                         "
+
+       L2="A. Abort (Restart and Shutdown)          "
+       L1="1. Cancel                                "
 
       L0="POWER Options: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "0" ]] && echo "Desligar" && f_shutdown  # Desliga a maquina
-      [[ $v_list =~ "5" ]] && echo "Detetado 5 (debug)"
-      [[ $v_list =~ "4" ]] && echo "Suspender" && systemctl suspend
-      [[ $v_list =~ "2" ]] && echo "Hibernar" && f_hibernate
-      [[ $v_list =~ "6" ]] && source ~/.bashrc
-      [[ $v_list =~ "8" ]] && echo "Reiniciar" && f_restart  # Restart à maquina
+      [[ $v_list =~ "A. " ]] && echo "A Abortar os encerramentos" && shutdown -c
+      [[ $v_list =~ "T. " ]] && echo "uDev T."
+      [[ $v_list =~ "6. " ]] && source ~/.bashrc
+      [[ $v_list =~ "8. " ]] && echo "Reiniciar" && f_restart  # Restart à maquina
+      [[ $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate
+      [[ $v_list =~ "4. " ]] && echo "Suspender" && systemctl suspend
+      [[ $v_list =~ "0. " ]] && echo "Desligar"  && f_shutdown
+      [[ $v_list =~ "5. " ]] && echo "uDev 5"
+      [[ $v_list =~ "1. " ]] && echo "Cancelado" 
 }
 
 
