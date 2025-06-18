@@ -1,5 +1,5 @@
 #!/bin/bash
-clear
+# Title: DRYa installer script (with dependency `fzf`)
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 
@@ -29,8 +29,8 @@ function f_greet {
       echo '					   '
    }
 
-   f_ascii_v1
-   #f_ascii_v2
+    figlet DRYa 2>/dev/null || f_ascii_v1
+   #figlet DRYa 2>/dev/null || f_ascii_v2
 }
 
 function f_greet_alternative {
@@ -372,9 +372,6 @@ function f_menu {
 }
 
 function f_discard_every_unused_function {
-   echo "-------------------------------------------------------------------"
-      echo "Debug: f_discard_every_unused_function"
-   echo "-------------------------------------------------------------------"
 
 #	# Evaluate the answer given by the user
 #	   if [[ $v_unload == "1" ]]; then
@@ -624,9 +621,6 @@ function f_delete_empty_lines {
 }
 
 function f_delete-previous-DRYa-installation {
-   echo "-------------------------------------------------------------------"
-      echo "Debug: f_delete-previous-DRYa-installation"
-   echo "-------------------------------------------------------------------"
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
@@ -658,9 +652,6 @@ function f_delete-previous-DRYa-installation {
 }
 
 function f_DRYa-install-me-at-bashrc {
-   echo "-------------------------------------------------------------------"
-      echo "Debug: f_DRYa-install-me-at-bashrc"
-   echo "-------------------------------------------------------------------"
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
@@ -705,9 +696,6 @@ function f_install_DRYA_desktop_icon {
 
 
 function f_source_bashrc {
-   echo "-------------------------------------------------------------------"
-      echo "Debug: f_source_bashrc"
-   echo "-------------------------------------------------------------------"
 
    # Execute this file simply to source (reset) ~/.bashrc
    # description: This file contains 2 ways of sourcing ~/.bashrc (one correct and one wrong)
@@ -784,9 +772,7 @@ function f_decide_to_run {
 }
 
 function f_exec {
-   #echo "-------------------------------------------------------------------"
-   #   echo "Debug: f_exec"
-   #echo "-------------------------------------------------------------------"
+   clear
 
    f_greet || f_greet_alternative
 
@@ -798,6 +784,5 @@ function f_exec {
 	  # the next function to decide wether to run the remaining of the code or not
 	  f_decide_to_run
 }
-#f_exec
+f_exec
 
-pwd
