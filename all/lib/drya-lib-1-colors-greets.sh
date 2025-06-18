@@ -153,7 +153,10 @@ function f_greet2 {
       || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
+# uDev: f_greet, f_Greet, f_greet2 ... change to f_g1, f_g2, f_g3 ...
+
 function f_talk {
+   # uDev: change to f_tk
    # Colorfull text to preceed any text of any important text line
 
    # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
