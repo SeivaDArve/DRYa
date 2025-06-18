@@ -1429,6 +1429,7 @@ function f_drya_fzf_MM_Toolbox {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
+         # L12='12. Host website on Android, using Abdroid as web server (exemplo: https://youtu.be/V-B-HGWAJac?feature=shared)
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='12. Comboios CP web-scraping
          # L12='12. Ementas Yummy
@@ -1750,7 +1751,7 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
       rm $v_temporary
 }
 
-function f_recall_one_command_from_fzf_hist_file {
+function f__D_hist__recall_one_command {
    # Aceder ao historico drya-fzf-menu e repetir esse comando
 
    # 1. Verificar existencia desse ficheiro
@@ -1780,6 +1781,12 @@ function f_recall_one_command_from_fzf_hist_file {
 }
 
 
+function f_drya_get_all_repo_names_private_public {
+   # Juntar a lista de repos publicas + privadas
+      v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
+      v_combine="$v_list_private $v_list_public"
+}
 
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
@@ -2046,18 +2053,25 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
    elif [ $2 == "." ]; then
       # Open fzf to help clone by the correct name
+      # uDev: `D cl . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
+      # uDev: `D cl . p`
+      # uDev: `D cl . P`
+
       f_talk; echo "Cloning Multiple Repositories"
               echo " > Listing all public repos (by web search)"
               echo " > Listing private repos    (from offline file)"
 
-      v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
-      v_combine="$v_list_private $v_list_public"
-      v_multiple=$(echo $v_combine | sed 's/ /\n/g' | fzf -m --cycle --prompt="DRYa: SELECT multiple: Repositories to clone: ")
+              #echo pin $v_pin; read
 
-      # uDev: Adicionar manualmente uma lista com as repos privadas, append na lista publica, depois meter no fzf
+      f_drya_get_all_repo_names_private_public
+
+      # Pedir ao user para selecionar repos
+         v_multiple=$(echo $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone: ")
+
 
       if [[ -n $v_multiple ]]; then
+
+         #[[ $v_multiple =~ "dv-cv-public" ]] && grep "dv-cv-public" <(echo $v_multiple) && [[ $? == "1" ]] && echo "Nao Quer clonar tambem 'dv-cv-private' que se comunica com 'dv-cv-public'?"
 
                  echo
          f_talk; echo "Repos selecionados:"
@@ -2065,7 +2079,7 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
          for i in $v_multiple
          do
             echo " > $i"
-            #[[ $i == "dv-cv-public" ]] && echo "Quer clonar tambem 'dv-cv-private' que se comunica com a anterior?"
+            #echo " > $i" >> $drya-status-messages
          done
 
       else
@@ -2073,16 +2087,24 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
          f_talk; echo "Nenhum repo selecionado"
       fi
 
-   elif [ $2 == "try" ]; then
+   elif [ $2 == "try" ] || [ $2 == "t" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
       #                when shortcuts were not already set or predictrd
 
       if [ -z $3 ]; then
          # Using menu fzf
-         echo "uDev: It is less easy to clone repos with case insensitivity, so fzf could filter github public repo names"
+         f_talk; echo "\`D cl try <name>\`"
+                 echo " > Repo name not specified"
+                 echo "   You must try at least one repo 'name'"
 
       else
          # Avoiding menu fzf and trying to type manually
+
+         # uDev: It is less easy to clone repos with case insensitivity, so fzf could filter github public repo names"
+         #   f_drya_get_all_repo_names_private_public
+         #   to `grep` and `fzf`
+
+
 
          # Verbose:
             f_talk; echo -e "DRYa: Trying to clone: $3 \n"; 
@@ -3033,7 +3055,7 @@ elif [ $1 == ".." ]; then
 
    # Buscar os argumentos do prompt e manipular o ficheiro
       if [ -z $2 ]; then
-         f_recall_one_command_from_fzf_hist_file
+         f__D_hist__recall_one_command
 
       elif [ $2 == "s" ]; then
          # Guardar copia do ficheiro de historico)
