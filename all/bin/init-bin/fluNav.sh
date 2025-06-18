@@ -39,11 +39,11 @@
 #       word="morse ..., ,.., .,,"
 
 
-function f_push_only_hist_file_omni_log {
+function f__omni_log__push_hist_file_only {
    echo "uDev: Will be used drya-lib-4 here to work with omni-log"
 }
 
-function f_refresh_S_hist_file {
+function f__S_hist__refresh_file_name {
    # Ficheiro de historico com lista de ficheiros
 
    v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
@@ -54,10 +54,10 @@ function f_refresh_S_hist_file {
    v_fluNav_S_hist_file=$i
 
    # uDev: Omni log is not receiving files yet (use drya-lib-4)
-   #       f_push_only_hist_file_omni_log
+   #       f__omni_log__push_hist_file_only
 }
 
-function f_refresh_V_hist_file {
+function f__V_hist__refresh_file_name {
    # Ficheiro de historico com lista de diretorios
 
    v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
@@ -68,16 +68,16 @@ function f_refresh_V_hist_file {
    v_fluNav_V_hist_file=$i
 
    # uDev: Omni log is not receiving files yet (use drya-lib-4)
-   #       f_push_only_hist_file_omni_log
+   #       f__omni_log__push_hist_file_only
 }
 
-function f_remove_duplicated_lines_S_history_file {
+function f__S_hist__remove_duplicated_lines {
    # Removes duplicated lines from the history files using a temporary file
 
-   # Note: This fx is meant to run only after history file's name was refreshed with f_refresh_S_hist_file
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
    
    # variable for the file names
-      # Original file name (this var was created at f_refresh_S_hist_file)
+      # Original file name (this var was created at f__S_hist__refresh_file_name)
       v_original=$v_fluNav_S_hist_file  
 
       # Temporary file name
@@ -103,13 +103,19 @@ function f_remove_duplicated_lines_S_history_file {
       rm $v_temporary
 }
 
-function f_remove_duplicated_lines_V_history_file {
+function f__S_hist__change_abs_path__to__relative_path {
+   echo "uDev: take fluNav:S history file, replace:"
+   echo "      > /data/data/com.termux/files/home/Repositories/ to:"
+   echo '      > ${v_REPOS_CENTER}/'
+}
+
+function f__V_hist__remove_duplicated_lines {
    # Removes duplicated lines from the history files using a temporary file
 
-   # Note: This fx is meant to run only after history file's name was refreshed with f_refresh_S_hist_file
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
    
    # variable for the file names
-      # Original file name (this var was created at f_refresh_V_hist_file)
+      # Original file name (this var was created at f__V_hist__refresh_file_name)
       v_original=$v_fluNav_V_hist_file 
 
       # Temporary file name
@@ -408,14 +414,6 @@ function . {
       # If no argument is given, lists storage (ls command)
       ls -p
 
-   elif [ $1 == "." ]; then 
-      # Edit this script (fluNav)
-      f_edit_self
-
-   elif [ $1 == "G" ]; then 
-      # If arg 1 is 'G' then navigate to the center of seiva's repos
-      cd $v_REPOS_CENTER
-
    elif [ $1 == "?" ] || [ $1 == "h" ]; then 
       # Describe all these navigation alias
 
@@ -424,8 +422,9 @@ function . {
       echo
       echo '`. ?` or `. h`  Shows this help menu'
       echo '`. G`           Navigate to: Repos Center'
+      echo ".  1x Means: open arguments given (with \`vim\` or \`cd\`)"
       echo
-      echo ".  1x Means: ls"
+      echo ".  1x Means: ls (if there are no arguments)"
       echo "..  2x Means: cd .."
       echo "...  3x Means: cd -"
       echo "....  4x Means: pwd"
@@ -434,6 +433,25 @@ function . {
       echo ".......  7x Means: remember last 2 variables set as \$h and \$v"
       echo
       echo "To visit a file called 'h' use: \`vim h\`"
+
+   elif [ $1 == "." ]; then 
+      # Edit this script (fluNav)
+      f_edit_self
+
+   elif [ $1 == "G" ]; then 
+      # If arg 1 is 'G' then navigate to the center of seiva's repos
+      # uDev: Se houver uma pasta ou ficheiro com o nome "G", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
+      cd $v_REPOS_CENTER
+
+   elif [ $1 == "t" ]; then 
+      # If arg 1 is 't' then use `tree` in current dir
+      # uDev: Se houver uma pasta ou ficheiro com o nome "t", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
+      # uDev: dizer em drya-status-messages qual é a depenencia (para o caso de dar erro por falta dela). Uma vez que é para isso que serve drya-status-message, é para ajudar no debug
+      echo uDev
+
+   elif [ $1 == "du" ]; then 
+      # If arg 1 is 'dy' then use `du -h` para sabe quando espaco de memoria ocupa a pasta atual (ou ficheiro)
+      echo uDev
 
    else
       # If argument is given, do the following:
@@ -1156,8 +1174,8 @@ function V {
          # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
          
          # Refresh the variable that stores the path
-            f_refresh_V_hist_file  
-            f_remove_duplicated_lines_V_history_file
+            f__V_hist__refresh_file_name  
+            f__V_hist__remove_duplicated_lines
 
          # Info adicional durante o menu 
             Lh=$(pwd); Lh=$(basename $Lh); LH="Searching dirs at: .../$Lh/"
@@ -1186,8 +1204,8 @@ function V {
             # If no 'number' is given as 2nd arg: Navigate to last dir in the history list
 
             # Refresh the variable that stores the path
-               f_refresh_V_hist_file  
-               f_remove_duplicated_lines_V_history_file
+               f__V_hist__refresh_file_name  
+               f__V_hist__remove_duplicated_lines
 
             v_go=$(tail -n 1 $v_fluNav_V_hist_file)
             cd $v_go
@@ -1199,7 +1217,7 @@ function V {
             # Testar se o arg dado foi um numero
                if [[ "$2" =~ ^-?[0-9]+$ ]]; then
                   echo "É um número inteiro" 1>/dev/null  # Debug
-                  f_remove_duplicated_lines_V_history_file
+                  f__V_hist__remove_duplicated_lines
                   v_line=$(tail -n $2 $v_fluNav_V_hist_file | head -n 1 )
                   f_talk; echo "V: Navigating to: $v_line"
                   cd $v_line
@@ -1213,8 +1231,8 @@ function V {
          # Read the history file and select one path from there
 
          # Used only to centralize the history file into one single variable across the file
-            f_refresh_V_hist_file  
-            f_remove_duplicated_lines_V_history_file
+            f__V_hist__refresh_file_name  
+            f__V_hist__remove_duplicated_lines
 
          # Criar um menu apartir do historico  
             # uDev: apagar linhas repetidas
@@ -1225,8 +1243,8 @@ function V {
 
       elif [ $1 == "...." ]; then
          # Used only to centralize the history file into one single variable across the file
-            f_refresh_V_hist_file  
-            f_remove_duplicated_lines_V_history_file
+            f__V_hist__refresh_file_name  
+            f__V_hist__remove_duplicated_lines
 
          # Edit file manually 
             vim $v_fluNav_V_hist_file
@@ -1310,7 +1328,7 @@ function f_action {
 
       f_greet 
 
-      cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
+      cd  ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
 
 
@@ -1319,8 +1337,8 @@ function f_action {
       # `S ,`
 
       # Used only to centralize the history file into one single variable across the file
-         f_refresh_S_hist_file  
-         f_remove_duplicated_lines_S_history_file
+         f__S_hist__refresh_file_name
+         f__S_hist__remove_duplicated_lines
 
       # Menu fzf that lists recent files
          unset v_list
@@ -1335,8 +1353,9 @@ function f_action {
       # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
 
       # Used only to centralize the history file into one single variable across the file
-         f_refresh_S_hist_file  
-         f_remove_duplicated_lines_S_history_file
+         f__S_hist__refresh_file_name
+         f__S_hist__remove_duplicated_lines
+         f__S_hist__change_abs_path__to__relative_path
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
@@ -1362,8 +1381,8 @@ function f_action {
       # `S ..` 
 
       # Used only to centralize the history file into one single variable across the file
-         f_refresh_S_hist_file  
-         f_remove_duplicated_lines_S_history_file
+         f__S_hist__refresh_file_name
+         f__S_hist__remove_duplicated_lines
 
       # Verificar qual é a ultima linha do ficheiro de historico
          [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
@@ -1378,8 +1397,8 @@ function f_action {
       # `S ...`
 
       # Used only to centralize the history file into one single variable across the file
-         f_refresh_S_hist_file  
-         f_remove_duplicated_lines_S_history_file
+         f__S_hist__refresh_file_name
+         f__S_hist__remove_duplicated_lines
 
       # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
          #v_text=$(sed "s/ / /g" $v_fluNav_S_hist_file)
@@ -1399,8 +1418,8 @@ function f_action {
       # Editar o ficheiro de historico
       # `S ....`
 
-      f_refresh_S_hist_file  # Used only to centralize the history file into one single variable across the script
-      f_remove_duplicated_lines_S_history_file
+      f__S_hist__refresh_file_name  # Used only to centralize the history file into one single variable across the script
+      f__S_hist__remove_duplicated_lines
       
       vim $v_fluNav_S_hist_file
 
