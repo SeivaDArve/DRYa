@@ -746,8 +746,9 @@ if [ -z "$1" ]; then
          L15='15. Relogio     | Despertador'
 
          #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
-         #L13='13. Calculadora | L/min > m^3/h
-         #L13='13. Calculadora | Graus Celcius > Farenheit
+         #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
+         #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
+         #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
          L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
