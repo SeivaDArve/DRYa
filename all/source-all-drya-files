@@ -91,6 +91,7 @@ function f_traitsID {
 
    # Nome do ficheiro SCRIPT traitsID.sh
       trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
+      trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
    # Nome do ficheiro OUTPUT com as variaveis
       trid_dir=~/.config/h.h/drya/traitsID
@@ -150,6 +151,7 @@ function f_drya_msgs_welcome {
 
 function f_drya_status_msgs {
    # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
+   # uDev: renomear v_MSGS para v_ssms
 
    # Configuring variable for DRYa messages
       v_name="drya-msgs"
@@ -281,14 +283,18 @@ function f_internal_drya_files_1_of_2 {
    # Repository: DRYa (internal files - (1/2) )
 
    # Demi-fake pin for fzf menus (scare away curious people)
-     v_pin=0000
+      v_pin=0000
+      export v_pin
+      # Usado em: `D cl .` para tambem listar as repos privadas
 
    # Include this file name in a variable
      v_name_drya_source="source-all-drya-files"
      v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_drya_source
+     # uDev: Dar um nome mais explicito: drya_source_all_files ou drya_sadf
 
      v_name_drya_alias="config-bash-alias"
      v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/$v_name_drya_alias
+     # uDev: Dar um nome mais explicito: drya_bash_alias ou drya_cfba ou drya_2_config_bash_alias
 
      v_name_dryarc=".dryarc"
      v_path_dryarc=~/.config/h.h/drya/$v_name_dryarc
