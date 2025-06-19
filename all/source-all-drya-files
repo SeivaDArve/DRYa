@@ -149,7 +149,7 @@ function f_drya_msgs_welcome {
       echo
 }  >> $v_MSGS 2>/dev/null
 
-function f_drya_status_msgs {
+function f_drya_ssms_start {
    # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
    # uDev: renomear v_MSGS para v_ssms
 
@@ -518,6 +518,7 @@ function f_repository_3_sticks_alpha_bravo {
 
 function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+   alias    jv="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias     J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
 
    # uDev: if drya-mail-box is ready, use it here!  
@@ -568,47 +569,63 @@ function f_internal_drya_files_2_of_2 {
      f_alias_to_enforce
 }
 
-function f_verbose_end_file {
+function f_drya_ssms_end {
    # Send to drya-messages the info that all the file was loaded
 
    echo -e "DRYa: file finished loading: $v_name_drya_source \n" >> $v_MSGS
+}
+
+function f_make_sound {
+   # Function to actually open the media player and play a sound
+   mpv --really-quiet $v_snd_2 & disown
+}
+
+function f_make_toast {
+   # Function to use termux:API fx to display a toast message in the middle of the screen
+   termux-toast "$v_toast_message_y"
+}
+
+function f_ezGIT_exists {
+   # Perform actions when ezGIT exist during terminal startup
+
+   # Downloading all updates for all repos
+      bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null 
+
+   # uDev: Se houver commits para upload, entao fazer tambem upload
+
+   # This fx will not send any output, so it will send text to drya-msgs
+      echo -e "DRYa: source-all-drya-files: f_startup_async_ezGIT_pull_All: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+
+   # Sound effect in the end (`disown` makes the process run in a sub-shell)
+      v_test=$(type mpv) &>/dev/null
+      
+      # SELECT apenas 1 das linhas abaixo (para FALSO)
+         [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
+
+      # SELECT apenas 1 das linhas abaixo (para VERDADEIRO)
+         [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_toast || f_make_sound
+
+   # Informar a conclusao em drya-status-messages
+      echo -e "\n\r $v_toast_message_y \n" >> $v_MSGS
 }
 
 function f_startup_async_ezGIT_pull_All {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message="ezGIT: \`git pull recursive\` done!"
+   v_toast_message_y="DRYa: ezGIT: \`git pull recursive\` done!"
+   v_toast_message_n="DRYa: ezGIT: \`git pull recursive\` not done (repo may not exist)"
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
-      # Downloading all
-         bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null && echo "Done"
+      # ezGIT existe (atuar)
+      f_ezGIT_exists
 
-      # uDev: Se houver commits para upload, entao fazer tambem upload
+   else
+      # ezGIT nao existe (nao atuar)
 
-      # This fx will not send any output, so it will send text to drya-msgs
-         echo -e "DRYa: source-all-drya-files: f_startup_async_ezGIT_pull_All: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+      # Informar a conclusao em drya-status-messages
+         echo -e "\n\r $v_toast_message_n \n" >> $v_MSGS
    fi
-
-
-   function f_make_sound {
-      # Function to actually open the media player and play a sound
-      mpv --really-quiet $v_snd_2 & disown
-   }
-
-   function f_make_toast {
-      # Function to use termux:API fx to display a toast message in the middle of the screen
-      termux-toast "$v_toast_message"
-   }
-
-   # Sound effect in the end (`disown` makes the process run in a sub-shell)
-      v_test=$(type mpv) &>/dev/null
-      
-      [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
-      [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_toast || f_make_sound
-
-   # Informar a conclusao em drya-status-messages
-      echo -e "\n$v_toast_message\n" >> $v_MSGS
 } 
 
 function f_temporary_fx_memor_sutras {
@@ -664,7 +681,7 @@ function f_exec {
       f_internal_drya_files_1_of_2
       #f_check_missing_dependencies
       f_drya_libs
-      f_drya_status_msgs
+      f_drya_ssms_start
       f_drya_fzf_history
       f_traitsID           
       f_dv_PS1    
@@ -708,7 +725,7 @@ function f_exec {
 
 
 
-      f_startup_async_ezGIT_pull_All &> /dev/null & disown  # Run last fx
+      f_startup_async_ezGIT_pull_All &> /dev/null #& disown  # Run last fx
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    # For practice, fun, entetainment:
@@ -716,7 +733,7 @@ function f_exec {
       #f_temporary_fx_open_random_shells_py_node_sql {
 
    # Last Verbose output for drya-status-messages
-      f_verbose_end_file
+      f_drya_ssms_end
 }
 f_exec
 
