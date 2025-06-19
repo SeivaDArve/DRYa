@@ -234,12 +234,12 @@ function f_clone_info {
            echo   " To list all public repositories"
            echo   '  > `drya clone --list-public` or:'
            echo   '    `drya clone p` or:'
-           echo   '    `D cl p`'
+           echo   '    `D cln p`'
            echo   
            echo   " To list all private repositories"
            echo   '  > `drya clone --list-private` or:'
            echo   '    `drya clone P` or:'
-           echo   '    `D cl P`'
+           echo   '    `D cln P`'
            echo
    f_talk; echo   "To clone DRYa:  "
            echo   "  > $v_clone_drya" 
@@ -2041,7 +2041,14 @@ elif [ $1 == "logout" ]; then
       echo "Option not recognized"
    fi
 
-elif [ $1 == "clone" ] || [ $1 == "cl" ]; then 
+elif [ $1 == "cl" ]; then 
+   # `cl` passou a ser `cln` para que `clip` passe a ser `clp` (ambos sao parecidos)
+   echo '`cl` = help'
+   echo '`cln` = clonar'
+   echo '`clp` = clip'
+   echo '`clr` = colar'
+
+elif [ $1 == "clone" ] || [ $1 == "cln" ]; then 
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
@@ -2053,9 +2060,9 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
    elif [ $2 == "." ]; then
       # Open fzf to help clone by the correct name
-      # uDev: `D cl . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
-      # uDev: `D cl . p`
-      # uDev: `D cl . P`
+      # uDev: `D cln . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
+      # uDev: `D cln . p`
+      # uDev: `D cln . P`
 
       f_talk; echo "Cloning Multiple Repositories"
               echo " > Listing all public repos (by web search)"
@@ -2093,7 +2100,7 @@ elif [ $1 == "clone" ] || [ $1 == "cl" ]; then
 
       if [ -z $3 ]; then
          # Using menu fzf
-         f_talk; echo "\`D cl try <name>\`"
+         f_talk; echo "\`D cln try <name>\`"
                  echo " > Repo name not specified"
                  echo "   You must try at least one repo 'name'"
 
@@ -2945,9 +2952,40 @@ elif [ $1 == "paste" ]; then
       cp $i .
    done
 
-elif [ $1 == "clip" ]; then 
-   echo "Ler/Visitar o ficheiro de clipboard"
+elif [ $1 == "clip" ] || [ $1 == "clp" ]; then 
+   f_talk; echo "Opcoes de clipboard (@DRYa + @host)"
+
    less $v_clip
+
+   # uDev: integrar: 
+   #       termux-clipboard-get
+   #       termux-clipboard-set
+
+
+   # uDev: integrar: 
+   #     Copiar uma variável do WSL2 para o Windows
+   #     mensagem="Texto vindo do Linux"
+   #     echo "$mensagem" | clip.exe
+   #     
+   #     # Ler o clipboard do Windows e salvar numa variável no WSL2
+   #     conteudo=$(powershell.exe -Command "Get-Clipboard")
+   #     echo "Clipboard do Windows contém: $conteudo"
+   #     
+
+   # uDev: integrar: 
+   #     echo "Olá Fedora Linux!" | xclip -selection clipboard
+   #
+
+   # uDev: 
+   #        `D clp`      # Help on DRYa clipboard   
+   #        `D clp c`    # Copy  (Drya clipboard)
+   #        `D clp p`    # Paste (Drya clipboard)
+   #        `D clp .`    # edit  (Drya clipboard)
+   #
+   #        `D clp m`    # Help on machine clipboard
+   #        `D clp m c`  # Copy using machine clipboard
+   #        `D clp m p`  # Paste using machine clipboard
+   #
 
 elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
    # Partial File Reader: Para imprimir apenas a linha X de um documento
