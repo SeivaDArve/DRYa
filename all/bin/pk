@@ -7,13 +7,15 @@
 #      Example with `dnf install <package-X>`: `pk + <package-X>`
 #      Example with `pacman -S   <package-X>`: `pk + <package-X>`
 
+# Var $pkgm might be: apt, pacman, dnf, zypper, apk, brew (check traitsID.sh to make sure)
    [[ -z $1        ]] && echo 'Help: `pk --help`'
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && echo "sudo apt install" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && echo "sudo pacman -S" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "dnf"    ]] && echo "sudo dnf install" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "apk"    ]] && echo "apk add" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "pkg"    ]] && shift && bash $pkgm install $* #&& echo "pkg install" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && echo "brew install" 
    [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
+
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -S      $*
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm install $*
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "apk"    ]] && shift &&      $pkgm add     $*
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm install $*
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm install
+   [[    $1 == "+" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
 
