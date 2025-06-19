@@ -182,6 +182,9 @@ function f_one_second_date {
 # -----------------------------------------------
 
 
+# uDev: Data neste formato:
+# (Data atual) - (Ano 2025) - (Mes 06 Jun) - (Dia 18 Wed) - (03:03:14)
+
 
 if [ -z $1 ]; then
    f_complete_date 
