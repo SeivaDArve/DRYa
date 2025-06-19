@@ -469,7 +469,7 @@ function . {
       && echo "Listing files at:" \
       && echo " > ./$BASENAME" \
       && echo \
-      && ls \
+      && ls -p \
       || for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly 
 
    fi
@@ -711,7 +711,7 @@ function f_mobile_android_going_internal_storage {
    echo "Internal Storage"
    f_horiz_line
 
-   cd /sdcard && ls
+   cd /sdcard && ls -p
 }
 
 function f_mobile_android_going_SD_card_storage {
@@ -739,9 +739,9 @@ function f_mobile_android_going_SD_card_storage {
    echo "SD card Storage"
    f_horiz_line
 
-   cd $v_place_2 && ls
+   cd $v_place_2 && ls -p
    f_horiz_line
-   cd $v_place_3 && ls
+   cd $v_place_3 && ls -p
 }
 
 function f_mobile_android_going_external_USB {
@@ -756,7 +756,7 @@ function f_mobile_android_going_external_USB {
    echo "USB Storage"
    f_horiz_line
 
-   cd /storage/83DB-10EA && ls || cd /storage && ls
+   cd /storage/83DB-10EA && ls -p || cd /storage && ls -p
 }
 
 function f_mobile_android_going_USB_mnt_dir {
@@ -771,7 +771,7 @@ function f_mobile_android_going_USB_mnt_dir {
    echo "Listing possible USB plugged in"
    f_horiz_line
 
-   cd /storage && ls
+   cd /storage && ls -p
 
    read -p "pause..."
 
@@ -810,7 +810,7 @@ function f_mobile_android_going_termux_bridge_android {
 
    f_horiz_line
 
-   cd /sdcard/Termux-bridge-Android && ls
+   cd /sdcard/Termux-bridge-Android && ls -p
 }
 
 function f_mobile_android_going_wsl {
@@ -1025,90 +1025,90 @@ function V {
       # uDev: If correspondent repo does not exist, ask to clone intead of the error message
 
       elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "dd" ] || [ $1 == "D" ]; then
-         cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
-         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
-         if   [ -z $2      ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls
-         elif [ $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls
+         if   [ -z $2      ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls -p
+         elif [ $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
-         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
-         cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
-         cd ${v_REPOS_CENTER}/dWiki 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/dWiki 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
-         cd ${v_REPOS_CENTER}/wikiD 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/wikiD 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "upk" ]; then
-         cd ${v_REPOS_CENTER}/upK 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/upK 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
-         cd ${v_REPOS_CENTER}/112-Shiva-Sutras 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/112-Shiva-Sutras 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-         cd ${v_REPOS_CENTER}/omni-log 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/omni-log 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "gps" ]]; then
-         cd ${v_REPOS_CENTER}/mastering-GPS 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/mastering-GPS 2>/dev/null && ls -p || f_error_cd
 
 
       elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
-         cd ${v_REPOS_CENTER}/verbose-lines 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/verbose-lines 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/yogaBashApp 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "shamb" ]]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ 2>/dev/null && ls -p || f_error_cd
       
 
       elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
-         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "one" ]] || [[ $1 == "1" ]]; then
-         cd ${v_REPOS_CENTER}/oneFile-bau 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/oneFile-bau 2>/dev/null && ls -p || f_error_cd
 
 
       elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
          # uDev: `D q 1` to remove the repo
-         cd ${v_REPOS_CENTER}/scratch-paper 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/scratch-paper 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "dota" ]; then
-         cd ${v_REPOS_CENTER}/Dota-2-guide 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/Dota-2-guide 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "luxam" ]; then
-         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "ga" ] || [ $1 == "garpho" ]; then
-         cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "ts" ] || [ $1 == "typescript" ] || [ $1 == "typescript-berg-house" ]; then
@@ -1121,29 +1121,29 @@ function V {
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
-         cd ~/.tmp/ && ls
+         cd ~/.tmp/ && ls -p
 
 
       elif [ $1 == "code" ]; then
          mkdir -p ~/.code
-         cd ~/.code/ && ls
+         cd ~/.code/ && ls -p
 
 
       elif [ $1 == "center" ]; then
-         cd ${v_REPOS_CENTER} && ls
+         cd ${v_REPOS_CENTER} && ls -p
 
 
       elif [ $1 == "lxm" ]; then
-         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls || f_error_cd
+         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "wsl" ] || [ $1 == "win" ] || [ $1 == "W" ]; then
-         cd /mnt/c/ 2>/dev/null && ls || f_error_cd
+         cd /mnt/c/ 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "ln" ]; then
          # Se a pasta ~/ls/ existir, navega para ela e lista os seus conteudos
-         [[ -d ~/ln/ ]] && cd ~/ln/ && ls
+         [[ -d ~/ln/ ]] && cd ~/ln/ && ls -p
 
 
       elif [ $1 == "mb" ] || [ $1 == "mobile-android" ]; then
@@ -1239,7 +1239,7 @@ function V {
             v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")
       
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-            [[ -n $v_hist ]] && cd $v_hist && ls && unset $v_hist
+            [[ -n $v_hist ]] && cd $v_hist && ls -p && unset $v_hist
 
       elif [ $1 == "...." ]; then
          # Used only to centralize the history file into one single variable across the file
@@ -1259,7 +1259,7 @@ function V {
          v_found=$(ls | grep $1)
          echo Found: $v_found
          if [[ $? == "0" ]]; then
-            cd $v_found && ls
+            cd $v_found && ls -p
          fi
          #uDev: use to command '$ file' to exclude all non directories
          #uDev: when there are 2 or more items found, allow the user to input a number as $2
