@@ -186,6 +186,7 @@ function f_drya_status_msgs {
 
 function f_drya_fzf_history {
    # Set an history file to be used in all `fzf` menus who need
+   # uDev: Eliminar esta fx, ja foi definido o ficheiro $v_drya_fzf_menu_hist antes
    echo  1>/dev/null
 }
 
@@ -201,13 +202,17 @@ function f_drya_welcome_screen {
    # In order to uncluter the welcome screen, we use this function
    # (Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not)
 
-   # uDev: At `D .` add an option to see the welcome screen again 
+   # NOTA: NAO E PRECISO SER CRIADO O FICHEIRO, porque o comando `D help > welcome` pode simplesmente repetir estes comandos
+
    # uDev: send to drya-messages too
    # uDev: set function: drya --os (traitsID info)
    # uDev: set environment variable: drya-os to be used by other functions like '$ op'
    # uDev: Ask if the user want to see more than just the OS that is running
-   # uDev: Make ezGIT ask if the user wants: G v all
       
+   # Para se poder ver o "welcome screen" de novo, guardamos no ficheiro
+      
+      #v_drya_welcome_screen=~/.config/h.h/drya/drya-welcome
+
    # Display info about it at the screen when DRYa is loaded by the terminal
    # --- Presenting it with figlet (which is a dependency) or just echo it's name:
       bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead

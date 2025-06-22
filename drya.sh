@@ -214,10 +214,23 @@ function f_calcular_tempo_decorrido_apos_data {
 }
 
 function f_drya_welcome {
-   clear
+   # Repetir os comandos que criam a mensagem de apresentacao DRYa
+   # (Esta sequencia de comandos ja existem em .../source-all-drya-files
 
-   v_file=~/.config/h.h/drya/drya-welcome
-   echo "uDev: will cat a file under $v_file"
+   echo "D help welcome" >> $v_drya_fzf_menu_hist
+
+   #v_drya_welcome_screen=~/.config/h.h/drya/drya-welcome 
+   #less $v_file
+
+   # Copiado de .../source-all-drya-files
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+   bash $trid_script startup-message
+   f_talk; echo "Startup Help..."
+           echo "      Aceder ao menu principal    : \`D .\`"
+           echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
+           echo
+
+   neofetch -L 2>/dev/null
 }
 
 function f_clone_info {
@@ -1612,15 +1625,14 @@ function f_drya_help_menu {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo "$Lz2"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
       [[ $v_list =~ "3. " ]] && f_drya_welcome
       [[ $v_list =~ "2. " ]] && f_drya_help
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2" echo "linha g" >> ~/.bash_history 
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
       unset v_list
-      history -r
 }
 
 function f_partial_file_reader {
@@ -1788,6 +1800,13 @@ function f_drya_get_all_repo_names_private_public {
       v_combine="$v_list_private $v_list_public"
 }
 
+
+
+
+
+
+
+
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
 # -------------------------------------------
@@ -1894,6 +1913,7 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
 
    elif [ $2 == "welcome" ]; then 
       # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
+      echo "D help welcome" >> $v_drya_fzf_menu_hist
       f_drya_welcome
 
    elif [ $2 == "status-messages" ] || [ $2 == "msgs" ] || [ $2 == "ssms" ]; then 
