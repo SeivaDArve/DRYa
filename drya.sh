@@ -2084,6 +2084,12 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
       # uDev: `D cln . p`
       # uDev: `D cln . P`
 
+      # uDev: Quando aparece a lista de repos para clonar, podemos logo testar se existem ou nao:
+      #       Exemplo:
+      #        > [X] dv-cv-private
+      #        > [ ] dv-cv-private
+
+
       f_talk; echo "Cloning Multiple Repositories"
               echo " > Listing all public repos (by web search)"
               echo " > Listing private repos    (from offline file)"
