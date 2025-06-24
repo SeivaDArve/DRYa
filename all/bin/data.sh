@@ -97,7 +97,7 @@ function f_help {
 }
 
 function f_variables_date {
-   # Exemplo: "Data/Hora: 2024-06-07 04:21:26"
+   # Exemplo: "Data-Hora_2024-06-07_04:21:26"
 
       v_data=$(date +'%Y-%m-%d_%Hh-%Mm-%Ss')
       v_data="Data-Hora_$v_data"
@@ -105,7 +105,8 @@ function f_variables_date {
 }
 
 function f_variables_date_to_file {
-   # Envia so a data para ficheiro (sem output)
+   # Envia so a data para ficheiro drya-date-now (sem output)
+   # (Durante o uso de `vim` pode despejar a data existente nesse ficheiro com as teclas de atalho `ZD` (confirmar teclas em .vimrc))
    # Exemplo: "<2024-06-07>"
 
    v_date_now=~/.config/h.h/drya/drya-date-now
@@ -113,6 +114,24 @@ function f_variables_date_to_file {
    v_data=$(date +'<%Y-%m-%d>')
    echo "$v_data" >  $v_date_now
    echo -e "\nScript 'data.sh': nova data '$v_data' inserida no ficheiro $v_date_now\n" >> $v_MSGS
+}
+
+function f_variables_date_to_file_verbose {
+   f_variables_date_to_file
+
+   echo "DRYa: data.sh: Enviar data atual para um ficheiro"
+   echo " 1. Teclas: \`d F\` para preencher ficheiro \$drya-date-now com data"
+   echo " 2. Teclas: \`ZD\`  no \`vim\` para despejar essa data no doc"
+   echo 
+   echo "Localizacao do ficheiro drya-date-now: "
+   echo " > $v_date_now"
+   echo
+   echo "Data atual (enviada):"
+   echo " > $v_data"
+   echo 
+   echo 'Agora ao usar `vim\` ja pode despejar essa data com as teclas:'
+   echo ' > `ZD`  (confirmar em .vimrc)'
+   echo
 }
 
 function f_hour_date {
@@ -196,6 +215,7 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L14='14. F     | Data para ficheiro (com verbose + instrucoes)'
       L13='13. f     | Data para ficheiro (sem verbose)'
       L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
       L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
@@ -213,10 +233,11 @@ elif  [ $1 == "." ]; then
 
       L0="SELECT 1: Menu X: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "14. " ]] && f_variables_date_to_file_verbose
       [[ $v_list =~ "13. " ]] && f_variables_date_to_file
       [[ $v_list =~ "12. " ]] && f_background_process
       [[ $v_list =~ "11. " ]] && f_complete_date && echo
@@ -278,5 +299,9 @@ elif  [ $1 == "alarm" ]; then
 elif  [ $1 == "f" ]; then
    # Data para ficheiro, sem verbose output
    f_variables_date_to_file
+
+elif  [ $1 == "F" ]; then
+   # Data para ficheiro, sem verbose output
+   f_variables_date_to_file_verbose
 fi
 
