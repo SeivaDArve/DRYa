@@ -63,7 +63,6 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
         \   exe "normal! g`\"" |
         \ endif
 
-
 " F7 to close vim from normal mode (equivalent to zz)
    nnoremap <F7> <Esc>ZZ
 
