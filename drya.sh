@@ -7,11 +7,19 @@
   Multi comment example
 '
 
-# Sourcing file with colors 
+# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="DRYa"
    v_talk="DRYa: "
+
+
+# Sourcing DRYa Lib 2
+   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
+
+   #f_create_tmp_file  # will give a $v_tmp with a new file with abs path
+
 
 function f_instructions_of_usage {
    # Função para exibir como usar o script
@@ -1796,8 +1804,18 @@ function f__D_hist__recall_one_command {
 function f_drya_get_all_repo_names_private_public {
    # Juntar a lista de repos publicas + privadas
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+      v_list_options="---Invert-Selection---"
       v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
-      v_combine="$v_list_private $v_list_public"
+      v_combine="$v_list_options $v_list_private $v_list_public"
+
+      # will give a $v_tmp with a new file with abs path
+         f_create_tmp_file  
+
+      # Get the new file created
+         echo "$v_combine" > $v_tmp
+
+      # Novo resultado em nova var
+         v_combine=$v_tmp
 }
 
 
@@ -2099,7 +2117,7 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
       f_drya_get_all_repo_names_private_public
 
       # Pedir ao user para selecionar repos
-         v_multiple=$(echo $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone: ")
+         v_multiple=$(cat $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone/install: ")
 
 
       if [[ -n $v_multiple ]]; then
@@ -2276,7 +2294,7 @@ elif [ $1 == "mac" ]; then
       echo
 
 
-elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == ".dot" ]]; then 
+elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == ".dot" ]] || [[ $1 == "dt" ]]; then 
    # Installing all configuration files
 
    if [[ -z $2 ]]; then 
@@ -2287,13 +2305,13 @@ elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [
       # List dot-files available in DRYa repo
       f_dot_files_list_available
 
-   elif [[ $2 == "install" ]] || [ $2 == "I" ]; then 
+   elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
       # Menu to install dot files
 
       [[ -z $3          ]] && f_menu_install_dot_files
       [[    $3 == "git" ]] && f_dot_files_install_git
 
-   elif [[ $2 == "remove" ]] || [ $2 == "O" ]; then 
+   elif [[ $2 == "remove" ]] || [ $2 == "r" ]; then 
       echo "uDev"
 
    elif [[ $2 == "backup" ]]; then 
