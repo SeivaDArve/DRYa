@@ -2835,7 +2835,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_quit=${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
 
    # Specific repos to delete
-      v_repo1=${v_REPOS_CENTER}/scratch-paper
+      v_repo=${v_REPOS_CENTER}
 
    if [ -z $2 ]; then 
       # File to run as last script before exit terminal
@@ -2843,13 +2843,17 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 
    elif [ $2 == "1" ]; then 
       # When exit, delete specific repositories too
-      [ -d $v_repo1 ] && cd && rm -rf $v_repo1 && f_talk && echo "Sc removed"
+      [ -d $v_repo/scratch-paper ] && cd && rm -rf $v_repo1 && f_talk && echo "Sc removed"
 
    elif [ $2 == "2" ]; then 
-      # When exit, delete specific configs 
-      echo "uDev"
+      # Delete all personal-data repos (private + scratch-paper + .netrc)
+      [ -d $v_repo/scratch-paper ] && cd && rm -rf $v_repo/scratch-paper && f_talk && echo "Sc removed"
+      [ -d $v_repo/omni-log      ] && cd && rm -rf $v_repo/omni-log      && f_talk && echo "omni-log removed"
+      [ -d $v_repo/moedaz        ] && cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz removed"
+      [ -f ~/.netrc              ] &&       rm ~/.netrc                  && f_talk && echo ".netrc removed"
       
    elif [ $2 == "3" ]; then 
+      # When exit, delete specific configs 
       # When exit, uninstall specific softwares too
       echo "uDev"
 
