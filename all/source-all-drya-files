@@ -385,6 +385,8 @@ function f_repository_ezGIT {
       alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
       alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
+      alias    GG="cd   ${v_REPOS_CENTER}"
+
       alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
