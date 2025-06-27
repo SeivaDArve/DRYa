@@ -4,6 +4,20 @@
 #              No final do ficheiro também estara um catalogo de todas as variaveis
 #              As variaveis que vao ser encontradas vao ser colocadas em 4 sitios: Uma Array; Exportadas para o Env; Concatenadas num ficheiro de configs; No final deste documento de texto num mini catalogo de variaveis
 
+# uDev: Create a script at DRYa/all/bin/ for drya-neofetch
+   # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+   # uDev: Detecte personal/safe device from job/public/unsafe device
+   # uDev: Create the same for package manager: apt, pacman, dnf, pkg
+   # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
+   # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
+   # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
+   # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
+   # uDev: Versao do Linux (para config do teclado)
+      #which yum >/dev/null && { echo Fedora flavour; exit 0; }
+      #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
+      #which apt-get >/dev/null && { echo Debian based;  }
+
+
 # uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
 # uDev: Detetar WM (window manager, se estar a usar GNOME, KDE...
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
@@ -267,19 +281,6 @@ function f_fetch {
    #f_detectOS_2
 
    f_actions 
-
-   # uDev: Create a script at DRYa/all/bin/ for drya-neofetch
-      # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
-      # uDev: Detecte personal/safe device from job/public/unsafe device
-      # uDev: Create the same for package manager: apt, pacman, dnf, pkg
-      # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
-      # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
-      # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
-      # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
-      # uDev: Versao do Linux (para config do teclado)
-         #which yum >/dev/null && { echo Fedora flavour; exit 0; }
-         #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
-         #which apt-get >/dev/null && { echo Debian based;  }
 }
 
 
