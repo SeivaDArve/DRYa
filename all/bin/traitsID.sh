@@ -12,6 +12,7 @@
 # uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 # uDev: Detect $SHELL
 # uDev: Detect wifi network name (add a loop, to oeriodically check the name)
+# uDev: Crir editor de texto predefinido
 # uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
 
 

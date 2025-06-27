@@ -103,6 +103,12 @@ function f__S_hist__remove_duplicated_lines {
       rm $v_temporary
 }
 
+function f__S_hist__make_abs_path_into_relative_path {
+   #echo "uDev: change: /data/data/com.termux/files/home/Repositories/"
+   #echo "      into:   \${v_REPOS_CENTER}/ "
+   sed -i "s#/data/data/com.termux/files/home/Repositories/#\${v_REPOS_CENTER}/#g" $v_original
+}
+
 function f__S_hist__change_abs_path__to__relative_path {
    echo "uDev: take fluNav:S history file, replace:"
    echo "      > /data/data/com.termux/files/home/Repositories/ to:"
@@ -1399,13 +1405,11 @@ function f_action {
       # Used only to centralize the history file into one single variable across the file
          f__S_hist__refresh_file_name
          f__S_hist__remove_duplicated_lines
+         #f__S_hist__make_abs_path_into_relative_path 
 
-      # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         #v_text=$(sed "s/ / /g" $v_fluNav_S_hist_file)
-
+      # Buscar uma das linhas
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
          v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
