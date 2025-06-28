@@ -241,8 +241,9 @@ function f_actions {
 }
 
 function f_startup {
-   f_talk; echo       "Running on : $trid_OS"
-           echo "      Git name   : $trid_gmn"
+   f_talk; echo       "Running on  : $trid_OS"
+           echo "      Git name    : $trid_gmn"
+           echo "      Editor texto: uDev"
            echo
 }
 
