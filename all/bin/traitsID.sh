@@ -4,6 +4,20 @@
 #              No final do ficheiro também estara um catalogo de todas as variaveis
 #              As variaveis que vao ser encontradas vao ser colocadas em 4 sitios: Uma Array; Exportadas para o Env; Concatenadas num ficheiro de configs; No final deste documento de texto num mini catalogo de variaveis
 
+# uDev: Create a script at DRYa/all/bin/ for drya-neofetch
+   # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+   # uDev: Detecte personal/safe device from job/public/unsafe device
+   # uDev: Create the same for package manager: apt, pacman, dnf, pkg
+   # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
+   # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
+   # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
+   # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
+   # uDev: Versao do Linux (para config do teclado)
+      #which yum >/dev/null && { echo Fedora flavour; exit 0; }
+      #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
+      #which apt-get >/dev/null && { echo Debian based;  }
+
+
 # uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
 # uDev: Detetar WM (window manager, se estar a usar GNOME, KDE...
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
@@ -15,6 +29,8 @@
 # uDev: Crir editor de texto predefinido
 # uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
 
+#udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+#udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
@@ -177,10 +193,10 @@ function f_trid_6 {
       trid_OS="Android"
       trid_os=A
       
-   elif  [[ $v_uname =~ "Microsoft" ]]; then 
+   elif  [[ $v_uname =~ "microsoft" ]]; then 
       # Detetar se é Windows
       # uDev: Verificar se o sistema está no WSL2
-      trid_OS="Microsoft"
+      trid_OS="Linux-Microsoft"
       trid_os=W
 
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
@@ -205,6 +221,41 @@ function f_trid_6 {
       echo "trid_OS=\"$trid_OS\""         >> $trid_output 
       echo "trid_os=$trid_os"             >> $trid_output
       echo                                >> $trid_output
+}
+
+function f_trid_7 {
+   #Procurar o editor de texto pre-definido
+
+   # Debug
+     #echo "Pasta h.h de trid: $trid_dir" 
+
+   trid_editor_file=$trid_dir/trid_editor
+   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+   
+   # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
+      if [ -f $trid_editor_file ]; then
+         
+         trid_editor_app=$(cat $trid_editor_file)
+
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: existe"
+            #echo $trid_editor_app
+      else
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: nao existe"
+            #echo " > Vai ser configurado o vim"
+
+         echo "vim" > $trid_editor_file
+         trid_editor_app="vim"
+         
+      fi
+
+   # Send out results
+      echo "trid_7=\"trid_editor_file::$trid_editor_file\"" >> $trid_output 
+      echo "trid_editor_file=\"$trid_editor_file\""         >> $trid_output 
+      echo "trid_editor_app=$trid_editor_app"               >> $trid_output
+      echo "e=$trid_editor_app"                             >> $trid_output
+      echo                                                  >> $trid_output
 }
 
 function f_trid_print_all {
@@ -266,22 +317,10 @@ function f_fetch {
    f_trid_4       # Procurar "Package Manager"
    f_trid_5       # Procurar "Termux"
    f_trid_6       # Procurar "OS"
+   f_trid_7       # Definir editor de texto pre-definido
    #f_detectOS_2
 
    f_actions 
-
-   # uDev: Create a script at DRYa/all/bin/ for drya-neofetch
-      # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
-      # uDev: Detecte personal/safe device from job/public/unsafe device
-      # uDev: Create the same for package manager: apt, pacman, dnf, pkg
-      # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
-      # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
-      # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
-      # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
-      # uDev: Versao do Linux (para config do teclado)
-         #which yum >/dev/null && { echo Fedora flavour; exit 0; }
-         #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
-         #which apt-get >/dev/null && { echo Debian based;  }
 }
 
 
@@ -352,6 +391,9 @@ elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
    }
 
    f_printenv
+
+elif [ $1 == "editor" ] || [ $1 == "E" ]; then
+  f_trid_7 
 
 elif [ $1 == "print" ] || [ $1 == "p" ]; then
    # Print all variables

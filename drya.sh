@@ -1297,36 +1297,38 @@ function f_menu_install_dot_files {
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
    #L10="10. stroken"  # It is part of .netrc         
 
-    L11="11. | termux  | termux.properties + colors.termux"
-    L10='10. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
-     L9="9.  | tmux    | .tmux.conf"
-     L8="8.  | bash    | .bash_logout"
-     L7="7.  | git     | .gitconfig "
-     L6="6.  | git     | .netrc "
-     L5="5.  | vim     | .vimrc "
-     L4="4.  | DRYa    | .dryarc "
+    L12="12. | termux  | termux.properties + colors.termux"
+    L11='11. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
+    L10="10. | tmux    | .tmux.conf"
+     L9="9.  | bash    | .bash_logout"
+     L8="8.  | git     | .gitconfig "
+     L7="7.  | git     | .netrc "
+     L6="6.  | vim     | .vimrc "
+     L5="5.  | DRYa    | .dryarc "
 
-     L3="3.  | Install | PRESETS"
-     L2="2.  | Install | ALL "
+     L4="4.  | Install | PRESETS"
+     L3="3.  | Install | ALL "
 
+     L2='2. -- Invert Selection --'
      L1="1.  Cancel "
 
-   L0="SELECT (1 or +) dot-files to install: "
+   L0="DRYa: dot-files install.uninstall menu: "
 
-   v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
-      [[ $v_list =~ "11. " ]] && f_dotFiles_install_termux_properties
-      [[ $v_list =~ "10. " ]] && echo "emacs dot-files: uDev"
-      [[ $v_list =~ "9.  " ]] && f_dotFiles_install_tm_tmux
-      [[ $v_list =~ "8.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
-      [[ $v_list =~ "7.  " ]] && f_dot_files_install_git 
-      [[ $v_list =~ "6.  " ]] && f_dot_files_install_netrc
-      [[ $v_list =~ "5.  " ]] && f_dotFiles_install_vim
-      [[ $v_list =~ "4.  " ]] && f_dotFiles_install_dryarc
-      [[ $v_list =~ "3.  " ]] && f_dot_files_install_presets
-      [[ $v_list =~ "2.  " ]] && f_dotFiles_install_vim && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
+      [[ $v_list =~ "12. " ]] && f_dotFiles_install_termux_properties
+      [[ $v_list =~ "11. " ]] && echo "emacs dot-files: uDev"
+      [[ $v_list =~ "10.  " ]] && f_dotFiles_install_tm_tmux
+      [[ $v_list =~ "9.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "8.  " ]] && f_dot_files_install_git 
+      [[ $v_list =~ "7.  " ]] && f_dot_files_install_netrc
+      [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "5.  " ]] && f_dotFiles_install_dryarc
+      [[ $v_list =~ "4.  " ]] && f_dot_files_install_presets
+      [[ $v_list =~ "3.  " ]] && f_dotFiles_install_vim && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
+      [[ $v_list =~ "2.  " ]] && echo "uDev"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
       unset v_list
 }
@@ -1403,15 +1405,11 @@ function f_dot_files_menu {
       L10="10. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
        L9="9.  Menu | Backups"
 
-       #L8="8.  View | Dependencies Checklist"
-       L8="8.  View | 1st Packages"
-
-       L7='7.  Edit | Installed files   | only @Host'
+       L7='7.  Edit | Installed   files | only @Host'
        L6="6.  Edit | Centralized files | only @DRYa"
-       L5='5.  Edit | Centralized > then > Install'
+       L5='5.  Edit | Centralized  > then >  Install'
 
-       L4="4.  Menu | Uninstall |"
-       L3="3.  Menu | Install   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+       L3="3.  Menu | install.uninstall   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
        L2="2.  List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
        L1="1.  Cancel"
 
@@ -1420,13 +1418,12 @@ function f_dot_files_menu {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n\n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "10. " ]] && echo "Detetado 10"
-      [[ $v_list =~ "9.  " ]] && echo "Detetado 9"
+      [[ $v_list =~ "10. " ]] && echo uDev 
+      [[ $v_list =~ "9.  " ]] && echo uDev 
       [[ $v_list =~ "8.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
       [[ $v_list =~ "7.  " ]] && f_dot_files_menu_edit_host_files
-      [[ $v_list =~ "6.  " ]] && echo "Detetado 6"
-      [[ $v_list =~ "5.  " ]] && echo "Detetado 5"
-      [[ $v_list =~ "4.  " ]] && echo "Detetado 4"  # Options to uninstall DRYa itself also
+      [[ $v_list =~ "6.  " ]] && echo uDev 
+      [[ $v_list =~ "5.  " ]] && echo uDev 
       [[ $v_list =~ "3.  " ]] && f_menu_install_dot_files
       [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
       [[ $v_list =~ "1.  " ]] && echo "Canceled"
@@ -1820,9 +1817,46 @@ function f_drya_get_all_repo_names_private_public {
 
 
 
+function f_backup_helper {
+
+      # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
+      # Pode ser usado o SyncThing
+      echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
+      echo 
+      echo "DRYa backup options:"
+      echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
+      echo
+      echo "DRYa: type 'drya backup list' to be listed a sugestion of files to backup"
+
+      echo "Backup on Smartphone (sugestions):"
+      echo " > Contacts"
+      echo " > Gmail accounts and passwords"
+      echo " > Social media login credentials"
+      echo " > Snapshot all installed apps"
+      echo " > Browser bookmarks"
+      echo " > Update all Repositories on termux"
+      echo " > All SD CARD and Internal Storage content"
+      echo " > ..."
+      echo
+      echo "Backup on Computer (suhestions):"
+      echo " > ..."
+      echo
+      echo "uDev: criar opcoes que criam um dir, nesse dir, guarda certos dot-files atualmente na maquina"
+      echo " > Depois, apartir desse exemplo, o user pode usar para outros fins"
+
+}
 
 
 
+
+function f_ghost {
+   # Creating/Deleting a place-holder for DRYa
+   echo "Instructions: ghost in.out:"
+   echo " > When DRYa installs ANY package, it is registered"
+   echo " > So, if drya wants to recover previous status (factory reset) it is possible"
+   
+   #uDev: Activate ghost.walk: Start recording all modifications done to the system to replace it later
+}
 
 
 # -------------------------------------------
@@ -1969,7 +2003,7 @@ elif [ $1 == "6" ] || [ $1 == "config-drya-hh" ] || [ $1 == "hh" ]; then
    echo 'Navigate to ~/.config/h.h/ with the alias `hh`'
 
 
-elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em aparelhos/dispositivos publicos
+elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ] || [ $1 == "ghost.in" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
    # Ao desativar DRYa com 'deactivate' fica possivel ativar novamente com 'activate'
    # Ativar serve para repor DRYa com todas as funcoes que tinha ao ser instalada
@@ -1981,7 +2015,10 @@ elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ]; then  # Usado em apare
    echo "uDev: Se nao existe nenhuma repo no dispositivo:"
    echo " > clonar DRYa do GitHub"
 
-elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ]; then
+   #echo
+   #f_ghost
+
+elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ] || [ $1 == "ghost.out" ]; then
    # Apos insdalar DRYa, fica possivel desarivar com 'deactivate'
    # Serve para apagar tudo o que existe na pasta ~/Repositories incluindo DRYa, apagando tambem as configs na pasta ~ relativamente a DRYa e deixar no seu lugar um script que volta a clonar do Github 
    # Serve para usar em telemoveis ou dispositivos dos quais SeivaDArve na é o dono, tal como nos dispositivos do trabalho
@@ -2004,6 +2041,9 @@ elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ]; then
       echo "git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa" >> ~/.DRYa-activate.sh && echo "DRYa: Criado ~/.DRYa-activate.sh"
       # uDev: usar ~/.config/h.h/DRYa-activate.sh rm vez de ~/.DRYa-activate.sh
       # uDev: Mencionar o Stroken
+
+   #echo
+   #f_ghost
 
 elif [ $1 == "location" ]; then 
    # Save GPS locations
@@ -2181,30 +2221,6 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
    fi
 
 
-elif [ $1 == "config" ]; then 
-
-   if [ -z $2 ]; then 
-      # uDev: at source-all-drya-files one function called traitsID will have these options
-     
-      # uDev: traitsID already gives these variables as environment variables. No need to repeat code 
-
-      uname -a | grep "Microsoft" 1>/dev/null
-      if [ $? == 0 ]; then echo "This is microsoft"; fi
-      uname -a | grep "Android" 1>/dev/null
-      if [ $? == 0 ]; then echo "This is Android"; fi
-      
-      v_hostname=$(hostname); echo "Hostname is: $v_hostname"
-      v_whoami=$(whoami); echo "whoami is: $v_whoami"
-      echo
-      echo "uDev: This info must be environment variables for other apps"
-
-   elif [[ $1 == ".dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == "dot" ]]; then 
-      f_dot_files_menu
-      
-   else
-      echo "List of possible things to config is uDev"
-   fi
-
 elif [[ $1 == "wpwd" ]] || [[ $1 == "wPWD" ]]; then 
    # Convert text Windows Path into text Linux Path
    
@@ -2212,33 +2228,6 @@ elif [[ $1 == "wpwd" ]] || [[ $1 == "wPWD" ]]; then
       v_arg2=$2
 
    f_win_to_linux_pwd
-
-elif [ $1 == "backup" ]; then 
-
-   if [ -z $2 ]; then 
-      # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
-      # Pode ser usado o SyncThing
-      echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
-      echo 
-      echo "DRYa backup options:"
-      echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
-      echo
-      echo "DRYa: type 'drya backup list' to be listed a sugestion of files to backup"
-
-   elif [ $2 == "list" ]; then 
-      echo "Backup on Smartphone (sugestions):"
-      echo " > Contacts"
-      echo " > Gmail accounts and passwords"
-      echo " > Social media login credentials"
-      echo " > Snapshot all installed apps"
-      echo " > Browser bookmarks"
-      echo " > Update all Repositories on termux"
-      echo " > All SD CARD and Internal Storage content"
-      echo " > ..."
-      echo
-      echo "Backup on Computer (suhestions):"
-      echo " > ..."
-   fi
 
 
 elif [ $1 == "eysek" ]; then 
@@ -2294,37 +2283,7 @@ elif [ $1 == "mac" ]; then
       echo
 
 
-elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == ".dot" ]] || [[ $1 == "dt" ]]; then 
-   # Installing all configuration files
-
-   if [[ -z $2 ]]; then 
-      # Main Menu for dot-files
-      f_dot_files_menu  
-
-   elif [ $2 == "ls" ] || [[ $2 == "list-ready-and-uDev" ]] || [[ $2 == "list" ]]; then 
-      # List dot-files available in DRYa repo
-      f_dot_files_list_available
-
-   elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
-      # Menu to install dot files
-
-      [[ -z $3          ]] && f_menu_install_dot_files
-      [[    $3 == "git" ]] && f_dot_files_install_git
-
-   elif [[ $2 == "remove" ]] || [ $2 == "r" ]; then 
-      echo "uDev"
-
-   elif [[ $2 == "backup" ]]; then 
-      echo "uDev: Backup Browser-Bokkmarks"
-
-   elif [[ $2 == "edit" ]]; then 
-      echo "uDev"
-
-   fi
-
-
-
-elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ];  then 
+elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ] || [[ $1 == "ui" ]];  then 
    # Install DRYa and more stuff
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
 
@@ -2334,25 +2293,45 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Save '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L4='4. Install: DRYa Dependencies only'
-         L3='3. Install: DRYa (with `fzf`)'
-         L2='2. Install: DRYa (with `select`) (legacy)'
-         L1='1. Cancel'
+         L10='10. Menu | helper  | factory reset + ghost (in.out)'
+          L9='9.  Menu | helper  | backups'
+          L8='8.  Menu | clone   | repos'
+          L7='7.  Menu | install | specific packages | `D iu p` | `D iu <package>`'
+          L6='6.  Menu | install | dot-files         | `D iu d`'
+   
+          L5='5.  Install DRYa | Dependencies only (1st packages)'
+          L4='4.  Install DRYa | `fzf`    installer'
+          L3='3.  Install DRYa | `select` installer'
 
-         L0="SELECIONE 1 Opcao: "
+          L2='2.  List Status  | `ls`'
+          L1='1.  Cancel'
+
+         L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+      # Atualizar historico fzf automaticamente
+         echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-         [[ $v_list =~ "4. " ]] && echo uDev
-         [[ $v_list =~ "3. " ]] && echo uDev
-         [[ $v_list =~ "2. " ]] && f_install_drya
-         [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+         [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "10. " ]] && f_ghost
+         [[ $v_list =~ "9.  " ]] && f_backup_helper
+         [[ $v_list =~ "8.  " ]] && echo uDev
+         [[ $v_list =~ "7.  " ]] && echo uDev
+         [[ $v_list =~ "6.  " ]] && f_dot_files_menu  
+         [[ $v_list =~ "5.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+         [[ $v_list =~ "4.  " ]] && echo uDev
+         [[ $v_list =~ "3.  " ]] && f_install_drya
+         [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
+         [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
          unset v_list
 
    elif [[ $2 == "me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
       f_install_drya
+
+   elif [[ $2 == "fig" ]]; then 
+      echo "testing existence of figlet (as an example)"
 
    #elif [[ $2 == "dependencies" ]] || [ $2 == "dep" ]; then 
    #   # uDev: Read file '1st' and exec instalation of selected group of dependencies
@@ -2360,6 +2339,12 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "." ]]; then 
       # Edit script "DRYa fzf installer"
       vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
+
+   elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
+      f_dot_files_list_available
+
+   elif [[ $2 == "dot-file" ]] || [ $2 == "d" ]; then 
+      f_dot_files_menu  
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
       # uDev: This is a config to set, not an instalation
@@ -2443,22 +2428,29 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       f_quick_install_all_upk
 
+   elif [[ $2 == "dot-files" ]] || [ $2 == "d" ]; then 
+      # Menu to install dot files
+
+      [[ -z $3          ]] && f_menu_install_dot_files
+      [[    $3 == "git" ]] && f_dot_files_install_git
+
    else
       echo "drya: What do you want to install? invalid arg"
    fi
 
-elif [ $1 == "ssh" ]; then 
-   # Options for SSH File System
 
-   # Para transportar os argumento de script para script, exportamos para o env
-      # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
-      ARG1=$1
-      ARG2=$2
-      ARG3=$3
-      export ARG1 ARG2 ARG3
-   
-   # Executamos o wrapper do SSHFS
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
+elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [[ $1 == ".dot" ]] || [[ $1 == "dt" ]]; then 
+   # Installing all configuration files
+
+   if [[ -z $2 ]]; then 
+      # Main Menu for dot-files
+      f_dot_files_menu  
+
+   else
+      echo "uDev: merge with install.uninstall"
+
+   fi
+
 
 elif [ $1 == "edit" ]; then 
    case $2 in
@@ -2563,14 +2555,27 @@ elif [ $1 == "remove" ]; then
       ;;
    esac
 
-elif [ $1 == "save" ]; then 
+elif [ $1 == "save-backup" ]; then 
 
    if [ $2 == "dot-files" ]; then 
          echo "drya: drya dot-files save"
-         echo " > copy from default locations to drya repo"
+         echo " > copy from default locations to omni-log repo"
    else
          echo "drya: What do you want to save? (uDev)"
    fi
+
+elif [ $1 == "ssh" ]; then 
+   # Options for SSH File System
+
+   # Para transportar os argumento de script para script, exportamos para o env
+      # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
+      ARG1=$1
+      ARG2=$2
+      ARG3=$3
+      export ARG1 ARG2 ARG3
+   
+   # Executamos o wrapper do SSHFS
+      bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
 
 elif [ $1 == "news" ]; then 
    # Runs a script inside DRYa directories that continuously rolls information
@@ -2578,14 +2583,8 @@ elif [ $1 == "news" ]; then
 
 elif [ $1 == "todo" ] || [ $1 == "t" ]; then  
    # Lista de tarefas
-   echo "uDev: ToDo list: "
-   echo "@ Android Notifications"
-   echo "@ scratch-paper"
-   echo "@ omni-log"
-   echo "@ moedaz"
-   echo "@ wikiD"
-   echo "@ wikiD"
-   echo "@ verbose-lines"
+   f_talk; echo 'ToDo list belongs to omni-log repo'
+           echo ' > Try: `td`'
 
 elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ]; then  # mostra os seu metadados da imagem fornecida
    
@@ -2876,6 +2875,9 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       [ -d $v_repo/moedaz        ] && cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz removed"
       [ -f ~/.netrc              ] &&       rm ~/.netrc                  && f_talk && echo ".netrc removed"
       
+      sleep 3
+      clear
+
    elif [ $2 == "3" ]; then 
       # When exit, delete specific configs 
       # When exit, uninstall specific softwares too
