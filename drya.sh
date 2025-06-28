@@ -2148,6 +2148,15 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
          echo $i
       done
 
+      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+
+      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+      for i in $v_multiple
+      do
+         echo $i
+      done
+
       # uDev: `D cln . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
       # uDev: `D cln . p`
       # uDev: `D cln . P`
