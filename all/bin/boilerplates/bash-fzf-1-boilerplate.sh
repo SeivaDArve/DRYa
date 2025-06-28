@@ -10,6 +10,7 @@
       L4='4. Opcao c/ Pin'                                       
       L3='3. Opcao c/ fx history';  L3c='<fx-terminal-command>'  # L3c: terminal command to send to history file
       L2='2. Opcao simples'                                      
+     #L2='2. -- Invert Selection --'
       L1='1. Cancel'
 
       Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui")
