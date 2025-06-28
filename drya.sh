@@ -2876,6 +2876,9 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       [ -d $v_repo/moedaz        ] && cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz removed"
       [ -f ~/.netrc              ] &&       rm ~/.netrc                  && f_talk && echo ".netrc removed"
       
+      sleep 3
+      clear
+
    elif [ $2 == "3" ]; then 
       # When exit, delete specific configs 
       # When exit, uninstall specific softwares too

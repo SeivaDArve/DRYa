@@ -575,10 +575,11 @@ function E {
        L2='2. vim'
 
        L1='1. Cancel'
-
+      
+      Lh=$(cat $trid_output | grep "trid_editor_app")
       L0="fluNav: E: SELECT 1 editor de texto para pre-definir em \`e\`: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"

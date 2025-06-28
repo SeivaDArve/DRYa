@@ -12,10 +12,11 @@
       L2='2. Opcao simples'                                      
       L1='1. Cancel'
 
+      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui")
       L0="SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4

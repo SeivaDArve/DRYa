@@ -220,6 +220,41 @@ function f_trid_6 {
       echo                                >> $trid_output
 }
 
+function f_trid_7 {
+   #Procurar o editor de texto pre-definido
+
+   # Debug
+     #echo "Pasta h.h de trid: $trid_dir" 
+
+   trid_editor_file=$trid_dir/trid_editor
+   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+   
+   # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
+      if [ -f $trid_editor_file ]; then
+         
+         trid_editor_app=$(cat $trid_editor_file)
+
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: existe"
+            #echo $trid_editor_app
+      else
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: nao existe"
+            #echo " > Vai ser configurado o vim"
+
+         echo "vim" > $trid_editor_file
+         trid_editor_app="vim"
+         
+      fi
+
+   # Send out results
+      echo "trid_7=\"trid_editor_file::$trid_editor_file\"" >> $trid_output 
+      echo "trid_editor_file=\"$trid_editor_file\""         >> $trid_output 
+      echo "trid_editor_app=$trid_editor_app"               >> $trid_output
+      echo "e=$trid_editor_app"                             >> $trid_output
+      echo                                                  >> $trid_output
+}
+
 function f_trid_print_all {
 
    echo "trid: (uDev) Print a list of all vars like neofetch"
@@ -278,6 +313,7 @@ function f_fetch {
    f_trid_4       # Procurar "Package Manager"
    f_trid_5       # Procurar "Termux"
    f_trid_6       # Procurar "OS"
+   f_trid_7       # Definir editor de texto pre-definido
    #f_detectOS_2
 
    f_actions 
@@ -351,6 +387,9 @@ elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
    }
 
    f_printenv
+
+elif [ $1 == "editor" ] || [ $1 == "E" ]; then
+  f_trid_7 
 
 elif [ $1 == "print" ] || [ $1 == "p" ]; then
    # Print all variables
