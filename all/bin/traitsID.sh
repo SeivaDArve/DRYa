@@ -28,6 +28,8 @@
 # uDev: Detect wifi network name (add a loop, to oeriodically check the name)
 # uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
 
+#udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+#udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
