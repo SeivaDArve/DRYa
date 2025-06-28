@@ -584,7 +584,7 @@ function E {
 
       L0="fluNav: E: SELECT 1 editor de texto para pre-definir em \`e\`: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n$Lz3" | fzf --cycle --header="uDev: Atual: vim" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -605,6 +605,12 @@ function f_menu_fzf_S {
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+       #L2='2. Opt 1   | S ....'
+       #L2='2. Opt 1   | S ...'
+       #L2='2. Opt 1   | S ...'
+       #L2='2. Opt 1   | S ..'
+       #L2='2. Opt 1   | S .'
 
       # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
          v_editor1="vim  "
