@@ -190,10 +190,10 @@ function f_trid_6 {
       trid_OS="Android"
       trid_os=A
       
-   elif  [[ $v_uname =~ "Microsoft" ]]; then 
+   elif  [[ $v_uname =~ "microsoft" ]]; then 
       # Detetar se é Windows
       # uDev: Verificar se o sistema está no WSL2
-      trid_OS="Microsoft"
+      trid_OS="Linux-Microsoft"
       trid_os=W
 
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
