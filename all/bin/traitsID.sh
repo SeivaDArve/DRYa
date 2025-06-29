@@ -292,10 +292,13 @@ function f_actions {
 }
 
 function f_startup {
-   f_talk; echo       "Running on   : $trid_OS"
-           echo "      Git name     : $trid_gmn"
-           echo "      Editor texto : uDev"
-           echo
+
+   # Var de espacamento
+      E="     "
+
+   f_talk; echo    "Running on   : $trid_OS"
+           echo "$E Git name     : $trid_gmn"
+           echo "$E Editor texto : uDev"
 }
 
 function f_printenv {
@@ -308,7 +311,43 @@ function f_printenv {
    f_talk; echo "Total de linhas encontradas: $v_count"
 }
 
+function f_neofetch {
+   # Same as neofetch
 
+   clear
+
+   # Var de espacamento
+      E="     "
+
+   f_talk; echo    "Running on      : $trid_OS"
+           echo "$E Git name        : $trid_gmn"
+           echo "$E Editor texto    : uDev"
+           echo "$E Package manager : $pkgm"
+           echo
+
+   # Apresentar apenas o icon ASCII do `neofetch`
+      neofetch -L 2>/dev/null
+}
+
+function f_help {
+   # Como na versão atual de Bash não da para exportar arrays, será usado um metodo mais arcaico
+   echo "Este ficheiro é:"
+   echo "> \$trid_script"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
+   echo 
+   echo "Elemento [0] do array arcaico:"
+   echo " > Cujo 'Key' + 'Pair' estao separados por '::'"
+   echo " >> \$trid_0"   # esta variavel foi criada e exportada em 'source-all-drya-file'
+   echo 
+   echo "DRYa: traitsID: Source Location:"
+   echo " > $trid_source"
+   echo 
+   echo "DRYa: traitsID: Main Script Location:"
+   echo " > $trid_script"
+   echo 
+   echo "DRYa: traitsID: Output file Location:"
+   echo " > $trid_output"
+   echo 
+}
 
 function f_fetch {
    #echo " === Debug === $trid_output"; read
@@ -339,13 +378,13 @@ if [ -z $1 ];then
    # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Saving '; Lz2='trid'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Opcao simples'                                      
+      L2='2. h'                                      
       L1='1. Cancel'
 
-      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui")
-      L0="SELECT 1: Menu X: "
+      Lh=""
+      L0="traitsID: SELECT 1: "
       
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
@@ -354,7 +393,8 @@ if [ -z $1 ];then
       echo "$Lz2" >> $Lz4
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ..\`"
+      [[ $v_list =~ "2. " ]] && f_help
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       unset v_list
 
@@ -363,24 +403,7 @@ if [ -z $1 ];then
 
 elif [ $1 == "h" ]; then
    # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
-
-   # Como na versão atual de Bash não da para exportar arrays, será usado um metodo mais arcaico
-   echo "Este ficheiro é:"
-   echo "> \$trid_script"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
-   echo 
-   echo "Elemento [0] do array arcaico:"
-   echo " > Cujo 'Key' + 'Pair' estao separados por '::'"
-   echo " >> \$trid_0"   # esta variavel foi criada e exportada em 'source-all-drya-file'
-   echo 
-   echo "DRYa: traitsID: Source Location:"
-   echo " > $trid_source"
-   echo 
-   echo "DRYa: traitsID: Main Script Location:"
-   echo " > $trid_script"
-   echo 
-   echo "DRYa: traitsID: Output file Location:"
-   echo " > $trid_output"
-   echo 
+   f_help
 
 elif [ $1 == "." ]; then
    vim $trid_script
@@ -394,6 +417,9 @@ elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
 
 elif [ $1 == "startup-message" ] || [ $1 == "s" ]; then
    f_startup
+
+elif [ $1 == "neofetch" ] || [ $1 == "S" ]; then
+   f_neofetch
 
 elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
 

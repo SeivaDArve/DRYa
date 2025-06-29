@@ -221,6 +221,7 @@ function f_drya_welcome_screen {
 
    # Using traitsID startup message
       bash $trid_script startup-message
+      echo
 
    # Verbose Initial DRYa Message
       f_talk; echo "Startup Help..."
