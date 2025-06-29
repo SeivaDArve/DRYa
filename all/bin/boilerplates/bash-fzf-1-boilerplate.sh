@@ -23,7 +23,7 @@
       echo "$Lz2" >> $Lz4
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ..\`"
       [[ $v_list =~ "4. " ]] && f_pin && echo "uDev: $L4"
       [[ $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
       [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 

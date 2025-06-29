@@ -336,7 +336,30 @@ function f_fetch {
 
 
 if [ -z $1 ];then
-   echo "uDev: fzf menu"
+   # Menu Simples
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Opcao simples'                                      
+      L1='1. Cancel'
+
+      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui")
+      L0="SELECT 1: Menu X: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente
+      echo "$Lz2" >> $Lz4
+
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ "1. " ]] && echo "Canceled" 
+      unset v_list
+
+
+
 
 elif [ $1 == "h" ]; then
    # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
