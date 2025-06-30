@@ -21,10 +21,11 @@ function f_background_process {
    function f_bg {
       while true
       do
-         echo
+               echo
          f_c2; echo -n "Data.sh: "
-         f_rc; echo "data test hit"
-         echo
+         f_rc; echo    "data test hit"
+               echo
+
          sleep 60
       done
    }
@@ -39,25 +40,27 @@ function f_background_process {
 function f_complete_date {
    # Exemplo: "Data atual: (Dia 07 Sex)(Mês 06 jun)(Ano 2024)(03:38:38)"
 
+            # (Data atual) - (Ano 2025) - (Mes 06 Jun) - (Dia 18 Wed) - (03:03:14)
+
    # Instrucoes ao developer:
       # echo -ne "\r"      ## Move o cursor para o inicio da linha
       # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
 
-   v_texto="Data atual: (Dia"
-   v_dia=$(date +'%d %a')
-   v_texto_dia="$v_texto $v_dia"
+   v_texto="(Data atual) -"
 
-   v_texto="$v_texto_dia)(Mês"
+   v_ano=$(date +'%Y')
+   v_texto="${v_texto} (Ano $v_ano) -"
+
    v_mes=$(date +'%m %b')
-   v_texto_mes="$v_texto $v_mes"
+   v_texto="${v_texto} (Mês $v_mes) -"
 
-   v_texto="$v_texto_mes)(Ano"
-   v_ano=$(date +'%Y)')
-   v_texto_ano="$v_texto $v_ano"
+   v_dia=$(date +'%d %a')
+   v_texto="${v_texto} (Dia $v_dia) -"
 
-   v_hora=$(date +'(%H:%M:%S)')
-   v_data="$v_texto_ano$v_hora"
-   echo -ne "\r\033[K$v_data "
+   v_hora=$(date +'%H:%M:%S')
+   v_texto="${v_texto} (Hora $v_hora)"
+
+   echo -ne "\r\033[K$v_texto "
 }
 
 function f_complete_date_loop {
@@ -196,7 +199,7 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L13='13. f     | Data para ficheiro (sem verbose)'
+      L13='13. f     | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
       L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
       L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
       L10='10. r     | Data completa esclarecida com loop com LOGO'
