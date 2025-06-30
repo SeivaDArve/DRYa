@@ -218,12 +218,8 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-<<<<<<< HEAD
-      L13='13. f     | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
-=======
       L14='14. F     | Data para ficheiro (com verbose + instrucoes)'
-      L13='13. f     | Data para ficheiro (sem verbose)'
->>>>>>> 7ae016a1b0f1ff3085533f32a688e2263d1d3fdf
+      L13='13. f     | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
       L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
       L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
       L10='10. r     | Data completa esclarecida com loop com LOGO'
