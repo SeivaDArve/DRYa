@@ -588,37 +588,49 @@ function f_make_toast {
 function f_ezGIT_exists {
    # Perform actions when ezGIT exist during terminal startup
 
-   # Downloading all updates for all repos
-      bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null 
+   function f_start {
+      # Downloading all updates for all repos
+         # uDev: Se houver commits para upload, entao fazer tambem upload
+         bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null & disown 
+    
+      # Buscar PID anterior
+         v_PID=$!
+   }
 
-   # uDev: Se houver commits para upload, entao fazer tambem upload
+   function f_notificacao_final {
+      # Sound effect in the end (`disown` makes the process run in a sub-shell)
+         v_test=$(type mpv) &>/dev/null
+         
+         # SELECT para FALSO
+           [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
 
-   # This fx will not send any output, so it will send text to drya-msgs
-      echo -e "DRYa: source-all-drya-files: f_startup_async_ezGIT_pull_All: using ezGIT: git pull all recursivelly finished\n" >> $v_MSGS
+         # SELECT para VERDADEIRO
+            [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_toast
+            [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_sound
 
-   # Sound effect in the end (`disown` makes the process run in a sub-shell)
-      v_test=$(type mpv) &>/dev/null
-      
-      # SELECT apenas 1 das linhas abaixo (para FALSO)
-         [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
+      # Informar a conclusao em drya-status-messages
+         echo -e "\n\r $v_toast_message_y \n" >> $v_MSGS
+   }
 
-      # SELECT apenas 1 das linhas abaixo (para VERDADEIRO)
-         [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_toast || f_make_sound
+   function f_notificacao_finals {
+      # Para chamar um BUFFER
+      bash ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-6-flash-buffer.sh 
+   }
 
-   # Informar a conclusao em drya-status-messages
-      echo -e "\n\r $v_toast_message_y \n" >> $v_MSGS
+   # Executa a função em background, e no fim chama a notificação
+      (f_start && f_notificacao_final) &
 }
 
 function f_startup_async_ezGIT_pull_All {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y="DRYa: ezGIT: \`git pull recursive\` done!"
-   v_toast_message_n="DRYa: ezGIT: \`git pull recursive\` not done (repo may not exist)"
+   v_toast_message_y="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Success!"
+   v_toast_message_n="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Fail: repo may not exist"
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
       # ezGIT existe (atuar)
-      f_ezGIT_exists
+      f_ezGIT_exists #&>/dev/null #& disown  # Run last fx
 
    else
       # ezGIT nao existe (nao atuar)
@@ -723,9 +735,7 @@ function f_exec {
          #       uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
          #       uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
 
-
-
-      f_startup_async_ezGIT_pull_All &>/dev/null & disown  # Run last fx
+      f_startup_async_ezGIT_pull_All 
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    # For practice, fun, entetainment:
