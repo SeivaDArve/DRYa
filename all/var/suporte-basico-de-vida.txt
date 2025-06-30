@@ -1,0 +1,96 @@
+# Titulo: 1° Socorros (Supporte Basico de Vida)
+# Descricao: Documento que decreve como proceder em caso de emergencia
+# Use: Usa `D 112` para aceder rapidamente a este documento + Ativar localizacao GPS automaticamente e buscar as coordenadas
+
+SBV -> Vivo? -> Estímulos 
+
+INFO: Quem atende as chamadas do '112' é A PSP (Policia de Seguranca Publica) que pode emcaminhar chamadas
+INFO: Antes de ligar ao 112 existe muuito trabalho para fazer, poque na chamada eles vao perguntar coisas
+      - Tirar nabos da pucara (escrito mais a frente neste documento)
+      - Morada, onde se encontra?
+
+• É proibido dar estaladinhas na cara paravo reanimar, pode piorar um traumatismo ou um avc. Porque isso provoca dor e aumenta a circulação sanguinea e por isso, perdas de sangue mais rapidas. Bater na cara aumenta a lesão.
+• Bater no peito também não 
+
+Bater sim nos ombros ao mesmo tempo que pergunto se ouve
+1. Ou ela reage (consciente) - se reage, está consciente
+2. Ou não reage (inconsciente)
+Nao existe:
+- Consciente e orientado (É redundante: "Está a chover na rua e o chão está molhado")
+Mas existe:
+- Consciente e desorientado
+
+A vitima pode reagir de 5 formas:
+1. consciente
+2. consciente e desorientado
+3. consciente e bebedo/maxilar partido? (consciente e nao consegue articular)
+4. Consciente que emite sons
+5. Consciente (com movimentos expontaneo de olhos e braços)
+São os estados de consciencia que definem os meios que vão para o local. Pode ir só os bombeiros ou pode logo ir a SIV
+
+Depois vou tirar os nabos da pucara (triagem)
+1. O que lhe aconteceu (um vaso na cabeça)
+2. Toma medicamentos
+3. Tem doenças? (É diabético? Comeu?)
+
+Depois ligar 112
+-Bom dia, tenho aqui um s
+
+Depois temos de permanecer ao pé da vitima (se formos nós a chamar o socorro)
+1. Se for preciso abandonar a vitima para ter aceso ao telefone, tudo bem
+2. Bebés são os unicos que podem vir connosco
+3. Se houver 2 pessas, 1 delas não abandona a vitima
+Se ela acordar, tranquilizar a vitima.
+4.      de tempos a tempos ir estimulando a vitima para saber se o estado de consciencia piora, mantém ou melhora.
+
+Às vezes ha vitimas que o CODU mantém ao telefone por causa dessas vitimas não terem grande suporte (por exemplo os velhinhos)
+1. Ja aconteceu um pai reanimar um filho no local por aprender reanimação ao vivo pelo telefone com o CODU a ensinar (tai teve descerenhimento)
+
+Para saber se uma pessoa está a fingir de inconsciente. Baste levantar um braço e deixar cair. (Porque a tendência é travar a queda)
+
+Na avaliação de inconsciência não se avalia o pulso.
+Daí a menemonica
+A- air way
+B- breathing
+C- circulation
+A avaliação eletrica da pulsação no ECG não diz se o doente está vivo. Porque a parte eletrica do coração pode estar a trabalhar, mas a parte mecanica não. 
+• Se o coração está a trabalhar, ha frequencia cardiaca + tensão arterial. 
+• Se houve frequência cardiaca sem tensão arterial. Temos impulsos eletricos mas não temos trabalho mecanico 
+So faz sentido fazer o VOS depois da vitima estar inconsciente e de me mostrar que a vitima não está a respirar. A maioria das vezes a gente ve automaticamente se respira e n preciso fazer
+
+VOS (Ver, Ouvir, Sentir)
+Avaliar a pessoa ATÉ 10 segundos 
+   V: Juntando os ouvidos ao naris da vitima, vemos se tem movimentacoes no torax da respiracao
+   O: Ouvir o som da respiracao
+   S: Sentir... o pulso??
+
+
+Em pessoas que queremos avaliar a respiração e elas encontram-se sentadas, deitamos sempre no chão 
+• O chão é sempre o melhor sitio para socorrer
+Em estado de consciencia débil, deitar sempre no chão (para n haver risco de queda, stificação e para nao entrar em estados de consciência mais profundos que levem à inconsciência)
+
+Nao se coloca almofadas debaixo da cabeça nem se pesquisa por objetos estranhos na boca
+
+Inconciente + respira: termo técnico: desmaiado
+
+(Um termo técnico é um termo/definição que independentemente de que o fala, toda a gente entende sem dúvidas)
+
+Musculos que matam
+• A língua nao se enrola... a língua tem queda. "Queda de lingua".... É um musculo que mata.
+• O cárdia (esfincter do estomago, a sopa do estomago vem para os pulmoes)
+• Não dar chapadas, não inventar hstorias da avaliação à vitima que eu vejo, não dar copos de água com açúcar.
+
+Desmaiar = inconsciente que respira
+
+"Com o aumento das series do 911 na TV, crescem os números de queixa contra os nossos profissionais de saude"
+
+"Os seguros servem para o trauma e a segurança social serve para a doença"
+
+"Sendo um TAS, ao lavar o chao, colocar sempre uma placa de chão molhado, se Nao, podemos ser acusados"
+
+"Assistencia de viagem não é para o carro, é para viagem.... o carro pode estar estacionado em casa e eu acionar isso para mim próprio - portanto, leva o numero de telefone contigo"
+
+"A horizontalidade trata certos problemas"
+
+Em Portugal a única coisa que é ilegal em casos de emergencia, é não dispultar os meios de socorro.... porque fszer insuflacoes e compressoes podem nao ser efetuadas porque ninguém é obrigado a atuar na ausência de condições de segurança
+

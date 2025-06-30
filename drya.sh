@@ -1429,6 +1429,7 @@ function f_drya_fzf_MM_Toolbox {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
+         # L12='12. Supporte basico de Vida: Melhorar o formulario: .../var/suporte-basico-de-vida.txt
          # L12='12. Host website on Android, using Abdroid as web server (exemplo: https://youtu.be/V-B-HGWAJac?feature=shared)
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='12. Comboios CP web-scraping
@@ -1454,13 +1455,13 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
          # L12='12. From Pc to Pc, connect/transfer files via bluetooth / UTP 
          # L12='12. info: set phonecalls recorder automatically
-         # L12='12. zip | unzip
          # L12='12. Raspberry: GPIO
          # L12='12. Record mouse and keyboard activity
          # L12='12. criar links de imagens com suport github (partilhar fotos ou videos)
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
          # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
+         L20='20. Menu   | zip unzip'
          L19='19. Script | Datas (menu)'
          L18='18. Script | Youtube download (with `yt-dlp`)'
          L17='17. Menu   | Clone Repositories (github)'
@@ -1490,6 +1491,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "19. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
          [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
          [[ $v_list =~ "17. " ]] && echo "uDev"
@@ -1786,6 +1788,10 @@ function f_drya_get_all_repo_names_private_public {
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
       v_combine="$v_list_private $v_list_public"
+}
+
+function f_zip_unzip {
+   echo "uDev: Menu com opcoes"
 }
 
 # -------------------------------------------
@@ -3042,8 +3048,15 @@ elif [ $1 == "hush" ]; then
 
    f_toggle_termux_hushlogin 
 
+elif [ $1 == "zip" ] ; then 
+   f_zip_unzip
+
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+
+elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ]; then 
+   echo "uDev: Escrever formula de 1.os Socorros"
+   echo "      fichiro: .../var/suporte-basico-de-vida.txt"
 
 elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then 
    
