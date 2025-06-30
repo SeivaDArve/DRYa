@@ -870,9 +870,18 @@ function arco {
    }
 
    if [ -z $1 ]; then
-      v=$(f_arco | fzf --layout=reverse --no-info --prompt="Arco-Iris: Pesquise na Tabela de Codigos: ")
+
+      LH="(Pode selecionar varios, isso imprime no terminal)"
+      L0="Arco-Iris: Pesquise na Tabela de Codigos: "
+      v_separador="|-----------------------+---------------------------|"
+
+      v=$(f_arco | fzf --layout=reverse --no-info -m --header="$LH" --prompt="$L0")
       
-      [[ -n $v ]] && echo "Results: $v" 
+      [[ -n $v ]] && echo "Resultados filtrados (arco-iris):" && echo "$v_separador" && echo "$v" && echo "$v_separador"
+
+   elif [ $1 = "." ]; then
+      # Imprime so a tabela
+      f_arco
 
    else
       # Se os argumentos forem diferentes do esperado, filtra esse texto do argumento no texto da tabela
