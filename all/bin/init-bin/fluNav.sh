@@ -103,6 +103,12 @@ function f__S_hist__remove_duplicated_lines {
       rm $v_temporary
 }
 
+function f__S_hist__make_abs_path_into_relative_path {
+   #echo "uDev: change: /data/data/com.termux/files/home/Repositories/"
+   #echo "      into:   \${v_REPOS_CENTER}/ "
+   sed -i "s#/data/data/com.termux/files/home/Repositories/#\${v_REPOS_CENTER}/#g" $v_original
+}
+
 function f__S_hist__change_abs_path__to__relative_path {
    echo "uDev: take fluNav:S history file, replace:"
    echo "      > /data/data/com.termux/files/home/Repositories/ to:"
@@ -575,10 +581,11 @@ function E {
        L2='2. vim'
 
        L1='1. Cancel'
-
+      
+      Lh=$(cat $trid_output | grep "trid_editor_app")
       L0="fluNav: E: SELECT 1 editor de texto para pre-definir em \`e\`: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$9 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -599,6 +606,12 @@ function f_menu_fzf_S {
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+       #L2='2. Opt 1   | S ....'
+       #L2='2. Opt 1   | S ...'
+       #L2='2. Opt 1   | S ...'
+       #L2='2. Opt 1   | S ..'
+       #L2='2. Opt 1   | S .'
 
       # udev: traitsID has to solve this. Avoid duplicated line for each file editor and use the '3. Toggle file editor' instead
          v_editor1="vim  "
@@ -1399,13 +1412,11 @@ function f_action {
       # Used only to centralize the history file into one single variable across the file
          f__S_hist__refresh_file_name
          f__S_hist__remove_duplicated_lines
+         #f__S_hist__make_abs_path_into_relative_path 
 
-      # Criar um menu apartir do historico  (uDev: apagar linhas repetidas)
-         #v_text=$(sed "s/ / /g" $v_fluNav_S_hist_file)
-
+      # Buscar uma das linhas
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
          v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist

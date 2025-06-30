@@ -4,6 +4,20 @@
 #              No final do ficheiro também estara um catalogo de todas as variaveis
 #              As variaveis que vao ser encontradas vao ser colocadas em 4 sitios: Uma Array; Exportadas para o Env; Concatenadas num ficheiro de configs; No final deste documento de texto num mini catalogo de variaveis
 
+# uDev: Create a script at DRYa/all/bin/ for drya-neofetch
+   # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
+   # uDev: Detecte personal/safe device from job/public/unsafe device
+   # uDev: Create the same for package manager: apt, pacman, dnf, pkg
+   # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
+   # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
+   # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
+   # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
+   # uDev: Versao do Linux (para config do teclado)
+      #which yum >/dev/null && { echo Fedora flavour; exit 0; }
+      #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
+      #which apt-get >/dev/null && { echo Debian based;  }
+
+
 # uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
 # uDev: Detetar WM (window manager, se estar a usar GNOME, KDE...
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
@@ -12,7 +26,11 @@
 # uDev: Porque nao usar tambem sqlite3 (base de dados) para guardar as variaveis?
 # uDev: Detect $SHELL
 # uDev: Detect wifi network name (add a loop, to oeriodically check the name)
+# uDev: Crir editor de texto predefinido
+# uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
 
+#udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+#udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
@@ -175,10 +193,10 @@ function f_trid_6 {
       trid_OS="Android"
       trid_os=A
       
-   elif  [[ $v_uname =~ "Microsoft" ]]; then 
+   elif  [[ $v_uname =~ "microsoft" ]]; then 
       # Detetar se é Windows
       # uDev: Verificar se o sistema está no WSL2
-      trid_OS="Microsoft"
+      trid_OS="Linux-Microsoft"
       trid_os=W
 
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
@@ -203,6 +221,41 @@ function f_trid_6 {
       echo "trid_OS=\"$trid_OS\""         >> $trid_output 
       echo "trid_os=$trid_os"             >> $trid_output
       echo                                >> $trid_output
+}
+
+function f_trid_7 {
+   #Procurar o editor de texto pre-definido
+
+   # Debug
+     #echo "Pasta h.h de trid: $trid_dir" 
+
+   trid_editor_file=$trid_dir/trid_editor
+   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+   
+   # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
+      if [ -f $trid_editor_file ]; then
+         
+         trid_editor_app=$(cat $trid_editor_file)
+
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: existe"
+            #echo $trid_editor_app
+      else
+         # Debug
+            #echo "Ficheiro que menciona o editor de texto: nao existe"
+            #echo " > Vai ser configurado o vim"
+
+         echo "vim" > $trid_editor_file
+         trid_editor_app="vim"
+         
+      fi
+
+   # Send out results
+      echo "trid_7=\"trid_editor_file::$trid_editor_file\"" >> $trid_output 
+      echo "trid_editor_file=\"$trid_editor_file\""         >> $trid_output 
+      echo "trid_editor_app=$trid_editor_app"               >> $trid_output
+      echo "e=$trid_editor_app"                             >> $trid_output
+      echo                                                  >> $trid_output
 }
 
 function f_trid_print_all {
@@ -239,9 +292,13 @@ function f_actions {
 }
 
 function f_startup {
-   f_talk; echo       "Running on : $trid_OS"
-           echo "      Git name   : $trid_gmn"
-           echo
+
+   # Var de espacamento
+      E="     "
+
+   f_talk; echo    "Running on   : $trid_OS"
+           echo "$E Git name     : $trid_gmn"
+           echo "$E Editor texto : uDev"
 }
 
 function f_printenv {
@@ -254,51 +311,25 @@ function f_printenv {
    f_talk; echo "Total de linhas encontradas: $v_count"
 }
 
+function f_neofetch {
+   # Same as neofetch
 
+   clear
 
-function f_fetch {
-   #echo " === Debug === $trid_output"; read
-   f_trid_0_1_2   # Procurar "source","script", "output"
-   f_trid_3       # Procurar "git name"
-   f_trid_4       # Procurar "Package Manager"
-   f_trid_5       # Procurar "Termux"
-   f_trid_6       # Procurar "OS"
-   #f_detectOS_2
+   # Var de espacamento
+      E="     "
 
-   f_actions 
+   f_talk; echo    "Running on      : $trid_OS"
+           echo "$E Git name        : $trid_gmn"
+           echo "$E Editor texto    : uDev"
+           echo "$E Package manager : $pkgm"
+           echo
 
-   # uDev: Create a script at DRYa/all/bin/ for drya-neofetch
-      # uDev: Create the same for Device: Samsung, TLC, Lenovo, Azus (drya will need a .config for this, and needs the user to answer a script)
-      # uDev: Detecte personal/safe device from job/public/unsafe device
-      # uDev: Create the same for package manager: apt, pacman, dnf, pkg
-      # uDev: Create the same for processor: ARM, 64 Bits, 32 Bits (Raspberry pi?)
-      # uDev: Create a binary for each combination: 00101: pacman, lenovo, windows, userX
-      # uDev: Create environment variables: drya-env-os; drya-env-me (for command whoami); etc
-      # uDev: Detect wifi not connected networks due to lack of passaword and chech our list of wifi passwords to see if we can log on it
-      # uDev: Versao do Linux (para config do teclado)
-         #which yum >/dev/null && { echo Fedora flavour; exit 0; }
-         #which zypper >/dev/null && { echo Suse of sorts; exit 0; }
-         #which apt-get >/dev/null && { echo Debian based;  }
+   # Apresentar apenas o icon ASCII do `neofetch`
+      neofetch -L 2>/dev/null
 }
 
-
-
-
-
-# -------------------------------------------
-# -- Functions above --+-- Arguments Below --
-# -------------------------------------------
-
-
-
-
-
-if [ -z $1 ];then
-   echo "uDev: fzf menu"
-
-elif [ $1 == "h" ]; then
-   # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
-
+function f_help {
    # Como na versão atual de Bash não da para exportar arrays, será usado um metodo mais arcaico
    echo "Este ficheiro é:"
    echo "> \$trid_script"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
@@ -316,6 +347,63 @@ elif [ $1 == "h" ]; then
    echo "DRYa: traitsID: Output file Location:"
    echo " > $trid_output"
    echo 
+}
+
+function f_fetch {
+   #echo " === Debug === $trid_output"; read
+   f_trid_0_1_2   # Procurar "source","script", "output"
+   f_trid_3       # Procurar "git name"
+   f_trid_4       # Procurar "Package Manager"
+   f_trid_5       # Procurar "Termux"
+   f_trid_6       # Procurar "OS"
+   f_trid_7       # Definir editor de texto pre-definido
+   #f_detectOS_2
+
+   f_actions 
+}
+
+
+
+
+
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
+
+
+
+
+
+if [ -z $1 ];then
+   # Menu Simples
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saving '; Lz2='trid'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. h'                                      
+      L1='1. Cancel'
+
+      Lh=""
+      L0="traitsID: SELECT 1: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente
+      echo "$Lz2" >> $Lz4
+
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ..\`"
+      [[ $v_list =~ "2. " ]] && f_help
+      [[ $v_list =~ "1. " ]] && echo "Canceled" 
+      unset v_list
+
+
+
+
+elif [ $1 == "h" ]; then
+   # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
+   f_help
 
 elif [ $1 == "." ]; then
    vim $trid_script
@@ -329,6 +417,9 @@ elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
 
 elif [ $1 == "startup-message" ] || [ $1 == "s" ]; then
    f_startup
+
+elif [ $1 == "neofetch" ] || [ $1 == "S" ]; then
+   f_neofetch
 
 elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
 
@@ -349,6 +440,9 @@ elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then
    }
 
    f_printenv
+
+elif [ $1 == "editor" ] || [ $1 == "E" ]; then
+  f_trid_7 
 
 elif [ $1 == "print" ] || [ $1 == "p" ]; then
    # Print all variables

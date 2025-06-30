@@ -36,6 +36,28 @@ function f_define_files_as_vars {
 f_define_files_as_vars
 
 
+function f_stroken {
+   # (Copiando de ezGIT)
+   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # While the app is in beta, this is usefull
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         #echo "~/.netrc exists"
+         echo "it exists" 1>/dev/null
+      else
+         f_talk; echo -n "Presenting \""
+           f_c3; echo -n "stroken"
+           f_rc; echo    "\""
+                 echo    " > Automatic sync (config file) not configured"
+                 echo -n "   Use: "
+           f_c2; echo    "seivadarve"
+           f_rc; echo -n           "   And: ";
+           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+           f_rc; echo
+      fi
+}
+
 
 
 function f_create_tmp_file_with_date_as_name {
@@ -226,6 +248,7 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
    
+   f_stroken
    f_ensure_omni_log  # Ensuring omni-log is installed (using drya-lib-4)
    f_lib4_git_pull
 
