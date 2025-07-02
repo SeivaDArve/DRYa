@@ -398,9 +398,6 @@ if [ -z $1 ];then
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       unset v_list
 
-
-
-
 elif [ $1 == "h" ]; then
    # uDev: This file is re-loaded every terminal startup and all variables are reloaded. So, another file is also needed where variables no not chang for the actuall machine. so, traitsID_rc should also be there (like .dryarc) The file .dryarc may even be a better option
    f_help
