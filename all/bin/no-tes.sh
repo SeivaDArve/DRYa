@@ -267,6 +267,10 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    f_lib4_git_commit
    f_lib4_git_push
 
+elif [ $1 == "unique-nt" ] || [ $1 == "u" ]; then
+   # Cria uma nota nova em um ficheiro novo (na pasta .../omni-log/all/ex-pressa/unique-nt/<nota-nova>
+   echo "uDev: Buscar a drya-lib que cria ficheiros temporarios e usar escrver a nota nova, no fim, guardar"
+
 elif [ $1 == "x" ]; then
    # Save all arguments as the note itself, directly from the terminal and without any text editor
 
