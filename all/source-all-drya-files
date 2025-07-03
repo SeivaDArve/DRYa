@@ -585,7 +585,7 @@ function f_drya_ssms_end {
 
 function f_make_sound {
    # Function to actually open the media player and play a sound
-   mpv --really-quiet $v_snd_2 & disown
+   mpv --really-quiet $v_snd_2 2>/dev/null & disown
 }
 
 function f_make_toast {
@@ -607,7 +607,7 @@ function f_ezGIT_exists {
 
    function f_notificacao_final {
       # Sound effect in the end (`disown` makes the process run in a sub-shell)
-         v_test=$(type mpv) &>/dev/null
+         v_test=$(type mpv &>/dev/null)
          
          # SELECT para FALSO
            [[ $trid_atTermux == "false" ]] && [[ -n $v_test ]] && f_make_sound
