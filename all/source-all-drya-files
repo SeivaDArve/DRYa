@@ -318,12 +318,13 @@ function f_internal_drya_files_1_of_2 {
      v_dirc_fzf_H=$v_cfg/drya-fzf
 
      v_file_fzf_H=$v_dirc_fzf_H/$v_name_fzf_H
+
+                      Lz4=$v_file_fzf_H
      v_drya_fzf_menu_hist=$v_file_fzf_H  # Legacy
-     #$v_drya_fzf_menu_hist              # Legacy
 
      mkdir -p $v_dirc_fzf_H
      touch    $v_file_fzf_H $v_drya_fzf_menu_hist
-     export    v_file_fzf_H  v_drya_fzf_menu_hist
+     export    v_file_fzf_H  v_drya_fzf_menu_hist Lz4
 
 
 
