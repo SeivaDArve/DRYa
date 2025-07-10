@@ -36,6 +36,7 @@ alias hi="echo hello!"
    alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
    alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
    alias    td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
+   alias    Td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
 
    alias d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
@@ -900,3 +901,8 @@ function arco {
 # Verbose file (variables and outputs)
    echo "      File Finished loading: $v_title" >> $v_MSGS
    echo >> $v_MSGS
+
+function e {
+   $trid_editor_app $*
+   #bash vim  $*
+}
