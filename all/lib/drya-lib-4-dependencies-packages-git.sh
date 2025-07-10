@@ -1,12 +1,13 @@
 #!/bin/bash
 # Title: Test dependencies existence
 
-# Test the existence of DRYa dependencies like: fzf, figlet, ncurses-utils, etc
-#   (See dependencies on file '1st' somewhere in DRYa repo)
-#
-# Test the existence of DRYa repositories
-# 
-# Test and clone Repo dependencies too
+# Description: 
+#  - Tests the existence of DRYa dependencies like: fzf, figlet, ncurses-utils, etc
+#    (See dependencies on file '1st' somewhere in DRYa repo)
+#   
+#  - Tests the existence of DRYa repositories
+#    
+#  - Tests and clone Repo dependencies too
 
 
 
@@ -71,6 +72,8 @@
 #             done
 #       
 
+# uDev: create fx that catches prompt arguments: $1 $2 $3 = $v_1 $v_2 $v_3
+# uDev: create fx to increment a var: i=(($i + 1))
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
