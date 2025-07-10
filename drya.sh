@@ -1031,16 +1031,12 @@ function f_win_to_linux_pwd {
       # Convert the text inside the file
          sed -i '/^#/d'             $v_file  # Delete all commented lines
          sed -i '/^$/d'             $v_file  # Delete all empty lines
-
          sed -i 's#C:\\#/mnt/c/#g'  $v_file  # Convert C:\ into /mnt/c
          sed -i 's#c:\\#/mnt/c/#g'  $v_file  # Convert c:\ into /mnt/c
-
          sed -i 's#D:\\#/mnt/d/#g'  $v_file  # Convert D:\ into /mnt/d
          sed -i 's#d:\\#/mnt/d/#g'  $v_file  # Convert d:\ into /mnt/d
-
          sed -i 's#E:\\#/mnt/e/#g'  $v_file  # Convert E:\ into /mnt/e
          sed -i 's#e:\\#/mnt/e/#g'  $v_file  # Convert e:\ into /mnt/e
-
          sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
          sed -i 's/\\/\//g'         $v_file  # Convert \ into /
          sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
@@ -1197,7 +1193,7 @@ function f_dot_files_list_available {
          ".dryarc"                     \
          ".tmux.conf"                  \
          '$PS1'                        \
-          "browser:bookmarks"          )  
+         "browser:bookmarks"           )  
 
    # `echo` variable horizontally:
       #echo "Array is: ${v_all_dot_files[@]}"
@@ -1320,7 +1316,7 @@ function f_menu_install_dot_files {
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
       [[ $v_list =~ "12. " ]] && f_dotFiles_install_termux_properties
       [[ $v_list =~ "11. " ]] && echo "emacs dot-files: uDev"
-      [[ $v_list =~ "10.  " ]] && f_dotFiles_install_tm_tmux
+      [[ $v_list =~ "10. " ]] && f_dotFiles_install_tm_tmux
       [[ $v_list =~ "9.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "8.  " ]] && f_dot_files_install_git 
       [[ $v_list =~ "7.  " ]] && f_dot_files_install_netrc
@@ -1862,6 +1858,10 @@ function f_ghost {
    
    #uDev: Activate ghost.walk: Start recording all modifications done to the system to replace it later
 }
+
+
+
+
 
 
 # -------------------------------------------
