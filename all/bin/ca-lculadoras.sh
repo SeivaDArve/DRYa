@@ -745,6 +745,8 @@ if [ -z "$1" ]; then
          L16='16. Relogio     | Temporizador'
          L15='15. Relogio     | Despertador'
 
+         #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
+         #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
          #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
          #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
          #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
