@@ -364,6 +364,7 @@ function f_clone_repos {
          # uDev: Criar menu fzf para questionar se tambem quer clonar
          #       dv-cv-public
          #       dv-cv-private
+         #       informar que existe .../source-all-moedaz-files que contem alias. Preciasa de um restart ao terminal
 
          echo "cloning: moedaz"; git clone https://github.com/SeivaDArve/moedaz.git
          #f_refresh_terminal_after_clone
