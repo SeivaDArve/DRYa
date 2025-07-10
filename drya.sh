@@ -1792,6 +1792,8 @@ function f__D_hist__recall_one_command {
       v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
       v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
 
+      v_line=$(sed "s#^3sab #${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh #g" <(echo $v_line))
+
    # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
       [[ -n $v_line ]] && bash $v_line 
 }
