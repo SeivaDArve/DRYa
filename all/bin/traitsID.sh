@@ -225,6 +225,7 @@ function f_trid_6 {
 
 function f_trid_7 {
    #Procurar o editor de texto pre-definido
+   # uDev: tem de funcionar em sintonia com a fx `E` em "fluNav"
 
    # Debug
      #echo "Pasta h.h de trid: $trid_dir" 
