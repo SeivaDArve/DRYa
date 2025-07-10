@@ -29,7 +29,7 @@
 #
 #  INSTALLING (this library on main scripts):
 #
-#     # Sourcing DRYa Lib 4
+#     # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
 #        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #        [[ -f $v_lib4 ]] && source $v_lib4 || read -s -n 1 -p "Error: drya-lib-4 does not exist"
 #
@@ -80,7 +80,7 @@
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="DRYa"
-   v_talk="DRYa-lib-4: "
+   v_talk="drya-lib-4: "
    # uDev: perguntar ao chat gpt se usar libliotecas dentro de bibliotecas se nao da conflito
 
 
