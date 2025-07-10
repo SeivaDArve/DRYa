@@ -627,7 +627,7 @@ function f_ezGIT_exists {
    }
 
    # Executa a função em background, e no fim chama a notificação
-      (f_start && f_notificacao_final) &
+      (f_start && f_notificacao_final) & disown
 }
 
 function f_startup_async_ezGIT_pull_All {
