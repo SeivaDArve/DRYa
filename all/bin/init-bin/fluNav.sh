@@ -559,13 +559,15 @@ function ., {
 
 function E {
    # Escolher editor de texto para pre-definir 
+   # uDev: Tem de funcionar em dintonia com traitsID
 
    # In fluNav, there is a command to open either a dir or to open a file:
    # '$ . <file>'
    # and if there is no dir or existent file, it will create one,
    # so, this function will decide which text editor will open the file
 
-   # uDev: Set traitsID accordingly
+   trid_editor_file=$trid_dir/trid_editor
+   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
