@@ -7,7 +7,7 @@
 
 # Normal text top
    tput cup 3 23; 
-   echo D.R.Y.; 
+   echo D.R.Y.a.; 
 
 # Normal text
    tput cup 4 23; 
