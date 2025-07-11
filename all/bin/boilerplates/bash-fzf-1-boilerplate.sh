@@ -19,12 +19,19 @@
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
 
-   # Atualizar historico fzf automaticamente
+   # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
+   
+   # Atualizar historico fzf automaticamente (em cada fx)
+   #
+   #  funtion f_example { 
+   #     # Atualizar historico fzf (inserir esta fx):
+   #        echo "D command" >> $Lz4 
+   #  }
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ..\`"
-      [[ $v_list =~ "4. " ]] && f_pin && echo "uDev: $L4"
+      [[ $v_list =~ "4. " ]] && f_pin && f_example  
       [[ $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
       [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
