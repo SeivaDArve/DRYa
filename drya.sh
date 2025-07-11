@@ -910,7 +910,7 @@ function f_menu_internet_network_ip_options {
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && echo "uDev: copiar/scrape do wikiD.org para aqui"
       [[ $v_list =~ "5. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/web.sh
       [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
@@ -941,7 +941,7 @@ function f_menu_audio_media_player {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "8. " ]] && echo "uDev: $L8" 
       [[ $v_list =~ "7. " ]] && echo "uDev: $L7" 
       [[ $v_list =~ "6. " ]] && echo "uDev: $L6" 
@@ -996,7 +996,7 @@ function f_QR_code_fzf_menu {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && echo uDev
       [[ $v_list =~ "5. " ]] && bash $v_REPOS_CENTER/DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
       [[ $v_list =~ "4. " ]] && echo uDev
@@ -1354,7 +1354,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && f_toggle_termux_hushlogin
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && echo "uDev"
@@ -1378,7 +1378,7 @@ function f_dot_files_menu_edit_host_files {
       v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "2. " ]] && f_dot_files_menu_edit_host_files_termux_properties
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -1422,6 +1422,7 @@ function f_dot_files_menu {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "8. " ]] && f_ghost
       [[ $v_list =~ "7. " ]] && f_backup_helper
       [[ $v_list =~ "6. " ]] && f_dot_files_menu_edit_host_files
@@ -1569,7 +1570,7 @@ function f_drya_fzf_MM {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "4. " ]] && echo "$L4c" >> $Lz4 && f_drya_help_menu 
       [[ $v_list =~ "3. " ]] && echo "$Lc3" >> $Lz4 && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!" 
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
@@ -1634,7 +1635,7 @@ function f_drya_help_menu {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
@@ -2359,7 +2360,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
          [[ $v_list =~ "10. " ]] && f_ghost
          [[ $v_list =~ "9.  " ]] && f_backup_helper
          [[ $v_list =~ "8.  " ]] && echo uDev
@@ -2781,10 +2782,12 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
-   f_greet
-   f_talk; echo "Keyboard options"
+
+   function f_kbd_greet {
+      f_greet
+      f_talk; echo "Keyboard options"
+   }
     
-   # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -2801,8 +2804,6 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 	#     | ç | $c_1 |
 	#
 
-
-	  
       L6='6. DRYa emergency keyboard'
 
       L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
@@ -2817,15 +2818,14 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "6. " ]] && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-      [[ $v_list =~ "5. " ]] && echo "uDev: $L4"
-      [[ $v_list =~ "4. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
-      [[ $v_list =~ "3. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
-      [[ $v_list =~ "2. " ]] && localectl status 
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+      [[ $v_list =~ "5. " ]] && f_kbd_greet echo "uDev: $L4"
+      [[ $v_list =~ "4. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
+      [[ $v_list =~ "3. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
+      [[ $v_list =~ "2. " ]] && f_kbd_greet localectl status 
+      [[ $v_list =~ "1. " ]] && f_kbd_greet echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
       unset v_list
-    
 
 
 elif [ $1 == "k" ]; then 
