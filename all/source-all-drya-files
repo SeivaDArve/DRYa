@@ -182,6 +182,7 @@ function f_drya_ssms_start {
    # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
       #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
       alias dmsgs="less $v_MSGS"
+      alias ssms="less $v_MSGS"
 }
 
 function f_drya_fzf_history {
@@ -403,7 +404,7 @@ function f_repository_moedaz {
    # Repository: moedaz
 
    # uDev: Put all files to be open under menuFAV F   
-   alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
+   alias   mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color             2>/dev/null
@@ -634,8 +635,8 @@ function f_startup_async_ezGIT_pull_All {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Success!"
-   v_toast_message_n="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Fail: repo may not exist"
+   v_toast_message_y="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Success)"
+   v_toast_message_n="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
       # ezGIT existe (atuar)
