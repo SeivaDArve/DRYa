@@ -1,8 +1,16 @@
 
 
 
+
+
+
+
+
+
+
 # [fzf menu exemplo 1]
    # Menu Simples
+   # uDev: testar --history=HISTORY_FILE
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -30,12 +38,16 @@
    #  }
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ..\`"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "4. " ]] && f_pin && f_example  
       [[ $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
       [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       unset v_list
+
+
+
+
 
 
 
