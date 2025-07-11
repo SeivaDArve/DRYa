@@ -48,8 +48,8 @@ function f_complete_date {
 
    v_texto="(Data atual) -"
 
-   v_fuso=$(date +'%z')
-   v_texto="${v_texto} (GDH $v_fuso) -"
+   #v_fuso=$(date +'%z')
+   #v_texto="${v_texto} (GDH $v_fuso) -"
 
    v_ano=$(date +'%Y')
    v_texto="${v_texto} (Ano $v_ano) -"
