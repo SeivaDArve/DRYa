@@ -902,7 +902,7 @@ function arco {
    echo "      File Finished loading: $v_title" >> $v_MSGS
    echo >> $v_MSGS
 
-#  
+
 #  function e {
 #     # uDev: enviar para .../bin/
 #     $trid_editor_app $*
