@@ -735,7 +735,7 @@ function f_exec {
       # Jarve 
          # (Drya: foreground tasks, Jarve: Background tasks)
          # Executa as fx async
-         # Calendario com scripts
+         # Calendario com scripts (OTs e Rotinas pessoais)
          # uDev: f_assync `td` using GPS
          # uDev: Create jarve-mail-box instead of drya-mail-box 
          # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
