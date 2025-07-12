@@ -98,7 +98,7 @@ function f_traitsID {
       trid_file=trid_output.txt
       trid_output=$trid_dir/$trid_file
       trid_2="trid_output::$trid_output"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
-      export trid_dir trid_file trid_output trid_script trid_source
+      export trid_dir trid_file trid_output trid_script trid_source trid_0 trid_1
 
    # Usar traitsID.sh para buscar todas as var e guardar em ficheiro $trid_output
       bash $trid_script fetch 
@@ -534,6 +534,10 @@ function f_repository_jarve {
    #
 }
 
+function f_repository_dota_2 {
+   alias dt="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
+}
+
 function f_internal_drya_files_2_of_2 {
    # Repository: DRYa (internal files - (2/2) )
 
@@ -725,6 +729,7 @@ function f_exec {
       f_repository_omni-log
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
+      f_repository_dota_2
 
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_2
