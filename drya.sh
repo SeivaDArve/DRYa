@@ -3147,6 +3147,10 @@ elif [ $1 == "hush" ]; then
 elif [ $1 == "zip" ] ; then 
    f_zip_unzip
 
+elif [ $1 == "msg" ]; then 
+   # Read the log file to events (DRYa)
+   less $v_MSGS
+   
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
