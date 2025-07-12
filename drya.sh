@@ -2916,6 +2916,8 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 
    elif [ $2 == "1" ]; then 
       # When exit, delete specific repositories too
+      # uDev: perguntar por 5 segundos: quer `git push` das alteracoes?
+
       [ -d $v_repo/scratch-paper ] && cd && rm -rf $v_repo1 && f_talk && echo "Sc removed"
 
    elif [ $2 == "2" ]; then 

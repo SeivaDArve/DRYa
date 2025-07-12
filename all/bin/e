@@ -1,0 +1,21 @@
+#!/bin/bash
+# Title: e
+# Description: use `E` to define file editor, then open files with `e <file>`
+
+# Use: After 'traitsID.sh' detects system editor
+#
+#      Example with `e file.txt`
+
+#     # Var $pkgm might be: apt, pacman, dnf, zypper, apk, brew (check traitsID.sh to make sure)
+#        [[ -z $1        ]] && echo 'Help: `pk --help`'
+#        [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
+#     
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -S      $*
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm install $*
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "apk"    ]] && shift &&      $pkgm add     $*
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm install $*
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm install
+#        [[    $1 == "+" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
+
+[[ -z $trid_editor_app ]] && bash $trid_editor_app $* || bash vim $*

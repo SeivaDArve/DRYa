@@ -31,19 +31,33 @@ function f_talk {
    f_resetCor
 }
 
-# Criar ficheiro de historico
+function f_hist {
+   # Criar ficheiro de historico
+
    #uDev: Enviar para verbose-lines APENAS quando repo existe, senao, apos algum registo forcado nesse nome, nao sera possivel colonar verbose-lines repo
    #uDev: Criar menu fzf para configurar uma lista de ficheiros com pwd absoluto para onde queremos enviar historico
    #uDev: enviar antes para omni-log com drya-lib-4
 
    #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
-   v_dir=~/.config/h.h/verbose-lines/mail-box/history-calculator
+   v_dir_vb=~/.config/h.h/verbose-lines/mail-box/history-calculator/
+   v_dir_om=${v_REPOS_CENTER}/omni-log/all/calc/
+
+   [[ -d $v_dir_om ]] && v_dir=$v_dir_om 
+   echo "vdir: $v_dir"
+   [[ -d $v_dir_vb ]] && v_dir=$v_dir_vb
+   echo "vdir: $v_dir"
+   read
+   
+   v_dir=$v_dir_vb
    mkdir -p $v_dir
 
    v_file=history-drya-calculator.org
    v_log=$v_dir/$v_file
 
    touch $v_log
+}
+f_hist
+
 
 function f_decimais {
    # Definir o numero de casas decimais a aplicar nos calculos
