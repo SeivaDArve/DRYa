@@ -418,10 +418,11 @@ function . {
    
    if [ -z $1 ]; then 
       # If no argument is given, lists storage (ls command)
-      ls -p
+      ls -p --color=auto
 
    elif [ $1 == "?" ] || [ $1 == "h" ]; then 
       # Describe all these navigation alias
+      # uDev: Se houver uma pasta ou ficheiro com o nome "h", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
 
       f_greet
       f_talk; echo "Instructions:"

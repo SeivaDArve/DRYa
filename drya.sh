@@ -660,11 +660,13 @@ function f_dot_files_install_git {
    # Install .gitconfig on the system
    # uDev: test if `git` itself is installed
 
+   # Atualizar historico fzf (inserir esta fx):
+      echo "D ui d i git" >> $Lz4
+
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
    v_place=~
 
    f_greet
-
 
    f_talk; echo -n "Installing "
      f_c2; echo    ".gitconfig"
@@ -705,8 +707,11 @@ function f_dot_files_install_git {
    f_talk; echo "Done! "
 }
 
-function f_dotFiles_install_vim {
+function f_dot_files_install_vimrc {
    # Install .vimrc on the system
+
+   # Atualizar historico fzf (inserir esta fx):
+      echo "D ui d i vimrc" >> $Lz4
 
    v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
    v_place=~
@@ -716,6 +721,7 @@ function f_dotFiles_install_vim {
    #echo "Final: $v_v2"; read   # Debug
 
    f_greet
+
    f_talk; echo -n "Installing "
      f_c2; echo    ".vimrc"
      f_rc; echo
@@ -904,7 +910,7 @@ function f_menu_internet_network_ip_options {
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && echo "uDev: copiar/scrape do wikiD.org para aqui"
       [[ $v_list =~ "5. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/web.sh
       [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
@@ -935,7 +941,7 @@ function f_menu_audio_media_player {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "8. " ]] && echo "uDev: $L8" 
       [[ $v_list =~ "7. " ]] && echo "uDev: $L7" 
       [[ $v_list =~ "6. " ]] && echo "uDev: $L6" 
@@ -990,7 +996,7 @@ function f_QR_code_fzf_menu {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && echo uDev
       [[ $v_list =~ "5. " ]] && bash $v_REPOS_CENTER/DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
       [[ $v_list =~ "4. " ]] && echo uDev
@@ -1292,7 +1298,7 @@ function f_menu_install_dot_files {
    #       Install: font: Monospace (best for terminal)
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
-   #L10="10. stroken"  # It is part of .netrc         
+   #L10="10. stroken"     # It is part of .netrc         
 
     L12="12. | termux  | termux.properties + colors.termux"
     L11='11. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
@@ -1306,12 +1312,12 @@ function f_menu_install_dot_files {
      L4="4.  | Install | PRESETS"
      L3="3.  | Install | ALL "
 
-     L2='2. -- Invert Selection --'
+     L2='2.  -- Invert Selection --'
      L1="1.  Cancel "
 
    L0="DRYa: dot-files install.uninstall menu: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
@@ -1321,10 +1327,10 @@ function f_menu_install_dot_files {
       [[ $v_list =~ "9.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
       [[ $v_list =~ "8.  " ]] && f_dot_files_install_git 
       [[ $v_list =~ "7.  " ]] && f_dot_files_install_netrc
-      [[ $v_list =~ "6.  " ]] && f_dotFiles_install_vim
+      [[ $v_list =~ "6.  " ]] && f_dot_files_install_vimrc
       [[ $v_list =~ "5.  " ]] && f_dotFiles_install_dryarc
       [[ $v_list =~ "4.  " ]] && f_dot_files_install_presets
-      [[ $v_list =~ "3.  " ]] && f_dotFiles_install_vim && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
+      [[ $v_list =~ "3.  " ]] && f_dot_files_install_vimrc && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
       [[ $v_list =~ "2.  " ]] && echo "uDev"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
       unset v_list
@@ -1348,7 +1354,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && f_toggle_termux_hushlogin
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && echo "uDev"
@@ -1372,7 +1378,7 @@ function f_dot_files_menu_edit_host_files {
       v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "2. " ]] && f_dot_files_menu_edit_host_files_termux_properties
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -1383,7 +1389,7 @@ function f_test_L3_available_updates {
    # Antes do menu dos dot-files, testar se existe diferenca entre os ficheiros centralizados e os ficheiros instalados, se houver diferenca, indica que ha atualizacoes
 
    # Se existe atualizacoes
-      L3b="(uDev: Detetar se existe diferenca nos ficheiros instalados)" # Atencao: .gitconfig vai ter user.name de acordo com traitsID, de acordo com a maquina
+      L3b="(uDev: Pending Files: yes)" # Atencao: .gitconfig vai ter user.name de acordo com traitsID, de acordo com a maquina
 
    # Se nao existe atualizacoes
       #L3b=""
@@ -1395,36 +1401,36 @@ function f_dot_files_menu {
    f_test_L3_available_updates
 
    # List of options
-      Lz='`D dot`'
+      Lz1='Saving '; Lz2='D dot'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      #L8="8. Factory Reset (- ghost-out.sh)"  # uDev: At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
-      #L7="7. Factory Reset (+ ghost-out.sh)"  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L10="10. Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-       L9="9.  Menu | Backups"
+      L8="8. Menu | Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+      L7="7. Menu | Backups"
 
-       L7='7.  Edit | Installed   files | only @Host'
-       L6="6.  Edit | Centralized files | only @DRYa"
-       L5='5.  Edit | Centralized  > then >  Install'
+      L6='6. Edit | Installed   files (only @Host) |'
+      L5="5. Edit | Centralized files (only @DRYa) |"
+      L4='4. Edit | Centralized  > then >  Install |'
 
-       L3="3.  Menu | install.uninstall   | $L3b" # Variable L3b may be set and may be empty to give more info to the user
-       L2="2.  List | Available |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
-       L1="1.  Cancel"
+      L3="3. Menu | install.uninstall | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+      L2="2. List | Available         |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+      L1="1. Cancel"
 
       L0="DRYa: dot-files menu: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n\n$L10 \n\n$Lz" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente
+      echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "10. " ]] && echo uDev 
-      [[ $v_list =~ "9.  " ]] && echo uDev 
-      [[ $v_list =~ "8.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-      [[ $v_list =~ "7.  " ]] && f_dot_files_menu_edit_host_files
-      [[ $v_list =~ "6.  " ]] && echo uDev 
-      [[ $v_list =~ "5.  " ]] && echo uDev 
-      [[ $v_list =~ "3.  " ]] && f_menu_install_dot_files
-      [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
-      [[ $v_list =~ "1.  " ]] && echo "Canceled"
-   
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "8. " ]] && f_ghost
+      [[ $v_list =~ "7. " ]] && f_backup_helper
+      [[ $v_list =~ "6. " ]] && f_dot_files_menu_edit_host_files
+      [[ $v_list =~ "5. " ]] && echo uDev 
+      [[ $v_list =~ "4. " ]] && echo uDev 
+      [[ $v_list =~ "3. " ]] && f_menu_install_dot_files
+      [[ $v_list =~ "2. " ]] && f_dot_files_list_available
+      [[ $v_list =~ "1. " ]] && echo "Canceled"
       unset v_list
 }
 
@@ -1564,7 +1570,7 @@ function f_drya_fzf_MM {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "Acede ao historico com \`D ...\`"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "4. " ]] && echo "$L4c" >> $Lz4 && f_drya_help_menu 
       [[ $v_list =~ "3. " ]] && echo "$Lc3" >> $Lz4 && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!" 
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
@@ -1629,7 +1635,7 @@ function f_drya_help_menu {
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
@@ -1860,6 +1866,10 @@ function f_ghost {
    echo " > So, if drya wants to recover previous status (factory reset) it is possible"
    
    #uDev: Activate ghost.walk: Start recording all modifications done to the system to replace it later
+
+
+   # (- ghost-out.sh): At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
+   # (+ ghost-out.sh): When setting factory reset, leave a file to clone drya ENTIRELY
 }
 
 
@@ -2350,7 +2360,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
          [[ $v_list =~ "10. " ]] && f_ghost
          [[ $v_list =~ "9.  " ]] && f_backup_helper
          [[ $v_list =~ "8.  " ]] && echo uDev
@@ -2379,8 +2389,19 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
 
-   elif [[ $2 == "dot-file" ]] || [ $2 == "d" ]; then 
-      f_dot_files_menu  
+   elif [[ $2 == "dot-file" ]] || [ $2 == "dot" ] || [ $2 == "d" ]; then 
+
+      if [ -z $3 ]; then
+         # Menu principal: dot-files
+         f_dot_files_menu  
+
+      elif [ $3 == "install" ] || [ $3 == "i" ]; then
+         # Menu: dot-files install
+         
+         [[ -z $4            ]] && f_menu_install_dot_files
+         [[    $4 == "git"   ]] && f_dot_files_install_git
+         [[    $4 == "vimrc" ]] && f_dot_files_install_vimrc
+      fi
 
    elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
       # uDev: This is a config to set, not an instalation
@@ -2464,12 +2485,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       f_quick_install_all_upk
 
-   elif [[ $2 == "dot-files" ]] || [ $2 == "d" ]; then 
-      # Menu to install dot files
-
-      [[ -z $3          ]] && f_menu_install_dot_files
-      [[    $3 == "git" ]] && f_dot_files_install_git
-
    else
       echo "drya: What do you want to install? invalid arg"
    fi
@@ -2483,8 +2498,8 @@ elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [
       f_dot_files_menu  
 
    else
-      echo "uDev: merge with install.uninstall"
-
+      echo "uDev: merged with install.uninstall"
+      echo 'Use:  `D ui dot ...`' 
    fi
 
 
@@ -2767,10 +2782,12 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
-   f_greet
-   f_talk; echo "Keyboard options"
+
+   function f_kbd_greet {
+      f_greet
+      f_talk; echo "Keyboard options"
+   }
     
-   # Menu Simples
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -2787,8 +2804,6 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 	#     | ç | $c_1 |
 	#
 
-
-	  
       L6='6. DRYa emergency keyboard'
 
       L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
@@ -2803,15 +2818,14 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "6. " ]] && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-      [[ $v_list =~ "5. " ]] && echo "uDev: $L4"
-      [[ $v_list =~ "4. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
-      [[ $v_list =~ "3. " ]] && echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
-      [[ $v_list =~ "2. " ]] && localectl status 
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+      [[ $v_list =~ "5. " ]] && f_kbd_greet echo "uDev: $L4"
+      [[ $v_list =~ "4. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
+      [[ $v_list =~ "3. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
+      [[ $v_list =~ "2. " ]] && f_kbd_greet localectl status 
+      [[ $v_list =~ "1. " ]] && f_kbd_greet echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
       unset v_list
-    
 
 
 elif [ $1 == "k" ]; then 

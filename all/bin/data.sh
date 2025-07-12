@@ -48,6 +48,14 @@ function f_complete_date {
 
    v_texto="(Data atual) -"
 
+   v_dia=$(date +'%d')
+   v_hor=$(date +'%H')
+   #v_fuso=$(date +'%z')
+   v_min=$(date +'%M')
+   v_mes=$(date +'%b')
+   v_ano=$(date +'%Y')
+   v_texto="${v_texto} (${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"
+
    v_ano=$(date +'%Y')
    v_texto="${v_texto} (Ano $v_ano) -"
 
@@ -218,19 +226,19 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L14='14. F     | Data para ficheiro (com verbose + instrucoes)'
-      L13='13. f     | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
-      L12='12. b     | Data completa esclarecida sem loop sem LOGO (background)'
-      L11='11. ll    | Data completa esclarecida sem loop sem LOGO'
-      L10='10. r     | Data completa esclarecida com loop com LOGO'
-       L9='9.  l     | Data completa esclarecida com loop'
-       L8='8.  h     | Instructions / Help'
-       L7='7.  v     | Imprime 1x a data em um formato util para variaveis'
-       L6='6.  hr    | Data que foca na hora'
-       L5='5.  m     | Imprime linhas com a hora durante 1 min'
-       L4='4.  s     | Imprime 1 linha com a hora durante 1 seg'
-       L3='3.  g     | Grupo Data Hora (ao estilo militar)'
-       L2='2.  alarm | '
+      L14='14. F | Data para ficheiro (com verbose + instrucoes)'
+      L13='13. f | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
+      L12='12. b | Data completa esclarecida sem loop sem LOGO (background)'
+      L11='11. d | Data completa esclarecida sem loop sem LOGO'
+      L10='10. r | Data completa esclarecida com loop com LOGO'
+       L9='9.  l | Data completa esclarecida com loop'
+       L8='8.  h | Instructions / Help'
+       L7='7.  v | Imprime 1x a data em um formato util para variaveis'
+       L6='6.  H | Data que foca na hora'
+       L5='5.  m | Imprime linhas com a hora durante 1 min'
+       L4='4.  s | Imprime 1 linha com a hora durante 1 seg'
+       L3='3.  g | Grupo Data Hora (ao estilo militar)'
+       L2='2.  a | Alarm'
 
        L1='1.  Cancel'
 
@@ -251,7 +259,7 @@ elif  [ $1 == "." ]; then
       [[ $v_list =~ "6.  " ]] && f_hour_date
       [[ $v_list =~ "5.  " ]] && f_one_minute_date
       [[ $v_list =~ "4.  " ]] && f_one_second_date
-      [[ $v_list =~ "3.  " ]] && echo "uDev: GDH"
+      [[ $v_list =~ "3.  " ]] && echo "uDev: GDH: 111230Z DEC 25 (Dia 11, 12h30, fuso Z, Dezembro, 2025)"
       [[ $v_list =~ "2.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -271,6 +279,10 @@ elif  [ $1 == "l" ]; then
    # Data completa esclarecida em loop
    f_complete_date_loop
 
+elif  [ $1 == "d" ]; then
+   # Nota: `d` e `d d` sao o mesmo comando de proposito
+   f_complete_date && echo
+
 elif  [ $1 == "h" ]; then
    # Instructions / Help
    f_help
@@ -279,7 +291,7 @@ elif  [ $1 == "v" ]; then
    # Imprime 1x a data em um formato util para variaveis
    f_variables_date 
 
-elif  [ $1 == "hr" ]; then
+elif  [ $1 == "H" ]; then
    # Data que foca na hora
    f_hour_date
 
@@ -294,9 +306,20 @@ elif  [ $1 == "s" ]; then
 elif  [ $1 == "g" ]; then
    # Imprime a data no formato grupo Data Hora (ao estilo militar)
    # 09FEB25 0930
-   echo "uDev: GDH"
 
-elif  [ $1 == "alarm" ]; then
+   v_dia=$(date +'%d')
+   v_hor=$(date +'%H')
+   #v_fuso=$(date +'%z')
+   v_min=$(date +'%M')
+   v_mes=$(date +'%b')
+   v_ano=$(date +'%Y')
+
+   v_texto="Grupo Data Hora (GDH):"
+   v_texto="$v_texto ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}"
+   echo $v_texto
+
+elif  [ $1 == "a" ]; then
+   # Alarm
    echo "uDev: quando chegar a hora pretendida, soar alarme"
 
 elif  [ $1 == "f" ]; then

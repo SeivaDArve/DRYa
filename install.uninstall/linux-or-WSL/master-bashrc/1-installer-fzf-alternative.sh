@@ -2,6 +2,7 @@
 # Title: DRYa installer script (with dependency `fzf`)
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
+# uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
 
 function f_greet {
    # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
