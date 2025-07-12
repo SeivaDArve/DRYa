@@ -1,12 +1,13 @@
 #!/bin/bash
 # Title: Test dependencies existence
 
-# Test the existence of DRYa dependencies like: fzf, figlet, ncurses-utils, etc
-#   (See dependencies on file '1st' somewhere in DRYa repo)
-#
-# Test the existence of DRYa repositories
-# 
-# Test and clone Repo dependencies too
+# Description: 
+#  - Tests the existence of DRYa dependencies like: fzf, figlet, ncurses-utils, etc
+#    (See dependencies on file '1st' somewhere in DRYa repo)
+#   
+#  - Tests the existence of DRYa repositories
+#    
+#  - Tests and clone Repo dependencies too
 
 
 
@@ -28,7 +29,7 @@
 #
 #  INSTALLING (this library on main scripts):
 #
-#     # Sourcing DRYa Lib 4
+#     # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
 #        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #        [[ -f $v_lib4 ]] && source $v_lib4 || read -s -n 1 -p "Error: drya-lib-4 does not exist"
 #
@@ -71,13 +72,15 @@
 #             done
 #       
 
+# uDev: create fx that catches prompt arguments: $1 $2 $3 = $v_1 $v_2 $v_3
+# uDev: create fx to increment a var: i=(($i + 1))
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="DRYa"
-   v_talk="DRYa-lib-4: "
+   v_talk="drya-lib-4: "
    # uDev: perguntar ao chat gpt se usar libliotecas dentro de bibliotecas se nao da conflito
 
 

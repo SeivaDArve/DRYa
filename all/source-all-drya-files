@@ -182,6 +182,7 @@ function f_drya_ssms_start {
    # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
       #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
       alias dmsgs="less $v_MSGS"
+      alias ssms="less $v_MSGS"
 }
 
 function f_drya_fzf_history {
@@ -318,12 +319,13 @@ function f_internal_drya_files_1_of_2 {
      v_dirc_fzf_H=$v_cfg/drya-fzf
 
      v_file_fzf_H=$v_dirc_fzf_H/$v_name_fzf_H
+
+                      Lz4=$v_file_fzf_H
      v_drya_fzf_menu_hist=$v_file_fzf_H  # Legacy
-     #$v_drya_fzf_menu_hist              # Legacy
 
      mkdir -p $v_dirc_fzf_H
      touch    $v_file_fzf_H $v_drya_fzf_menu_hist
-     export    v_file_fzf_H  v_drya_fzf_menu_hist
+     export    v_file_fzf_H  v_drya_fzf_menu_hist Lz4
 
 
 
@@ -402,7 +404,7 @@ function f_repository_moedaz {
    # Repository: moedaz
 
    # uDev: Put all files to be open under menuFAV F   
-   alias mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
+   alias   mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
    source ~/.config/h.h/moedaz/terminal-text-color             2>/dev/null
@@ -528,10 +530,11 @@ function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias    jv="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias     J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+}
 
-   # uDev: if drya-mail-box is ready, use it here!  
-   #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
-   #
+function f_drya_mail_box {
+   # drya-mail-box is a directory with files to updoald to github but did not have internet when they were written
+   echo "Use it once at startup, then with jarve"
 }
 
 function f_repository_dota_2 {
@@ -578,7 +581,10 @@ function f_internal_drya_files_2_of_2 {
       source $v_path_dryarc 2>/dev/null
 
    # Main alias for the most important DRYa files of all
-     f_alias_to_enforce
+      f_alias_to_enforce
+
+   # Send pending updates to repos
+      #f_drya_mail_box 
 }
 
 function f_drya_ssms_end {
@@ -630,15 +636,15 @@ function f_ezGIT_exists {
    }
 
    # Executa a função em background, e no fim chama a notificação
-      (f_start && f_notificacao_final) &
+      (f_start && f_notificacao_final) & disown
 }
 
 function f_startup_async_ezGIT_pull_All {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Success!"
-   v_toast_message_n="DRYa source-all-drya-files: ezGIT: \`git pull recursive\` done: Fail: repo may not exist"
+   v_toast_message_y="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Success)"
+   v_toast_message_n="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
       # ezGIT existe (atuar)
@@ -738,7 +744,7 @@ function f_exec {
       # Jarve 
          # (Drya: foreground tasks, Jarve: Background tasks)
          # Executa as fx async
-         # Calendario com scripts
+         # Calendario com scripts (OTs e Rotinas pessoais)
          # uDev: f_assync `td` using GPS
          # uDev: Create jarve-mail-box instead of drya-mail-box 
          # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
@@ -754,6 +760,7 @@ function f_exec {
    # For practice, fun, entetainment:
       #f_temporary_fx_memor_sutras
       #f_temporary_fx_open_random_shells_py_node_sql {
+      #f_temporary_sanskrit (uDev)
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end

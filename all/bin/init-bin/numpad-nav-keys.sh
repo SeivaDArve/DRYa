@@ -44,6 +44,7 @@ function f_fzf_power_options {
        L5="4. Suspender                             "
        L4="0. Desligar  | Encerrar | Shutdown | OFF "
        L3="5. Bloquear ecra                         "
+       #L3="5. Bloquear terminal                    " `clear && cmatrix && f_pin`
 
        L2="A. Abort (Restart and Shutdown)          "
        L1="1. Cancel                                "

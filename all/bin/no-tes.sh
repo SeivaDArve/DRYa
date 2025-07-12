@@ -1,25 +1,33 @@
 #/bin/bash
-# Title: Helper to write notes
+# Title: no-tes.sh
+# Description: Helper to write notes
 
-# Sourcing f_lib4_ensure_repo_existence
-      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 
-# Sourcing f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline
+# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "
-      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
-   
+# Sourcing DRYa Lib 2: Create temporary files
+   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
 
+   # Example: f_create_tmp_file will create a temporary file stored at $v_tmp (with abs path, at ~/.tmp/...)
+
+# Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
+   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+   # Example: f_lib4_ensure_repo_existence
+
+  
 
 function f_define_files_as_vars {
 
-   # Default Log repository
+   # Default Storage Repository (for log files)
       v_df_repo="omni-log"
       v_df_repo_pwd=${v_REPOS_CENTER}/$v_df_repo
 
-   # Default text editor
-   # uDev: Use traitsID to choose the editor
+   # Default text editor (Using traitsID.sh to define the default text editor)
       v_default_editor=vim  
 
    # Directory of all Heteronimos

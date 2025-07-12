@@ -11,13 +11,15 @@
 #     At the top of every script file in which this script needed, place these lines below:
 #
 #
-#     # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-#        source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+#     # Sourcing DRYa Lib 1: Color schemes
+#        v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+#        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
 #
-#        v_greet="DRYa"
-#        v_talk="DRYa: "
-#        v_txt="<text-used-at-f_anyK-fx>"
-#        v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
+#        # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+#           v_greet="DRYa"
+#           v_talk="DRYa: "
+#           v_txt="<text-used-at-f_anyK-fx>"
+#           v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
 #
 
