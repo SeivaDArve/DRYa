@@ -529,10 +529,11 @@ function f_repository_jarve {
    alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias    jv="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
    alias     J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+}
 
-   # uDev: if drya-mail-box is ready, use it here!  
-   #       (drya-mail-box is a directory with files to updoald to github but did not have internet when they were written)
-   #
+function f_drya_mail_box {
+   # drya-mail-box is a directory with files to updoald to github but did not have internet when they were written
+   echo "Use it once at startup, then with jarve"
 }
 
 function f_internal_drya_files_2_of_2 {
@@ -575,7 +576,10 @@ function f_internal_drya_files_2_of_2 {
       source $v_path_dryarc 2>/dev/null
 
    # Main alias for the most important DRYa files of all
-     f_alias_to_enforce
+      f_alias_to_enforce
+
+   # Send pending updates to repos
+      #f_drya_mail_box 
 }
 
 function f_drya_ssms_end {
@@ -750,6 +754,7 @@ function f_exec {
    # For practice, fun, entetainment:
       #f_temporary_fx_memor_sutras
       #f_temporary_fx_open_random_shells_py_node_sql {
+      #f_temporary_sanskrit (uDev)
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end
