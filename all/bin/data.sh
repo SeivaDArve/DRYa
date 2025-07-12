@@ -48,8 +48,13 @@ function f_complete_date {
 
    v_texto="(Data atual) -"
 
+   v_dia=$(date +'%d')
+   v_hor=$(date +'%H')
    #v_fuso=$(date +'%z')
-   #v_texto="${v_texto} (GDH $v_fuso) -"
+   v_min=$(date +'%M')
+   v_mes=$(date +'%b')
+   v_ano=$(date +'%Y')
+   v_texto="${v_texto} (${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"
 
    v_ano=$(date +'%Y')
    v_texto="${v_texto} (Ano $v_ano) -"
@@ -301,7 +306,17 @@ elif  [ $1 == "s" ]; then
 elif  [ $1 == "g" ]; then
    # Imprime a data no formato grupo Data Hora (ao estilo militar)
    # 09FEB25 0930
-   echo "uDev: GDH"
+
+   v_dia=$(date +'%d')
+   v_hor=$(date +'%H')
+   #v_fuso=$(date +'%z')
+   v_min=$(date +'%M')
+   v_mes=$(date +'%b')
+   v_ano=$(date +'%Y')
+
+   v_texto="Grupo Data Hora (GDH):"
+   v_texto="$v_texto ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}"
+   echo $v_texto
 
 elif  [ $1 == "a" ]; then
    # Alarm
