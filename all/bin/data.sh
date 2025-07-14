@@ -334,7 +334,9 @@ elif  [ $1 == "F" ]; then
 elif  [ $1 == "M" ]; then
    # uDev: Calendario lunar
    # Formato: Lua1-Terra28-Sol25 (13 meses = 13 Luas) + (28 dias = 28 Voltas da Terra) + (Ano 2025 = Voltas ao Sol 25, desde 2000)
+   # Saturday (vem de Saturn-day, Dia de Saturno (o planeta)) # link: https://www.instagram.com/reel/DFIrKJuO_iQ/?igsh=aWljaHp1b21heXh5
    echo "uDev: Calendario com lua"
+
 
 fi
 
