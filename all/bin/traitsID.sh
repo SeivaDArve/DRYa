@@ -225,37 +225,37 @@ function f_trid_6 {
 
 function f_trid_7 {
    #Procurar o editor de texto pre-definido
-   # uDev: tem de funcionar em sintonia com a fx `E` em "fluNav"
+   # uDev: tem de funcionar em sintonia com a fx `E` em "fluNav" e `e` em .../DRYa/bin/e
 
    # Debug
      #echo "Pasta h.h de trid: $trid_dir" 
 
    trid_editor_file=$trid_dir/trid_editor
-   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+   trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
    
    # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
       if [ -f $trid_editor_file ]; then
          
-         trid_editor_app=$(cat $trid_editor_file)
+         trid_editor_name=$(cat $trid_editor_file)
 
          # Debug
             #echo "Ficheiro que menciona o editor de texto: existe"
-            #echo $trid_editor_app
+            #echo $trid_editor_name
       else
          # Debug
             #echo "Ficheiro que menciona o editor de texto: nao existe"
             #echo " > Vai ser configurado o vim"
 
          echo "vim" > $trid_editor_file
-         trid_editor_app="vim"
+         trid_editor_name="vim"
          
       fi
 
    # Send out results
       echo "trid_7=\"trid_editor_file::$trid_editor_file\"" >> $trid_output 
       echo "trid_editor_file=\"$trid_editor_file\""         >> $trid_output 
-      echo "trid_editor_app=$trid_editor_app"               >> $trid_output
-      echo "e=$trid_editor_app"                             >> $trid_output
+      echo 'trid_editor_name="trid_editor_name=$(cat $trid_editor_file)"'               >> $trid_output
+      echo "e=$trid_editor_name"                             >> $trid_output
       echo                                                  >> $trid_output
 }
 
