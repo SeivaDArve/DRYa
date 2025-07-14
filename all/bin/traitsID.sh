@@ -295,11 +295,13 @@ function f_actions {
 function f_startup {
 
    # Var de espacamento
-      E="     "
+      e="     "
 
-   f_talk; echo    "Running on   : $trid_OS"
-           echo "$E Git name     : $trid_gmn"
-           echo "$E Editor texto : uDev"
+   v_ed=$(cat $trid_editor_file)
+
+   f_talk; echo    "Running on  : $trid_OS"
+           echo "$e Git name    : $trid_gmn"
+           echo "$e Text editor : $v_ed"
 }
 
 function f_printenv {

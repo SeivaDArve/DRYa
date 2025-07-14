@@ -573,10 +573,10 @@ function E {
       trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
 
       # Lista de opcoes para o menu `fzf`
-         Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Saving '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
          L10='10. less --wordwrap'
-          L9='9.  vim (easy mode)'  # `vim -y`
+          L9='9.  vim (easy mode, `vim -y`)' 
 
           L8='8.  cat'
           L7='7.  nano'
@@ -593,6 +593,9 @@ function E {
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
 
+      # Atualizar historico fzf automaticamente (deste menu)
+         echo "$Lz2" >> $Lz4
+   
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
          [[ $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file

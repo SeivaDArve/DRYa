@@ -225,10 +225,12 @@ function f_drya_welcome_screen {
       echo
 
    # Verbose Initial DRYa Message
-      f_talk; echo "Startup Help..."
-              echo "      Aceder ao menu principal    : \`D .\`"
-              echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
-              echo
+      f_talk; echo    "Stratup Instructions"
+              echo -n "      Menu 'Main'       : "
+        f_c4; echo -e "D ."
+        f_rc; echo -n "      Menu 'Instrucoes' : "
+        f_c4; echo    "D help"
+        f_rc; echo
 
    # Apresentar apenas o icon ASCII do `neofetch`
       neofetch -L 2>/dev/null
