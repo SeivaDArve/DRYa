@@ -407,7 +407,7 @@ elif [ $1 == "." ]; then
    vim $trid_script
 
 elif [ $1 == "o" ]; then
-   vim $trid_output
+   less $trid_output
 
 elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
    # Start a new search of all variables and store them in a file
