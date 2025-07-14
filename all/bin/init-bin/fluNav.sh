@@ -559,51 +559,57 @@ function ., {
 }
 
 function E {
-   # Escolher editor de texto para pre-definir 
-   # uDev: Tem de funcionar em dintonia com traitsID
 
-   # In fluNav, there is a command to open either a dir or to open a file:
-   # '$ . <file>'
-   # and if there is no dir or existent file, it will create one,
-   # so, this function will decide which text editor will open the file
+   if [ -z $1 ]; then
+      # Escolher editor de texto para pre-definir 
+      # uDev: Tem de funcionar em dintonia com traitsID
 
-   trid_editor_file=$trid_dir/trid_editor
-   trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+      # In fluNav, there is a command to open either a dir or to open a file:
+      # '$ . <file>'
+      # and if there is no dir or existent file, it will create one,
+      # so, this function will decide which text editor will open the file
 
-   # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      trid_editor_file=$trid_dir/trid_editor
+      trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
 
-      L10='10. less '
-       L9='9.  less --wordwrap'
-       L8='8.  cat'
-       L7='7.  nano'
-       L6='6.  vim (easy mode)'  # `vim -y`
+      # Lista de opcoes para o menu `fzf`
+         Lz1='Save '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-       L5='5.  ed'   # Antigo editor de texto da Unix/Linux 
-       L4='4.  emacs'
-       L3='3.  vim'
+         L10='10. less --wordwrap'
+          L9='9.  vim (easy mode)'  # `vim -y`
 
-       L2='2.  Ver editor atual'
-       L1='1.  Cancel'
-      
-      Lh=$(cat $trid_output | grep "trid_editor_app")
-      L0="fluNav: E: SELECT 1 editor de texto para pre-definir em \`e\`: "
-      
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
+          L8='8.  cat'
+          L7='7.  nano'
+          L6='6.  less '
+          L5='5.  ed'   # Antigo editor de texto da Unix/Linux 
+          L4='4.  emacs'
+          L3='3.  vim'
 
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "10. " ]] && echo "less"           > $trid_editor_file
-      [[ $v_list =~ "9.  " ]] && echo "less -wordwrap" > $trid_editor_file
-      [[ $v_list =~ "8.  " ]] && echo "cat"            > $trid_editor_file
-      [[ $v_list =~ "7.  " ]] && echo "nano"           > $trid_editor_file
-      [[ $v_list =~ "6.  " ]] && echo "vim -y"         > $trid_editor_file
-      [[ $v_list =~ "5.  " ]] && echo "ed"             > $trid_editor_file
-      [[ $v_list =~ "4.  " ]] && echo "emacs"          > $trid_editor_file
-      [[ $v_list =~ "3.  " ]] && echo "vim"            > $trid_editor_file
-      [[ $v_list =~ "2.  " ]] && cat $trid_editor_file
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
-      unset v_list
+          L2='2.  Ver editor atual | `E .`'
+          L1='1.  Cancel'
+         
+         Lh=$(cat $trid_output | grep "trid_editor_app")
+         L0="fluNav: E: escolha editor de texto para \`e\`: "
+         
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
+
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file
+         [[ $v_list =~ "9.  " ]] && echo "vim -y"         > $trid_editor_file
+         [[ $v_list =~ "8.  " ]] && echo "cat"            > $trid_editor_file
+         [[ $v_list =~ "7.  " ]] && echo "nano"           > $trid_editor_file
+         [[ $v_list =~ "6.  " ]] && echo "less"           > $trid_editor_file
+         [[ $v_list =~ "5.  " ]] && echo "ed"             > $trid_editor_file
+         [[ $v_list =~ "4.  " ]] && echo "emacs"          > $trid_editor_file
+         [[ $v_list =~ "3.  " ]] && echo "vim"            > $trid_editor_file
+         [[ $v_list =~ "2.  " ]] && cat $trid_editor_file
+         [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+         unset v_list
+
+   elif [ $1 == "." ]; then
+      cat $trid_editor_file
+   fi
 }
 
 function f_menu_fzf_S {

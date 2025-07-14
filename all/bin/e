@@ -27,20 +27,21 @@
 
 # Pesquisar a ultima alteracao ao ficheiro $trid_editor_file
    # Nota: Esta var tambem existe em traitsID.sh 
-   trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
+   trid_editor_name=$(cat $trid_editor_file 2>/dev/null)
 
 if [ -z $1 ]; then
-   f_talk; echo "Qual o ficheiro que que editar?"
+   f_talk; echo "Qual o ficheiro que quer editar?"
 
 else
 
    if [ -z $trid_editor_name ]; then
       # Mencionar se funciona ou nao
-         f_talk; echo "Editor: Nenhum. Sera usado: vim"
+         f_talk; echo "Nenhum editor. Sera usado: vim"
 
       # Para cada item fornecido como arg, editar com o vim
          for i in $*
          do
+            echo " > vim $i"  # Tambem funciona como Debug
             vim $i
          done
 
