@@ -1044,15 +1044,22 @@ function V {
          cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls -p || f_error_cd
       
 
-      elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
-         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
-      
-
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
+         # uDev: Sempre que `V` detete a inexistencia da repo para onde queremos navegar, teremos estas opcoes:
+         #       1. Dizer so que nao existe
+         #       2. Perguntar se quer clonar, posteriormente navegar para la
+         #       3. Pedir um pin, depois clonar
+         #       4. Verificar a existencia de algum dot-file (uDev) que faca o bypass as perguntas e que clone logo (uso direto)
+
          if   [ -z $2      ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls -p
          elif [ $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
+
+
+      elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
+         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
+      
 
       elif [ $1 == "trade" ] || [ $1 == "t" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls -p || f_error_cd
