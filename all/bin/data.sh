@@ -226,7 +226,7 @@ elif  [ $1 == "." ]; then
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      #L14='14.  | calandario lunar, em que cada mes tem 28 dias
+     #L14='14. M | calandario lunar, em que cada mes tem 28 dias
       L14='14. F | Data para ficheiro (com verbose + instrucoes)'
       L13='13. f | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
       L12='12. b | Data completa esclarecida sem loop sem LOGO (background)'
@@ -330,5 +330,11 @@ elif  [ $1 == "f" ]; then
 elif  [ $1 == "F" ]; then
    # Data para ficheiro, sem verbose output
    f_variables_date_to_file_verbose
+
+elif  [ $1 == "M" ]; then
+   # uDev: Calendario lunar
+   # Formato: Lua1-Terra28-Sol25 (13 meses = 13 Luas) + (28 dias = 28 Voltas da Terra) + (Ano 2025 = Voltas ao Sol 25, desde 2000)
+   echo "uDev: Calendario com lua"
+
 fi
 
