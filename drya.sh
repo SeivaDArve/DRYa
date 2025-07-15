@@ -3177,6 +3177,11 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
 
+elif [ $1 == "ascii" ]; then 
+   clear
+   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
+   figlet "               DRYa" 
+
 elif [ $1 == "..." ]; then  
    # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
    # uDev: Remover linhas duplicadas
