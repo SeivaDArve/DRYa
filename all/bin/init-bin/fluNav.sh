@@ -553,6 +553,12 @@ function ,,, {
    ,,
 }
 
+function ,,,, {
+   clear
+   figlet l s
+   ls
+}
+
 function ., {
    # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
    ls -Ap

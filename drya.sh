@@ -1299,6 +1299,7 @@ function f_menu_install_dot_files {
    
    #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
    #L10="10. stroken"     # It is part of .netrc         
+   #L10="10. .drya.node.rc
 
     L12="12. | termux  | termux.properties + colors.termux"
     L11='11. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`

@@ -77,7 +77,7 @@ function wsl {
    alias      ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
 
 # Para Javascript
-   alias node="node -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/node/.drya.node.rc"
+   alias node="[[ -f ~/.config/.drya.node.rc ]] && node -r ~/.config/.drya.node.rc || node"
 
 
 #alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
