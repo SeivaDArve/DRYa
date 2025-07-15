@@ -570,7 +570,7 @@ function E {
       # so, this function will decide which text editor will open the file
 
       trid_editor_file=$trid_dir/trid_editor
-      trid_editor_app=$(cat $trid_editor_file) 2>/dev/null
+      trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
 
       # Lista de opcoes para o menu `fzf`
          Lz1='Saving '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -588,10 +588,10 @@ function E {
           L2='2.  Ver editor atual | `E .`'
           L1='1.  Cancel'
          
-         Lh=$(cat $trid_output | grep "trid_editor_app")
-         L0="fluNav: E: escolha editor de texto para \`e\`: "
+         Lh=$(echo -e "\nNote: Current default text editor: Use \`e\` to act as \`$(cat $trid_editor_file)\` ")
+         L0="fluNav: E: set text editor: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente (deste menu)
          echo "$Lz2" >> $Lz4

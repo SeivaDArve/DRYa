@@ -10,7 +10,10 @@
 
 # [fzf menu exemplo 1]
    # Menu Simples
+   # Note: `--no-info` significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
+
    # uDev: testar --history=HISTORY_FILE
+   # uDev: Capturar Esc dos menus "exist status code" 
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -25,7 +28,7 @@
       L0="SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4

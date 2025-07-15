@@ -62,18 +62,28 @@ function f_trid_0_1_2 {
       rm       $trid_output 2>/dev/null
       touch    $trid_output
 
-   # Guardar em "trid_output" todas as var
-      echo "trid_0=$trid_0"           >> $trid_output
-      echo "trid_source=$trid_source" >> $trid_output
-      echo "                        " >> $trid_output
-      echo "trid_1=$trid_1"           >> $trid_output
-      echo "trid_script=$trid_script" >> $trid_output
-      echo "                        " >> $trid_output
-      echo "trid_2=$trid_2"           >> $trid_output
-      echo "trid_dir=$trid_dir"       >> $trid_output
-      echo "trid_file=$trid_file"     >> $trid_output
-      echo "trid_output=$trid_output" >> $trid_output
-      echo "                        " >> $trid_output
+   function f_verbose_output_0 {
+      # Info inicial do ficheiro
+         echo "# Title: traitsID output"
+         echo "# Description: File that gather most important system variables for DRYa" 
+         echo "# Note: The info in this file is gathered at terminal startup. May change during the session"
+         echo  
+
+      # Guardar em "trid_output" todas as var
+         echo "trid_0=$trid_0           "           
+         echo "trid_source=$trid_source " 
+         echo "                         " 
+         echo "trid_1=$trid_1           "           
+         echo "trid_script=$trid_script " 
+         echo "                         " 
+         echo "trid_2=$trid_2           "           
+         echo "trid_dir=$trid_dir       "       
+         echo "trid_file=$trid_file     "     
+         echo "trid_output=$trid_output " 
+         echo "                         " 
+   } >> $trid_output
+
+   f_verbose_output_0 
 }
 
 function f_trid_3 {
@@ -81,15 +91,13 @@ function f_trid_3 {
    # Deteta qual é o nome usado pelo `git` e que coloca nos `git commits`
    # --- Se encontrar o nome standard 'seivadarve', pede para configurar/instalar o nome correto
 
-   v_user=$(git config --get user.name)
-   trid_3=$v_user
-   trid_git_machine_name=$v_user
-   trid_gmn=$v_user
+   trid_git_machine_name=$(git config --get user.name)
+   trid_gmn=$trid_git_machine_name
 
-   echo "trid_3=\"trid_git_machine_name::$v_user\""         >> $trid_output
-   echo "trid_git_machine_name=\"$trid_git_machine_name\""  >> $trid_output
-   echo "trid_gmn=\"$trid_gmn\""                            >> $trid_output
-   echo "                     "                             >> $trid_output
+   echo "trid_3=\"trid_git_machine_name::$trid_gmn\" "  >> $trid_output
+   echo "trid_git_machine_name=\"$trid_gmn\"         "  >> $trid_output
+   echo "trid_gmn=\"$trid_gmn\"                      "  >> $trid_output
+   echo "                                            "  >> $trid_output
 }
 
 function f_trid_4 {
@@ -224,40 +232,68 @@ function f_trid_6 {
 }
 
 function f_trid_7 {
-   #Procurar o editor de texto pre-definido
-   # uDev: tem de funcionar em sintonia com a fx `E` em "fluNav" e `e` em .../DRYa/bin/e
+   # Definir ficheiro onde guardar o nome do editor de texto a usar. Mencionar o seu nome e caminho
+   # Nota: tem de funcionar em sintonia com a fx `E` em "fluNav" e `e` em .../DRYa/bin/e
 
-   # Debug
-     #echo "Pasta h.h de trid: $trid_dir" 
-
-   trid_editor_file=$trid_dir/trid_editor
-   trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
+   # Nome do ficheiro 
+      trid_editor_file=$trid_dir/trid_editor  # variavel 'trid_dir' configurado em source-all-drya-files
    
    # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
       if [ -f $trid_editor_file ]; then
-         
+         echo "Debug: O ficheiro que menciona o editor de texto: existe"  1>/dev/null
          trid_editor_name=$(cat $trid_editor_file)
 
-         # Debug
-            #echo "Ficheiro que menciona o editor de texto: existe"
-            #echo $trid_editor_name
       else
-         # Debug
-            #echo "Ficheiro que menciona o editor de texto: nao existe"
-            #echo " > Vai ser configurado o vim"
-
-         echo "vim" > $trid_editor_file
-         trid_editor_name="vim"
-         
+         echo "Debug: O ficheiro que menciona o editor de texto: nao existe"  1>/dev/null
+         echo "vim" > $trid_editor_file  # Criar ficheiro, ao mesmo tempo, inserir o texto "vim" nesse ficheiro
       fi
 
    # Send out results
       echo "trid_7=\"trid_editor_file::$trid_editor_file\"" >> $trid_output 
       echo "trid_editor_file=\"$trid_editor_file\""         >> $trid_output 
-      echo 'trid_editor_name="trid_editor_name=$(cat $trid_editor_file)"'               >> $trid_output
-      echo "e=$trid_editor_name"                             >> $trid_output
       echo                                                  >> $trid_output
 }
+
+
+function f_trid_8 {
+   # Definir ficheiro onde guardar o nome do editor de texto a usar. Mencionar o seu nome e caminho
+   # Nota: tem de funcionar em sintonia com a fx `E` em "fluNav" e `e` em .../DRYa/bin/e
+
+   # Nome do ficheiro 
+      trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
+   
+   function f_verbose_output_8 {
+      # Send out results
+         echo 'trid_8="trid_editor_name=$(cat $trid_editor_file)"           '
+         echo 'trid_editor_name="trid_editor_name=$(cat $trid_editor_file)" '     
+         echo "# At terminal Startup: \$trid_editor_name=$trid_editor_name  "     
+         echo "# Script that wraps any editor: \`e example.txt\` = \`$trid_editor_name example.txt\`" 
+         echo                                                 
+   } >> $trid_output
+
+   f_verbose_output_8 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function f_trid_print_all {
 
@@ -298,9 +334,21 @@ function f_startup {
       e="     "
 
    v_ed=$(cat $trid_editor_file)
+   trid_gmn=$(git config --get user.name)
+
+   function f_coloring_variable_git_name__normal {
+      echo "$e Git name    : $trid_gmn"
+   }
+
+   function f_coloring_variable_git_name__red {
+            echo -n "$e Git name    : "
+      f_c8; echo                     "$trid_gmn"
+      f_rc
+   }
 
    f_talk; echo    "Running on  : $trid_OS"
-           echo "$e Git name    : $trid_gmn"
+          #echo "$e Git name    : $trid_gmn"
+           [[ $trid_gmn == "seivaDArve" ]] && f_coloring_variable_git_name__red || f_coloring_variable_git_name__normal 
            echo "$e Text editor : $v_ed"
 }
 
@@ -320,12 +368,15 @@ function f_neofetch {
    clear
 
    # Var de espacamento
-      E="     "
+      e="     "
+
+   trid_gmn=$(git config --get user.name)
+   v_ed=$(cat $trid_editor_file)
 
    f_talk; echo    "Running on      : $trid_OS"
-           echo "$E Git name        : $trid_gmn"
-           echo "$E Editor texto    : uDev"
-           echo "$E Package manager : $pkgm"
+           echo "$e Git name        : $trid_gmn"
+           echo "$e Editor texto    : $v_ed"
+           echo "$e Package manager : $pkgm"
            echo
 
    # Apresentar apenas o icon ASCII do `neofetch`
@@ -359,7 +410,8 @@ function f_fetch {
    f_trid_4       # Procurar "Package Manager"
    f_trid_5       # Procurar "Termux"
    f_trid_6       # Procurar "OS"
-   f_trid_7       # Definir editor de texto pre-definido
+   f_trid_7       # Definir ficheiro para guardar o nome do editor de texto pre-definido
+   f_trid_8       # Procurar dentro do ficheor "editor de texto" qual o nome do editor a usar
    #f_detectOS_2
 
    f_actions 

@@ -1562,9 +1562,9 @@ function f_drya_fzf_MM {
 
       L1="1. Cancel" 
 
-      L0='DRYa: `fzf` Main Menu: '
+      L0='DRYa: Main Menu: '
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
