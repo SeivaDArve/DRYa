@@ -38,7 +38,8 @@ alias hi="echo hello!"
    alias    td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
    alias    Td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
 
-   alias d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
+   alias data="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
+   alias    d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
 alias cam="am start -a android.media.action.IMAGE_CAPTURE"
 

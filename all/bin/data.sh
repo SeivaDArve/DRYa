@@ -98,6 +98,7 @@ function f_help {
   
    echo 'DRYa: Command `data` with alias `d`'
    echo ' > `data`      # Output 1x Current time'
+   echo ' > `data .`    # Main Menu'
    echo ' > `data h`    # Help and Instructions'
    echo ' > `data r`    # Loop Current time with figlet'
    echo ' > `data l`    # Loop Current time'
