@@ -40,11 +40,66 @@ function f_session_instructions {
       echo 
 }
 
+function f_drya_workspace_1 {
+   # Criar uma organizacao do tmux de exemplo com:
+   #     1. Criar uma nova sessao de tmux com o nome 'D-sess-1'
+   #     2. Nessa Sessao, criar uma janela com o nome 'J-1'
+   #     3. Nessa janela, criar mais um painel vertical para que fiquem 2.
+   #     4. O painel da esquerda vai ter o nome de 'D1' e o painel da direita vai ter o nome de 'D2'
+   #     5. Em cada painel, comando diferentes sao executado. Neste caso: `date` e `cal`
+   #
+   #     Esta fx cria tudo isso no modo "detached", depois entra na sessao "attach"
+   
+
+   # Definir o nome de cada elemento dentro do tmux
+      local session_name="D-Sess-1"
+      local window_name="J-1"
+      local left="D1"
+      local right="D2"
+
+   # Cria nova sessão desanexada, com nome da sessão e da janela
+      tmux new-session -d -s "$session_name" -n "$window_name"
+
+   # Renomeia o painel inicial para D1 (esquerda)
+      tmux select-pane -t "$session_name:$window_name.0"
+      tmux select-pane -T $left
+
+   # Divide verticalmente e nomeia o novo painel como D2 (direita)
+      tmux split-window -h -t "$session_name:$window_name"
+      tmux select-pane -T $right
+
+   # Executar comandos nos paineis
+      # uDev: O tempo de startup DRYa, se for lento, interfere na introducao destes comandos
+      #       Solucao 1. Colocar `sleep 5` nesta fx antes de cada `send-keys`
+      #               2. Em 'souce-all-drya-files' manualmente comentar a fx  'f_drya_welcome_screen'
+      #               3. Nesta fx, com `sed -i` comentar essa fx de 'souce-all-drya-file' e no final da fx repor como estava
+
+      # Troubleshooting
+         sleep 5
+
+      # Executa o comando 'date' no painel D1
+         tmux send-keys -t "$session_name:$window_name.0" "date" C-m
+
+      # Executa o comando 'cal' no novo painel D2
+         tmux send-keys -t "$session_name:$window_name.1" "cal" C-m
+
+      # Exemplo de temporizar um painel para que se apague ao fim de alguns segundos
+         #tmux send-keys -t 1 "sleep 5; tmux kill-pane -t 1" C-m
+
+   # Entra na sessão
+      tmux attach -t "$session_name"
+
+}
+
+
+
 function tm {
    if [ -z $1 ]; then
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='tm-tmux'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L12='12. DRYa | Criar um worspace (nr.1)'
 
       L11='11. Pane | Next pane | `C-b o`'
       L10='10. Pane | Split pane: Vertical | `C-b %`'
@@ -65,10 +120,11 @@ function tm {
       Lh="Note: Probably at DRYa, the shortcut is 'C-x' instead of 'C-b'"
       L0="tm-tmux: menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "12. " ]] && f_drya_workspace_1
       [[ $v_list =~ "11. " ]] && tmux select-pane -t :.+
       [[ $v_list =~ "10. " ]] && tmux split-window -h  # `Ctrl-b %`
       [[ $v_list =~ "9.  " ]] && tmux next-window
