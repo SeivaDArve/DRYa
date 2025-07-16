@@ -46,22 +46,40 @@ function tm {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='tm-tmux'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. Help'
+      L11='11. Pane | Next pane | `C-b o`'
+      L10='10. Pane | Split pane: Vertical | `C-b %`'
 
-      L3='3. Kill tmux session'
-      L2='2. Open tmux session'
-      L1='1. Cancel'
+       L9='9.  Wind | Next window | `C-b n`'
+       L8='8.  Wind | New window  | `C-b c`'
 
-      L0="SELECT 1: Menu X: "
+       L7='7.  Sess | Detach Session'
+       L6='6.  Sess | Attach Session'
+       L5='5.  Sess | Kill tmux session'
+       L4='4.  Sess | Open tmux session'
+
+       L3='3.  tmux | Open command line | `tmux command-prompt` or `C-b :`'
+
+       L2='2.  Help'
+       L1='1.  Cancel'
+
+      Lh="Note: Probably at DRYa, the shortcut is 'C-x' instead of 'C-b'"
+      L0="tm-tmux: menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "4. " ]] && f_session_instructions
-      [[ $v_list =~ "3. " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
-      [[ $v_list =~ "2. " ]] && tmux
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "11. " ]] && tmux select-pane -t :.+
+      [[ $v_list =~ "10. " ]] && tmux split-window -h  # `Ctrl-b %`
+      [[ $v_list =~ "9.  " ]] && tmux next-window
+      [[ $v_list =~ "8.  " ]] && tmux new-window
+      [[ $v_list =~ "7.  " ]] && tmux detach-client
+      [[ $v_list =~ "6.  " ]] && tmux a
+      [[ $v_list =~ "5.  " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
+      [[ $v_list =~ "4.  " ]] && tmux
+      [[ $v_list =~ "3.  " ]] && tmux command-prompt
+      [[ $v_list =~ "2.  " ]] && f_session_instructions
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
       unset v_list
     
 
