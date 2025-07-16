@@ -2,6 +2,8 @@
 # Title: drya-lib-6-flash-buffer
 # Description: Abrir temporariamente uma buffer com mensagens de DRYa (em buffer a parte, tal como o `vim` faz)
 
+# uDev: Alternativa para buffers com `tput`: Iniciar o terminal sempre com `tmux` e usar os paineis como buffers. Existe sempre a opcao deles serem temporizados para se apagarem automaticamente
+
 # Entra no buffer alternativo
    tput smcup
 
