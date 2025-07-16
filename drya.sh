@@ -3178,9 +3178,14 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > Visite website com: \`web cv\`"
 
 elif [ $1 == "ascii" ]; then 
+   # uDev: Centrar BEM no ecra. Nao apresentar o prompt por alguns segundos com `read -t 5`
    clear
-   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
+   #${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
    figlet "               DRYa" 
+   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
+   echo
+
+   read -t 5
 
 elif [ $1 == "..." ]; then  
    # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
