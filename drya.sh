@@ -3155,6 +3155,12 @@ elif [ $1 == "msg" ]; then
 elif [ $1 == "morse" ]; then 
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 
+elif [ $1 == "wam" ]; then 
+   # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
+   # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
+   
+   [[ -d ${v_REPOS_CENTER}/omni-log ]] && vim ${v_REPOS_CENTER}/omni-log/all/wam/wam.log
+
 elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ]; then 
    echo "uDev: Escrever formula de 1.os Socorros"
    echo "      fichiro: .../var/suporte-basico-de-vida.txt"
