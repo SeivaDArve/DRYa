@@ -93,43 +93,49 @@ function f_drya_workspace_1 {
 
 function f_tmux_panels {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='tm p'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='tm panels'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L11='11. Pane | Next pane            | `C-b o`'
-      L10='10. Pane | Split pane: Vertical | `C-b %`'
+      L3='3. Panels | Next pane            | `C-b o`'
+      L2='2. Panels | Split pane: Vertical | `C-b %`'
 
-       L1='1.  Cancel'
+      L1='1. Cancel'
 
-      L0="tm-tmux: menu: "
+      L0="tm-tmux: menu panels: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "11. " ]] && tmux select-pane -t :.+
-      [[ $v_list =~ "10. " ]] && tmux split-window -h  # `Ctrl-b %`
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "3. " ]] && tmux select-pane -t :.+
+      [[ $v_list =~ "2. " ]] && tmux split-window -h  # `Ctrl-b %`
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
       unset v_list
 }
 
 function f_tmux_windows {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='tm w'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='tm windows'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-       L9='9.  Wind | Next window | `C-b n`'
-       L8='8.  Wind | New window  | `C-b c`'
+      L3='3.  Windows | Next window | `C-b n`'
+      L2='2.  Windows | New window  | `C-b c`'
 
-       L1='1.  Cancel'
+      L1='1.  Cancel'
 
-      L0="tm-tmux: menu: "
+      L0="tm-tmux: menu windows: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "9.  " ]] && tmux next-window
-      [[ $v_list =~ "8.  " ]] && tmux new-window
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "3. " ]] && tmux next-window
+      [[ $v_list =~ "2. " ]] && tmux new-window
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
       unset v_list
     
 
@@ -137,29 +143,32 @@ function f_tmux_windows {
 
 function f_tmux_sessions {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='tm s'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='tm sessions'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L12='12. DRYa | Criar um worspace (nr.1)'
+       L6='6. DRYa    | Criar um worspace (nr.1)'
 
-       L7='7.  Sess | Detach Session'
-       L6='6.  Sess | Attach Session'
-       L5='5.  Sess | Kill tmux session'
-       L4='4.  Sess | Open tmux session'
+       L5='5. Session | Detach Session'
+       L4='4. Session | Attach Session'
+       L3='3. Session | Kill tmux session'
+       L2='2. Session | Open tmux session'
 
        L1='1.  Cancel'
 
-      L0="tm-tmux: menu: "
+      L0="tm-tmux: menu sessions: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "12. " ]] && f_drya_workspace_1
-      [[ $v_list =~ "7.  " ]] && tmux detach-client
-      [[ $v_list =~ "6.  " ]] && tmux a
-      [[ $v_list =~ "5.  " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
-      [[ $v_list =~ "4.  " ]] && tmux
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "6. " ]] && f_drya_workspace_1
+      [[ $v_list =~ "5. " ]] && tmux detach-client
+      [[ $v_list =~ "4. " ]] && tmux a
+      [[ $v_list =~ "3. " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
+      [[ $v_list =~ "2. " ]] && tmux
+      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
       unset v_list
     
 }
@@ -170,20 +179,17 @@ function tm {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='tm'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L12='12. DRYa | Criar um worspace (nr.1)'
+      L11='11. DRYa | Criar um worspace (nr.1) | `tm wr 1`'
 
-      L11='11. Pane | Next pane | `C-b o`'
-      L10='10. Pane | Split pane: Vertical | `C-b %`'
+      L10='10. Menu | Panes    | `tm p`'
+       L9='9.  Menu | Windows  | `tm w`'
+       L8='8.  Menu | Sessions | `tm s`'
 
-       L9='9.  Wind | Next window | `C-b n`'
-       L8='8.  Wind | New window  | `C-b c`'
-
-       L7='7.  Sess | Detach Session'
-       L6='6.  Sess | Attach Session'
-       L5='5.  Sess | Kill tmux session'
-       L4='4.  Sess | Open tmux session'
-
-       L3='3.  tmux | Open command line | `tmux command-prompt` or `C-b :`'
+       L7='7.  CMD           | Open command line | `C-b :`'
+       L6='6.  CMD (session) | Detach Session'
+       L5='5.  CMD (session) | Attach Session'
+       L4='4.  CMD (session) | Kill tmux session'
+       L3='3.  CMD (session) | Open tmux session'
 
        L2='2.  Help'
        L1='1.  Cancel'
@@ -191,33 +197,64 @@ function tm {
       Lh="Note: Probably at DRYa, the shortcut is 'C-x' instead of 'C-b'"
       L0="tm-tmux: menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n$L10 \n\n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "12. " ]] && f_drya_workspace_1
-      [[ $v_list =~ "11. " ]] && tmux select-pane -t :.+
-      [[ $v_list =~ "10. " ]] && tmux split-window -h  # `Ctrl-b %`
-      [[ $v_list =~ "9.  " ]] && tmux next-window
-      [[ $v_list =~ "8.  " ]] && tmux new-window
-      [[ $v_list =~ "7.  " ]] && tmux detach-client
-      [[ $v_list =~ "6.  " ]] && tmux a
-      [[ $v_list =~ "5.  " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
-      [[ $v_list =~ "4.  " ]] && tmux
-      [[ $v_list =~ "3.  " ]] && tmux command-prompt
+      [[ $v_list =~ "11. " ]] && f_drya_workspace_1
+      [[ $v_list =~ "10. " ]] && f_tmux_panels 
+      [[ $v_list =~ "9.  " ]] && f_tmux_windows
+      [[ $v_list =~ "8.  " ]] && f_tmux_sessions
+      [[ $v_list =~ "7.  " ]] && tmux command-prompt
+      [[ $v_list =~ "6.  " ]] && tmux detach-client
+      [[ $v_list =~ "5.  " ]] && tmux a
+      [[ $v_list =~ "4.  " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
+      [[ $v_list =~ "3.  " ]] && tmux
       [[ $v_list =~ "2.  " ]] && f_session_instructions
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
       unset v_list
     
 
+   elif [ $1 == "n" ]; then
+      # Open new session
+      tmux
 
    elif [ $1 == "k" ]; then
       tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
    
-   elif [ $1 == "s" ]; then
-      echo "tmux: what do you want to do about S (sessions)?" 
-      echo " > '$ tm s': prints this message" 
-      echo " > '$ tm S': lists all sessions" 
+   elif [ $1 == "d" ]; then
+      # Detach session
+      tmux detach-client
+   
+   elif [ $1 == "a" ]; then
+      # Attach session
+      tmux a
+
+   elif [ $1 == "s" ] || [ $1 == "sessions" ]; then
+      # Menu with options for sessions
+      f_tmux_sessions
+
+   elif [ $1 == "w" ] || [ $1 == "windows" ]; then
+      # Menu with options for windows
+      f_tmux_windows
+
+   elif [ $1 == "p" ] || [ $1 == "panels" ]; then
+      # Menu with options for paineis
+      f_tmux_panels
+
+   elif [ $1 == "wr" ]; then
+      # opcoes para Wprkspaces para DRYa
+
+      if [ -z $2 ]; then
+         echo "tm-tmux: Qual é o numero do layput de workspace que pretende? Tem de fornecer um numero"
+
+      elif [ $2 == "1" ]; then
+         # uDev: Antes de criar o workspace, verbosamente descrever todo o workspace e perguntar se quer continuar...
+         f_drya_workspace_1
+      fi
 
    elif [ $1 == "h" ]; then
       echo "tmux: uDev list"
