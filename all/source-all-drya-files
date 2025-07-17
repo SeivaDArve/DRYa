@@ -536,7 +536,11 @@ function f_repository_jarve {
 
 function f_drya_mail_box {
    # drya-mail-box is a directory with files to updoald to github but did not have internet when they were written
-   echo "Use it once at startup, then with jarve"
+   
+   v_path_drya_mail_box=~/.config/h.h/drya-mail-box/
+   # uDev: Se o diretorio estiver vazio, `rmdir`
+
+   echo "Use it once at startup, then with jarve or DRYa"
 }
 
 function f_repository_dota_2 {
