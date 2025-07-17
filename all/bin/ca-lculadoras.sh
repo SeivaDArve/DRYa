@@ -34,13 +34,20 @@ function f_talk {
 function f_hist {
    # Criar ficheiro de historico
 
-   #uDev: Enviar para verbose-lines APENAS quando repo existe, senao, apos algum registo forcado nesse nome, nao sera possivel colonar verbose-lines repo
+   # Opcao 1: Enviar historico/registos para "omni-log" se existir
+   # Opcao 2: Enviar historico/registos para "~/.config/h.h/omni-log/" se "omni-log" nao existir
+   # 
+   # Ao iniciar este script, todas as configs que nao estejam perfeitas tem de ser mencionadas (por exemplo a inexistencia de omni-log)
+   # Ao iniciar este script, Se existirem os ficheiros das opcoes 1 e 2 em simultaneo, enviar o texto da opcao 2 para o ficheiro da opcao 1 e depois apagar o sa opcao 2.... Mencionar tambem nonterminal
+
+   # uDev: meter tambem verbose-lines, porque é uma repo de scratch sem info importante
    #uDev: Criar menu fzf para configurar uma lista de ficheiros com pwd absoluto para onde queremos enviar historico
    #uDev: enviar antes para omni-log com drya-lib-4
 
    #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
    v_dir_vb=~/.config/h.h/verbose-lines/mail-box/history-calculator/
    v_dir_om=${v_REPOS_CENTER}/omni-log/all/calc/
+   v_opc_2=~/.config/h.h/drya-mail-box/omni-log/history-calculator/
 
    [[ -d $v_dir_om ]] && v_dir=$v_dir_om 
    echo "vdir: $v_dir"
@@ -201,26 +208,19 @@ function f_avaliar_calculo {
 function f_exec_calculadora_registadora {
    # Calculadora dedicaca a contas básicas e a calculos de comissoes
 
-   f_greet
-
-   f_decimais 
-
    function f_start {
       f_talk; echo "Calculadora Basica (extendida)"
               echo " > Instruções: h"
               echo " > Casas decimais: $v_decimal"
               echo
    }
-   f_start
 
    function f_clc_help {
       # Help and instructions
 
-
       # uDev: Use the --preview option of `fzf`
       #       example: Place this in the terminal to test `cat` on documents: 
       #                fzf --preview 'cat {}' --preview-window=right:60%
-
 
       # HereDoc com instruçoes de utilização
 # --- # -------------------------------------------------------------------------
@@ -322,7 +322,6 @@ EOF
 # -# -------------------------------------------------------------------------
    }
 
-
    function f_create_tmp {
       # Criar ficheiro temporario (para edição do resultado anterior)
          v_tmp_dir=~/.tmp
@@ -338,6 +337,10 @@ EOF
       # Enviar instrucoes para quem abrir o ficheiro temporario
          echo -e "\n\n# Coloque o seu input neste ficheiro de texto (com editor vim) e simplesmente feche" >> $v_tmp
    }
+
+   f_greet
+   f_decimais 
+   f_start
 
    while true # Disponibilizar a calculadora constantemente até que o utilizador cancele o script
    do
@@ -359,7 +362,6 @@ EOF
             v_long_input=" < $v_input" 
 
       f_modificadores_de_texto
-
       f_avaliar_calculo
 
       # Dar estes input para sair da app:
@@ -844,6 +846,6 @@ elif [ $1 == "p" ]; then
    fi
 
 elif [ $1 == "h" ]; then
-   echo "hit help"
+   echo "uDev: help"
 
 fi
