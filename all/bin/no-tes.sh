@@ -183,6 +183,7 @@ function f_main_menu {
 
       #L80= Share Trascrypt from termux (copy paste entire termux output)
 
+      #L7='7. Edit   | drya::wam (wordly abreviated messages) | `no wam`  # Ficheiro de texto (do estilo dicionario) que guarda um par de "key, value" cujo conteudo sao frases. No mundo real, podem ser encontradas frases com  texto "drya::wam:01" que corresponde ao "key". O valor dessa expressao "value" é guardada so online, e informa o que essa expressao abreviada quer dizer.  # uDev: mencionar e permitir que na repo "3sab" exista este software na repo DRYa que guarda texto na repo omni-log
       #L7='7. Script | Upload to omni-log | `no ^`
 
       L9='9. script | notify.sh         | `notify`' 
