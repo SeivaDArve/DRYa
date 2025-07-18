@@ -1513,7 +1513,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "19. " ]] && f_zip_unzip
+         [[ $v_list =~ "20. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
          [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
          [[ $v_list =~ "17. " ]] && echo "uDev"
@@ -1824,7 +1824,10 @@ function f_drya_get_all_repo_names_private_public {
 }
 
 function f_zip_unzip {
-   echo "uDev: Menu com opcoes"
+   echo "uDev: Menu com opcoes zip/unzip"
+
+   # uDev: aprender bruteforce para unzip: https://www.instagram.com/reel/DJfFjNpuvwW/?igsh=YTA3eDVuYTc2cmFt
+   #                                       https://www.instagram.com/reel/DHzW9hboyfH/?igsh=dWgyMnRnZWE4bGJo
 }
 
 
