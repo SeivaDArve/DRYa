@@ -3159,7 +3159,21 @@ elif [ $1 == "wam" ]; then
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
    # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
    
-   [[ -d ${v_REPOS_CENTER}/omni-log ]] && vim ${v_REPOS_CENTER}/omni-log/all/wam/wam.log
+   # Ficheiro que é editado
+      v_wam=${v_REPOS_CENTER}/omni-log/all/wam/wam.org
+
+   if [ -z $2 ]; then
+      # Se nao for dado nenhum arg extra, edita o ficheiro
+      [[ -d ${v_REPOS_CENTER}/omni-log ]] && e $v_wam  ## Usa o script `e` que vem com DRYa repo
+
+   else 
+      # Se forem usados mais args, pesquisa-os e imprime no terminal
+      for i in $*
+      do
+         grep "drya-wam-$i" $v_wam | sed "s/|/\n|/g" | sed "s/  / /g" | sed "s/  / /g" | sed "s/  / /g" 
+         f_hzl
+      done
+   fi
 
 elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ]; then 
    echo "uDev: Escrever formula de 1.os Socorros"
