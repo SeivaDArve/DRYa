@@ -28,6 +28,8 @@
 # uDev: Detect wifi network name (add a loop, to oeriodically check the name)
 # uDev: Crir editor de texto predefinido
 # uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
+# uDev: Detetar IP, local + publico
+# uDev: Detetar nome da network atual
 
 #udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
 #udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
