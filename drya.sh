@@ -3,16 +3,27 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
-: '
-  Multi comment example
-'
+
+
+
+# uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
+
+# Comments examples: 
+   # Single comment example
+
+   : '
+     Multi comment example. Line 1
+     Multi comment example. Line 2
+   '
+
+
+
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 
    v_greet="DRYa"
    v_talk="DRYa: "
-
 
 # Sourcing DRYa Lib 2
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
@@ -2872,8 +2883,33 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
    f_QR_code_fzf_menu
 
 elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
-   # Presenting DRYa with ASCII text
-   ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   function f_presentation_info {
+      echo ' > `D p 1`  # DRYa presentation'
+      echo ' > `D p 2`  # DRYa ascii logo'
+   }
+
+   if [ -z $2 ]; then
+      f_presentation_info
+
+   elif [ $2 == "1" ] ; then 
+      # Presenting DRYa with ASCII text
+      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   elif [ $2 == "2" ] ; then 
+
+      # uDev: Centrar BEM no ecra. Nao apresentar o prompt por alguns segundos com `read -t 5`
+      clear
+      #${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      figlet "               DRYa" 
+      cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
+      echo
+
+      read -t 5
+
+   else
+      f_presentation_info
+   fi
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    # Step-by-step guide to create a bootable USB at windows command prompt"
@@ -3115,7 +3151,7 @@ elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then
 #   echo $0
 #   bash  ${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh 
 
-elif [ $1 == "dmsg" ]; then 
+elif [ $1 == "dmsg" ] || [ $1 == "ssms" ]; then 
    # Read the log file to events (drya-messages)
    less $v_MSGS
    
@@ -3199,16 +3235,6 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > https://seivadarve.github.io/Curriculum-Vitae/"
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
-
-elif [ $1 == "ascii" ]; then 
-   # uDev: Centrar BEM no ecra. Nao apresentar o prompt por alguns segundos com `read -t 5`
-   clear
-   #${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   figlet "               DRYa" 
-   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
-   echo
-
-   read -t 5
 
 elif [ $1 == "..." ]; then  
    # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
