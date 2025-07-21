@@ -35,27 +35,27 @@ function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
    # Menu
-      L10="A. Abort (Restart and Shutdown)          "
-       L9="T. Temporizar acções                     "
+      L10='T. Temporizar acções                     '
        
-       L8="6. Refresh   | (F5)                      "
-       L7="8. Reiniciar | Reeboot  | Restart        "
-       L6="2. Hibernar                              "
-       L5="4. Suspender                             "
-       L4="0. Desligar  | Encerrar | Shutdown | OFF "
-       L3="5. Bloquear ecra                         "
-       #L3="5. Bloquear terminal                    " `clear && cmatrix && f_pin`
+       L9='C. Bloquear terminal                     ' 
+       L8='6. Restart Terminal | `rs`               '
+       L7='8. Reiniciar/ Reeboot/ Restart           '
+       L6='2. Hibernar                              '
+       L5='4. Suspender                             '
+       L4='0. Desligar/ Encerrar/ Shutdown/ OFF bbb '
+       L3='5. Bloquear ecra                         '
 
-       L2="A. Abort (Restart and Shutdown)          "
-       L1="1. Cancel                                "
+       L2='1. Cancel                                '
+       L1='A. Abort (cancel Restart and Shutdown process)'
 
-      L0="POWER Options: "
+      L0="numpad-nav-keys: POWER options: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 " | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "A. " ]] && echo "A Abortar os encerramentos" && shutdown -c
       [[ $v_list =~ "T. " ]] && echo "uDev T."
+      [[ $v_list =~ "C. " ]] && clear && cmatrix && f_pin
       [[ $v_list =~ "6. " ]] && source ~/.bashrc
       [[ $v_list =~ "8. " ]] && echo "Reiniciar" && f_restart  # Restart à maquina
       [[ $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate
