@@ -100,12 +100,6 @@ function f_ensure_omni_log {
 
 function f_edit_with_heteronimos {
    
-   # Using drya-lib-4 to ensure omni-log exists and is updated
-      f_ensure_omni_log
-
-   # Verbose notification
-      f_talk; echo "Notas em: .../omni-log/all/ex-pressa/" 
-
    # Menu that allows user to choose an Heteronimo file to edit
       v_file=$(ls $v_dir_expressa | fzf --prompt="no-tes: Edit 1 file with Heteronimo: ")
 
@@ -230,7 +224,26 @@ if [ -z $1 ]; then
    f_main_menu
  
 elif [ $1 == "H" ]; then
-   f_edit_with_heteronimos
+   # Notas de cada Heteronimo
+
+   # Using drya-lib-4 to ensure omni-log exists and is updated
+      f_ensure_omni_log
+
+   # Verbose notification
+      f_talk; echo "Notas em: .../omni-log/all/ex-pressa/" 
+
+   if [ -z $2 ]; then
+      # Usar `vim` como menu para escolher qual ficheiro editar
+      f_edit_with_heteronimos
+
+   elif [ $2 == "dr" ]; then
+      # Editar heteronimo Darve
+      vim $v_dir_expressa/dr
+   else
+      shift  # Serve para remover o primeiro arg `H` e manter todos os restantes
+      echo
+      f_talk; echo "Esses heteronimos nao existem: $*"
+   fi
 
 elif [ $1 == "-" ]; then
    if [ -z $2 ]; then
