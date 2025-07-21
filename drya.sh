@@ -1308,9 +1308,11 @@ function f_menu_install_dot_files {
    #       Terminal best font
    #       Install: font: Monospace (best for terminal)
    
-   #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
    #L10="10. stroken"     # It is part of .netrc         
    #L10="10. .drya.node.rc
+
+   #L10="10. Install termux widgets (from .../bin/termux-widgets)
+   #L10="10. .hushlogin"  # Se este ficheiro existir, o termux nao cria welcom screen
 
     L12="12. | termux  | termux.properties + colors.termux"
     L11='11. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`

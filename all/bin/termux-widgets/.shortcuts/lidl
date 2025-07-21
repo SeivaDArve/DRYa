@@ -1,0 +1,4 @@
+#!/bin/bash
+#xdg-open /data/data/com.termux/files/home/Repositories/moedaz/all/proc/cartao-lidl.jpg
+source ~/.bashrc
+lidl

@@ -1,0 +1,3 @@
+#!/bin/bash
+termux-media-player play /data/data/com.termux/files/home/Repositories/DRYa/all/etc/sounds/example-sound-completion-bell.wav
+exit
