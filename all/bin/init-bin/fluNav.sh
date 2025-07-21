@@ -653,7 +653,7 @@ function f_menu_fzf_S {
        L5='5.  Help'
        L4='4.  Toggle file editor'
        L3='3.  Reload  | dot-files + DRYa + Terminal'
-       L2='2.  Reload  | Terminal'
+       L2='2.  Reload  | Terminal | `S 0` or `rs`'
        L1='1.  Cancel'
 
       L0="fluNav: S: SELECT (1 ou +) ficheiros para editar: "
