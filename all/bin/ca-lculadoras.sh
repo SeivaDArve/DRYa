@@ -1,9 +1,8 @@
 #!/bin/bash
-
 # Title: Calculator-with-registry
-# Description: Another version of calculator, this time, made around the command 'bc' that is the actual calculator. What this wrap-around script does is to add specific variables and math modifiers. It is tweeked to help on Binance Day Trading, where for example you can calculate '4 tkc' or '4 mkc' and it will tell you how much commission ('c') is taken from 4$ if you are a Market Maker ('mk') or a Market Taker ('tk')... Another fx is, for example, '[ 4 ]tk' or '[ 4 ]mk' and what ever number is inside the [] will be subtracted the corresponding commision out. Another fx is for example, outputing every prompt and result for a file written in org-mode (for emacs) allowing anotations and study.
 
-   # Prompt de calculadora da DRYa que faz wrap-around ao pkg 'bc' e que dá exemplos no inicio do prompt para relembrar ao utilizador como se usa
+# Description: Another version of calculator, this time, made around the command 'bc' that is the actual calculator. What this wrap-around script does is to add specific variables and math modifiers. It is tweeked to help on Binance Day Trading, where for example you can calculate '4 tkc' or '4 mkc' and it will tell you how much commission ('c') is taken from 4$ if you are a Market Maker ('mk') or a Market Taker ('tk')... Another fx is, for example, '[ 4 ]tk' or '[ 4 ]mk' and what ever number is inside the [] will be subtracted the corresponding commision out. Another fx is for example, outputing every prompt and result for a file written in org-mode (for emacs) allowing anotations and study.
+#              Prompt de calculadora da DRYa que faz wrap-around ao pkg 'bc' e que dá exemplos no inicio do prompt para relembrar ao utilizador como se usa
 
 # uDev: criar fx que verifica se os valores introduzidos sao mesmo numeros
 # uDev: Opcao de config para o numero de casas decimais
@@ -31,39 +30,97 @@ function f_talk {
    f_resetCor
 }
 
-function f_hist {
+function f_set_history_reg {
    # Criar ficheiro de historico
 
-   # Opcao 1: Enviar historico/registos para "omni-log" se existir
-   # Opcao 2: Enviar historico/registos para "~/.config/h.h/omni-log/" se "omni-log" nao existir
-   # 
-   # Ao iniciar este script, todas as configs que nao estejam perfeitas tem de ser mencionadas (por exemplo a inexistencia de omni-log)
-   # Ao iniciar este script, Se existirem os ficheiros das opcoes 1 e 2 em simultaneo, enviar o texto da opcao 2 para o ficheiro da opcao 1 e depois apagar o sa opcao 2.... Mencionar tambem nonterminal
+   # Instrucoes:
+   #     1. Testa se existe omni-log. Se existir, usa uma sub pasta para guardar os hitoricos
+   #     2. Ao iniciar a calculadora registadora, é verificado tambem se anteriormente a calculadora foi usada offline criando um ficheiro local (ainda por sincronizar online). Se esse ficheiro existir em drya-mail-box/omni-log copia para omni-log
+   #     3. Se nao houver omni-log, cria um ficheiro ou continua a usar um offline em drya-mail-box/omni-log
+   #
+   #     4. Este script nao envia nada para verbose-lines, porque verbose lines é para outputs que expiram/temporarios
 
-   # uDev: meter tambem verbose-lines, porque é uma repo de scratch sem info importante
-   #uDev: Criar menu fzf para configurar uma lista de ficheiros com pwd absoluto para onde queremos enviar historico
+
+   # Variaveis para os ficheiros de historico/registo da calculadora
+      v_file=drya-calc-history.org
+      v_dir=drya-calc-history
+      v_reg_om=${v_REPOS_CENTER}/omni-log/all
+      v_reg_dmb_om=~/.config/h.h/drya/drya-mail-box/omni-log
+
+
+   if [ -d ${v_REPOS_CENTER}/omni-log ]; then
+      # 1. Se existir a repo "omni-log" 
+      #    entao o ficheiro onde sao guardados os 
+      #    registos da calculadora é $v_reg_om
+
+      # Debug
+         echo "DB: omni-log existe"; read -t 2
+
+      # Assegurar que existe dentro de omni-log... :
+         mkdir -p $v_reg_om/$v_dir       # ...A pasta onde vao ser guardados os ficheiros de registo
+            v_reg=$v_reg_om/$v_dir/$v_file 
+         touch $v_reg                    # ...Atualizar/Criar o ficheiro designado para guardar os registos
+
+
+
+      # 2. Ao iniciar a calculadora registadora, 
+      #    se existir texto dentro do 
+      #    ficheiro $v_reg_dmb_om/$v_file (se existir mail), 
+      #    entao esse texto sera enviado 
+      #    para $v_reg_om/$v_file (omni-log). 
+      #    Depois $v_reg_dmb_om/ se estiver vazio, 
+      #    é apagado
+      
+      if [ ! -d $v_reg_dmb_om ]; then
+         # Se a pasta drya-mail-box nao existir para omni-log, entao:
+            
+         # Debug
+            echo "DB: drya-mail-box nao existe"; read -t 2
+
+         echo "Tudo ok, nao existe mail"
+
+      else
+         # Quando a pasta existe
+            
+         # Debug
+            echo "DB: drya-mail-box existe"; read -t 2
+
+         # Envia o conteudo do ficheiro de mail para o ficheiro dentro de omni-log
+            echo  "                   " >> $v_reg_om/$v_dir/$v_file
+            cat   $v_reg_dmb_om/$v_dir/$v_file >> $v_reg_om/$v_dir/$v_file 
+            rm    $v_reg_dmb_om/$v_dir/$v_file
+            rmdir $v_reg_dmb_om/$v_dir  2>/dev/null # Elimina o dir se estiver vazio (coisas dentro de temp omni-log)
+            rmdir $v_reg_dmb_om         2>/dev/null # Elimina o dir se estiver vazio (o proprio dir temp omni-log)
+
+      fi
+
+   else 
+      # 3. Se nao existir, em vez de guardar nessa repo, 
+      #    guarda em drya-mail-box 
+
+      # Debug
+         echo "DB: omni-log nao existe"; read -t 2
+
+      # Assegurar que existe dentro da repo, a pasta onde vao ser guardados os ficheiros de registo
+         mkdir -p $v_reg_dmb_om/$v_dir
+
+      # Criar/atualizar o ficheiro designado para guardar os registos
+         v_reg=$v_reg_dmb_om/$v_dir/$v_file
+         touch $v_reg
+
+   fi
+
+   # uDev: Apresentar um manu fzf: 1. Quer fazer uploads (se houver omni,log)?
+   #                               2. Se nao houver omni-log, quer download e update?
+   #                               3. Possibilitar o registo anterior ir para um ficheiro externo
+
    #uDev: enviar antes para omni-log com drya-lib-4
 
-   #v_dir=${v_REPOS_CENTER}/verbose-lines/history-calculator
-   v_dir_vb=~/.config/h.h/verbose-lines/mail-box/history-calculator/
-   v_dir_om=${v_REPOS_CENTER}/omni-log/all/calc/
-   v_opc_2=~/.config/h.h/drya-mail-box/omni-log/history-calculator/
-
-   [[ -d $v_dir_om ]] && v_dir=$v_dir_om 
-   echo "vdir: $v_dir"
-   [[ -d $v_dir_vb ]] && v_dir=$v_dir_vb
-   echo "vdir: $v_dir"
-   read
-   
-   v_dir=$v_dir_vb
-   mkdir -p $v_dir
-
-   v_file=history-drya-calculator.org
-   v_log=$v_dir/$v_file
-
-   touch $v_log
+   # Debug
+      echo "v_reg=$v_reg"
+      read
 }
-f_hist
+f_set_history_reg
 
 
 function f_decimais {
@@ -256,7 +313,7 @@ Exemplos de como usar a calculadora 'D clc' ----------------------"
 
 Editar o ecra ----------------------------------------------------"
  > Limpar ecra: 'L' 
- > uDev: Mater sempre limpo (para usar em conjunto com '$ watch $v_log'
+ > uDev: Mater sempre limpo (para usar em conjunto com '$ watch $v_reg'
 
 
 
@@ -303,9 +360,9 @@ Em desenvolvimento (uDev)  -----------------------------------------------"
       e resulta a quanto é que temos de fechar a operação para sair com Zero
       é preciso introduzir Alavancagem e preço de entrada
 
- > Atalho para visualizar constantemente o ficheiro \$v_log de 2 em 2 segundos
+ > Atalho para visualizar constantemente o ficheiro \$v_reg de 2 em 2 segundos
    >> Por exemplo: 
-   >> '$ watch -n 2 tail $v_log'
+   >> '$ watch -n 2 tail $v_reg'
 
  > Conversor de unidade de medida + Conversor de Cambios
    > exemplo: 1 BTC = 1000 mBTC (1 Bitcoin = 1000 mili Bitcoins)    # Converter Unidades
@@ -370,19 +427,19 @@ EOF
 
       # Visualizar ficheiro de historico
          [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
-            && v_esc=1 && less $v_log && echo
+            && v_esc=1 && less $v_reg && echo
 
       # Visualizar ficheiro de historico (so ultimas linhas)
          [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
-            && v_esc=1 && tail $v_log | less && echo
+            && v_esc=1 && tail $v_reg | less && echo
 
       # Visualizar e editar ficheiro de historico
          [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
-            && v_esc=1 && vim $v_log && echo
+            && v_esc=1 && vim $v_reg && echo
 
       # Visualizar e editar ficheiro de historico
          [[ $v_input == "emacs" ]] || [[ $v_input == "Emacs" ]] \
-            && v_esc=1 && emacs $v_log && echo
+            && v_esc=1 && emacs $v_reg && echo
 
       # Abrir ajuda
          [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
@@ -398,7 +455,7 @@ EOF
 
       # Inserir data (timestamp) com mensagem adicionar (nota) no ficheiro de historico
          [[ $v_input == "n" ]] || [[ $v_input == "N" ]] \
-            && v_esc=1 && echo " >> Inserir Data e Nota (no ficheiro de historico)." && read -p " >> Nota: " v_nota && echo " " >> $v_log  && echo "* Nota: [$(date +'%Y-%m-%d %H:%M:%S')] > $v_nota"  >> $v_log \ && echo
+            && v_esc=1 && echo " >> Inserir Data e Nota (no ficheiro de historico)." && read -p " >> Nota: " v_nota && echo " " >> $v_reg  && echo "* Nota: [$(date +'%Y-%m-%d %H:%M:%S')] > $v_nota"  >> $v_reg \ && echo
 
       # Editar o resultado falhado do loop anterior
          [[ $v_input == "f" ]] || [[ $v_input == "F" ]] \
@@ -432,10 +489,10 @@ EOF
                v_long_result=" > $v_result"  # Vai ser usado para enviar para um ficheiro de historico
 
             # Enviar ambas as variaves input e output para um ficheiro de historico
-               echo "            " >> $v_log
-               echo $v_long_input  >> $v_log
-               [[ -n $v_new ]] && echo $v_old >> $v_log && echo $v_new >> $v_log && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
-               echo $v_long_result >> $v_log
+               echo "            " >> $v_reg
+               echo $v_long_input  >> $v_reg
+               [[ -n $v_new ]] && echo $v_old >> $v_reg && echo $v_new >> $v_reg && unset v_new  # Caso haja alteracoes com a fx 'f', tambem explicar isso no ficheiro de log
+               echo $v_long_result >> $v_reg
          fi
    done
 }
@@ -752,7 +809,7 @@ if [ -z "$1" ]; then
       # Texto do menu
          Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
 
-         #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
+        #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
          L21='21. Relogio     | Cronometro | multi datas < ficheiro.txt '
          L20='20. Relogio     | Cronometro'
          L19='19. Relogio     | Calculo entre 2 datas'
@@ -761,12 +818,12 @@ if [ -z "$1" ]; then
          L16='16. Relogio     | Temporizador'
          L15='15. Relogio     | Despertador'
 
-         #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
-         #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
-         #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
-         #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
-         #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
-         #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
+        #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
+        #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
+        #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
+        #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
+        #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
+        #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
          L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
          L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
          L12='12. Calculadora | supermercado'
@@ -815,7 +872,7 @@ if [ -z "$1" ]; then
 
          [[ $v_list =~ "4.  " ]] && echo "uDev"
          [[ $v_list =~ "3.  " ]] && echo "uDev"
-         [[ $v_list =~ "2.  " ]] && vim $v_log
+         [[ $v_list =~ "2.  " ]] && vim $v_reg
          [[ $v_list =~ "1.  " ]] && sleep 0.1
          unset v_list
 
