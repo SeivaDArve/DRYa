@@ -1322,6 +1322,8 @@ function f_menu_install_dot_files {
      L7="7.  | git     | .netrc "
      L6="6.  | vim     | .vimrc "
      L5="5.  | DRYa    | .dryarc "
+    #L0="1.  | .bashrc (redundante, ja existe)
+    #L0="1.  | .logout (logout-all-drya-file)
 
      L4="4.  | Install | PRESETS"
      L3="3.  | Install | ALL "
@@ -2156,7 +2158,7 @@ elif [ $1 == "logout" ]; then
 
 elif [ $1 == "cl" ]; then 
    # `cl` passou a ser `cln` para que `clip` passe a ser `clp` (ambos sao parecidos)
-   echo '`cl` = help'
+   echo '`cl`  = Displays this help, then exit'
    echo '`cln` = clonar'
    echo '`clp` = clip'
    echo '`clr` = colar'
@@ -2837,11 +2839,11 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-      [[ $v_list =~ "5. " ]] && f_kbd_greet echo "uDev: $L4"
-      [[ $v_list =~ "4. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap -layout pt
-      [[ $v_list =~ "3. " ]] && f_kbd_greet echo "Configuring Keyboard to PT-PT (current session only)" && setxkbmap pt
-      [[ $v_list =~ "2. " ]] && f_kbd_greet localectl status 
-      [[ $v_list =~ "1. " ]] && f_kbd_greet echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
+      [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
+      [[ $v_list =~ "4. " ]] && f_kbd_greet && echo && f_talk && echo "$L4" && echo " > setxkbmap -layout pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap -layout pt
+      [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && f_talk && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
+      [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 
+      [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
       unset v_list
 
 
