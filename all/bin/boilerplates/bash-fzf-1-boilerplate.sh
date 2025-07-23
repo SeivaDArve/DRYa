@@ -41,12 +41,13 @@
    #  }
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[ $v_list =~ "4. " ]] && f_pin && f_example  
-      [[ $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
-      [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[ $v_list =~ "1. " ]] && echo "Canceled" 
-      unset v_list
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "4. " ]] && f_pin && f_example  
+      [[    $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
+      [[    $v_list =~ "2. " ]] && echo "uDev: $L2" 
+      [[    $v_list =~ "1. " ]] && echo "Canceled" 
+      [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
+      unset  v_list
 
 
 
