@@ -261,32 +261,37 @@ function f_clone_info {
    v_clone_drya='git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa'
    v_github_seiva='https://github.com/SeivaDArve?tab=repositories'
 
-   f_talk; echo   "Must specify a repository to clone"
-           echo
-           echo   " To list all public repositories"
-           echo   '  > `drya clone --list-public` or:'
-           echo   '    `drya clone p` or:'
-           echo   '    `D cln p`'
-           echo   
-           echo   " To list all private repositories"
-           echo   '  > `drya clone --list-private` or:'
-           echo   '    `drya clone P` or:'
-           echo   '    `D cln P`'
+#  f_talk; echo   "Must specify a repository to clone"
+#          echo
+#          echo   " To list all public repositories"
+#          echo   '  > `drya clone --list-public` or:'
+#          echo   '    `drya clone p` or:'
+#          echo   '    `D cln p`'
+#          echo   
+#          echo   " To list all private repositories"
+#          echo   '  > `drya clone --list-private` or:'
+#          echo   '    `drya clone P` or:'
+#          echo   '    `D cln P`'
            echo
    f_talk; echo   "To clone DRYa:  "
-           echo   "  > $v_clone_drya" 
+           echo   "  > Command: $v_clone_drya" 
+           echo   "  > QR code:"
            printf "$v_clone_drya" | curl -F-=\<- qrenco.de/
            echo
-   f_talk; echo   "Visit github.com Webpage with all Seiva D'Arve Repositories:"
-           echo   "  > $v_github_seiva"
+           echo
+           echo
+           echo
+   f_talk; echo   "Visit github.com webpage (with all Seiva D'Arve Repositories):"
+           echo   "  > Link: $v_github_seiva"
            echo   '  > uDev: add command: `D web github all`'
+           echo   "  > QR code:"
            printf "$v_github_seiva" | curl -F-=\<- qrenco.de/
            echo
 
-   f_horizline
-   echo " Note: So far, drya can open this link only with Termux"
-   echo " > uDev: No other browser found"
-   echo
+#  f_horizline
+#  echo " Note: So far, drya can open this link only with Termux"
+#  echo " > uDev: No other browser found"
+#  echo
 
    # uDev: Add menu em para estas opcoes (em vez de ser obrigatorio para o utilizador)
       #echo "Opening URL with Termux (terminal)"
@@ -1432,7 +1437,7 @@ function f_dot_files_menu {
 
       L0="DRYa: dot-files menu: "
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
@@ -1892,8 +1897,119 @@ function f_ghost {
 }
 
 
+function f_clone_by_fzf_list {
+   # Open fzf to help clone repos by the correct name
+
+   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+
+   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+   for i in $v_multiple
+   do
+      echo $i
+   done
+
+   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+
+   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+   for i in $v_multiple
+   do
+      echo $i
+   done
+
+   # uDev: `D cln . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
+   # uDev: `D cln . p`
+   # uDev: `D cln . P`
+
+   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
+
+   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
+   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
+   for i in $v_multiple
+   do
+      echo $i
+   done
+
+   # uDev: Quando aparece a lista de repos para clonar, podemos logo testar se existem ou nao:
+   #       Exemplo:
+   #        > [X] dv-cv-private
+   #        > [ ] dv-cv-private
 
 
+   f_talk; echo "Cloning Multiple Repositories"
+           echo " > Listing all public repos (by web search)"
+           echo " > Listing private repos    (from offline file)"
+
+           #echo pin $v_pin; read
+
+   f_drya_get_all_repo_names_private_public
+
+   # Pedir ao user para selecionar repos
+      v_multiple=$(cat $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone/install: ")
+
+
+   if [[ -n $v_multiple ]]; then
+
+      #[[ $v_multiple =~ "dv-cv-public" ]] && grep "dv-cv-public" <(echo $v_multiple) && [[ $? == "1" ]] && echo "Nao Quer clonar tambem 'dv-cv-private' que se comunica com 'dv-cv-public'?"
+
+              echo
+      f_talk; echo "Repos selecionados:"
+
+      for i in $v_multiple
+      do
+         echo " > $i"
+         #echo " > $i" >> $drya-status-messages
+      done
+
+   else
+              echo
+      f_talk; echo "Nenhum repo selecionado"
+   fi
+}
+
+function f_clone_by_attempted_name {
+   # To clone repos when we are not exactly sure how it's name is written 
+   #                when shortcuts were not already set or predictrd
+
+   if [ -z $3 ]; then
+      # Using menu fzf
+      f_talk; echo "\`D cln try <name>\`"
+              echo " > Repo name not specified"
+              echo "   You must try at least one repo 'name'"
+
+   else
+      # Avoiding menu fzf and trying to type manually
+
+      # uDev: It is less easy to clone repos with case insensitivity, so fzf could filter github public repo names"
+      #   f_drya_get_all_repo_names_private_public
+      #   to `grep` and `fzf`
+
+
+
+      # Verbose:
+         f_talk; echo -e "DRYa: Trying to clone: $3 \n"; 
+
+      # Save current PWD + Navigate to Repos Center + Call f_stroken
+         f_init_clone_repos 
+
+      # Actually try to clone
+         git clone https://github.com/SeivaDArve/$3.git
+   fi
+}
+
+function f_clone_by_inserting_correct_name {
+   # Clone pre-defined repositories, without menu fzf, when the user remembers the correct name
+
+   # Saving Terminal argument into internal variable
+      v_arg2=$2
+
+   # Save current PWD + Navigate to Repos Center + Call f_stroken
+      f_init_clone_repos 
+
+   # Actually clone known repos. (In case repo is not recognized, it is also mentioned)
+      f_clone_repos 
+}
 
 
 # -------------------------------------------
@@ -2170,119 +2286,50 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
    f_greet
 
    if [ -z "$2" ]; then
-      # If nothing was specified to clone, give some instructions
+      # If nothing was specified to clone, show an fzf menu
+
+
+      # Lista de opcoes para o menu `fzf`
+         Lz1='Saving '; Lz2='D cln'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+         L4='4. Visit github.com (defaul browser) (uDev)'
+         L3='3. Clone by fzf menu        | `D cln .`'                                      
+         L2='2. Help (how to clone DRYa) | `D cln h`'                                      
+         L1='1. Cancel'
+
+         L0="DRYa: Clone Menu: "
+         
+      # Ordem de Saida das opcoes durante run-time
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4\n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
+
+      # Atualizar historico fzf automaticamente (deste menu)
+         echo "$Lz2" >> $Lz4
+      
+      # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+         [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "4. " ]] && echo uDev
+         [[ $v_list =~ "3. " ]] && f_clone_by_fzf_list
+         [[ $v_list =~ "2. " ]] && f_clone_info
+         [[ $v_list =~ "1. " ]] && echo "Canceled" 
+         unset v_list
+
+
+   elif [ $2 == "h" ]; then
+      # Give some instructions (imcomplete)
       f_clone_info
 
    elif [ $2 == "." ]; then
-      # Open fzf to help clone by the correct name
-
-      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-      for i in $v_multiple
-      do
-         echo $i
-      done
-
-      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-      for i in $v_multiple
-      do
-         echo $i
-      done
-
-      # uDev: `D cln . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
-      # uDev: `D cln . p`
-      # uDev: `D cln . P`
-
-      f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-      v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-      for i in $v_multiple
-      do
-         echo $i
-      done
-
-      # uDev: Quando aparece a lista de repos para clonar, podemos logo testar se existem ou nao:
-      #       Exemplo:
-      #        > [X] dv-cv-private
-      #        > [ ] dv-cv-private
-
-
-      f_talk; echo "Cloning Multiple Repositories"
-              echo " > Listing all public repos (by web search)"
-              echo " > Listing private repos    (from offline file)"
-
-              #echo pin $v_pin; read
-
-      f_drya_get_all_repo_names_private_public
-
-      # Pedir ao user para selecionar repos
-         v_multiple=$(cat $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone/install: ")
-
-
-      if [[ -n $v_multiple ]]; then
-
-         #[[ $v_multiple =~ "dv-cv-public" ]] && grep "dv-cv-public" <(echo $v_multiple) && [[ $? == "1" ]] && echo "Nao Quer clonar tambem 'dv-cv-private' que se comunica com 'dv-cv-public'?"
-
-                 echo
-         f_talk; echo "Repos selecionados:"
-
-         for i in $v_multiple
-         do
-            echo " > $i"
-            #echo " > $i" >> $drya-status-messages
-         done
-
-      else
-                 echo
-         f_talk; echo "Nenhum repo selecionado"
-      fi
+      # Open fzf to help clone repos by the correct name
+      f_clone_by_fzf_list
 
    elif [ $2 == "try" ] || [ $2 == "t" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
       #                when shortcuts were not already set or predictrd
-
-      if [ -z $3 ]; then
-         # Using menu fzf
-         f_talk; echo "\`D cln try <name>\`"
-                 echo " > Repo name not specified"
-                 echo "   You must try at least one repo 'name'"
-
-      else
-         # Avoiding menu fzf and trying to type manually
-
-         # uDev: It is less easy to clone repos with case insensitivity, so fzf could filter github public repo names"
-         #   f_drya_get_all_repo_names_private_public
-         #   to `grep` and `fzf`
-
-
-
-         # Verbose:
-            f_talk; echo -e "DRYa: Trying to clone: $3 \n"; 
-
-         # Save current PWD + Navigate to Repos Center + Call f_stroken
-            f_init_clone_repos 
-
-         # Actually try to clone
-            git clone https://github.com/SeivaDArve/$3.git
-      fi
+      f_clone_by_attempted_name
 
    else  
-      # Clone pre-defined repositories, without menu fzf
-
-      # Saving Terminal argument into internal variable
-         v_arg2=$2
-
-      # Save current PWD + Navigate to Repos Center + Call f_stroken
-         f_init_clone_repos 
-
-      # Actually clone known repos. (In case repo is not recognized, it is also mentioned)
-         f_clone_repos 
+      # Clone pre-defined repositories, without menu fzf, when the user remembers the correct name
+      f_clone_by_inserting_correct_name
    fi
 
 
@@ -2358,12 +2405,14 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Save '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L10='10. Menu | helper  | factory reset + ghost (in.out)'
-          L9='9.  Menu | helper  | backups'
-          L8='8.  Menu | clone   | repos'
-          L7='7.  Menu | install | specific packages | `D iu p` | `D iu <package>`'
-          L6='6.  Menu | install | dot-files         | `D iu d`'
+         L11='11. Menu | helper  | factory reset + ghost (in.out)'
+         L10='10. Menu | helper  | backups'
+          L9='9.  Menu | clone   | repos'
+          L8='8.  Menu | install | specific packages | `D iu p` | `D iu <package>`'
+          L7='7.  Menu | install | dot-files         | `D iu d`'
    
+          L6='6.  How To clone DRYa (in other devices) | `D cln`'
+
           L5='5.  Install DRYa | Dependencies only (1st packages)'
           L4='4.  Install DRYa | `fzf`    installer'
           L3='3.  Install DRYa | `select` installer'
@@ -2373,18 +2422,19 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
          L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "10. " ]] && f_ghost
-         [[ $v_list =~ "9.  " ]] && f_backup_helper
+         [[ $v_list =~ "11. " ]] && f_ghost
+         [[ $v_list =~ "10. " ]] && f_backup_helper
+         [[ $v_list =~ "9.  " ]] && echo uDev
          [[ $v_list =~ "8.  " ]] && echo uDev
-         [[ $v_list =~ "7.  " ]] && echo uDev
-         [[ $v_list =~ "6.  " ]] && f_dot_files_menu  
+         [[ $v_list =~ "7.  " ]] && f_dot_files_menu  
+         [[ $v_list =~ "6.  " ]] && echo uDev
          [[ $v_list =~ "5.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
          [[ $v_list =~ "4.  " ]] && echo uDev
          [[ $v_list =~ "3.  " ]] && f_install_drya
