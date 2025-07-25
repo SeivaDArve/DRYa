@@ -3134,7 +3134,7 @@ elif [ $1 == "copy" ]; then
    if [ -z $2 ]; then 
       # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
 
-      v_files=$(ls -1F | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+      v_files=$(ls -1F | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
       v_pwd=$(pwd)
  
       echo > $v_clip   # Variable already set on file: 'source-all-drya-files'
@@ -3158,7 +3158,7 @@ elif [ $1 == "copy" ]; then
       
       [[ -f $v_clip ]] && rm $v_clip && touch $v_clip
 
-      v_files=$(find . -maxdepth 1 | fzf -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+      v_files=$(find . -maxdepth 1 | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
 
       if [[ -n $v_files ]]; then
 
