@@ -1500,34 +1500,35 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Raspberry: GPIO
          # L12='12. Record mouse and keyboard activity
          # L12='12. criar links de imagens com suport github (partilhar fotos ou videos)
+         # L12='12. gerir `lsblk`, `fstab`, `journalctl`, flags das particoes no GParted
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
          # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
-         L20='20. Menu   | zip unzip'
-         L19='19. Script | Datas (menu)'
-         L18='18. Script | Youtube download (with `yt-dlp`)'
-         L17='17. Menu   | Clone Repositories (github)'
-         L16='16. Menu   | Metadata'
-         L15='15. Menu   | Internet / Network / IP'
-         L14='14. Script | sshfs-wrapper'
-         L13='13. Menu   | Audio (Media Player + Voice Recorder)'  
-         L12='12. Print  | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
-         L11='11. Print  | `curl` tricks: Online man pages'  
-         L10='10. Print  | morse'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-          L9='9.  Menu   | no-tes '
-          L8='8.  Script | Convert `pwd` from Win to Linux'
-          L7="7.  Script | xKill"
-          L6="6.  Script | notify"
-          L5="5.  Menu   | QR code"
-          L4="4.  Menu   | calculos/calculadoras"
-          L3="3.  Menu   | dot-files"
-          L2='2.  Script | fluNav'
+         L20='20. Menu   |  zip  | zip unzip'
+         L19='19. Script |  `d`  | Datas (menu)'
+         L18='18. Script |   -   | Youtube download (with `yt-dlp`)'
+         L17='17. Menu   |  cln  | Clone Repositories (github)'
+         L16='16. Menu   | mt-ls | Metadata management'
+         L15='15. Menu   |  ip   | Internet / Network / IP'
+         L14='14. Script |  ssh  | sshfs-wrapper'
+         L13='13. Menu   |  plr  | Audio (Media Player + Voice Recorder)'  
+         L12='12. Print  |       | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
+         L11='11. Print  |       | `curl` tricks: Online man pages'  
+         L10='10. Print  | morse | morse code diagram'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L9='9.  Menu   |  no   | no-tes '
+          L8='8.  Script | wpwd  | Convert `pwd` from Win to Linux'
+          L7="7.  Script |   -   | xKill + tty + PID (info)" # Ensinar como abrir diferentes tty e como usar o xKill, tambem como fechar processos teimosos
+          L6="6.  Script | noty  | notify"
+          L5="5.  Menu   |  qr   | QR code"
+          L4="4.  Menu   |  clc  | calculos/calculadoras"
+          L3="3.  Menu   | ui  d | dot-files"
+          L2='2.  Script | `. .` | fluNav'
 
           L1="1.  Cancel" 
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lv" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
@@ -1543,7 +1544,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "13. " ]] && f_menu_audio_media_player
          [[ $v_list =~ "12. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[ $v_list =~ "11. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
-         [[ $v_list =~ "10. " ]] && less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+         [[ $v_list =~ "10. " ]] && f_morse
          [[ $v_list =~ "9.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
          [[ $v_list =~ "8.  " ]] && f_win_to_linux_pwd
          [[ $v_list =~ "7.  " ]] && echo "uDev"
@@ -1748,7 +1749,7 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
    # Note: This fx is meant to run only if some History file exists
    #       But such fx was already set before
    
-   # variable for the file names
+   # Variable for the file names
       # Original file name (this var was created at source-all-drya-files)
       v_original=$v_drya_fzf_menu_hist
 
@@ -1763,8 +1764,6 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
 
    # Se o ficheiro tiver zero linhas: exit
       [[ $v_nr_lines == "0" ]] && echo "DRYa: fzf history file: file has no written lines to recall" && exit 1
-
-   # Variable $v_max_lines was already set before (to cut excessive lines, avoiding creating huge files)
 
    # Creates a temporary file
       rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
@@ -1787,9 +1786,12 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
       done
 
    # Overwrite original file with the content of temporary file
-      cat $v_temporary > $v_original                    # Mater TODAS as linhas
-      #tail -n $v_max_lines $v_temporary > $v_original  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+      tac $v_temporary > $v_original                    # Mater TODAS as linhas
    
+   # Variable $v_max_lines was already set before (to cut excessive lines, avoiding creating huge files)
+      tail -n $v_max_lines  $v_original > $v_temporary  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+      cat                  $v_temporary > $v_original   # O ficheiro com apenas X linhas passa a ser o ficheiro original
+
    # Removing the tmp file in the end to clean dir
       rm $v_temporary
 }
@@ -1813,7 +1815,7 @@ function f__D_hist__recall_one_command {
       f_remove_duplicated_lines_drya_fzf_history_file
 
    # Do ficheiro de historico, buscar apenas 1 linha
-      v_line=$(cat $v_drya_fzf_menu_hist | fzf --prompt "DRYa: Choose a command to repeat (from fzf history): ")
+      v_line=$(tac $v_drya_fzf_menu_hist | fzf --cycle --prompt "DRYa: Choose a command to repeat (from fzf history): ")
 
    # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
       v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
@@ -2010,6 +2012,16 @@ function f_clone_by_inserting_correct_name {
    # Actually clone known repos. (In case repo is not recognized, it is also mentioned)
       f_clone_repos 
 }
+
+
+function f_morse {
+   # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
+   less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+}
+
+
+
+
 
 
 # -------------------------------------------
@@ -2283,14 +2295,12 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
-   f_greet
-
    if [ -z "$2" ]; then
       # If nothing was specified to clone, show an fzf menu
 
 
       # Lista de opcoes para o menu `fzf`
-         Lz1='Saving '; Lz2='D cln'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Saving '; Lz2='D clone'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
          L4='4. Visit github.com (defaul browser) (uDev)'
          L3='3. Clone by fzf menu        | `D cln .`'                                      
@@ -2706,7 +2716,7 @@ elif [ $1 == "todo" ] || [ $1 == "t" ]; then
    f_talk; echo 'ToDo list belongs to omni-log repo'
            echo ' > Try: `td`'
 
-elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ]; then  # mostra os seu metadados da imagem fornecida
+elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ] || [ $1 == "mt-ls" ]; then  # mostra os seu metadados da imagem fornecida
    
    if [ -z $2 ]; then
       # Caminho para a imagem
@@ -3049,6 +3059,9 @@ elif [ $1 == "web" ]; then
    # All options for web
    f_menu_internet_network_ip_options
 
+elif [ $1 == "player" ] || [ $1 == "plr" ]; then 
+   f_menu_audio_media_player 
+
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
@@ -3245,9 +3258,6 @@ elif [ $1 == "msg" ]; then
    # Read the log file to events (DRYa)
    less $v_MSGS
    
-elif [ $1 == "morse" ]; then 
-   less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
-
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
    # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
@@ -3267,6 +3277,10 @@ elif [ $1 == "wam" ]; then
          f_hzl
       done
    fi
+
+elif [ $1 == "morse" ]; then 
+   # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
+   f_morse
 
 elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ]; then 
    echo "uDev: Escrever formula de 1.os Socorros"
@@ -3304,6 +3318,11 @@ elif [ $1 == ".." ]; then
    # `D .. S` substituir o ficheiro de historico original pela copia guardada desse ficheiro
    #          Isso permite ao utilizador navegar a vontade sem se importar com o ficheiro de historico (enquanto procura os menus certos) e depois restaurar para a versao anterior
    #          Assim o user consegue escolher como e quanto vai para o ficheiro de historico
+   #
+   # `D .. c` edita copia desse ficheiro de historico (se existir)
+
+   # Variavel com o nome/caminho do ficheiro de historico fzf
+      # v_drya_fzf_menu_hist  # Ja foi definido em source-all-drya-files
 
    # Se o ficheiro que queremos manipular nao existir, abortar todo o script
       if [[ -f $v_drya_fzf_menu_hist ]]; then
@@ -3335,7 +3354,7 @@ elif [ $1 == ".." ]; then
          echo "DRYa: a copia do ficheiro de historico dos menus fzf foi APLICADO como original"
 
       elif [ $2 == "c" ]; then
-         echo "DRYa: a visualizar o ficheiro de historico dos menus fzf"
+         echo "DRYa: a editar o ficheiro copiado de historico dos menus fzf (se existir)"
          [[ -f ${v_drya_fzf_menu_hist}.copia ]] && vim ${v_drya_fzf_menu_hist}.copia || echo " > Nao existe ficheiro nenhum"
 
       fi
