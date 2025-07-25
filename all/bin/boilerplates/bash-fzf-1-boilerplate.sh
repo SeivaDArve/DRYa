@@ -10,10 +10,14 @@
 
 # [fzf menu exemplo 1]
    # Menu Simples
-   # Note: `--no-info` significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
+   
+   # Note: `--layout=reverse-list` : ...
+   # Note: `--reverse`             : ...
+   # Note: `--cycle`               : ...
+   # Note: `--m`                   : ...
+   # Note: `--no-info`             : significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
 
    # uDev: testar --history=HISTORY_FILE
-   # uDev: Capturar Esc dos menus "exist status code" 
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
