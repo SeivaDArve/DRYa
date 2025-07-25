@@ -14,9 +14,8 @@
    # Note: `--layout=reverse-list` : ...
    # Note: `--reverse`             : ...
    # Note: `--cycle`               : ...
-   # Note: `--m`                   : ...
+   # Note: `--pointer=">" -m`      : combinar 2 comandos. Sempre que o menu for de escolha multipla, usa o caractere ">" cmoo ponteiro.
    # Note: `--no-info`             : significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
-   # Note: `--pointer=">" `
    # Note: `--header="Text here" 
    # Note: `--tac" 
 
@@ -31,7 +30,7 @@
      #L2='2. -- Invert Selection --'
       L1='1. Cancel'
 
-      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui")
+      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui\n ")
       L0="SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
