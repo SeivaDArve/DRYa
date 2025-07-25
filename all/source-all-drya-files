@@ -591,6 +591,8 @@ function f_internal_drya_files_2_of_2 {
 
    # Send pending updates to repos
       #f_drya_mail_box 
+
+   # uDev: colocar o processo a correr em background: `data.sh F` ou semelhante. Ou seja, uma fx que cada minuto atualiza o ficheiro drya-date-now
 }
 
 function f_drya_ssms_end {

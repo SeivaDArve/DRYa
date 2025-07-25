@@ -2003,9 +2003,6 @@ function f_clone_by_attempted_name {
 function f_clone_by_inserting_correct_name {
    # Clone pre-defined repositories, without menu fzf, when the user remembers the correct name
 
-   # Saving Terminal argument into internal variable
-      v_arg2=$2
-
    # Save current PWD + Navigate to Repos Center + Call f_stroken
       f_init_clone_repos 
 
@@ -2339,6 +2336,11 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
 
    else  
       # Clone pre-defined repositories, without menu fzf, when the user remembers the correct name
+
+      # Saving Terminal argument into internal variable
+         # uDev: Ver em bash como se faz para saber os nomes dos restantes arg (para guargar todos)
+         v_arg2=$2
+
       f_clone_by_inserting_correct_name
    fi
 

@@ -441,7 +441,7 @@ if [ -z $1 ];then
       L1='1. Cancel'
 
       Lh=""
-      L0="traitsID: SELECT 1: "
+      L0="{m+} traitsID: main menu: "
       
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --header="$Lh" --prompt="$L0")

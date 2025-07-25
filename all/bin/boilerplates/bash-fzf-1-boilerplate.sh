@@ -23,7 +23,7 @@
    # uDev: testar --history=HISTORY_FILE
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Saving '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Saved '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L4='4. Opcao c/ Pin'                                       
       L3='3. Opcao c/ fx history';  L3c='<fx-terminal-command>'  # L3c: terminal command to send to history file

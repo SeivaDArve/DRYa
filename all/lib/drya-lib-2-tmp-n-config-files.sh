@@ -19,7 +19,7 @@
 #     
 
 
-
+# uDev: criar fx que facilite a utilizacao de pares "key + value" e que os guarde tanto em .../all/etc/dot-file/drya/ quanto em .../h.h/drya/drya-key-value. provavelmente .json é bom para isso
 
 
 # uDev: 

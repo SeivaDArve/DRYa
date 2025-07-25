@@ -141,7 +141,7 @@ function f_variables_date_to_file_verbose {
    echo "Data atual (enviada):"
    echo " > $v_data"
    echo 
-   echo 'Agora ao usar `vim\` ja pode despejar essa data com as teclas:'
+   echo 'Agora ao usar `vim` ja pode despejar essa data com as teclas:'
    echo ' > `ZD`  (confirmar em .vimrc)'
    echo
 }
@@ -228,25 +228,25 @@ elif  [ $1 == "." ]; then
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
      #L14='14. M | calandario lunar, em que cada mes tem 28 dias
-      L14='14. F | Data para ficheiro (com verbose + instrucoes)'
-      L13='13. f | Data em formato para ficheiros (sem verbose, envia para drya-date-now e drya-status-messages)'
-      L12='12. b | Data completa esclarecida sem loop sem LOGO (background)'
-      L11='11. d | Data completa esclarecida sem loop sem LOGO'
-      L10='10. r | Data completa esclarecida com loop com LOGO'
-       L9='9.  l | Data completa esclarecida com loop'
-       L8='8.  h | Instructions / Help'
-       L7='7.  v | Imprime 1x a data em um formato util para variaveis'
-       L6='6.  H | Data que foca na hora'
-       L5='5.  m | Imprime linhas com a hora durante 1 min'
-       L4='4.  s | Imprime 1 linha com a hora durante 1 seg'
-       L3='3.  g | Grupo Data Hora (ao estilo militar)'
-       L2='2.  a | Alarm'
+      L14='14. | F | Data para ficheiros | (com verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
+      L13='13. | f | Data para ficheiros | (sem verbose, envia para drya-date-now e drya-status-messages)'
+      L12='12. | b | Data completa esclarecida sem loop sem LOGO (background)'
+      L11='11. | d | Data completa esclarecida sem loop sem LOGO'
+      L10='10. | r | Data completa esclarecida com loop com LOGO'
+       L9='9.  | l | Data completa esclarecida com loop'
+       L8='8.  | v | Imprime 1x a data em um formato util para variaveis'
+       L7='7.  | H | Data que foca na hora'
+       L6='6.  | m | Imprime linhas com a hora durante 1 min'
+       L5='5.  | s | Imprime 1 linha com a hora durante 1 seg'
+       L4='4.  | g | Grupo Data Hora (ao estilo militar)'
+       L3='3.  | a | Alarm'
 
-       L1='1.  Cancel'
+       L2='2.  | h | Instructions / Help'
+       L1='1.  Cancelar'
 
-      L0="SELECT 1: Menu X: "
+      L0="[m+] data.sh: main menu: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$Lz3" | fzf --no-info -m --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -256,15 +256,19 @@ elif  [ $1 == "." ]; then
       [[ $v_list =~ "11. " ]] && f_complete_date && echo
       [[ $v_list =~ "10. " ]] && f_complete_date_loop_plus_figlet
       [[ $v_list =~ "9.  " ]] && f_complete_date_loop
-      [[ $v_list =~ "8.  " ]] && f_help
-      [[ $v_list =~ "7.  " ]] && f_variables_date 
-      [[ $v_list =~ "6.  " ]] && f_hour_date
-      [[ $v_list =~ "5.  " ]] && f_one_minute_date
-      [[ $v_list =~ "4.  " ]] && f_one_second_date
-      [[ $v_list =~ "3.  " ]] && echo "uDev: GDH: 111230Z DEC 25 (Dia 11, 12h30, fuso Z, Dezembro, 2025)"
-      [[ $v_list =~ "2.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
-      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "8.  " ]] && f_variables_date 
+      [[ $v_list =~ "7.  " ]] && f_hour_date
+      [[ $v_list =~ "6.  " ]] && f_one_minute_date
+      [[ $v_list =~ "5.  " ]] && f_one_second_date
+      [[ $v_list =~ "4.  " ]] && echo "uDev: GDH: 111230Z DEC 25 (Dia 11, 12h30, fuso Z, Dezembro, 2025)"
+      [[ $v_list =~ "3.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
+      [[ $v_list =~ "2.  " ]] && f_help
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
       unset v_list
+
+elif  [ $1 == "h" ]; then
+   # Instructions / Help
+   f_help
 
 elif  [ $1 == "b" ]; then
    # Data num processo em segundo plano
@@ -284,10 +288,6 @@ elif  [ $1 == "l" ]; then
 elif  [ $1 == "d" ]; then
    # Nota: `d` e `d d` sao o mesmo comando de proposito
    f_complete_date && echo
-
-elif  [ $1 == "h" ]; then
-   # Instructions / Help
-   f_help
 
 elif  [ $1 == "v" ]; then
    # Imprime 1x a data em um formato util para variaveis

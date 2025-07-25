@@ -171,6 +171,11 @@ function f_one_file_bau {
 
 }
 
+function f_run_notify_script {
+   # Runs/Executes external script 'notify.sh'
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+}
+
 function f_main_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D note'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -180,7 +185,7 @@ function f_main_menu {
       #L7='7. Edit   | drya::wam (wordly abreviated messages) | `no wam`  # Ficheiro de texto (do estilo dicionario) que guarda um par de "key, value" cujo conteudo sao frases. No mundo real, podem ser encontradas frases com  texto "drya::wam:01" que corresponde ao "key". O valor dessa expressao "value" é guardada so online, e informa o que essa expressao abreviada quer dizer.  # uDev: mencionar e permitir que na repo "3sab" exista este software na repo DRYa que guarda texto na repo omni-log
       #L7='7. Script | Upload to omni-log | `no ^`
 
-      L9='9. script | notify.sh         | `notify`' 
+      L9='9. script | notify.sh         | `no f` or `notify`' 
 
       L8='8. Info   | com het. random   | `no x <txt no terminal>`' 
       L7='7. Nota   | com heteronimos   | `no H`' 
@@ -203,7 +208,7 @@ function f_main_menu {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "9. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+      [[ $v_list =~ "9. " ]] && f_run_notify_script 
       [[ $v_list =~ "8. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
       [[ $v_list =~ "7. " ]] && f_edit_with_heteronimos
       [[ $v_list =~ "6. " ]] && f_ensure_omni_log && emacs ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
@@ -308,6 +313,10 @@ elif [ $1 == "^" ]; then
 
 elif [ $1 == "rn" ]; then
    vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
+
+elif [ $1 == "notify" ] || [ $1 == "f" ]; then
+   # Runs/Executes external script 'notify.sh'
+   f_run_notify_script 
 
 else
    f_talk; echo 'Option not recognized. try `no`'
