@@ -16,6 +16,9 @@
    # Note: `--cycle`               : ...
    # Note: `--m`                   : ...
    # Note: `--no-info`             : significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
+   # Note: `--pointer=">" `
+   # Note: `--header="Text here" 
+   # Note: `--tac" 
 
    # uDev: testar --history=HISTORY_FILE
 
