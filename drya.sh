@@ -1295,7 +1295,7 @@ function f_dot_files_install_presets {
 
    L0="SELECT (1 or +) dot-files to install: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n\n$Lz" | fzf --cycle --pointer=">" -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz" ]] && echo "$Lz" 
@@ -1338,7 +1338,7 @@ function f_menu_install_dot_files {
 
    L0="DRYa: dot-files install.uninstall menu: "
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz" | fzf --cycle -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz" | fzf --cycle --pointer=">" -m --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
@@ -1827,22 +1827,60 @@ function f__D_hist__recall_one_command {
       [[ -n $v_line ]] && bash $v_line 
 }
 
+function f_clone_selected_from_list_no_invertion {
+   # Clonar exatamente as repos que o user escolheu
+
+   f_talk; echo "Clonar Repos:"
+   for i in $v_multiple
+   do
+      echo " > $i"
+      
+      # Quando o comando anterior é executado com sucesso, informa drya-messages
+         #[[ $? == 0 ]] && echo -e "DRYa: repo $i clonada com sucesso" >> $drya-status-messages  
+   done
+}
+
+function f_clone_selected_from_list_with_invertion {
+   # Clonar exatamente as repos oposta ao que o user escolheu. O user escolheu clonar todas repos excepto as que selecionou
+
+   # Retirar o texto "---Invert-Selection---" da variavel 
+      v_multiple=$(sed 's/---Invert-Selection---//g' <(echo $v_multiple))
+
+   f_talk; echo "Clonar todas, excepto: "
+   for i in $v_multiple
+   do
+      echo " > $i"
+
+      # Quando o comando anterior é executado com sucesso, informa drya-messages
+         #[[ $? == 0 ]] && echo -e "DRYa: repo $i clonada com sucesso" >> $drya-status-messages  
+   done
+}
 
 function f_drya_get_all_repo_names_private_public {
+
    # Juntar a lista de repos publicas + privadas
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_list_options="---Invert-Selection---"
       v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
-      v_combine="$v_list_options $v_list_private $v_list_public"
 
       # will give a $v_tmp with a new file with abs path
-         f_create_tmp_file  
+         f_create_tmp_file  # Vai criar o ficheiro $v_tmp
+
+      # Juntar todos os textos
+         echo "$v_list_options" >  $v_tmp
+         for i in $v_list_private
+         do
+            echo $i >> $v_tmp
+         done
+
+         echo "$v_list_public"  >> $v_tmp
 
       # Get the new file created
-         echo "$v_combine" > $v_tmp
+         #echo "$v_combine" > $v_tmp
 
       # Novo resultado em nova var
-         v_combine=$v_tmp
+         #cat $v_tmp > $v_combine
+         #rm  $v_tmp
 }
 
 function f_zip_unzip {
@@ -1902,72 +1940,50 @@ function f_ghost {
 function f_clone_by_fzf_list {
    # Open fzf to help clone repos by the correct name
 
-   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-   for i in $v_multiple
-   do
-      echo $i
-   done
-
-   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-   for i in $v_multiple
-   do
-      echo $i
-   done
-
    # uDev: `D cln . inv` para inverter a selecao (Clonar todas as repos excepto as que forem selecioadas)
    # uDev: `D cln . p`
    # uDev: `D cln . P`
-
-   f_talk; echo "uDev: List all public repos to clone (with \`fzf\`)"
-
-   v_list=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-   v_multiple=$(echo $v_list | sed 's/ /\n/g' | fzf -m --prompt="DRYa: SELECT multiple: Public Repositories to clone")
-   for i in $v_multiple
-   do
-      echo $i
-   done
 
    # uDev: Quando aparece a lista de repos para clonar, podemos logo testar se existem ou nao:
    #       Exemplo:
    #        > [X] dv-cv-private
    #        > [ ] dv-cv-private
 
+   f_greet
 
-   f_talk; echo "Cloning Multiple Repositories"
+   f_talk; echo "Cloning menu (fzf to clone Repositories)"
            echo " > Listing all public repos (by web search)"
            echo " > Listing private repos    (from offline file)"
+           echo
+           echo " ... a buscar repos publicas (diretamente da web)"
+           echo
 
-           #echo pin $v_pin; read
+   # Combinar em 1 ficheiro: todas as repos publicas + privadas para usar no fzf
+      f_drya_get_all_repo_names_private_public
 
-   f_drya_get_all_repo_names_private_public
-
-   # Pedir ao user para selecionar repos
-      v_multiple=$(cat $v_combine | sed 's/ /\n/g' | fzf -m --cycle --pointer=">" --prompt="DRYa: SELECT multiple: Repositories to clone/install: ")
+   # Perguntar ao user quais repos quer
+      L0="DRYa: cln: Public + Private Repos (to clone/install): "
+      Lh=$(echo -e "\nPara apagar texto introduzido da busca:\n  CTRL-U\n ")
+      v_multiple=$(cat $v_tmp | fzf --cycle --header="$Lh" --pointer=">" -m --prompt="$L0")
 
 
    if [[ -n $v_multiple ]]; then
+      # Se o utilizador selecionou nem se seja uma repo, executar:
 
-      #[[ $v_multiple =~ "dv-cv-public" ]] && grep "dv-cv-public" <(echo $v_multiple) && [[ $? == "1" ]] && echo "Nao Quer clonar tambem 'dv-cv-private' que se comunica com 'dv-cv-public'?"
-
-              echo
-      f_talk; echo "Repos selecionados:"
-
-      for i in $v_multiple
-      do
-         echo " > $i"
-         #echo " > $i" >> $drya-status-messages
-      done
+      if [[ $v_multiple =~ "---Invert-Selection---" ]]; then
+         #echo "inversao detetada"
+         f_clone_selected_from_list_with_invertion
+      else
+         #echo "inversao nao detetada"
+         f_clone_selected_from_list_no_invertion
+      fi
 
    else
-              echo
+      # Se o utilizador nao selecionou nem sequer uma repo
       f_talk; echo "Nenhum repo selecionado"
    fi
+
+   #[[ $v_multiple =~ "dv-cv-public" ]] && grep "dv-cv-public" <(echo $v_multiple) && [[ $? == "1" ]] && echo "Nao Quer clonar tambem 'dv-cv-private' que se comunica com 'dv-cv-public'?"
 }
 
 function f_clone_by_attempted_name {
