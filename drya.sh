@@ -2089,16 +2089,16 @@ if [ -z "$*" ]; then
             f_drya_fzf_MM
 
       else
-
          # If there is a variable, delete and tell which was
          
          # ANSII to go to beggining of line and clear endire line after cursor
             echo -ne "\r\033[K"
 
-         echo "Argument $v_ans not recognized at the temporized menu"
-         unset v_ans
+         f_talk; echo "Argument '$v_ans' not recognized here"
 
       fi
+
+      unset v_ans
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu. [rtfm: "Read the Fucking Manual"]
