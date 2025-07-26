@@ -20,16 +20,19 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo
 
    v_greet="DRYa"
    v_talk="DRYa: "
 
+   # Examples: `db` (an fx to use during debug)
+
 # Sourcing DRYa Lib 2
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
+   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo
 
-   #f_create_tmp_file  # will give a $v_tmp with a new file with abs path
+   # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
 
 function f_instructions_of_usage {
@@ -2356,6 +2359,8 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
 
+   # uDev: Test if Repos Center is set. If is not, just mention the command to mimic on the prompt
+
    if [ -z "$2" ]; then
       # If nothing was specified to clone, show an fzf menu
       f_clone_main_menu
@@ -2449,6 +2454,8 @@ elif [ $1 == "mac" ]; then
 elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ] || [[ $1 == "ui" ]];  then 
    # Install DRYa and more stuff
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
+
+   # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
    if [[ -z $2 ]]; then 
       # If there are no args:
@@ -2969,11 +2976,13 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
          [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
          unset v_list
 
-   elif [ $1 == "detect" ] || [ $1 == "d" ]; then 
+   elif [ $2 == "detect" ] || [ $2 == "d" ]; then 
       # An alternative for when `fzf` is not yet installed
 
       v_uname=$(uname -a)
-      [[ $v_uname =~ "kali" ]] && echo "kali linux was found" && echo " > setxkbmap -layout pt" 
+      echo
+      echo "DRYa: Detecting OS and Setting correct keyboard layout"
+      [[ $v_uname =~ "kali" ]] && echo " > Detected: Kali Linux" && echo " > setxkbmap -layout pt" && setxkbmap -layout pt && echo " > Sucess!"
    fi
 
 elif [ $1 == "k" ]; then 

@@ -2,15 +2,36 @@
 # Title: Detecting info about the argument 0
 # Description: By running this script, it will echo and store it's own name, absolute path, relative path from where you are callinh it, etc...
 
+function f_create_file_to_save_all_vars {
+   # After creating this file, it can be sourced and used by other scripts
+
+   v_dir=~/tmp && mkdir -p $v_dir
+
+   v_name="drya-to-source.sh"
+   v_file=$v_dir/$v_name
+
+   echo "#!/bin/bash"  > $v_file
+   echo "           " >> $v_file
+}
+
 function f_1 {
    # Gives the terminal's current directory name (the directory from where, the user is calling a script. This script)
 
    v_pwd=$(pwd)
    v_pwd="$v_pwd/"
 
-   echo "Current working directory:"
-   echo " > $v_pwd"
-   echo
+   v_mensagem1=' 1. Location of the Prompt: Current working directory (`pwd`):'
+   v_mensagem2="    > $v_pwd"
+
+   # Verbose no terminal
+      echo "$v_mensagem1"
+      echo "$v_mensagem2"
+      echo
+
+   # Verbose no ficheor arg-zero.sh
+      echo "#$v_mensagem1" >> $v_file
+      echo "v_1=$v_pwd"     >> $v_file
+      echo                  >> $v_file
 }
 
 function f_2 {
@@ -23,9 +44,18 @@ function f_2 {
    v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
    v_script_directory="$v_script_directory/"
 
-   echo "Path only: to the working dir of running script:"; 
-   echo " > $v_script_directory";
-   echo
+   v_mensagem1=" 2. Absolute Path: only to the directory of running script:"
+   v_mensagem2="    > $v_script_directory"
+
+   # Verbose no terminal
+      echo "$v_mensagem1"
+      echo "$v_mensagem2"
+      echo
+
+   # Verbose no ficheor arg-zero.sh
+      echo "#$v_mensagem1"           >> $v_file
+      echo "v_2=$v_script_directory" >> $v_file
+      echo                           >> $v_file
 }
 
 function f_3 {
@@ -40,9 +70,18 @@ function f_3 {
       v_name=$(echo "$0" | sed ':a; s/^\.\///; ta')
       v_name="./$v_name"
 
-      echo "Arg 0, given at the terminal as the running script (relative path):"
-      echo " > $v_name"
+      v_mensagem1=" 3. Relative Path: Arg 0. Prompt given to run the script:"
+      v_mensagem2="    > $v_name"
+
+   # Verbose no terminal
+      echo "$v_mensagem1"
+      echo "$v_mensagem2"
       echo
+
+   # Verbose no ficheor arg-zero.sh
+      echo "#$v_mensagem1"           >> $v_file
+      echo "v_3=$v_name" >> $v_file
+      echo                           >> $v_file
 }
 
 function f_4 {
@@ -50,9 +89,18 @@ function f_4 {
 
    v_basename=$(basename $0)
 
-   echo "Basename only: of the running script:"
-   echo " > $v_basename"
-   echo
+   v_mensagem1=" 4. Basename only of the running script:"
+   v_mensagem2="    > $v_basename"
+
+   # Verbose no terminal
+      echo "$v_mensagem1"
+      echo "$v_mensagem2"
+      echo
+
+   # Verbose no ficheor arg-zero.sh
+      echo "#$v_mensagem1"           >> $v_file
+      echo "v_4=$v_basename" >> $v_file
+      echo                           >> $v_file
 }
 
 function f_5 {
@@ -62,9 +110,18 @@ function f_5 {
    v_basename=$(basename $0)
    v_script=$v_script_directory/$v_basename
 
-   echo "Absolute path to the running script:"
-   echo " > $v_script"
-   echo
+   v_mensagem1=" 5. Absolute path of the running script:"
+   v_mensagem2="    > $v_script"
+
+   # Verbose no terminal
+      echo "$v_mensagem1"
+      echo "$v_mensagem2"
+      echo
+
+   # Verbose no ficheor arg-zero.sh
+      echo "#$v_mensagem1"           >> $v_file
+      echo "v_5=$v_script" >> $v_file
+      echo                           >> $v_file
 }
 
 function f_exec {
@@ -72,7 +129,12 @@ function f_exec {
 
    # Comment all not supposes to run
    clear
+	
+   f_create_file_to_save_all_vars
 
+   echo "# Title: all-info-arg-o.sh"
+   echo
+   echo "Demonstration of habilities:"
    f_1
    f_2
    f_3
@@ -81,3 +143,36 @@ function f_exec {
 }
 f_exec
 
+# detecting also arguments
+   echo " 6. Detecting also arguments:"
+ 
+   if [ -z $1 ]; then 
+      echo "    > No argument was given at the prompt"
+
+   else
+      for i in $*
+      do
+         echo "    > $i"
+      done
+   fi
+
+
+# Mentioning the name of the temporary file where all demonstrated variables where put
+   echo 
+   echo 
+   echo "All demonstrated variables were put in a temporary file at:"
+   echo " > $v_file"
+
+# After the display of power, a temporary file will be created so that each variable may be used
+   echo
+   echo
+   echo "How to use:"
+   echo " 1. By running this script from ANYWHERE, a file is created at ~/tmp/arg-zero.sh"
+   echo " 2. The file contains valid BASH syntax, and has a copy of the verbose ouptup given here"
+   echo ' 3. For any script that needs these values, type `source ~/tmp/arg-zero.sh` at the beginning of the file'
+   echo ' 4. The file has verbose output, but after running it, a command `clear` can be added'
+   echo ' 5. variables like $v_1 $v_2 $v_3 can now be used on your script'
+   echo 
+   echo ' 6. In the case of DRYa: all-info-arg-0.sh is a file placed side-by-side with other important DRYa scripts that need the `pwd` for such directory'
+
+   less $v_file
