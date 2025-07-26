@@ -2923,50 +2923,58 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
    # uDev: nem sempre existe fzf quando é preciso configurar o teclado
    #       - Apresentar verbose sobre como configurar cada teclado
 
-   function f_kbd_greet {
-      f_greet
-      f_talk; echo "Keyboard options"
-   }
-    
+   if [ -z $2 ]; then
 
-   # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      function f_kbd_greet {
+         f_greet
+         f_talk; echo "Keyboard options"
+      }
+       
 
-   #  Instrucoes: Para usar 'ç' na palacra 'caça', com a variavel $c_1 que contem o valor 'ç', usa o `eval` no terminal: `eval ca${c_1}a`
-	#
-	#     | a | $a_0 |
-	#     | á | $a_1 |
-	#     | à | $a_2 |
-	#     | ã | $a_3 |
-	#     | ä | $a_4 |
-	#
-	#     | c | $c_0 |
-	#     | ç | $c_1 |
-	#
+      # Lista de opcoes para o menu `fzf`
+         Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L6='6. DRYa emergency keyboard'
+      #  Instrucoes: Para usar 'ç' na palacra 'caça', com a variavel $c_1 que contem o valor 'ç', usa o `eval` no terminal: `eval ca${c_1}a`
+      #
+      #     | a | $a_0 |
+      #     | á | $a_1 |
+      #     | à | $a_2 |
+      #     | ã | $a_3 |
+      #     | ä | $a_4 |
+      #
+      #     | c | $c_0 |
+      #     | ç | $c_1 |
+      #
 
-      L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
-      L4='4. Config keyboard layout: Kali   Linux (sess atual)'
-      L3='3. Config keyboard layout: Ubuntu Linux (sess atual)'
+         L6='6. DRYa emergency keyboard'
 
-      L2='2. Verificar teclado atual' 
-      L1='1. Cancel + Instructions'
+         L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
+         L4='4. Config keyboard layout: Kali   Linux (sess atual)'
+         L3='3. Config keyboard layout: Ubuntu Linux (sess atual)'
 
-      L0="DRYa: Keyboard: "
-      
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+         L2='2. Verificar teclado atual' 
+         L1='1. Cancel + Instructions'
 
-   # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-      [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
-      [[ $v_list =~ "4. " ]] && f_kbd_greet && echo && f_talk && echo "$L4" && echo " > setxkbmap -layout pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap -layout pt
-      [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && f_talk && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
-      [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 
-      [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
-      unset v_list
+         L0="DRYa: Keyboard: "
+         
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
+      # Perceber qual foi a escolha da lista
+         [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+         [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
+         [[ $v_list =~ "4. " ]] && f_kbd_greet && echo && f_talk && echo "$L4" && echo " > setxkbmap -layout pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap -layout pt
+         [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && f_talk && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
+         [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 
+         [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
+         unset v_list
+
+   elif [ $1 == "detect" ] || [ $1 == "d" ]; then 
+      # An alternative for when `fzf` is not yet installed
+
+      v_uname=$(uname -a)
+      [[ $v_uname =~ "kali" ]] && echo "kali linux was found" && echo " > setxkbmap -layout pt" 
+   fi
 
 elif [ $1 == "k" ]; then 
    echo 'uDev: fzf menu for entire keyboard'
