@@ -240,6 +240,16 @@ function f_drya_welcome_screen {
    #   bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
 }
 
+function f_fun_after_welcome_screen {
+   # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
+
+    f_fun_memorize_sutras
+   #f_fun_open_random_shells
+   #f_fun_memorize_sanskrit    (uDev)
+   #f_fun_memorize_font_kamida (uDev)
+   #f_fun_memorize_font_diedro (uDev)
+ }
+
 function f_any_key_b4_open_msgs {
    # Centering text in the middle of the terminal
    # --- Before opening drya-messages `dmsgs`
@@ -395,7 +405,7 @@ function f_repository_ezGIT {
       alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
-   #       `f_startup_async_ezGIT_pull_All`
+   #       `f_async__ezGIT_pull_All__at_startup`
 }
    
 function f_repository_wikiD {
@@ -647,7 +657,7 @@ function f_ezGIT_exists {
       (f_start && f_notificacao_final) & disown
 }
 
-function f_startup_async_ezGIT_pull_All {
+function f_async__ezGIT_pull_All__at_startup {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
@@ -666,7 +676,7 @@ function f_startup_async_ezGIT_pull_All {
    fi
 } 
 
-function f_temporary_fx_memor_sutras {
+function f_fun_memorize_sutras {
    # Temporary fx
    # Memorize Shiva Sutras
    # Uses the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
@@ -676,7 +686,7 @@ function f_temporary_fx_memor_sutras {
       echo
 }
 
-function f_temporary_fx_open_random_shells {
+function f_fun_open_random_shells {
    # Forçar a aprendizagemnde Javascript ou Python ou SQLite
    v_opt=$(shuf -i 1-4 -n 1)
 
@@ -715,7 +725,7 @@ function f_exec {
    # Config Internal scripts and settings
       f_startup_escape_time
       f_internal_drya_files_1_of_2
-      #f_check_missing_dependencies
+     #f_check_missing_dependencies
       f_drya_libs
       f_drya_ssms_start
       f_drya_fzf_history
@@ -760,15 +770,11 @@ function f_exec {
          #       uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
          #       uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
 
-      f_startup_async_ezGIT_pull_All 
+      f_async__ezGIT_pull_All__at_startup
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
-   # For practice, fun, entetainment:
-      #f_temporary_fx_open_random_shells
-      #f_temporary_sanskrit    (uDev)
-      #f_temporary_font_kamida (uDev)
-      #f_temporary_font_diedro (uDev)
-       f_temporary_fx_memor_sutras
+   # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
+      f_fun_after_welcome_screen
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end
