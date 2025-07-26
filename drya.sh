@@ -78,7 +78,11 @@ function f_stroken {
       fi
 }
 
-function f_install_drya {
+function f_install_drya__with_fzf {
+   echo "uDev"
+}
+
+function f_install_drya__with_Select {
    # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
 
    f_greet
@@ -89,6 +93,8 @@ function f_install_drya {
            echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
            echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
            echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
+           echo 
+           echo " ... uDev"
 }
 
 function f_git_status {
@@ -1287,13 +1293,13 @@ function f_quick_install_all_upk {
    f_talk; echo "udev: install all dependencies for upk repo to run"
 }
 
-function f_dot_files_install_presets {
-   Lz='`D dot install presets`'
+function f_install_presets {
+   Lz='`D ui pr`'
 
    L2="2. Quick Install | upk + upkd + dependencies "
    L1="1. Cancel "
 
-   L0="SELECT (1 or +) dot-files to install: "
+   L0="DRYa: presets menu: "
 
    v_list=$(echo -e "$L1 \n$L2 \n\n$Lz" | fzf --cycle --pointer=">" -m --prompt="$L0")
 
@@ -1350,7 +1356,7 @@ function f_menu_install_dot_files {
       [[ $v_list =~ "7.  " ]] && f_dot_files_install_netrc
       [[ $v_list =~ "6.  " ]] && f_dot_files_install_vimrc
       [[ $v_list =~ "5.  " ]] && f_dotFiles_install_dryarc
-      [[ $v_list =~ "4.  " ]] && f_dot_files_install_presets
+      [[ $v_list =~ "4.  " ]] && f_install_presets
       [[ $v_list =~ "3.  " ]] && f_dot_files_install_vimrc && f_dot_files_install_git && f_dotFiles_install_termux_properties && f_dotFiles_install_dryarc && f_dot_files_install_netrc
       [[ $v_list =~ "2.  " ]] && echo "uDev"
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz"
@@ -1361,7 +1367,7 @@ function f_dot_files_menu_edit_host_files_termux_properties {
    # Mangage ./termux @Host (at the machine, not at the repo)
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='uDev'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L6='6. Toggle     | .hushlogin termux verbose output at terminal startup'
       L5='5. Toggle     | (uDev) termux Extra Keys On/Off'
@@ -1424,16 +1430,16 @@ function f_dot_files_menu {
    # List of options
       Lz1='Saving '; Lz2='D dot'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L8="8. Menu | Factory Reset "  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
-      L7="7. Menu | Backups"
+      L8='8. Menu | Factory Reset '  # uDev: When setting factory reset, leave a file to clone drya ENTIRELY
+      L7='7. Menu | Backups | `D ui bk`'
 
       L6='6. Edit | Installed   files (only @Host) |'
-      L5="5. Edit | Centralized files (only @DRYa) |"
+      L5='5. Edit | Centralized files (only @DRYa) |'
       L4='4. Edit | Centralized  > then >  Install |'
 
       L3="3. Menu | install.uninstall | $L3b" # Variable L3b may be set and may be empty to give more info to the user
-      L2="2. List | Available         |"      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
-      L1="1. Cancel"
+      L2='2. List | Available         |'      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
+      L1='1. Cancel'
 
       L0="DRYa: dot-files menu: "
 
@@ -1895,13 +1901,12 @@ function f_backup_helper {
 
       # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
       # Pode ser usado o SyncThing
-      echo "drya: uDev: in the future you may call this function to send files from one device to another device using the web"
+      echo "DRYa: uDev: in the future you may call this function to send files from one device to another device using the web"
       echo 
       echo "DRYa backup options:"
       echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
       echo
       echo "DRYa: type 'drya backup list' to be listed a sugestion of files to backup"
-
       echo "Backup on Smartphone (sugestions):"
       echo " > Contacts"
       echo " > Gmail accounts and passwords"
@@ -1912,7 +1917,7 @@ function f_backup_helper {
       echo " > All SD CARD and Internal Storage content"
       echo " > ..."
       echo
-      echo "Backup on Computer (suhestions):"
+      echo "Backup on Computer (sugestions):"
       echo " > ..."
       echo
       echo "uDev: criar opcoes que criam um dir, nesse dir, guarda certos dot-files atualmente na maquina"
@@ -2032,6 +2037,49 @@ function f_morse {
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 }
 
+
+
+function f_clone_main_menu {
+   # Main menu para clonar repositorios do github (de SeivaDArve)
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saving '; Lz2='D clone'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L4='4. Visit github.com (defaul browser) (uDev)'
+      L3='3. Clone by fzf menu        | `D cln .`'                                      
+      L2='2. Help (how to clone DRYa) | `D cln h`'                                      
+      L1='1. Cancel'
+
+      L0="DRYa: Clone Menu: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4\n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
+   
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "4. " ]] && echo uDev
+      [[ $v_list =~ "3. " ]] && f_clone_by_fzf_list
+      [[ $v_list =~ "2. " ]] && f_clone_info
+      [[ $v_list =~ "1. " ]] && echo "Canceled" 
+      unset v_list
+}
+
+
+
+function f_menu_install_drya_dependencies__1st {
+   # Menu para a detecao e instalacao de dependencias, com PRESETS
+   # uDev: Esta fx tambem tem de ser util para utilizacao no ficheiro source-all-drya-files
+   # uDev: This may use drya-lib-4
+
+   vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+}
+
+function f_help_installing_specific_packages {
+   echo
+}
 
 
 
@@ -2310,32 +2358,7 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
 
    if [ -z "$2" ]; then
       # If nothing was specified to clone, show an fzf menu
-
-
-      # Lista de opcoes para o menu `fzf`
-         Lz1='Saving '; Lz2='D clone'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-
-         L4='4. Visit github.com (defaul browser) (uDev)'
-         L3='3. Clone by fzf menu        | `D cln .`'                                      
-         L2='2. Help (how to clone DRYa) | `D cln h`'                                      
-         L1='1. Cancel'
-
-         L0="DRYa: Clone Menu: "
-         
-      # Ordem de Saida das opcoes durante run-time
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4\n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
-
-      # Atualizar historico fzf automaticamente (deste menu)
-         echo "$Lz2" >> $Lz4
-      
-      # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-         [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "4. " ]] && echo uDev
-         [[ $v_list =~ "3. " ]] && f_clone_by_fzf_list
-         [[ $v_list =~ "2. " ]] && f_clone_info
-         [[ $v_list =~ "1. " ]] && echo "Canceled" 
-         unset v_list
-
+      f_clone_main_menu
 
    elif [ $2 == "h" ]; then
       # Give some instructions (imcomplete)
@@ -2431,57 +2454,69 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # If there are no args:
 
       # Lista de opcoes para o menu `fzf`
-         Lz1='Save '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L11='11. Menu | helper  | factory reset + ghost (in.out)'
-         L10='10. Menu | helper  | backups'
-          L9='9.  Menu | clone   | repos'
-          L8='8.  Menu | install | specific packages | `D iu p` | `D iu <package>`'
-          L7='7.  Menu | install | dot-files         | `D iu d`'
+         L12='12. Help | Factory reset + ghost (in.out)'
+         L11='11. Menu | install | PRESETS              | `D ui pr`'
+         L10='10. Menu | helper  | backups              | `D ui bk`'
+          L9='9.  Menu |  clone  | repos                | `D cln`'
+          L8='8.  Menu | install | specific packages    | `D iu p` | `D iu <package>`'
+          L7='7.  Menu | install | dot-files            | `D iu d`'
+          L6='6.  Menu |   1st   | Dependencies         | `D ui dp`'  # uDev: adicionar a este menu "populate machines"
    
-          L6='6.  How To clone DRYa (in other devices) | `D cln`'
+          L5='5.  How To clone DRYa (for other devices) | `D cln h`'
 
-          L5='5.  Install DRYa | Dependencies only (1st packages)'
-          L4='4.  Install DRYa | `fzf`    installer'
-          L3='3.  Install DRYa | `select` installer'
+          L4='4.  Install DRYa | `fzf`    installer     | `D ui fzf`'
+          L3='3.  Install DRYa | `select` installer     | `D ui sel`'
 
-          L2='2.  List Status  | `ls`'
+          L2='2.  List Status  | `D iu ls`'
           L1='1.  Cancel'
 
          L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "11. " ]] && f_ghost
+         [[ $v_list =~ "12. " ]] && f_ghost
+         [[ $v_list =~ "11. " ]] && f_install_presets
          [[ $v_list =~ "10. " ]] && f_backup_helper
-         [[ $v_list =~ "9.  " ]] && echo uDev
-         [[ $v_list =~ "8.  " ]] && echo uDev
+         [[ $v_list =~ "9.  " ]] && f_clone_main_menu
+         [[ $v_list =~ "8.  " ]] && f_help_installing_specific_packages
          [[ $v_list =~ "7.  " ]] && f_dot_files_menu  
-         [[ $v_list =~ "6.  " ]] && echo uDev
-         [[ $v_list =~ "5.  " ]] && vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-         [[ $v_list =~ "4.  " ]] && echo uDev
-         [[ $v_list =~ "3.  " ]] && f_install_drya
+         [[ $v_list =~ "6.  " ]] && f_menu_install_drya_dependencies__1st
+         [[ $v_list =~ "5.  " ]] && f_clone_info
+         [[ $v_list =~ "4.  " ]] && f_install_drya__with_fzf
+         [[ $v_list =~ "3.  " ]] && f_install_drya__with_Select
          [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
-         [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+         [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
          unset v_list
 
    elif [[ $2 == "me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
-      f_install_drya
+      f_install_drya__with_Select
+
+   elif [[ $2 == "dependencies" ]] || [ $2 == "dp" ]; then 
+      # uDev: source file '1st' and exec instalation of selected group of dependencies
+      f_menu_install_drya_dependencies__1st
+
+   elif [[ $2 == "presets" ]] || [ $2 == "pr" ]; then 
+      # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
+      f_install_presets
+
+   elif [[ $2 == "backups" ]] || [ $2 == "bk" ]; then 
+      f_backup_helper
+
+   elif [[ $2 == "p" ]]; then 
+      # Verbose that mentions what packages exist to install
+      # uDev: Create a menu instead
+
+      f_help_installing_specific_packages
 
    elif [[ $2 == "fig" ]]; then 
-      echo "testing existence of figlet (as an example)"
-
-   #elif [[ $2 == "dependencies" ]] || [ $2 == "dep" ]; then 
-   #   # uDev: Read file '1st' and exec instalation of selected group of dependencies
-
-   elif [[ $2 == "." ]]; then 
-      # Edit script "DRYa fzf installer"
-      vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
+      echo "uDev: testing and installimg existence of figlet"
 
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
@@ -2582,8 +2617,12 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       f_quick_install_all_upk
 
+   elif [[ $2 == "." ]]; then 
+      # Edit script "DRYa fzf installer"
+      vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
+
    else
-      echo "drya: What do you want to install? invalid arg"
+      echo "drya: What do you want to install? (invalid arg)"
    fi
 
 
@@ -2879,6 +2918,10 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
    fi
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
+   # Comandos para configurar o layout do teclado
+
+   # uDev: nem sempre existe fzf quando é preciso configurar o teclado
+   #       - Apresentar verbose sobre como configurar cada teclado
 
    function f_kbd_greet {
       f_greet
@@ -3266,7 +3309,6 @@ elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then
 
 elif [ $1 == "hush" ]; then 
    # Ligar/Desligar o output verboso do Termux. 
-
    f_toggle_termux_hushlogin 
 
 elif [ $1 == "zip" ] ; then 

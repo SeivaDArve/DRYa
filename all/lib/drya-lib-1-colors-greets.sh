@@ -339,6 +339,12 @@ function f_verticline {
 #     esac
 #  }
 
+function db {
+   # Function for fast debugging
+   # use: After sourcing this drya-lib-2, just add a line `db` to it
+   read -s -p " ------> Debug <------ "
+   echo
+}
 
 function f_debug {
    # Creating a pause in the middle of the script for debugging process

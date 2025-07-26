@@ -25,10 +25,6 @@ function f_startup_escape_time {
    fi
 }
 
-function db {
-   read -p " ------> Debug <------ "
-}
-
 function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
@@ -717,16 +713,13 @@ function f_backdoor {
 }
 
 function f_exec { 
-   # Running all functions by sequence
-
-   # Default debug fx
-      #db
+   # Running all functions by sequence 
 
    # Config Internal scripts and settings
       f_startup_escape_time
       f_internal_drya_files_1_of_2
      #f_check_missing_dependencies
-      f_drya_libs
+      f_drya_libs  # Includes an fx for debugging: `db` 
       f_drya_ssms_start
       f_drya_fzf_history
       f_traitsID           
@@ -756,19 +749,23 @@ function f_exec {
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_2
 
-   # Start loading background tasks 
-      # Jarve 
-         # (Drya: foreground tasks, Jarve: Background tasks)
-         # Executa as fx async
-         # Calendario com scripts (OTs e Rotinas pessoais)
-         # uDev: f_assync `td` using GPS
-         # uDev: Create jarve-mail-box instead of drya-mail-box 
-         # jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
-         #f_notes_toDo
-         #
-         # uDev: automatic comunications deve ser em jarve, nao em ezGIT
-         #       uDev: #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
-         #       uDev: #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+   # Start loading background tasks (jarve)
+      # (DRYa:  foreground tasks, once.       (at startup and on command))
+      # (Jarve: Background tasks, on a loop.  (permanent))
+      #
+      # Executa as fx async em loop permanente
+      #   - f_assync manter GPS on (para uso em `td`)
+      #   - Create jarve-mail-box like drya-mail-box 
+      #   - f_notes_toDo
+      #   - jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
+      #   - IRC automatic comunications, tipo sms, com e sem encriptacao, com e sem 3sab. (deve ser em jarve, nao em ezGIT)
+      #   - #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
+      #
+      # Calendario com scripts (OTs e Rotinas pessoais)
+      #   - rotinas de saude (Checkup anual, rotina anual dentista, desparazitantes)
+      #   - #for messenger-like comunications: download+upload content for a private github repo and after the other mobile phone downloads it, use git to remove it from the git log permanently
+      #   - agendar envio de sms, chamadas, mensagens whatsapp
+      #
 
       f_async__ezGIT_pull_All__at_startup
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID

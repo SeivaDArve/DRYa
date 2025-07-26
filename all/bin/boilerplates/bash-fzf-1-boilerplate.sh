@@ -20,36 +20,45 @@
    # Note: `--tac" 
 
    # uDev: testar --history=HISTORY_FILE
+   # uDev: fx/lib para o  ---Invert Selection---'
+   # uDev: criar em drya-lib-2:      "Tracking: `command`  [ENTER = Previous menu]"
+
+   # Opcional: Buscar valores externos para usar variaveis neste menu
+   #    f_example_busca_L6b; echo "$Lb6"
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Saved '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. Opcao c/ Pin'                                       
-      L3='3. Opcao c/ fx history';  L3c='<fx-terminal-command>'  # L3c: terminal command to send to history file
+      L6="6. Opcao com variavel externa | $L6b" # Variable L6b may be set and may be empty to give more info to the user
+      L5='5. Opcao com Pin'                                       
+      L5='5. Opcao com fx history (na fx)'                                       
+      L3='3. Opcao com fx history (no proprio menu)';  L3c='<fx-terminal-command>'  # L3c: terminal command to send to history file
       L2='2. Opcao simples'                                      
-     #L2='2. -- Invert Selection --'
+     #L2='2. ---Invert Selection---'
       L1='1. Cancel'
 
       Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui\n ")
       L0="SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
    
-   # Atualizar historico fzf automaticamente (em cada fx)
+   # Atualizar historico fzf (texto em cada fx)
    #
    #  funtion f_example { 
    #     # Atualizar historico fzf (inserir esta fx):
-   #        echo "D command" >> $Lz4 
+   #        echo "D command" >> $Lz4  # Segundo a opcao 4
+   #        echo "$L3c" >> $Lz4       # Segundo a opcao 3 
    #  }
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[    $v_list =~ "4. " ]] && f_pin && f_example  
-      [[    $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev: $L3" 
+      [[    $v_list =~ "5. " ]] && f_pin && echo "uDev"
+      [[    $v_list =~ "4. " ]] && f_example
+      [[    $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev" 
       [[    $v_list =~ "2. " ]] && echo "uDev: $L2" 
       [[    $v_list =~ "1. " ]] && echo "Canceled" 
       [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1

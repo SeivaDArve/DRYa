@@ -1399,8 +1399,10 @@ function f_action {
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
+         L0="fluNav: S: edite 1 ficheiro: "
+
          unset v_list
-         v_file=$(fzf --prompt="fluNav: edite 1 ficheiro: " --header="$LH" --preview 'cat {}' --preview-window=right:40%)
+               v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
 
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
          v_pwd=$(pwd)
@@ -1414,6 +1416,7 @@ function f_action {
 
 
    elif [ $v_nm == "search_files_with_query" ]; then
+      # ?
       unset e; shift; for i in $@; do e="$e$i"; done;  v=$(fzf --query="$e" --select-1 --exit-0);  echo "Result: $v" 
 
    elif [ $v_nm == "edit_last_h_file" ]; then
@@ -1428,7 +1431,7 @@ function f_action {
          [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
 
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ -n $v_last ]] && vim $v_last || echo "fluNav: Nothing written in history file to edit"
+         [[ -n $v_last ]] && vim $v_last || echo "fluNav: S: Nothing written in history file to edit"
 
 
 
@@ -1443,7 +1446,7 @@ function f_action {
 
       # Buscar uma das linhas
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-         v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
+         v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "fluNav: S: edite 1 ficheiro (do historico): ")
    
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
