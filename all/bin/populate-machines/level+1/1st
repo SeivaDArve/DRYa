@@ -60,6 +60,7 @@ function f_gr_hard_dependencies {
    # List of DRYa dependencies (to be installed by DRYa installer)
 
    pkg install \
+   man            # Man pages (it does not come default in arch, for example)
    awk            # Serve para procurar e substituir texto
    figlet         # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
    ncurses-utils  # Instals packages like `tput`
