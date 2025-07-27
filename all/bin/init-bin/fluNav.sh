@@ -555,7 +555,7 @@ function ,,, {
 
 function ,,,, {
    clear
-   figlet l s
+   f_greet
    ls
 }
 
