@@ -2274,29 +2274,21 @@ elif [ $1 == "deactivate" ] || [ $1 == "placeholder-on" ] || [ $1 == "ghost.out"
    #echo
    #f_ghost
 
-elif [ $1 == "location" ]; then 
+elif [ $1 == "gps" ]; then 
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
+
+   if [ -z "$2" ]; then
+      # Displays current GPS location using GPS as provider
+      termux-location -p gps  # The termux gps provider is `gps` by default
 
    if [ $2 == "network" ]; then 
       # Displays current GPS location using network as provider
       termux-location -p network
 
-   elif [ $2 == "gps" ]; then 
-      # Displays current GPS location using GPS as provider
-      termux-location -p GPS
-
-   elif [ $2 == "network-save" ]; then 
-      # Displays current GPS location using network and saves in a file
-      # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
-      termux-location -p network
-
-   elif [ $2 == "gps-save" ]; then 
-      # Displays current GPS location using GPS and saves in a file
-      # ${REPOS_CENTER}/DRYa/all/var/report-termux-locations.txt
-      termux-location -p GPS
-
    fi
+
+   # uDev: now ask the user if he wants to save to omni-log
 
 elif [ $1 == "update" ]; then 
    echo "uDev: Similar to: G v; source ~/.bashrc; apply all dot-files across the system"
@@ -2953,7 +2945,8 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       #     | ç | $c_1 |
       #
 
-         L6='6. DRYa emergency keyboard'
+         L7='7. DRYa emergency keyboard 2'
+         L6='6. DRYa emergency keyboard 1'
 
          L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
          L4='4. Config keyboard layout: Kali   Linux (sess atual)'
@@ -2964,10 +2957,11 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
          L0="DRYa: Keyboard: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "7. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
          [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
          [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
          [[ $v_list =~ "4. " ]] && f_kbd_greet && echo && f_talk && echo "$L4" && echo " > setxkbmap -layout pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap -layout pt
@@ -2983,6 +2977,10 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       echo
       echo "DRYa: Detecting OS and Setting correct keyboard layout"
       [[ $v_uname =~ "kali" ]] && echo " > Detected: Kali Linux" && echo " > setxkbmap -layout pt" && setxkbmap -layout pt && echo " > Sucess!"
+
+   elif [ $2 == "help" ] || [ $2 == "h" ]; then 
+      echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
+
    fi
 
 elif [ $1 == "k" ]; then 
