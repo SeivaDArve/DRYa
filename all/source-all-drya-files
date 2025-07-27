@@ -7,6 +7,7 @@
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
+# uDev: fix dependencies bugs (in case DRYa is running on a fresh install of some new OS)
 
 function f_startup_escape_time {
    # Allowing the user to escape DRYa for 1 second

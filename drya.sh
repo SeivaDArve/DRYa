@@ -2516,7 +2516,21 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    elif [[ $2 == "dependencies" ]] || [ $2 == "dp" ]; then 
       # uDev: source file '1st' and exec instalation of selected group of dependencies
-      f_menu_install_drya_dependencies__1st
+
+      if [[ -z $3 ]]; then 
+         # Menu to pick and choose which dependencies will be installed/removed
+         f_menu_install_drya_dependencies__1st
+
+      elif [[ $3 == "hard" ]] || [ $3 == "1" ]; then 
+         # Most crutial DRYa dependencies. (But if DRYa bugs are fixed, DRYa can run without dependencies)
+         echo "uDev: installing git, tput, fzf... "
+         echo " > Any Key to proceed (uDev)"
+
+      elif [[ $3 == "soft" ]] || [ $3 == "2" ]; then 
+         echo "uDev: installing man, tree, neofetch... "
+         echo " > Any Key to proceed (uDev)"
+      
+      fi
 
    elif [[ $2 == "presets" ]] || [ $2 == "pr" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things

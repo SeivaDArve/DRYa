@@ -31,23 +31,34 @@
 #       f_count_var_size,     (saber quantas letrar tem `echo ${#variavel}`)
 #       f_create_tmp_file     (dar um nome e saber que esse ficheiro tmp foi criado)
 
+# uDev: fix dependencies bugs (in case DRYa is running on a fresh install of some new OS)
 
 # uDev: Center text Horizontally + vertically
 # uDev: add fx to test if a given variable is number, letter or others
 
+function f_test_dependencie_tput {
+   # Testar a existencia de ncurses-utils
+
+   #echo "uDev"
+
+   v_status=1
+   v_status=0
+}
 
 
 function f_c1 {	
    # Fx for color 1
-
    # This function is to be used when something is SEARCHED
-   tput setaf 5 
+
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 5 
 }
 
 function f_c2 { 
    # Fx for color 2
 
-   tput setaf 12
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 12
 }
 
 function f_c3 { 
@@ -55,7 +66,9 @@ function f_c3 {
 
    # Mentioning user input or valiable input
    # This function is to be used when something is DECLAIRED
-   tput setaf 3
+
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 3
 }
 
 function f_c4 { 
@@ -63,22 +76,25 @@ function f_c4 {
 
    # Similar to Bold. Used in: f_talk
    # This function is to be used when something is ASKED
-   tput setaf 4
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 4
 }
 
 function f_c5 { 
    # Fx for color 5
 
    # Similar to Bold
-   tput setaf 6
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 6
 }
 
 function f_c6 { 
    # Fx for color 6
 
    # Used for ASCII Drya Logo, centered to the screen
-   tput setaf 28
-   tput bold
+   f_test_dependencie_tput
+   [[ $v_status == 0 ]] && tput setaf 28
+   [[ $v_status == 0 ]] && tput bold
 }
 
 function f_c7 {
@@ -99,7 +115,7 @@ function f_rc {
    # Fx for color reset
 
    # This function is to be used when styles are to be CLEARED
-   tput sgr0
+   [[ $v_status == 0 ]] && tput sgr0
 }
 
 function f_colors_without_tput {
@@ -114,13 +130,13 @@ function f_colors_without_tput {
 function f_cON {
    # Fx for make cursor visible
 
-   tput cnorm
+   [[ $v_status == 0 ]] && tput cnorm
 }
 
 function f_cOFF {
    # Fx for make cursor invisible
 
-	tput civis
+   [[ $v_status == 0 ]] && tput civis
 }
 
 function f_greet {

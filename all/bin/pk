@@ -21,7 +21,7 @@
 
    [[    $1 == "-" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
    [[    $1 == "-" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm remove $*
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -R      $*
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -R     $*
    [[    $1 == "-" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm remove $*
    [[    $1 == "-" ]] && [[ $trid_pkgm == "apk"    ]] && echo "udev"
    [[    $1 == "-" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm remove $*
