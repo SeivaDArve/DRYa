@@ -212,7 +212,11 @@ function f_drya_welcome_screen {
 
    # Display info about it at the screen when DRYa is loaded by the terminal
    # --- Presenting it with figlet (which is a dependency) or just echo it's name:
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+         figlet -v &>/dev/null  # Testing if figlet is installed
+         v_status=$?  # Guardar o status code para saber se o comando anterior deu algum erro
+         [[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
+         [[ $v_status ==  1  ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
+         [[ $v_status == 127 ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
 
    #f_termux_welcome
 
@@ -239,7 +243,7 @@ function f_drya_welcome_screen {
 function f_fun_after_welcome_screen {
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
 
-    f_fun_memorize_sutras
+    f_fun_memorize_sutras      2>/dev/null
    #f_fun_open_random_shells
    #f_fun_memorize_sanskrit    (uDev)
    #f_fun_memorize_font_kamida (uDev)
