@@ -18,6 +18,10 @@
     ;; source: https://stackoverflow.com/questions/45379426/orgmode-disable-elisp-code-execute-confirmation-dialog
 
 ;;;; Making use of Termux "Touch Keyboard" keys
+   ;; Assegurar vertical scroll no termux usando touch screen: (mouse-wheel-mode &optional ARG
+        (mouse-wheel-mode  1)  ;; To enable  scroll
+      ;;(mouse-wheel-mode -1)  ;; To disable scroll
+
    ;; Criar horizontal scroll
       ;; Pesquisa: If your mouse’s wheel can be tilted, or if your touchpad supports it, then you can also enable horizontal scrolling by customizing the variable mouse-wheel-tilt-scroll to a non-nil value
       ;; source: https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Commands.html
