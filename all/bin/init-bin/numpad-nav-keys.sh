@@ -55,7 +55,7 @@ function f_fzf_power_options {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "A. " ]] && echo "A Abortar os encerramentos" && shutdown -c
       [[ $v_list =~ "T. " ]] && echo "uDev T."
-      [[ $v_list =~ "C. " ]] && clear && cmatrix && f_pin
+      [[ $v_list =~ "C. " ]] && clear && cmatrix && v_pin_txt="Para regressar ao terminal, introduza: " && f_pin
       [[ $v_list =~ "6. " ]] && source ~/.bashrc
       [[ $v_list =~ "8. " ]] && echo "Reiniciar" && f_restart  # Restart à maquina
       [[ $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate

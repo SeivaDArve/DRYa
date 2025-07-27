@@ -683,7 +683,15 @@ function f_dotFiles_install_git_set_machine_name {
 
 function f_dot_files_install_git {
    # Install .gitconfig on the system
+
    # uDev: test if `git` itself is installed
+   # uDev: at least in this fx, fzf dependency should be tested
+
+      f_greet
+      fzf -h &>/dev/null 
+      v_status=$?
+      [[ $v_status == "1"   ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
+      [[ $v_status == "127" ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
 
    # Atualizar historico fzf (inserir esta fx):
       echo "D ui d i git" >> $Lz4
@@ -705,6 +713,7 @@ function f_dot_files_install_git {
            echo    " > Either insert New name or choose from Default name list"
            echo
 
+   f_hzl
    v_txt="Install .gitconfig file " && f_anyK
    echo
 
@@ -2499,7 +2508,21 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    elif [[ $2 == "dependencies" ]] || [ $2 == "dp" ]; then 
       # uDev: source file '1st' and exec instalation of selected group of dependencies
-      f_menu_install_drya_dependencies__1st
+
+      if [[ -z $3 ]]; then 
+         # Menu to pick and choose which dependencies will be installed/removed
+         f_menu_install_drya_dependencies__1st
+
+      elif [[ $3 == "hard" ]] || [ $3 == "1" ]; then 
+         # Most crutial DRYa dependencies. (But if DRYa bugs are fixed, DRYa can run without dependencies)
+         echo "uDev: installing git, tput, fzf... "
+         echo " > Any Key to proceed (uDev)"
+
+      elif [[ $3 == "soft" ]] || [ $3 == "2" ]; then 
+         echo "uDev: installing man, tree, neofetch... "
+         echo " > Any Key to proceed (uDev)"
+      
+      fi
 
    elif [[ $2 == "presets" ]] || [ $2 == "pr" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
@@ -2531,6 +2554,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          
          [[ -z $4            ]] && f_menu_install_dot_files
          [[    $4 == "git"   ]] && f_dot_files_install_git
+         [[    $4 == "netrc" ]] && f_dot_files_install_netrc
          [[    $4 == "vimrc" ]] && f_dot_files_install_vimrc
       fi
 
