@@ -78,7 +78,7 @@
 
 # Passo 3: ----------------------------------------------------------------------------------------------------
 
-   # Associar a função a um atalho com comando BIND
+   # Associar a função a um atalho com comando BIND as hotkey Ctrl-x
       bind -x '"\C-x":f_insert_letter'
 
 # -------------------------------------------------------------------------------------------------------------
