@@ -683,7 +683,15 @@ function f_dotFiles_install_git_set_machine_name {
 
 function f_dot_files_install_git {
    # Install .gitconfig on the system
+
    # uDev: test if `git` itself is installed
+   # uDev: at least in this fx, fzf dependency should be tested
+
+      f_greet
+      fzf -h &>/dev/null 
+      v_status=$?
+      [[ $v_status == "1"   ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
+      [[ $v_status == "127" ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
 
    # Atualizar historico fzf (inserir esta fx):
       echo "D ui d i git" >> $Lz4
@@ -705,6 +713,7 @@ function f_dot_files_install_git {
            echo    " > Either insert New name or choose from Default name list"
            echo
 
+   f_hzl
    v_txt="Install .gitconfig file " && f_anyK
    echo
 
