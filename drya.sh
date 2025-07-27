@@ -2548,6 +2548,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          
          [[ -z $4            ]] && f_menu_install_dot_files
          [[    $4 == "git"   ]] && f_dot_files_install_git
+         [[    $4 == "netrc" ]] && f_dot_files_install_netrc
          [[    $4 == "vimrc" ]] && f_dot_files_install_vimrc
       fi
 
