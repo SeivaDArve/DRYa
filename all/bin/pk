@@ -9,8 +9,8 @@
 
 # Var $pkgm might be: apt, pacman, dnf, zypper, apk, brew (check traitsID.sh to make sure)
    [[ -z $1        ]] && echo 'Help: `pk --help`'
-   [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
 
+   [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
    [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*
    [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -S      $*
    [[    $1 == "+" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm install $*
@@ -19,3 +19,11 @@
    [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm install
    [[    $1 == "+" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
 
+   [[    $1 == "-" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm remove $*
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -R      $*
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm remove $*
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "apk"    ]] && echo "udev"
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm remove $*
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm remove
+   [[    $1 == "-" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
