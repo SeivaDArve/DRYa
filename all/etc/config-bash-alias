@@ -200,14 +200,14 @@ alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
 alias lh="du -ah" # Lists all file's size
-alias c="cd"
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 alias RM="rm -rf"
 
 alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
  #uDev: `mk ..` to go to last created dir
  #uDev: `mk dir1 . dir2 dir3` to make all dirs and navigate do dir2
-function Mk {
+function MK {
+
 
    if [[ -z $* ]]; then
       # Creates a directory and navigates to it imediatly
@@ -227,12 +227,16 @@ function Mk {
       done
       ls
    fi
+
+   # uDev: Adicionar menu fzf no final, para perguntar ao user se quer navegar para alguma dessas pastas ou para nenhuma
 }
 
 function lll {
    # Print for each file in `ls`, its absolute path
       # Prints to Terminal and to temp file
       # Also, if you give a number as arg, it will filter the output line. Example: `ls` prints 3 lines, so `lll 2` will print only the absolute path of the second line
+
+   # uDev: renomear comando para `ls ...`
 
    # udev: a pasta atual pode nao conter nenhum ficheiro do qual dar o abs path. Adicionar tambem opcao "Current ./"
 
@@ -324,7 +328,8 @@ alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tr
    alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
    alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
    alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
-   alias madagascar="termux-open-url https://youtu.be/Xe0dChqgTJQ?feature=shared"
+   alias madagascar="termux-open-url https://youtu.be/bYxt96GAf4g?feature=shared"
+   alias monstro="termux-open-url https://youtu.be/I5e6ftNpGsU?feature=shared"
 
 
 
