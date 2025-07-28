@@ -19,7 +19,7 @@
 
 
 
-# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+# Sourcing DRYa Lib 1: Color schemes
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo
 
@@ -27,8 +27,9 @@
    v_talk="DRYa: "
 
    # Examples: `db` (an fx to use during debug)
+   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 
-# Sourcing DRYa Lib 2
+# Sourcing DRYa Lib 2: Creating temporary files for support on scripts
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo
 
@@ -1164,6 +1165,26 @@ function f_drya_help {
            echo "   Windows, Linux, Mac, Android, iPhone,"
            echo "   Raspberry Pi"
            echo
+           echo " > A failback system:"
+           echo "   It has dependencies, but if they do not exist,"
+           echo "   it can still run."
+           echo "   Can be used fully featured, but if the system"
+           echo "   does not have the features, then there are"
+           echo "   functions to recall and re-install all features"
+           echo "   again."
+           echo 
+           echo "   If enough commits are done, in one command"
+           echo "   It can put Arch linux (as an example)"
+           echo "   fully running, fully featured, fully configured"
+           echo "   after a fresh Installation of the OS on de HDD"
+           echo "   (at the taste of the user, for example D'Arve,"
+           echo "   the first developer)"
+           echo
+           echo " > It is not installed on /bin"
+           echo "   the user can run DRYa on any computer without"
+           echo "   asking for admin priviledges"
+           echo "   (It is s software for the current user)"
+           echo   
            echo " > All burocracy around the user of the app"
            echo "   is taken care of, without spy or malware"
            echo   
@@ -1184,6 +1205,23 @@ function f_drya_help {
            echo "   always to allow DRYa repo to be cloned"
            echo "   (if needed)"
            echo   
+           echo " > Example on repetitive task:"
+           echo '   1. `om` is an alias on ~/.bashrc that runs'
+           echo '      `alias om="bash ~/scripts/omni-script.sh`'
+           echo '      It has to be installed there for bash and'
+           echo '      the script has to be downloaded'
+           echo '   2. If both do not exist, then we can use'
+           echo '      `drya.sh` (alias `D`) to store `om` function'
+           echo '      now we can run `D om` and DRYa will'
+           echo '      FIRST verify the existence of "om" repository'
+           echo '      and if it does not exist, it is downloaded,'
+           echo '      installed and configured, so that, next time'
+           echo '      `om` alone as arguent $0 can be used'
+           echo '   3. DRYa ensured the existence and configuration'
+           echo '      of `om` software'
+           echo '   4. Supose now that we installed a new fresh OS'
+           echo '      on the HDD, DRYa will detect the current OS'
+           echo '      and download and configure properly'
            echo
            echo "Author: "
            echo " > David Rodrigues (Seiva D'Arve)"
@@ -2291,7 +2329,7 @@ elif [ $1 == "gps" ]; then
       # Displays current GPS location using GPS as provider
       termux-location -p gps  # The termux gps provider is `gps` by default
 
-   if [ $2 == "network" ]; then 
+   elif [ $2 == "network" ]; then 
       # Displays current GPS location using network as provider
       termux-location -p network
 
