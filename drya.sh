@@ -8,6 +8,8 @@
 
 # uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
 
+# uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS)
+
 # Comments examples: 
    # Single comment example
 
@@ -21,7 +23,7 @@
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-   [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo
+   [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
    v_talk="DRYa: "
@@ -30,7 +32,7 @@
 
 # Sourcing DRYa Lib 2
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo
+   [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
@@ -2007,7 +2009,7 @@ function f_clone_by_attempted_name {
    # To clone repos when we are not exactly sure how it's name is written 
    #                when shortcuts were not already set or predictrd
 
-   if [ -z $3 ]; then
+   if [ -z $v_arg3 ]; then
       # Using menu fzf
       f_talk; echo "\`D cln try <name>\`"
               echo " > Repo name not specified"
@@ -2023,13 +2025,13 @@ function f_clone_by_attempted_name {
 
 
       # Verbose:
-         f_talk; echo -e "DRYa: Trying to clone: $3 \n"; 
+         f_talk; echo -e "DRYa: Trying to clone: $v_arg3 \n"; 
 
       # Save current PWD + Navigate to Repos Center + Call f_stroken
          f_init_clone_repos 
 
       # Actually try to clone
-         git clone https://github.com/SeivaDArve/$3.git
+         git clone https://github.com/SeivaDArve/$v_arg3.git
    fi
 }
 
@@ -2212,6 +2214,21 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
          less $v_MSGS
    fi
 
+elif [ $1 == "-4" ] || [ $1 == "edit-how-to-flash-an-OS-on-USB" ]; then 
+   echo uDev
+
+elif [ $1 == "-3" ] || [ $1 == "edit-how-to-partition-HDD-correctly" ]; then 
+   echo "uDev"
+
+elif [ $1 == "-2" ] || [ $1 == "edit-drya-installer-select-menu" ]; then 
+   echo "uDev"
+
+elif [ $1 == "-1" ] || [ $1 == "edit-drya-installer-fzf-menu" ]; then 
+   echo "uDev"
+
+elif [ $1 == "-0" ] || [ $1 == "edit-help-populate" ]; then 
+   echo "Display all these numeric arguments on how to populate machines"
+
 elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
    # Edit the file that starts DRYa's loading sequence
    vim ~/.bashrc
@@ -2385,6 +2402,7 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
    elif [ $2 == "try" ] || [ $2 == "t" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
       #                when shortcuts were not already set or predictrd
+      v_arg3=$3
       f_clone_by_attempted_name
 
    else  
