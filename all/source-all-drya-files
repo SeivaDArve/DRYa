@@ -502,7 +502,9 @@ function f_repository_omni-log {
          v_file="omni-log.org "
          v_choosen_file="${v_REPOS_CENTER}/omni-log/omni-log.org"
 
-      if [ -f /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe ]; then
+         v_binary_exe="/mnt/c/Program Files/Emacs/x86_64/bin/emacs.exe"
+
+      if [[ -f $v_binary_exe ]]; then
          # if .exe is found, open GUI emacs on windows:
             clear
             figlet "omni-log"
