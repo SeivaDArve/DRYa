@@ -162,6 +162,7 @@ function f_list_of_usefull_apps_at_WSL2 {
 
 # For termux, may be needed:
    # uDev: Put these on wikiD
+   - termux-info  # Variaveis sobre o termux
    - termux-change-repo
    - termux-setup-storage
    - termux-reload-settings
