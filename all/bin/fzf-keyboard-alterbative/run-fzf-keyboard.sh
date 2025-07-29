@@ -1,3 +1,4 @@
 #!/bin/bash
-CHOICE=$(printf "a\nb\nc\n" | fzf --prompt="Escolhe uma letra: ")
+L0="drya-emergency-keyboard: Cola uma letra no cursor: "
+CHOICE=$(printf "a\nb\nc\n?\n\\ \n^\n@" | fzf --cycle --prompt="$L0")
 echo -n "$CHOICE"
