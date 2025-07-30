@@ -490,48 +490,7 @@ function f_repository_row-reader {
 function f_repository_omni-log {
    # Repository: omni-log
 
-   # If windows with graphical interface is available, we will prefer that to the terminal version
-
-   # Using command 'om' to open our file
-   function om {
-      
-      # uDev: use drya-lib-4
-
-      # Defining the name of the file as a variable
-         v_dir="${v_REPOS_CENTER}/omni-log/"
-         v_file="omni-log.org "
-         v_choosen_file="${v_REPOS_CENTER}/omni-log/omni-log.org"
-
-         v_binary_exe="/mnt/c/Program Files/Emacs/x86_64/bin/emacs.exe"
-
-      if [[ -f $v_binary_exe ]]; then
-         # if .exe is found, open GUI emacs on windows:
-            clear
-            figlet "omni-log"
-
-            echo "DRYa: Opening file (in GUI windows):"
-            echo " > $v_choosen_file"
-            echo
-            echo "Is file going to sync with github? (No)"; sleep 2
-
-            cd $v_dir && /mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe $v_file 
-               echo -e "... File closed\n" 
-               cd ${v_REPOS_CENTER}/omni-log
-
-      else
-         # Otherwise, open emacs in terminal:
-            echo "Drya: Opening file (in Terminal Linux):"
-            echo " > $v_choosen_file"
-            echo
-            echo "Is file going to sync with github? (No)"; sleep 2
-
-            emacs $v_choosen_file 
-               echo -e "... File closed\n"  
-               cd ${v_REPOS_CENTER}/omni-log
-      fi
-   }
-   alias Om="om"  ## Alow capital letters too
-   alias OM="om"  ## Alow capital letters too
+   alias om="bash ${v_REPOS_CENTER}/omni-log/omni.sh"
 }
 
 function f_repository_3_sticks_alpha_bravo {
