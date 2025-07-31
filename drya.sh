@@ -1369,7 +1369,7 @@ function f_menu_edit_centralized_then_install {
    # Lista de opcoes para o menu `fzf`
       Lz1='Saved '; Lz2='edit-centralized-then-install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Edit/Install .init.el (emacs)'                                      
+      L2='2. Edit/Install .init.el (emacs) | `S 2`'                                      
       L1='1. Cancel'
 
       L0="SELECT 1: Menu X: "
