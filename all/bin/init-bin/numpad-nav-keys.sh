@@ -23,6 +23,8 @@
    alias 12="G v"
    alias 121="G v A ."
 
+   alias 13="G ^"
+
 
 function f_shutdown {
    # Desligar a maquina
