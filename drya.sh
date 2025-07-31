@@ -1363,6 +1363,31 @@ function f_install_presets {
 
 }
 
+function f_menu_edit_centralized_then_install {
+   # Menu to edit centralized files and then, ask the user if he wants to install
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saved '; Lz2='edit-centralized-then-install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Edit/Install .init.el (emacs)'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
+   
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh 2
+      [[    $v_list =~ "1. " ]] && echo "Canceled" 
+      unset  v_list
+
+}
+
 function f_menu_install_dot_files {
    Lz='`D dot install`'
 
@@ -1506,7 +1531,7 @@ function f_dot_files_menu {
       [[ $v_list =~ "7. " ]] && f_backup_helper
       [[ $v_list =~ "6. " ]] && f_dot_files_menu_edit_host_files
       [[ $v_list =~ "5. " ]] && echo uDev 
-      [[ $v_list =~ "4. " ]] && echo uDev 
+      [[ $v_list =~ "4. " ]] && f_menu_edit_centralized_then_install
       [[ $v_list =~ "3. " ]] && f_menu_install_dot_files
       [[ $v_list =~ "2. " ]] && f_dot_files_list_available
       [[ $v_list =~ "1. " ]] && echo "Canceled"

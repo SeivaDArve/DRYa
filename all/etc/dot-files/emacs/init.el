@@ -345,7 +345,7 @@
 ;;; Vim keybindings
 
     ;; Open lines
-       (global-set-key (kbd "C-o") (lambda () (interactive)(end-of-line)(insert "\n")))
+       (global-set-key (kbd "C-o")   (lambda () (interactive)(end-of-line)(insert "\n")))
        (global-set-key (kbd "C-M-o") (lambda () (interactive)(beginning-of-line)(insert "\n")(previous-line)))
 
 ;; uDev: Create hotkey to mimic 'M-x' and then the vim key
@@ -583,7 +583,7 @@ Usado nas Fx:
 
 
 ;; Funtion to allow TAB to print n empty spaces
-(defun tab-inserting-text ()
+   (defun tab-inserting-text ()
    (interactive)
    (insert "   "))
    (global-set-key (kbd "C-<tab>") 'tab-inserting-text)
@@ -824,7 +824,7 @@ uDev: <inserir-aqui: todas as Fx das quais esta Fx depende>"
 
 
 
-;;; dv- properties/end/properties-end
+;;; dv-properties/end/properties-end
    (defun dv-add-properties ()
      (interactive)
      "Creates a new empty line below and adds the text: :PROPERTIES:"
@@ -1066,7 +1066,7 @@ uDev:
 
 ;; uDev: Algumas abrev tem espcos, por esse motivo, talvez seja melhor criar so 1 funcao que peça interativamente o nome da funcao desejada. Pode incluir read-completion
 
-(defun dv-print-siigo-ot-type ()
+  (defun dv-print-siigo-ot-type ()
   (interactive)
   "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de ot do siigo. Esse documnto que é aberto tem também links de atalho programados em elisp que ao clicar, fazem preencher o buffer anterior com o texto desejado"
 
@@ -1081,7 +1081,7 @@ uDev:
       (switch-to-buffer-other-window (find-file-noselect "~/Repositories/upK/all/Documentos/tipos-de-ots-no-siigo.org"))))
 
 ;;; Apoio ao ensaio semanal das bombas de incendio da central de bombagem
-(defun dv-ensaio-semanal-CBI ()
+  (defun dv-ensaio-semanal-CBI ()
   (interactive)
   "Abre um buffer paralelo ao buffer atual (semelhante à hotkey C-x 2) e abre lá um ficheiro de texto com todos os tipos de info necessario para fazer o arranque as bombas de incendio"
 
@@ -1613,8 +1613,8 @@ This is used only for \"tipo:\""
 
 
 (defun dv-copy-next-http-to-clipboard ()
+  "Na linha atual, do cursor para a frente, procura pela palavra 'http'. Vai té ao proximo espaço em branco ou até ao final da linha. Se encontrar, copia o link inteiro para o clipboard. Se nao encontrar, volta ao inicio da linha e tenta de novo"
   (interactive)
-  "Na linha atual, procura texto do cursor para a frente com http(s). Vai té ao proximo espaço em branco ou até ao final da linha e copia esse link para o clipboard. Se nao encontrar, volta ao inicio da linha e volta a tentar "
   
   (let ((start-point (point))
         (found nil)
@@ -1624,7 +1624,7 @@ This is used only for \"tipo:\""
     (save-excursion
       (when (re-search-forward "\\(https?://[^ ]+\\)" line-end t)
         (kill-new (match-string 1))
-        (message "URL copiada: %s" (match-string 1))
+        (message "URL copiada (primeira tentativa): \n > %s" (match-string 2))
         (setq found t)))
     ;; Se não encontrou, tenta de novo do início da linha
     (unless found
@@ -1633,7 +1633,7 @@ This is used only for \"tipo:\""
         (setq search-start (point))
         (when (re-search-forward "\\(https?://[^ ]+\\)" line-end t)
           (kill-new (match-string 1))
-          (message "URL copiada (segunda tentativa): %s" (match-string 1))
+          (message "URL copiada (segunda tentativa): \n > %s" (match-string 1))
           (setq found t))))
     (unless found
       (message "Nenhuma URL http encontrada nesta linha."))))

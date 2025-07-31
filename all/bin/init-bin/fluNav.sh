@@ -1591,4 +1591,13 @@ function S {
 
 
       fi
-}   
+}  
+
+
+# Enable external scripts to use internal functions
+if [ -z $1 ]; then
+   echo 1>/dev/null
+
+elif [ $1 == "2" ]; then
+   f_edit__init_file_emacs__with_vim
+fi
