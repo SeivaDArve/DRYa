@@ -41,7 +41,7 @@
       L0="SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
@@ -56,6 +56,7 @@
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "6. " ]] && echo "uDev: $L6" 
       [[    $v_list =~ "5. " ]] && f_pin && echo "uDev"
       [[    $v_list =~ "4. " ]] && f_example
       [[    $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev" 
