@@ -34,6 +34,7 @@
 #        [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
 #
 #        # Examples: v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
+#        #           f_stroken
 #
 #     
 #     
@@ -224,6 +225,28 @@ function f_git_commit {
 
 
 
+
+function f_stroken {
+   # (Copiando de ezGIT)
+   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # While the app is in beta, this is usefull
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         #echo "~/.netrc exists"
+         echo "it exists" 1>/dev/null
+      else
+         f_talk; echo -n "Presenting \""
+           f_c3; echo -n "stroken"
+           f_rc; echo    "\""
+                 echo    " > Automatic sync (config file) not configured"
+                 echo -n "   Use: "
+           f_c2; echo    "seivadarve"
+           f_rc; echo -n           "   And: ";
+           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+           f_rc; echo
+      fi
+}
 
 
 
