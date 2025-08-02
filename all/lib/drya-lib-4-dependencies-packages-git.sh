@@ -31,9 +31,9 @@
 #
 #     # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
 #        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
-#        [[ -f $v_lib4 ]] && source $v_lib4 || read -s -n 1 -p "Error: drya-lib-4 does not exist"
+#        [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
 #
-#        v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
+#        # Examples: v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
 #
 #     
 #     
@@ -56,24 +56,40 @@
 #     # uDev: encrypt before push, decrypt after pull (using 3sab)
 #
 #
-#     # `upk` fxs: 
-#             Data de inicio
-#             Verbose: nome da repo
-#             ficheiro a ser editado
-#             git pull
-#             git status
-#             uDev: trigger, to stop multiple files to work on same file at once
-#             open file ...
-#             ... close file
-#             nome do ficheiro acabado de editar
-#             git push
-#             git status
-#             data de fim
-#             done
+#     # Repo `upk` sequence of fxs: 
+#                  Data de inicio
+#                  Verbose: nome da repo
+#                  ficheiro a ser editado
+#                  git pull
+#                  git status
+#                  uDev: trigger, to stop multiple files to work on same file at once
+#                  open file ...
+#                  ... close file
+#                  nome do ficheiro acabado de editar
+#                  git push
+#                  git status
+#                  data de fim
+#                  done
 #       
 
 # uDev: create fx that catches prompt arguments: $1 $2 $3 = $v_1 $v_2 $v_3
 # uDev: create fx to increment a var: i=(($i + 1))
+
+
+# ------------------------------------------------------------------
+# --+-- Above: Instructions on how to use on other scripts --+--
+# --+-- Below: Dependencies for this library itself        --+-- 
+# ------------------------------------------------------------------
+
+
+
+
+
+
+
+# uDev: copiar drya-lib-1 para um ficheiro temporario e usar de la
+#       ou entao, perguntar ao GPT se variaveis de scoope local resolvem o problema da lib-4 subescrever as variaveis do main script
+
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
@@ -90,9 +106,10 @@
 
 
 
-# ----------------------------------------------------------------------------------------
-# -- Above: Set up this library itself --+-- Below: functions to be internally called
-# ----------------------------------------------------------------------------------------
+# ---------------------------------------------------------
+# --+-- Above: Dependencies for this library itself        --+-- 
+# --+-- Below: functions to be internally called --+--
+# ---------------------------------------------------------
 
 
 
@@ -200,9 +217,10 @@ function f_git_commit {
 
 
 
-# -----------------------------------------------------------------------------------------------------------------
-# -- Above: functions to be internally called  --+--  Below: functions to be called externally by main scripts
-# -----------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+# --+-- Above: functions to be internally called                 --+--  
+# --+-- Below: functions to be called externally by main scripts --+--
+# -------------------------------------------------------------------------
 
 
 

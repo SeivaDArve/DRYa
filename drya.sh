@@ -21,7 +21,7 @@
 
 
 
-# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+# Sourcing DRYa Lib 1: Color schemes
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
@@ -29,8 +29,9 @@
    v_talk="DRYa: "
 
    # Examples: `db` (an fx to use during debug)
+   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 
-# Sourcing DRYa Lib 2
+# Sourcing DRYa Lib 2: Creating temporary files for support on scripts
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
@@ -1166,6 +1167,26 @@ function f_drya_help {
            echo "   Windows, Linux, Mac, Android, iPhone,"
            echo "   Raspberry Pi"
            echo
+           echo " > A failback system:"
+           echo "   It has dependencies, but if they do not exist,"
+           echo "   it can still run."
+           echo "   Can be used fully featured, but if the system"
+           echo "   does not have the features, then there are"
+           echo "   functions to recall and re-install all features"
+           echo "   again."
+           echo 
+           echo "   If enough commits are done, in one command"
+           echo "   It can put Arch linux (as an example)"
+           echo "   fully running, fully featured, fully configured"
+           echo "   after a fresh Installation of the OS on de HDD"
+           echo "   (at the taste of the user, for example D'Arve,"
+           echo "   the first developer)"
+           echo
+           echo " > It is not installed on /bin"
+           echo "   the user can run DRYa on any computer without"
+           echo "   asking for admin priviledges"
+           echo "   (It is s software for the current user)"
+           echo   
            echo " > All burocracy around the user of the app"
            echo "   is taken care of, without spy or malware"
            echo   
@@ -1186,6 +1207,23 @@ function f_drya_help {
            echo "   always to allow DRYa repo to be cloned"
            echo "   (if needed)"
            echo   
+           echo " > Example on repetitive task:"
+           echo '   1. `om` is an alias on ~/.bashrc that runs'
+           echo '      `alias om="bash ~/scripts/omni-script.sh`'
+           echo '      It has to be installed there for bash and'
+           echo '      the script has to be downloaded'
+           echo '   2. If both do not exist, then we can use'
+           echo '      `drya.sh` (alias `D`) to store `om` function'
+           echo '      now we can run `D om` and DRYa will'
+           echo '      FIRST verify the existence of "om" repository'
+           echo '      and if it does not exist, it is downloaded,'
+           echo '      installed and configured, so that, next time'
+           echo '      `om` alone as arguent $0 can be used'
+           echo '   3. DRYa ensured the existence and configuration'
+           echo '      of `om` software'
+           echo '   4. Supose now that we installed a new fresh OS'
+           echo '      on the HDD, DRYa will detect the current OS'
+           echo '      and download and configure properly'
            echo
            echo "Author: "
            echo " > David Rodrigues (Seiva D'Arve)"
@@ -1322,6 +1360,31 @@ function f_install_presets {
       [[ $v_list =~ "2. " ]] && f_quick_install_all_upk
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       unset v_list
+
+}
+
+function f_menu_edit_centralized_then_install {
+   # Menu to edit centralized files and then, ask the user if he wants to install
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saved '; Lz2='edit-centralized-then-install'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L2='2. Edit/Install .init.el (emacs) | `S 2`'                                      
+      L1='1. Cancel'
+
+      L0="SELECT 1: Menu X: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
+   
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh 2
+      [[    $v_list =~ "1. " ]] && echo "Canceled" 
+      unset  v_list
 
 }
 
@@ -1468,7 +1531,7 @@ function f_dot_files_menu {
       [[ $v_list =~ "7. " ]] && f_backup_helper
       [[ $v_list =~ "6. " ]] && f_dot_files_menu_edit_host_files
       [[ $v_list =~ "5. " ]] && echo uDev 
-      [[ $v_list =~ "4. " ]] && echo uDev 
+      [[ $v_list =~ "4. " ]] && f_menu_edit_centralized_then_install
       [[ $v_list =~ "3. " ]] && f_menu_install_dot_files
       [[ $v_list =~ "2. " ]] && f_dot_files_list_available
       [[ $v_list =~ "1. " ]] && echo "Canceled"
@@ -2308,7 +2371,7 @@ elif [ $1 == "gps" ]; then
       # Displays current GPS location using GPS as provider
       termux-location -p gps  # The termux gps provider is `gps` by default
 
-   if [ $2 == "network" ]; then 
+   elif [ $2 == "network" ]; then 
       # Displays current GPS location using network as provider
       termux-location -p network
 

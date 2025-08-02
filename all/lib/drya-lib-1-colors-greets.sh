@@ -36,6 +36,8 @@
 # uDev: Center text Horizontally + vertically
 # uDev: add fx to test if a given variable is number, letter or others
 
+# uDev: fx to read text like chat gpt, one character at a time, slow dump of text, like pokemon on gameboy, like in between each letter of text there is a command `sleep 0.1`. Text is not dumpt at once, it is slowly diumped
+
 function f_test_dependencie_tput {
    # Testar a existencia de ncurses-utils
 
