@@ -96,4 +96,8 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 " Mapear `CTRL-o` e `CTRL-O` para que abram novas linhas de texto (abaixo do cursor e acima do cursor, respetivamente) sem entrar em INSERT mode
    " uDev
 
+" Config para que o nome do ficheiro se mantenha visivel
+   " Help command (in vim): `:help laststatus` or `:help statusline`
+   set laststatus=2
+   "set statusline+=%F  "Para ver o caminho inteiro
 
