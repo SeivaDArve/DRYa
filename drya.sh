@@ -247,21 +247,9 @@ function f_calcular_tempo_decorrido_apos_data {
 function f_drya_welcome {
    # Repetir os comandos que criam a mensagem de apresentacao DRYa
    # (Esta sequencia de comandos ja existem em .../source-all-drya-files
+   # uDev: Criar uma fx que litralmente copia a fx em .../source-all-drya-files para um ficheiro temporario, depois executar esse ficheiro
 
-   echo "D help welcome" >> $v_drya_fzf_menu_hist
-
-   #v_drya_welcome_screen=~/.config/h.h/drya/drya-welcome 
-   #less $v_file
-
-   # Copiado de .../source-all-drya-files
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo "DRYa: Don't Repeat Yourself (app)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-   bash $trid_script startup-message
-   f_talk; echo "Startup Help..."
-           echo "      Aceder ao menu principal    : \`D .\`"
-           echo "      Aceder ao menu 'Instrucoes' : \`D help\`"
-           echo
-
-   neofetch -L 2>/dev/null
+   echo "uDev: copiar de source-all..."
 }
 
 function f_clone_info {
