@@ -13,3 +13,10 @@
    drya-lib-6-call-python-elisp-etc
    README.txt
 
+# Directory ./cat contents:
+   This direcotry contains a copy of each lib, but just the header, just the way it may be called by a sub-process
+
+   Example on how to use: 
+      1. A vimscript creates an output file after searching bash text, or bash functions
+      2. If that files need any drya-lib, then before bash runs the output file from vimscript, we have to concat `source drya-lib--` into the output file
+      3. So, we concat drya-lib-- into the first lines of the output file, then we run a bash command to execute 

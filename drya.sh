@@ -249,8 +249,45 @@ function f_drya_welcome {
    # (Esta sequencia de comandos ja existem em .../source-all-drya-files
    # uDev: Criar uma fx que litralmente copia a fx em .../source-all-drya-files para um ficheiro temporario, depois executar esse ficheiro
 
-   echo "uDev: copiar de source-all..."
+   # Ficheiro vimscript.vim (que vai servir de modelo para a proxima busca)
+      v_scr=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/vimscript_1_*
+      v_copy=~/.tmp/vimscript-1-copy.vim
+   
+   # Ficheiro que queremos depois pesquisar funcoes
+      v_file=${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+      v_out=~/.tmp/vimscript-1-output.txt
+      rm $v_out 2>/dev/null  # Remove o ficheoiro temporario caso ja haja algum com esse nome
+
+   # Ficheiro que tem apenas o cabecalho da drya-lib-1 para se concatenar ao ficheiro de output
+      v_lib_1=${v_REPOS_CENTER}/DRYa/all/lib/cat/cat-drya-lib-1-colors-greets.sh
+
+   # Fazer uma copia desse script. Para que possamos alterar o contudo daquilo que buscamos
+      mkdir -p ~/.tmp
+      cp $v_scr $v_copy
+
+   # Dentro da copia do ficheiro modelo (temporario), substituir o texto que pretendemos pesquisar
+      # Nota: vai ser substituido $v_default pela var $v_busca. A variavel $v_default existe no vimscript modelo (o original)
+      v_default="function f_busca_exemplo"
+      v_busca="function f_drya_welcome_screen"
+      v_fx=$(echo $v_busca | sed "s/function //g")  # Filtra e guarda o nome da fx sem o comando `function `
+
+      sed -i "s/$v_default/$v_busca/g" $v_copy 
+
+   cat $v_lib_1 >> $v_out
+   
+   # Agora que ja temos uma copia do vimscript personalizado, vamos usar em um ficheiro real
+      #vim -Es -S $v_copy $v_file
+       vim -Es -S $v_copy $v_file
+
+   # Envia uma linha de codigo que mande executar a fx do documento (so pode serexecutado apos o vim executar)
+      echo "$v_fx" >> $v_out
+
+      bash $v_out
+   
+   # Para o proposito de apresentar/executar o welcome screen, no final de executado, sao apagados todos os ficheiros temporarios (Serve tambem para debug)
+      #rm ~/.tmp/*
 }
+
 
 function f_clone_info {
    # Info given:
@@ -2148,6 +2185,14 @@ function f_help_installing_specific_packages {
 
 
 
+function f_source_drya_lib_1 {
+   # Sourcing DRYa Lib 1: Color schemes
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+
+      v_greet="DRYa"
+      v_talk="DRYa: "
+}
 
 
 # -------------------------------------------
@@ -2254,7 +2299,7 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    elif [ $2 == "all" ]; then 
       f_drya_help
 
-   elif [ $2 == "welcome" ]; then 
+   elif [ $2 == "welcome" ] || [ $2 == "w" ] ; then 
       # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
       echo "D help welcome" >> $v_drya_fzf_menu_hist
       f_drya_welcome
@@ -3247,7 +3292,10 @@ elif [ $1 == "lib" ]; then
       f_talk; echo "Listing how each can be installed"
               echo " > uDev"
 
-   elif [ $2 == "4" ]; then 
+   elif [ $2 == "1" ] || [ $2 == "source-drya-lib-1" ]; then 
+      f_source_drya_lib_1
+
+   elif [ $2 == "4" ] || [ $2 == "source-drya-lib-4" ]; then 
       # Make drya-lib-4 available on current terminal and use it for some purpouse
 
       # Source lib 4
