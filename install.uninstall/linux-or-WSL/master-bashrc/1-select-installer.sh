@@ -1,15 +1,30 @@
 #!/bin/bash
-# Title: DRYa installer script (with dependency `fzf`)
+clear
 
-# uDev: Test her if `fzf`is installed. If not, help installing
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
 
 function f_greet {
-   # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
-   # echo -e "plain \e[0;32m
+   # This fx ensures some correct ASCII greet is used
+   f_greet_standard || f_greet_failsafe
+}
 
-   function f_ascii_v1 {
+function f_greet_standard {
+   # If installed, use `figlet`
+
+   # This script could also ensure the standard.flf font is correctly installed.
+	# Command to find the standard PATH for figlet fonts: `figlet -I2`
+	
+   figlet -f standard.flf DRYa 2>/dev/null
+}
+
+function f_greet_failsafe {
+   # Display a nice ascii Title for DRYa
+
+   # Example: `echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"`
+   #          `echo -e "plain \e[0;32m`
+
+   function f_one {
       echo
       echo -e " \e[0;32m    ||\`		                   		"
       echo -e " \e[0;32m    ||				                  "
@@ -21,8 +36,7 @@ function f_greet {
       echo -e " \e[0m" 
    }
 
-   function f_ascii_v2 {
-
+   function f_two {
       echo ' ____  ___ __   __    '
       echo '|  _ \|  _ \ \ / /_ _ '
       echo '| | | | |_) \ V / _` |'
@@ -31,28 +45,16 @@ function f_greet {
       echo '					   '
    }
 
-    figlet DRYa 2>/dev/null || f_ascii_v1
-   #figlet DRYa 2>/dev/null || f_ascii_v2
+    f_one || f_two
 }
 
-function f_greet_alternative {
 
-   # This script could also ensure the standard.flf font is correctly installed.
-	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
-   figlet -f standard.flf DRYa 2>/dev/null
-}
+# uDev: due to bug which was found, the next line will fix it
+   f_greet
+	touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
+	echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
+	read -s -n 1 -p " > [Any key to continue]"
 
-function f_touch_bashrc {
-   # Making sure ~/.bashrc exists (Instalation is canceled otherwise)
-      f_greet
-      touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
-      echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
-      read -s -n 1 -p " > [Any key to continue]"
-}
-
-function f_test_fzf_existence {
-   echo "uDev: test fzf existence"
-}
 
 function f_title {
    echo -e " ( Initial Menu )\n"
@@ -247,6 +249,7 @@ function f_3rd_select {
       done
 }
 
+
 function f_4rd_select {
    # Fourth question:
       clear; f_greet; f_4th
@@ -256,7 +259,7 @@ function f_4rd_select {
          case $i in 
             "(yes) to continue")
                echo " All questions answered... Continuing the script"
-               read
+               read -sn1
 
                # After the 'select' loop breaks, it should carry this variable to indicate the next function
                   # That the process of reaching this line of code was sucessfull or not
@@ -268,20 +271,26 @@ function f_4rd_select {
 
                # Last, allow to script to flow by breaking all 'select loops'
                   v_break_select_loops="yes"; f_break_select_loops; eval $_break
-            ;;
+           ;;
+
            "(no) to abort")
              echo " Not ready to see magic... I see..."
              exit 1
            ;;
+
            "(help) to explain") 
              clear; f_greet
-               echo "Explanation for the Forth Question"
+             echo "Explanation for the Forth Question"
 
              # Explanation
                echo " Magic is the instalation of such usefull software"
-           ;;
-          "(back to Q3)") clear; f_greet; f_3rd; break ;;
-          *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_4th ;;
+          ;;
+
+          "(back to Q3)") clear; f_greet; f_3rd; break
+          ;;
+
+          *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_4th 
+          ;;
          esac
       done
 }
@@ -289,6 +298,7 @@ function f_4rd_select {
 function f_options_menu {
    clear; f_greet; echo "Options not ready yet"
 }
+
 
 function f_uninstall_1st {
    # First question when uninstalling DRYa
@@ -495,7 +505,7 @@ function f_define_env_vars {
 	  
    # Finding path to 'source-all-drya-files' (the file that contains reference for all other seiva's repositories when downloaded
 	  declare DRYa_HEART="all/source-all-drya-files"
-		 declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
+	  declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
 
 	  echo "The Heart of DRYa is located at:"
 	  echo " > $DRYa_HEART"
@@ -623,6 +633,9 @@ function f_delete_empty_lines {
 }
 
 function f_delete-previous-DRYa-installation {
+echo "-------------------------------------------------------------------"
+   echo "Debug: f_delete-previous-DRYa-installation"
+echo "-------------------------------------------------------------------"
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
@@ -654,6 +667,9 @@ function f_delete-previous-DRYa-installation {
 }
 
 function f_DRYa-install-me-at-bashrc {
+echo "-------------------------------------------------------------------"
+   echo "Debug: f_DRYa-install-me-at-bashrc"
+echo "-------------------------------------------------------------------"
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
@@ -669,16 +685,26 @@ function f_DRYa-install-me-at-bashrc {
 	   #$v_REPOS_CENTER
    
    echo "If you agree with this, press any key to concat this info into ~/.bashrc"
-   read -s -n 1
+   echo " > Or press Ctrl-c to abort"
+   read -sn 1
 
-   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
-	  # Pasting 1 empty line + 4 lines of code:
-	  echo ""														                                                   >> ~/.bashrc
-	  echo "# Load Seiva's main repo (one file that wakes all others)"                                    >> ~/.bashrc
-     echo "   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER #Dedicated dir for repos"        >> ~/.bashrc
-	  echo "   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART"			                                    >> ~/.bashrc
-	  echo "   source ${DRYa_HEART}"                              	                                       >> ~/.bashrc
-     #uDev: Decide a name for a variable to point at a file called DRYa-messages. And export it too
+   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily
+      v_dee="  # --drya-line-- "
+
+   # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
+	   # Pasting 1 empty line + 4 lines of code:
+
+      L1=""
+      L2="# Sourcing Seiva's main repo: DRYa"
+      L3="   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER  # Dedicated dir for repos"
+      L4="   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART  # setting one file that wakes all others"
+      L5="   source ${DRYa_HEART}"
+
+      echo "$L1"        >> ~/.bashrc
+      echo "$L2 $v_dee" >> ~/.bashrc
+      echo "$L3 $v_dee" >> ~/.bashrc
+      echo "$L4 $v_dee" >> ~/.bashrc
+      echo "$L5 $v_dee" >> ~/.bashrc
 
    # Process Finished
 	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
@@ -698,6 +724,9 @@ function f_install_DRYA_desktop_icon {
 
 
 function f_source_bashrc {
+echo "-------------------------------------------------------------------"
+   echo "Debug: f_source_bashrc"
+echo "-------------------------------------------------------------------"
 
    # Execute this file simply to source (reset) ~/.bashrc
    # description: This file contains 2 ways of sourcing ~/.bashrc (one correct and one wrong)
@@ -774,12 +803,8 @@ function f_decide_to_run {
 }
 
 function f_exec {
-   clear
 
-   f_greet || f_greet_alternative
-
-   f_touch_bashrc
-   f_test_fzf_existence 
+   f_greet
    f_menu
 
    # The previous function f_initial_statement brings a variable that allows 
@@ -787,4 +812,3 @@ function f_exec {
 	  f_decide_to_run
 }
 f_exec
-

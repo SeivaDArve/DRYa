@@ -1,6 +1,7 @@
 #!/bin/bash
-clear
+# Title: DRYa installer script (with dependency `fzf`)
 
+# uDev: Test here if `fzf`is installed. If not, help installing
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
 
@@ -8,22 +9,30 @@ function f_greet {
    # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
    # echo -e "plain \e[0;32m
 
-	echo
-	echo -e " \e[0;32m    ||\`		                   		"
-	echo -e " \e[0;32m    ||				                  "
-	echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
-	echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
-	echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
-	echo -e " \e[0;32m                 ,  |'		         "
-	echo -e " \e[0;32m                   ''		         "
-   echo -e " \e[0m" 
+   function f_ascii_v1 {
+      echo
+      echo -e " \e[0;32m    ||\`		                   		"
+      echo -e " \e[0;32m    ||				                  "
+      echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
+      echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
+      echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
+      echo -e " \e[0;32m                 ,  |'		         "
+      echo -e " \e[0;32m                   ''		         "
+      echo -e " \e[0m" 
+   }
 
-   #echo ' ____  ___ __   __    '
-   #echo '|  _ \|  _ \ \ / /_ _ '
-   #echo '| | | | |_) \ V / _` |'
-   #echo '| |_| |  _ < | | (_| |'
-   #echo '|____/|_| \_\|_|\__,_|'
-   #echo '					   '
+   function f_ascii_v2 {
+
+      echo ' ____  ___ __   __    '
+      echo '|  _ \|  _ \ \ / /_ _ '
+      echo '| | | | |_) \ V / _` |'
+      echo '| |_| |  _ < | | (_| |'
+      echo '|____/|_| \_\|_|\__,_|'
+      echo '					   '
+   }
+
+    figlet DRYa 2>/dev/null || f_ascii_v1
+   #figlet DRYa 2>/dev/null || f_ascii_v2
 }
 
 function f_greet_alternative {
@@ -33,12 +42,17 @@ function f_greet_alternative {
    figlet -f standard.flf DRYa 2>/dev/null
 }
 
-# uDev: due to bug which was found, the next line will fix it
-   f_greet
-	touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
-	echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
-	read -s -n 1 -p " > [Any key to continue]"
+function f_touch_bashrc {
+   # Making sure ~/.bashrc exists (Instalation is canceled otherwise)
+      f_greet
+      touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
+      echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
+      read -s -n 1 -p " > [Any key to continue]"
+}
 
+function f_test_fzf_existence {
+   echo "uDev: test fzf existence"
+}
 
 function f_title {
    echo -e " ( Initial Menu )\n"
@@ -233,7 +247,6 @@ function f_3rd_select {
       done
 }
 
-
 function f_4rd_select {
    # Fourth question:
       clear; f_greet; f_4th
@@ -276,7 +289,6 @@ function f_4rd_select {
 function f_options_menu {
    clear; f_greet; echo "Options not ready yet"
 }
-
 
 function f_uninstall_1st {
    # First question when uninstalling DRYa
@@ -362,9 +374,6 @@ function f_menu {
 }
 
 function f_discard_every_unused_function {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_discard_every_unused_function"
-echo "-------------------------------------------------------------------"
 
 #	# Evaluate the answer given by the user
 #	   if [[ $v_unload == "1" ]]; then
@@ -614,9 +623,6 @@ function f_delete_empty_lines {
 }
 
 function f_delete-previous-DRYa-installation {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_delete-previous-DRYa-installation"
-echo "-------------------------------------------------------------------"
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
@@ -648,9 +654,6 @@ echo "-------------------------------------------------------------------"
 }
 
 function f_DRYa-install-me-at-bashrc {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_DRYa-install-me-at-bashrc"
-echo "-------------------------------------------------------------------"
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
@@ -695,9 +698,6 @@ function f_install_DRYA_desktop_icon {
 
 
 function f_source_bashrc {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_source_bashrc"
-echo "-------------------------------------------------------------------"
 
    # Execute this file simply to source (reset) ~/.bashrc
    # description: This file contains 2 ways of sourcing ~/.bashrc (one correct and one wrong)
@@ -774,11 +774,12 @@ function f_decide_to_run {
 }
 
 function f_exec {
-#echo "-------------------------------------------------------------------"
-#   echo "Debug: f_exec"
-#echo "-------------------------------------------------------------------"
+   clear
 
    f_greet || f_greet_alternative
+
+   f_touch_bashrc
+   f_test_fzf_existence 
    f_menu
 
    # The previous function f_initial_statement brings a variable that allows 
@@ -786,3 +787,4 @@ function f_exec {
 	  f_decide_to_run
 }
 f_exec
+
