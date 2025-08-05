@@ -1068,8 +1068,8 @@ function V {
          #       3. Pedir um pin, depois clonar
          #       4. Verificar a existencia de algum dot-file (uDev) que faca o bypass as perguntas e que clone logo (uso direto)
 
-         if   [ -z $2      ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls -p
-         elif [ $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls -p
+         if   [ -z $2         ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
+         elif [    $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
 
