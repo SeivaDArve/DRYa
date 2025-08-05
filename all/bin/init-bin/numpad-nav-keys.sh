@@ -33,6 +33,12 @@ function f_shutdown {
       sleep $v_time && shutdown --poweroff
 }
 
+function f_restart {
+   # Restart a maquina
+   #shutdown --reboot
+   echo "hit"
+}
+
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
@@ -55,16 +61,17 @@ function f_fzf_power_options {
       v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 " | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ "A. " ]] && echo "A Abortar os encerramentos" && shutdown -c
-      [[ $v_list =~ "T. " ]] && echo "uDev T."
-      [[ $v_list =~ "C. " ]] && clear && cmatrix && v_pin_txt="Para regressar ao terminal, introduza: " && f_pin
-      [[ $v_list =~ "6. " ]] && source ~/.bashrc
-      [[ $v_list =~ "8. " ]] && echo "Reiniciar" && f_restart  # Restart à maquina
-      [[ $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate
-      [[ $v_list =~ "4. " ]] && echo "Suspender" && systemctl suspend
-      [[ $v_list =~ "0. " ]] && echo "Desligar"  && f_shutdown
-      [[ $v_list =~ "5. " ]] && echo "uDev 5"
-      [[ $v_list =~ "1. " ]] && echo "Cancelado" 
+      [[    $v_list =~ "A. " ]] && echo "A Abortar os encerramentos" && shutdown -c
+      [[    $v_list =~ "T. " ]] && echo "uDev T."
+      [[    $v_list =~ "9. " ]] && clear && cmatrix && v_pin_txt="Para regressar ao terminal, introduza: " && f_pin
+      [[    $v_list =~ "6. " ]] && source ~/.bashrc
+      [[    $v_list =~ "8. " ]] && echo "Reiniciar" && echo "hit 1" && f_restart && echo "hit 2"  # Restart à maquina
+      [[    $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate 
+      [[    $v_list =~ "4. " ]] && echo "Suspender" && systemctl suspend
+      [[    $v_list =~ "0. " ]] && echo "Desligar"  && f_shutdown
+      [[    $v_list =~ "5. " ]] && echo "uDev 5"
+      [[    $v_list =~ "1. " ]] && echo "Cancelado" 
+      unset  v_list
 }
 
 
