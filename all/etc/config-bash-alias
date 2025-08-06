@@ -53,8 +53,6 @@ alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # t
 
 alias xdg=xdg-open
 
-alias hh="cd ~/.config/h.h"
-
 function wsl {
    # fx that uses `cd` to navigate to windows directories (when using WSL2)
 

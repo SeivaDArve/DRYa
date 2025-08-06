@@ -1,43 +1,76 @@
 #!/bin/bash
-clear
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
 
 function f_greet {
-   # Example: #echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"
-   # echo -e "plain \e[0;32m
-
-	echo
-	echo -e " \e[0;32m    ||\`		                   		"
-	echo -e " \e[0;32m    ||				                  "
-	echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
-	echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
-	echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
-	echo -e " \e[0;32m                 ,  |'		         "
-	echo -e " \e[0;32m                   ''		         "
-   echo -e " \e[0m" 
-
-   #echo ' ____  ___ __   __    '
-   #echo '|  _ \|  _ \ \ / /_ _ '
-   #echo '| | | | |_) \ V / _` |'
-   #echo '| |_| |  _ < | | (_| |'
-   #echo '|____/|_| \_\|_|\__,_|'
-   #echo '					   '
+   # This fx ensures some correct ASCII greet is used
+   clear
+   f_greet_standard || f_greet_failsafe
 }
 
-function f_greet_alternative {
+function f_greet_standard {
+   # If installed, use `figlet`
 
    # This script could also ensure the standard.flf font is correctly installed.
-	  # To find the standard PATH for figlet fonts you could iddue the command '$ figlet -I2'
+	# Command to find the standard PATH for figlet fonts: `figlet -I2`
+	
    figlet -f standard.flf DRYa 2>/dev/null
 }
 
-# uDev: due to bug which was found, the next line will fix it
-   f_greet
-	touch ~/.bashrc && echo "Existence of ~/.bashrc confirmed"  ## uDev: This line must be put on it's right place, not at the beggining of the script. The bug that was found was the inability to install DRYa for the simple reason that the file ~/.bashrc did not exist
-	echo " " >> ~/.bashrc                             ## because there is a bug at: f_delete_empty_lines where if there is nithing at the file, this function will not proceed
-	read -s -n 1 -p " > [Any key to continue]"
+function f_greet_failsafe {
+   # Display a nice ascii Title for DRYa
+
+   # Example: `echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"`
+   #          `echo -e "plain \e[0;32m`
+
+   function f_one {
+      echo
+      echo -e " \e[0;32m    ||\`		                   		"
+      echo -e " \e[0;32m    ||				                  "
+      echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
+      echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
+      echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
+      echo -e " \e[0;32m                 ,  |'		         "
+      echo -e " \e[0;32m                   ''		         "
+      echo -e " \e[0m" 
+   }
+
+   function f_two {
+      echo ' ____  ___ __   __    '
+      echo '|  _ \|  _ \ \ / /_ _ '
+      echo '| | | | |_) \ V / _` |'
+      echo '| |_| |  _ < | | (_| |'
+      echo '|____/|_| \_\|_|\__,_|'
+      echo '					   '
+   }
+
+    f_one || f_two
+}
+
+function f_internal_vars {
+   v_talk="DRYa: select-installer: "
+}
+
+function f_talk {
+   echo -n "$v_talk"
+}
+
+function f_debug_bashrc_existence {
+   # To avoid some bugs on unexistence of ~/.bashrc
+
+	touch ~/.bashrc
+
+   # If file ~/.bashrc does not exist, DRYa cannot be installed
+      [[ -f ~/.bashrc ]] && f_talk && ((echo "File ~/.bashrc exists" ||  echo "File ~/.bashrc doe not exist") || exit 1)
+
+   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors
+   # uDev: Sempre que este installer é aberto, esta linha vai adicionando continuamente linhas vazias spam no fundo do ficheiro desnecessariamente. Precisa ser corrigido
+      echo " " >> ~/.bashrc
+
+   # Waiting for user to read
+      read -sn 1 -p " > [Any key to continue]"
+}
 
 
 function f_title {
@@ -137,14 +170,14 @@ function f_1st_select {
                     echo "   where DRYa and all other Seiva's Software"
                     echo "   can be installed (e.g. /home/Repositories)"
                     echo
-                    read -s -n 1
+                    read -sn 1
                     clear; f_greet ; f_1st
                ;;
                "(back to Menu)")
                   clear; f_greet; f_title; break
                ;;
                "exit") echo "Bye"; exit 0 ;;
-               *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_1st ;;
+               *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_1st ;;
               esac
          done
 }
@@ -183,7 +216,7 @@ function f_2nd_select {
          "(back to Q1)")
             clear; f_greet; f_1st; break
          ;;
-         *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_2nd ;;
+         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_2nd ;;
         esac
       done
 
@@ -228,7 +261,7 @@ function f_3rd_select {
           ;;
           "(back to Q2)") clear; f_greet; f_2nd; break
           ;;
-          *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_3rd ;;
+          *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_3rd ;;
          esac
       done
 }
@@ -243,7 +276,7 @@ function f_4rd_select {
          case $i in 
             "(yes) to continue")
                echo " All questions answered... Continuing the script"
-               read
+               read -sn1
 
                # After the 'select' loop breaks, it should carry this variable to indicate the next function
                   # That the process of reaching this line of code was sucessfull or not
@@ -255,20 +288,26 @@ function f_4rd_select {
 
                # Last, allow to script to flow by breaking all 'select loops'
                   v_break_select_loops="yes"; f_break_select_loops; eval $_break
-            ;;
+           ;;
+
            "(no) to abort")
              echo " Not ready to see magic... I see..."
              exit 1
            ;;
+
            "(help) to explain") 
              clear; f_greet
-               echo "Explanation for the Forth Question"
+             echo "Explanation for the Forth Question"
 
              # Explanation
                echo " Magic is the instalation of such usefull software"
-           ;;
-          "(back to Q3)") clear; f_greet; f_3rd; break ;;
-          *) echo " That option is invalid. Press ENTER to clear screen"; read; clear; f_greet; f_4th ;;
+          ;;
+
+          "(back to Q3)") clear; f_greet; f_3rd; break
+          ;;
+
+          *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_4th 
+          ;;
          esac
       done
 }
@@ -283,7 +322,7 @@ function f_uninstall_1st {
    echo "Uninstalling Done!"
 }
 
-function f_underscore_creator {
+function f_hzl {
    # At every 'select' menu, I want the first 
       # and last option of the menu to be an
       # horizontal split.
@@ -299,7 +338,7 @@ function f_underscore_creator {
          v_cols="$COLUMNS"
          let "v_count = $v_cols - 5"
             #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
-            #read
+            #read -sn1
 
          # You may choose the apropriate symbol here
             v_underscore="+"
@@ -313,7 +352,7 @@ function f_underscore_creator {
 
          # The result is an horizontal line
             #echo "var is $v_underscoreCount"
-            #read
+            #read -sn1
             v_line=$v_underscoreCount
 }
 
@@ -321,7 +360,7 @@ function f_menu {
    # The first menu of the Installer/Uninstaller
 
    # The following function gives the variable v_line (vertical line to use as an option inside 'select' menu)
-      f_underscore_creator
+      f_hzl
 
    # Display a menu, using the 'select' in-built bash loop function
       clear; f_greet; f_title
@@ -346,12 +385,12 @@ function f_menu {
                   clear; f_greet; 
                   echo "In this bash menu, you can clear the screen if unwanted output in displayed"
                   echo "By entering any unexpected input and pressing enter 2x"
-                  read -s -n 1
+                  read -sn 1
                   clear; f_greet; 
                ;;
                Instructions) 
                   echo "For instalation instructions, please open th README.md file"
-                  read -s -n 1
+                  read -sn 1
                   clear; f_greet; 
                ;;
                *) clear; f_greet; f_title ;;
@@ -362,17 +401,13 @@ function f_menu {
 }
 
 function f_discard_every_unused_function {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_discard_every_unused_function"
-echo "-------------------------------------------------------------------"
 
 #	# Evaluate the answer given by the user
 #	   if [[ $v_unload == "1" ]]; then
 #
 #			 echo 
 #			 echo " WILL NOT RUN"
-#			 read
-#			 read
+#			 read -sn1
 
 		 # Discard every function if the instalation is to be aborted
 			unset f_cut_4_fields_relative_path
@@ -472,7 +507,7 @@ function f_cut_4_fields_relative_path {
 
    # Display the entire result of this script:
 	  echo "found DRYa at: $found_DRYa_at"
-     read -s -n 1 -t 4
+     read -sn 1 -t 4
 }
 
 function f_define_env_vars {
@@ -486,7 +521,7 @@ function f_define_env_vars {
 	  
    # Finding path to 'source-all-drya-files' (the file that contains reference for all other seiva's repositories when downloaded
 	  declare DRYa_HEART="all/source-all-drya-files"
-		 declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
+	  declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
 
 	  echo "The Heart of DRYa is located at:"
 	  echo " > $DRYa_HEART"
@@ -531,7 +566,7 @@ function f_explain {
 
 function f_create_backup {
    echo "Press enter to start the backup sequence"
-   read -s -n 1
+   read -sn 1
 
    # Search and delete the entry for DRYa inside ~/.bashrc
 	  
@@ -539,28 +574,28 @@ function f_create_backup {
 		 while true
 		   do
 			   echo -n " > Do you want a backup to be created from your ~/.bashrc? (y/n) "
-			   read -n 1 -s v_ans
+			   read -sn 1 v_ans
 		      echo
 
             case $v_ans in
                y | Y)
                   cp ~/.bashrc ~/.bashrc.bak
                   echo "	> file ~/.bashrc copied to ~/.bashrc.bak (ENTER to continue)"
-                  read -s -n 1
+                  read -sn 1
                   break
                ;;
                n | N)
                   echo "	 > You are choosing not to create a backup"
                   echo "	 > Ctrl + C:  to CANCEL, or"
                   echo "	 > 3 x ENTER: to CONTINUE"
-                  read -s -n 1
-                  read -s -n 1
-                  read -s -n 1
+                  read -sn 1
+                  read -sn 1
+                  read -sn 1
                   break
                ;;
                *)
                   echo " > Please choose a valid Option (ENTER to continue)"
-                  read -s -n 1
+                  read -sn 1
                   echo
                ;;
             esac
@@ -569,7 +604,7 @@ function f_create_backup {
 
 function f_delete_empty_lines {
    echo "Press enter to start the backup removal of empty lines sequence"
-   read -s -n 1
+   read -sn 1
 
    # Deleting empty lines found only at the bottom of the file 
       # It deletes one by one with a while loop (while the last line is found empty)
@@ -608,15 +643,12 @@ function f_delete_empty_lines {
 		  done
 
 		  echo "Done removing empty lines. PRESS any key"
-	      read -s -n 1
+	      read -sn 1
 
 		fi
 }
 
 function f_delete-previous-DRYa-installation {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_delete-previous-DRYa-installation"
-echo "-------------------------------------------------------------------"
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
@@ -625,11 +657,11 @@ echo "-------------------------------------------------------------------"
 	  echo " > to remove the 4 lines of code maybe present inside"
 	  echo "   ~/.bashrc from a possible previous DRYa instalation?"
 	  echo "   (ignore if you never installed DRYa before)"
-	  read -s -n 1 -p " > Remove? (y/n)" v_ans
+	  read -sn 1 -p " > Remove? (y/n)" v_ans
 	  
 	  case $v_ans in
 		 y | Y)
-           read -s -n 1 -p " Press ENTER to proceed to delete previous DRYa instalation"
+           read -sn 1 -p " Press ENTER to proceed to delete previous DRYa instalation"
            # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
              # and deleting also the next 4 lines which are the actual code
              sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
@@ -648,13 +680,10 @@ echo "-------------------------------------------------------------------"
 }
 
 function f_DRYa-install-me-at-bashrc {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_DRYa-install-me-at-bashrc"
-echo "-------------------------------------------------------------------"
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
-      #read -s -n 1
+      #read -sn 1
 	  
    # Defining the environment variable:
 	  DRYa_HEART="${found_DRYa_at}/all/source-all-drya-files"
@@ -666,16 +695,26 @@ echo "-------------------------------------------------------------------"
 	   #$v_REPOS_CENTER
    
    echo "If you agree with this, press any key to concat this info into ~/.bashrc"
-   read -s -n 1
+   echo " > Or press Ctrl-c to abort"
+   read -sn 1
 
-   # Pasting a new entry inside ~/.bashrc (these 2 lines are responsible to load every other Seiva's Repositories
-	  # Pasting 1 empty line + 4 lines of code:
-	  echo ""														                                                   >> ~/.bashrc
-	  echo "# Load Seiva's main repo (one file that wakes all others)"                                    >> ~/.bashrc
-     echo "   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER #Dedicated dir for repos"        >> ~/.bashrc
-	  echo "   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART"			                                    >> ~/.bashrc
-	  echo "   source ${DRYa_HEART}"                              	                                       >> ~/.bashrc
-     #uDev: Decide a name for a variable to point at a file called DRYa-messages. And export it too
+   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily
+      v_dee="  # --drya-line-- "
+
+   # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
+	   # Pasting 1 empty line + 4 lines of code:
+
+      L1=""
+      L2="# Sourcing Seiva's main repo: DRYa"
+      L3="   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER  # Dedicated dir for repos"
+      L4="   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART  # setting one file that wakes all others"
+      L5="   source ${DRYa_HEART}"
+
+      echo "$L1"        >> ~/.bashrc
+      echo "$L2 $v_dee" >> ~/.bashrc
+      echo "$L3 $v_dee" >> ~/.bashrc
+      echo "$L4 $v_dee" >> ~/.bashrc
+      echo "$L5 $v_dee" >> ~/.bashrc
 
    # Process Finished
 	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
@@ -695,9 +734,6 @@ function f_install_DRYA_desktop_icon {
 
 
 function f_source_bashrc {
-echo "-------------------------------------------------------------------"
-   echo "Debug: f_source_bashrc"
-echo "-------------------------------------------------------------------"
 
    # Execute this file simply to source (reset) ~/.bashrc
    # description: This file contains 2 ways of sourcing ~/.bashrc (one correct and one wrong)
@@ -734,7 +770,7 @@ function f_run_every_used_function {
    # Installer sequence
    
    echo "Press enter to start the installation sequence"
-   read -s -n 1
+   read -sn 1
 
          #f_install_DRYA_desktop_icon
          #f_install_figlet_font
@@ -761,12 +797,12 @@ function f_decide_to_run {
 
 	  elif [ $load_remaining_functions == "yes" ]; then
 		 echo "permission to run installer: Yep"
-		 read
+		 read -sn1
 		 f_run_every_used_function
 
 	  elif [ $load_remaining_functions == "no" ]; then
 		 echo "permission to run installer: nope"
-		 read
+		 read -sn1
 		 #f_discard_every_unused_function
 
 	  fi
@@ -774,11 +810,10 @@ function f_decide_to_run {
 }
 
 function f_exec {
-#echo "-------------------------------------------------------------------"
-#   echo "Debug: f_exec"
-#echo "-------------------------------------------------------------------"
 
-   f_greet || f_greet_alternative
+   f_internal_vars
+   f_greet
+   f_debug_bashrc_existence
    f_menu
 
    # The previous function f_initial_statement brings a variable that allows 

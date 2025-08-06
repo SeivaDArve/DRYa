@@ -1,7 +1,7 @@
 #!/bin/bash
 # Title: DRYa installer script (with dependency `fzf`)
 
-# uDev: Test her if `fzf`is installed. If not, help installing
+# uDev: Test here if `fzf`is installed. If not, help installing
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
 
