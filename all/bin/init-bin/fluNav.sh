@@ -672,6 +672,7 @@ function h {
    # For: wsl, tails, linux, android
 
    # uDev: passar esta fx para `V .` Exemplo: `V . 1`
+   #       ou se junta com `V mb` ambos passavam a `V v`
 
    L1="$HOME"                    # Linux Default home dir for current user. (For TAILS it is anmnesic and it is always empty)
    L2='/mnt/c"  '            # On windows, this navigates to disk root 'C:\'
@@ -1125,7 +1126,7 @@ function V {
          # Use 6:  `V .      `    # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
          # Use 7:  `V ..     `    # Navigate to last dir in the history list
          # Use 8:  `V ...    `    # Read the history file and select one path from there
-         # Use 9:  `V <dir>  `    # Go to existent dir at current pwd
+         # Use 9:  `V ....   `    # ...
    '
    }
 
@@ -1394,20 +1395,8 @@ function V {
          # Edit file manually 
             vim $v_fluNav_V_hist_file
 
-   # Implementation of Use 9:
       else 
-         # mkdir -p ~/.tmp
-         # ls > ~/.tmp/found.txt
-         # grep -n "$1" ~/.tmp/found
-         # wc -l ~/.tmp/found
-
-         v_found=$(ls | grep $1)
-         echo Found: $v_found
-         if [[ $? == "0" ]]; then
-            cd $v_found && ls -p
-         fi
-         #uDev: use to command '$ file' to exclude all non directories
-         #uDev: when there are 2 or more items found, allow the user to input a number as $2
+         echo DRYa: fluNav: V: file/dir/option not found. Found this instead: $v_found
    fi
 
 }
