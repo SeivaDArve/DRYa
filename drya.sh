@@ -1438,13 +1438,13 @@ function f_menu_install_dot_files {
     #L0="1.  | .bashrc (redundante, ja existe)
     #L0="1.  | .logout (logout-all-drya-file)
 
-     L4="4.  | Install | PRESETS"
-     L3="3.  | Install | ALL "
+     L4="4.  | Install | PRESETS" # uDev: Presets tem de passar para a fx f_dot_files_menu
+     L3="3.  | Install | ALL "    # uDev: esta opc tem de passar para --invert-selection--
 
-     L2='2.  -- Invert Selection --'
+     L2='2.  -- Invert-Selection --'
      L1="1.  Cancel "
 
-   L0="DRYa: dot-files install.uninstall menu: "
+   L0="DRYa: dot-files install menu: "
 
    v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz" | fzf --cycle --pointer=">" -m --prompt="$L0")
 
@@ -1471,19 +1471,21 @@ function f_dot_files_menu_edit_host_files_termux_properties {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='uDev'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L7='7. Reload     | termux-reload-settings'
       L6='6. Toggle     | .hushlogin termux verbose output at terminal startup'
       L5='5. Toggle     | (uDev) termux Extra Keys On/Off'
       L4='4. Toggle     | (uDev) termux.properties volume keys'
       L3='3. Edit       | termux.properties file'
-      L2='2. Manipulate | Termux Properties as menu (uDev)'
+      L2='2. Manipulate | (uDev) Termux Properties as menu'
       L1='1. Cancel'
 
-      L0="SELECT 1: Edit @Host files: "
+      L0="DRYa: vlm: Edit termux files @Host: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "7. " ]] && termux-reload-settings
       [[ $v_list =~ "6. " ]] && f_toggle_termux_hushlogin
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && echo "uDev"
@@ -1499,7 +1501,7 @@ function f_dot_files_menu_edit_host_files {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='edit only host'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L2='2. Menu | Termux'                                      
+      L2='2. Menu | Termux @Host'                                      
       L1='1. Cancel'
 
       L0="DRYa: Edit @Host files: "
@@ -1539,7 +1541,11 @@ function f_dot_files_menu {
       L5='5. Edit | Centralized files (only @DRYa) |'
       L4='4. Edit | Centralized  > then >  Install |'
 
-      L3="3. Menu | install.uninstall | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+     #L3="3. Menu | Uninstall PRESETS | 
+     #L3="3. Menu | Install   PRESETS | 
+
+     #L3="3. Menu | Uninstall         | $L3b" # Variable L3b may be set and may be empty to give more info to the user
+      L3="3. Menu | Install           | $L3b" # Variable L3b may be set and may be empty to give more info to the user
       L2='2. List | Available         |'      # uDev: Test if centralized DRYa dot-files were modified and are available to replace old ones at the current system
       L1='1. Cancel'
 
@@ -2579,7 +2585,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
          L12='12. Help | Factory reset + ghost (in.out)'
-         L11='11. Menu | install | PRESETS              | `D ui pr`'
+         L11='11. Menu | Install | PRESETS              | `D ui pr`'
          L10='10. Menu | helper  | backups              | `D ui bk`'
           L9='9.  Menu |  clone  | repos                | `D cln`'
           L8='8.  Menu | install | specific packages    | `D iu p` | `D iu <package>`'
