@@ -55,6 +55,7 @@ alias xdg=xdg-open
 
 function wsl {
    # fx that uses `cd` to navigate to windows directories (when using WSL2)
+   # uDev: wsl vai passar a ser um alias que executa `V . wsl` em fluNav
 
    if [ -z $2 ]; then
       cd /mnt/c/
