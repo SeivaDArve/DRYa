@@ -671,6 +671,8 @@ function h {
    # Key to navigate home
    # For: wsl, tails, linux, android
 
+   # uDev: passar esta fx para `V .` Exemplo: `V . 1`
+
    L1="$HOME"                    # Linux Default home dir for current user. (For TAILS it is anmnesic and it is always empty)
    L2='/mnt/c"  '            # On windows, this navigates to disk root 'C:\'
    L3='/mnt/c/Users/$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")'  # Pesquisa o utilizador e naveC:\%userprofile%
@@ -720,7 +722,9 @@ function h {
    fi
 }
 
-alias hh="mkdir -p ~/.config/h.h && cd ~/.config/h.h"
+
+# uDev: passar esta fx para `V`
+   alias hh="mkdir -p ~/.config/h.h && cd ~/.config/h.h"
 
 function f_menu_fzf_S {
    # Menu Quick file edit (para quando S nao recebe argumentos no terminal)
