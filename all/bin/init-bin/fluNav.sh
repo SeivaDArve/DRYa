@@ -447,18 +447,46 @@ function . {
 
    elif [ $1 == "G" ]; then 
       # If arg 1 is 'G' then navigate to the center of seiva's repos
-      # uDev: Se houver uma pasta ou ficheiro com o nome "G", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
+      # Se houver uma pasta/ficheiro com o nome "G", precisa ser aberto com `. ... G`
       cd $v_REPOS_CENTER
 
    elif [ $1 == "t" ]; then 
       # If arg 1 is 't' then use `tree` in current dir
-      # uDev: Se houver uma pasta ou ficheiro com o nome "t", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
-      # uDev: dizer em drya-status-messages qual é a depenencia (para o caso de dar erro por falta dela). Uma vez que é para isso que serve drya-status-message, é para ajudar no debug
-      echo uDev
+      # Se houver uma pasta/ficheiro com o nome "t", precisa ser aberto com `. ... t`
+
+      f_talk; echo 'fluNav: `tree` (arvore de ficheiros e pastas):'
+      tree || echo 'fluNav: `tree` nao funcionou'
 
    elif [ $1 == "du" ]; then 
-      # If arg 1 is 'dy' then use `du -h` para sabe quando espaco de memoria ocupa a pasta atual (ou ficheiro)
-      echo uDev
+      # If arg 1 is 'du' then use `du -h` para sabe quando espaco de memoria ocupa a pasta atual (ou ficheiro)
+      # Se houver uma pasta/ficheiro com o nome "du", precisa ser aberto com `. ... du`
+
+      f_talk; echo 'fluNav: `du -h` (disk usage, human readable):'
+      du -h || echo 'fluNav: `du -h` nao funcionou'
+
+   elif [ $1 == "..." ]; then 
+      # Se houver pastas ou ficheiros com os nomes:
+      #  > "t"
+      #  > "G" 
+      #  > "du" 
+      # entao o argumento  `...` faz com que seja literal. Para abrir esses ficheiros, usamos:
+      #  > `. ... t`
+      #  > `. ... G`
+      #  > `. ... du`
+    
+      if [ $1 == "G" ]; then 
+         # Abrir literalmente o ficheiro/pasta com o nome "G"
+         cd G 2>/dev/null || vim G
+
+      elif [ $1 == "t" ]; then 
+         # Abrir literalmente o ficheiro/pasta com o nome "t"
+         cd t 2>/dev/null || vim t
+
+      elif [ $1 == "du" ]; then 
+         # Abrir literalmente o ficheiro/pasta com o nome "du"
+         cd du 2>/dev/null || vim du
+
+      fi
 
    else
       # If argument is given, do the following:
@@ -466,18 +494,21 @@ function . {
       #  2. If arg is a file:      `vim` to edit the file
       #  3. Also runs a script that fills a file $v_date_now = ~/.config/h.h/drya/drya_date_now that `vim` with '.vimrc' can use to paste into files with the command `Z..`
 
+      # uDev: instead of using `vim` detect which text editor is selected by `E` and `e` and use it instead. If they are not clear only then use vim for sure
+      #       And if argument is .jpg on termux, open accordingly 
+
       # Create a file with the current date on it
          bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh f
 
-      PWD=$(pwd) && \
-      BASENAME=$(basename $PWD) && \
-      cd $1 2>/dev/null \
+      PWD=$(pwd) \
+      && BASENAME=$(basename $PWD) \
+      && cd $1 2>/dev/null \
       && f_talk \
       && echo "Listing files at:" \
       && echo " > ./$BASENAME" \
       && echo \
       && ls -p \
-      || for i in $@; do vim $i; done  # uDev: if if is .jpg on termux, open accordingly 
+      || for i in $@; do vim $i; done  
 
    fi
 }
@@ -564,7 +595,14 @@ function ., {
    ls -Ap
 }
 
-function E {
+#  
+#  function e { 
+#     # (Function deactivated, because script already exists at .../DRYa/all/bin/e)
+#  }
+#  
+
+function ee {
+   # Menu `ee` to select the text editor. Works in tandem with the script `e` (located at .../DRYa/all/bin/e)
 
    if [ -z $1 ]; then
       # Escolher editor de texto para pre-definir 
@@ -578,8 +616,11 @@ function E {
       trid_editor_file=$trid_dir/trid_editor
       trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
 
+      # Getting variable of current text editor
+         Lhc=$(cat $trid_editor_file)
+
       # Lista de opcoes para o menu `fzf`
-         Lz1='Saving '; Lz2='E'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
          L10='10. less --wordwrap'
           L9='9.  vim (easy mode, `vim -y`)' 
@@ -591,11 +632,11 @@ function E {
           L4='4.  emacs'
           L3='3.  vim'
 
-          L2='2.  Ver editor atual | `E .`'
+          L2='2.  Print editor atual | `ee .`'
           L1='1.  Cancel'
          
-         Lh=$(echo -e "\nNote: Current default text editor: Use \`e\` to act as \`$(cat $trid_editor_file)\` ")
-         L0="fluNav: E: set text editor: "
+         Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
+         L0="fluNav: ee: set text editor: "
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
@@ -603,23 +644,83 @@ function E {
          echo "$Lz2" >> $Lz4
    
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-         [[ $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file
-         [[ $v_list =~ "9.  " ]] && echo "vim -y"         > $trid_editor_file
-         [[ $v_list =~ "8.  " ]] && echo "cat"            > $trid_editor_file
-         [[ $v_list =~ "7.  " ]] && echo "nano"           > $trid_editor_file
-         [[ $v_list =~ "6.  " ]] && echo "less"           > $trid_editor_file
-         [[ $v_list =~ "5.  " ]] && echo "ed"             > $trid_editor_file
-         [[ $v_list =~ "4.  " ]] && echo "emacs"          > $trid_editor_file
-         [[ $v_list =~ "3.  " ]] && echo "vim"            > $trid_editor_file
-         [[ $v_list =~ "2.  " ]] && cat $trid_editor_file
-         [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
+         [[   $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[   $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file
+         [[   $v_list =~ "9.  " ]] && echo "vim -y"          > $trid_editor_file
+         [[   $v_list =~ "8.  " ]] && echo "cat"             > $trid_editor_file
+         [[   $v_list =~ "7.  " ]] && echo "nano"            > $trid_editor_file
+         [[   $v_list =~ "6.  " ]] && echo "less"            > $trid_editor_file
+         [[   $v_list =~ "5.  " ]] && echo "ed"              > $trid_editor_file
+         [[   $v_list =~ "4.  " ]] && echo "emacs"           > $trid_editor_file
+         [[   $v_list =~ "3.  " ]] && echo "vim"             > $trid_editor_file
+         [[   $v_list =~ "2.  " ]] && cat $trid_editor_file
+         [[   $v_list =~ "1. "  ]] && echo "Canceled: Menu: $Lz2" 
          unset v_list
 
    elif [ $1 == "." ]; then
       cat $trid_editor_file
    fi
 }
+
+function eee {
+   echo "uDev: open cheat sheets for current editor"
+}
+
+
+function h {
+   # Key to navigate home
+   # For: wsl, tails, linux, android
+
+   L1="$HOME"                    # Linux Default home dir for current user. (For TAILS it is anmnesic and it is always empty)
+   L2='/mnt/c"  '            # On windows, this navigates to disk root 'C:\'
+   L3='/mnt/c/Users/$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")'  # Pesquisa o utilizador e naveC:\%userprofile%
+   L4='~/Persistent/HOME/"'  # Used on TAIL (Persistence is set on OS instalation; HOME is manually created after OS instalations)
+   L5='termux-bridge-android"'
+   L6='shared-HDD-home-partition"'
+   L7="${v_REPOS_CENTER}/"
+
+   if [ -z $1 ]; then
+      # 1. Se nao for dado nenhum arg, navega para HOME definido por DRYa (se essa config existir)
+      # 2. Se essa config nao existir, pergunta para o user se quer configurar ou deixar padrao
+      # 3. O user por fim, tambem pode deixar padrao
+      
+      echo "flunav: Arguments for home possibilities"
+      echo " 1 | $L1 "
+      echo " 2 | $L2 "
+      echo " 3 | $L3 "
+      echo " 4 | $L4 "
+      echo " 5 | $L5 "
+      echo " 6 | $L6 "
+      echo " 7 | $L7 "
+      echo " 8 | $L8 "
+
+   elif [ $1 == "1" ]; then
+      cd $L1
+
+   elif [ $1 == "2" ]; then
+      cd $L2
+
+   elif [ $1 == "3" ]; then
+      cd $L3
+
+   elif [ $1 == "4" ]; then
+      cd $L4
+
+   elif [ $1 == "5" ]; then
+      cd $L5
+
+   elif [ $1 == "6" ]; then
+      cd $L6
+
+   elif [ $1 == "7" ]; then
+      cd $L7
+
+   elif [ $1 == "8" ]; then
+      cd $L8
+   fi
+}
+
+alias hh="mkdir -p ~/.config/h.h && cd ~/.config/h.h"
 
 function f_menu_fzf_S {
    # Menu Quick file edit (para quando S nao recebe argumentos no terminal)
