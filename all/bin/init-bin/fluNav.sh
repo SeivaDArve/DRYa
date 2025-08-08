@@ -1396,7 +1396,7 @@ function V {
             vim $v_fluNav_V_hist_file
 
       else 
-         echo DRYa: fluNav: V: file/dir/option not found. Found this instead: $v_found
+         echo DRYa: fluNav: V: file/dir/option not found. 
    fi
 
 }
