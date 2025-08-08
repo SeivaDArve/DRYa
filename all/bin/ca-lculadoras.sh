@@ -33,6 +33,8 @@ function f_talk {
 function f_set_history_reg {
    # Criar ficheiro de historico
 
+   # uDev: quando estiver pronto, enviar para drya-lib-4 
+
    # Instrucoes:
    #     1. Testa se existe omni-log. Se existir, usa uma sub pasta para guardar os hitoricos
    #     2. Ao iniciar a calculadora registadora, é verificado tambem se anteriormente a calculadora foi usada offline criando um ficheiro local (ainda por sincronizar online). Se esse ficheiro existir em drya-mail-box/omni-log copia para omni-log
@@ -427,7 +429,12 @@ EOF
 
       # Visualizar ficheiro de historico
          [[ $v_input == "v" ]] || [[ $v_input == "V" ]] \
-            && v_esc=1 && less $v_reg && echo
+            && v_esc=1                  \
+            && echo "Ficheiro \$v_reg:" \
+            && echo " > $v_reg"         \
+            && read -sn1                \
+            && less $v_reg              \
+            && echo
 
       # Visualizar ficheiro de historico (so ultimas linhas)
          [[ $v_input == "u" ]] || [[ $v_input == "U" ]] \
@@ -435,11 +442,21 @@ EOF
 
       # Visualizar e editar ficheiro de historico
          [[ $v_input == "e" ]] || [[ $v_input == "E" ]] \
-            && v_esc=1 && vim $v_reg && echo
+            && v_esc=1                  \
+            && echo "Ficheiro \$v_reg:" \
+            && echo " > $v_reg"         \
+            && read -sn1                \
+            && vim $v_reg               \
+            && echo
 
       # Visualizar e editar ficheiro de historico
          [[ $v_input == "emacs" ]] || [[ $v_input == "Emacs" ]] \
-            && v_esc=1 && emacs $v_reg && echo
+            && v_esc=1                  \
+            && echo "Ficheiro \$v_reg:" \
+            && echo " > $v_reg"         \
+            && read -sn1                \
+            && emacs $v_reg             \
+            && echo
 
       # Abrir ajuda
          [[ $v_input == "h" ]] || [[ $v_input == "H" ]] \
