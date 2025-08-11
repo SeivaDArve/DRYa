@@ -235,7 +235,7 @@ function f_trid_6 {
 
 function f_trid_7 {
    # Definir ficheiro onde guardar o nome do editor de texto a usar. Mencionar o seu nome e caminho
-   # Nota: tem de funcionar em sintonia com a fx `E` em "fluNav" e `e` em .../DRYa/bin/e
+   # Nota: tem de funcionar em sintonia com a fx `.` e `ee` em "fluNav" e `e` em .../DRYa/bin/e
 
    # Nome do ficheiro 
       trid_editor_file=$trid_dir/trid_editor  # variavel 'trid_dir' configurado em source-all-drya-files
@@ -460,9 +460,11 @@ elif [ $1 == "h" ]; then
    f_help
 
 elif [ $1 == "." ]; then
+   # Editar este mesmo script
    vim $trid_script
 
 elif [ $1 == "o" ]; then
+   # Ler o ficheiro de saida com todas as var encontradas pelo sistema
    less $trid_output
 
 elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
@@ -470,9 +472,11 @@ elif [ $1 == "fetch" ] || [ $1 == "f" ]; then
    f_fetch
 
 elif [ $1 == "startup-message" ] || [ $1 == "s" ]; then
+   # Print no terminal so as var necesarias para que o iniciar do terminal seja bonito
    f_startup
 
 elif [ $1 == "neofetch" ] || [ $1 == "S" ]; then
+   # Print no terminal todas as var que encontrar, sem enviar para um ficheiro
    f_neofetch
 
 elif [ $1 == "printenv" ] || [ $1 == "env" ] || [ $1 == "e" ]; then

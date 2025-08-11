@@ -474,15 +474,22 @@ function . {
       #  > `. ... G`
       #  > `. ... du`
     
-      if [ $1 == "G" ]; then 
+      if [ -z $2 ]; then 
+         echo 'fluNav: O argumento  `...` faz com que seja literal. '
+         echo '  Para abrir esses ficheiros t, G, du, usamos:'
+         echo '  > `. ... t`'
+         echo '  > `. ... G`'
+         echo '  > `. ... du`'
+
+      elif [ $2 == "G" ]; then 
          # Abrir literalmente o ficheiro/pasta com o nome "G"
          cd G 2>/dev/null || vim G
 
-      elif [ $1 == "t" ]; then 
+      elif [ $2 == "t" ]; then 
          # Abrir literalmente o ficheiro/pasta com o nome "t"
          cd t 2>/dev/null || vim t
 
-      elif [ $1 == "du" ]; then 
+      elif [ $2 == "du" ]; then 
          # Abrir literalmente o ficheiro/pasta com o nome "du"
          cd du 2>/dev/null || vim du
 
@@ -508,7 +515,7 @@ function . {
       && echo " > ./$BASENAME" \
       && echo \
       && ls -p \
-      || for i in $@; do vim $i; done  
+      || for i in $@; do vim $i; done  # uDev: no futuro pode ser usado vim ou pode ser usado outro que o user escolhs como pre-definido 
 
    fi
 }
