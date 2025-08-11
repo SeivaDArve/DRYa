@@ -104,29 +104,23 @@
    if [ -f $v_lib1 ]; then
       # Se drya-lib-1 estiver disponivel para copia, a copia é executada, alterada ao estilo de drya-lib-4 (para que as variaveis da lib 4 nao se subreponham as de lib 1, e depois `source` a essa copia
 
-      cp $v_lib1 $v_lib1_copy
+      # Making a copy of the original, before manipulating and before sourcing a manipulated version (diferent from the original)
+         cp $v_lib1 $v_lib1_copy
 
-      # uDev: rename ALL functions in the copied file
-         
-      #sed -i "s/v_talk/V_talk/g"   $v_lib1_copy
-      #sed -i "s/f_talk/F_talk/g"   $v_lib1_copy
+      # Renaming ALL functions in the copied file
+         sed -i "s/ f_/ F_/g" $v_lib1_copy
+         sed -i "s/ v_/ V_/g" $v_lib1_copy
 
-      #sed -i "s/v_greet/V_greet/g" $v_lib1_copy
-      #sed -i "s/f_greet/F_greet/g" $v_lib1_copy
+      # Defining variables according to manipulation
+         V_greet="DRYa"
+         V_talk="drya-lib-4: "
 
-      #sed -i "s/f_done/F_done/g" $v_lib1_copy
-
-      sed -i "s/ f_/ F_/g" $v_lib1_copy
-      sed -i "s/ v_/ V_/g" $v_lib1_copy
-
-      V_greet="DRYa"
-      V_talk="drya-lib-4: "
-
-      source $v_lib1_copy
+      # Sourcing a manipulated version, diferent from the original, in order not to overwrite the original
+         source $v_lib1_copy
 
    else
       # Se a drya-lib-1 nao existir para copia, mandar mensagem de erro
-      read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+         read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
    fi
 
 
