@@ -20,3 +20,10 @@
       1. A vimscript creates an output file after searching bash text, or bash functions
       2. If that files need any drya-lib, then before bash runs the output file from vimscript, we have to concat `source drya-lib--` into the output file
       3. So, we concat drya-lib-- into the first lines of the output file, then we run a bash command to execute 
+
+
+# Directory ./copies-for-libs contents:
+   Both libs drya-lib-1 and drya-lib-4 used to be sourced at the beginning of scripts.
+   Because drya-lib-4 wanted to source drya-lib-1, it would overwrite the variable names v_talk, v_greet etc...
+   Now, at the beginning of main scripts, drya-lib-1 is sourced, then, when drya-lib-4 is sourced, internally drya-lib-4 makes a copy of drya-lib-1, changes all necessary variable names, sets values for these new variables and the sources the copy...
+   This directory is for the copied and altered libs, used by other libs
