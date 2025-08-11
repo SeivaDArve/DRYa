@@ -15,9 +15,9 @@
 #        v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
 #        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
 #
-#        # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-#           v_greet="DRYa"
-#           v_talk="DRYa: "
+#        # Examples: F_greet, F_greet2, F_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+#           V_greet="DRYa"
+#           V_talk="DRYa: "
 #           v_txt="<text-used-at-f_anyK-fx>"
 #           v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
@@ -78,7 +78,7 @@ function f_c3 {
 function f_c4 { 
    # Fx for color 4
 
-   # Similar to Bold. Used in: f_talk
+   # Similar to Bold. Used in: F_talk
    # This function is to be used when something is ASKED
    f_test_dependencie_tput
    [[ $v_status == 0 ]] && tput setaf 4
@@ -143,48 +143,48 @@ function f_cOFF {
    [[ $v_status == 0 ]] && tput civis
 }
 
-function f_greet {
+function F_greet {
    # Presents a nice visual ascii name/logo if figlet is installed
    # Presents a text massage with name/logo if figlet is NOT installed
 
    # uDev: Confirmar se no futuro pode haver problemas com a font: Enviar para omni-log
 
-   # If previously the variable $v_greet was not set by any script, then assign a <Placeholder> to it.
-      [[ -z $v_greet ]] && v_greet="< v_greet >"
+   # If previously the variable $V_greet was not set by any script, then assign a <Placeholder> to it.
+      [[ -z $V_greet ]] && V_greet="< V_greet >"
 
    # Creting an alternative message in case figlet is not installed
       v_basename=$(basename $0)
-      v_2nd_option="<< $v_greet >>\n\n > Running: $v_basename\n > Missing: \`figlet\` \n"
+      v_2nd_option="<< $V_greet >>\n\n > Running: $v_basename\n > Missing: \`figlet\` \n"
 
    clear
    f_c2
-   figlet $v_greet 2>/dev/null || echo -e "$v_2nd_option"
+   figlet $V_greet 2>/dev/null || echo -e "$v_2nd_option"
    f_rc
 }
 
 function f_Greet {
-   # Same as f_greet, but for Text that uses all the ascii space like "g" in "Yoga". This fx only adds another empty line below the ascii "g"
-   f_greet
+   # Same as F_greet, but for Text that uses all the ascii space like "g" in "Yoga". This fx only adds another empty line below the ascii "g"
+   F_greet
    echo
 }
 
-function f_greet2 {
-   # Prints a more verbose output of the ascii text "DRYa" then f_greet
+function F_greet2 {
+   # Prints a more verbose output of the ascii text "DRYa" then F_greet
 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh 2>/dev/null \
       || echo -e "DRYa: app available \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 }
 
-# uDev: f_greet, f_Greet, f_greet2 ... change to f_g1, f_g2, f_g3 ...
+# uDev: F_greet, f_Greet, F_greet2 ... change to f_g1, f_g2, f_g3 ...
 
-function f_talk {
+function F_talk {
    # uDev: change to f_tk
    # Colorfull text to preceed any text of any important text line
 
-   # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
-      [[ -z $v_talk ]] && v_talk="< v_talk > "
+   # If previously no script gave the variable $V_talk, then, assign "DRYa-lib-1" to it
+      [[ -z $V_talk ]] && V_talk="< V_talk > "
 
-   f_c2; echo -n "$v_talk"
+   f_c2; echo -n "$V_talk"
    f_rc
 }
 
@@ -227,7 +227,7 @@ function f_suc2 {
 function f_done {
    # Use this after all precesses are finished
 
-   f_talk; echo "Done!"
+   F_talk; echo "Done!"
    f_rc
 }
 
@@ -261,7 +261,7 @@ function f_anyK {
 
    # Text to print
          #echo
-   f_talk; echo -n 'Are you sure? `'
+   F_talk; echo -n 'Are you sure? `'
      f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
      f_rc; echo '`'
            echo -n "$v_msg"
@@ -303,7 +303,7 @@ function f_prsD {
 
    # Text to print
          #echo
-   f_talk; echo -n 'Are you sure? `'
+   F_talk; echo -n 'Are you sure? `'
      f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
      f_rc; echo '`'
            echo -n "$v_msg"

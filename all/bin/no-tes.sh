@@ -9,17 +9,27 @@
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "
 
+
+
 # Sourcing DRYa Lib 2: Create temporary files
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
 
    # Example: f_create_tmp_file will create a temporary file stored at $v_tmp (with abs path, at ~/.tmp/...)
 
-# Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
-   # Example: f_lib4_ensure_repo_existence
 
+
+# Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
+   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+
+   # Examples: v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
+   #           f_stroken
   
+
+
+
+
 
 function f_define_files_as_vars {
 
@@ -41,32 +51,6 @@ function f_define_files_as_vars {
    
 
 }
-f_define_files_as_vars
-
-
-function f_stroken {
-   # (Copiando de ezGIT)
-   # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   # While the app is in beta, this is usefull
-
-   # If ~/.netrc exists, no need to print the rest
-      if [ -f ~/.netrc ]; then
-         #echo "~/.netrc exists"
-         echo "it exists" 1>/dev/null
-      else
-         f_talk; echo -n "Presenting \""
-           f_c3; echo -n "stroken"
-           f_rc; echo    "\""
-                 echo    " > Automatic sync (config file) not configured"
-                 echo -n "   Use: "
-           f_c2; echo    "seivadarve"
-           f_rc; echo -n           "   And: ";
-           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-           f_rc; echo
-      fi
-}
-
-
 
 function f_create_tmp_file_with_date_as_name {
    # Get current day and hour; Create a tmp file with it
@@ -121,7 +105,6 @@ function f_edit_temporary_file {
    && echo " > uDev: sync omni-log automatically"
 }
 
-
 function f_edit_random_note_no_title {
    # Creating new random note as tmp file, then sending to omni-log
    # File to use: $v_file_rn
@@ -167,8 +150,6 @@ function f_one_file_bau {
       if [[ $v_err == 0 ]]; then
          echo "esta pronto para editar"
       fi
-      
-
 }
 
 function f_run_notify_script {
@@ -223,13 +204,20 @@ function f_main_menu {
 
 
 
+f_define_files_as_vars
 f_greet 
 
 if [ -z $1 ]; then
+   f_talk; echo "Opening main menu"
+           echo
+
    f_main_menu
  
 elif [ $1 == "H" ]; then
    # Notas de cada Heteronimo
+
+   f_talk; echo "Opening Heteronimos"
+           echo
 
    # Using drya-lib-4 to ensure omni-log exists and is updated
       f_ensure_omni_log

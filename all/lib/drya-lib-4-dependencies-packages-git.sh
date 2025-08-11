@@ -73,8 +73,12 @@
 #                  done
 #       
 
-# uDev: create fx that catches prompt arguments: $1 $2 $3 = $v_1 $v_2 $v_3
-# uDev: create fx to increment a var: i=(($i + 1))
+
+
+
+
+
+
 
 
 # ------------------------------------------------------------------
@@ -88,17 +92,34 @@
 
 
 
-# uDev: copiar drya-lib-1 para um ficheiro temporario e usar de la
-#       ou entao, perguntar ao GPT se variaveis de scoope local resolvem o problema da lib-4 subescrever as variaveis do main script
 
+# Sourcing DRYa Lib 1: Color schemes
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1_copy=${v_REPOS_CENTER}/DRYa/all/lib/copies-for-libs/drya-lib-1--for--drya-lib-4
 
+   # Original Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   #  v_greet="DRYa"
+   #  v_talk="DRYa: "
 
-# Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   if [ -f $v_lib1 ]; then
+      # Se drya-lib-1 estiver disponivel para copia, a copia é executada, alterada ao estilo de drya-lib-4 (para que as variaveis da lib 4 nao se subreponham as de lib 1, e depois `source` a essa copia
 
-   v_greet="DRYa"
-   v_talk="drya-lib-4: "
-   # uDev: perguntar ao chat gpt se usar libliotecas dentro de bibliotecas se nao da conflito
+      cp $v_lib1 $v_lib1_copy
+      sed -i "s/v_talk/V_talk/g"   $v_lib1_copy
+      sed -i "s/f_talk/F_talk/g"   $v_lib1_copy
+
+      sed -i "s/v_greet/V_greet/g" $v_lib1_copy
+      sed -i "s/f_greet/F_greet/g" $v_lib1_copy
+
+      V_greet="DRYa"
+      V_talk="drya-lib-4: "
+
+      source $v_lib1_copy
+
+   else
+      # Se a drya-lib-1 nao existir para copia, mandar mensagem de erro
+      read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+   fi
 
 
 
@@ -122,7 +143,7 @@
 
 
 function f_rename_directory_with_same_name_as_original_repo {
-   f_talk
+   F_talk
    echo    "Para clonar a repo $v_ensure original, tem de renomear a pasta atual"
    echo    " > Qual o nome para a pasta existente (que nao é repo)? "
    read -p " > " v_ans
@@ -132,7 +153,7 @@ function f_rename_directory_with_same_name_as_original_repo {
 
 
 function f_testing_either_repo_or_directory {
-   f_talk; echo "Testing if it is a repo:"
+   F_talk; echo "Testing if it is a repo:"
 
    cd $v_repo 
 
@@ -192,7 +213,7 @@ function f_git_commit {
    # uDev: Run only if there are files to commit
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
 
-   f_talk; echo -en "Adding a commit message "
+   F_talk; echo -en "Adding a commit message "
      f_c1; echo -n                          "i"
      f_rc; echo                              " (to staged files):"
            echo -n ' > `git commit -m "'
@@ -203,7 +224,7 @@ function f_git_commit {
            echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
      f_c1; read -p " > " v_ans
      f_rc; echo
-   f_talk; echo -n 'git commit -m "'
+   F_talk; echo -n 'git commit -m "'
      f_c1; echo -n               "$v_ans"
      f_rc; echo                        '"'
 
@@ -236,7 +257,7 @@ function f_stroken {
          #echo "~/.netrc exists"
          echo "it exists" 1>/dev/null
       else
-         f_talk; echo -n "Presenting \""
+         F_talk; echo -n "Presenting \""
            f_c3; echo -n "stroken"
            f_rc; echo    "\""
                  echo    " > Automatic sync (config file) not configured"
@@ -254,7 +275,7 @@ function f_stroken {
 function f_lib4_welcome {
    # Use this just to know if drya-lib-4 is intalled/available/sourced/ready
 
-   f_talk; echo "Ready!"
+   F_talk; echo "Ready!"
 }
 
 
@@ -275,7 +296,7 @@ function f_lib4_ensure_repo_existence {
    
    # When using this script as a Lib, the variable $v_ensure must exist, an error will be mentioned if not set
       if [ -z $v_ensure ]; then
-         f_talk; echo 'Could not test repo existence, variable not set'
+         F_talk; echo 'Could not test repo existence, variable not set'
                  echo ' > Specifying variable $v_ensure'
          exit 1
       fi
@@ -286,14 +307,14 @@ function f_lib4_ensure_repo_existence {
    # Testing if directory corresponding to the repo exists
       if [ -d $v_repo ]; then
 
-         f_talk; echo "Directory already exists:"
+         F_talk; echo "Directory already exists:"
                  echo " > $v_ensure"
                  echo
 
          f_testing_either_repo_or_directory
 
       else
-         f_talk; echo "Directory does not exist"
+         F_talk; echo "Directory does not exist"
 
          cd ${v_REPOS_CENTER}/ 
          v_cloned="https://github.com/SeivaDArve/$v_ensure.git"
@@ -308,7 +329,7 @@ function f_lib4_git_pull {
 
    # uDev: perguntar char GPT: testar `git pull` so por 10 secs, e editar à mesma se Offline.
 
-   f_talk; echo 'A fazer download `git pull --no-edit`'
+   F_talk; echo 'A fazer download `git pull --no-edit`'
    git pull --no-edit
 
    # uDev: Se a fx anterior der erro, questionar o utilizador se quer continuar a edtar o ficheiro em modo offline com a ultima versao do ficheiro possivelmente desatualizada
@@ -318,7 +339,7 @@ function f_lib4_git_pull {
 
 
 function f_lib4_git_pull_2 {
-   f_talk; echo -n 'Receiving from Github: '
+   F_talk; echo -n 'Receiving from Github: '
      f_c3; echo    '`git pull`'
      f_rc; echo
 
@@ -335,13 +356,13 @@ function f_lib4_git_add_all {
    # Only if there is anything to commit or to finish, only then, changes are added to Staging Are
       if [[ -n $v_status ]]; then
          # uDev: Run only if there are files to stage
-         f_talk; echo -n 'Staging all files: '
+         F_talk; echo -n 'Staging all files: '
            f_c3; echo    '`git add --all`'
            f_rc
                  git add --all
                  echo
       else
-         f_talk; echo 'Nothing needs to be done'
+         F_talk; echo 'Nothing needs to be done'
          exit 0
 
       fi
@@ -351,7 +372,7 @@ function f_lib4_git_add_all {
 function f_lib4_git_push {
    # uDev: Run only if there are files to push
 
-   f_talk; echo -n 'Sending to Github: '
+   F_talk; echo -n 'Sending to Github: '
      f_c3; echo    '`git push`'
      f_rc
 
