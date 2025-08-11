@@ -112,6 +112,7 @@
       sed -i "s/v_greet/V_greet/g" $v_lib1_copy
       sed -i "s/f_greet/F_greet/g" $v_lib1_copy
 
+      sed -i "s/f_done/F_done/g" $v_lib1_copy
       V_greet="DRYa"
       V_talk="drya-lib-4: "
 
