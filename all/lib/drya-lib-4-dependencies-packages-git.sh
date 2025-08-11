@@ -106,13 +106,19 @@
 
       cp $v_lib1 $v_lib1_copy
 
-      sed -i "s/v_talk/V_talk/g"   $v_lib1_copy
-      sed -i "s/f_talk/F_talk/g"   $v_lib1_copy
+      # uDev: rename ALL functions in the copied file
+         
+      #sed -i "s/v_talk/V_talk/g"   $v_lib1_copy
+      #sed -i "s/f_talk/F_talk/g"   $v_lib1_copy
 
-      sed -i "s/v_greet/V_greet/g" $v_lib1_copy
-      sed -i "s/f_greet/F_greet/g" $v_lib1_copy
+      #sed -i "s/v_greet/V_greet/g" $v_lib1_copy
+      #sed -i "s/f_greet/F_greet/g" $v_lib1_copy
 
-      sed -i "s/f_done/F_done/g" $v_lib1_copy
+      #sed -i "s/f_done/F_done/g" $v_lib1_copy
+
+      sed -i "s/ f_/ F_/g" $v_lib1_copy
+      sed -i "s/ v_/ V_/g" $v_lib1_copy
+
       V_greet="DRYa"
       V_talk="drya-lib-4: "
 
