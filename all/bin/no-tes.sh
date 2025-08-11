@@ -180,7 +180,7 @@ function f_main_menu {
       L2='2. Nota   | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
       L1='1. Cancel'
 
-      L0="SELECIONE 1 do menu: "
+      L0="DRYa: no-tes: main menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
