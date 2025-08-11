@@ -105,6 +105,7 @@
       # Se drya-lib-1 estiver disponivel para copia, a copia é executada, alterada ao estilo de drya-lib-4 (para que as variaveis da lib 4 nao se subreponham as de lib 1, e depois `source` a essa copia
 
       cp $v_lib1 $v_lib1_copy
+
       sed -i "s/v_talk/V_talk/g"   $v_lib1_copy
       sed -i "s/f_talk/F_talk/g"   $v_lib1_copy
 
