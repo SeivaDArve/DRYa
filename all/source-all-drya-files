@@ -179,7 +179,24 @@ function f_drya_ssms_start {
    # Merging last 2 commands into one (called only by the user, to avoid dumping spam on the screen)
       #alias dmsgs="f_any_key_b4_open_msgs; clear; cat $v_preMSGS; read -sn1 -t 5; less $v_MSGS"
       #alias dmsgs="less $v_MSGS"  
-       alias ssms="less $v_MSGS"
+      #alias ssms="less $v_MSGS"
+
+   function ssms {
+      f_greet
+      if [ -z $1 ]; then
+         f_talk; echo 'DRYa: ssms: showing lasts 10 lines (use `ssms a` to show all):'
+         tail $v_MSGS
+
+      elif [ $1 == "a" ]; then
+         f_talk; echo 'DRYa: ssms: showing entire file'
+                 echo " > opening file... "
+
+                 less $v_MSGS
+
+                 echo " > ... file closed "
+
+      fi
+   }
 }
 
 function f_drya_fzf_history {
@@ -623,8 +640,8 @@ function f_async__ezGIT_pull_All__at_startup {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Success)"
-   v_toast_message_n="DRYa: source-all-drya-files: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
+   v_toast_message_y='DRYa: source-all-drya-files: ezGIT: `git pull recursive` (done, Success)'
+   v_toast_message_n='DRYa: source-all-drya-files: ezGIT: `git pull recursive` (done, Fail. Repo may not exist)'
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
       # ezGIT existe (atuar)
@@ -634,7 +651,7 @@ function f_async__ezGIT_pull_All__at_startup {
       # ezGIT nao existe (nao atuar)
 
       # Informar a conclusao em drya-status-messages
-         echo -e "\n\r $v_toast_message_n \n" >> $v_MSGS
+         echo -e "\n$v_toast_message_n \n" >> $v_MSGS
    fi
 } 
 
