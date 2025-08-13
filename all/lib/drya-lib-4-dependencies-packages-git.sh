@@ -131,10 +131,10 @@
 
 
 # ---------------------------------------------------------
-# --+-- Above: Dependencies for this library itself        --+-- 
-# --+-- Below: functions to be internally called --+--
+# --+-- Above: Dependencies for this library itself --+-- 
+# --+-- Below: functions to be internally called    --+--
 # ---------------------------------------------------------
-
+   
 
 
 
@@ -300,6 +300,7 @@ function f_lib4_ensure_repo_existence {
       if [ -z $v_ensure ]; then
          F_talk; echo 'Could not test repo existence, variable not set'
                  echo ' > Specifying variable $v_ensure'
+         # uDev: add v_green_light
          exit 1
       fi
 
@@ -307,6 +308,7 @@ function f_lib4_ensure_repo_existence {
       f_test_pkg_git_installed
 
    # Testing if directory corresponding to the repo exists
+      # uDev: add v_green_light
       if [ -d $v_repo ]; then
 
          F_talk; echo "Directory already exists:"
