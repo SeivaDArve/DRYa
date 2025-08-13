@@ -19,7 +19,7 @@
 #           v_greet="DRYa"
 #           v_talk="DRYa: "
 #           v_txt="<text-used-at-f_anyK-fx>"
-#           v_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
+#           v_hzl  # (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
 #
 

@@ -81,7 +81,7 @@ function f_gr_hard_dependencies {
 }
 
 # List of usefull apps 
-   gh         # for arch is `github-cli` to use github without opening a browser
+   gh         # for arch is `github-cli`. See f_github_cli 
    dos2unix   # Or DRYa: `dos-2-unix` When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
    exiftool
    tree
@@ -103,6 +103,29 @@ function f_gr_hard_dependencies {
    nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
    lf             # Terminal file explorer
 
+function f_github_cli {
+   # Software to use github without opening a browser. 
+   # Package name in most repos: `gh`
+   # Package name in arch repos: `github-cli`
+
+   # Installing on most repos:
+      sudo apt install gh
+
+   # Installing on arch repos:
+      sudo pacman -S github-cli
+
+   # Creating autintication and login (config git with github)
+      gh auth login
+
+   # Creating a new repo (opcao A)
+      mkdir nome-do-repo
+      cd nome-do-repo
+      gh repo create nome-do-repo --source=. --remote=origin
+
+   # Creating a new repo (opcao B, `gh` will create everything)
+      gh repo create nome-do-repo --public --clone
+
+}
 
 # installing `mpv` on fedora
    Ao executar `sudo dnf repolist` no fedora linux, tem de aparecer rpmfusion-free e rpmfusion-nonfree.
