@@ -110,6 +110,7 @@
       # Renaming ALL functions in the copied file
          sed -i "s/ f_/ F_/g" $v_lib1_copy
          sed -i "s/ v_/ V_/g" $v_lib1_copy
+         sed -i 's/$v_/$V_/g' $v_lib1_copy
 
       # Defining variables according to manipulation
          V_greet="DRYa"

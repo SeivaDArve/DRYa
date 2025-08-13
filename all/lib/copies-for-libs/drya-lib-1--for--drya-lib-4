@@ -13,13 +13,13 @@
 #
 #     # Sourcing DRYa Lib 1: Color schemes
 #        V_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-#        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+#        [[ -f $V_lib1 ]] && source $V_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
 #
 #        # Examples: F_greet, F_greet2, F_talk, F_done, F_anyK, F_Hline, F_horizlina, F_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 #           V_greet="DRYa"
 #           V_talk="DRYa: "
 #           V_txt="<text-used-at-f_anyK-fx>"
-#           V_hzl (uDev: variable that decides what is the char that is written in the horizontal line)
+#           V_hzl  # (uDev: variable that decides what is the char that is written in the horizontal line)
 #  
 #
 
@@ -29,7 +29,7 @@
 # uDev: Center text Horizontally + vertically
 # uDev: add fx to test if a given variable is number, letter or others
 # uDev: fx to read text like chat gpt, one character at a time, slow dump of text, like pokemon on gameboy, like in between each letter of text there is a command `sleep 0.1`. Text is not dumpt at once, it is slowly diumped
-# uDev: create fx that catches prompt arguments: $1 $2 $3 = $v_1 $v_2 $v_3
+# uDev: create fx that catches prompt arguments: $1 $2 $3 = $V_1 $V_2 $V_3
 # uDev: create fx to increment a var: i=(($i + 1))
 # uDev: add fx for `date` command
 # uDev: with ANSI, move cursor up one line
@@ -55,14 +55,14 @@ function F_c1 {
    # This function is to be used when something is SEARCHED
 
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 5 
+   [[ $V_status == 0 ]] && tput setaf 5 
 }
 
 function F_c2 { 
    # Fx for color 2
 
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 12
+   [[ $V_status == 0 ]] && tput setaf 12
 }
 
 function F_c3 { 
@@ -72,7 +72,7 @@ function F_c3 {
    # This function is to be used when something is DECLAIRED
 
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 3
+   [[ $V_status == 0 ]] && tput setaf 3
 }
 
 function F_c4 { 
@@ -81,7 +81,7 @@ function F_c4 {
    # Similar to Bold. Used in: F_talk
    # This function is to be used when something is ASKED
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 4
+   [[ $V_status == 0 ]] && tput setaf 4
 }
 
 function F_c5 { 
@@ -89,7 +89,7 @@ function F_c5 {
 
    # Similar to Bold
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 6
+   [[ $V_status == 0 ]] && tput setaf 6
 }
 
 function F_c6 { 
@@ -97,8 +97,8 @@ function F_c6 {
 
    # Used for ASCII Drya Logo, centered to the screen
    F_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 28
-   [[ $v_status == 0 ]] && tput bold
+   [[ $V_status == 0 ]] && tput setaf 28
+   [[ $V_status == 0 ]] && tput bold
 }
 
 function F_c7 {
@@ -119,7 +119,7 @@ function F_rc {
    # Fx for color reset
 
    # This function is to be used when styles are to be CLEARED
-   [[ $v_status == 0 ]] && tput sgr0
+   [[ $V_status == 0 ]] && tput sgr0
 }
 
 function F_colors_without_tput {
@@ -134,13 +134,13 @@ function F_colors_without_tput {
 function F_cON {
    # Fx for make cursor visible
 
-   [[ $v_status == 0 ]] && tput cnorm
+   [[ $V_status == 0 ]] && tput cnorm
 }
 
 function F_cOFF {
    # Fx for make cursor invisible
 
-   [[ $v_status == 0 ]] && tput civis
+   [[ $V_status == 0 ]] && tput civis
 }
 
 function F_greet {
@@ -149,16 +149,16 @@ function F_greet {
 
    # uDev: Confirmar se no futuro pode haver problemas com a font: Enviar para omni-log
 
-   # If previously the variable $v_greet was not set by any script, then assign a <Placeholder> to it.
-      [[ -z $v_greet ]] && V_greet="< V_greet >"
+   # If previously the variable $V_greet was not set by any script, then assign a <Placeholder> to it.
+      [[ -z $V_greet ]] && V_greet="< V_greet >"
 
    # Creting an alternative message in case figlet is not installed
       V_basename=$(basename $0)
-      V_2nd_option="<< $v_greet >>\n\n > Running: $v_basename\n > Missing: \`figlet\` \n"
+      V_2nd_option="<< $V_greet >>\n\n > Running: $V_basename\n > Missing: \`figlet\` \n"
 
    clear
    F_c2
-   figlet $v_greet 2>/dev/null || echo -e "$v_2nd_option"
+   figlet $V_greet 2>/dev/null || echo -e "$V_2nd_option"
    F_rc
 }
 
@@ -181,10 +181,10 @@ function F_talk {
    # uDev: change to F_tk
    # Colorfull text to preceed any text of any important text line
 
-   # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
-      [[ -z $v_talk ]] && V_talk="< V_talk > "
+   # If previously no script gave the variable $V_talk, then, assign "DRYa-lib-1" to it
+      [[ -z $V_talk ]] && V_talk="< V_talk > "
 
-   F_c2; echo -n "$v_talk"
+   F_c2; echo -n "$V_talk"
    F_rc
 }
 
@@ -238,7 +238,7 @@ function F_anyK {
 
 
 
-   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
       # EXEMPLO:
       #
       # V_txt="Editado X"
@@ -256,15 +256,15 @@ function F_anyK {
    # Message
       V_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
 
-   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
-      [[ -z $v_txt ]] && V_txt=" ... "
+   # Set $V_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $V_txt ]] && V_txt=" ... "
 
    # Text to print
          #echo
    F_talk; echo -n 'Are you sure? `'
-     F_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+     F_c5; echo -n "$V_txt"   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
      F_rc; echo '`'
-           echo -n "$v_msg"
+           echo -n "$V_msg"
            read -sn1
      F_rc; echo -e "\r\033[K > A Continuar..."
 
@@ -280,7 +280,7 @@ function F_prsD {
 
 
 
-   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
       # EXEMPLO:
       #
       # V_txt="Editado X"
@@ -298,19 +298,19 @@ function F_prsD {
    # Message
       V_msg=" ... (Continue: 'd' or 'D' | Cancel: Ctrl-C or Any Key) "
 
-   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
-      [[ -z $v_txt ]] && V_txt=" ... "
+   # Set $V_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $V_txt ]] && V_txt=" ... "
 
    # Text to print
          #echo
    F_talk; echo -n 'Are you sure? `'
-     F_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+     F_c5; echo -n "$V_txt"   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
      F_rc; echo '`'
-           echo -n "$v_msg"
+           echo -n "$V_msg"
            read -sn1 V_ans
            echo
      
-     [[ -n $v_ans ]] && echo -e "\r\033[K > A Continuar..."
+     [[ -n $V_ans ]] && echo -e "\r\033[K > A Continuar..."
 
    # Removing variables before the fx finished
       unset V_txt
@@ -321,10 +321,10 @@ function F_hzl {
    # This fx exists also at .../init-bin/horizontal-line.sh
 
    # If the script that used this library does not set the variable that fills the line, then the character is set as default here
-      [[ -z $v_hzl ]] && V_hzl="-"
+      [[ -z $V_hzl ]] && V_hzl="-"
       
    V_cols=$(tput cols)
-   printf "%*s" $v_cols | tr " " "$v_hzl"
+   printf "%*s" $V_cols | tr " " "$V_hzl"
 }
 
 function F_horizline {
@@ -334,7 +334,7 @@ function F_horizline {
       V_cols=$(tput cols)
 
    # Escrever uma linha no ecra
-      for i in $(seq $v_cols); do
+      for i in $(seq $V_cols); do
          echo -ne "-" 
       done
 }
@@ -343,7 +343,7 @@ function F_horizline {
 
 function F_verticline {
 	v_lines=$(tput lines)
-	for i in $(seq $v_lines); do
+	for i in $(seq $V_lines); do
    	echo -ne "   |\n" 
 	done
 }
@@ -352,7 +352,7 @@ function F_verticline {
 #     # Testa se a Var fornecida é numero ou nao
 #     # V_nr
 #     
-#     case $v_nr in
+#     case $V_nr in
 #        1 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0)
 #           V_nr=true
 #           ;;
@@ -370,7 +370,7 @@ function F_debug {
    # Creating a pause in the middle of the script for debugging process
    
    # Var to print as debug message: V_debug (do not set this var if not needed)
-   echo "Debuging... $v_debug"
+   echo "Debuging... $V_debug"
    echo -n " > 3"
    read -sn1
    echo -n ", 2"
@@ -386,12 +386,12 @@ function F_pin {
    V_pin=0000
 
    # Se no 'main' script o user definiu texto para apresentar no ecra, entao esse texto é apresentado
-      [[ -n $v_pin_txt ]] && echo "$v_pin_txt" 
+      [[ -n $V_pin_txt ]] && echo "$V_pin_txt" 
 
    read -sp " > Introduz um PIN: " V_ans
 
-   [[ $v_ans != $v_pin ]] && F_suc2 && exit 1
-   [[ $v_ans == $v_pin ]] && F_suc1
+   [[ $V_ans != $V_pin ]] && F_suc2 && exit 1
+   [[ $V_ans == $V_pin ]] && F_suc1
 
    unset V_pin_txt
 
@@ -404,15 +404,15 @@ function F_pin {
 #  # For the lines: 
 #     # Count number of lines in the terminal:
 #        V_tLines=$(stty size | cut -d ' ' -f 1)
-#          #echo "current number of lines in the terminal is: $v_tLines"
+#          #echo "current number of lines in the terminal is: $V_tLines"
 #
 #     # Dividing that number into 2
-#        V_half_tLines=$(expr $v_tLines / 2)
-#         #echo "Half of that is (rounded number): $v_half_tLines"
+#        V_half_tLines=$(expr $V_tLines / 2)
+#         #echo "Half of that is (rounded number): $V_half_tLines"
 #
 #     # And the into 2
-#        V_half_half_tLines=$(expr $v_half_tLines / 2)
-#        V_lines=$v_half_half_tLines
+#        V_half_half_tLines=$(expr $V_half_tLines / 2)
+#        V_lines=$V_half_half_tLines
 #
 #
 #
@@ -421,28 +421,28 @@ function F_pin {
 #  # For the Columns: 
 #     # Count number of lines in the terminal:
 #        V_tCols=$COLUMNS
-#          #echo "current number of columns in the terminal is: $v_tCols"
+#          #echo "current number of columns in the terminal is: $V_tCols"
 #
 #     # Removing the number of characters from the text variables:
-#        V_tCols=$(expr $v_tCols - $v_char) 
+#        V_tCols=$(expr $V_tCols - $V_char) 
 #
 #     # Dividing that number into 2
-#        V_half_tCols=$(expr $v_tCols / 2)
-#        #echo "Half of that is (rounded number): $v_half_tCols"
+#        V_half_tCols=$(expr $V_tCols / 2)
+#        #echo "Half of that is (rounded number): $V_half_tCols"
 #
-#     V_cols=$v_half_tCols
+#     V_cols=$V_half_tCols
 #
 #
 #
 #  # Center Vertically 
-#     for i in $(seq 1 $v_lines)
+#     for i in $(seq 1 $V_lines)
 #     do
 #        # Filling a file with empty lines
-#        echo -e "\n" >> $v_preMSGS
+#        echo -e "\n" >> $V_preMSGS
 #     done
 #
 #  # Center Horizontally
-#     echo "${v_cols}$v_msg_1" >> $v_preMSGS
-#     echo "${v_cols}$v_msg_2" >> $v_preMSGS
+#     echo "${v_cols}$V_msg_1" >> $V_preMSGS
+#     echo "${v_cols}$V_msg_2" >> $V_preMSGS
 #
 # }----------------------------------------------------------------------
