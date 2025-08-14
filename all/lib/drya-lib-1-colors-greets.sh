@@ -2,7 +2,9 @@
 # Title: Colors Boilerplate
 # Description: One file that saves all colors
 # Use: `source` this file to avoid repeating the same color functions on your scripts
-
+# Use for libraries: In this file, copy the normal functions and variables to the bottom of the page and use capital letters instead
+#                    f_talk is F_talk  (for example in drya-lib-4)
+#                    v_txt  is V_txt   (for example in drya-lib-4)
 
 
 #
@@ -446,3 +448,61 @@ function f_pin {
 #     echo "${v_cols}$v_msg_2" >> $v_preMSGS
 #
 # }----------------------------------------------------------------------
+
+
+
+
+
+# -----------------------------------------------------------------------------------------
+# --+-- Above: functions for '__main__' scripts                                     --+--  
+# --+-- Below: functions for libraries, that are also called by '__main__' scripts  --+--
+# -----------------------------------------------------------------------------------------
+
+
+function F_c1 {	
+   f_c1 
+}
+
+function F_c2 { 
+   f_c2
+}
+
+function F_c3 { 
+   f_c3
+}
+
+function F_c4 { 
+   f_c4
+}
+
+function F_c5 { 
+   f_c5
+}
+
+function F_c6 { 
+   f_c6
+}
+
+function F_c7 {
+   f_c7
+}
+
+function F_c8 {
+   f_c8
+}
+
+function F_rc { 
+   f_rc
+}
+
+function F_greet {
+   f_greet
+}
+
+function F_talk {
+   f_talk
+}
+
+# -----------------------------------------------------------------------------------------
+# --+-- Above: functions for libraries, that are also called by '__main__' scripts  --+--
+# -----------------------------------------------------------------------------------------

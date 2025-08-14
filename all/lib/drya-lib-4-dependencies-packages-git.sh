@@ -132,8 +132,8 @@
 
 
 # ---------------------------------------------------------
-# --+-- Above: Dependencies for this library itself --+-- 
-# --+-- Below: functions to be internally called    --+--
+# --+-- Above: Dependencies for this library itself  --+-- 
+# --+-- Below: functions to be internally called     --+--
 # ---------------------------------------------------------
    
 
@@ -178,10 +178,10 @@ function f_testing_either_repo_or_directory {
          L2='2. Renomear pasta existente e Clonar Original'                                      
          L1='1. Cancelar alteracoes (com erro 1)'
 
+         Lh="Pasta ja existe e nao é repo, o que pretende fazer?"
          L0="drya-lib-4: f_lib4_ensure_repo_existence: $v_ensure: "
-         LH="Pasta ja existe e nao é repo, o que pretende fazer?"
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0" --header="$LH")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --cycle --prompt="$L0" --header="$Lh")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
@@ -217,11 +217,11 @@ function f_git_commit {
    # uDev: If git status says "nothing to commit, working tree clean" then we must not ask for a commit message. Unless there are N number of commits to upload, which in that case, G ++ be used anyway
 
    F_talk; echo -en "Adding a commit message "
-     f_c1; echo -n                          "i"
-     f_rc; echo                              " (to staged files):"
+     F_c1; echo -n                          "i"
+     F_rc; echo                              " (to staged files):"
            echo -n ' > `git commit -m "'
-     f_c1; echo -n                    "i"
-     f_rc; echo                        '" `'
+     F_c1; echo -n                    "i"
+     F_rc; echo                        '" `'
            echo
            echo    " > What is your commit message?"
            echo    " > (leave empty to abort)"  # uDev: save cursor position here to overwrite text "leave empty to abort" 
@@ -231,7 +231,7 @@ function f_git_commit {
      f_c1; echo -n               "$v_ans"
      f_rc; echo                        '"'
 
-   git commit -m "$v_ans"  # uDev: Add f_sucess
+   git commit -m "$v_ans"  # uDev: Add F_sucess
 
            echo
 
@@ -250,6 +250,18 @@ function f_git_commit {
 
 
 
+function f_stroken_print {
+   F_talk; echo -n "Presenting \""
+     F_c3; echo -n "stroken"
+     F_rc; echo    "\""
+           echo    " > Automatic sync (config file) not configured"
+           echo -n "   Use: "
+     F_c2; echo    "seivadarve"
+     F_rc; echo -n           "   And: ";
+     F_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+     F_rc; echo
+}
+
 function f_stroken {
    # (Copiando de ezGIT)
    # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -260,15 +272,7 @@ function f_stroken {
          #echo "~/.netrc exists"
          echo "it exists" 1>/dev/null
       else
-         F_talk; echo -n "Presenting \""
-           f_c3; echo -n "stroken"
-           f_rc; echo    "\""
-                 echo    " > Automatic sync (config file) not configured"
-                 echo -n "   Use: "
-           f_c2; echo    "seivadarve"
-           f_rc; echo -n           "   And: ";
-           f_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-           f_rc; echo
+         f_stroken_print 
       fi
 }
 
@@ -345,8 +349,8 @@ function f_lib4_git_pull {
 
 function f_lib4_git_pull_2 {
    F_talk; echo -n 'Receiving from Github: '
-     f_c3; echo    '`git pull`'
-     f_rc; echo
+     F_c3; echo    '`git pull`'
+     F_rc; echo
 
    git pull
 }
@@ -362,8 +366,8 @@ function f_lib4_git_add_all {
       if [[ -n $v_status ]]; then
          # uDev: Run only if there are files to stage
          F_talk; echo -n 'Staging all files: '
-           f_c3; echo    '`git add --all`'
-           f_rc
+           F_c3; echo    '`git add --all`'
+           F_rc
                  git add --all
                  echo
       else
@@ -378,8 +382,8 @@ function f_lib4_git_push {
    # uDev: Run only if there are files to push
 
    F_talk; echo -n 'Sending to Github: '
-     f_c3; echo    '`git push`'
-     f_rc
+     F_c3; echo    '`git push`'
+     F_rc
 
    git push
            echo
@@ -421,7 +425,7 @@ function f_lib4_git_commit {
       [[    $v_list =~ "3. " ]] && f_git_commit
       [[    $v_list =~ "2. " ]] && echo          "$v_cancel_msg"
       [[    $v_list =~ "1. " ]] && git commit -m "$v_auto___msg" && echo
-      [[ -z $v_list          ]] && echo          "$v_cancel_msg" && f_c8 && echo "$v_unfini_msg" && f_rc && echo
+      [[ -z $v_list          ]] && echo          "$v_cancel_msg" && F_c8 && echo "$v_unfini_msg" && F_rc && echo
 
       unset v_list
 }
