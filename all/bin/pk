@@ -9,6 +9,7 @@
 #      Example with `pacman -S   <package-X>`: `pk + <package-X>`
 
 
+v_talk="DRYa: (pk + $trid_pkgm):"
 
 # Testing if any command was given first
    [[ -z $1        ]] && echo 'Help: `pk --help`'
@@ -42,7 +43,8 @@
    [[    $1 == '^^' ]] && [[    $trid_pkgm == "pacman" ]] && sudo pacman -Syu
 
 # Testing existence of packages
-   [[    $1 == '??' ]] && [[ $trid_pkgm == "pacman" ]] && (shift; for i in $*; do pacman -Qi $i &> /dev/null && echo "DRYa: pk: pacman: [X] '$i' Instalado" || echo "DRYa: pk: pacman: [ ] '$i' Nao instalado"; done)
+   [[    $1 == '??' ]] && [[ $trid_pkgm == "pacman" ]] && (shift; for i in $*; do pacman -Qi $i &> /dev/null && echo "$v_talk | [X] Instalado   | '$i' " \
+                                                                                                             || echo "$v_talk | [ ] N Instalado | '$i' "; done)
 
 
 
