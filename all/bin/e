@@ -1,7 +1,7 @@
 #!/bin/bash
 # Title: e
 # Description: Este script `e` busca num ficheiro X qual é o editor de texto pre-definido (segundo o user de DRYa, nao do user do OS). O nome do editor de texto que for encontrado nesse ficheiro sera usado para abrir quaisquer ficheiros que sejam fornecido como argumentos no prompt 
-# Use: Use `E` to define file editor, then open files with `e <file>`
+# Use: Use `ee` to define file editor, then open files with `e <file>`
 
 # Variaveis: $trid_dir         (diretorio de configs do traitsID.sh)
 #            $trid_editor      (nome do ficheiro existente em $trid_dir, cujo texto no seu interior é so o nome do editor de texto)
@@ -30,7 +30,7 @@
    trid_editor_name=$(cat $trid_editor_file 2>/dev/null)
 
 if [ -z $1 ]; then
-   f_talk; echo "Qual o ficheiro que quer editar?"
+   f_talk; echo "Qual o ficheiro que quer editar? (com $trid_editor_name)"
 
 else
 
