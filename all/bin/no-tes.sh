@@ -264,12 +264,16 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
 
    
    f_stroken
+   
    f_ensure_omni_log  # Ensuring omni-log is installed (using drya-lib-4)
    f_lib4_git_pull
 
    if [ -z $2 ]; then
-      # If no arg are given, use the dedault file editor
-      eval "$v_default_editor $v_file_td" 
+      # If no arg are given
+
+      # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e` 
+         #eval "$v_default_editor $v_file_td" 
+         bash e $v_file_td 
 
    elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
       emacs $v_file_td
