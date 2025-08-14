@@ -1,29 +1,48 @@
 #!/bin/bash
 # Title: pk
 # Description: Abreviation to command 'pkg-manager' 
+#              Var $pkgm might be: apt, pacman, dnf, zypper, apk, brew (check traitsID.sh to make sure)
 
 # Use: After 'traitsID.sh' detects sysrem variables like package manager, independently of what it is the package manager stored in $trid_pkgm (dnf, apt, pkg) this script `pk` will wrap around it
 #
 #      Example with `dnf install <package-X>`: `pk + <package-X>`
 #      Example with `pacman -S   <package-X>`: `pk + <package-X>`
 
-# Var $pkgm might be: apt, pacman, dnf, zypper, apk, brew (check traitsID.sh to make sure)
+
+
+# Testing if any command was given first
    [[ -z $1        ]] && echo 'Help: `pk --help`'
 
-   [[    $1 == "+" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -S      $*
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm install $*
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "apk"    ]] && shift &&      $pkgm add     $*
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm install $*
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm install
-   [[    $1 == "+" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
+# Adding packages
+   [[    $1 == "+" ]] && [[ -z $trid_pkgm             ]] && echo "Variable not set: \$trid_pkgm" 
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -S      $*
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm install $*
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "apk"    ]] && shift &&      $pkgm add     $*
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "pkg"    ]] && shift &&      $pkgm install $*
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "brew"   ]] && shift &&      $pkgm install
+   [[    $1 == "+" ]] && [[    $trid_pkgm == "zypper" ]] && echo "uDev" 
 
-   [[    $1 == "-" ]] && [[ -z $trid_pkgm ]] && echo "Variable not set: \$trid_pkgm" 
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "apt"    ]] && shift && sudo $pkgm remove $*
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -R     $*
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm remove $*
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "apk"    ]] && echo "udev"
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "pkg"    ]] && shift &&      $pkgm remove $*
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "brew"   ]] && shift &&      $pkgm remove
-   [[    $1 == "-" ]] && [[ $trid_pkgm == "zypper" ]] && echo "uDev" 
+# Removing packages
+   [[    $1 == "-" ]] && [[ -z $trid_pkgm             ]] && echo "Variable not set: \$trid_pkgm" 
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "apt"    ]] && shift && sudo $pkgm remove $*
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "pacman" ]] && shift && sudo $pkgm -R     $*
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "dnf"    ]] && shift && sudo $pkgm remove $*
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "apk"    ]] && echo "udev"
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "pkg"    ]] && shift &&      $pkgm remove $*
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "brew"   ]] && shift &&      $pkgm remove
+   [[    $1 == "-" ]] && [[    $trid_pkgm == "zypper" ]] && echo "uDev" 
+
+# So Atualizar 
+   [[    $1 == "^" ]] && [[ -z $trid_pkgm             ]] && echo "Variable not set: \$trid_pkgm" 
+   [[    $1 == '^' ]] && [[    $trid_pkgm == "pacman" ]] && echo "DRYa: pk:" && echo " > No arch, só atualizar sem upgrade pode dar conflitos, por criar Upgrades Parciais, recomenda-se Ambos" && read -sn1 && sudo pacman -Syu
+
+# Atualizar + Upgrade
+   [[    $1 == "^^" ]] && [[ -z $trid_pkgm             ]] && echo "Variable not set: \$trid_pkgm" 
+   [[    $1 == '^^' ]] && [[    $trid_pkgm == "pacman" ]] && sudo pacman -Syu
+
+# Testing existence of packages
+   [[    $1 == '??' ]] && [[ $trid_pkgm == "pacman" ]] && (shift; for i in $*; do pacman -Qi $i &> /dev/null && echo "DRYa: pk: pacman: [X] '$i' Instalado" || echo "DRYa: pk: pacman: [ ] '$i' Nao instalado"; done)
+
+
+
