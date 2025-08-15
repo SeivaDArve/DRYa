@@ -533,7 +533,7 @@ function f_drya_mail_box {
 }
 
 function f_repository_dota_2 {
-   alias dt="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
+   alias dota="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
 }
 
 function f_internal_drya_files_2_of_2 {
