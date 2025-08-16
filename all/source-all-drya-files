@@ -297,6 +297,11 @@ function f_any_key_b4_open_msgs {
 function f_alias_to_enforce {
    # These variavles and alias will be set twice, to ensure they are not overwritten by mistake
 
+   # To refresh the terminal
+      alias src="source ~/.bashrc"
+      alias  rs="source ~/.bashrc" 
+      alias  f5="source ~/.bashrc"
+
    # DRYa executable
       alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
       alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"

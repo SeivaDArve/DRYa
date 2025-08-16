@@ -26,18 +26,68 @@
    alias 13="G ^"
 
 
-function f_shutdown {
-   # Desligar a maquina
+# List de OS possibeis (ver traitsID.sh)
+#  trid_OS="Android"
+#  trid_OS="Linux-Microsoft"
+#  trid_OS="RaspberryPi"
+#  trid_OS="Linux"
+#  trid_OS="NotDetected"
 
-   # Fedora Linux
-      sleep $v_time && shutdown --poweroff
+
+
+
+
+function f_hibernate {
+   if [ -z $trid_OS]; then
+      echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
+
+   elif [ $trid_OS == "Linux-Microsoft" ]; then
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
+
+   elif [ $trid_OS == "Linux" ]; then
+      sudo systemctl hibernate
+   fi
 }
 
 function f_restart {
-   # Restart a maquina
-   #shutdown --reboot
-   echo "hit"
+   if [ -z $trid_OS]; then
+      echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
+
+   elif [ $trid_OS == "Linux-Microsoft" ]; then
+
+      sleep $v_time
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
+
+   elif [ $trid_OS == "Linux" ]; then
+      sleep $v_time && (shutdown -r now || shutdown --reboot)
+   fi
 }
+
+function f_shutdown {
+   if [ -z $trid_OS]; then
+      echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
+
+   elif [ $trid_OS == "Linux-Microsoft" ]; then
+      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
+   
+   elif [ $trid_OS == "Linux" ]; then
+      sleep $v_time && (shutdown --poweroff || shutdown now)
+   fi
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts

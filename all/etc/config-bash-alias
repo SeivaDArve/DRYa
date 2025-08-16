@@ -3,6 +3,9 @@
 # Description: Dv List of all alias and Functions (for Linux terminal)
 # Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
 
+# At drya-text-editor: functions: op go 
+#                      alias:     em Em EM xdg
+
 
 
 # Verbose file (variables and outputs)
@@ -19,14 +22,17 @@
    v_talk="DRYa: "
 
 
+# Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
+   # More info at: '$ man bash'
+   HISTCONTROL=ignoreboth
+
 
 # Set the keybindings to vi/vim mode:
    #set -o vi
 
 
-alias hi="echo hello!"
+alias hi="echo hello!"  # Used as test
 
-alias rs="source ~/.bashrc"  # Restart terminal
 
 
 # For .../bin scripts
@@ -51,25 +57,11 @@ alias timg="termimage" # App to print any img on the terminal in an ascii style
 
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
-alias xdg=xdg-open
-
-function wsl {
-   # fx that uses `cd` to navigate to windows directories (when using WSL2)
-   # uDev: wsl vai passar a ser um alias que executa `V . wsl` em fluNav
-
-   if [ -z $2 ]; then
-      cd /mnt/c/
-
-   elif [ $2 == "." ]; then
-      cd /mnt/$3
-   fi
-}
 
 # Function for web options. (Sent to .../DRYa/bin/init-bin/web.sh
-#    function web { ... } 
-
-# Shortcuts for fx `web`
-   # dee: HashTag:987657897
+#  function web { ... } 
+#
+#  Shortcuts for fx `web`
    alias whatsapp="xdg-open https://web.whatsapp.com"
    alias    siigo="eval web siigo"
    alias      gpt="eval web gpt & disown"
@@ -81,27 +73,22 @@ function wsl {
    alias node="[[ -f ~/.config/.drya.node.rc ]] && node -r ~/.config/.drya.node.rc || node"
 
 
-#alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
-alias cm="cmatrix"
+alias py="python3"
+alias pip="pip3"
+alias cm="cmatrix"  #alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
+alias timg="termimage"
+alias pycharm="pycharm-community 1>/dev/null &"
+alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
-# Telling bash not to save command line on history log file that have either a whit space befor it ou that the previous line is duplicate
-   # More info at: '$ man bash'
-   HISTCONTROL=ignoreboth
 
-
-# Termux alias
-   alias REC="termux-microphone-record -l 0"
-   alias rec="termux-microphone-record -d && clear && echo 'Going'" # Starts voice recording (There should be a fast dial for this option)
-
-   alias cer="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
-      alias b="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
-      alias recs="termux-microphone-record -q" # Stops voice recording (There should be a fast dial for this option)
+# Termux Microphone Recorder at: .../DRYa/.../ez-ov.sh
       
-   alias paste="termux-clipboard-get"
-   alias copy="shift; termux-clipboard-get "$*""
-   alias sms="termux-sms-send -n" 
+
+alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
 # Termux sms script
+   alias sms="termux-sms-send -n" 
+
    function sms {
       case $1 in
          send)
@@ -116,16 +103,15 @@ alias cm="cmatrix"
          *)
          ;;
       esac
-}
+   }
 
 # uDev: alias para: 'date' que neste momento so da as horas e dia em ingles e com pouca info, udev: criar date que da info tao boas quanto a fx 'date' que criei no emacs init.el
 
-alias pycharm="pycharm-community 1>/dev/null &"
 
-alias grep="grep --color=auto"
 
 function bt {
    # See battery status
+   # uDev: use trid instead
    
    if [ $(uname -o) == "Android" ]; then
       termux-battery-status
@@ -161,21 +147,9 @@ function dos_2_unix {
 }
    
 
-alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 
 
-#alias wiki="EM ${v_REPOS_CENTER}/wikiD/wikiD"
 alias wiki="EM -nw /mnt/c/wsl-dv/Repositories/wikiD/wikiD.org"
-
-function f_debug {
-   # Degug function: use it when you need to re-open this file over and over again for debug.
-	read
-	vim ${v_REPOS_CENTER}/DRYa/all/config-bash-alias
-	#pkill -9 -x ~/Repositories/DRYa/all/config-bash-alias
-}
-
-
-
 
 
 function f_drya-messages {
@@ -195,15 +169,29 @@ function f_drya-messages {
 # joke:
    alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
+# DRYa clipboard will be set on drya.sh
+   alias paste="termux-clipboard-get"
+   alias copy="shift; termux-clipboard-get "$*""
+
+alias tc="touch"
 alias ls="ls -p --color=auto"
 alias la="ls -pA"
 alias ll="ls -pl"
+alias lll=f_ls_with_absolute_path
 alias lh="du -ah" # Lists all file's size
-alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
 alias RM="rm -rf"
+alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
+   alias lx="lixo"
+
+alias cl="cd; tput cnorm; clear; figlet 'Clear'" # Also resets the blinking cursor if it was hidden
+alias sh="bash"
+
+alias all="cd all && ls"
+alias   a="cd all && ls"
+alias   A="cd all && ls"
 
 alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
- #uDev: `mk ..` to go to last created dir
+ #uDev: `mk .` to go to last created dir
  #uDev: `mk dir1 . dir2 dir3` to make all dirs and navigate do dir2
 function MK {
 
@@ -230,8 +218,10 @@ function MK {
    # uDev: Adicionar menu fzf no final, para perguntar ao user se quer navegar para alguma dessas pastas ou para nenhuma
 }
 
-function lll {
-   # Print for each file in `ls`, its absolute path
+alias grep="grep --color=auto"
+
+function f_ls_with_absolute_path {
+   # Print for each file in `ls`, its absolute path. It is used by the alias `lll`
       # Prints to Terminal and to temp file
       # Also, if you give a number as arg, it will filter the output line. Example: `ls` prints 3 lines, so `lll 2` will print only the absolute path of the second line
 
@@ -304,17 +294,8 @@ function lll {
 
 
 
-alias tc="touch"
 alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tree ."
 
-# uDev: 'Mv' Alias for 'cut' 'paste' 'list mv-v clipboard'
-   # alias 'Mv'  : without arguments, show mv-cut/mv-paste clipboard and help
-   # alias 'Mv c': move-cut  # add files and their absolute path to an array.... then paste then with mv-p at the dir you want
-   # alias 'Mv C': move-cut  # move files from current dir to another at ~/.config/h.h/... and when 'Mv p' is used.... all contents from such dir are moved again to the final location
-   # alias 'Mv p': move-paste
-   # alias 'Mv l': Move to 'lixo'/'lx'
-   alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
-      alias lx="lixo"
 
 # 'Calc' and 'bc' are 2 Bash calculators
 # 'split -n 5' is a command that splits a text file into 5 parts
@@ -329,96 +310,6 @@ alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tr
    alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
    alias madagascar="termux-open-url https://youtu.be/bYxt96GAf4g?feature=shared"
    alias monstro="termux-open-url https://youtu.be/I5e6ftNpGsU?feature=shared"
-
-
-
-function op {
-   # Function to open all files and directories given as arguments ($*)
-      # Similar apps: termux-open; termux-open-url; wslview
-
-   # uDev: Since DRYa is developing traitsID, then in the future we will get our OS from an environment variable made by DRYa
-
-   # Test in which OS this script is running:
-      v_uname=$(uname -a)
-
-   # from the list o arguments, send links to an array, send non-links to another array
-      # Unseting array variabls, so that they start empty
-         unset link links          # Erasing the contents of the 'links' variable/array
-         unset non_link non_links  # Erasing the contents of the 'non_links' variable/array
-         #unset ls_detected_files
-         #unset op_special_commands
-         #unset saved_recognized_files
-
-      # Filtering the arguments 
-      #  for i in $*
-      #  do
-      #     # Testing each arg
-      #        link=$(echo $i | grep "^http")         # Attempt to detect if a given argument is a link
-      #        non_link=$(echo $i | grep -v "^http")  # Ateempt to detect if a given argument is not a link (by inverting the grep search with -v)
-
-      #     # For debug, verbose var:
-      #        echo "arg: $i"
-
-      #     # If var if link, go to Variable A; If var is non_non link, go to var B  (WITH VERBOSE, FOR DEBUG)
-      #        [[ ! -z $link ]] && echo "'link' var is: $link" && \
-      #        links+=("$link")  # If variable 'link' comes with some value (meaning that we detected a link) then, append it to the array 'links'
-
-      #        [[ ! -z $non_link ]] && echo "'non_link' var is: $non_link" && \
-      #        non_links+=("$non_link")
-      #  done
-
-      # Verbose results (for debug):
-      #  echo
-      #  echo "------------------------------"
-      #  echo "'links' array: ${links[@]}"
-      #  echo "'non_links' array: ${non_links[@]}"
-      #  #read; clear; exit 0  # For testing only
-
-   
-   if [ -z $1 ]; then
-      # Search file to open with `fzf`
-
-      # Buscar um ficheiro apartir da pasta atual até todas as subpastas
-         unset v_item
-         v_item=$(fzf -m --prompt="DRYa: op: Select ficheiros para abrir com xdg-open: ")
-
-      # So se houver algum nome na variavel $v_item, tenta abrir com xdg (evita `xdg-open` de reclamar erro por falta de argumentos)
-         [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
-
-   else
-      # Try to find the file opener at each OS (for the given files, given as arguments):
-         if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
-            /mnt/c/windows/explorer.exe $*  # Original script, without a for loop
-      
-              # uDev: For links and non_links open accordingly:   
-              #   # open each link
-              #      for i in ${links[@]}
-              #      do 
-              #         /mnt/c/windows/explorer.exe $links  #Error: windows explorer does not open links
-              #      done
-              #
-              #   # open each non_link
-              #      for i in ${non_links[@]}
-              #      do 
-              #         /mnt/c/windows/explorer.exe $non_links
-              #      done
-
-         elif [[ $v_uname =~ "Android" ]]; then  # If it finds "Android" then it should be working at Termux terminal
-               xdg-open $*
-               # uDev: usar `termux-open --chooser`
-
-         elif [[ $v_uname =~ "Linux" ]]; then  # If it is Any kind of Linux, try to open as standard
-               xdg-open $*
-         else
-            echo "DRYa: 'op' command failed to open the arguments"
-         fi
-         
-         # uDev: Add 'termux-open $* --chooser' as an option
-
-         # uDev: '$ op grep 20240114_094706.jpg' para procurar 'grep' pela foto certa
-         #       '$ op grep mv 20240114_094706.jpg' para mover a foto encontrada (precisa de um menu interativo)
-      fi
-}
 
 
 # Ask the terminal to print the stroken
@@ -491,21 +382,18 @@ function nfc {
       fi
 }
 
-alias py="python3"
-alias pip="pip3"
 
-alias timg="termimage"
 
 # uDev: alias dnf-apt-pkg-pacman = X
 
-alias        t-play="termux-media-player play"
-alias       t-pause="termux-media-player pause"
-alias        t-stop="termux-media-player stop"
-alias        t-info="termux-media-player info"
-alias  t-sound-test="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
-alias t-sound-test1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
+# uDev: send to ez-ov
+   alias        t-play="termux-media-player play"
+   alias       t-pause="termux-media-player pause"
+   alias        t-stop="termux-media-player stop"
+   alias        t-info="termux-media-player info"
+   alias  t-sound-test="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
+   alias t-sound-test1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
 
-alias tufnar="echo '# uDev: Tufnar Isaura 91... Check a phone list on omni-log" 
 
 function hr {
    # Fx para adicionar novos horarios do trabalho e visual os que ja existem
@@ -570,7 +458,6 @@ function shebang {
    function f_inform_creation {
       # Informing the user that the process is ready
 
-      
       # Using command 'ls' to test existence
          ls $i 1>/dev/null # Delete all output
          if [[ $? == 0 ]]; then
@@ -646,73 +533,6 @@ function shebang {
 }
 
 
-function go {
-	# This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
-	for v_arg in $@
-	do
-		setsid $v_arg &>/dev/null
-	done
-
-      # Detecting if any of the arguments given has the word "terminal" to replace for "gnome-terminal"
-      if [[ $@ =~ "terminal" ]]; then setsid gnome-terminal &>/dev/null; fi
-
-
-      # Detect if LAST argument is "bye" to make the current terminal "exit"
-         # Store all arguments inside a variable
-         v_allArguments=$*
-         
-         # Using awk to detect only the last argument
-         v_lastArg=$(echo $v_allArguments | awk '{ print $NF }')
-         if [ ${v_lastArg} == "bye" ]; then 
-            #echo "bye was said. Press enter to exit"    #Exit message
-            #read                                        #Pause before exit
-            exit
-         fi
-
-      # If there is an app called "bye" that you want to open with the command "go" then just put something else in from of it to prevent "exit" command to happen
-         # Use: $ go bye ...
-
-      # If you simply want to restart the terminal
-         if [ $1 == "again" ]; then gnome-terminal && exit; fi
-
-   # If you want to export just this "go" script for an entire repository, the name sugested is: bash-open-app-at-external-window
-}
-
-# This command is same as: "source ~/.bashrc" (but needs the function: go)
-alias src="go gnome-terminal; exit"
-alias f5="source ~/.bashrc"
-
-
-alias CLEAR="cd; tput cnorm; clear; figlet 'Clear'" # Also resets the blinking cursor if it was hidden
-alias    sh="bash"
-
-alias all="cd all && ls"
-alias   a="cd all && ls"
-alias   A="cd all && ls"
-
-function f_emacs {
-   # Attempt to untangle emacs alias (due to so many versions)
-   
-   # Path to binary emacs .exe for windows
-      v_emacs_gui="/mnt/c/Program\ Files/Emacs/x86_64/bin/emacs.exe" 
-
-   # Alias for TUI emacs (on Linux, Windows)
-      alias emacs="emacs"
-      alias    em="emacs"
-      alias   ems="emacs --script"
-
-   # Alias for GUI emacs (on windows only)
-      alias Emacs="$v_emacs_gui" 
-      alias    Em="$v_emacs_gui"
-
-   # Alias 'EM' to adapt for the best emacs executable. Will TRY to set GUI first. If GUI is not existent, set as TUI instead (Usually the best alias to use)
-      if [[ -f $v_emacs_gui ]]; then 
-         alias EM="$v_emacs_gui"  # If emacs GUI exists (on windows), then
-      else 
-         alias EM="emacs"         # If emacs GUI does not exist, then set it for terminal emacs
-      fi
-}
-f_emacs
 
 
 
@@ -734,35 +554,6 @@ alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.
 
 
 
-function f_hibernate {
-   if [ $traits_OS == "Windows" ]; then
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
-      /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
-
-   elif [ $traits_OS == "Linux" ]; then
-      sudo systemctl hibernate
-   fi
-}
-
-function f_restart {
-   if [ $traits_OS == "Windows" ]; then
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
-      /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
-
-   elif [ $traits_OS == "Linux" ]; then
-      shutdown -r now
-   fi
-}
-
-function f_shutdown {
-   if [ $traits_OS == "Windows" ]; then
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
-      /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
-   
-   elif [ $traits_OS == "Linux" ]; then
-      shutdown now
-   fi
-}
 
 
 
@@ -905,12 +696,7 @@ function arco {
 
 
 # Verbose file (variables and outputs)
+   # uDev: Cria drya-lib-X para isto
    echo "      File Finished loading: $v_title" >> $v_MSGS
    echo >> $v_MSGS
 
-
-#  function e {
-#     # uDev: enviar para .../bin/
-#     $trid_editor_app $*
-#     #bash vim  $*
-#  }

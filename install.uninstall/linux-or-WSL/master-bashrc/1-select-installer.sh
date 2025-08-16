@@ -708,7 +708,7 @@ function f_DRYa-install-me-at-bashrc {
       L2="# Sourcing Seiva's main repo: DRYa"
       L3="   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER  # Dedicated dir for repos"
       L4="   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART  # setting one file that wakes all others"
-      L5="   source ${DRYa_HEART}"
+      L5='   source ${DRYa_HEART}'
 
       echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc

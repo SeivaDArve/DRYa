@@ -1250,6 +1250,14 @@ function f_drya_help {
            echo '      on the HDD, DRYa will detect the current OS'
            echo '      and download and configure properly'
            echo
+           echo ' '
+           echo ' > Problems solved by DRYa:'
+           echo '   Avoids unwanted/forced updates'
+           echo '   Re-creates and connects most needed Play Store apps'
+           echo '   Entirely open source'
+           echo '   It will be totally encripted in the future (for the sake of the user)'
+           echo '   "One script to rule them all" (any device, any network, anywhere)'
+           echo '   '
            echo "Author: "
            echo " > David Rodrigues (Seiva D'Arve)"
            echo "   flowreshe.seiva.d.arve@gmail.com"

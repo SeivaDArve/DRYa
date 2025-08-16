@@ -10,11 +10,6 @@
 #       letra S para ABRIR ficheiros com SYNC
 #       letra . para abrir ficheiros sem s
 
-# uDev: 
-#    '. '       ## ls
-#    'V mo'     ## cd moedaz
-#    'DD'       ## cd DRYa
-#    'op file.org' detect current emacs (instead of EM, Em, em)
 
 # Leters to be used:
 #     function S     (Sync files before/after editing at: DRYa/locally/maybe github)
@@ -275,6 +270,7 @@ function f_edit__init_file_emacs__with_vim {
 }
 
 function f_help {
+   # uDev: this fx is overwriten. Must be either renamed or merged with the other existing f_help from V
    f_greet
    echo "fluNav"
    echo " > Edits files inside 'DRYa repository' then copies those files across the system"
@@ -409,8 +405,22 @@ function f_up {
    f_talk; echo "uDev: Upload updates using drya-lib-4 (after closing file)"
 }
 
+# functions for text editor `e` `ee` `eee` exist at .../DRYa/all/bin/init-bin/drya-text-editor
 
 
+alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
+
+function wsl {
+   # fx that uses `cd` to navigate to windows directories (when using WSL2)
+   # uDev: wsl vai passar a ser um alias que executa `V . wsl` em fluNav
+
+   if [ -z $2 ]; then
+      cd /mnt/c/
+
+   elif [ $2 == "." ]; then
+      cd /mnt/$3
+   fi
+}
 
 
 function . {
@@ -600,77 +610,6 @@ function ,,,, {
 function ., {
    # uDev: This is meant also to SEE if the directory is empty or not, therefore, if the dir is Totally empty, echo "This place is empty"
    ls -Ap
-}
-
-#  
-#  function e { 
-#     # (Function deactivated, because script already exists at .../DRYa/all/bin/e)
-#  }
-#  
-
-function ee {
-   # Menu `ee` to select the text editor. Works in tandem with the script `e` (located at .../DRYa/all/bin/e)
-
-   if [ -z $1 ]; then
-      # Escolher editor de texto para pre-definir 
-      # uDev: Tem de funcionar em dintonia com traitsID
-
-      # In fluNav, there is a command to open either a dir or to open a file:
-      # '$ . <file>'
-      # and if there is no dir or existent file, it will create one,
-      # so, this function will decide which text editor will open the file
-
-      trid_editor_file=$trid_dir/trid_editor
-      trid_editor_name=$(cat $trid_editor_file) 2>/dev/null
-
-      # Getting variable of current text editor
-         Lhc=$(cat $trid_editor_file)
-
-      # Lista de opcoes para o menu `fzf`
-         Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-
-         L10='10. less --wordwrap'
-          L9='9.  vim (easy mode, `vim -y`)' 
-
-          L8='8.  cat'
-          L7='7.  nano'
-          L6='6.  less '
-          L5='5.  ed'   # Antigo editor de texto da Unix/Linux 
-          L4='4.  emacs'
-          L3='3.  vim'
-
-          L2='2.  Print editor atual | `ee .`'
-          L1='1.  Cancel'
-         
-         Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
-         L0="fluNav: ee: set text editor: "
-         
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
-
-      # Atualizar historico fzf automaticamente (deste menu)
-         echo "$Lz2" >> $Lz4
-   
-      # Perceber qual foi a escolha da lista
-         [[   $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[   $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file
-         [[   $v_list =~ "9.  " ]] && echo "vim -y"          > $trid_editor_file
-         [[   $v_list =~ "8.  " ]] && echo "cat"             > $trid_editor_file
-         [[   $v_list =~ "7.  " ]] && echo "nano"            > $trid_editor_file
-         [[   $v_list =~ "6.  " ]] && echo "less"            > $trid_editor_file
-         [[   $v_list =~ "5.  " ]] && echo "ed"              > $trid_editor_file
-         [[   $v_list =~ "4.  " ]] && echo "emacs"           > $trid_editor_file
-         [[   $v_list =~ "3.  " ]] && echo "vim"             > $trid_editor_file
-         [[   $v_list =~ "2.  " ]] && cat $trid_editor_file
-         [[   $v_list =~ "1. "  ]] && echo "Canceled: Menu: $Lz2" 
-         unset v_list
-
-   elif [ $1 == "." ]; then
-      cat $trid_editor_file
-   fi
-}
-
-function eee {
-   echo "uDev: open cheat sheets for current editor"
 }
 
 
