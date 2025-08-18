@@ -169,9 +169,6 @@ function f_drya-messages {
 # joke:
    alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
 
-# DRYa clipboard will be set on drya.sh
-   alias paste="termux-clipboard-get"
-   alias copy="shift; termux-clipboard-get "$*""
 
 alias tc="touch"
 alias ls="ls -p --color=auto"
@@ -265,10 +262,10 @@ function f_ls_with_absolute_path {
            echo "$v_pwd/$i" 
            echo
          done
-       
 
 
 
+   # uDev: os resultados, enviar para drya-clipboard para o vim poder colar 
 }
 
 # Options for SQLite
@@ -393,6 +390,11 @@ function nfc {
    alias        t-info="termux-media-player info"
    alias  t-sound-test="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
    alias t-sound-test1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
+
+# DRYa clipboard will be set on drya.sh
+   alias t-paste="termux-clipboard-get"  # `paste` ja existe e é util, nao pode ser usado. 
+   alias t-copy="shift; termux-clipboard-get "$*""
+
 
 
 function hr {
