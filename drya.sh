@@ -38,6 +38,8 @@
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
 
+
+
 function f_instructions_of_usage {
    # Função para exibir como usar o script
 
@@ -69,6 +71,7 @@ function f_instructions_of_usage {
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # uDev: Use from drya-lib-4 instead. Make this just a copy like ezGIT
 
    # If ~/.netrc exists, no need to print the rest
       if [ -f ~/.netrc ]; then
@@ -1050,7 +1053,7 @@ function f_QR_code_fzf_menu {
          
       L4='4. Criar QR code | Apartir de 1 linha de 1 ficheiro'
       L3='3. Criar QR code | Apartir de ficheiro inteiro'
-      L2='2. Criar QR code | Apartir de texto'
+      L2='2. Criar QR code | Apartir de texto `curl`'
       L1='1. Cancel'
 
       L0="SELECIONE 1 Opcao: "
@@ -3172,7 +3175,32 @@ elif [ $1 == "noty" ] || [ $1 == "notify" ]; then
 elif [ $1 == "QR" ] || [ $1 == "qr" ]; then 
    # Options for QR codes
 
-   f_QR_code_fzf_menu
+   if [ -z $2 ]; then
+      f_QR_code_fzf_menu
+
+   elif [ $2 == "curl" ] ; then 
+
+      if [ -z $3 ]; then
+         echo "Tem de fornecer arg 4 como texto"
+
+      else 
+         shift
+         shift
+
+         f_talk; echo "A criar QR codes de cada argumento"
+
+         for i in $@ 
+         do
+            # curl trick, pedir a um site para criar um qr code
+            echo
+            echo " > $i"
+            printf "$i" | curl -F-=\<- qrenco.de/
+            echo
+            echo
+      
+         done
+      fi
+   fi
 
 elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
 
@@ -3494,10 +3522,26 @@ elif [ $1 == "wam" ]; then
    
    # Ficheiro que é editado
       v_wam=${v_REPOS_CENTER}/omni-log/all/wam/wam.org
+      v_example="${v_REPOS_CENTER}/omni-log/all/wam/example-wam-qrcode/run-example.sh"
 
    if [ -z $2 ]; then
       # Se nao for dado nenhum arg extra, edita o ficheiro
-      [[ -d ${v_REPOS_CENTER}/omni-log ]] && e $v_wam  ## Usa o script `e` que vem com DRYa repo
+      [[ -d ${v_REPOS_CENTER}/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
+
+   elif [ $2 == "?" ]; then
+      f_greet
+      f_talk; echo "Example of D.W.A.M. (DRYa Worldly Abreviated Messages)"
+              echo " > 1. DWAM + code (text representatio, for manual database search)"
+              echo " > 2. QR code of the same to code (for automation)"
+      f_hzl
+
+      echo
+      echo
+      [[ -f $v_example ]] && bash $v_example
+      echo
+      echo
+
+      f_hzl
 
    else 
       # Se forem usados mais args, pesquisa-os e imprime no terminal
