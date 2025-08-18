@@ -152,7 +152,8 @@ function f_drya_ssms_start {
 
    # Configuring variable for DRYa messages
       v_name="drya-msgs"
-      v_MSGS="$v_cfg/$v_name"  &&  export v_MSGS
+      v_MSGS="$v_cfg/$v_name"  &&  export v_MSGS  # Legacy
+      v_ssms="$v_cfg/$v_name"  &&  export v_ssms
 
    # Populating file with standard text
       v_text1="# Title: DRYa Messages (verbose output for apps under DRYa)"
