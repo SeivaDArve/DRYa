@@ -835,6 +835,7 @@ if [ -z "$1" ]; then
          L16='16. Relogio     | Temporizador'
          L15='15. Relogio     | Despertador'
 
+        #L13='13. Calculadora | Centralizar os furos de um quadro na parede (2 furos centraldos numa parede):   |----------|----|----------|
         #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
         #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
         #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
