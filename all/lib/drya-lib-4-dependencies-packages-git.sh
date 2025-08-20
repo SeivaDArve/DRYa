@@ -306,7 +306,14 @@ function f_lib4_welcome {
    F_talk; echo "Ready!"
 }
 
+function f_lib4_just_check_repo_existence {
+   echo "uDev: Just check if repo exists and do nothing. exit if it does not exist"
 
+   # uDev: pode ser dado o nome de uma repo $v_repo:                [ -n $v_repo         ]
+   # uDev: pode ser dado o nome de um ficheiro de uma repo $v_file: [ -n $v_repo/$v_file ]
+
+   echo "args: $@"
+}
 
 function f_lib4_git_status_compact {
    v_basename=$(basename $(pwd))
