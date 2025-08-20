@@ -250,15 +250,17 @@ function f_ls_with_absolute_path {
       # Menu Simples
 
       # Lista de opcoes para o menu `fzf`
-         L0='SELECT (1 or +): `lll` Print Abs Path: '
+         L0='DRYa: config-bash-alias: lll: Print Abs Path: '
          
-         v_list=$(ls -A | fzf -m --cycle --prompt="$L0")
+         v_list=$(ls -A | fzf -m --cycle --pointer=">" -m --prompt="$L0")
 
       # Atuar na escolha da lista
         v_pwd=$(pwd)
 
+         n=0
          for i in $v_list
          do
+           # uDev: increment n, the print '1|path' then send to temp file
            echo "$v_pwd/$i" 
            echo
          done
