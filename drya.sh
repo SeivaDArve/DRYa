@@ -40,6 +40,16 @@
 
 
 
+# Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
+   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+
+   # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
+   #           f_lib4_stroken
+
+
+
+
 function f_instructions_of_usage {
    # Função para exibir como usar o script
 
@@ -3400,22 +3410,18 @@ elif [ $1 == "grep" ] || [ $1 == "gr" ]; then
 
    v_script=${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh
 
-   # Save Arguments as variables (uDev: criar fx em drya-lib-1)
-      v_1=$1
-      v_2=$2
-      v_3=$3
-      v_4=$4
-      v_5=$5
-      v_6=$6
-      v_7=$7
-      v_8=$8
-      v_9=$9
-
    if [ -z $2 ]; then 
-      bash $v_script
+      bash $v_script 
 
    elif [ $2 == "." ]; then 
       vim $v_script
+
+   else
+
+      # Enviar todos os argumentos deste processo principal para o script (sub-processo). Shift elimina o arg 'grep'
+      shift
+      bash $v_script "$@"
+         
    fi
 
 
