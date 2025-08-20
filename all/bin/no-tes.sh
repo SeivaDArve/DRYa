@@ -72,16 +72,6 @@ function f_create_tmp_file_with_date_as_name {
    touch $v_tmp
 }
    
-function f_ensure_omni_log {
-   # Using drya-lib-4 to ensure omni-log exists and is updated
-
-   unset v_green_light    # var given after drya-lib-4 that tells this main script either to proceed or not
-   v_ensure="$v_df_repo"  # Ensure default repo (the one this script uses the most)
-   f_lib4_ensure_repo_existence
-
-   # uDev: ensure it is updated
-}
-
 function f_edit_with_heteronimos {
    
    # Menu that allows user to choose an Heteronimo file to edit
@@ -263,17 +253,16 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
    
-   f_stroken
-   
-   f_ensure_omni_log  # Ensuring omni-log is installed (using drya-lib-4)
-   f_lib4_git_pull
+   # Ensuring omni-log with drya-lib-4
+      # uDev: para o verbose output falta: mencionar que vem do script: `no - .`
+      v_ensure="$v_df_repo" && f_lib4_download_compact
 
    if [ -z $2 ]; then
       # If no arg are given
 
       # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e` 
-         #eval "$v_default_editor $v_file_td" 
-         bash e $v_file_td 
+         eval "$v_default_editor $v_file_td" 
+         #bash e $v_file_td 
 
    elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
       emacs $v_file_td
@@ -282,9 +271,7 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
       emacs $v_file_td
    fi
       
-   f_lib4_git_add_all
-   f_lib4_git_commit
-   f_lib4_git_push
+   f_lib4_upload_compact
 
 elif [ $1 == "unique-nt" ] || [ $1 == "u" ]; then
    # Cria uma nota nova em um ficheiro novo (na pasta .../omni-log/all/ex-pressa/unique-nt/<nota-nova>
