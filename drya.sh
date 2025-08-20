@@ -3455,7 +3455,8 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
    #        `D clp m p`  # Paste using machine clipboard
    #
 
-elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
+#elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then  # Legacy
+ elif [ $1 == "grep" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
    # Partial File Reader: Para imprimir apenas a linha X de um documento
    # Exemplo: `D linha <opcao> <numero-da-linha> <nome-do-ficheiro>`
 
@@ -3477,8 +3478,9 @@ elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then
 #   echo $0
 #   bash  ${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh 
 
-elif [ $1 == "dmsg" ] || [ $1 == "ssms" ]; then 
+elif [ $1 == "dmsg" ] || [ $1 == "ssms" ] || [ $1 == "msg" ]; then 
    # Read the log file to events (drya-messages)
+   f_talk; echo 'Showing `ssms` entire file'
    less $v_MSGS
    
 elif [ $1 == "call" ]; then 
@@ -3512,10 +3514,6 @@ elif [ $1 == "hush" ]; then
 elif [ $1 == "zip" ] ; then 
    f_zip_unzip
 
-elif [ $1 == "msg" ]; then 
-   # Read the log file to events (DRYa)
-   less $v_MSGS
-   
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
    # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
@@ -3526,7 +3524,7 @@ elif [ $1 == "wam" ]; then
 
    if [ -z $2 ]; then
       # Se nao for dado nenhum arg extra, edita o ficheiro
-      [[ -d ${v_REPOS_CENTER}/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
+      [[ -d ${v_REPOS_CENTER}/omni-log ]] && emacs $v_wam  ## Usa o script `e` que vem com DRYa repo
 
    elif [ $2 == "?" ]; then
       f_greet
@@ -3556,7 +3554,7 @@ elif [ $1 == "morse" ]; then
    # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
    f_morse
 
-elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ]; then 
+elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
    echo "uDev: Escrever formula de 1.os Socorros"
    echo "      fichiro: .../var/suporte-basico-de-vida.txt"
 
