@@ -208,13 +208,18 @@ function f_one_second_date {
    date +"%d/%m/%Y %H:%M:%S"
 }
 
+function f_nanoseconds {
+  v_nano=$(date +'%N')
+  echo $v_nano
+}
 
+function f_short_with_seconds {
+  v_data_shrt_plus_secs=$(date +'<%Y-%m-%d %H:%M:%S>')
+  echo "$v_data_shrt_plus_secs"
+}
 
 # -----------------------------------------------
 
-
-# uDev: Data neste formato:
-# (Data atual) - (Ano 2025) - (Mes 06 Jun) - (Dia 18 Wed) - (03:03:14)
 
 
 if [ -z $1 ]; then
@@ -228,14 +233,16 @@ elif  [ $1 == "." ]; then
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
      #L14='14. M | calandario lunisolar, em que cada mes tem 28 dias. 
-      L16='16. | I | Informar dia/forma de mudanca de hora Verao/Inverno'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
-      L15='15. | i | Data e hora: Da internet (nao confiar no pc)'
-      L14='14. | F | Data para ficheiros | (com verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
-      L13='13. | f | Data para ficheiros | (sem verbose, envia para drya-date-now e drya-status-messages)'
-      L12='12. | b | Data completa esclarecida sem loop sem LOGO (background)'
-      L11='11. | d | Data completa esclarecida sem loop sem LOGO'
-      L10='10. | r | Data completa esclarecida com loop com LOGO'
-       L9='9.  | l | Data completa esclarecida com loop'
+      L18='18. | I | Informar dia/forma de mudanca de hora Verao/Inverno'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
+      L17='17. | n | Nanoseconds only'
+      L16='16. | i | Data e hora: Da internet (nao confiar no pc)'
+      L15='15. | F | Data curta para ficheiros | (com verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
+      L14='14. | f | Data curta para ficheiros | (sem verbose, envia para drya-date-now e drya-status-messages)'
+      L13='13. | c | Data curta para terminal  | (com verbose, com segundos, envia para drya-date-now e drya-status-messages, define variavel v_data_shrt_plus_secs)'
+      L12='12. | b | Data longa esclarecida sem loop sem LOGO (background)'
+      L11='11. | d | Data longa esclarecida sem loop sem LOGO'
+      L10='10. | r | Data longa esclarecida com loop com LOGO'
+       L9='9.  | l | Data longa esclarecida com loop'
        L8='8.  | v | Imprime 1x a data em um formato util para variaveis'
        L7='7.  | H | Data que foca na hora'
        L6='6.  | m | Imprime linhas com a hora durante 1 min'
@@ -248,14 +255,16 @@ elif  [ $1 == "." ]; then
 
       L0="[m+] data.sh: main menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16  \n\n$Lz3" | fzf --no-info -m --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18\n\n$Lz3" | fzf --no-info -m --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "18. " ]] && echo "uDev"
+      [[ $v_list =~ "17. " ]] && f_nanoseconds 
       [[ $v_list =~ "16. " ]] && echo "uDev"
-      [[ $v_list =~ "15. " ]] && echo "uDev"
-      [[ $v_list =~ "14. " ]] && f_variables_date_to_file_verbose
-      [[ $v_list =~ "13. " ]] && f_variables_date_to_file
+      [[ $v_list =~ "15. " ]] && f_variables_date_to_file_verbose
+      [[ $v_list =~ "14. " ]] && f_variables_date_to_file
+      [[ $v_list =~ "13. " ]] && f_short_with_seconds
       [[ $v_list =~ "12. " ]] && f_background_process
       [[ $v_list =~ "11. " ]] && f_complete_date && echo
       [[ $v_list =~ "10. " ]] && f_complete_date_loop_plus_figlet
@@ -335,6 +344,12 @@ elif  [ $1 == "f" ]; then
 elif  [ $1 == "F" ]; then
    # Data para ficheiro, sem verbose output
    f_variables_date_to_file_verbose
+
+elif  [ $1 == "c" ]; then
+   f_short_with_seconds
+
+elif  [ $1 == "n" ]; then
+   f_nanoseconds
 
 elif  [ $1 == "M" ]; then
    # uDev: Calendario lunisolar
