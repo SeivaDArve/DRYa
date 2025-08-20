@@ -53,8 +53,9 @@ function f_test_dependencie_tput {
 
 
 function f_c1 {	
-   # Fx for color 1
-   # This function is to be used when something is SEARCHED
+   # Text Color 1
+   # This function is to be used:
+   #  - Output of `git` when something is being cloned, pulled, pushed
 
    f_test_dependencie_tput
    [[ $v_status == 0 ]] && tput setaf 5 
@@ -455,54 +456,4 @@ function f_pin {
 
 # -----------------------------------------------------------------------------------------
 # --+-- Above: functions for '__main__' scripts                                     --+--  
-# --+-- Below: functions for libraries, that are also called by '__main__' scripts  --+--
-# -----------------------------------------------------------------------------------------
-
-
-function F_c1 {	
-   f_c1 
-}
-
-function F_c2 { 
-   f_c2
-}
-
-function F_c3 { 
-   f_c3
-}
-
-function F_c4 { 
-   f_c4
-}
-
-function F_c5 { 
-   f_c5
-}
-
-function F_c6 { 
-   f_c6
-}
-
-function F_c7 {
-   f_c7
-}
-
-function F_c8 {
-   f_c8
-}
-
-function F_rc { 
-   f_rc
-}
-
-function F_greet {
-   f_greet
-}
-
-function F_talk {
-   f_talk
-}
-
-# -----------------------------------------------------------------------------------------
-# --+-- Above: functions for libraries, that are also called by '__main__' scripts  --+--
 # -----------------------------------------------------------------------------------------

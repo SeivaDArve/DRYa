@@ -11,6 +11,7 @@
    drya-lib-4-dependencies-packages-git.sh   # For each script, Tests if all dependencies are met
    drya-lib-5-all-info-arg-0.sh              # Usado para saber em que pasta estao o script a executar, e evitar navegar ate a pasta dele para fazer alteracoes
    drya-lib-6-call-python-elisp-etc
+   drya-lib-7-bash-calling-for-sqlite3.sh
    README.txt
 
 # Directory ./cat contents:
