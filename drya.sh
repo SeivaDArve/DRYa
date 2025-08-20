@@ -1792,66 +1792,6 @@ function f_drya_help_menu {
       unset v_list
 }
 
-function f_partial_file_reader {
-   # Para ler partes de documentos
-
-   # uDev: O primeiro argumento convem ser logo o nome do ficheiro, so depois adicionar argumentos com opcoes
-
-   # uDev:
-   #      [ -z $2     ]  # Print todas estas opcoes/help
-   #
-   #      [ $2 == g   ]  # Usa `grep` e as pesquisas apresentam o nunero da linha
-   #                       grep -n <pesquisa> <ficheiro>
-   #
-   #      [ $2 == n   ]  # Imprime so a linha numero X correspondente
-   #                       exemplo: linha 1:
-   #                       sed -n '1p' <nome-do-ficheiro>
-   #
-   #      [ $2 == ^   ]  # Imprime so a linha numero X para cima
-   #                       sed -n '1,76p' <nome-do-ficheiro>
-   #
-   #      [ $2 == v   ]  # Imprime so a linha numero X para baixo
-   #                       exemplo: linha 5 ate 11:
-   #                       sed -n '5,$p' <nome-do-ficheiro>
-   #
-   #      [ $2 == "nn 5 11" ]  # Imprime desde a linha X a Y
-   #                             exemplo: linha 5 ate 11:
-   #                             sed -n '5,11p' <nome-do-ficheiro>
-   #
-   #      [ $2 == "gg <pesquisa> <pesquisa> " ]  # Imprime da linha X a Y, mas em vez de alimentar o numero da linha, alimenta 2 pesquisas de texto
-   #
-   #      [ $2 == "org <grep-ogr-header>" ]      # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
-   #
-   #      [ $2 == "org" "-z $3" ]                # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
-   #                                               exemplo, pesquisar TODOS os headers:
-   #                                               grep -n "^\*" <nome-do-ficheiro>
-   #
-   #      [ $2 == "r" ]  # Read a random line from a file
-
-
-
-   #
-   #   # Set Variables
-   #      v_opti=$2
-   #      v_line=$3
-   #      v_file=$4
-   #
-   #      v_msg_miss_opti="DRYa: You need to provide an option"
-   #      v_msg_miss_line="DRYa: You need to provide a line number"
-   #      v_msg_miss_file="DRYa: You need to provide a file name"
-   #
-   #   # Exit on error:
-   #      [[ -z $2 ]] && echo $v_msg_miss_opti && exit 1
-   #      [[ -z $3 ]] && echo $v_msg_miss_line && exit 1
-   #      [[ -z $4 ]] && echo $v_msg_miss_file && exit 1
-   #
-   #   # Run the command only if all args were given
-   #      [[ -n $3 ]] && sed -n "${v_line}p" $v_file  
-   #
-   #
-
-   echo
-}
 
 function f_toggle_termux_hushlogin {
    # O ficheiro .hushlogin que Liga/Desliga o ouptup:
@@ -3455,12 +3395,12 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
    #        `D clp m p`  # Paste using machine clipboard
    #
 
-#elif [ $1 == "line" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then  # Legacy
- elif [ $1 == "grep" ] || [ $1 == "linha" ] || [ $1 == "l" ]; then 
-   # Partial File Reader: Para imprimir apenas a linha X de um documento
-   # Exemplo: `D linha <opcao> <numero-da-linha> <nome-do-ficheiro>`
+elif [ $1 == "grep" ] || [ $1 == "gr" ]; then 
+   # Partial File Reader: Filtrar texto de ficheiros
 
-   # Save Arguments as variables
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh
+
+   # Save Arguments as variables (uDev: criar fx em drya-lib-1)
       v_1=$1
       v_2=$2
       v_3=$3
@@ -3471,12 +3411,13 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
       v_8=$8
       v_9=$9
 
-   f_partial_file_reader
+   if [ -z $2 ]; then 
+      bash $v_script
 
-# Alternativa (uDev)
-#   echo "script: ${BASH_SOURCE[0]}"
-#   echo $0
-#   bash  ${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh 
+   elif [ $2 == "." ]; then 
+      vim $v_script
+   fi
+
 
 elif [ $1 == "dmsg" ] || [ $1 == "ssms" ] || [ $1 == "msg" ]; then 
    # Read the log file to events (drya-messages)
