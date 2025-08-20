@@ -2614,7 +2614,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
 
-   elif [[ $2 == "dot-file" ]] || [ $2 == "dot" ] || [ $2 == "d" ]; then 
+   elif [[ $2 == "dot-file" ]] || [ $2 == "dot" ] || [ $2 == "d" ] || [ $2 == "." ]; then 
 
       if [ -z $3 ]; then
          # Menu principal: dot-files
@@ -2711,7 +2711,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       f_quick_install_all_upk
 
-   elif [[ $2 == "." ]]; then 
+   elif [[ $2 == "1" ]]; then 
       # Edit script "DRYa fzf installer"
       vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
 
