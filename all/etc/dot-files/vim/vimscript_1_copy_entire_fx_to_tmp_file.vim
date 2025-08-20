@@ -7,6 +7,8 @@
 "      -s        significa: silent mode
 "      -S {file} significa: source 'file' com o vimscript la dentro, para ser usado no ficheiro do arg seguinte 
 
+" Use cases: f_drya_welcome (copy bash function)
+
 " Abre o arquivo bash-texto.sh com `:e ficheiro.sh` e nao precisa ser usado caso o nome desse ficheiro ja seja mencionado no argumento seguinte  
    "e bash-texto.sh
 
