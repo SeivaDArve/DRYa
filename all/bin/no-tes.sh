@@ -261,8 +261,8 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
       # If no arg are given
 
       # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e` 
-         eval "$v_default_editor $v_file_td" 
-         #bash e $v_file_td 
+         #eval "$v_default_editor $v_file_td" 
+         bash e $v_file_td 
 
    elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
       emacs $v_file_td

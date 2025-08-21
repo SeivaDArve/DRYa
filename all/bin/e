@@ -1,0 +1,13 @@
+#!/bin/bash
+# Title: drya-text-editor
+# Use: `e` is the name of a file placed on a directory which is present on $PATH, so if we call `e` it will load `function e` passing it the arguments
+
+# Os scripts em .../bin/ provavelmente precisam de permissao para ser executados (com `chmod +x`)
+
+# For debug:
+#     echo "e: Args: $@"
+#     read  
+
+# O script drya-text-editor encontra-se em .../init-bin para ser carregado no startup do terminal, logo, para que um sub-processo utilize os seus recursos, temos nesse sub-processo de o chamar enviando-lhe os argumentos do processo principal
+   source  ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-text-editor.sh
+   e $@

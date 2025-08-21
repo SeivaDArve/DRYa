@@ -622,7 +622,7 @@ function f_lib4_git_pull_compact {
    F_rc
 
       f_hzl >> $v_ssms
-      echo "drya-lib-4: git pull: date: $v_date" >> $v_ssms
+      echo "drya-lib-4: git pull: Date: $v_date" >> $v_ssms
 
       #git pull --no-edit 1>/dev/null
       git pull --no-edit 1>>$v_ssms
@@ -702,11 +702,11 @@ function f_lib4_git_commit_compact {
       echo " > Opening 'commits' menu..."
 
       # Variables to improve txt
-         v_blind__msg="drya-lib-4: commits menu: Pushed to github.com automatically"
-         v_udev___msg="drya-lib-4: Commits menu: Improvements made only around uDev comments (added/modify/etc..)"
-         v_auto___msg="drya-lib-4: Commits menu: automatic commit"
-         v_cancel_msg="drya-lib-4: Commits menu: Canceled automatic commit messages"
-         v_unfini_msg="drya-lib-4: Commits menu: Unfinished uploads"
+         v_blind__msg=" > commits menu: Pushed to github.com automatically"
+         v_udev___msg=" > Commits menu: Improvements made only around uDev comments (added/modify/etc..)"
+         v_auto___msg=" > Commits menu: automatic commit"
+         v_cancel_msg=" > Commits menu: Canceled automatic commit messages"
+         v_unfini_msg=" > Commits menu: Unfinished uploads"
 
       # Lista de opcoes para o menu `fzf`
          L5="5. Mensagem automatica |  $v_blind__msg"
