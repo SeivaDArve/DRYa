@@ -257,6 +257,33 @@ function f_get_stroken {
 
 
 
+               function f_stroken_print {
+                  F_talk; echo -n "Presenting \""
+                    F_c3; echo -n "stroken"
+                    F_rc; echo    "\""
+                          echo    " > Automatic sync (config file) not configured"
+                          echo -n "   Use: "
+                    F_c2; echo    "seivadarve"
+                    F_rc; echo -n           "   And: ";
+                    F_c2; echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+                    F_rc; echo
+               }
+
+               function f_stroken {
+                  # (Copiando de ezGIT)
+                  # When automatic github.com authentication is not set, an alternative (as taxt based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+                  # While the app is in beta, this is usefull
+
+                  # If ~/.netrc exists, no need to print the rest
+                     if [ -f ~/.netrc ]; then
+                        #echo "~/.netrc exists"
+                        echo "it exists" 1>/dev/null
+                     else
+                        f_stroken_print 
+                     fi
+               }
+
+
 
 function f_lib4_stroken {
    # (Copiando de ezGIT)
@@ -284,7 +311,7 @@ function f_lib4_stroken {
    fi
 }
 
-function f_stroken_print {
+function f_lib4_stroken_print {
    # Print EVEN if .netrc exists and is properly configured. Print just to inform
       
    f_get_stroken 
@@ -315,18 +342,151 @@ function f_lib4_just_check_repo_existence {
    echo "args: $@"
 }
 
-function f_lib4_git_status_compact {
-   v_basename=$(basename $(pwd))
-    F_talk; echo -n "git status on path: "
-     F_c3; echo    ".../$v_basename"
-     F_rc
 
 
-   F_c1
-   git status
-   F_rc
+
+
+function f_lib4_ensure_repo_existence_single {
+   # Tests if a repository exists. If it does not, it clones it
+   # Needs var: v_ensure
+
+   # Example: 
+   #     unset v_green_light       # var given after drya-lib-4 that tells this main script either to proceed or not
+   #     v_ensure="repoX"          # Repo name we want to ensure its existence
+   #     f_lib4_ensure_repo_existence_single   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
+
+
+   # Path + Name of the repo
+      v_repo=${v_REPOS_CENTER}/$v_ensure
+   
+   # When using this script as a Lib, the variable $v_ensure must exist, an error will be mentioned if not set
+      if [ -z $v_ensure ]; then
+         F_talk; echo 'Could not test repo existence, variable not set'
+                 echo ' > Specifying variable $v_ensure'
+         # uDev: add v_green_light
+         exit 1
+      fi
+
+   # Test if package `git` exists
+      f_test_pkg_git_installed
+
+   # Testing if directory corresponding to the repo exists
+      # uDev: add v_green_light
+      if [ -d $v_repo ]; then
+
+         F_talk; echo "Directory already exists:"
+                 echo " > $v_ensure"
+                 echo
+
+         f_testing_either_repo_or_directory
+
+      else
+         F_talk; echo "Directory does not exist"
+
+         cd ${v_REPOS_CENTER}/ 
+         v_cloned="https://github.com/SeivaDArve/$v_ensure.git"
+         git clone $v_cloned
+      fi
+
+      # uDev: Git Pull, otherwise, files can be edited in outdated versions
 }
 
+function f_lib4_git_pull_single {
+   # Git Pull sem abrir o editor e editar a commit message quando faz Merge
+
+   # uDev: perguntar char GPT: testar `git pull` so por 10 secs, e editar à mesma se Offline.
+
+   F_talk; echo 'A fazer download `git pull --no-edit`'
+   git pull --no-edit
+
+   # uDev: Se a fx anterior der erro, questionar o utilizador se quer continuar a edtar o ficheiro em modo offline com a ultima versao do ficheiro possivelmente desatualizada
+
+   echo
+}
+
+
+function f_lib4_git_pull_2_single {
+   F_talk; echo -n 'Receiving from Github: '
+     F_c3; echo    '`git pull`'
+     F_rc; echo
+
+   git pull
+}
+
+function f_lib4_git_add_all_single {
+
+   # Get current `git status` without verbose, only the intresting part.
+      v_status=$(git status --short)
+
+      cd $v_df_repo_pwd
+
+   # Only if there is anything to commit or to finish, only then, changes are added to Staging Are
+      if [[ -n $v_status ]]; then
+         # uDev: Run only if there are files to stage
+         F_talk; echo -n 'Staging all files: '
+           F_c3; echo    '`git add --all`'
+           F_rc
+                 git add --all
+                 echo
+      else
+         F_talk; echo 'Nothing needs to be done'
+         exit 0
+
+      fi
+}
+
+
+function f_lib4_git_push_single {
+   # uDev: Run only if there are files to push
+
+   F_talk; echo -n 'Sending to Github: '
+     F_c3; echo    '`git push`'
+     F_rc
+
+   git push
+           echo
+}
+
+
+
+
+
+function f_lib4_git_commit_single {
+   # uDev: Run only if there are files to commit
+   # uDev: Nas commit messagem, incluir o nome do ficheiro modificado
+
+   # Menu Simples
+
+   # Variables to improve txt
+      v_blind__msg="drya-lib-4: Pushed to github.com automatically"
+      v_udev___msg="drya-lib-4: Improvements made only around uDev comments (added/modify/etc..)"
+      v_auto___msg="drya-lib-4: automatic commit"
+      v_cancel_msg="Canceled: Adding a commit message to last changes"
+      v_unfini_msg=" > Unfinished uploads: repo $v_df_repo (uDev)"
+
+   # Lista de opcoes para o menu `fzf`
+      L5='5. Mensagem automatica: blind commit'
+      L4='4. Mensagem automatica: uDev comments'                                      
+      L3='3. Mensagem nova (Introduzir manualmente)'                                      
+
+      L2='2. Cancel'
+      L1='1. Mensagem automatica: "drya-lib-4: automatic commit"'
+
+      L0="drya-lib-4: Que tipo de commit message pretende? "
+      
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="$L0")
+
+   # Perceber qual foi a escolha da lista
+      [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[    $v_list =~ "5. " ]] && git commit -m "$v_blind__msg" && echo
+      [[    $v_list =~ "4. " ]] && git commit -m "$v_udev___msg" && echo
+      [[    $v_list =~ "3. " ]] && f_git_commit
+      [[    $v_list =~ "2. " ]] && echo          "$v_cancel_msg"
+      [[    $v_list =~ "1. " ]] && git commit -m "$v_auto___msg" && echo
+      [[ -z $v_list          ]] && echo          "$v_cancel_msg" && F_c8 && echo "$v_unfini_msg" && F_rc && echo
+
+      unset v_list
+}
 
 
 # --------------------------------------------------------------------------------
@@ -343,6 +503,17 @@ function f_repo_name_compact {
      F_rc  
 }
 
+function f_lib4_git_status_compact {
+   v_basename=$(basename $(pwd))
+    F_talk; echo -n "git status on path: "
+     F_c3; echo    ".../$v_basename"
+     F_rc
+
+
+   F_c1
+   git status
+   F_rc
+}
 
 function f_lib4_ensure_repo_existence_compact {
    # Tests if a repository exists. If it does not, it clones it. (Needs var: v_ensure)
@@ -629,5 +800,9 @@ function f_lib4_upload_compact {
 
 # -------------------------------------------------------------------------------
 # --+-- Above: functions (compact) to be called externally by main scripts  --+--
-# -------------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+
+
+
 
