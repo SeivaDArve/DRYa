@@ -4,6 +4,11 @@
 #              or, feed a .org file name and a header name, this script will print the entire header
 
 
+
+
+
+
+
 # Sourcing DRYa Lib 1: Color schemes
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
@@ -14,11 +19,110 @@
    # Examples: `db` (an fx to use during debug)
    #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 
+
+
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+
+
+   
+
+
+
+
+
+
+
+
+
+# uDev:
+#      [ -z $2     ]  # Print todas estas opcoes/help
+#
+#      [ $2 == g   ]  # Usa `grep` e as pesquisas apresentam o nunero da linha
+#                       grep -n <pesquisa> <ficheiro>
+#
+#      [ $2 == n   ]  # Imprime so a linha numero X correspondente
+#                       exemplo: linha 1:
+#                       sed -n '1p' <nome-do-ficheiro>
+#
+#      [ $2 == ^   ]  # Imprime so a linha numero X para cima
+#                       sed -n '1,76p' <nome-do-ficheiro>
+#
+#      [ $2 == v   ]  # Imprime so a linha numero X para baixo
+#                       exemplo: linha 5 ate 11:
+#                       sed -n '5,$p' <nome-do-ficheiro>
+#
+#      [ $2 == "nn 5 11" ]  # Imprime desde a linha X a Y
+#                             exemplo: linha 5 ate 11:
+#                             sed -n '5,11p' <nome-do-ficheiro>
+#
+#      [ $2 == "gg <pesquisa> <pesquisa> " ]  # Imprime da linha X a Y, mas em vez de alimentar o numero da linha, alimenta 2 pesquisas de texto
+#
+#      [ $2 == "org <grep-ogr-header>" ]      # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
+#
+#      [ $2 == "org" "-z $3" ]                # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
+#                                               exemplo, pesquisar TODOS os headers:
+#                                               grep -n "^\*" <nome-do-ficheiro>
+#
+
+
+    
+
+
+
+
+
+
+
+
+
+function f_pfr_welcome {
+
+   # Timer for verbose welcome screen
+      v_secs=10 
+
+   # Testing if args are inexistent / existent == 0 / existent != 0
+
+   if [ -z $1 ]; then
+      Lhc1="[none -z]"
+      Lhc2="[none -z]"
+
+   elif [[ $1 == 0 ]]; then
+      Lhc1="[none 0]"
+
+      if [ -z $2 ]; then
+         Lhc2="[none -z]"
+      elif [[ $2 == "0" ]]; then  
+         Lhc2="[none 0]"
+      else
+         Lhc2="$2"
+      fi
+
+   else
+      Lhc1="$1"
+
+      if [ -z $2 ]; then
+         Lhc2="[none -z]"
+      elif [[ $2 == "0" ]]; then  
+         Lhc2="[none 0]"
+      else
+         Lhc2="$2"
+      fi
+
+   fi
+
+   echo "DRYa: partial-file-reader: (ENTER or wait $v_secs sec):"
+   echo " > All args: $@"
+   echo
+   echo " > Assuming: \$1: Input  File: $Lhc1"
+   echo " > Assuming: \$2: Output File: $Lhc2"
+   read -sn1 -t $v_secs
+      
+   f_partial_file_reader "$Lhc1" "$Lhc2"
+}
 
 
 
@@ -37,41 +141,7 @@ function f_partial_file_reader_choose_file {
 function f_partial_file_reader {
    # Para ler partes de documentos (com fzf)
 
-   # uDev:
-   #      [ -z $2     ]  # Print todas estas opcoes/help
-   #
-   #      [ $2 == g   ]  # Usa `grep` e as pesquisas apresentam o nunero da linha
-   #                       grep -n <pesquisa> <ficheiro>
-   #
-   #      [ $2 == n   ]  # Imprime so a linha numero X correspondente
-   #                       exemplo: linha 1:
-   #                       sed -n '1p' <nome-do-ficheiro>
-   #
-   #      [ $2 == ^   ]  # Imprime so a linha numero X para cima
-   #                       sed -n '1,76p' <nome-do-ficheiro>
-   #
-   #      [ $2 == v   ]  # Imprime so a linha numero X para baixo
-   #                       exemplo: linha 5 ate 11:
-   #                       sed -n '5,$p' <nome-do-ficheiro>
-   #
-   #      [ $2 == "nn 5 11" ]  # Imprime desde a linha X a Y
-   #                             exemplo: linha 5 ate 11:
-   #                             sed -n '5,11p' <nome-do-ficheiro>
-   #
-   #      [ $2 == "gg <pesquisa> <pesquisa> " ]  # Imprime da linha X a Y, mas em vez de alimentar o numero da linha, alimenta 2 pesquisas de texto
-   #
-   #      [ $2 == "org <grep-ogr-header>" ]      # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
-   #
-   #      [ $2 == "org" "-z $3" ]                # Para Emacs, imprime apenas o Header correspondente a pesquisa `grep` dada no arg seguinte 
-   #                                               exemplo, pesquisar TODOS os headers:
-   #                                               grep -n "^\*" <nome-do-ficheiro>
-   #
-
-
-   # ------------------------------
-    
-
-   # Buscar variavel `Lhc` para usar em `Lh`
+   # Buscar variavel `Lhc1` e `Lhc2 para usar em `Lh`
       f_partial_file_reader_choose_file 
       f_partial_file_reader_get_file_name 
 
@@ -94,15 +164,15 @@ function f_partial_file_reader {
        L5='5.  | D grep | bash      |  file       | ( nr linha                   | grep) | tmp file |'
        L4='4.  | D grep | vimscript |  file.sh    | ( bash fx                    | grep) | tmp file |'                                      
 
-      L3='3. Manipular/Selecionar ficheiro de entrada'  # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav; 
-      L2='2. Manipular/Selecionar ficheiro de saida'    # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav; 
+      L3='3. Manipular/Selecionar ficheiro de entrada'  # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav;  # Opc: same input file as output and input    
+      L2='2. Manipular/Selecionar ficheiro de saida'    # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav;  # Opc: same input file as output and input    
       L1='1. Cancel'
 
       Lhc1=$1
       Lhc2=$2
      #Lhc1 existe na fx: ...  (para ficheiro de entrada)
      #Lhc2 existe na fx: ...  (para ficheiro de saida)
-      Lh=$(echo -e "\nFicheiro de entrada:\n > $Lhc2\n\nFicheiro de saida: ( concat:yes ):\n > $Lhc1\n ")
+      Lh=$(echo -e "\nFicheiro de entrada:\n > $Lhc1\n\nFicheiro de saida: ( concat:yes ):\n > $Lhc2\n ")
       L0="DRYa: Menu grep: "
       
    # Ordem de Saida das opcoes durante run-time
@@ -122,13 +192,28 @@ function f_partial_file_reader {
       unset  v_list
 }
 
-v_secs=10
-echo "DRYa: partial-file-reader: (ENTER or wait $v_secs sec):"
-echo " > All args: $@"
-echo
-echo " > Assuming: \$1: Input  File: $1"
-echo " > Assuming: \$2: Output File: $2"
-read -sn1 -t $v_secs
 
-f_partial_file_reader "$@"
 
+
+
+
+
+
+
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
+
+
+
+
+
+
+
+
+
+
+# Re-organizacao dos argumentos passados a esta fx principal: `f_partial_file_reader`
+   f_pfr_welcome "$@"
+
+   #f_partial_file_reader "$@"  # Inutilizado por causa do tratamentos de dados e de argumentos da fx f_pfr_welcome 
