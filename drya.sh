@@ -1991,6 +1991,12 @@ function f_backup_helper {
       echo
       echo "uDev: criar opcoes que criam um dir, nesse dir, guarda certos dot-files atualmente na maquina"
       echo " > Depois, apartir desse exemplo, o user pode usar para outros fins"
+      echo
+      echo
+      echo
+      echo "uDev: criar .dotfile que guarde uma lista de enderecos de pastas que um dia podem precisar serv revistos (para backup)"
+      echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
+
 
 }
 
