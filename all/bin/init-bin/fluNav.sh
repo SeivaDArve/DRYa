@@ -98,17 +98,45 @@ function f__S_hist__remove_duplicated_lines {
       rm $v_temporary
 }
 
-function f__S_hist__make_abs_path_into_relative_path {
-   #echo "uDev: change: /data/data/com.termux/files/home/Repositories/"
-   #echo "      into:   \${v_REPOS_CENTER}/ "
-   sed -i "s#/data/data/com.termux/files/home/Repositories/#\${v_REPOS_CENTER}/#g" $v_original
-}
+
+
 
 function f__S_hist__change_abs_path__to__relative_path {
-   echo "uDev: take fluNav:S history file, replace:"
-   echo "      > /data/data/com.termux/files/home/Repositories/ to:"
-   echo '      > ${v_REPOS_CENTER}/'
+
+   #   echo "uDev: take fluNav:S history file, replace:"
+   #   echo "      > /data/data/com.termux/files/home/Repositories/ to:"
+   #   echo '      > ${v_REPOS_CENTER}/'
+
+
+
+   # variable for the file names
+      # Original file name (this var was created at f__S_hist__refresh_file_name)
+      v_original=$v_fluNav_S_hist_file  
+
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      v_A=${v_REPOS_CENTER}
+      v_B="[DRYa-REPOS-CENTER]"
+      sed -i "s|$v_A|$v_B|g" "$v_original"
+
 }
+
+function f__S_hist__change_relative_path__to__abs_path {
+   #echo "uDev: change: /data/data/com.termux/files/home/Repositories/"
+   #echo "      into:   \${v_REPOS_CENTER}/ "
+
+   # variable for the file names
+      # Original file name (this var was created at f__S_hist__refresh_file_name)
+      v_original=$v_fluNav_S_hist_file  
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      v_A=${v_REPOS_CENTER}
+      v_B="[DRYa-REPOS-CENTER]"
+      sed -i "s|$v_B|$v_A|g" "$v_original"
+      read -p "hit"
+      sed -i "s|//|/|g"      "$v_original"
+}
+
 
 function f__V_hist__remove_duplicated_lines {
    # Removes duplicated lines from the history files using a temporary file
@@ -1435,7 +1463,6 @@ function f_action {
       # Used only to centralize the history file into one single variable across the file
          f__S_hist__refresh_file_name
          f__S_hist__remove_duplicated_lines
-         f__S_hist__change_abs_path__to__relative_path
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
@@ -1443,6 +1470,7 @@ function f_action {
 
          unset v_list
                v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
+
 
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
          v_pwd=$(pwd)
@@ -1482,12 +1510,30 @@ function f_action {
       # Used only to centralize the history file into one single variable across the file
          f__S_hist__refresh_file_name
          f__S_hist__remove_duplicated_lines
-         #f__S_hist__make_abs_path_into_relative_path 
+      
+      # Debug
+         echo "output v_hist (original):"
+         echo " > $(cat $v_fluNav_S_hist_file | tail -n 1)"
+
+      # Toggle Abs path vs Relative path
+         f__S_hist__change_abs_path__to__relative_path
+
+      # Debug
+         echo "output v_hist (relativo):"
+         echo " > $v_hist"
 
       # Buscar uma das linhas
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
          v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "fluNav: S: edite 1 ficheiro (do historico): ")
    
+      # Toggle Abs path vs Relative path
+         f__S_hist__change_relative_path__to__abs_path
+
+      # Debug
+         echo "output v_hist (absoluto):"
+         echo " > $v_hist"
+         read
+
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
 
