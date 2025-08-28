@@ -50,6 +50,7 @@ function f__S_hist__refresh_file_name {
 
    # uDev: Omni log is not receiving files yet (use drya-lib-4)
    #       f__omni_log__push_hist_file_only
+
 }
 
 function f__V_hist__refresh_file_name {
@@ -92,7 +93,7 @@ function f__S_hist__remove_duplicated_lines {
       done
 
    # Overwrite original file with the content of temporary file
-      tac $v_temporary > $v_original
+      tac $v_temporary > $v_original  # uDev: `tac` vai dar erro se nao existirem linhas com texto escrito no ficheiro
    
    # Removing the tmp file in the end to clean dir
       rm $v_temporary
@@ -102,39 +103,63 @@ function f__S_hist__remove_duplicated_lines {
 
 
 function f__S_hist__change_abs_path__to__relative_path {
-
-   #   echo "uDev: take fluNav:S history file, replace:"
-   #   echo "      > /data/data/com.termux/files/home/Repositories/ to:"
-   #   echo '      > ${v_REPOS_CENTER}/'
-
+   # Taking fluNav:S history file and replace:
+   #  from: /data/data/com.termux/files/home/Repositories/ 
+   #  to:   [DRYa-REPOS-CENTER]
 
 
-   # variable for the file names
-      # Original file name (this var was created at f__S_hist__refresh_file_name)
-      v_original=$v_fluNav_S_hist_file  
+   # Variables 
+      v_original=$v_fluNav_S_hist_file    # this var was created at f__S_hist__refresh_file_name for the original file name
+      v_temporary=${v_original}.tmp  && touch $v_temporary
+      v_A=${v_REPOS_CENTER}               # Text originaly found if the original fzf history file (absolute path of a file)
+      v_B="[DRYa-REPOS-CENTER]"           # Text to be presented to the user temporarily instead of the absolute path
 
 
-   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-      v_A=${v_REPOS_CENTER}
-      v_B="[DRYa-REPOS-CENTER]"
-      sed -i "s|$v_A|$v_B|g" "$v_original"
 
+   function f_attempt_using_sed {
+      # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+         sed -i "s|$v_A|$v_B|g" "$v_original"
+   }
+
+   function f_attempt_using_awk {
+      # Using awk to replace var vs. text
+   
+      awk -v from="$v_A" -v to="$v_B" '{gsub(from, to)}1' "$v_original" > $v_temporary && mv $v_temporary $v_original
+   }
+
+   # Choose only one fx to run
+      #f_attempt_using_sed
+      f_attempt_using_awk
 }
 
 function f__S_hist__change_relative_path__to__abs_path {
-   #echo "uDev: change: /data/data/com.termux/files/home/Repositories/"
-   #echo "      into:   \${v_REPOS_CENTER}/ "
+   # Taking fluNav:S history file and replace:
+   #  from: [DRYa-REPOS-CENTER]
+   #  to:   /data/data/com.termux/files/home/Repositories/
 
-   # variable for the file names
-      # Original file name (this var was created at f__S_hist__refresh_file_name)
-      v_original=$v_fluNav_S_hist_file  
+   # Variables 
+      v_original=$v_fluNav_S_hist_file    # this var was created at f__S_hist__refresh_file_name for the original file name
+      v_temporary=${v_original}.tmp  && touch $v_temporary
+      v_B="[DRYa-REPOS-CENTER]"           # Text to be presented to the user temporarily instead of the absolute path
+      v_A=${v_REPOS_CENTER}               # Text originaly found if the original fzf history file (absolute path of a file)
 
-   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-      v_A=${v_REPOS_CENTER}
-      v_B="[DRYa-REPOS-CENTER]"
-      sed -i "s|$v_B|$v_A|g" "$v_original"
-      read -p "hit"
-      sed -i "s|//|/|g"      "$v_original"
+
+   function f_attempt_using_sed {
+      # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+         sed -i "s|$v_B|$v_A|g" "$v_original"
+         sed -i "s|//|/|g"      "$v_original"
+   }
+
+   function f_attempt_using_awk {
+      # Using awk to replace text vs. var
+
+      awk -v from="$v_B" -v to="$v_A" '{gsub(from, to)}1' $v_original > $v_temporary && mv $v_temporary $v_original
+   }
+
+  
+   # Choose only one fx to run
+      #f_attempt_using_sed
+      f_attempt_using_awk
 }
 
 
@@ -1511,16 +1536,8 @@ function f_action {
          f__S_hist__refresh_file_name
          f__S_hist__remove_duplicated_lines
       
-      # Debug
-         echo "output v_hist (original):"
-         echo " > $(cat $v_fluNav_S_hist_file | tail -n 1)"
-
       # Toggle Abs path vs Relative path
          f__S_hist__change_abs_path__to__relative_path
-
-      # Debug
-         echo "output v_hist (relativo):"
-         echo " > $v_hist"
 
       # Buscar uma das linhas
          #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
@@ -1528,11 +1545,6 @@ function f_action {
    
       # Toggle Abs path vs Relative path
          f__S_hist__change_relative_path__to__abs_path
-
-      # Debug
-         echo "output v_hist (absoluto):"
-         echo " > $v_hist"
-         read
 
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
