@@ -450,7 +450,7 @@ function f_repository_patuscas {
    # Repository: patuscas
    # Cooking repo
 
-   alias P="bash ${v_REPOS_CENTER}/garpho/patuscas.sh"
+   alias P="bash ${v_REPOS_CENTER}/patuscas/patuscas.sh"
 }
 
 function f_repository_upK {
