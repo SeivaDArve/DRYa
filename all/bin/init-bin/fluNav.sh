@@ -1252,8 +1252,8 @@ function V {
          cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
 
 
-      elif [ $1 == "ga" ] || [ $1 == "garpho" ]; then
-         cd ${v_REPOS_CENTER}/garpho 2>/dev/null && ls -p || f_error_cd
+      elif [ $1 == "p" ] || [ $1 == "patuscas" ]; then
+         cd ${v_REPOS_CENTER}/patuscas 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "ts" ] || [ $1 == "typescript" ] || [ $1 == "typescript-berg-house" ]; then
