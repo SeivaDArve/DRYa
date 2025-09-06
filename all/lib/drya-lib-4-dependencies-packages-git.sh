@@ -398,6 +398,7 @@ function f_lib4_git_pull_single {
 
    F_talk; echo 'A fazer download `git pull --no-edit`'
    git pull --no-edit
+   read -sn1 -t 1  # Dar 1 segundo pada o user ler o texto  
 
    # uDev: Se a fx anterior der erro, questionar o utilizador se quer continuar a edtar o ficheiro em modo offline com a ultima versao do ficheiro possivelmente desatualizada
 
@@ -411,6 +412,7 @@ function f_lib4_git_pull_2_single {
      F_rc; echo
 
    git pull
+   read -sn1 -t 1  # Dar 1 segundo pada o user ler o texto  
 }
 
 function f_lib4_git_add_all_single {
@@ -418,7 +420,8 @@ function f_lib4_git_add_all_single {
    # Get current `git status` without verbose, only the intresting part.
       v_status=$(git status --short)
 
-      cd $v_df_repo_pwd
+     #cd $v_df_repo_pwd  # Legacy
+      cd $v_ensure
 
    # Only if there is anything to commit or to finish, only then, changes are added to Staging Are
       if [[ -n $v_status ]]; then
@@ -428,6 +431,9 @@ function f_lib4_git_add_all_single {
            F_rc
                  git add --all
                  echo
+
+         read -sn1 -t 1  # Dar 1 segundo pada o user ler o texto  
+
       else
          F_talk; echo 'Nothing needs to be done'
          exit 0
@@ -444,7 +450,8 @@ function f_lib4_git_push_single {
      F_rc
 
    git push
-           echo
+   echo
+   read -sn1 -t 1  # Dar 1 segundo pada o user ler o texto  
 }
 
 
