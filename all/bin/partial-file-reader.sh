@@ -148,21 +148,23 @@ function f_partial_file_reader {
    # Lista de opcoes para o menu `fzf`
       Lz1='Saved '; Lz2='D grep'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L18='    |   CMD  |   arg     |    input    |     task                             |  output  |'
-      L17='----|--------|-----------|-------------|--------------------------------------|----------|'
-      L16='16. | D grep | bash      | `ls | fzf`  | ( corrigir endereco `pwd` do dir   ) | tmp file |'
-      L15='15. | D grep | bash      |  file       | ( select random line from file     ) | tmp file |'
-      L14='14. | D grep | bash      |  file       | ( intervalo de 2 pesquisas   | grep) | tmp file |'
-      L13='13. | D grep | bash      |  file       | ( intervalo de nr linhas     | grep) | tmp file |'
-      L12='12. | D grep | bash      |  file       | ( antes de:    pesquisa      | grep) | tmp file |'
-      L11='11. | D grep | bash      |  file       | ( depois de:   pesquisa      | grep) | tmp file |'
-      L10='10. | D grep | bash      |  file       | ( antes de:    nr linha      | grep) | tmp file |'
-       L9='9.  | D grep | bash      |  file       | ( depois de:   nr linha      | grep) | tmp file |'
-       L8='8.  | D grep | bash      |  file.org   | ( `org-mode headers | fzf`   | grep) | tmp file |'                                      
-       L7='7.  | D grep | bash      |  file.org   | ( org-mode header + menu     | grep) | tmp file |'                                      
-       L6='6.  | D grep | bash      |  file       | ( texto                      | grep) | tmp file |'
-       L5='5.  | D grep | bash      |  file       | ( nr linha                   | grep) | tmp file |'
-       L4='4.  | D grep | vimscript |  file.sh    | ( bash fx                    | grep) | tmp file |'                                      
+     #L19= Ver se 2 ficheiros sao diferentes em alguma parte do texto `diff`
+      L18='Arg |   CMD  |  Method   |    Input      |     Task                             |  Output       |'
+      L17='----|--------|-----------|---------------|--------------------------------------|---------------|'
+      L16='16. | D grep | bash      | `ls | fzf`    | ( corrigir endereco `pwd` do dir   ) | tmp file      |'
+      #L15='15. | D grep | bash      | file1 + file2 | ( select random line from file     ) | file1 + file2 |'
+      L15='15. | D grep | bash      |  file         | ( select random line from file     ) | tmp file      |'
+      L14='14. | D grep | bash      |  file         | ( intervalo de 2 pesquisas   | grep) | tmp file      |'
+      L13='13. | D grep | bash      |  file         | ( intervalo de nr linhas     | grep) | tmp file      |'
+      L12='12. | D grep | bash      |  file         | ( antes de:    pesquisa      | grep) | tmp file      |'
+      L11='11. | D grep | bash      |  file         | ( depois de:   pesquisa      | grep) | tmp file      |'
+      L10='10. | D grep | bash      |  file         | ( antes de:    nr linha      | grep) | tmp file      |'
+       L9='9.  | D grep | bash      |  file         | ( depois de:   nr linha      | grep) | tmp file      |'
+       L8='8.  | D grep | bash      |  file.org     | ( `org-mode headers | fzf`   | grep) | tmp file      |'                                      
+       L7='7.  | D grep | bash      |  file.org     | ( org-mode header + menu     | grep) | tmp file      |'                                      
+       L6='6.  | D grep | bash      |  file         | ( texto                      | grep) | tmp file      |'
+       L5='5.  | D grep | bash      |  file         | ( nr linha                   | grep) | tmp file      |'
+       L4='4.  | D grep | vimscript |  file.sh      | ( bash fx                    | grep) | tmp file      |'                                      
 
       L3='3. Manipular/Selecionar ficheiro de entrada'  # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav;  # Opc: same input file as output and input    
       L2='2. Manipular/Selecionar ficheiro de saida'    # Toggle: Entrada vs. Saida'  # Pode ter uma lista de ficheiros fav;  # Opc: same input file as output and input    
