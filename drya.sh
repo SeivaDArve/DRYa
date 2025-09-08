@@ -2206,14 +2206,14 @@ if [ -z "$*" ]; then
    # Info: nome do dispositivo atual
       v_user=$(git config --get user.name)
 
-      f_talk; echo -n "Device Name: "
+      f_talk; echo -n "Custom Device Name: "
         f_c3; echo $v_user
         f_rc; echo 
 
    # Info when no args are given
       f_talk; echo "is installed!"
-              echo ' > Use: Terminal: `D --help` (for help)'
-              echo ' > Use: fzf Menu: `D .`      (for main menu)'
+              echo ' > Command: `D --help` (for `fzf` menu for help)'
+              echo ' > Command: `D .`      (for `fzf` main menu)'
               echo
 
    # Temporized Quick menu
@@ -2263,11 +2263,13 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    # uDev: `drya h 2`  # 2nd level of help
    # uDev: `drya h 3`  # 3rd level of help
    # uDev: `drya h 4`  # 4th level of help ... instead of "msgs"
+
+   # uDev: se fzf nao existir, print all
    
    if [ -z "$2" ]; then
       # Menu Simples: Help
 
-      f_drya_help_menu  
+      f_drya_help_menu #` || echo "fzf falhou"`  # uDev: adicionar failsafe
 
    elif [ $2 == "all" ]; then 
       f_drya_help
