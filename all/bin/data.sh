@@ -243,7 +243,7 @@ elif  [ $1 == "." ]; then
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
      #L14='14. M | calandario lunisolar, em que cada mes tem 28 dias. 
-      L18='18. | I | Informar dia/forma de mudanca de hora Verao/Inverno'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
+      L18='18. | I | Informar dia/forma de mudanca de hora Verao/Inverno Marco/Outubro'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
       L17='17. | n | Nanoseconds only'
       L16='16. | i | Data e hora: Da internet (nao confiar no pc)'
       L15='15. | F | Data curta para ficheiros | (com verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
