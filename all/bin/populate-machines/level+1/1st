@@ -2,6 +2,7 @@
 # Hint: Use "GETOPTS" in this file just as an exercise
 # Use: uDev: Let DRYa source these functions so that the DRYa installed can run the function that installs dependencies
 
+
 # Help
    # Step 1 (Most Basic) :: You may use this command to FULLY INSTALL the most basic DRYa's functionality:
       # Verbose # clear; echo -e "DRYa: Quick install is starting (3 seconds) \n > Starting: System Update and System upgrade \n > Installing git, ncurses-utils and neofetch \n"; sleep 3;
@@ -54,6 +55,7 @@ function f_gr_2_soft_DRYa_dependencies {
 
       pkg install figlet || snap install figlet
 
+   # Nota: Numa fresh install do OS, podemos por curiosidade, criar um ficheiro com uma variavel (na maquina, host) que informa a idade do OS "OS Age" e depois mencionar as duas variavies "current up-time". Exemplo: comando `trid up-time` que manda o resultado: "OS age: 2 anos"; "Dispositivo ligado ha X dias"
 }
 
 function f_gr_hard_dependencies {
