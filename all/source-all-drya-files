@@ -26,6 +26,24 @@ function f_escape_time_at_terminal_startup {
    fi
 }
 
+function f_demi_fake_pin {
+   # Demi-fake pin for fzf menus (scare away curious people)
+      v_pin=0000
+      export v_pin
+      # Usado em: `D cln .` para tambem listar as repos privadas
+}
+
+function f_startup_lock_DRYa {
+    
+   # uDev: grep em .dryarc se existe alguma definicao para que esta fx seja ou nao execurada (apesar de que .dryarc vai ser executado por inteiro mais à frente neste script)
+
+   f_demi_fake_pin
+   echo "DRYa: Qual é o pin para usar DRYa?"
+   read -s -p " > " v_ans
+   echo
+   [[ $v_pin == $v_ans ]] || exit # echo "errado: uDev: descobrir como se cancela o source sem encerrar o terminal"
+}
+
 function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
@@ -325,10 +343,7 @@ function f_alias_to_enforce {
 function f_internal_drya_files_1_of_2 {
    # Repository: DRYa (internal files - (1/2) )
 
-   # Demi-fake pin for fzf menus (scare away curious people)
-      v_pin=0000
-      export v_pin
-      # Usado em: `D cl .` para tambem listar as repos privadas
+   f_demi_fake_pin 
 
    # Include this file name in a variable
      v_name_drya_source="source-all-drya-files"
@@ -514,6 +529,14 @@ function f_repository_omni-log {
    # Repository: omni-log
 
    alias om="bash ${v_REPOS_CENTER}/omni-log/omni.sh"
+
+   function f_get_birthdays_from_db {
+      echo
+      echo "Omni-log: Datas de aniversario"
+      echo " > "
+      echo
+   }
+   #f_get_birthdays_from_db 
 }
 
 function f_repository_3_sticks_alpha_bravo {
@@ -706,6 +729,7 @@ function f_exec {
 
    # Config Internal scripts and settings
       f_escape_time_at_terminal_startup
+     #f_startup_lock_DRYa
       f_internal_drya_files_1_of_2
      #f_check_missing_dependencies
       f_drya_libs  # Includes an fx for debugging: `db` 
@@ -734,6 +758,7 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
       f_repository_dota_2
+     #f_repository_caum_lendario
 
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_2
