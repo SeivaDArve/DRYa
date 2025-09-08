@@ -9,7 +9,7 @@
 
 # uDev: fix dependencies bugs (in case DRYa is running on a fresh install of some new OS)
 
-function f_startup_escape_time {
+function f_escape_time_at_terminal_startup {
    # Allowing the user to escape DRYa for 1 second
    # It is best to use any key to 'escape' rather than 'Ctrl-C' directly, because 'Ctrl-C' are 2 keys, and 'Ctrl' key might not be enabled on termux "extra keys" at all
 
@@ -705,7 +705,7 @@ function f_exec {
    # Running all functions by sequence 
 
    # Config Internal scripts and settings
-      f_startup_escape_time
+      f_escape_time_at_terminal_startup
       f_internal_drya_files_1_of_2
      #f_check_missing_dependencies
       f_drya_libs  # Includes an fx for debugging: `db` 
