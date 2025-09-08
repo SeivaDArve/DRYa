@@ -222,12 +222,22 @@ function f_short_with_seconds {
 
 
 
+
+
+# Aplicar SEMPRE (simplificando) `d f` para que o `vim` possa usar `ZD` no `vim`
+   f_variables_date_to_file 
+
+
+
 if [ -z $1 ]; then
-   f_complete_date 
-   echo
+   # Imprimir 1x a data no terminal
+      f_complete_date
+      echo
+
 
 elif  [ $1 == "." ]; then
    # Menu with all the options
+
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -253,9 +263,10 @@ elif  [ $1 == "." ]; then
        L2='2.  | h | Instructions / Help'
        L1='1.  Cancelar'
 
+      Lh=$(echo -e "\nInfo: Ja esta a ser aplicado automaticamente 'd f' para se usar com 'ZD' no 'vim'\n ")
       L0="[m+] data.sh: main menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18\n\n$Lz3" | fzf --no-info -m --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18\n\n$Lz3" | fzf --no-info -m --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
