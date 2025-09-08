@@ -339,19 +339,19 @@ function f_startup {
    trid_gmn=$(git config --get user.name)
 
    function f_coloring_variable_git_name__normal {
-      echo "$e Git name    : $trid_gmn"
+      echo "$e Name for 'git' : $trid_gmn"
    }
 
    function f_coloring_variable_git_name__red {
-            echo -n "$e Git name    : "
-      f_c8; echo                     "$trid_gmn"
+            echo -n "$e Name for 'git' : "
+      f_c8; echo                        "$trid_gmn"
       f_rc
    }
 
-   f_talk; echo    "Running on  : $trid_OS"
+   f_talk; echo    "Running on OS  : $trid_OS"
           #echo "$e Git name    : $trid_gmn"
            [[ $trid_gmn == "seivaDArve" ]] && f_coloring_variable_git_name__red || f_coloring_variable_git_name__normal 
-           echo "$e Text editor : $v_ed"
+           echo "$e Text editor    : $v_ed"
 }
 
 function f_printenv {
