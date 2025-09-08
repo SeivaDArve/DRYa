@@ -38,7 +38,8 @@
 # uDev: f_clear_current_line, (Apagar texto da linha atual ate ao fundo com ANSI)
 #       f_count_var_size,     (saber quantas letrar tem `echo ${#variavel}`)
 #       f_create_tmp_file     (dar um nome e saber que esse ficheiro tmp foi criado)
-
+# uDev: fx com tput para apagar linha anterior inteira e comecar a escrever a partir de la
+#       vatias fx para usar tput, manipular tput facilmente
 
 
 
