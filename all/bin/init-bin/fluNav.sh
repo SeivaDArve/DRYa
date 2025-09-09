@@ -1619,7 +1619,8 @@ function S {
    # List fav files for edition (fluNav)
    
    # Reload the amount of '-' are needed to create an horizontal line
-      source ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh 1>/dev/null
+      v_file=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
+      [[ -f $v_file ]] && source $v_file 1>/dev/null
 
    # If there are no arguments, present the fluNav
       if [ -z $1 ]; then
