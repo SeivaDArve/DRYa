@@ -1,12 +1,9 @@
 #!/bin/bash
 # Title: fluNav (fluent navigation)
 
-# Dependencies: figlet, file, fzf (may bi instaled by typing):
-   # '$ pkg install figlet file fzf'
+# Dependencies: figlet, file, fzf (may be instaled with `pkg install figlet file fzf`)
 
-# uDev: This app should NOT have 3 prefixes: V, S, E and .....
-#       Instead: use only: `. M` for fluNav menu
-#
+# uDev: 
 #       letra S para ABRIR ficheiros com SYNC
 #       letra . para abrir ficheiros sem s
 
@@ -34,166 +31,7 @@
 #       word="morse ..., ,.., .,,"
 
 
-function f__omni_log__push_hist_file_only {
-   echo "uDev: Will be used drya-lib-4 here to work with omni-log"
-}
 
-function f__S_hist__refresh_file_name {
-   # Ficheiro de historico com lista de ficheiros
-
-   v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
-   v_file="drya-fluNav-S-hist" 
-
-   i=$v_dir/$v_file
-
-   v_fluNav_S_hist_file=$i
-
-   # uDev: Omni log is not receiving files yet (use drya-lib-4)
-   #       f__omni_log__push_hist_file_only
-
-}
-
-function f__V_hist__refresh_file_name {
-   # Ficheiro de historico com lista de diretorios
-
-   v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
-   v_file="drya-fluNav-V-hist" 
-
-   i=$v_dir/$v_file
-
-   v_fluNav_V_hist_file=$i
-
-   # uDev: Omni log is not receiving files yet (use drya-lib-4)
-   #       f__omni_log__push_hist_file_only
-}
-
-function f__S_hist__remove_duplicated_lines {
-   # Removes duplicated lines from the history files using a temporary file
-
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
-   
-   # variable for the file names
-      # Original file name (this var was created at f__S_hist__refresh_file_name)
-      v_original=$v_fluNav_S_hist_file  
-
-      # Temporary file name
-      v_temporary=${v_original}.tmp
-
-   
-   # Creates a temporary file
-      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
-      touch $v_temporary               # Create a temporary enpty file to work
-
-   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-      for i in $(tac $v_original)
-      do 
-         # If original line does not exist already in the tmp file, copy it to tmp once
-         grep --fixed-strings "$i" $v_temporary &>/dev/null
-         [[ $? == 1 ]] && echo $i >> $v_temporary
-      done
-
-   # Overwrite original file with the content of temporary file
-      tac $v_temporary > $v_original  # uDev: `tac` vai dar erro se nao existirem linhas com texto escrito no ficheiro
-   
-   # Removing the tmp file in the end to clean dir
-      rm $v_temporary
-}
-
-
-
-
-function f__S_hist__change_abs_path__to__relative_path {
-   # Taking fluNav:S history file and replace:
-   #  from: /data/data/com.termux/files/home/Repositories/ 
-   #  to:   [DRYa-REPOS-CENTER]
-
-
-   # Variables 
-      v_original=$v_fluNav_S_hist_file    # this var was created at f__S_hist__refresh_file_name for the original file name
-      v_temporary=${v_original}.tmp  && touch $v_temporary
-      v_A=${v_REPOS_CENTER}               # Text originaly found if the original fzf history file (absolute path of a file)
-      v_B="[DRYa-REPOS-CENTER]"           # Text to be presented to the user temporarily instead of the absolute path
-
-
-
-   function f_attempt_using_sed {
-      # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-         sed -i "s|$v_A|$v_B|g" "$v_original"
-   }
-
-   function f_attempt_using_awk {
-      # Using awk to replace var vs. text
-   
-      awk -v from="$v_A" -v to="$v_B" '{gsub(from, to)}1' "$v_original" > $v_temporary && mv $v_temporary $v_original
-   }
-
-   # Choose only one fx to run
-      #f_attempt_using_sed
-      f_attempt_using_awk
-}
-
-function f__S_hist__change_relative_path__to__abs_path {
-   # Taking fluNav:S history file and replace:
-   #  from: [DRYa-REPOS-CENTER]
-   #  to:   /data/data/com.termux/files/home/Repositories/
-
-   # Variables 
-      v_original=$v_fluNav_S_hist_file    # this var was created at f__S_hist__refresh_file_name for the original file name
-      v_temporary=${v_original}.tmp  && touch $v_temporary
-      v_B="[DRYa-REPOS-CENTER]"           # Text to be presented to the user temporarily instead of the absolute path
-      v_A=${v_REPOS_CENTER}               # Text originaly found if the original fzf history file (absolute path of a file)
-
-
-   function f_attempt_using_sed {
-      # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-         sed -i "s|$v_B|$v_A|g" "$v_original"
-         sed -i "s|//|/|g"      "$v_original"
-   }
-
-   function f_attempt_using_awk {
-      # Using awk to replace text vs. var
-
-      awk -v from="$v_B" -v to="$v_A" '{gsub(from, to)}1' $v_original > $v_temporary && mv $v_temporary $v_original
-   }
-
-  
-   # Choose only one fx to run
-      #f_attempt_using_sed
-      f_attempt_using_awk
-}
-
-
-function f__V_hist__remove_duplicated_lines {
-   # Removes duplicated lines from the history files using a temporary file
-
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
-   
-   # variable for the file names
-      # Original file name (this var was created at f__V_hist__refresh_file_name)
-      v_original=$v_fluNav_V_hist_file 
-
-      # Temporary file name
-      v_temporary=${v_original}.tmp
-
-   
-   # Creates a temporary file
-      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
-      touch $v_temporary               # Create a temporary enpty file to work
-
-   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
-      for i in $(tac $v_original)
-      do 
-         # If original line does not exist already in the tmp file, copy it to tmp once
-         grep --fixed-strings "$i" $v_temporary &>/dev/null
-         [[ $? == 1 ]] && echo $i >> $v_temporary
-      done
-
-   # Overwrite original file with the content of temporary file
-      tac $v_temporary > $v_original
-   
-   # Removing the tmp file in the end to clean dir
-      rm $v_temporary
-}
 
 function f_c1 {
    tput setaf 5
@@ -231,6 +69,141 @@ function f_horiz_line {
    bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
    echo $v_line
 }
+
+
+
+
+function f__omni_log__push_hist_file_only {
+   echo "uDev: Will be used drya-lib-4 here to work with omni-log"
+}
+
+function f__S_hist__refresh_file_name {
+   # Criar nomes para: Ficheiro de historico (para listar de ficheiros visualizados recentemente)
+
+   # Variaveis para o nome do ficheiro de historico (o original e o temporario)
+      v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
+      v_file="drya-fluNav-S-hist" 
+
+      i=$v_dir/$v_file
+
+      v_fluNav_S_hist_file=$i
+      v_original=$i
+      v_temporary=${i}.tmp
+
+
+
+   # Variaveis para diminuir o texto (do 'absolute path' para 'relative path' e vice-versa)
+      v_A=${v_REPOS_CENTER}               # Original text found in the original fzf history file (absolute path of a file)
+      v_B="(DRYa-REPOS-CENTER)"           # Text to be presented to the user temporarily instead of the absolute path
+
+      v_A=$(f_escape_sed_characters "$v_A")  # Ajuda o `sed` com o seu regex interno  
+      v_B=$(f_escape_sed_characters "$v_B")  # Ajuda o `sed` com o seu regex interno    
+
+
+
+   # uDev: Omni log is not receiving files yet (use drya-lib-4)
+   #       f__omni_log__push_hist_file_only
+
+}
+
+function f__V_hist__refresh_file_name {
+   # Ficheiro de historico com lista de diretorios
+
+   v_dir=~/.config/h.h/drya/flunav/tmp  &&  mkdir -p $v_dir
+   v_file="drya-fluNav-V-hist" 
+
+   i=$v_dir/$v_file
+
+   v_fluNav_V_hist_file=$i
+   v_original=$i
+   v_temporary=${i}.tmp
+
+   # uDev: Omni log is not receiving files yet (use drya-lib-4)
+   #       f__omni_log__push_hist_file_only
+}
+
+function f__S_hist__remove_duplicated_lines {
+   # Removes duplicated lines from the history files using a temporary file
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(tac $v_original)
+      do 
+         # If original line does not exist already in the tmp file, copy it to tmp once
+         grep --fixed-strings "$i" $v_temporary &>/dev/null
+         [[ $? == 1 ]] && echo $i >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      tac $v_temporary > $v_original  # uDev: `tac` vai dar erro se nao existirem linhas com texto escrito no ficheiro
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
+}
+
+
+
+function f_escape_sed_characters {
+   # Função para escapar caracteres especiais de regex do `sed`
+   # Nota: Provavelmente os caracteres '[' e ']' sao parte do regex do `sed` e por isso da erro ao tentar substituilos diretamente
+
+   printf '%s' "$1" | sed -e 's/[.[\*^$/]/\\&/g'
+
+   # Example: `v_variable=$(escape_sed "$v_variable"`
+}
+
+
+function f__S_hist__change_abs_path__to__relative_path {
+   # Taking file $v_fluNav_S_hist_file and replace text:
+   #  from: ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
+   #  to:   (DRYa-REPOS-CENTER)
+
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+
+   # Before `fzf` chooses a line from $v_temporary, send all text from $v_original to $v_temporary and change in it's text the values "absolute path" to "relative path" 
+      cat $v_original | sed "s|$v_A|$v_B|g" > $v_temporary
+}
+
+function f__S_hist__change_relative_path__to__abs_path {
+   # Taking file $v_fluNav_S_hist_file and replace text:
+   #  from: (DRYa-REPOS-CENTER)
+   #  to:   ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
+
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+
+   # After `fzf` chooses a line from $v_temporary, replace in it"s text the values "relative path" to "absolute path"
+      v_hist=$(sed "s|$v_B|$v_A|g" <(echo $v_hist) )
+      v_hist=${v_hist//\\}  # Using vanilla bash to remove text '\' from the variable
+}
+
+
+function f__V_hist__remove_duplicated_lines {
+   # Removes duplicated lines from the history files using a temporary file
+   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   
+   # Creates a temporary file
+      rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
+      touch $v_temporary               # Create a temporary enpty file to work
+
+   # Read original file line by line, but starting from the bottom with `tac` (instead of `cat`)
+      for i in $(tac $v_original)
+      do 
+         # If original line does not exist already in the tmp file, copy it to tmp once
+         grep --fixed-strings "$i" $v_temporary &>/dev/null
+         [[ $? == 1 ]] && echo $i >> $v_temporary
+      done
+
+   # Overwrite original file with the content of temporary file
+      tac $v_temporary > $v_original
+   
+   # Removing the tmp file in the end to clean dir
+      rm $v_temporary
+}
+
 
 function f_edit__config_bash_alias {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
@@ -1540,8 +1513,8 @@ function f_action {
          f__S_hist__change_abs_path__to__relative_path
 
       # Buscar uma das linhas
-         #v_hist=$(cat $v_text | tac | fzf --prompt "SELECIONE do Historico de ficheiros, 1 para EDITAR: ")
-         v_hist=$(cat $v_fluNav_S_hist_file | fzf --tac --prompt "fluNav: S: edite 1 ficheiro (do historico): ")
+         L0="fluNav: S: edite 1 ficheiro (do historico): "
+         v_hist=$(cat $v_temporary | fzf --tac --prompt "$L0")
    
       # Toggle Abs path vs Relative path
          f__S_hist__change_relative_path__to__abs_path
@@ -1551,6 +1524,9 @@ function f_action {
 
       # Se a variavel nao vier vazia do menu fzf, tambem envia a ultima selacao para o fim do documento de historico
          [[ -n $v_hist ]] && echo "$v_hist" >> $v_fluNav_S_hist_file
+
+      # Remover ficheiros temporarios
+         rm $v_temporary
 
 
    elif [ $v_nm == "edit_hist_file" ]; then
@@ -1699,3 +1675,4 @@ if [ -z $1 ]; then
 elif [ $1 == "2" ]; then
    f_edit__init_file_emacs__with_vim
 fi
+
