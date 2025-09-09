@@ -456,12 +456,12 @@ function f_clone_repos {
          echo "cloning: scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
       }
 
-      function f_clone_garpho {
-         echo "cloning: garpho"; git clone https://github.com/SeivaDArve/garpho.git
+      function f_clone_patuscas {
+         echo "cloning: patuscas"; git clone https://github.com/SeivaDArve/patuscas.git
       }
 
       function f_clone_typescript {
-         echo "cloning: garpho"; git clone https://github.com/SeivaDArve/typescript-berg-house.git
+         echo "cloning: typescript"; git clone https://github.com/SeivaDArve/typescript-berg-house.git
       }
 
       function f_clone_curriculum_vitae {
@@ -564,8 +564,8 @@ function f_clone_repos {
          f_clone_scratch_paper
       ;;
 
-      ga | garpho)
-         f_clone_garpho
+      p | P | patuscas)
+         f_clone_patuscas
       ;;
 
       ts | typescript | typescript-berg-house)
