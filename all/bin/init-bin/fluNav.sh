@@ -603,6 +603,16 @@ function ...... {
 }
 
 function ....... {
+      
+   # uDev: Send this option to `V`
+   #
+   #       Example: `V sv a`  (To save current location as `a` variable)
+   #       Example: `V sv b`  (To save current location as `b` variable)
+   #       Example: `V sv c`  (To save current location as `c` variable)
+   #       ... 
+   #       Example: `V sv z`  (To save current location as `z` variable)
+   #       
+   #       Nota: tem de ser criados `if` e `elif` para todas as 26 letras do alfabeto, para n precisar de usar ficheiros temporarios externos
 
    f_talk; echo 'Variable $h saved as:'
            echo " > $h"
