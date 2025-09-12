@@ -194,7 +194,7 @@ function op {
          [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
 
    elif [[ $1 == "brave" ]] && [[ $v_uname =~ "microsoft" ]]; then
-      /mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe
+      /mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe || echo "DRYa: could not open brave on windows (error)"
 
    else
       # Try to find the file opener at each OS (for the given files, given as arguments):
