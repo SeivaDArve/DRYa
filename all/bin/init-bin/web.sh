@@ -144,8 +144,14 @@ function web {
 
       elif [ $1 == "s" ]; then 
          # Web Search (browser pre-definido + google.com)
-         read -p "DRYa: Pesquisa web (google): " v_ans
-         xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
+
+         if [[ -z $2 ]]; then 
+            read -p "DRYa: Pesquisa web (google): " v_ans
+            xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
+
+         else
+            xdg-open "https://www.google.com/search?q=$(echo $2 | sed 's/ /+/g')"
+         fi
 
       else
          echo "DRYa: web: Tem de inserir um link valido"
