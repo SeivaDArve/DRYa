@@ -74,6 +74,13 @@ function web {
       
    }
 
+   function f_web_search_by_keywords {
+      # Web Search (browser pre-definido + google.com)
+      read -p "DRYa: Pesquisa web (google): " v_ans
+      v_ans=$(echo $v_ans | sed 's/ /+/g')
+      v_ans="https://www.google.com/search?q=$v_ans"
+      xdg-open $v_ans   
+   }
 
 
 
@@ -82,27 +89,27 @@ function web {
          # Se nao for dado nenhum argumento, dar o menu: 
    
          # Lista de opcoes
-            L13='13. Pesquisa online (com browser pre-definido + google.com)'
+            L13='13. | s | Pesquisa online (com browser pre-definido + google.com)'
 
-            L12="12. Experimentar Terminal Online"  
-            L11="11. Experimentar Distros Linux Online" 
-            L10="10. Pagina do historico Google" 
+            L12="12. |   | Experimentar Terminal Online"  
+            L11="11. |   | Experimentar Distros Linux Online" 
+            L10="10. |   | Pagina do historico Google" 
 
-             L9='9.  Detetar | Browser pre-definido + Browsers instalados' 
-             L8="8.  Navegar | Router Config Page"
+             L9='9.  |   | Detetar | Browser pre-definido + Browsers instalados' 
+             L8="8.  |   | Navegar | Router Config Page"
 
-             L7="7.  Ir | Google.com"
-             L6="6.  Ir | $homePage_name"
-             L5='5.  Ir | Seiva | Website (yola.com)'
-             L4="4.  Ir | Seiva | Curriculum-Vitae (github)"
-             L3='3.  Ir | Seiva | Github.com'
+             L7="7.  |   | Ir | Google.com"
+             L6="6.  |   | Ir | $homePage_name"
+             L5='5.  | . | Ir | Seiva | Website (yola.com)'
+             L4="4.  |   | Ir | Seiva | Curriculum-Vitae (github)"
+             L3='3.  |   | Ir | Seiva | Github.com'
 
-             L2='2.  Abrir | Bookmarks Guardados '
+             L2='2.  |   | Abrir | Bookmarks Guardados '
              L1='1.  Cancel'
 
          v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$L13" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
 
-         [[ $v_ask =~ "13. " ]] && read -p "DRYa: Pesquisa web (google): " v_ans && xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
+         [[ $v_ask =~ "13. " ]] && f_web_search_by_keywords 
          [[ $v_ask =~ "12. " ]] && v_URL="https://www.terminaltemple.com"
          [[ $v_ask =~ "11. " ]] && v_URL="https://distrosea.com/pt"
          [[ $v_ask =~ "10. " ]] && v_URL="https://myactivity.google.com"
@@ -120,7 +127,7 @@ function web {
          unset v_URL
          v_URL="https://seiva.yolasite.com"
          
-      elif [ $1 == "siigo" ]; then 
+      elif [ $1 == "siigo" ] || [ $1 == "upk" ; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
       elif [ $1 == "gpt" ]; then 
@@ -146,9 +153,7 @@ function web {
          # Web Search (browser pre-definido + google.com)
 
          if [[ -z $2 ]]; then 
-            read -p "DRYa: Pesquisa web (google): " v_ans
-            xdg-open "https://www.google.com/search?q=$(echo $v_ans | sed 's/ /+/g')"
-
+            f_web_search_by_keywords
          else
             xdg-open "https://www.google.com/search?q=$(echo $2 | sed 's/ /+/g')"
          fi
