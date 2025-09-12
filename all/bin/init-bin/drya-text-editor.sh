@@ -193,6 +193,9 @@ function op {
       # So se houver algum nome na variavel $v_item, tenta abrir com xdg (evita `xdg-open` de reclamar erro por falta de argumentos)
          [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
 
+   elif [[ $1 == "brave" ]] && [[ $v_uname =~ "microsoft" ]]; then
+      /mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe
+
    else
       # Try to find the file opener at each OS (for the given files, given as arguments):
          if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
