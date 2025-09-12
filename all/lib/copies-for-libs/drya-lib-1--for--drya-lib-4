@@ -326,9 +326,14 @@ function F_hzl {
 
    # If the script that used this library does not set the variable that fills the line, then the character is set as default here
       [[ -z $V_hzl ]] && V_hzl="-"
+   
+   # Allowing $1 to overwrite $V_hzl
+      [[ -n $1 ]] && V_hzl=$1
       
    V_cols=$(tput cols)
    printf "%*s" $V_cols | tr " " "$V_hzl"
+
+   unset V_hzl  # Obrigar a que as fx externas tenham sempre de configurar esta variavel para que ela saia do padrao default
 }
 
 function F_horizline {
