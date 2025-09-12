@@ -201,10 +201,25 @@ function f_drya_ssms_start {
       #alias ssms="less $v_MSGS"
 
    function ssms {
+
+      function f_ssms_instructions {
+         f_talk; echo 'Instructions: Use `ssms n 15` to:'
+                 echo ' > Read '15' lines from the bottom of $v_ssms file'
+                 echo 
+      }
+
       f_greet
+
+      v_nr_lines=11  # This variable determines how many lines to show with `ssms` command with no arguments
+
       if [ -z $1 ]; then
-         f_talk; echo 'DRYa: ssms: showing lasts 10 lines (use `ssms a` to show all):'
-         tail $v_MSGS
+         f_talk; echo 'DRYa: ssms'
+                 echo " > showing last $v_nr_lines lines (use \`ssms a\` to show all):"
+                 echo
+         
+         f_hzl "{"
+         tail -n $v_nr_lines $v_MSGS
+         f_hzl "}"
 
       elif [ $1 == "a" ]; then
          f_talk; echo 'DRYa: ssms: showing entire file'
@@ -214,6 +229,31 @@ function f_drya_ssms_start {
 
                  echo " > ... file closed "
 
+      elif [ $1 == "n" ]; then
+         # Opcao que funciona apenas com ($1 == n) && ( -n $2); Tudo o resto apenas mostra um output com instrucoes
+        
+         if [ -z $2 ]; then
+            # Se nao for dado um numero para $v_nr_lines no arg $2, output instrucoes
+            f_ssms_instructions
+         
+         elif [[ -n $3 ]]; then
+            # Se for dado um arg $3, sao argumentos a mais, invalido
+            f_ssms_instructions
+
+         else
+            # Quando existe arg $1 e $2
+            # uDev: Certificar que $2 é numero, nao letra ou simbolo
+
+            f_talk; echo "DRYa: \`ssms n $2\`"
+                    echo " > showing last $2 lines of file \$v_ssms:"
+                    echo
+
+            f_hzl "{"
+            tail -n $2 $v_ssms
+            f_hzl "}"
+
+         fi
+   
       fi
    }
 }
@@ -653,7 +693,7 @@ function f_ezGIT_exists {
             [[ $trid_atTermux == "true"  ]] && [[ -n $v_test ]] && f_make_sound
 
       # Informar a conclusao em drya-status-messages
-         echo -e "\n\r $v_toast_message_y \n" >> $v_MSGS
+         echo -e "\n$v_toast_message_y \n" >> $v_MSGS
    }
 
    function f_notificacao_finals {
