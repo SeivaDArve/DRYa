@@ -3185,6 +3185,13 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
 
       read -t 5
 
+   elif [ $2 == "3" ] ; then 
+      clear
+      figlet DRYa
+      f_talk; echo "DRYa: Presentation 3"
+              echo
+      cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2
+      echo
    else
       f_presentation_info
    fi
