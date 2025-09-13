@@ -253,7 +253,26 @@ function f_drya_ssms_start {
             f_hzl "}"
 
          fi
-   
+
+      elif [ $1 == "grep" ] || [ $1 == "g" ]; then
+         # Usar grep para ir diretamente para a informacao pretendida
+         
+         if [ -z $2 ]; then
+            f_talk; echo 'Instructions: How to filter `ssms`'
+                    echo ' > `ssms g "<text-to-grep>" "<text-to-grep>" "<text-to-grep>" `'
+
+         else
+            # Filtar texto varias vezes, 
+
+            shift 
+            for i in $*
+            do
+               v_grep=$(grep -i $i $v_ssms)
+               shift 2>/dev/null
+            done
+
+            echo $v_grep
+         fi
       fi
    }
 }
