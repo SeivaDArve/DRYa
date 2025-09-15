@@ -291,7 +291,7 @@ function f_drya_welcome_screen {
    # --- Presenting it with figlet (which is a dependency) or just echo it's name:
          figlet -v &>/dev/null  # Testing if figlet is installed
          v_status=$?  # Guardar o status code para saber se o comando anterior deu algum erro
-         [[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
+         #[[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
          [[ $v_status ==  1  ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
          [[ $v_status == 127 ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
 
@@ -432,8 +432,19 @@ function f_internal_drya_files_1_of_2 {
       v_snd_1=$v_snd/example-sound-completion-bell.wav
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
+}
+
+function f_internal_drya_files_3_of_3 {
    # Add script drya.sh to PATH variable (try: echo $PATH) 
-      export PATH=$PATH:${v_REPOS_CENTER}/DRYa/all/bin  # Any file placed here, is executed automaticaaly on the terminal by calling it by the name
+
+      v_add=${v_REPOS_CENTER}/DRYa/all/bin 
+
+      grep $v_add <(echo $PATH)
+      v_status=$?
+
+      echo "estado: $v_status"
+      [[ $v_status == "1" ]] && echo "Nao encontrado" && export PATH=$PATH:$v_add # Any file placed here, is executed automatically on the terminal by calling it by the name
+      [[ $v_status == "0" ]] && echo "Encontrado"     && echo "Tudo ok"
 
    # Remover linhas duplicadas de $PATH com `awk`
       #export PATH=$(echo "$PATH" | awk -v RS=':' '!a[$1]++' | paste -sd:)
@@ -441,7 +452,6 @@ function f_internal_drya_files_1_of_2 {
          #    RS=':'     : Define o separador de registros como : (delimitador do $PATH).
          #    !a[$1]++   : Garante que cada diretório só apareça uma vez.
          #    paste -sd: : Junta os diretórios novamente com :.
-      
 }
 
 function f_config_figlet {
@@ -799,9 +809,10 @@ function f_exec {
       f_repository_jarve  
       f_repository_dota_2
      #f_repository_caum_lendario
-
+      
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_2
+      f_internal_drya_files_3_of_3
 
    # Start loading background tasks (jarve)
       # (DRYa:  foreground tasks, once.       (at startup and on command))
@@ -831,4 +842,3 @@ function f_exec {
       f_drya_ssms_end
 }
 f_exec
-
