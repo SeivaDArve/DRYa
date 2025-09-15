@@ -38,7 +38,7 @@
 
 
 function f_hibernate {
-   if [ -z $trid_OS]; then
+   if [ -z $trid_OS ]; then
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
    elif [ $trid_OS == "Linux-Microsoft" ]; then
@@ -51,7 +51,7 @@ function f_hibernate {
 }
 
 function f_restart {
-   if [ -z $trid_OS]; then
+   if [ -z $trid_OS ]; then
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
    elif [ $trid_OS == "Linux-Microsoft" ]; then
@@ -66,7 +66,7 @@ function f_restart {
 }
 
 function f_shutdown {
-   if [ -z $trid_OS]; then
+   if [ -z $trid_OS ]; then
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
    elif [ $trid_OS == "Linux-Microsoft" ]; then
@@ -92,18 +92,18 @@ function f_shutdown {
 function f_fzf_power_options {
    # POWER OPTIONS: Using Num Pad numbers as shortcuts
 
-   # Menu
-      L10='T. Temporizar acções                     '
+   # Lista de opcoes para o menu `fzf`
+      L10='T. Temporizar acções'
        
-       L9='C. Bloquear terminal                     ' 
-       L8='6. Restart Terminal | `rs`               '
-       L7='8. Reiniciar/ Reeboot/ Restart           '
-       L6='2. Hibernar                              '
-       L5='4. Suspender                             '
-       L4='0. Desligar/ Encerrar/ Shutdown/ OFF bbb '
-       L3='5. Bloquear ecra                         '
+       L9='C. Bloquear terminal' 
+       L8='6. Restart Terminal | `rs`'
+       L7='8. Reiniciar/ Reeboot/ Restart'
+       L6='2. Hibernar'
+       L5='4. Suspender'
+       L4='0. Desligar/ Encerrar/ Shutdown/ OFF'
+       L3='5. Bloquear ecra'
 
-       L2='1. Cancel                                '
+       L2='1. Cancel'
        L1='A. Abort (cancel Restart and Shutdown process)'
 
       L0="numpad-nav-keys: POWER options: "
@@ -127,13 +127,13 @@ function f_fzf_power_options {
 
    # uDev: Criar uma fx para cada comando e os alias "numeros" + alias "escritos" chamam essas fx.
    # ----- Dica: Pode ser usado o teclado numerico para escrever: Exemplo tecla 1: 'nada'; tecla 2: 'ABC'; tecla 3: 'DEF'; tecla 4: 'GHI' ...
-   alias         exe="/mnt/c/Windows/System32/cmd.exe /c"
    alias           5="f_fzf_power_options"
    alias      246855="echo 'Lock Screen'"
    alias      246852="echo 'Shutdown'; shutdown now"
    alias      246858="echo 'Restart'; shutdown -r now"
    alias      246850="echo 'Hibernete'; win-hibernate 2>/dev/null|| echo ' > This command is for Windows only'"
    alias      246851="echo 'Suspend'"
+   alias         exe="/mnt/c/Windows/System32/cmd.exe /c"
    alias    shutdown="shutdown -r now"
    alias      reboot="shutdown -r now"
    alias     restart="shutdown -r now"
