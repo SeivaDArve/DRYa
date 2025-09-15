@@ -65,7 +65,9 @@ function f_restart {
    fi
 }
 
-function f_shutdown {
+function f_desligar {
+   echo "Desligar"  
+
    if [ -z $trid_OS ]; then
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
@@ -74,7 +76,9 @@ function f_shutdown {
       /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
    
    elif [ $trid_OS == "Linux" ]; then
-      sleep $v_time && (shutdown --poweroff || shutdown now)
+      echo " > Sleep time: $v_time seconds"
+      echo " > (Enter to Fast Forward)"
+      read -sn 1 -t $v_time -p " > " && (shutdown --poweroff || shutdown now)
    fi
 }
 
@@ -118,7 +122,7 @@ function f_fzf_power_options {
       [[    $v_list =~ "8. " ]] && echo "Reiniciar" && echo "hit 1" && f_restart && echo "hit 2"  # Restart à maquina
       [[    $v_list =~ "2. " ]] && echo "Hibernar"  && f_hibernate 
       [[    $v_list =~ "4. " ]] && echo "Suspender" && systemctl suspend
-      [[    $v_list =~ "0. " ]] && echo "Desligar"  && f_shutdown
+      [[    $v_list =~ "0. " ]] && f_desligar
       [[    $v_list =~ "5. " ]] && echo "uDev 5"
       [[    $v_list =~ "1. " ]] && echo "Cancelado" 
       unset  v_list
