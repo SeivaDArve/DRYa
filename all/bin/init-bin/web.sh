@@ -127,7 +127,7 @@ function web {
          unset v_URL
          v_URL="https://seiva.yolasite.com"
          
-      elif [ $1 == "siigo" ] || [ $1 == "upk" ; then 
+      elif [ $1 == "siigo" ] || [ $1 == "upk" ]; then 
          v_URL="https://siigo-maintenance.com/#/calendar"
 
       elif [ $1 == "gpt" ]; then 
@@ -155,7 +155,8 @@ function web {
          if [[ -z $2 ]]; then 
             f_web_search_by_keywords
          else
-            xdg-open "https://www.google.com/search?q=$(echo $2 | sed 's/ /+/g')"
+            v_search=$(echo $2 | sed 's/ /+/g')
+            xdg-open "https://www.google.com/search?q=$v_search"
          fi
 
       else

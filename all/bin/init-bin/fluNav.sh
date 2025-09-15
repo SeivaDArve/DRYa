@@ -603,6 +603,16 @@ function ...... {
 }
 
 function ....... {
+      
+   # uDev: Send this option to `V`
+   #
+   #       Example: `V sv a`  (To save current location as `a` variable)
+   #       Example: `V sv b`  (To save current location as `b` variable)
+   #       Example: `V sv c`  (To save current location as `c` variable)
+   #       ... 
+   #       Example: `V sv z`  (To save current location as `z` variable)
+   #       
+   #       Nota: tem de ser criados `if` e `elif` para todas as 26 letras do alfabeto, para n precisar de usar ficheiros temporarios externos
 
    f_talk; echo 'Variable $h saved as:'
            echo " > $h"
@@ -1099,6 +1109,7 @@ function V {
          # Use 7:  `V ..     `    # Navigate to last dir in the history list
          # Use 8:  `V ...    `    # Read the history file and select one path from there
          # Use 9:  `V ....   `    # ...
+         # Use 10: `V pwd    `    # uDev: Fazer a mesma fx que `lll` faz neste momento. Chamar menu fzf para apresentar `ls -a` e listar o caminho absoluto para todos os ficheiros selecionados
    '
    }
 
@@ -1359,6 +1370,7 @@ function V {
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls -p && unset $v_hist
 
+   # Implementation of Use 9:
       elif [ $1 == "...." ]; then
          # Used only to centralize the history file into one single variable across the file
             f__V_hist__refresh_file_name  
@@ -1367,6 +1379,10 @@ function V {
          # Edit file manually 
             vim $v_fluNav_V_hist_file
 
+   # Implementation of Use 10:
+      elif [ $1 == "pwd" ]; then
+         eval lll  # Function usually at config-bash-alias
+      
       else 
          echo DRYa: fluNav: V: file/dir/option/menu/place/history not found. 
    fi

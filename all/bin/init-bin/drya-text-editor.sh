@@ -108,7 +108,7 @@ function ee {
           L1='1.  Cancel'
          
          Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
-         L0="fluNav: ee: set text editor: "
+         L0="fluNav: ee: Set/Toggle/Swap text editor: "
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
@@ -192,6 +192,17 @@ function op {
 
       # So se houver algum nome na variavel $v_item, tenta abrir com xdg (evita `xdg-open` de reclamar erro por falta de argumentos)
          [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
+
+   elif [[ $1 == "brave" ]]; then
+
+      if [[ $v_uname =~ "microsoft" ]]; then 
+         v_erro="DRYa: could not open brave on"
+         /mnt/c/Program\ Files/BraveSoftware/Brave-Browser/Application/brave.exe || echo "$v_erro windows (error)"
+
+      else
+         echo "uDev: Nao disponivel sem ser para windows"
+
+      fi
 
    else
       # Try to find the file opener at each OS (for the given files, given as arguments):

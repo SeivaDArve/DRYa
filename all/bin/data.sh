@@ -38,37 +38,44 @@ function f_background_process {
 }
 
 function f_complete_date {
-   # Exemplo: "Data atual: (Dia 07 Sex)(Mês 06 jun)(Ano 2024)(03:38:38)"
+   # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
-            # (Data atual) - (Ano 2025) - (Mes 06 Jun) - (Dia 18 Wed) - (03:03:14)
+   # Montagem da data
+      # Display: Titulo em linha com o restante
+         v_texto="(Data atual) -"
 
-   # Instrucoes ao developer:
+      # Display: Grupo data hora
+         v_txt="GDH"
+         v_dia=$(date +'%d')
+         v_hor=$(date +'%H')
+         #v_fuso=$(date +'%z')
+         v_min=$(date +'%M')
+         v_mes=$(date +'%b')
+         v_ano=$(date +'%Y')
+         v_texto="${v_texto} ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"
+   
+      # Display: Ano sozinho
+         v_ano=$(date +'%Y')
+         v_texto="${v_texto} (Ano $v_ano) -"
+
+      # Display: Mes sozinho
+         v_mes=$(date +'%m %b')
+         v_texto="${v_texto} (Mês $v_mes) -"
+
+      # Display: Dia sozinho
+         v_dia=$(date +'%d %a')
+         v_texto="${v_texto} (Dia $v_dia) -"
+
+      # Display: Hora + minutos + segundos
+         v_hora=$(date +'%H:%M:%S')
+         v_texto="${v_texto} (Hora $v_hora)"
+
+   # Instrucoes ao desenvolvedor:
       # echo -ne "\r"      ## Move o cursor para o inicio da linha
       # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
 
-   v_texto="(Data atual) -"
-
-   v_dia=$(date +'%d')
-   v_hor=$(date +'%H')
-   #v_fuso=$(date +'%z')
-   v_min=$(date +'%M')
-   v_mes=$(date +'%b')
-   v_ano=$(date +'%Y')
-   v_texto="${v_texto} (${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"
-
-   v_ano=$(date +'%Y')
-   v_texto="${v_texto} (Ano $v_ano) -"
-
-   v_mes=$(date +'%m %b')
-   v_texto="${v_texto} (Mês $v_mes) -"
-
-   v_dia=$(date +'%d %a')
-   v_texto="${v_texto} (Dia $v_dia) -"
-
-   v_hora=$(date +'%H:%M:%S')
-   v_texto="${v_texto} (Hora $v_hora)"
-
-   echo -ne "\r\033[K$v_texto "
+      # Montrar o resultado no terminal
+         echo -ne "\r\033[K$v_texto "  
 }
 
 function f_complete_date_loop {
