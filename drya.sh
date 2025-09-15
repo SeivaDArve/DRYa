@@ -2259,6 +2259,9 @@ if [ -z "$*" ]; then
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu. [rtfm: "Read the Fucking Manual"]
 
+   # uDev: Tem de passar a ser TUDO texto do README.md senao esse ficheiro nunca é trabalhado.
+   #       Depois o restante script corta e imprime so partes desse ficheiro
+
    # uDev: `drya h  `  # 1st Level of help
    # uDev: `drya h 2`  # 2nd level of help
    # uDev: `drya h 3`  # 3rd level of help
