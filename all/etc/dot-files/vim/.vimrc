@@ -85,6 +85,9 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 " Inserir o texto que estiver no ficheiro 'drya-date-now'
    nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
 
+" Inserir o texto que estiver no ficheiro 'drya-autocomplete-if-then-else-fi
+   nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/etc/autocomplete/drya/drya-autocomplete-if-then-else-fi.txt'<CR>
+
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
    nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/bin/boilerplates/bash-fzf-1-boilerplate.sh'<CR>
@@ -100,4 +103,5 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    " Help command (in vim): `:help laststatus` or `:help statusline`
    set laststatus=2
    "set statusline+=%F  "Para ver o caminho inteiro
+
 

@@ -1,0 +1,13 @@
+if [ -z $1 ]; then
+   echo "none"
+
+elif [ $1 == "1" ]; then
+   echo "1"
+
+elif [ $1 == "2" ] || [ $1 == "3" ]; then
+   echo "2 or 3"
+
+else
+   echo "uDev: help"
+
+fi
