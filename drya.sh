@@ -2149,7 +2149,30 @@ function f_menu_install_drya_dependencies__1st {
    # uDev: Esta fx tambem tem de ser util para utilizacao no ficheiro source-all-drya-files
    # uDev: This may use drya-lib-4
 
-   vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saved '; Lz2='D iu dp'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L4='4. Install | Soft dependencies (less important libraries + pkgs)'                                      
+      L3='3. Install | Hard dependencies (most important libraries + pkgs)'                                      
+      L2="2. Edit    | '1st' file"
+      L1='1. Cancel'
+
+      L0="DRYa: Dependencies menu: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
+
+   # Atualizar historico fzf automaticamente (deste menu)
+      echo "$Lz2" >> $Lz4
+   
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "4. " ]] && echo "uDev: $L4" 
+      [[    $v_list =~ "3. " ]] && source $v_1st && f_gr_hard_dependencies 
+      [[    $v_list =~ "2. " ]] && vim $v_1st
+      [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
+      [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
+      unset  v_list
 }
 
 function f_help_installing_specific_packages {
@@ -2549,6 +2572,9 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
 
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
+
+   # Var: file for DRYa dependencies
+      v_1st=${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
 
    if [[ -z $2 ]]; then 
       # If there are no args:
