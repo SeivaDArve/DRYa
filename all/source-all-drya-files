@@ -50,7 +50,7 @@ function f_test {
 
 function f_drya_libs {
    # Sourcing drya-lib-1: File with colors 
-      source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      source ${v_REPOS_CENTER}/DRYa/all/lib//libs/drya-lib-1-colors-greets.sh
       v_greet="DRYa"
       v_talk="DRYa: "
 }
@@ -357,10 +357,11 @@ function f_fun_after_welcome_screen {
 
     f_fun_memorize_sutras      2>/dev/null
    #f_fun_open_random_shells
-   #f_fun_memorize_sanskrit    (uDev)
-   #f_fun_memorize_font_kamida (uDev)
-   #f_fun_memorize_font_diedro (uDev)
-   #f_fun_apprendre_le_francais
+   #f_fun_memorize_sanskrit      (uDev)
+   #f_fun_memorize_font_kamida   (uDev)
+   #f_fun_memorize_font_diedro   (uDev)
+   #f_fun_quotes_from_yogis      (uDev)
+   #f_fun_apprendre_le_francais  (uDev)
  }
 
 function f_any_key_b4_open_msgs {
@@ -419,6 +420,11 @@ function f_alias_to_enforce {
 function f_internal_drya_files_1_of_3 {
    # Repository: DRYa (internal files - (1/2) )
 
+   # uDev: v_nm_src_bash  = source-all-drya-files = drya-src-frm-bashrc
+   #       v_nm_pre_alias = nil                   = drya-pre-alias.sh
+   #       v_nm_mid_alias = config-bash-alias     = drya-mid-alias.sh
+   #       v_nm_pos_alias = .dryarc               = drya-pos-alias.sh
+
    f_demi_fake_pin 
 
    # Include this file name in a variable
@@ -454,9 +460,6 @@ function f_internal_drya_files_1_of_3 {
      touch    $v_file_fzf_H $v_drya_fzf_menu_hist
      export    v_file_fzf_H  v_drya_fzf_menu_hist Lz4
 
-
-
-      
    # Main alias for the most important DRYa files of all
      f_alias_to_enforce
 
@@ -527,6 +530,26 @@ function f_config_figlet {
 
    # Not every instalation of figlet comes with the same standard font, lets corret that
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
+}
+
+function f__sadf_lib_1__after_clonning {
+   v_erro"DRYa: Deu erro a clonar"
+
+   cd      ${v_REPOS_CENTER}            && git clone $v_clone
+   [[   -d ${v_REPOS_CENTER}/$v_name ]] && bash      $v_script $v_args
+   [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo "$v_erro"
+}
+
+function f__sadf_lib_2__asking_to_clone {
+   v_ask="$v_name nao instalado, deseja instalar? (S/n)"
+   v_clone="https://github.com/SeivaDArve/$v_name.git"
+
+   f_talk; echo        "$v_ask" 
+           read -p " > " v_ans
+
+   [[ -z $v_ans        ]] && f__sadf_lib_1__after_clonning 
+   [[    $v_ans == "s" ]] && f__sadf_lib_1__after_clonning 
+   [[    $v_ans == "S" ]] && f__sadf_lib_1__after_clonning 
 }
 
 function f_repository_dWiki {
@@ -608,31 +631,48 @@ function f_repository_upK-diario-Dv {
 
 function f_repository_112-Shiva-Sutras {
    # Repository: 112-Shiva-Sutras
+   # uDev: Enviar a maipr parte destes alias para `if elif fi` dentro de ss.sh
 
-   # Attemple to clear `less` 1st lime alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
-   alias Ss="ss all | less"
+   v_path="${v_REPOS_CENTER}/112-Shiva-Sutras"
 
-   #alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
-   alias SS="ss all | less"
+   alias    ss="bash $v_path/ss.sh"
+   alias   ss.="vim  $v_path/ss.sh"
 
-   alias ss="bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
-   alias ss.="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh"
+   alias    SS="ss all | less"  # Attempt to clear `less` output where 1st line of text has buggy encodings. alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
+   alias    Ss="SS"             # Creates case insensitivity for the last alias
 
-   alias exp="vim ${v_REPOS_CENTER}/112-Shiva-Sutras/all/exp112.txt"
-   alias links="cd ${v_REPOS_CENTER}/112-Shiva-Sutras/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
+   alias   exp="vim  $v_path/all/exp112.txt"
+   alias links="cd   $v_path/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 }
 
 function f_repository_yogaBashApp {
    # Repository: yogaBashApp
 
-   alias sadhguru-presence="${v_REPOS_CENTER}/yogaBashApp/sadhguru-presence.sh"
-   alias termux-stop="termux-media-player stop"
-   alias Y="${v_REPOS_CENTER}/yogaBashApp/yoga.sh"
-   source ${v_REPOS_CENTER}/yogaBashApp/all/source-all-yoga-files 2>/dev/null
+   v_path=${v_REPOS_CENTER}/yogaBashApp
+
+   alias t-stop="termux-media-player stop"  # Existe duplicado em config-bash-alias
+
+   alias sadhguru-presence="$v_path/sadhguru-presence.sh"
+   alias                 Y="$v_path/yoga.sh"
+   source                  "$v_path/all/source-all-yoga-files" 2>/dev/null
 }
 
 function f_repository_Tesoro {
-   alias T="bash ${v_REPOS_CENTER}/Tesoro/tesoro.sh"
+   # Opcoes para repositorio Tesoro. Vai clonar a app imediaramente caso nao exista, adicionando apenas 1 passo intremedio para clonar, depois, executa tudo normalmente
+
+   function T {
+      v_name="Tesoro"  # Nome do repositorio, tem de ser igual ao nome no github.com para poder clonar correto
+      v_script=${v_REPOS_CENTER}/Tesoro/tesoro.sh
+      v_args=$*
+
+      # drya-fast-tg-sys-vars: "direto", "ask-first"
+         v_execut="direto"     # Clonar a repo diretamente, sem pedir opiniao ao utilizador
+         v_execut="ask-first"  # Clonar a repo so com permissao do utilizador
+         v_execut="ask-pin"    # Clonar a repo so com permissao do utilizador, mas com autorizacao de acesso por pin
+
+      [[   -f $v_script ]] && bash $v_script $* 
+      [[ ! -f $v_script ]] && f__sadf_lib_2__asking_to_clone 
+   }
 }
 
 function f_repository_row-reader {
@@ -732,7 +772,6 @@ function f_internal_drya_files_2_of_3 {
 
 function f_drya_ssms_end {
    # Send to drya-messages the info that all the file was loaded
-
    echo -e "DRYa: file finished loading: $v_name_drya_source \n" >> $v_MSGS
 }
 
@@ -833,12 +872,28 @@ function f_notes_toDo {
 }
 
 function f_backdoor {
-   # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa
-
    # Lista de repos a apagar no startup (incluindo em outros dispositivos)
-      # Repo 1
-         v_rm="scratch-paper"
-         rm -rf ${v_REPOS_CENTER}/$v_rm 2>/dev/null 
+
+   # Repo names to delete (Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa)
+      unset v_rm
+
+      v_rm="$v_rm example-repo"
+      v_rm="$v_rm scratch-paper"
+
+   # Take actions for each name in the variable $v_rm
+      for i in $v_rm
+      do
+         echo "DRYa: Removing repo: $i" 1>/dev/null 
+         rm -rf ${v_REPOS_CENTER}/$i    2>/dev/null 
+      done
+
+   function f_backdoor_listening {
+      # Keep the terminal in a while loop and only listen to changes on github
+      # A file will be used to issue commands from a distance
+      echo uDev
+
+   }
+
 }
 
 function f_exec { 
@@ -857,6 +912,10 @@ function f_exec {
       f_config_figlet  
       f_drya_welcome_screen  
       f_test  # Can be deleted
+   
+   # Libs for repositories: 'sadf'=='Source.All.Drya.Files.'. Libs nao precisam ser exexutadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem exiatam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
+     #f__sadf_lib_1__after_clonning
+     #f__sadf_lib_2__asking_to_clone
 
    # Loading repositories (some have their .../source.../ files)
       f_repository_dWiki   
@@ -901,6 +960,7 @@ function f_exec {
 
       f_async__ezGIT_pull_All__at_startup
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
+
 
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
       #f_fun_after_welcome_screen
