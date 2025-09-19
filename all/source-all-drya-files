@@ -362,6 +362,7 @@ function f_fun_after_welcome_screen {
    #f_fun_memorize_font_diedro   (uDev)
    #f_fun_quotes_from_yogis      (uDev)
    #f_fun_apprendre_le_francais  (uDev)
+   #f_fun_dance_move_time        (uDev)
  }
 
 function f_any_key_b4_open_msgs {
