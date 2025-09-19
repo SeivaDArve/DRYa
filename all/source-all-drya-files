@@ -283,57 +283,73 @@ function f_drya_fzf_history {
    echo  1>/dev/null
 }
 
-function f_termux_welcome {
-   # Display the standard welcome termux message
+function f_drya_welcome_screen {
+   # Unclutering the welcome screen. (Turn verbose output welcome screen ON/OFF. 
+   # Nota: O comando `D help welcome` usa vimscript para executar copiar todo este ficheiro, filtrar so esta fx, e executar esta fx. 
+
+   # uDev: send to drya-messages too
+   # uDev: Ask if the user want to see more than just the OS that is running
+      
+   function f_ws_termux {
+      # Display the standard welcome termux message
+
       # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
       # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
       # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
-      if [ $(uname -o) == "Android" ]; then echo "DRYa: Termux welcome message:"; cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null; fi
-}
+      if [ $(uname -o) == "Android" ]; then 
+         echo "DRYa: Termux welcome message:" 
+         cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null
+      fi
+   }
 
-function f_drya_welcome_screen {
-   # In order to uncluter the welcome screen, we use this function
-   # (Turn verbose output welcome screen ON/OFF. # Re-directing too much output at the welcome screen for the choice of the user either to see it or not)
+   function f_ws_drya_presentation {
+      # Display info about DRYa at the screen with `figlet` when DRYa is first loaded by the terminal. Figlet is a depependency. If it does not exist, text will be echoed to inform (as a failsafe system)
 
-   # NOTA: NAO E PRECISO SER CRIADO O FICHEIRO, porque o comando `D help > welcome` pode simplesmente repetir estes comandos
+      figlet -v &>/dev/null  # Testing if figlet is installed
+      v_status=$?            # Guardar o status code para saber se o comando anterior deu algum erro
 
-   # uDev: send to drya-messages too
-   # uDev: set function: drya --os (traitsID info)
-   # uDev: set environment variable: drya-os to be used by other functions like '$ op'
-   # uDev: Ask if the user want to see more than just the OS that is running
-      
-   # Para se poder ver o "welcome screen" de novo, guardamos no ficheiro
-      
-      #v_drya_welcome_screen=~/.config/h.h/drya/drya-welcome
+      [[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
+      [[ $v_status ==  1  ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
+      [[ $v_status == 127 ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
+   }
 
-   # Display info about it at the screen when DRYa is loaded by the terminal
-   # --- Presenting it with figlet (which is a dependency) or just echo it's name:
-         figlet -v &>/dev/null  # Testing if figlet is installed
-         v_status=$?  # Guardar o status code para saber se o comando anterior deu algum erro
-         #[[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
-         [[ $v_status ==  1  ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
-         [[ $v_status == 127 ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
+   function f_ws_trid {
+      # Using traitsID startup message
 
-   #f_termux_welcome
-
-   # Using traitsID startup message
       bash $trid_script startup-message
       echo
+   }
 
-   # Verbose Initial DRYa Message
-      f_talk; echo    "Stratup Instructions"
+   function f_ws_verbose {
+      # Verbose Initial DRYa Message
+
+      f_talk; echo          "Stratup Instructions"
               echo -n "      Menu 'Main'       : "
-        f_c4; echo -e "D ."
+        f_c4; echo -e                           "D ."
         f_rc; echo -n "      Menu 'Instrucoes' : "
-        f_c4; echo    "D help"
+        f_c4; echo                              "D help"
         f_rc; echo
+   }
 
-   # Apresentar apenas o icon ASCII do `neofetch`
+   function f_ws_neofetch {
+      # Apresentar apenas o icon ASCII do `neofetch`
+
       neofetch -L 2>/dev/null
+   }
 
+   function f_ws_seiva_up_time {
+      # Optional: Add to "welcome screen": `D seiva-up-time`
 
-   # Optional: Add to "welcome screen": `D seiva-up-time`
-   #   bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
+      bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
+   }
+
+   f_ws_drya_presentation
+  #f_ws_termux               # uDev: create/removing ~/.hushlogin will disable/enable termux verbose startup
+   f_ws_trid
+   f_ws_verbose 
+   f_ws_neofetch
+  #f_ws_seiva_up_time 
+
 }
 
 function f_fun_after_welcome_screen {
@@ -344,6 +360,7 @@ function f_fun_after_welcome_screen {
    #f_fun_memorize_sanskrit    (uDev)
    #f_fun_memorize_font_kamida (uDev)
    #f_fun_memorize_font_diedro (uDev)
+   #f_fun_apprendre_le_francais
  }
 
 function f_any_key_b4_open_msgs {
@@ -399,7 +416,7 @@ function f_alias_to_enforce {
       alias 10="cd ${v_REPOS_CENTER} && ls"
 }
 
-function f_internal_drya_files_1_of_2 {
+function f_internal_drya_files_1_of_3 {
    # Repository: DRYa (internal files - (1/2) )
 
    f_demi_fake_pin 
@@ -455,22 +472,53 @@ function f_internal_drya_files_1_of_2 {
 
 function f_internal_drya_files_3_of_3 {
    # Add script drya.sh to PATH variable (try: echo $PATH) 
+   # Note: Any file's directory, if mentioned on the $PATH variable, is executed automatically at the terminal by calling
 
-      v_add=${v_REPOS_CENTER}/DRYa/all/bin 
+   function f_test_pattern_path_verbose {
+      echo "--------------------------"
+      echo "Estado:"
+      echo " > $v_status"
+      echo
+      echo "PATH: "
+      echo "$PATH" | sed 's/:/\n/g'
+      echo "--------------------------"
+      echo
+      echo
+      echo
+      echo
+   }
 
-      grep $v_add <(echo $PATH)
+   function f_test_pattern_path {
+      grep $v_add <(echo $PATH) 1>/dev/null
       v_status=$?
 
-      echo "estado: $v_status"
-      [[ $v_status == "1" ]] && echo "Nao encontrado" && export PATH=$PATH:$v_add # Any file placed here, is executed automatically on the terminal by calling it by the name
-      [[ $v_status == "0" ]] && echo "Encontrado"     && echo "Tudo ok"
+      #f_test_pattern_path_verbose  # Debug
+   }
 
-   # Remover linhas duplicadas de $PATH com `awk`
-      #export PATH=$(echo "$PATH" | awk -v RS=':' '!a[$1]++' | paste -sd:)
-         # Explicacao Chat GPT
-         #    RS=':'     : Define o separador de registros como : (delimitador do $PATH).
-         #    !a[$1]++   : Garante que cada diretório só apareça uma vez.
-         #    paste -sd: : Junta os diretórios novamente com :.
+   function f_debug_path {
+      # Testar + 1 vez se o $PATH ten os nossos enderecos
+
+      f_test_pattern_path 
+      read
+   }
+
+   function f_solve_PATH {
+      # Set $PATH variable to use DRYa scripts
+
+      v_add=${v_REPOS_CENTER}/DRYa/all/bin 
+      v_ys='DRYa: exporting $PATH: Pattern found (ok)'
+      v_no='DRYa: exporting $PATH: Pattern not found (not ok)'
+
+      # Testar 1x se o nosso endereco de scripts se encontra mencionado em $PATH0
+         f_test_pattern_path
+
+      [[ $v_status == "1" ]] && echo "$v_no" && export PATH=$PATH:$v_add
+      [[ $v_status == "0" ]] && echo "$v_ys" 1>/dev/null
+   }
+
+   #clear         # Debug
+   f_solve_PATH 
+   #f_debug_path  # Debug
 }
 
 function f_config_figlet {
@@ -634,7 +682,7 @@ function f_repository_dota_2 {
    alias dota="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
 }
 
-function f_internal_drya_files_2_of_2 {
+function f_internal_drya_files_2_of_3 {
    # Repository: DRYa (internal files - (2/2) )
 
    # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
@@ -799,7 +847,7 @@ function f_exec {
    # Config Internal scripts and settings
       f_escape_time_at_terminal_startup
      #f_startup_lock_DRYa
-      f_internal_drya_files_1_of_2
+      f_internal_drya_files_1_of_3
      #f_check_missing_dependencies
       f_drya_libs  # Includes an fx for debugging: `db` 
       f_drya_ssms_start
@@ -830,7 +878,7 @@ function f_exec {
      #f_repository_caum_lendario
       
    # Last default configs (again, if needed will overwriting configs, for safety)
-      f_internal_drya_files_2_of_2
+      f_internal_drya_files_2_of_3
       f_internal_drya_files_3_of_3
 
    # Start loading background tasks (jarve)
@@ -855,7 +903,7 @@ function f_exec {
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
-      f_fun_after_welcome_screen
+      #f_fun_after_welcome_screen
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end
