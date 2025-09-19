@@ -32,10 +32,27 @@ function f_gr_1_installing_terminal {
    #        windows:        Instrucoes/Script para Instalar WLS2 + Ubuntu
    #        Android/iPhone: Instrucoes/Links para instalar Termux + Termux:API
 
-   echo "uDev: Instalar terminal Base"
+   echo "uDev: Instalar terminal Base. Including git"
+
+   # Git is needed to install here. in termux if we delete ~/../usr then all termux content is lost while DRYa is at ~/Repositories/ (to fix termux, just restart and ~/../usr will be automatically created. But all pakages previously installed by termux were lost. Git is needed here because DRYa might need an update before installing further 
 }
 
-function f_gr_2_soft_DRYa_dependencies {
+function f_gr_2_hard_dependencies {
+   # List of DRYa dependencies (to be installed by DRYa installer)
+
+   pkg install   \  
+   figlet        \  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
+   ncurses-utils \  # Instals packages like `tput`
+   less          \  # Dependency for ezGIT (example: `git diff --staged` will only list diferences if less is installed. It will claim 'pager' was not found
+   vim           \  # Most Powerfull text editor
+   file          \  # Dependency for ezGIT
+   fzf           \  # Fuzzyfinder
+   -y
+
+   # uDev: Bash deve ter metodos para evitar usar `file` e assim `file` deixava de ser uma dependencia do ezGIT
+}
+
+function f_gr_3_soft_DRYa_dependencies {
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
 
    # Basic dependencies for Default DRYa usage
@@ -65,21 +82,6 @@ function f_gr_2_soft_DRYa_dependencies {
    # Nota: Numa fresh install do OS, podemos por curiosidade, criar um ficheiro com uma variavel (na maquina, host) que informa a idade do OS "OS Age" e depois mencionar as duas variavies "current up-time". Exemplo: comando `trid up-time` que manda o resultado: "OS age: 2 anos"; "Dispositivo ligado ha X dias"
 }
 
-function f_gr_hard_dependencies {
-   # List of DRYa dependencies (to be installed by DRYa installer)
-
-   pkg install \
-   man \          # Man pages (it does not come default in arch, for example)
-   figlet \       # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
-   ncurses-utils  # Instals packages like `tput`
-   less \         # Dependency for ezGIT
-   vim \          # Most Powerfull text editor
-   file \         # Dependency for ezGIT
-   man \          # Software to present manual pages
-   which \        # Used to detect the path of installed scripts
-   fzf \          # Fuzzyfinder
-   -y
-}
 
 function f_usefull {
 
@@ -99,6 +101,8 @@ function f_usefull {
       termux-api \   # Plug-in for termux
       awk \          # Serve para procurar e substituir texto
       upower \       # To enable the possibility to read battery status
+      which \        # Used to detect the path of installed scripts
+      man \          # Man pages. Software to present manual pages (it does not come default in arch, for example)
       emacs
       espeak     # Text to speach
       termimage  # Terminal images

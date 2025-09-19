@@ -279,10 +279,9 @@ function f_calcular_tempo_decorrido_apos_data {
       echo " > $YEARS anos, $MONTHS meses e $DAYS dias."
 }
 
-function f_drya_welcome {
+function f_output_drya_welcome_screen_msg_with_vimscript {
    # Repetir os comandos que criam a mensagem de apresentacao DRYa
    # (Esta sequencia de comandos ja existem em .../source-all-drya-files
-   # uDev: Criar uma fx que litralmente copia a fx em .../source-all-drya-files para um ficheiro temporario, depois executar esse ficheiro
 
    # Ficheiro vimscript.vim (que vai servir de modelo para a proxima busca)
       v_scr=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/vimscript_1_*
@@ -1820,7 +1819,7 @@ function f_drya_help_menu {
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
-      [[ $v_list =~ "3. " ]] && f_drya_welcome
+      [[ $v_list =~ "3. " ]] && f_output_drya_welcome_screen_msg_with_vimscript
       [[ $v_list =~ "2. " ]] && f_drya_help
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
       unset v_list
@@ -2327,7 +2326,7 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    elif [ $2 == "welcome" ] || [ $2 == "w" ] ; then 
       # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
       echo "D help welcome" >> $v_drya_fzf_menu_hist
-      f_drya_welcome
+      f_output_drya_welcome_screen_msg_with_vimscript
 
    elif [ $2 == "status-messages" ] || [ $2 == "msgs" ] || [ $2 == "ssms" ]; then 
       # Option to read the $DRYa_MESSAGES file

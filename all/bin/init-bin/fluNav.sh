@@ -1315,7 +1315,10 @@ function V {
             Lh=$(pwd); Lh=$(basename $Lh); LH="Searching dirs at: .../$Lh/"
 
          # Menu fzf que procura subpastas 
-            v_dir=$(fzf --header="$LH" --prompt="NAVEGUE para uma pasta (pode ignorar o conteudo): ")
+            L0="fluNav: V: Nevegue o prompt para a pasta selecionada: "
+            v_dir=$(fzf --header="$LH" --prompt="$L0")
+            #echo " > $_dir"
+            #v_dir=$(echo $v_dir | sed 's/ /\ /g')
 
          # Se tiver havido alguma escolha (que vem na var $v_dir) entaom navegar para la
             if [[ -n $v_dir ]]; then

@@ -723,9 +723,10 @@ function f_lib4_git_commit_compact {
          L2='2. Cancel'
          L1="1. Mensagem automatica | $v_auto___msg"
 
+         Lh=$(echo -e "\n- Alteracoes detetadas: 'git status -s':\n$(git status -s)\n ")
          L0="drya-lib-4: Que tipo de commit message pretende? "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
