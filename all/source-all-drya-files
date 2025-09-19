@@ -50,7 +50,7 @@ function f_test {
 
 function f_drya_libs {
    # Sourcing drya-lib-1: File with colors 
-      source ${v_REPOS_CENTER}/DRYa/all/lib//libs/drya-lib-1-colors-greets.sh
+      source ${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       v_greet="DRYa"
       v_talk="DRYa: "
 }

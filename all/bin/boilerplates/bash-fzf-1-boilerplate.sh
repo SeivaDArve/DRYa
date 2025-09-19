@@ -11,6 +11,7 @@
 # [fzf menu exemplo 1]
    # Menu Simples
    
+   # Note: Variable $v_fzf_talk for script name. Is a varible that should be set on the beginning of any script that wants to run this fzf boilerplate. This helps a lot when developing, because in any working script, when adding a new menu, it already brings the Script Name in $v_fzf_talk and prevents dev repetition
    # Note: `--layout=reverse-list` : ...
    # Note: `--reverse`             : ...
    # Note: `--cycle`               : ...
@@ -18,10 +19,22 @@
    # Note: `--no-info`             : significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
    # Note: `--header="Text here" 
    # Note: `--tac" 
+   # Note: `--wrap"                : Para quando as linhas sao demasiado longas e nao cabem no ecra
 
    # uDev: testar --history=HISTORY_FILE
    # uDev: fx/lib para o  ---Invert Selection---'
    # uDev: criar em drya-lib-2:      "Tracking: `command`  [ENTER = Previous menu]"
+
+   # uDev: criar opcoes de cor ANSI. 
+   #       Exemplo do GPT: `echo -e "normal\n\033[31mvermelho\033[0m" | fzf --ansi`
+   #
+   #       Exemplo de backspace 1: `echo -e "Texto \bArvore"` output: "TextoArvore"
+   #
+   #       Exemplo de backspace 2: v_backspace=$'\b'
+   #                               v="Texto ${v_backspace}Arvore"
+   #                               echo -e "$v"
+   #                               Output: "TextoArvore"
+   #
 
    # Opcional: Buscar valores externos para usar variaveis neste menu
    #    f_example_busca_L6b; echo "$Lb6"
@@ -38,7 +51,7 @@
       L1='1. Cancel'
 
       Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui\n ")
-      L0="SELECT 1: Menu X: "
+      L0="$v_fzf_talk: SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")

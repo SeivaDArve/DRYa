@@ -46,6 +46,26 @@ That means that this software is cross-platform just like any personal assistant
 
 For the enthusiastic programmer: Iron man (from the Marvel comics) was a programmer. Where the Iron Suit was like Termux (a dedicated command line, programmed to recognize voice and user input to extend the user habilities)
 
+## drya-fast-tg-sys-vars
+This text is something you can find on DRYa scripts (Fast Toggle System for Variables from DRYa)
+
+Some software options are ready to use only in the backend. When frontend menus are not ready to use and to toggle settings, then the fastest way to toggle configs is to set the varible of a specific config in several lines (as many lines as the options there are for such variable). The last line is again the same variable beeing set and overwritting all previous lines of the same variable beeing set.
+
+The text editor Vim has an hotkey to swap 2 text lines. Put the cursor on the line you want to move and delete it with hotkey `dd`. The past it imediatly on the line bolow with 'p'. In case you want to past in the previous line instead on the next line, press 'P' instead of 'p'
+
+Exemple (bash): Setting the same var 2x (the last time, overwrites all the orevious):
+    v_variable="Tree"
+    v_variable="Cat"
+    echo "Variable contains: $v_variable"
+
+    Result: "Variable contains: Cat"
+   
+## For the next Dev
+How to read DRYa/Seiva Syntax
+
+f_function_names                       (Helps A LOT to read code. gives the starting common pattern f_ and helps distinguish from v_ variables)
+v_variable_names                       (instead all Caps variables, as default for $BASH)
+c_variables_of_text_but_for_ansi_codes (usually containing backspaces already)
 
 ## Brainstorming
 Do you have config files that you keep installing/removing/installing/removing?

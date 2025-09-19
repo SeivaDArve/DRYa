@@ -35,7 +35,7 @@
 #udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   source ${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
 
    v_greet="traitsID"
    v_talk="trid: "

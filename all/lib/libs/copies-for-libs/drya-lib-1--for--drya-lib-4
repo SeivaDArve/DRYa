@@ -59,7 +59,7 @@ function F_c1 {
    #  - Output of `git` when something is being cloned, pulled, pushed
 
    F_test_dependencie_tput
-   [[ $V_status == 0 ]] && tput setaf 5 
+   [[ $V_status == 0 ]] && tput setaf 5  #   2>/dev/null  || (or, use ANSI colors) 
 }
 
 function F_c2 { 
@@ -130,6 +130,22 @@ function F_colors_without_tput {
    # Text Colors before discovering '$ tput setaf'
       RESTORE=$(echo -en '\001\033[0m\002')
           RED=$(echo -en '\001\033[00;31m\002')
+
+   # Exemplo de backspace 1: `echo -e "Texto \bArvore"` output: "TextoArvore"
+   #
+   # Exemplo de backspace 2: V_backspace=$'\b'
+   #                         v="Texto ${v_backspace}Arvore"
+   #                         echo -e "$v"
+   #                         Output: "TextoArvore"
+
+   # uDev: Criar vars de cor ANSI que usam SEMPRE um Backspace (facilita aleitura)
+   #       c_bks="\b"                           # Variavel de codigo ANSI para traser o cursor um caractere para a esquerda
+   #       c_vrm="\001\033[00;31m\002"          # Variavel de cor V_vrm ou c_vrm para: Vermelho
+   #       c_vrm="${c_bks}\001\033[00;31m\002"  # Variavel de cor V_vrm ou c_vrm para: Vermelho (com backspace)
+   #       c_rst="\001\033[00;31m\002"          # Variavel de cor V_rst ou c_rst para: Restore (reset as cores e estilos)
+   #
+   #       Exemplo: `echo -e "Texto: ${c_vrm} A vermelho. ${c_rst} Agora a branco"
+
 
    # Example of Text formating before discovering '$ tput'
    # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`

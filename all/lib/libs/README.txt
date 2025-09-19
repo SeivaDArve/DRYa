@@ -12,7 +12,8 @@
    drya-lib-5-all-info-arg-0.sh              # Usado para saber em que pasta estao o script a executar, e evitar navegar ate a pasta dele para fazer alteracoes
    drya-lib-6-call-python-elisp-etc
    drya-lib-7-bash-calling-for-sqlite3.sh
-   README.txt
+   cat                                       # A direcrory containing text about libraries. Example: headers of 'how to install drya-lib-*'
+   README.txt                                
 
 # Directory ./cat contents:
    This direcotry contains a copy of each lib, but just the header, just the way it may be called by a sub-process

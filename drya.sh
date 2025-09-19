@@ -3,12 +3,31 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
+# Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
+   v_fzf_talk=DRYa
+
+
+
+
 
 
 
 # uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
+# uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS). Tambem chamado 'failsafe'
 
-# uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS)
+# uDev: Criar menus 'failsafe' semelhantes a este:
+#
+#   flunav: h: Arguments for home possibilities
+#    1 | /data/data/com.termux/files/home
+#    2 | /mnt/c"
+#    3 | /mnt/c/Users/$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")
+#    4 | ~/Persistent/HOME/"
+#    5 | termux-bridge-android"
+#    6 | shared-HDD-home-partition"
+#    7 | /data/data/com.termux/files/home/Repositories/
+
+
+
 
 # Comments examples: 
    # Single comment example
@@ -21,8 +40,10 @@
 
 
 
+
+
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
@@ -31,17 +52,18 @@
    # Examples: `db` (an fx to use during debug)
    #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 
+
+
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
 
 
-
 # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
    [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
 
    # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
@@ -1777,22 +1799,24 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L6='6. About the Developer: seiva-up-time'
-      L5='5. About DRYa extentions (ezGIT, trid, jarve, ...)'  
+      L7='7. About: drya-fast-tg-sys-vars (see README.md)'  
+      L6='6. About: Developer (seiva-up-time)'
+      L5='5. About: DRYa extentions (ezGIT, trid, jarve, ...)'  
       L4='4. Read drya-msgs'  
       L3='3. Welcome Screen'
       L2='2. Print All' 
       L1='1. Cancel'
 
-      L0="SELECT 1: Menu X: "
+      L0="$v_fzf_talk: Menu X: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6\n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "7. " ]] && echo "uDev"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
       [[ $v_list =~ "4. " ]] && less $v_MSGS
@@ -3245,6 +3269,9 @@ elif [ $1 == "omni" ] || [ $1 == "om" ]; then
 
    # uDev: Test fist if repo exists
    cd ${v_REPOS_CENTER}/omni-log/ && emacs omni-log.org
+
+elif [ $1 == "remove" ] || [ $1 == "rm" ]; then 
+   echo "uDev: Remove repos"
 
 elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
    # Several ways to exit the terminal

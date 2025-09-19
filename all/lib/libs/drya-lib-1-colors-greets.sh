@@ -14,8 +14,9 @@
 #
 #
 #     # Sourcing DRYa Lib 1: Color schemes
+#        v_name="DRYa"  # Change to the name of the script. Example: DRYa, ezGIT, Patuscas
 #        v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-#        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+#        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "$v_name: drya-lib-1 does not exist (error)"
 #
 #        # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 #           v_greet="DRYa"
@@ -59,7 +60,7 @@ function f_c1 {
    #  - Output of `git` when something is being cloned, pulled, pushed
 
    f_test_dependencie_tput
-   [[ $v_status == 0 ]] && tput setaf 5 
+   [[ $v_status == 0 ]] && tput setaf 5  #   2>/dev/null  || (or, use ANSI colors) 
 }
 
 function f_c2 { 
@@ -130,6 +131,22 @@ function f_colors_without_tput {
    # Text Colors before discovering '$ tput setaf'
       RESTORE=$(echo -en '\001\033[0m\002')
           RED=$(echo -en '\001\033[00;31m\002')
+
+   # Exemplo de backspace 1: `echo -e "Texto \bArvore"` output: "TextoArvore"
+   #
+   # Exemplo de backspace 2: v_backspace=$'\b'
+   #                         v="Texto ${v_backspace}Arvore"
+   #                         echo -e "$v"
+   #                         Output: "TextoArvore"
+
+   # uDev: Criar vars de cor ANSI que usam SEMPRE um Backspace (facilita aleitura)
+   #       c_bks="\b"                           # Variavel de codigo ANSI para traser o cursor um caractere para a esquerda
+   #       c_vrm="\001\033[00;31m\002"          # Variavel de cor v_vrm ou c_vrm para: Vermelho
+   #       c_vrm="${c_bks}\001\033[00;31m\002"  # Variavel de cor v_vrm ou c_vrm para: Vermelho (com backspace)
+   #       c_rst="\001\033[00;31m\002"          # Variavel de cor v_rst ou c_rst para: Restore (reset as cores e estilos)
+   #
+   #       Exemplo: `echo -e "Texto: ${c_vrm} A vermelho. ${c_rst} Agora a branco"
+
 
    # Example of Text formating before discovering '$ tput'
    # > `echo ${RED}To do something, specify an argument like \"G 2\"${RESTORE}`

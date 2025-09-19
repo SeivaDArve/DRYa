@@ -55,8 +55,6 @@ alias cam="am start -a android.media.action.IMAGE_CAPTURE"
 alias start-termux-gui="vncserver -localhost :1"  # Inicia  o servidor VNC no ecra :1
 alias stop-termux-gui="vncserver -kill :1"        # Termina o servidor VNC no ecra :1
 
-alias timg="termimage" # App to print any img on the terminal in an ascii style
-
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 
@@ -78,7 +76,7 @@ alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # t
 alias py="python3"
 alias pip="pip3"
 alias cm="cmatrix"  #alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
-alias timg="termimage"
+alias timg="termimage"  # App to print any img on the terminal in an ascii style
 alias pycharm="pycharm-community 1>/dev/null &"
 alias irc="irssi" # An IRC client :: Install it with: pkg install irssi
 

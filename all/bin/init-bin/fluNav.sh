@@ -669,7 +669,7 @@ function h {
       # 2. Se essa config nao existir, pergunta para o user se quer configurar ou deixar padrao
       # 3. O user por fim, tambem pode deixar padrao
       
-      echo "flunav: Arguments for home possibilities"
+      echo "flunav: h: Arguments for home possibilities"
       echo " 1 | $L1 "
       echo " 2 | $L2 "
       echo " 3 | $L3 "
@@ -744,9 +744,10 @@ function f_menu_fzf_S {
        L2='2.  Reload  | Terminal | `S 0` or `rs`'
        L1='1.  Cancel'
 
+       Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`S .. a\`):\n - \`S a\`: (uDev)  \n - \`S b\`: (uDev)  \n - \`S c\`: (uDev)  \n   ")
       L0="fluNav: S: SELECT (1 ou +) ficheiros para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -761,7 +762,7 @@ function f_menu_fzf_S {
       [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
       [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
       [[ $v_list =~ "5.  " ]] && f_help
-      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor"
+      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor" && eval ee
       [[ $v_list =~ "3.  " ]] && echo 'uDev: Same as `D update`'
       [[ $v_list =~ "2.  " ]] && source ~/.bashrc
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
@@ -1163,6 +1164,10 @@ function V {
          fi
 
 
+      elif [ $1 == "tesoro" ] || [ $1 == "T" ]; then
+         cd ${v_REPOS_CENTER}/Tesoro 2>/dev/null && ls -p || f_error_cd
+
+
       elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
          cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
       
@@ -1365,7 +1370,7 @@ function V {
 
          # Criar um menu apartir do historico  
             # uDev: apagar linhas repetidas
-            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")
+            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --wrap --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")
       
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls -p && unset $v_hist
@@ -1530,7 +1535,7 @@ function f_action {
 
       # Buscar uma das linhas
          L0="fluNav: S: edite 1 ficheiro (do historico): "
-         v_hist=$(cat $v_temporary | fzf --tac --prompt "$L0")
+         v_hist=$(cat $v_temporary | fzf --tac --wrap --prompt "$L0")
    
       # Toggle Abs path vs Relative path
          f__S_hist__change_relative_path__to__abs_path
@@ -1650,7 +1655,12 @@ function S {
       elif [ $1 == "."        ]; then 
          if   [ -z $2 ]; then v_nm="search_files";                     f_action; # Search Files with fzf, then open
          elif [ -n $2 ]; then unset e; shift; for i in $@; do e="$e$i"; done; v=$(fzf --prompt="Automatic query: " --query="$e" --select-1 --exit-0); echo "Result: $v";fi  # For each argument given after first argument, filter with grep as if it is a fuzzy finder like fzf
+
       elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";       f_action;     # Asks i
+         # uDev: `S .. a` to save last file in fast-acess key 'a'
+         # uDev: `S .. b` to save last file in fast-acess key 'b'
+         # uDev: `S .. c` to save last file in fast-acess key 'c'
+
       elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";      f_action;     # Asks i
       elif [ $1 == "...."     ]; then v_nm="edit_hist_file";         f_action;     # Asks i
       elif [ $1 == ","        ]; then v_nm="search_history_files";   f_action;     # Asks i

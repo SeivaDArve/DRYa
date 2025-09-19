@@ -11,6 +11,53 @@
 
 v_talk="DRYa: (pk + $trid_pkgm):"
 
+
+
+
+
+
+#  # uDev: 
+#     f_pkg() {
+#
+#        # Instead of using this:
+#           [[ $1 == "+" ]] && [[ $trid_pkgm == "pkg" ]] && shift && $pkgm install $*
+#
+#        # Use this instead, by returning 1 or 0
+#           [[ $1 == "+" ]] && f_pkg && $pkgm install $*
+#
+#        # By using something like this fx
+#           if [[ -z $trid_pkgm ]]; then
+#              [[ -z $1 ]] && echo 'Help: `pk --help`'
+#              return false
+#              exit 1
+#           elif [[ $trid_pkgm == "pkg"    ]]; then
+#              shift 
+#              return true
+#           else
+#              return false
+#           fi
+#
+#        # Ou seja, uma fx que simplifica o texto longo, tipo:
+#           f_apt && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_pac && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_dnf && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_apk && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_pkg && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_brw && [[ $1 == "+" ]] && sudo $pkgm install $*
+#           f_zyp && [[ $1 == "+" ]] && sudo $pkgm install $*
+#     }
+#
+#
+#
+#
+#
+#
+#
+
+
+
+
+
 # Testing if any command was given first
    [[ -z $1        ]] && echo 'Help: `pk --help`'
 
