@@ -543,7 +543,7 @@ function f__sadf_lib_1__after_clonning {
 
    cd      ${v_REPOS_CENTER}            && git clone $v_clone
    [[   -d ${v_REPOS_CENTER}/$v_name ]] && bash      $v_script $v_args
-   [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo "$v_erro"
+   [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo     "$v_erro"
 }
 
 function f__sadf_lib_2__asking_to_clone {
@@ -553,9 +553,11 @@ function f__sadf_lib_2__asking_to_clone {
    f_talk; echo        "$v_ask" 
            read -p " > " v_ans
 
-   [[ -z $v_ans        ]] && f__sadf_lib_1__after_clonning 
-   [[    $v_ans == "s" ]] && f__sadf_lib_1__after_clonning 
-   [[    $v_ans == "S" ]] && f__sadf_lib_1__after_clonning 
+   # A fx anterior tem de ter respondido a uma pergunta. Caso essa pergunta tenha sido evitada ou nao obteve a respota certa, sera filtrada de seguida: 
+      [[ -z $v_ans        ]] && f__sadf_lib_1__after_clonning 
+      [[    $v_ans == "s" ]] && f__sadf_lib_1__after_clonning 
+      [[    $v_ans == "S" ]] && f__sadf_lib_1__after_clonning 
+      unset  v_ans
 }
 
 function f_repository_dWiki {
@@ -676,8 +678,7 @@ function f_repository_Tesoro {
          v_execut="ask-first"  # Clonar a repo so com permissao do utilizador
          v_execut="ask-pin"    # Clonar a repo so com permissao do utilizador, mas com autorizacao de acesso por pin
 
-      [[   -f $v_script ]] && bash $v_script $* 
-      [[ ! -f $v_script ]] && f__sadf_lib_2__asking_to_clone 
+      [[ -f $v_script ]] && bash $v_script $* 2>/dev/null || f__sadf_lib_2__asking_to_clone 
    }
 }
 
@@ -940,11 +941,9 @@ function f_exec {
       f_repository_112-Shiva-Sutras
       f_repository_yogaBashApp
       f_repository_Tesoro
-
       f_repository_row-reader
       f_repository_omni-log
       f_repository_3_sticks_alpha_bravo
-
       f_repository_jarve  
       f_repository_dota_2
      #f_repository_caum_lendario
