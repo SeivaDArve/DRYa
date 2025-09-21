@@ -1104,8 +1104,8 @@ function V {
          # Use 1:  `V        `    # Present a Menu
          # Use 2:  `V drya   `    # Travels to favorites  # uDev: to be absorved by the 'function . { }'
          # Use 3:  `V p <dir>`    # Create new dir and travel to it
-         # Use 4:  `V r <dir>`    # finds and lists a dir to remove (use -R to confirm yout choice)
-         # Use 5:  `V R <dir>`    # Removes dir (recommended to confirm which dir will be removed with the option -r)
+         # Use 4:  `V r      `    # finds all repos with fzf to navigate
+         # Use 5:  `V rm  <dir>`  # Removes dir recommended to confirm which dir will be removed 
          # Use 6:  `V .      `    # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
          # Use 7:  `V ..     `    # Navigate to last dir in the history list
          # Use 8:  `V ...    `    # Read the history file and select one path from there
@@ -1293,7 +1293,11 @@ function V {
 
    # Implementation of Use 4:
       elif [ $1 == "r" ]; then
-         ls $2
+         # Navigates to repo
+         # (does not sork in sub shell)
+
+         v_repo=$(ls ${v_REPOS_CENTER}/ | fzf)
+         [[ -n $v_repo ]] && cd ${v_REPOS_CENTER}/$repo
 
    # Implementation of Use 5:
       elif [ $1 == "R" ]; then
