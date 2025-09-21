@@ -2,6 +2,7 @@
 # Title: Detecting info about the argument 0 (about the running script)
 # Description: By running this script, it will echo and store it's own name, absolute path, relative path from where you are callinh it, etc...
 
+# uDev: we can use varoable names like python at least for: __name__ __main__ or _name_ _main_   
 function f_1 {
    # Gives the terminal's current directory name (the directory from where, the user is calling a script. This script)
 
