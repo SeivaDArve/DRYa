@@ -6,7 +6,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-   [[ -f $v_lib1 ]] && (source $v_lib1 || read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)")
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "
@@ -15,7 +15,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 # Sourcing DRYa Lib 2: Create temporary files
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
+   source $v_lib2 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)" && echo )
 
    # Example: f_create_tmp_file will create a temporary file stored at $v_tmp (with abs path, at ~/.tmp/...)
 
@@ -23,7 +23,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
    v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
-   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+   source $v_lib4 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)" && echo )
 
    # Examples: v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
    #           f_stroken
