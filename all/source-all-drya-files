@@ -360,13 +360,13 @@ function f_drya_welcome_screen {
 function f_fun_after_welcome_screen {
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
 
+    f_fun_apprendre_le_francais
     f_fun_memorize_sutras      2>/dev/null
    #f_fun_open_random_shells
    #f_fun_memorize_sanskrit      (uDev)
    #f_fun_memorize_font_kamida   (uDev)
    #f_fun_memorize_font_diedro   (uDev)
    #f_fun_quotes_from_yogis      (uDev)
-   #f_fun_apprendre_le_francais  (uDev)
    #f_fun_dance_move_time        (uDev)
  }
 
@@ -866,6 +866,11 @@ function f_fun_open_random_shells {
    [[ $v_opt == "4" ]] && echo "bash" 1>/dev/null
 }
 
+function f_fun_apprendre_le_francais {
+   v_file=${v_REPOS_CENTER}/omni-log/all/frances/frances.org
+   [[ -f $v_file ]] && cat $v_file || echo akl
+}
+
 function f_notes_toDo {
    # Running To Do list
    # Use: It is used when one machine schedules tasks for other machine to run at it's startup
@@ -935,9 +940,11 @@ function f_exec {
       f_repository_112-Shiva-Sutras
       f_repository_yogaBashApp
       f_repository_Tesoro
+
       f_repository_row-reader
       f_repository_omni-log
       f_repository_3_sticks_alpha_bravo
+
       f_repository_jarve  
       f_repository_dota_2
      #f_repository_caum_lendario
