@@ -1,8 +1,10 @@
 #!/bin/bash
 # Title: Create Windows bootable USB intallation with Windows terminal
+__name__="create-windows-bootable-USB-cmd.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 
 # Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   [[ -f $v_lib1 ]] && (source $v_lib1 || read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)")
 
    function f_usb_tut_2 {  # uDev: rename to: _part_00
       clear

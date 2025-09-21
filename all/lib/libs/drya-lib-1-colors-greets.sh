@@ -14,9 +14,9 @@
 #
 #
 #     # Sourcing DRYa Lib 1: Color schemes
-#        v_name="DRYa"  # Change to the name of the script. Example: DRYa, ezGIT, Patuscas
-#        v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-#        [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "$v_name: drya-lib-1 does not exist (error)"
+#        __name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+#        v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+#        source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 #
 #        # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 #           v_greet="DRYa"

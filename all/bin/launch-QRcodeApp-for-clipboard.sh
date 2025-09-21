@@ -1,8 +1,11 @@
 #!/bin/bash
+# Title: 
+__name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 # Important: It requires a method to acess the clipboard like the option "termux-clipboard-get" from the package Termux:API (from the F-Droid app)
 
 # Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   [[ -f $v_lib1 ]] && (source $v_lib1 || read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)")
 
    v_greet="DRYa"
    v_talk="QR data: "

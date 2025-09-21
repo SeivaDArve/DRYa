@@ -1,5 +1,6 @@
 #!/bin/bash
 # Title: TraitsID (Getting info about the machine)
+__name__="traitsID.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 # Description: faz uso do kernel para identificar variaveis que permiam ao script DRYa de tornar Cross-Platform. Assim, será possivel ao utilizador usar os mesmos softwares independentemente se esta no Android, Linux, WSL2 no Windows, Windows, etc.
 #              No final do ficheiro também estara um catalogo de todas as variaveis
 #              As variaveis que vao ser encontradas vao ser colocadas em 4 sitios: Uma Array; Exportadas para o Env; Concatenadas num ficheiro de configs; No final deste documento de texto num mini catalogo de variaveis
@@ -35,7 +36,8 @@
 #udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
-   source ${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="traitsID"
    v_talk="trid: "

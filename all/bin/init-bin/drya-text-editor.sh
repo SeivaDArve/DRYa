@@ -19,7 +19,7 @@ function e {
    # uDev: `e` `ee` and `eee` should be on the same file.... maybe fluNav
 
    # Sourcing DRYa Lib 1: Color schemes
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
 
       # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]

@@ -1,10 +1,12 @@
 #/bin/bash
 # Title: no-tes.sh
+__name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 # Description: Helper to write notes
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   [[ -f $v_lib1 ]] && (source $v_lib1 || read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)")
 
    v_greet="DRYa"
    v_talk="DRYa: no-tes: "

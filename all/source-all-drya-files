@@ -1,5 +1,6 @@
 #!/bin/bash
 # Title: source-all-drya-files
+__name__="source-all-drya-files.sh"
 # Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
 
 
@@ -49,8 +50,12 @@ function f_test {
 }
 
 function f_drya_libs {
+   # uDev: Test if actually there are any libs, then `read` and inform
+
    # Sourcing drya-lib-1: File with colors 
-      source ${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "$__name__: drya-lib-1 does not exist (error)"
+
       v_greet="DRYa"
       v_talk="DRYa: "
 }
@@ -88,7 +93,7 @@ function f_traitsID {
       function f_debug {
          for i in $(printenv | grep "trid" | cut -f 1 -d "=")
          do
-            echo $i
+            echo  $i
             unset $i
          done
 
@@ -729,7 +734,7 @@ function f_internal_drya_files_2_of_3 {
    # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
 
    # Remove temporary dir created by DRYa's other scripts
-      rm -rf ~/.tmp/  
+      rm -rf ~/.tmp/  2>/dev/null
 
       # nota: Passar tambem para o ficheiro bash_logout
       #       Manter assim a apagar em ambos 
