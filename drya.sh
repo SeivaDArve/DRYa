@@ -1928,13 +1928,24 @@ function f__D_hist__recall_one_command {
 function f_clone_selected_from_list_no_invertion {
    # Clonar exatamente as repos que o user escolheu
 
-   f_talk; echo "Clonar Repos:"
+   cd ${v_REPOS_CENTER}/ 
+
+   f_talk; echo "Lista de Repos que vai ser clonada:"
    for i in $v_multiple
    do
       echo " > $i"
-      
-      # Quando o comando anterior é executado com sucesso, informa drya-messages
-         #[[ $? == 0 ]] && echo -e "DRYa: repo $i clonada com sucesso" >> $drya-status-messages  
+   done
+
+   echo
+   v_txt="Iniciar os downloads"; f_anyK
+   echo
+
+   for i in $v_multiple
+   do
+      f_talk; echo "A clonar o Repositorio:"
+      echo " > $i"
+      git clone https://github.com/SeivaDArve/$i.git
+      echo
    done
 }
 
