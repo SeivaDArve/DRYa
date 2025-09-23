@@ -480,54 +480,43 @@ function f_internal_drya_files_1_of_3 {
 }
 
 function f_internal_drya_files_3_of_3 {
-   # Add script drya.sh to PATH variable (try: echo $PATH) 
-   # Note: Any file's directory, if mentioned on the $PATH variable, is executed automatically at the terminal by calling
+   # Adding .../DRYa/all/bin to the envirnoment variable $PATH so that, script at that .../DRYa/all/bin/ can be automatically recognized by yhe system
 
-   function f_test_pattern_path_verbose {
-      echo "--------------------------"
-      echo "Estado:"
-      echo " > $v_status"
-      echo
-      echo "PATH: "
-      echo "$PATH" | sed 's/:/\n/g'
-      echo "--------------------------"
-      echo
-      echo
-      echo
-      echo
-   }
+   v_add=${v_REPOS_CENTER}/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
+
+   v_msg='DRYa: exporting $PATH: Pattern $v_add'
+   v_ys="$v_msg found (ok)"
+   v_no="$v_msg not found (not ok)"
 
    function f_test_pattern_path {
-      grep $v_add <(echo $PATH) 1>/dev/null
+      # Testing without changing, if our $v_add is already mentioned in $PATH variable
+
+      echo $PATH | grep $v_add 1>/dev/null
       v_status=$?
-
-      #f_test_pattern_path_verbose  # Debug
    }
 
-   function f_debug_path {
-      # Testar + 1 vez se o $PATH ten os nossos enderecos
+   function f_solve_PATH_befor_test {
+      # Testar 1x se o nosso endereco de scripts $v_add se encontra mencionado em $PATH
+      # Se $v_add nao existir, vai ser adicionado sem verbose
 
-      f_test_pattern_path 
-      read
+      f_test_pattern_path  
+
+      [[ $v_status == "1" ]] && export PATH=$PATH:$v_add
+      [[ $v_status == "0" ]] && echo   1>/dev/null
    }
 
-   function f_solve_PATH {
-      # Set $PATH variable to use DRYa scripts
+   function f_solve_PATH_after_test {
+      # Testar 1x se o nosso endereco de scripts $v_add se encontra mencionado em $PATH
+      # Se $v_add nao existir, vai ser notificado o erro no ecra
 
-      v_add=${v_REPOS_CENTER}/DRYa/all/bin 
-      v_ys='DRYa: exporting $PATH: Pattern found (ok)'
-      v_no='DRYa: exporting $PATH: Pattern not found (not ok)'
+      f_test_pattern_path  
 
-      # Testar 1x se o nosso endereco de scripts se encontra mencionado em $PATH0
-         f_test_pattern_path
-
-      [[ $v_status == "1" ]] && echo "$v_no" && export PATH=$PATH:$v_add
-      [[ $v_status == "0" ]] && echo "$v_ys" 1>/dev/null
+      [[ $v_status == "1" ]] && echo "$v_no" && read -sn 1 -t 3
+      [[ $v_status == "0" ]] && echo "$v_ys" >> $v_ssms
    }
 
-   #clear         # Debug
-   f_solve_PATH 
-   #f_debug_path  # Debug
+   f_solve_PATH_befor_test
+   f_solve_PATH_after_test 
 }
 
 function f_config_figlet {
