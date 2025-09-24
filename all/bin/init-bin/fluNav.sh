@@ -1164,7 +1164,7 @@ function V {
          fi
 
 
-      elif [ $1 == "tesoro" ] || [ $1 == "T" ]; then
+      elif [ $1 == "tesoro" ] || [ $1 == "T" ] || [ $1 == "t" ]; then
          cd ${v_REPOS_CENTER}/Tesoro 2>/dev/null && ls -p || f_error_cd
 
 
@@ -1172,7 +1172,7 @@ function V {
          cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
       
 
-      elif [ $1 == "trade" ] || [ $1 == "t" ]; then
+      elif [ $1 == "trade" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls -p || f_error_cd
       
 

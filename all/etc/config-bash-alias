@@ -257,7 +257,7 @@ function f_ls_with_absolute_path {
          
 
          Lh=$(echo -e "\nInfo: Selecione todos os ficheiros dos quais pretende:\n > Print Caminho absoluto (no terminal)\n > Print Caminho absoluto (num ficheiro temp. uDev)\n ")
-         v_list=$(ls -a | fzf --no-info -m --cycle --pointer=">" -m --header="$Lh" --prompt="$L0")
+         v_list=$(ls -a | fzf --no-info --tac -m --cycle --pointer=">" -m --header="$Lh" --prompt="$L0")
 
       # Atuar na escolha da lista
         v_pwd=$(pwd)

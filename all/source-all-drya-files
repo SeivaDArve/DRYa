@@ -1,7 +1,10 @@
 #!/bin/bash
 # Title: source-all-drya-files
-__name__="source-all-drya-files.sh"
 # Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
+
+# File vars
+   __name__="source-all-drya-files.sh"
+   __repo__="${v_REPOS_CENTER}/DRYa"
 
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
@@ -53,7 +56,7 @@ function f_drya_libs {
    # uDev: Test if actually there are any libs, then `read` and inform
 
    # Sourcing drya-lib-1: File with colors 
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=$__repo__/all/lib/libs/drya-lib-1-colors-greets.sh
       [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "$__name__: drya-lib-1 does not exist (error)"
 
       v_greet="DRYa"
@@ -667,6 +670,7 @@ function f_repository_Tesoro {
          v_execut="ask-first"  # Clonar a repo so com permissao do utilizador
          v_execut="ask-pin"    # Clonar a repo so com permissao do utilizador, mas com autorizacao de acesso por pin
 
+      # uDev: Tem de ser clonado APENAS quando nao existe o script. Caso contrario, sempre que ha bugs no tesoro.sh elimina o erro e pede para clonar.
       [[ -f $v_script ]] && bash $v_script $* 2>/dev/null || f__sadf_lib_2__asking_to_clone 
    }
 }

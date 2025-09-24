@@ -28,6 +28,7 @@ function f_background_process {
 
          sleep 60
       done
+       
    }
 
    f_bg & 
@@ -225,6 +226,52 @@ function f_short_with_seconds {
   echo "$v_data_shrt_plus_secs"
 }
 
+function f_data_ano_mes_dia {
+   # Formato '2025-09-22'
+
+   v_dia=$(date +'%d')
+   v_mes=$(date +'%m') 
+   v_ano=$(date +'%Y')
+   
+   v_result="$v_ano-$v_mes-$v_dia"
+   echo $v_result
+}
+
+function f_data_grupo_data_hora {
+   # Imprime a data no formato grupo Data Hora (ao estilo militar)
+   # Formato: "(GDH: 240309set2025)"
+   
+   #echo "uDev: GDH: 111230Z DEC 25 (Dia 11, 12h30, fuso Z, Dezembro, 2025)"
+
+   v_dia=$(date +'%d')
+   v_hor=$(date +'%H')
+   #v_fuso=$(date +'%z')
+   v_min=$(date +'%M')
+   v_mes=$(date +'%b')  # uDev: Corrigir 'Dez'=='Dec'  ::  uDev: Traduzir do Ing e do Pt para uma so lingua
+   v_ano=$(date +'%Y')
+
+   v_texto="(GDH: $v_texto ${v_dia}${v_hor}${v_min}${v_mes}${v_ano})"
+   echo $v_texto
+}
+
+function f_data_alarm {
+
+   function f_alarme {
+      while true
+      do
+         clear
+               echo
+         f_c2; echo -n "Data.sh: "
+         f_rc; echo    "Alarm (cancel with command \`d A\` (uDev)"
+               echo
+
+         sleep 60  # uDev: substituir por um prompt que pergunte qual o horario que pretende
+      done
+   }
+
+   f_alarme & 
+   # udev: buscar o numero do PID anterior e criar um alias para cancelar esse PID
+}
 # -----------------------------------------------
 
 
@@ -250,22 +297,24 @@ elif  [ $1 == "." ]; then
       Lz1='Save '; Lz2='data.sh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
      #L14='14. M | calandario lunisolar, em que cada mes tem 28 dias. 
+      L19='19. | e | Data em formato numerico "ano-mes-dia"'
       L18='18. | I | Informar dia/forma de mudanca de hora Verao/Inverno Marco/Outubro'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
       L17='17. | n | Nanoseconds only'
-      L16='16. | i | Data e hora: Da internet (nao confiar no pc)'
-      L15='15. | F | Data curta para ficheiros | (com verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
-      L14='14. | f | Data curta para ficheiros | (sem verbose, envia para drya-date-now e drya-status-messages)'
-      L13='13. | c | Data curta para terminal  | (com verbose, com segundos, envia para drya-date-now e drya-status-messages, define variavel v_data_shrt_plus_secs)'
-      L12='12. | b | Data longa esclarecida sem loop sem LOGO (background)'
-      L11='11. | d | Data longa esclarecida sem loop sem LOGO'
-      L10='10. | r | Data longa esclarecida com loop com LOGO'
-       L9='9.  | l | Data longa esclarecida com loop'
-       L8='8.  | v | Imprime 1x a data em um formato util para variaveis'
-       L7='7.  | H | Data que foca na hora'
-       L6='6.  | m | Imprime linhas com a hora durante 1 min'
-       L5='5.  | s | Imprime 1 linha com a hora durante 1 seg'
-       L4='4.  | g | Grupo Data Hora (ao estilo militar)'
-       L3='3.  | a | Alarm'
+      L16='16. | i | Data da internet (nao confiar no pc)'
+      L15='15. | F | Data curta para ficheiros (+ verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
+      L14='14. | f | Data curta para ficheiros (- verbose, envia para drya-date-now e drya-status-messages)'
+      L13='13. | c | Data curta para terminal  (+ verbose, com segundos, envia para drya-date-now e drya-status-messages, define variavel v_data_shrt_plus_secs)'
+      L12='12. | b | Data longa esclarecida (- loop)(- ASCII) - (background test)'
+      L11='11. | d | Data longa esclarecida (- loop)(- ASCII)'
+      L10='10. | r | Data longa esclarecida (+ loop)(+ ASCII)'
+       L9='9.  | l | Data longa esclarecida (+ loop)'
+       L8='8.  | v | Data em formato util para variaveis'
+       L7='7.  | H | Data que foca na hora (+ loop)(- ASCII)'
+       L6='6.  | m | Imprime linhas:  com a hora durante 1 min'
+       L5='5.  | s | Imprime 1 linha: com a hora durante 1 seg'
+       L4='4.  | g | Data estilo militar (Grupo Data Hora)'
+      #L3='3.  | A | Alarm - Cancelar (uDev)'
+       L3='3.  | a | Alarm - Iniciar  (uDev)'
 
        L2='2.  | h | Instructions / Help'
        L1='1.  Cancelar'
@@ -273,10 +322,11 @@ elif  [ $1 == "." ]; then
       Lh=$(echo -e "\nInfo: Ja esta a ser aplicado automaticamente 'd f' para se usar com 'ZD' no 'vim'\n ")
       L0="[m+] data.sh: main menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18\n\n$Lz3" | fzf --no-info -m --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lz3" | fzf --no-info -m --cycle --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "19. " ]] && f_data_ano_mes_dia
       [[ $v_list =~ "18. " ]] && echo "uDev"
       [[ $v_list =~ "17. " ]] && f_nanoseconds 
       [[ $v_list =~ "16. " ]] && echo "uDev"
@@ -291,7 +341,7 @@ elif  [ $1 == "." ]; then
       [[ $v_list =~ "7.  " ]] && f_hour_date
       [[ $v_list =~ "6.  " ]] && f_one_minute_date
       [[ $v_list =~ "5.  " ]] && f_one_second_date
-      [[ $v_list =~ "4.  " ]] && echo "uDev: GDH: 111230Z DEC 25 (Dia 11, 12h30, fuso Z, Dezembro, 2025)"
+      [[ $v_list =~ "4.  " ]] && f_data_grupo_data_hora
       [[ $v_list =~ "3.  " ]] && echo "uDev: quando chegar a hora pretendida, soar alarme"
       [[ $v_list =~ "2.  " ]] && f_help
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
@@ -336,24 +386,21 @@ elif  [ $1 == "s" ]; then
    # Imprime 1 linha com a hora durante 1 seg
    f_one_second_date
 
+elif  [ $1 == "e" ]; then
+   # Formato '2025-09-22'
+   
+   f_data_ano_mes_dia
+
 elif  [ $1 == "g" ]; then
    # Imprime a data no formato grupo Data Hora (ao estilo militar)
-   # 09FEB25 0930
+   # Formato: "(GDH: 240309set2025)"
 
-   v_dia=$(date +'%d')
-   v_hor=$(date +'%H')
-   #v_fuso=$(date +'%z')
-   v_min=$(date +'%M')
-   v_mes=$(date +'%b')  # uDev: Corrigir 'Dez'=='Dec'  ::  uDev: Traduzir do Ing e do Pt para uma so lingua
-   v_ano=$(date +'%Y')
-
-   v_texto="Grupo Data Hora (GDH):"
-   v_texto="$v_texto ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}"
-   echo $v_texto
+   f_data_grupo_data_hora
 
 elif  [ $1 == "a" ]; then
    # Alarm
    echo "uDev: quando chegar a hora pretendida, soar alarme"
+   f_data_alarm
 
 elif  [ $1 == "f" ]; then
    # Data para ficheiro, sem verbose output

@@ -20,7 +20,7 @@ function e {
 
    # Sourcing DRYa Lib 1: Color schemes
       v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-      [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
+      source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)" && echo)
 
       # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
          v_greet="DRYa"
@@ -74,6 +74,10 @@ function e {
             done
       fi
 
+   elif [ $1 == ".." ]; then
+      # Fx to simply output the NAME of the current text editor
+      echo $trid_editor_name
+      
    else
 
       if [[ -z $trid_editor_name ]]; then
@@ -126,6 +130,7 @@ function ee {
       # Lista de opcoes para o menu `fzf`
          Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+
          L11='11. `clone repo` + `cd repo` + `e *example-file.txt*` + `git push`'
          L10='10. less --wordwrap'
           L9='9.  vim (easy mode, `vim -y`)' 
@@ -137,7 +142,8 @@ function ee {
           L4='4.  emacs'
           L3='3.  vim'
 
-          L2='2.  Print editor atual | `ee .`'
+         #L2='2.  [ ] Adicionar 'Confirmacao' antes de abrir qualquer ficheiro
+          L2='2.  Print editor atual | `ee .` ou `e ..`'
           L1='1.  Cancel'
          
          Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
