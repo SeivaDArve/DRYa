@@ -531,10 +531,9 @@ function f_config_figlet {
 }
 
 function f__sadf_lib_1__after_clonning {
-   v_erro"DRYa: Deu erro a clonar"
+   v_erro="DRYa: Deu erro a clonar"
 
    cd      ${v_REPOS_CENTER}            && git clone $v_clone
-   [[   -d ${v_REPOS_CENTER}/$v_name ]] && bash      $v_script $v_args
    [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo     "$v_erro"
 }
 
@@ -550,6 +549,7 @@ function f__sadf_lib_2__asking_to_clone {
       [[    $v_ans == "s" ]] && f__sadf_lib_1__after_clonning 
       [[    $v_ans == "S" ]] && f__sadf_lib_1__after_clonning 
       unset  v_ans
+
 }
 
 function f_repository_dWiki {
@@ -670,8 +670,11 @@ function f_repository_Tesoro {
          v_execut="ask-first"  # Clonar a repo so com permissao do utilizador
          v_execut="ask-pin"    # Clonar a repo so com permissao do utilizador, mas com autorizacao de acesso por pin
 
-      # uDev: Tem de ser clonado APENAS quando nao existe o script. Caso contrario, sempre que ha bugs no tesoro.sh elimina o erro e pede para clonar.
-      [[ -f $v_script ]] && bash $v_script $* 2>/dev/null || f__sadf_lib_2__asking_to_clone 
+
+      # Se o Tesoro nao existir, pergunta se quer clonar
+         [[ ! -f $v_script ]] && f__sadf_lib_2__asking_to_clone 
+
+      bash $v_script $* 
    }
 }
 
