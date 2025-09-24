@@ -344,7 +344,7 @@ elif  [ $1 == "g" ]; then
    v_hor=$(date +'%H')
    #v_fuso=$(date +'%z')
    v_min=$(date +'%M')
-   v_mes=$(date +'%b')
+   v_mes=$(date +'%b')  # uDev: Corrigir 'Dez'=='Dec'  ::  uDev: Traduzir do Ing e do Pt para uma so lingua
    v_ano=$(date +'%Y')
 
    v_texto="Grupo Data Hora (GDH):"
