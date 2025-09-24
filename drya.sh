@@ -3237,7 +3237,8 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
 
    function f_presentation_info {
       echo ' > `D p 1`  # DRYa presentation'
-      echo ' > `D p 2`  # DRYa ascii logo'
+      echo ' > `D p 2`  # DRYa ascii logo legacy'
+      echo ' > `D p 3`  # DRYa ascii logo'
    }
 
    if [ -z $2 ]; then
