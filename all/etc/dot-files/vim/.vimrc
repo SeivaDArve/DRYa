@@ -45,6 +45,14 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    set cursorcolumn
    set cursorline
 
+   "Definir o mesmo estilo de cursor para horizontal e vertical (Para terminal (cterm) e GUI (gui))
+      "ctermbg    : cor de fundo no terminal.
+      "guibg      : cor de fundo no GVim/Neovim GUI.
+      "cterm=NONE : remove o sublinhado.
+
+      hi CursorLine   ctermbg=236 guibg=#3a3a3a cterm=NONE gui=NONE
+      hi CursorColumn ctermbg=236 guibg=#3a3a3a cterm=NONE gui=NONE
+
 " Dentro do vim, pesquisar texto com insensibilidade a letras maiusculas e minusculas quando pesquisamos com a vim keybing: /
    set ignorecase
 
