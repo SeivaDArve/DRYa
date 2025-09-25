@@ -41,9 +41,12 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 "Enable Mouse scrolling and selecting
    set mouse=a
 
-"Highlight columns and lines where the cursor stands
-   set cursorcolumn
-   set cursorline
+"Cursor options
+   "uDev: set an fx to toggle all cursors on/off at once (vertical and horizontal)
+
+   "Highlight columns and lines where the cursor stands
+      "set cursorcolumn
+      "set cursorline
 
    "Definir o mesmo estilo de cursor para horizontal e vertical (Para terminal (cterm) e GUI (gui))
       "ctermbg    : cor de fundo no terminal.
@@ -75,13 +78,19 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
         \   exe "normal! g`\"" |
         \ endif
 
-" F7 to close vim from normal mode (equivalent to zz)
+" F5 for termux-omni-key ((A)):  When using `f{char}` and `F{char}` and `t{char}` and `T{char}` this f6 is used as `next search` (to use with f F t T , ;)
+   nnoremap <F5> ;  
+
+" F6 for termux-omni-key ((B)):  When using `f{char}` and `F{char}` and `t{char}` and `T{char}` this f6 is used as `previous search` (to use with f F t T , ;)
+   nnoremap <F6> , 
+
+" F7 for termux-omni-key ((Om)): to close vim from normal mode (equivalent to zz)
    nnoremap <F7> <Esc>ZZ
 
-" F8 to scroll Horizontaly to the left
+" F8 for termux-omni-key  <---|  to scroll Horizontaly to the left
    nnoremap <F8> zhzhzhzhzhzhzhzh
 
-" F9 to scroll Horizontaly to the right
+" F9 for termux-omni-key  |--->  to scroll Horizontaly to the right
    nnoremap <F9> zlzlzlzlzlzlzlzl
 
 " Não manter sublinhado a pesquisa de palavras anterior. Esse mapeamento faz com que, quando pressiona Enter no modo normal, o Vim execute o comando :nohlsearch antes de inserir uma nova linha. que apaga o highlight da pesquisa
