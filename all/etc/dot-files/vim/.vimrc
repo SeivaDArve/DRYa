@@ -41,6 +41,10 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 "Enable Mouse scrolling and selecting
    set mouse=a
 
+"Highlight columns and lines where the cursor stands
+   set cursorcolumn
+   set cursorline
+
 " Dentro do vim, pesquisar texto com insensibilidade a letras maiusculas e minusculas quando pesquisamos com a vim keybing: /
    set ignorecase
 
