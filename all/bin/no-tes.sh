@@ -49,7 +49,7 @@ function f_define_files_as_vars {
       v_file_rn=$v_dir_expressa/rn
 
    # File 'ToDo'
-      v_file_td=${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+      v_file_td=${v_REPOS_CENTER}/omni-log/all/ex-pressa/td.org
    
 
 }
