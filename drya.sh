@@ -3283,6 +3283,8 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
    v_editor=$(cat $trid_editor_file)
    v_editor="'$v_editor'"
    
+   v_udev=' > uDev: usar `sed` para substituir ";; #+SETUPFILE" por "#+SETUPFILE"'
+
    f_talk; echo "Opening: wikiD.org"
 
    function f_wikiD_main_menu {
@@ -3301,7 +3303,7 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
 
       # Atuar de acordo com as instrucoes introduzidas pelo utilizador
          [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[    $v_list =~ "3. " ]] && echo "uDev: Criar um ficheiro temporario com o header que permite carregar CSS no browser"
+         [[    $v_list =~ "3. " ]] && echo "$v_udev"
          [[    $v_list =~ "2. " ]] && ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
          [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
          [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
@@ -3313,7 +3315,7 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
       f_wikiD_main_menu 
 
    elif [ $2 == "web" ] || [ $2 == "w" ]; then 
-      echo "uDev: Criar um ficheiro temporario com o header que permite carregar CSS no browser"
+      echo "$v_udev"
 
    elif [ $2 == "edit" ] || [ $2 == "." ]; then 
       ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
