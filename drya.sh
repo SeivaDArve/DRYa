@@ -3277,13 +3277,48 @@ elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then
 
 elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
+
+   v_repo=${v_REPOS_CENTER}/wikiD/
+   v_file="$v_repo/wikiD.org"
+   v_editor=$(cat $trid_editor_file)
+   v_editor="'$v_editor'"
    
    f_talk; echo "Opening: wikiD.org"
-           echo " > uDev: Create menu for browser visualization"
 
-   # uDev: Test fist if repo exists
+   function f_wikiD_main_menu {
+      # Lista de opcoes para o menu `fzf`
+         Lz1='Saved '; Lz2='D wiki'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+         L3='3. | w | wikiD.org | Abrir no browser'
+         L2="2. | . | wikiD.org | Abrir no $v_editor" 
+         L1='1. Cancel'
+
+         Lh=$(echo -e "\nInstrucoes sobre editor de texto:\n - Altere o editor com a fx \`ee\`\n ")
+         L0="$v_fzf_talk: SELECT 1: Menu X: "
+         
+      # Ordem de Saida das opcoes durante run-time
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+      # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+         [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[    $v_list =~ "3. " ]] && echo "uDev: Criar um ficheiro temporario com o header que permite carregar CSS no browser"
+         [[    $v_list =~ "2. " ]] && ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
+         [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
+         [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
+         unset  v_list
+
+   }
    
-   cd ${v_REPOS_CENTER}/wikiD/ && emacs wikiD.org
+   if [ -z $2 ]; then
+      f_wikiD_main_menu 
+
+   elif [ $2 == "web" ] || [ $2 == "w" ]; then 
+      echo "uDev: Criar um ficheiro temporario com o header que permite carregar CSS no browser"
+
+   elif [ $2 == "edit" ] || [ $2 == "." ]; then 
+      ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
+
+   fi
 
 elif [ $1 == "omni" ] || [ $1 == "om" ]; then 
    f_talk; echo "Opening: omni-log.org"
