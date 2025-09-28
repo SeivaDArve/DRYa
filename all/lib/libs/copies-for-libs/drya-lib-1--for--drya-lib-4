@@ -7,6 +7,7 @@
 #                    V_txt  is V_txt   (for example in drya-lib-4)
 
 
+
 #
 #
 #  INSTRUCTIONS: 
@@ -41,6 +42,7 @@
 #       F_create_tmp_file     (dar um nome e saber que esse ficheiro tmp foi criado)
 # uDev: fx com tput para apagar linha anterior inteira e comecar a escrever a partir de la
 #       vatias fx para usar tput, manipular tput facilmente
+# uDev: Para os repos que queiram ser independentes das bibliotecas, pode-se adicionar nos seus __repo__/all/libs-from-drya uma copia das libs originais, e depois colocar nos seus __main__ o codigo [[ -z $V_lib ]] && source $__repo__/all/libs-from-drya/copy-x
 
 
 
