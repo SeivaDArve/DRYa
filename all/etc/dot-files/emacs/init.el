@@ -1649,7 +1649,17 @@ This is used only for \"tipo:\""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;; Funcoes para 'bug fix' do org-dispatch para wikiD.org se tornar wikiD.html e abrir correto no browser
 
+;;; Fix htmlize.el:  
+;;      é uma biblioteca do Emacs que converte buffers com destaque de sintaxe (syntax highlighting) em HTML colorido, usado na exportação de arquivos Org para HTML (e outros formatos).
+(use-package htmlize  :ensure t) 
+
+;;; Fix async (queremos HTML e nao XHTML)
+(setq org-html-html5-fancy t)
+(setq org-html-doctype "html5")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 

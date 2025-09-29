@@ -701,9 +701,12 @@ function f_repository_omni-log {
 }
 
 function f_repository_3_sticks_alpha_bravo {
-   alias   3s="bash ${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh"
-   alias 3sab="bash ${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh"
-   alias 3SAB="bash ${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh"
+
+   v_3sab="bash ${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh"
+
+   alias   3s="$v_3sab"
+   alias 3sab="$v_3sab"
+   alias 3SAB="$v_3sab"
 }
 
 
@@ -724,6 +727,12 @@ function f_drya_mail_box {
 
 function f_repository_dota_2 {
    alias dota="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
+}
+
+function f_repository_cao_lendario {
+   alias lend="bash ${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
+   alias    L="bash ${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
+   
 }
 
 function f_internal_drya_files_2_of_3 {
@@ -943,7 +952,7 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
       f_repository_dota_2
-     #f_repository_caum_lendario
+      f_repository_cao_lendario
       
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_3

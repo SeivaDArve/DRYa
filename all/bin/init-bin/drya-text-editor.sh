@@ -95,6 +95,7 @@ function e {
       else
          # Mencionar se funciona ou nao
             f_talk; echo "A editar ficheiros com: $trid_editor_name"
+            read -sn1 -t 2
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
             for i in $* 
