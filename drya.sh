@@ -675,7 +675,7 @@ function f_dotFiles_install_git_set_machine_name {
 
    function f_choose_a_name_from_list {
       # Ask what name to change to (and tell dedault, if user do not choose)
-         v_txt="Press ENTER to choose a name"; f_anyK
+         v_txt="Step 2: Choose a Machine name"; f_anyK
          echo
 
       # Path to the list of preset possible machine names
@@ -683,7 +683,7 @@ function f_dotFiles_install_git_set_machine_name {
 
       # Creating fzf menu
          v_prompt="DRYa: Git: Qual é o nome que quer dar a maquina atual: "
-         v_ask_for_another_name=" > Inserir outro nome..."
+         v_ask_for_another_name=" > Inserir outro nome manualmente..."
 
          v_mach=$( (echo "$v_ask_for_another_name"; cat $v_list_of_machines) | fzf --prompt "$v_prompt")
          
@@ -767,16 +767,18 @@ function f_dot_files_install_git {
      f_c2; echo    ".gitconfig"
      f_rc; echo
 
-   f_talk; echo    "STEP 1: Copy .gitconfig"
-           echo    " > File 1 : .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-           echo    " > To:      ~/"
+   f_talk; echo    "STEP 1: "
+           echo    " > Task | Copy .gitconfig"
+           echo    " > From | .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+           echo    " > To   | ~/"
            echo
-   f_talk; echo    "STEP 2: Change Machine name"
-           echo    " > Either insert New name or choose from Default name list"
+   f_talk; echo    "STEP 2: "
+           echo    " > Change Machine name"
+           echo    "   Insert <New name> or choose from default fzf list"
            echo
 
    f_hzl
-   v_txt="Install .gitconfig file " && f_anyK
+   v_txt="Step 1: Install .gitconfig file" && f_anyK
    echo
 
    f_hzl
@@ -2215,14 +2217,6 @@ function f_help_installing_specific_packages {
 
 
 
-function f_source_drya_lib_1 {
-   # Sourcing DRYa Lib 1: Color schemes
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
-      [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)"
-
-      v_greet="DRYa"
-      v_talk="DRYa: "
-}
 
 
 
@@ -2717,6 +2711,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ -z $4            ]] && f_menu_install_dot_files
          [[    $4 == "git"   ]] && f_dot_files_install_git
          [[    $4 == "netrc" ]] && f_dot_files_install_netrc
+         [[    $4 == "vim"   ]] && f_dot_files_install_vimrc
          [[    $4 == "vimrc" ]] && f_dot_files_install_vimrc
       fi
 
@@ -3363,32 +3358,44 @@ elif [ $1 == "player" ] || [ $1 == "plr" ]; then
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
+   v_libs=${v_REPOS_CENTER}/DRYa/all/lib/libs
+
    if [ -z $2 ]; then 
       f_greet
       f_talk; echo "Info about libraries file at:"
-              echo ' > ${v_REPOS_CENTER}/DRYa/all/lib/'
+              echo " > $v_libs"
               echo
       f_talk; echo "Listing names:"
 
-      ls -1 ${v_REPOS_CENTER}/DRYa/all/lib
+      ls -1 $v_libs
 
               echo
       f_talk; echo "Listing how each can be installed"
               echo " > uDev"
 
    elif [ $2 == "1" ] || [ $2 == "source-drya-lib-1" ]; then 
-      f_source_drya_lib_1
+      # Make drya-lib-- available on current terminal session
+      # Note: DRYa Lib 1: Color schemes
+
+      v_lib1=$v_libs/drya-lib-1-colors-greets.sh
+      source $v_lib1 2>/dev/null || (read -sn 1 -p "DRYa: drya-lib-1 does not exist (error)" && echo)
+      # uDev: este source nao sera valido, ira abrir num sub-processo
+
+      v_greet="DRYa"
+      v_talk="DRYa: "
 
    elif [ $2 == "4" ] || [ $2 == "source-drya-lib-4" ]; then 
-      # Make drya-lib-4 available on current terminal and use it for some purpouse
+      # Make drya-lib-- available on current terminal session
+      # Note: DRYa Lib 4: dependencies, packages, git...
 
-      # Source lib 4
-         v_greet="DRYa"
-         v_talk="DRYa-lib-4: "
-         source ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+      v_lib4=$v_libs/drya-lib-4-dependencies-packages-git.sh
+      source $v_lib4 2>/dev/null || (read -sn 1 -p "DRYa: drya-lib-1 does not exist (error)" && echo)
+      # uDev: este source nao sera valido, ira abrir num sub-processo
+
+      v_greet="DRYa"
+      v_talk="DRYa-lib-4: "
 
       f_greet
-
       f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
               echo '      Or use `G s <file>` instead'
               echo

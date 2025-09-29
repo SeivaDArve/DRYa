@@ -1611,6 +1611,11 @@ This is used only for \"tipo:\""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Atalho para recalcular todas as tabelas do buffer org-mode como valores e com formulas de calculo. Assin esta hotkey faz org-mode quase como excel
+(global-set-key (kbd "C-c r") 'org-table-recalculate-buffer-tables)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (defun dv-copy-next-http-to-clipboard ()
   "Na linha atual, do cursor para a frente, procura pela palavra 'http'. Vai té ao proximo espaço em branco ou até ao final da linha. Se encontrar, copia o link inteiro para o clipboard. Se nao encontrar, volta ao inicio da linha e tenta de novo"

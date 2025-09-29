@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # uDev: Coordenar com `op`, em, Em, EM (emacs)
+# uDev: sempre que abre o vim ou outros, atualizar drya-date-now
 
 function e {
    # Title: e

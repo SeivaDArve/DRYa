@@ -172,6 +172,7 @@ function F_greet {
 
    # If previously the variable $V_greet was not set by any script, then assign a <Placeholder> to it.
       [[ -z $V_greet ]] && V_greet="< V_greet >"
+      [[ -n $1       ]] && V_greet="$1"           # If an argument was given to F_greet, it will overwrite $V_greet
 
    # Creting an alternative message in case figlet is not installed
       V_basename=$(basename $0)

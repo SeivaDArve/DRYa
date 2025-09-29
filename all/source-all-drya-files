@@ -595,6 +595,7 @@ function f_repository_moedaz {
    # Repository: moedaz
 
    # uDev: Put all files to be open under menuFAV F   
+   alias    M="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias   mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
    alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
    source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
