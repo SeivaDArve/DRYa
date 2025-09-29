@@ -1,9 +1,9 @@
 #+Title: dailyLog.org
+#+Description: 
+#+Author: David Rodrigues <mydvr7@gmail.com>
 
 - Settings
 :PROPERTIES:
-#+Author: David Rodrigues <mydvr7@gmail.com>
-#+Description: Storage of CascaisShopping documentation + David's log history
 #+STARTUP: overview
 #+STARTUP: hidestars
 #+STARTUP: indent
@@ -14,7 +14,6 @@
 ;; 2. Criar Fx no inicio do ficheiro para que neste documento va recursivamente a procura das Fx anteriores e so execute essas
 ;; 3. Usar um link para a variavel definida com o setq (exiatira 1 target-name e 1 char-point para isso
 
-#code (hashtag do codigo do cacifo)
 :END:
 
 [[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
