@@ -51,7 +51,7 @@ function f_done {
    f_rc
 }
 
-function f_greet { 
+function f_greet1 { 
    # Avoiding repetition
    clear
    f_c5; figlet fluNav
@@ -207,57 +207,57 @@ function f__V_hist__remove_duplicated_lines {
 
 function f_edit__config_bash_alias {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-   f_greet
+   f_greet1
    echo "edited: config-bash-alias"
 }
 
 function f_edit__notes {
-   f_greet
+   f_greet1
    note  # This is an alias set on config-bash-alias file
 }
 
 function f_edit__source_all_drya_files {
    vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
-   f_greet
+   f_greet1
    echo "edited: source-all-drya-files"
 }
 
 function f_edit__bashrc {
    vim ~/.bashrc
-   f_greet  
+   f_greet1  
    echo "edited: ~/.bashrc"
    f_uDev
 }
 
 function f_edit__source_all_moedaz_files {
-   f_greet
+   f_greet1
    vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
    echo "edited: source-all-moedaz-files"
 }
 
 function f_edit__vimrc {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
-   f_greet
+   f_greet1
    echo "edited: .vimrc on DRYa"
    cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
    echo "copied: from DRYa to ~"
 }
 
 function f_edit__1st_emacs {
-   f_greet
+   f_greet1
    echo "Editing the list of 1st apps to install"
    read -s -t 2
    EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-   f_greet
+   f_greet1
    echo "edited: 1st"
 }
 
 function f_edit__1st_vim {
-   f_greet
+   f_greet1
    echo "Editing the list of 1st apps to install"
    read -s -t 2
    vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-   f_greet
+   f_greet1
    echo "edited: 1st"
 }
 
@@ -297,7 +297,7 @@ function f_edit__init_file_emacs__with_vim {
 
 function f_help {
    # uDev: this fx is overwriten. Must be either renamed or merged with the other existing f_help from V
-   f_greet
+   f_greet1
    echo "fluNav"
    echo " > Edits files inside 'DRYa repository' then copies those files across the system"
    echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
@@ -350,7 +350,7 @@ function f_manage_init_and_libraries_after_mod {
    #    "emacs-init (emacs)" and 
    #    "emacs-init (vim)"
 
-   f_greet
+   f_greet1
    f_talk; echo "Edited file is now closed:"
            echo " > $v_init_file"
            echo
@@ -384,7 +384,7 @@ function f_manage_init_and_libraries_after_mod {
 
 function f_edit_self {
 
-   f_greet
+   f_greet1
 
    # Verbose: Before opening file
       f_talk; echo "Editing fluNav original file"
@@ -460,7 +460,7 @@ function . {
       # Describe all these navigation alias
       # uDev: Se houver uma pasta ou ficheiro com o nome "h", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
 
-      f_greet
+      f_greet1
       f_talk; echo "Instructions:"
       echo
       echo '`. ?` or `. h`  Shows this help menu'
@@ -639,7 +639,7 @@ function ,,, {
 
 function ,,,, {
    clear
-   f_greet
+   f_greet1
    ls
 }
 
@@ -829,7 +829,7 @@ function f_mobile_android_going_internal_storage {
    pwd
    echo
 
-   f_greet
+   f_greet1
    echo "Internal Storage"
    f_horiz_line
 
@@ -843,7 +843,7 @@ function f_mobile_android_going_SD_card_storage {
    v_place_2=/storage/0123-4567
    v_place_3=/storage/
 
-   f_greet
+   f_greet1
 
    echo "SD card storage"
    echo
@@ -874,7 +874,7 @@ function f_mobile_android_going_external_USB {
    pwd
    echo
 
-   f_greet
+   f_greet1
    echo "USB Storage"
    f_horiz_line
 
@@ -889,7 +889,7 @@ function f_mobile_android_going_USB_mnt_dir {
    pwd
    echo
 
-   f_greet
+   f_greet1
    echo "Listing possible USB plugged in"
    f_horiz_line
 
@@ -904,7 +904,7 @@ function f_mobile_android_going_USB_mnt_dir {
    echo "file explorer, MOVE it to the SD card"
    echo
 
-   f_greet
+   f_greet1
    echo "SD card Storage"
    f_horiz_line
 
@@ -926,7 +926,7 @@ function f_mobile_android_going_termux_bridge_android {
    # Navigate to termux-bridge-android
    #    For `V mb` it is the arg $2 "b"
 
-   f_greet
+   f_greet1
 
    echo "Directory: Internal Storage: Termux-bridge-Android"
 
@@ -1193,7 +1193,7 @@ function V {
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet1 && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -1408,7 +1408,7 @@ function f_action {
    if [ $v_nm == "fx_test" ]; then
       # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
 
-      f_greet
+      f_greet1
       f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned (with drya-lib-4)
 
       echo "$v_nm: Testing fluNav"
@@ -1418,7 +1418,7 @@ function f_action {
    elif [ $v_nm == "car" ]; then
       # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
 
-      f_greet 
+      f_greet1   
 
       # Variables for this task
          v_respective_repo=${v_REPOS_CENTER}/moedaz 
@@ -1460,7 +1460,7 @@ function f_action {
    
    elif [ $v_nm == "tmux" ]; then
 
-      f_greet 
+      f_greet1 
 
       cd  ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
       vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
@@ -1576,7 +1576,7 @@ function f_action {
       # 
       #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
 
-      f_greet 
+      f_greet1 
 
       #f_down
       echo "$v_nm: Menu to support UPK"
@@ -1594,7 +1594,7 @@ function f_action {
 
    elif [ $v_nm == "trade" ]; then
 
-      f_greet
+      f_greet1
 
       echo "$v_nm being edited"
       cd ${v_REPOS_CENTER}/moedaz/trade && \
@@ -1621,7 +1621,7 @@ function f_action {
          v_parent="omni-log"
          #v_editor= Em || Vim
 
-      f_greet
+      f_greet1
 
       echo "$v_nm being edited (file: omni-log.org)"
       echo " > Alias: 'F om' (sync)"

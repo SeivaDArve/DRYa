@@ -729,7 +729,7 @@ function f_lib4_git_commit_compact {
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
-         [[    $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+         [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
          [[    $v_list =~ "5. " ]] && v_msg="$v_blind__msg" && f_cmt_msg
          [[    $v_list =~ "4. " ]] && v_msg="$v_udev___msg" && f_cmt_msg
          [[    $v_list =~ "3. " ]] && f_git_commit

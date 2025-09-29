@@ -3609,6 +3609,10 @@ elif [ $1 == "wam" ]; then
       # Se nao for dado nenhum arg extra, edita o ficheiro
       [[ -d ${v_REPOS_CENTER}/omni-log ]] && emacs $v_wam  ## Usa o script `e` que vem com DRYa repo
 
+   elif [ $2 == "g" ] && [[ -n $3 ]]; then
+      # grep 
+      cat $v_wam | grep $3
+
    elif [ $2 == "?" ]; then
       f_greet
       f_talk; echo "Example of D.W.A.M. (DRYa Worldly Abreviated Messages)"

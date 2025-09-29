@@ -438,6 +438,23 @@ function hr {
 }
 
 function shebang {
+   if [ -z $1 ]; then
+      # Prompt for a filename
+      echo
+      v_talk="Config"
+      f_talk; echo "Name?"
+
+   else
+      for i in $*
+      do
+         ls $i &>/dev/null && echo "File $i exists, choose other name" 
+      done
+   fi
+
+
+}
+
+function shebang2 {
    # It creates a bash script (if no args are input)
       # Or gives a shebang to the file you input as argument 1)
       # It also changes the permissions of tbe file to executable
@@ -445,22 +462,19 @@ function shebang {
    function f_inform_creation_noArgs {
       # Informing the user that the process is ready
       
-      # Using command 'ls' to test existence
-         ls $v_ans 1>/dev/null # Delete all output
-         if [[ $? == 0 ]]; then # If last '$ ls' command was sucessfull, then:
+      # Using command 'ls' to test existence of $v_ans (without output)
+         ls $v_ans 1>/dev/null  
+         v_status=$?  # If last '$ ls' command was sucessfull, then:
 
-            tput setaf 3
-               echo -n " > File "
-            tput setaf 4
-               echo -n $v_ans
-            tput setaf 3
-               echo " created!"
-            tput sgr0
+      # Verbose message (wheater it exists or not)
+         if [[ $v_status == 0 ]]; then 
 
-            read -s -n 1
-            vim $v_ans
+            f_talk; read -sn 1 -p " > File '$v_ans' will be created"
+                    echo
+                    vim $v_ans
+
          else 
-            echo File not created
+            echo "File '$v_ans' not created"
          fi
    }
 
@@ -496,7 +510,12 @@ function shebang {
       else 
          # If file does not exist, run:
          touch $v_ans
-         echo "#!/bin/bash" > ./${v_ans}
+         echo "#!/bin/bash" > ${v_ans}
+         echo "#!/bin/bash"                     >> $v_ans
+         echo "# Title:   "                     >> $v_ans
+         echo "__name__=$i  # Self Script Name" >> $v_ans
+         echo "# Description: "                 >> $v_ans
+         echo "# Use:"                          >> $v_ans
          chmod +x ./${v_ans}
 
          f_inform_creation_noArgs
@@ -518,13 +537,22 @@ function shebang {
       else 
          # If file does not exist, run:
          touch $i
-         echo "#!/bin/bash" > ./${i}
-         chmod +x ./${i}
+         echo "#!/bin/bash"                     > ./$i
+         echo "# Title:   "                     > ./$i
+         echo "__name__=$i  # Self Script Name" > ./$i
+         echo "# Description: "                 > ./$i
+         echo "# Use:"                          > ./$i
+
+         chmod +x ./$i
          
          f_inform_creation 
 
       fi
    }
+
+   v_greet="DRYa"
+   v_talk="DRYa: "
+   f_greet 
 
    if [[ -z $1 ]]; then
       # If no arg is given
@@ -534,7 +562,7 @@ function shebang {
          f_test_existence_noArgs
 
    else 
-      # If there are arguments, test each one for exuatence:
+      # If there are arguments, test each one for existence:
          for i in $@; do 
             f_test_existence
          done

@@ -363,8 +363,10 @@ function f_drya_welcome_screen {
 function f_fun_after_welcome_screen {
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
 
-    f_fun_apprendre_le_francais
-    f_fun_memorize_sutras      2>/dev/null
+   echo                          1>/dev/null  # It must have at least one command permenently running in an fx where everything else is commented
+
+   #f_fun_apprendre_le_francais
+   #f_fun_memorize_sutras      2>/dev/null
    #f_fun_open_random_shells
    #f_fun_memorize_sanskrit      (uDev)
    #f_fun_memorize_font_kamida   (uDev)
@@ -522,7 +524,7 @@ function f_internal_drya_files_3_of_3 {
    f_solve_PATH_after_test 
 }
 
-function f_config_figlet {
+function f_config_pkg_figlet {
    # Configuration for dependency: figlet
    # (figlet is a dependency)
 
@@ -859,8 +861,10 @@ function f_fun_memorize_sutras {
    # Uses the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
 
    # Fx que tras um Sutra aleatorio
+      f_hzl
       bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r2
       echo
+      f_hzl
 }
 
 function f_fun_open_random_shells {
@@ -927,9 +931,9 @@ function f_exec {
       f_drya_fzf_history
       f_traitsID           
       f_dv_PS1    
-      f_config_figlet  
+      f_config_pkg_figlet  
       f_drya_welcome_screen  
-      f_test  # Can be deleted
+      f_test  # Can be deleted, literally a test
    
    # Libs for repositories: 'sadf'=='Source.All.Drya.Files.'. Libs nao precisam ser exexutadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem exiatam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
      #f__sadf_lib_1__after_clonning
@@ -952,7 +956,11 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
       f_repository_dota_2
+<<<<<<< Updated upstream
       f_repository_cao_lendario
+=======
+     #f_repository_cao_lendario
+>>>>>>> Stashed changes
       
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_3
@@ -981,7 +989,7 @@ function f_exec {
 
 
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
-      #f_fun_after_welcome_screen
+      f_fun_after_welcome_screen
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end
