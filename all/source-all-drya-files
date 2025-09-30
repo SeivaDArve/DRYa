@@ -713,9 +713,11 @@ function f_repository_3_sticks_alpha_bravo {
 
 
 function f_repository_jarve {
-   alias jarve="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
-   alias    jv="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
-   alias     J="bash ${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+   v_jarve="${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+
+   alias jarve="bash $v_jarve"
+   alias    jv="bash $v_jarve"
+   alias     J="bash $v_jarve"
 }
 
 function f_drya_mail_box {
@@ -732,8 +734,11 @@ function f_repository_dota_2 {
 }
 
 function f_repository_cao_lendario {
-   alias lend="bash ${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
-   alias    L="bash ${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
+   v_lendario="${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
+
+   alias  cao="bash $v_lendario" 
+   alias lend="bash $v_lendario" 
+   alias    L="bash $v_lendario"
    
 }
 
