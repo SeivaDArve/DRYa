@@ -3544,7 +3544,7 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
 elif [ $1 == "grep" ] || [ $1 == "gr" ]; then 
    # Partial File Reader: Filtrar texto de ficheiros
 
-   v_script=${v_REPOS_CENTER}/DRYa/all/bin/partial-file-reader.sh
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-extended-grep.sh
 
    if [ -z $2 ]; then 
       bash $v_script 

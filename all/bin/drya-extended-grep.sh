@@ -10,7 +10,7 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
@@ -22,7 +22,7 @@
 
 
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
@@ -187,7 +187,7 @@ function f_partial_file_reader {
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[    $v_list =~ "3. " ]] && echo "uDev" 
       [[    $v_list =~ "3. " ]] && echo "uDev" 
-      [[    $v_list =~ "8. " ]] && echo "hit: $1" && grep "^*" $1 | fzf
+      [[    $v_list =~ "8. " ]] && echo "hit: $1" && grep "^*" $1 | fzf --tac --cycle
       [[    $v_list =~ "2. " ]] && f_partial_file_reader_choose_file 
       [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
       [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
