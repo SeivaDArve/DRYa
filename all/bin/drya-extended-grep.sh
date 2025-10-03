@@ -121,7 +121,7 @@ function f_pfr_welcome {
    echo " > Assuming: \$2: Output File: $Lhc2"
    read -sn1 -t $v_secs
       
-   f_partial_file_reader "$Lhc1" "$Lhc2"
+   #f_partial_file_reader "$Lhc1" "$Lhc2"
 }
 
 
@@ -138,6 +138,18 @@ function f_partial_file_reader_choose_file {
    f_create_tmp_file 
 }
 
+function f_output_org_mode_header_filtered_by_fzf {
+
+
+   f_greet
+   [[ -z $2 ]] && echo "Esta fx precisa do Arg 2 (ficheiro de entrada)" && exit 1
+
+   v_headr=$(grep "^*" $2 | fzf --tac --cycle)
+
+   [[ -n $v_headr ]] && echo $v_headr || echo "No line was selected"
+   unset  v_headr
+}
+
 function f_partial_file_reader {
    # Para ler partes de documentos (com fzf)
 
@@ -152,7 +164,7 @@ function f_partial_file_reader {
       L18='Arg |   CMD  |  Method   |    Input      |     Task                             |  Output       |'
       L17='----|--------|-----------|---------------|--------------------------------------|---------------|'
       L16='16. | D grep | bash      | `ls | fzf`    | ( corrigir endereco `pwd` do dir   ) | tmp file      |'
-      #L15='15. | D grep | bash      | file1 + file2 | ( select random line from file     ) | file1 + file2 |'
+     #L15='15. | D grep | bash      | file1 + file2 | ( select random line from file     ) | file1 + file2 |'
       L15='15. | D grep | bash      |  file         | ( select random line from file     ) | tmp file      |'
       L14='14. | D grep | bash      |  file         | ( intervalo de 2 pesquisas   | grep) | tmp file      |'
       L13='13. | D grep | bash      |  file         | ( intervalo de nr linhas     | grep) | tmp file      |'
@@ -187,7 +199,7 @@ function f_partial_file_reader {
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[    $v_list =~ "3. " ]] && echo "uDev" 
       [[    $v_list =~ "3. " ]] && echo "uDev" 
-      [[    $v_list =~ "8. " ]] && echo "hit: $1" && grep "^*" $1 | fzf --tac --cycle
+      [[    $v_list =~ "8. " ]] && f_output_org_mode_header_filtered_by_fzf $*
       [[    $v_list =~ "2. " ]] && f_partial_file_reader_choose_file 
       [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
       [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
@@ -216,6 +228,6 @@ function f_partial_file_reader {
 
 
 # Re-organizacao dos argumentos passados a esta fx principal: `f_partial_file_reader`
-   f_pfr_welcome "$@"
+   #f_pfr_welcome "$@"
 
-   #f_partial_file_reader "$@"  # Inutilizado por causa do tratamentos de dados e de argumentos da fx f_pfr_welcome 
+   f_partial_file_reader $*  # Inutilizado por causa do tratamentos de dados e de argumentos da fx f_pfr_welcome 
