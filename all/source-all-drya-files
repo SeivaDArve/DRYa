@@ -738,8 +738,14 @@ function f_repository_cao_lendario {
 
    alias  cao="bash $v_lendario" 
    alias lend="bash $v_lendario" 
-   alias    L="bash $v_lendario"
+   alias    C="bash $v_lendario"
    
+}
+
+function f_repository_luxam {
+   v_luxam="${v_REPOS_CENTER}/luxam/luxam.sh"
+
+   alias    L="bash $v_luxam"
 }
 
 function f_internal_drya_files_2_of_3 {
@@ -962,6 +968,7 @@ function f_exec {
       f_repository_jarve  
       f_repository_dota_2
       f_repository_cao_lendario
+      f_repository_luxam
       
    # Last default configs (again, if needed will overwriting configs, for safety)
       f_internal_drya_files_2_of_3

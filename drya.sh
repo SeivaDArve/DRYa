@@ -2280,8 +2280,8 @@ if [ -z "$*" ]; then
    # Temporized Quick menu
       f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
               echo    "       |"
-              echo -n "       |_ To open MAIN fzf menu, press NOW: '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
-              echo -n '          Equivalent Terminal commands: `';         f_c5; echo -n 'D .';     f_rc; echo '`' 
+              echo -n "       |_ To open MAIN fzf menu, press NOW : '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
+              echo -n '          Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
 
    
    # Options available during only few seconds

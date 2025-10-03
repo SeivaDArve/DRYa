@@ -1395,6 +1395,16 @@ function V {
       elif [ $1 == "pwd" ]; then
          eval lll  # Function usually at config-bash-alias
       
+
+   # Implementation of Use ... :
+      elif [ $1 == "+" ]; then
+         # Adicionar `pwd` ao historico
+
+         f__V_hist__refresh_file_name  
+         v_pwd=$(pwd)
+         echo "$v_pwd" >> $v_fluNav_V_hist_file
+         f_talk; echo '`pwd` adicionado ao historico'
+
       else 
          echo DRYa: fluNav: V: file/dir/option/menu/place/history not found. 
    fi
