@@ -107,7 +107,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
 
 " Inserir o texto que estiver no ficheiro 'drya-autocomplete-if-then-else-fi
-   nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/etc/autocomplete/drya/drya-autocomplete-if-then-else-fi.txt'<CR>
+   nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/autocomplete/drya/drya-autocomplete-if-then-else-fi.txt'<CR>
 
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
