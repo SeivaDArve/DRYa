@@ -1252,7 +1252,7 @@ function V {
       elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
          cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
-      elif [ $1 == "L" ] || [ $1 == "l" ] || [ $1 == "lendario" ]; then
+      elif [ $1 == "C" ] || [ $1 == "c" ] || [ $1 == "lendario" ]; then
          cd ${v_REPOS_CENTER}/Cao-Lendario 2>/dev/null && ls -p || f_error_cd
 
       elif [ $1 == "tmp" ]; then
@@ -1269,7 +1269,7 @@ function V {
          cd ${v_REPOS_CENTER} && ls -p
 
 
-      elif [ $1 == "lxm" ]; then
+      elif [ $1 == "l" ] || [ $1 == "L" ] || [ $1 == "luxam" ]; then
          cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
 
 
