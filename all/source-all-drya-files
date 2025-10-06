@@ -331,7 +331,7 @@ function f_drya_welcome_screen {
    function f_ws_verbose {
       # Verbose Initial DRYa Message
 
-      f_talk; echo          "Stratup Instructions"
+      f_talk; echo          "Startup Instructions"
               echo -n "      Menu 'Main'       : "
         f_c4; echo -e                           "D ."
         f_rc; echo -n "      Menu 'Instrucoes' : "
