@@ -332,10 +332,10 @@ function f_drya_welcome_screen {
       # Verbose Initial DRYa Message
 
       f_talk; echo          "Startup Instructions"
-              echo -n "      Menu 'Main'       : "
-        f_c4; echo -e                           "D ."
-        f_rc; echo -n "      Menu 'Instrucoes' : "
-        f_c4; echo                              "D help"
+              echo -n "      Menu 'Main'         : "
+        f_c4; echo -e                             "D ."
+        f_rc; echo -n "      Menu 'Instructions' : "
+        f_c4; echo                                "D help"
         f_rc; echo
    }
 
