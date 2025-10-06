@@ -19,7 +19,7 @@
    # Note: `--no-info`             : significa ocultar a info de quantos resultados encontrou. (Exemplo: "14/200" quando encontra 200 itens e o cursor esta na linha 14)
    # Note: `--header="Text here" 
    # Note: `--tac" 
-   # Note: `--wrap"                : Para quando as linhas sao demasiado longas e nao cabem no ecra
+   # Note: `--wrap"                : (ATENCAO: existem versoes fzf sem este parametroi, WSL2) Para quando as linhas sao demasiado longas e nao cabem no ecra
 
    # uDev: testar --history=HISTORY_FILE
    # uDev: fx/lib para o  ---Invert Selection---'

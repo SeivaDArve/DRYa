@@ -764,7 +764,7 @@ function f_internal_drya_files_2_of_3 {
       #       Para programar scripts temporarios de teste é melhor usar a pasta ~/.code/
       
 
-   # Drya start-up bin files (init-bin)
+   # Drya start-up bin files (init-bin)  # udev: change to ".../DRYa/all/boot"
       # Sourcing all stand-alone scripts
          v_init=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
 
