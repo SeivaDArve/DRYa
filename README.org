@@ -46,26 +46,6 @@ That means that this software is cross-platform just like any personal assistant
 
 For the enthusiastic programmer: Iron man (from the Marvel comics) was a programmer. Where the Iron Suit was like Termux (a dedicated command line, programmed to recognize voice and user input to extend the user habilities)
 
-** drya-fast-tg-sys-vars
-This text is something you can find on DRYa scripts (Fast Toggle System for Variables from DRYa)
-
-Some software options are ready to use only in the backend. When frontend menus are not ready to use and to toggle settings, then the fastest way to toggle configs is to set the varible of a specific config in several lines (as many lines as the options there are for such variable). The last line is again the same variable beeing set and overwritting all previous lines of the same variable beeing set.
-
-The text editor Vim has an hotkey to swap 2 text lines. Put the cursor on the line you want to move and delete it with hotkey `dd`. The past it imediatly on the line bolow with 'p'. In case you want to past in the previous line instead on the next line, press 'P' instead of 'p'
-
-Exemple (bash): Setting the same var 2x (the last time, overwrites all the orevious):
-    v_variable="Tree"
-    v_variable="Cat"
-    echo "Variable contains: $v_variable"
-
-    Result: "Variable contains: Cat"
-   
-** For the next Dev
-How to read DRYa/Seiva Syntax
-
-f_function_names                       (Helps A LOT to read code. gives the starting common pattern f_ and helps distinguish from v_ variables)
-v_variable_names                       (instead all Caps variables, as default for $BASH)
-c_variables_of_text_but_for_ansi_codes (usually containing backspaces already)
 
 ** Brainstorming
 Do you have config files that you keep installing/removing/installing/removing?
@@ -92,15 +72,38 @@ Install one of these utilities to backup your config files and this way, after a
 4 - This repository can install every other repositories from the same author. The majority of software options already come inside DRYa like the phone finder by GPS, car finder by GPS, directory looper etc... (this README.md is under development also)
 
 ** Learning Bash On-the-Go
-*** #uDev: Something under develpment listed to be done soon: List... List... List
+This app is at the same time a notebook, where every function is commented above telling in plain english what it does
+
+Self documented script. Usually when people have doubts about the usage of the program/app/script, they search for the manual page. 
+in case of linux you can type at the terminal '$ man <app-name-here>'
+But this app/script does something better. This app IS NOT COMPILED, therefore the user can see the source code always. It may lose some speed (CPU speed) but you (the user) can read the source code the same way the programmer did (knowing EVERYTHING about the app and learning Bash on-the-go)
+
+DRYa has it's own style and organization for best read and fast understanding
+**** Coding style (syntax)
+***** #uDev
+Something "under develpment" where work is in progress. Lists something to be done soon in the future: List... List... List
 If you read the source code you will find many many comments of my own code (Learning bash by practice)
 And you will also find another kind of comment "# uDev: Under Development" which are a message to my future self, some idea to remember
 If you wish to co-op then you may find these comments and try to script yourself
+***** drya-fast-tg-sys-vars
+   This text is something you can find on DRYa scripts (Fast Toggle System for Variables from DRYa)
 
-*** Self documented script
-Usually when people have doubts about the usage of the program/app/script, they search for the manual page. 
-in case of linux you can type at the terminal '$ man <app-name-here>'
-But this app/script does something better. This app IS NOT COMPILED, therefore the user can see the source code always. It may lose some speed (CPU speed) but you (the user) can read the source code the same way the programmer did (knowing EVERYTHING about the app and learning Bash on-the-go)
+   Some software options are ready to use only in the backend. When frontend menus are not ready to use and to toggle settings, then the fastest way to toggle configs is to set the varible of a specific config in several lines (as many lines as the options there are for such variable). The last line is again the same variable beeing set and overwritting all previous lines of the same variable beeing set.
+
+   The text editor Vim has an hotkey to swap 2 text lines. Put the cursor on the line you want to move and delete it with hotkey `dd`. The past it imediatly on the line bolow with 'p'. In case you want to past in the previous line instead on the next line, press 'P' instead of 'p'
+
+   Exemple (bash): Setting the same var 2x (the last time, overwrites all the orevious):
+       v_variable="Tree"
+       v_variable="Cat"
+       echo "Variable contains: $v_variable"
+
+       Result: "Variable contains: Cat"
+***** f_function v_variable c_variables_ascii
+
+   f_function_names                       (Helps A LOT to read code. gives the starting common pattern f_ and helps distinguish from v_ variables)
+   v_variable_names                       (instead all Caps variables, as default for $BASH)
+   c_variables_of_text_but_for_ansi_codes (usually containing backspaces already)
+   
 
 ** Modular software (list of apps under DRYa)
 *** Jarve
