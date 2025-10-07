@@ -1,6 +1,6 @@
 * DRYa
 
-[DRYa icon](./all/etc/dot-files/drya/logo.ascii.2)
+[DRYa icon][./all/etc/dot-files/drya/logo.ascii.2]
 
 ** DRYa acronym
 Don't Repeat Yourself (app) 
