@@ -117,11 +117,11 @@ Do you need to format your machine? DRYa may help you while your machine is offl
 Not public yet
 
 ** Author
-The author is David Rodrigues, also know everywhere as Flowreshe Seiva Naghori D'arve.
+The author is David Rodrigues, also known everywhere as Flowreshe Seiva Naghori D'arve.
 
 ** GitHub - "Seiva D'Arve"
-Overview: 	https://github.com/SeivaDArve
-Repositories:	https://github.com/SeivaDArve?tab=repositories 
+| Overview     | https://github.com/SeivaDArve                   |
+| Repositories | https://github.com/SeivaDArve?tab=repositories  |
 
 ** QR Code (link to open DRYa's Github page directly from another device)
 uDev
