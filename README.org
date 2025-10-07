@@ -139,6 +139,7 @@ For the non power user, this is the best sequence of steps to take and install D
 `sudo apt install git fzf`
 *** Step 2 - Clone DRYa spefically to "$HOME/Repositories/DRYa" folder                    
 (optional): change destination to other folder or else it will be cloned exactly to the directory where your prompt is currently at
+
 `git clone https://github.com/SeivaDArve/DRYa.git $HOME/Repositories/DRYa`
 *** Step 3 - Installing DRYa 
  `bash $HOME/Repositories/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-installer.sh` 
