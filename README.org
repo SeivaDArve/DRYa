@@ -79,13 +79,13 @@ in case of linux you can type at the terminal '$ man <app-name-here>'
 But this app/script does something better. This app IS NOT COMPILED, therefore the user can see the source code always. It may lose some speed (CPU speed) but you (the user) can read the source code the same way the programmer did (knowing EVERYTHING about the app and learning Bash on-the-go)
 
 DRYa has it's own style and organization for best read and fast understanding
-**** Coding style (syntax)
-***** #uDev
+** Coding style (syntax)
+*** #uDev
 Something "under develpment" where work is in progress. Lists something to be done soon in the future: List... List... List
 If you read the source code you will find many many comments of my own code (Learning bash by practice)
 And you will also find another kind of comment "# uDev: Under Development" which are a message to my future self, some idea to remember
 If you wish to co-op then you may find these comments and try to script yourself
-***** drya-fast-tg-sys-vars
+*** drya-fast-tg-sys-vars
    This text is something you can find on DRYa scripts (Fast Toggle System for Variables from DRYa)
 
    Some software options are ready to use only in the backend. When frontend menus are not ready to use and to toggle settings, then the fastest way to toggle configs is to set the varible of a specific config in several lines (as many lines as the options there are for such variable). The last line is again the same variable beeing set and overwritting all previous lines of the same variable beeing set.
@@ -98,7 +98,7 @@ If you wish to co-op then you may find these comments and try to script yourself
        echo "Variable contains: $v_variable"
 
        Result: "Variable contains: Cat"
-***** f_function v_variable c_variables_ascii
+*** f_function v_variable c_variables_ascii
 
    f_function_names                       (Helps A LOT to read code. gives the starting common pattern f_ and helps distinguish from v_ variables)
    v_variable_names                       (instead all Caps variables, as default for $BASH)
