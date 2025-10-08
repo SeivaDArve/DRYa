@@ -3606,18 +3606,31 @@ elif [ $1 == "wam" ]; then
       v_example="${v_REPOS_CENTER}/omni-log/all/wam/example-wam-qrcode/run-example.sh"
 
    if [ -z $2 ]; then
-      # Se nao for dado nenhum arg extra, edita o ficheiro
+      # Se nao for dado nenhum arg extra, da instrucoes
+      f_talk; echo "DRYa WAM messages, arguments:"
+              echo " > .          | To edit main DWAM file"
+              echo " > ?          | To give an example of DWAM aplyied in the world"
+              echo " > g <search> | To grep text directly from the main DWAM file"
+
+   elif [ $2 == "." ] || [[ $1 == "edit-dwam-main-file" ]]; then
       [[ -d ${v_REPOS_CENTER}/omni-log ]] && emacs $v_wam  ## Usa o script `e` que vem com DRYa repo
 
-   elif [ $2 == "g" ] && [[ -n $3 ]]; then
-      # grep 
-      cat $v_wam | grep $3
+   elif [ $2 == "g" ]; then
+
+      if [ -z $3 ]; then
+         f_talk; echo "DRYa WAM: How to use grep command:"
+                 echo ' > `D wam g <search>`'
+      else
+         cat $v_wam | grep --color=auto $3
+      fi
+
 
    elif [ $2 == "?" ]; then
       f_greet
       f_talk; echo "Example of D.W.A.M. (DRYa Worldly Abreviated Messages)"
-              echo " > 1. DWAM + code (text representatio, for manual database search)"
-              echo " > 2. QR code of the same to code (for automation)"
+              echo " > 1. Text    : code written according to database"
+              echo " > 2. QR code : containing the text code (for automation)"
+              echo " > 3. NFC tag : possibility to scan the NFC (for automation)"
       f_hzl
 
       echo
