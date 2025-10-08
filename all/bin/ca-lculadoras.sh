@@ -736,7 +736,7 @@ function f_eletricidade {
    echo "clc: Eletricidade"
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='D clc eletricidade'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L6='6. Resistencias: Esquema de cores'
 
@@ -746,7 +746,7 @@ function f_eletricidade {
       L2='2. P=V^2/R ; P=RxI^2 ; P=VxI'
       L1='1. Cancel'
 
-      L0="SELECT 1: Formulas Eletricidade: "
+      L0="DRYa: calc: eltricidade: "
       
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -901,7 +901,12 @@ elif [ $1 == "." ]; then
 elif [ $1 == "," ]; then
    # Entrar na Calculadora Registadora
    f_exec_calculadora_registadora
-   
+
+elif [ $1 == "e" ] || [ $1 == "eletricidade" ]; then
+   echo akka
+
+   f_eletricidade
+
 elif [ $1 == "3" ]; then
    # Entrar na Calculadora da Regra de 3 Simples
    f_exec_calculadora_regra_de_3

@@ -3061,41 +3061,47 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
 elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calculator" ] || [ $1 == "clc" ] || [ $1 == "calculadora" ]; then
    # List of calculatores (some modified for Trading)
 
-   if [ -z $2 ]; then 
-      # Opens menu "calculadoras"
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh
+   v_calc="${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
+   shift; bash $v_calc $*
 
-   elif [ $2 == "." ]; then 
-      # Opens interactive calculadora
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh .
+   function f_off {
+      if [ -z $2 ]; then 
+         # Opens menu "calculadoras"
+         bash $v_calc
 
-   elif [ $2 == "," ]; then 
-      # Opens calculadora registadora
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh ,
+      elif [ $2 == "." ]; then 
+         # Opens interactive calculadora
+         #bash $v_calc .
+         shift; bash $v_calc $*
 
-   elif [ $2 == "3" ]; then
-      # Entrar na Calculadora da Regra de 3 Simples
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 3
+      elif [ $2 == "," ]; then 
+         # Opens calculadora registadora
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh ,
 
-   elif [ $2 == "p" ]; then
-      # Entrar na Calculadora de Percentagens
+      elif [ $2 == "3" ]; then
+         # Entrar na Calculadora da Regra de 3 Simples
+         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 3
 
-      # Perguntar quantas casas decimais?
-         v_ask=no
+      elif [ $2 == "p" ]; then
+         # Entrar na Calculadora de Percentagens
 
-      if [ -z $3 ]; then
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p
+         # Perguntar quantas casas decimais?
+            v_ask=no
 
-      elif [ $3 == "d" ]; then
-         v_ask=yes
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p d
+         if [ -z $3 ]; then
+            bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p
+
+         elif [ $3 == "d" ]; then
+            v_ask=yes
+            bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh p d
+         fi
+
+      elif [ $2 == "x" ]; then 
+         # Calculations directly on the prompt: `D ca x "3 + 3"`
+         [[ -n $3 ]] && echo "$3" | bc
+
       fi
-
-   elif [ $2 == "x" ]; then 
-      # Calculations directly on the prompt: `D ca x "3 + 3"`
-      [[ -n $3 ]] && echo "$3" | bc
-
-   fi
+   }
 
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
    # Comandos para configurar o layout do teclado
