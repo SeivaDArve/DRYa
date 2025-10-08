@@ -51,6 +51,8 @@ function f_define_files_as_vars {
    # File 'ToDo'
       v_file_td=${v_REPOS_CENTER}/omni-log/all/ex-pressa/td.org
    
+   # File 'Seiva'
+      v_file_sv=${v_REPOS_CENTER}/omni-log/all/ex-pressa/sv.org
 
 }
 
@@ -271,6 +273,34 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
 
    elif [ $2 == "vim" ] || [ $2 == "v" ]; then
       emacs $v_file_td
+   fi
+      
+   f_lib4_upload_compact
+
+elif [ $1 == "sv" ] || [ $1 == "seiva" ]; then
+   # Edit file: "To Do list"
+   # --- File to be edited: $v_file_sv (variable set at the top of this script)
+   # --- Alias also defined as `td` in 'source-all-drya-files'
+
+   # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
+
+   
+   # Ensuring omni-log with drya-lib-4
+      # uDev: para o verbose output falta: mencionar que vem do script: `no - .`
+      v_ensure="$v_df_repo" && f_lib4_download_compact
+
+   if [ -z $2 ]; then
+      # If no arg are given
+
+      # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e` 
+         #eval "$v_default_editor $v_file_sv" 
+         bash e $v_file_sv 
+
+   elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
+      emacs $v_file_sv
+
+   elif [ $2 == "vim" ] || [ $2 == "v" ]; then
+      emacs $v_file_sv
    fi
       
    f_lib4_upload_compact
