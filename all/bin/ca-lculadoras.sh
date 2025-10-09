@@ -7,28 +7,29 @@
 # uDev: criar fx que verifica se os valores introduzidos sao mesmo numeros
 # uDev: Opcao de config para o numero de casas decimais
 
-function f_greet {
-   # If 'figlet' app is installed, print an ascii version of the text "DRYa" to improve the appearence of the app
-      clear
-      figlet DRYa || echo -e "( DRYa ):\vrunning drya.sh\n"
-}
+__name__="ca-lculadoras.sh"  
 
-function f_cor4 { 
-   # Similar to Bold
-   # f_talk
-   tput setaf 4
-}
 
-function f_resetCor { 
-   tput sgr0
-}
-      
-function f_talk {
-   # Copied from: ezGIT
-   echo
-   f_cor4; echo -n "DRYa: "
-   f_resetCor
-}
+
+
+
+
+
+
+# Sourcing DRYa Lib 1: Color schemes
+   __name__="ca-lculadoras.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+   
+   v_greet="DRYa"
+   v_talk="DRYa: clc: "
+
+
+
+
+
+
+
 
 function f_set_history_reg {
    # Criar ficheiro de historico
@@ -39,7 +40,6 @@ function f_set_history_reg {
    #     1. Testa se existe omni-log. Se existir, usa uma sub pasta para guardar os hitoricos
    #     2. Ao iniciar a calculadora registadora, é verificado tambem se anteriormente a calculadora foi usada offline criando um ficheiro local (ainda por sincronizar online). Se esse ficheiro existir em drya-mail-box/omni-log copia para omni-log
    #     3. Se nao houver omni-log, cria um ficheiro ou continua a usar um offline em drya-mail-box/omni-log
-   #
    #     4. Este script nao envia nada para verbose-lines, porque verbose lines é para outputs que expiram/temporarios
 
 
@@ -56,7 +56,7 @@ function f_set_history_reg {
       #    registos da calculadora é $v_reg_om
 
       # Debug
-         echo "DB: omni-log existe"; read -t 2
+         echo -n " > Test 1: testing DB omni-log existence" && f_suc3
 
       # Assegurar que existe dentro de omni-log... :
          mkdir -p $v_reg_om/$v_dir       # ...A pasta onde vao ser guardados os ficheiros de registo
@@ -77,15 +77,15 @@ function f_set_history_reg {
          # Se a pasta drya-mail-box nao existir para omni-log, entao:
             
          # Debug
-            echo "DB: drya-mail-box nao existe"; read -t 2
+            echo -n " > Test 2: Testing drya-mail-box existence" && f_suc4
 
-         echo "Tudo ok, nao existe mail"
+            echo -n " > Test 3: Tudo ok, nao existe mail" && f_suc3
 
       else
          # Quando a pasta existe
             
          # Debug
-            echo "DB: drya-mail-box existe"; read -t 2
+            echo -n " > Test 2: Testing drya-mail-box existence" && f_suc3
 
          # Envia o conteudo do ficheiro de mail para o ficheiro dentro de omni-log
             echo  "                   " >> $v_reg_om/$v_dir/$v_file
@@ -101,7 +101,7 @@ function f_set_history_reg {
       #    guarda em drya-mail-box 
 
       # Debug
-         echo "DB: omni-log nao existe"; read -t 2
+         echo -n " > Test 1: testing DB omni-log existence" && f_suc4
 
       # Assegurar que existe dentro da repo, a pasta onde vao ser guardados os ficheiros de registo
          mkdir -p $v_reg_dmb_om/$v_dir
@@ -119,10 +119,14 @@ function f_set_history_reg {
    #uDev: enviar antes para omni-log com drya-lib-4
 
    # Debug
-      echo "v_reg=$v_reg"
-      read
+      echo " > Part 4: Printing v_reg path (ficheiro de historico)"
+      echo "   $v_reg"
+      echo
+
+   f_talk; echo "Any key to continue... "
+   read -sn 1 -t 6 -p " > "
+   echo
 }
-f_set_history_reg
 
 
 function f_decimais {
@@ -733,25 +737,28 @@ function f_exec_calculadora_percentagens {
 }
 
 function f_eletricidade {
-   echo "clc: Eletricidade"
+   # Menu com formulas de eletricidade
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D clc eletricidade'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L6='6. Resistencias: Esquema de cores'
+      L7='7. |   | Resistencias: Esquema de cores'
 
-      L5='5. I=P/V   ; I=V/R   ; I=√(P/R)'
-      L4='4. R=V/I   ; R=V^2/P ; V=P/I^2'
-      L3='3. V=IxR   ; V=P/I   ; V=√(PxR)'
-      L2='2. P=V^2/R ; P=RxI^2 ; P=VxI'
+      L6='6. |   | Web: Imagem das Formulas I. R. V. P.'
+      L5='5. |   | I=P/V   ; I=V/R   ; I=√(P/R)'
+      L4='4. |   | R=V/I   ; R=V^2/P ; V=P/I^2'
+      L3='3. |   | V=IxR   ; V=P/I   ; V=√(PxR)'
+      L2='2. |   | P=V^2/R ; P=RxI^2 ; P=VxI'
+
       L1='1. Cancel'
 
-      L0="DRYa: calc: eltricidade: "
+      L0="DRYa: clc: eltricidade: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+      [[ $v_list =~ "7. " ]] && echo "uDev: $L7"
       [[ $v_list =~ "6. " ]] && echo "uDev: $L6"
       [[ $v_list =~ "5. " ]] && echo "uDev: $L5"
       [[ $v_list =~ "4. " ]] && echo "uDev: $L4"
@@ -806,6 +813,84 @@ function f_cronometro_multi_datas {
    f_calcular_tempo_decorrido_apos_data
 }
 
+function f_clc_main_menu {
+   # Texto do menu
+      Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
+
+     #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
+      L21='21. Relogio     | Cronometro | multi datas < ficheiro.txt '
+      L20='20. Relogio     | Cronometro'
+      L19='19. Relogio     | Calculo entre 2 datas'
+      L18='18. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+      L17='17. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+      L16='16. Relogio     | Temporizador'
+      L15='15. Relogio     | Despertador'
+
+     #L13='13. Calculadora | Centralizar os furos de um quadro na parede (2 furos centraldos numa parede):   |----------|----|----------|
+     #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
+     #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
+     #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
+     #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
+     #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
+     #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
+      L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
+      L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
+      L12='12. Calculadora | supermercado'
+      L11='11. Calculadora | trim-the-hedge'
+      L10='10. Calculadora | regra-3-simples | `D ca 3`'
+       L9='9.  Calculadora | cambios'
+       L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
+       L7='7.  Calculadora | registadora | `D ca ,` ' 
+      #L7='7.  Calculadora | registadora | `D ca x` '   ## (at drya.sh): Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
+      #L4='4.  Alterar numero de casas decimais (usado nas calculadoras)
+
+       L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
+       L5='5.  Executar    | apk Texas TI-84 ROM'
+
+       L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
+       L3='3.  Agenda      | Repo: moedaz'
+       L2='2.  Historico'
+       L1='1.  Cancel'
+
+      L0='DRYa: Calculo: '
+
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+               
+   # Quando o menu de Escolha multipla tipo `for` loop
+      [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
+
+      [[ $v_list =~ "21. " ]] && f_cronometro_multi_datas
+      [[ $v_list =~ "20. " ]] && echo "uDev"
+      [[ $v_list =~ "19. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
+      [[ $v_list =~ "18. " ]] && echo "uDev"
+      [[ $v_list =~ "17. " ]] && echo "uDev"
+      [[ $v_list =~ "16. " ]] && echo "uDev"
+      [[ $v_list =~ "15. " ]] && echo "uDev"
+      [[ $v_list =~ "14. " ]] && f_exec_calculadora_percentagens
+
+      [[ $v_list =~ "13. " ]] && f_eletricidade
+      [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+      [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
+      [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3
+      [[ $v_list =~ "9.  " ]] && f_exec_calculadora_cambios
+      [[ $v_list =~ "8.  " ]] && f_exec_calculadora_conversora
+      [[ $v_list =~ "7.  " ]] && f_exec_calculadora_registadora
+   
+      [[ $v_list =~ "6.  " ]] && f_clc_bc
+      [[ $v_list =~ "5.  " ]] && echo "uDev: Open APK on Android"
+
+      [[ $v_list =~ "4.  " ]] && echo "uDev"
+      [[ $v_list =~ "3.  " ]] && echo "uDev"
+      [[ $v_list =~ "2.  " ]] && vim $v_reg
+      [[ $v_list =~ "1.  " ]] && sleep 0.1
+      unset v_list
+}
+
+
+
+
+
+
 
 
 # -------------------------------------------
@@ -817,82 +902,20 @@ function f_cronometro_multi_datas {
 
 
 
-# Pre-definir numero das casas decimais
-   f_decimais
+
+
+
+
+# Startup sequence
+   f_greet
+   f_talk; echo "Starting Main Menu... "
+   f_set_history_reg  # Define variables at every startup
+   f_decimais         # Pre-definir numero das casas decimais
 
 if [ -z "$1" ]; then
    # Menu para aceder a todas as calculadoras
 
-      # Texto do menu
-         Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
-
-        #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
-         L21='21. Relogio     | Cronometro | multi datas < ficheiro.txt '
-         L20='20. Relogio     | Cronometro'
-         L19='19. Relogio     | Calculo entre 2 datas'
-         L18='18. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L17='17. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-         L16='16. Relogio     | Temporizador'
-         L15='15. Relogio     | Despertador'
-
-        #L13='13. Calculadora | Centralizar os furos de um quadro na parede (2 furos centraldos numa parede):   |----------|----|----------|
-        #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
-        #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
-        #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
-        #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
-        #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
-        #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
-         L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
-         L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
-         L12='12. Calculadora | supermercado'
-         L11='11. Calculadora | trim-the-hedge'
-         L10='10. Calculadora | regra-3-simples | `D ca 3`'
-          L9='9.  Calculadora | cambios'
-          L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
-          L7='7.  Calculadora | registadora | `D ca ,` ' 
-         #L7='7.  Calculadora | registadora | `D ca x` '   ## (at drya.sh): Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
-         #L4='4.  Alterar numero de casas decimais (usado nas calculadoras)
-
-          L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
-          L5='5.  Executar    | apk Texas TI-84 ROM'
-
-          L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
-          L3='3.  Agenda      | Repo: moedaz'
-          L2='2.  Historico'
-          L1='1.  Cancel'
-
-         L0='DRYa: Calculo: '
-
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
-                  
-      # Quando o menu de Escolha multipla tipo `for` loop
-         [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
-
-         [[ $v_list =~ "21. " ]] && f_cronometro_multi_datas
-         [[ $v_list =~ "20. " ]] && echo "uDev"
-         [[ $v_list =~ "19. " ]] && echo "uDev: Calculo entre data X e data Y. Exemplo: (20-01-2020 - 20-01-2018 = 2 anos)"
-         [[ $v_list =~ "18. " ]] && echo "uDev"
-         [[ $v_list =~ "17. " ]] && echo "uDev"
-         [[ $v_list =~ "16. " ]] && echo "uDev"
-         [[ $v_list =~ "15. " ]] && echo "uDev"
-         [[ $v_list =~ "14. " ]] && f_exec_calculadora_percentagens
-
-         [[ $v_list =~ "13. " ]] && f_eletricidade
-         [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
-         [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
-         [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3
-         [[ $v_list =~ "9.  " ]] && f_exec_calculadora_cambios
-         [[ $v_list =~ "8.  " ]] && f_exec_calculadora_conversora
-         [[ $v_list =~ "7.  " ]] && f_exec_calculadora_registadora
-      
-         [[ $v_list =~ "6.  " ]] && f_clc_bc
-         [[ $v_list =~ "5.  " ]] && echo "uDev: Open APK on Android"
-
-         [[ $v_list =~ "4.  " ]] && echo "uDev"
-         [[ $v_list =~ "3.  " ]] && echo "uDev"
-         [[ $v_list =~ "2.  " ]] && vim $v_reg
-         [[ $v_list =~ "1.  " ]] && sleep 0.1
-         unset v_list
+   f_clc_main_menu
 
 elif [ $1 == "." ]; then
    # Entrar diretamente na `bc` 
@@ -903,8 +926,7 @@ elif [ $1 == "," ]; then
    f_exec_calculadora_registadora
 
 elif [ $1 == "e" ] || [ $1 == "eletricidade" ]; then
-   echo akka
-
+   # Aceder diretamente ao menu com formulas de eletricidade
    f_eletricidade
 
 elif [ $1 == "3" ]; then

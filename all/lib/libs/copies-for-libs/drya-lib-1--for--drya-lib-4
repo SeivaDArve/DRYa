@@ -212,6 +212,55 @@ function F_talk {
    F_rc
 }
 
+
+
+
+
+
+
+
+
+
+#  Instructions of F_suc (success) options
+#
+#  | Name   | sucess | failed | green | red  | in-line | 2 lines |
+#  | F_suc1 | x      |        | x     |      |         | x       |
+#  | F_suc2 |        | x      |       | x    |         | x       |
+#
+#  | F_suc3 | x      |        | x     |      | x       |         |
+#  | F_suc4 |        | x      |       | x    | x       |         |
+#
+#  | F_suc5 | x      |        |       | x    |         | x       | (uDev) 
+#  | F_suc6 |        | x      | x     |      |         | x       | (uDev)
+#
+#  | F_suc7 | x      |        |       | x    | x       |         | (uDev)
+#  | F_suc8 |        | x      | x     |      | x       |         | (uDev)
+
+#  | F_suc  | `$1`   | `$2`   | `$3`  | `$4` | `$5`    | `$6`    | (uDev)
+
+
+function F_suc {
+
+   # uDev
+   
+   V_args_number=$#
+   echo $V_args_number  # Debug
+
+   # example: `f_suc [S|F] [G|R] [1|2]`         # Synopse  
+   # example: `f_suc S G 2`                     # $1 is Success; $2 is Green; $3 is "2 lines"
+   # example: `f_suc S R 1`                     # $1 is Success; $2 is Red  ; $3 is "1 line" 
+
+   # example: `echo -n "text" && F_suc S R 1`   # $1 is Success; $2 is Red  ; $3 is "1 line" 
+
+   if [[ $V_args_number == 3 ]]; then 
+      echo "hit" 1>/dev/null
+
+   else
+      echo "drya-lib-1: F_suc: Minimum args 6 not reached (error) "
+
+   fi
+}
+
 function F_suc1 {
    # Fx number 1 of 2 
    # Use this to give confirmation the previous command has successfull
@@ -247,6 +296,54 @@ function F_suc2 {
    # Set a variable to indicate exit status
       V_suc=1
 }
+
+function F_suc3 {
+   # Fx number 1 of 2 
+   # Use this to give confirmation the previous command has successfull
+   # Use it after text
+
+   # EXAMPLE: 
+   #     echo -n "Did this message work?" && echo "Success!"
+   #     echo -n "Did this message work?" && F_suc3 || F_suc4
+
+           echo -n " > "
+     F_c7; echo       "Success!"
+     F_rc
+
+   # Set a variable to indicate exit status
+      V_suc=0
+}
+
+function F_suc4 {
+   # Fx number 2 of 2 
+   # Use this to give confirmation the previous command has successfull
+   # Use it after text
+
+   # EXAMPLE: 
+   #     echo -n "Did this message work?" && echo "Success!"
+   #     echo -n "Did this message work?" && F_suc3 || F_suc4
+
+           echo -n " > "
+     F_c8; echo       "Failed!"
+     F_rc
+
+   # Set a variable to indicate exit status
+      V_suc=1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function F_done {
    # Use this after all precesses are finished
