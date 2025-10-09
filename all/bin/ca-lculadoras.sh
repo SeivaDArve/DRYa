@@ -123,8 +123,9 @@ function f_set_history_reg {
       echo "   $v_reg"
       echo
 
-   f_talk; echo "Any key to continue... "
-   read -sn 1 -t 6 -p " > "
+   v_secs=4
+   f_talk; echo "Any key to continue (or wait $v_secs secs)... "
+   read -sn 1 -t $v_secs -p " > "
    echo
 }
 
@@ -817,39 +818,39 @@ function f_clc_main_menu {
    # Texto do menu
       Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
 
-     #L20='20. Relogio     | Cronometro | Dolce Gusto (Mimic Times)
-      L21='21. Relogio     | Cronometro | multi datas < ficheiro.txt '
-      L20='20. Relogio     | Cronometro'
-      L19='19. Relogio     | Calculo entre 2 datas'
-      L18='18. Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-      L17='17. Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
-      L16='16. Relogio     | Temporizador'
-      L15='15. Relogio     | Despertador'
+     #L20='20. |   | Relogio     | Cronometro | Dolce Gusto (Mimic Times)
+      L21='21. |   | Relogio     | Cronometro | multi datas < ficheiro.txt '
+      L20='20. |   | Relogio     | Cronometro'
+      L19='19. |   | Relogio     | Calculo entre 2 datas'
+      L18='18. |   | Relogio     | Hora nacional      (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+      L17='17. |   | Relogio     | Hora internacional (usa internet)'  # Serve para nos dias de troca de hora, nao haver qualquer duvida
+      L16='16. |   | Relogio     | Temporizador'
+      L15='15. |   | Relogio     | Despertador'
 
-     #L13='13. Calculadora | Centralizar os furos de um quadro na parede (2 furos centraldos numa parede):   |----------|----|----------|
-     #L13='13. Calculadora | Tutorial: como fazer contas de Divisao Manualmente
-     #L13='13. Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
-     #L13='13. Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
-     #L13='13. Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
-     #L13='13. Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
-     #L13='13. Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
-      L14='14. Calculadora | Percentagens | `D ca p` | `D ca p d`' 
-      L13='13. Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
-      L12='12. Calculadora | supermercado'
-      L11='11. Calculadora | trim-the-hedge'
-      L10='10. Calculadora | regra-3-simples | `D ca 3`'
-       L9='9.  Calculadora | cambios'
-       L8='8.  Calculadora | Conversora de Unidades: Bitcoin'
-       L7='7.  Calculadora | registadora | `D ca ,` ' 
-      #L7='7.  Calculadora | registadora | `D ca x` '   ## (at drya.sh): Calculadora no proprio prompt de terminal, usando aspas: `D ca , x "100 - 23"`
-      #L4='4.  Alterar numero de casas decimais (usado nas calculadoras)
+     #L13='13. |   | Calculadora | Centralizar os furos de um quadro na parede (2 furos centraldos numa parede):   |----------|----|----------|
+     #L13='13. |   | Calculadora | Tutorial: como fazer contas de Divisao Manualmente
+     #L13='13. |   | Calculadora | Cv para Kw/h (Cavalos para Kilo watt)
+     #L13='13. |   | Calculadora | Criar nr Aleatorio'  # Ajudante para usar `shuf`
+     #L13='13. |   | Calculadora | Caudal      [ (L/min)  vs.vs   (m^3/h) ]
+     #L13='13. |   | Calculadora | Comprimento [ Polegadas (inches)  vs.vs  Centimetros ]
+     #L13='13. |   | Calculadora | Graus       [ Celcius  vs.vs  Farenheit  vs.vs  Kelvin ]
+      L14='14. | p | Calculadora | Percentagens | `D ca p` | `D ca p d`' 
+      L13='13. | e | Calculadora | Eletricidade'  # Conversora de eletricidade: Potencia, Voltagem, Amperagem, Resistencia, Preco em euros do quanto consome um eletrodomestico por hora
+      L12='12. |   | Calculadora | supermercado'
+      L11='11. |   | Calculadora | trim-the-hedge'
+      L10='10. | 3 | Calculadora | regra-3-simples'
+       L9='9.  |   | Calculadora | cambios'
+       L8='8.  |   | Calculadora | Conversora de Unidades: Bitcoin'
+       L7='7.  | , | Calculadora | registadora' 
+      #L7='7.  | = | Calculadora | registadora '   # Calculadora no proprio prompt de terminal, usando aspas: `D ca = "100 - 23"`
+      #L4='4.  |   | Alterar numero de casas decimais (usado nas calculadoras)
 
-       L6='6.  Executar    | `bc` (terminal default) | `D ca .`'
-       L5='5.  Executar    | apk Texas TI-84 ROM'
+       L6='6.  | . | Executar    | `bc` (terminal default)'
+       L5='5.  |   | Executar    | apk Texas TI-84 ROM'
 
-       L4='4.  Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
-       L3='3.  Agenda      | Repo: moedaz'
-       L2='2.  Historico'
+       L4='4.  |   | Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
+       L3='3.  |   | Agenda      | Repo: moedaz'
+       L2='2.  |   | Historico'
        L1='1.  Cancel'
 
       L0='DRYa: Calculo: '
@@ -946,6 +947,27 @@ elif [ $1 == "p" ]; then
       v_ask=yes
       f_exec_calculadora_percentagens
    fi
+
+elif [ $1 == "=" ]; then
+   # If arg $2 has no white spaces in it, calculation is possible
+   # Working example: `D ca x "4+4"`
+   # Error   example: `D ca x "4 + 4"`
+
+
+   f_greet
+   shift
+
+   f_talk; echo    "Calculating from the prompt: "
+     f_c6; echo    " < ($v_decimal decimal numbers)"
+           echo
+     f_rc; echo -n " < "
+     f_c3; echo       "$*"
+     f_rc
+
+   v_sed=$(sed 's/ //g' <(echo $*))
+   v_result=$(echo "scale=$v_decimal; $v_sed" | bc)
+
+   echo " > $v_result"
 
 elif [ $1 == "h" ]; then
    echo "uDev: help"
