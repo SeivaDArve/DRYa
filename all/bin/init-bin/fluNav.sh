@@ -1517,7 +1517,7 @@ function f_action {
             && echo "$v_pwd/$v_file" >> $v_fluNav_S_hist_file \
             && f_talk \
             && echo "a Editar: $v_file" \
-            && vim $v_file  
+            && bash e $v_file  
 
 
 
@@ -1537,7 +1537,7 @@ function f_action {
          [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
 
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ -n $v_last ]] && vim $v_last || echo "fluNav: S: Nothing written in history file to edit"
+         [[ -n $v_last ]] && bash e $v_last || echo "fluNav: S: Nothing written in history file to edit"
 
 
 
