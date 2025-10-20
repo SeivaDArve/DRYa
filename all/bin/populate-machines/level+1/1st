@@ -93,7 +93,7 @@ function f_usefull {
       tree
       linx
       tsu \          # To grant sudo permissions, may be needed to enable phone screenshots
-      gpg \          # Encryption/Decryption
+      gnupg \        # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
       ssh \          # Need to connect to raspberry Pi
       sshfs \        # Mout ssh as a file system 
       whiptail \     # Tool to give GUI menus on Bash
