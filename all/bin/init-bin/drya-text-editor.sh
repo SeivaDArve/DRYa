@@ -93,9 +93,12 @@ function e {
             done
 
       else
+         # Temporizador (em segundo)
+            v_secs=2
+
          # Mencionar se funciona ou nao
-            f_talk; echo "A editar ficheiros com: $trid_editor_name"
-            read -sn1 -t 2
+            f_talk; echo "A editar (em $v_secs segundos) ficheiros com: $trid_editor_name"
+            read -sn1 -t $v_secs
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
             for i in $* 
@@ -173,6 +176,21 @@ function ee {
 
    elif [ $1 == "." ]; then
       cat $trid_editor_file
+
+   elif [ $1 == "e" ] || [ $1 == "emacs" ]; then
+      # Define o emacs como editor de texto padrao
+
+      v_editor="emacs"
+      echo "$v_editor"   > $trid_editor_file
+      echo "DRYa: default text editor set as: $v_editor"
+
+   elif [ $1 == "v" ] || [ $1 == "vim" ]; then
+      # Define o vim como editor de texto padrao
+
+      v_editor="vim"
+      echo "$v_editor"   > $trid_editor_file
+      echo "DRYa: default text editor set as: $v_editor"
+
    fi
 }
 
