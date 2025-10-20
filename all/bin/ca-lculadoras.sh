@@ -814,6 +814,31 @@ function f_cronometro_multi_datas {
    f_calcular_tempo_decorrido_apos_data
 }
 
+
+function f_calculations_from_the_prompt {
+   # If arg $2 has no white spaces in it, calculation is possible
+   # Working example: `D ca x "4+4"`
+   # Error   example: `D ca x "4 + 4"`
+
+   # uDev: adicionar `-z $3` para possibilitar `D ca =` e dar instrucoes como se usa: `D ca = 67+  8 -7`
+
+   f_greet
+   shift
+
+   f_talk; echo    "Calculating from the prompt: "
+     f_c6; echo    " < ($v_decimal decimal numbers)"
+           echo
+     f_rc; echo -n " < "
+     f_c3; echo       "$*"
+     f_rc
+
+   v_sed=$(sed 's/ //g' <(echo $*))
+   v_result=$(echo "scale=$v_decimal; $v_sed" | bc)
+
+      echo " > $v_result"
+}
+
+
 function f_clc_main_menu {
    # Texto do menu
       Lz1='Save '; Lz2='D clc'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist 
@@ -848,6 +873,7 @@ function f_clc_main_menu {
        L6='6.  | . | Executar    | `bc` (terminal default)'
        L5='5.  |   | Executar    | apk Texas TI-84 ROM'
 
+      L22='22. | = | Print Instructions: Calc from the prompt'
        L4='4.  |   | Data/hora   | Visualizar horas'  # Varias formas de visualizar as horas e minutos no terminal
        L3='3.  |   | Agenda      | Repo: moedaz'
        L2='2.  |   | Historico'
@@ -855,7 +881,7 @@ function f_clc_main_menu {
 
       L0='DRYa: Calculo: '
 
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L22 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n\n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lz3" | fzf -m --cycle --prompt="$L0")
                
    # Quando o menu de Escolha multipla tipo `for` loop
       [[ $v_list =~ $Lz3   ]] && history -s "$Lz2" 
@@ -880,6 +906,7 @@ function f_clc_main_menu {
       [[ $v_list =~ "6.  " ]] && f_clc_bc
       [[ $v_list =~ "5.  " ]] && echo "uDev: Open APK on Android"
 
+      [[ $v_list =~ "22. " ]] && f_calculations_from_the_prompt 
       [[ $v_list =~ "4.  " ]] && echo "uDev"
       [[ $v_list =~ "3.  " ]] && echo "uDev"
       [[ $v_list =~ "2.  " ]] && vim $v_reg
@@ -949,25 +976,7 @@ elif [ $1 == "p" ]; then
    fi
 
 elif [ $1 == "=" ]; then
-   # If arg $2 has no white spaces in it, calculation is possible
-   # Working example: `D ca x "4+4"`
-   # Error   example: `D ca x "4 + 4"`
-
-
-   f_greet
-   shift
-
-   f_talk; echo    "Calculating from the prompt: "
-     f_c6; echo    " < ($v_decimal decimal numbers)"
-           echo
-     f_rc; echo -n " < "
-     f_c3; echo       "$*"
-     f_rc
-
-   v_sed=$(sed 's/ //g' <(echo $*))
-   v_result=$(echo "scale=$v_decimal; $v_sed" | bc)
-
-   echo " > $v_result"
+   f_calculations_from_the_prompt
 
 elif [ $1 == "h" ]; then
    echo "uDev: help"
