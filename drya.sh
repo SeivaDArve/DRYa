@@ -1080,18 +1080,19 @@ function f_QR_code_fzf_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D QR'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L6='6. Info: Website valido para criar QR codes'
+      L6='6. |   | Print Info (uDev): Website valido para criar QR codes'
 
-      L5='5. Obter QR text | Abrir Android App, get clipboard'
+      L5='5. |   | 1: "Abrir Android Camera"  2: "Ler QR"  3: "Save on clipboard"'
          
-      L4='4. Criar QR code | Apartir de 1 linha de 1 ficheiro'
-      L3='3. Criar QR code | Apartir de ficheiro inteiro'
-      L2='2. Criar QR code | Apartir de texto `curl`'
+      L4='4. |   | Criar QR code | Apartir de 1 linha de 1 ficheiro'
+      L3='3. |   | Criar QR code | Apartir de ficheiro inteiro'
+      L2='2. |   | Criar QR code | Apartir de texto `curl`'
+
       L1='1. Cancel'
 
-      L0="SELECIONE 1 Opcao: "
+      L0="DRYa: QR code Menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
@@ -1662,6 +1663,7 @@ function f_drya_fzf_MM_Toolbox {
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
          # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
+         L21='21. Menu   |  gpg  | gnu-privacy-guard (encrypt and decript files)'
          L20='20. Menu   |  zip  | zip unzip'
          L19='19. Script |  `d`  | Datas (menu)'
          L18='18. Script |   -   | Youtube download (with `yt-dlp`)'
@@ -1686,12 +1688,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "21. " ]] && f_gnu_privacy_guard_menu
          [[ $v_list =~ "20. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
          [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
@@ -1712,9 +1715,9 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
          [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
-         [[ $v_list =~ "3. "  ]] && f_dot_files_menu
-         [[ $v_list =~ "2. "  ]] && echo "uDev"
-         [[ $v_list =~ "1. "  ]] && echo "Canceled"
+         [[ $v_list =~ "3.  " ]] && f_dot_files_menu
+         [[ $v_list =~ "2.  " ]] && echo "uDev"
+         [[ $v_list =~ "1.  " ]] && echo "Canceled"
 
       # Evitar loops a mais
          # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
@@ -2219,6 +2222,9 @@ function f_help_installing_specific_packages {
 
 
 
+function f_gnu_privacy_guard_menu {
+   echo "uDev: \`gpg\` command comes from 'gnupg' package"
+}
 
 
 
@@ -2440,6 +2446,9 @@ elif [ $1 == "gps" ]; then
    # uDev: this function needs to go to the repo: master-GPS
 
    if [ -z "$2" ]; then
+      echo "uDev: repo omni-log: registo de coordenadas GPS favoritas"
+
+   elif [ $2 == "v" ]; then 
       # Displays current GPS location using GPS as provider
       termux-location -p gps  # The termux gps provider is `gps` by default
 
@@ -3602,6 +3611,11 @@ elif [ $1 == "hush" ]; then
 
 elif [ $1 == "zip" ] ; then 
    f_zip_unzip
+
+elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ]; then 
+   # Encrypt and Decript personal, private abd sensitive data
+
+   f_gnu_privacy_guard_menu
 
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
