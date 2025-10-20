@@ -418,6 +418,10 @@
   (message "Dv: Set toggle-truncate-lines to off")
   (toggle-truncate-lines -1))
 
+(defun dv-truncate-lines-toggle ()
+  (interactive)
+  (toggle-truncate-lines))
+
 (defun wrap ()
   (interactive)
   (message "Dv: Toggle text wrap on")
