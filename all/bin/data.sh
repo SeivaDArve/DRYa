@@ -272,6 +272,34 @@ function f_data_alarm {
    f_alarme & 
    # udev: buscar o numero do PID anterior e criar um alias para cancelar esse PID
 }
+
+
+function f_estacoes {
+   # source https://www.google.com/search?q=estacoes+do+ano&oq=estacoes+do+ano&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQABiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABDIHCAoQABiABDIHCAsQABiABDIHCAwQABiABDIHCA0QABiABDIHCA4QABiABNIBCDI3NzVqMGo0qAICsAIB&client=ms-android-oppo-rvo3&sourceid=chrome-mobile&ie=UTF-8
+   # source: Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
+
+   echo '
+Estacoes do ano:
+
+|        | Hemisferio | Primavera         | Verao                |
+|--------+------------+-------------------+----------------------|
+| Inicio | Sul        | 20 ou 21 de março | 21 ou 22 de dezembro |
+|        | Norte      | 21 de junho       | 22 de junho          |
+|--------+------------+-------------------+----------------------|
+
+|        | Hemisferio | Outono            | Inverno        |
+|--------+------------+-------------------+----------------|
+| Inicio | Sul        | 20 ou 21 de março | 21 de junho    |
+|        | Norte      | 23 de setembro    | 22 de dezembro |
+|--------+------------+-------------------+----------------|
+
+
+Mudanca de hora:
+ > Verao/Inverno Marco/Outubro 
+
+'
+}
+
 # -----------------------------------------------
 
 
@@ -298,7 +326,7 @@ elif  [ $1 == "." ]; then
 
      #L14='14. M | calandario lunisolar, em que cada mes tem 28 dias. 
       L19='19. | e | Data em formato numerico "ano-mes-dia"'
-      L18='18. | I | Informar dia/forma de mudanca de hora Verao/Inverno Marco/Outubro'  # Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
+      L18='18. | I | Estacoes do ano + Mudanca de hora '
       L17='17. | n | Nanoseconds only'
       L16='16. | i | Data da internet (nao confiar no pc)'
       L15='15. | F | Data curta para ficheiros (+ verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
@@ -327,7 +355,7 @@ elif  [ $1 == "." ]; then
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "19. " ]] && f_data_ano_mes_dia
-      [[ $v_list =~ "18. " ]] && echo "uDev"
+      [[ $v_list =~ "18. " ]] && f_estacoes 
       [[ $v_list =~ "17. " ]] && f_nanoseconds 
       [[ $v_list =~ "16. " ]] && echo "uDev"
       [[ $v_list =~ "15. " ]] && f_variables_date_to_file_verbose
@@ -427,6 +455,8 @@ elif  [ $1 == "M" ]; then
    # O primeiro dia da semana é sempre um domingo
    echo "uDev: Calendario com lua"
 
+elif  [ $1 == "I" ]; then
+   f_estacoes 
 
 fi
 
