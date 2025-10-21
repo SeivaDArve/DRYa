@@ -1,19 +1,23 @@
 #!/bin/bash
 # Title: data.sh
+__name__="data.sh"
 
-function f_c2 { 
-   # Fx for color 2
-   # Used: f_talk
 
-   tput setaf 12
-}
 
-function f_rc { 
-   # Fx for color reset
 
-   # This function is to be used when styles are to be CLEARED
-   tput sgr0
-}
+
+
+# Sourcing DRYa Lib 1: Color schemes
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   v_greet="DRYa"
+   v_talk="DRYa-data: "
+
+
+
+
+
 
 function f_background_process {
    echo "data test hit" >> $v_MSGS
@@ -95,25 +99,26 @@ function f_complete_date_loop {
 
 function f_complete_date_loop_plus_figlet {
    clear
-   figlet 'DRYa'
-   echo "DRYa: data.sh"
-   echo "----------------------------------------------------------"
+   f_greet
+   f_talk; echo "complete (+loop) (+ASCII):"
+   f_hzl
+   echo 
    f_complete_date_loop
 }
 
 function f_help {
    # Instructions / Help
   
-   echo 'DRYa: Command `data` with alias `d`'
-   echo ' > `data`      # Output 1x Current time'
-   echo ' > `data .`    # Main Menu'
-   echo ' > `data h`    # Help and Instructions'
-   echo ' > `data r`    # Loop Current time with figlet'
-   echo ' > `data l`    # Loop Current time'
-   echo ' > `data hr`   # Loop Current hour'
-   echo ' > `data v`    # Output 1x variable-like time'
-   echo ' > `data min`  # During 1 minut, display time'
-   echo ' > `data seg`  # During 1 second display time'
+   f_talk; echo 'Command `data` with alias `d`'
+           echo ' > `data`      # Output 1x Current time'
+           echo ' > `data .`    # Main Menu'
+           echo ' > `data h`    # Help and Instructions'
+           echo ' > `data r`    # Loop Current time with figlet'
+           echo ' > `data l`    # Loop Current time'
+           echo ' > `data hr`   # Loop Current hour'
+           echo ' > `data v`    # Output 1x variable-like time'
+           echo ' > `data min`  # During 1 minut, display time'
+           echo ' > `data seg`  # During 1 second display time'
 }
 
 function f_variables_date {
@@ -278,9 +283,9 @@ function f_estacoes {
    # source https://www.google.com/search?q=estacoes+do+ano&oq=estacoes+do+ano&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQABiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABDIHCAoQABiABDIHCAsQABiABDIHCAwQABiABDIHCA0QABiABDIHCA4QABiABNIBCDI3NzVqMGo0qAICsAIB&client=ms-android-oppo-rvo3&sourceid=chrome-mobile&ie=UTF-8
    # source: Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
 
+   f_greet
+   f_talk; echo "Estacoes do Ano:"
    echo '
-Estacoes do ano:
-
 |        | Hemisferio | Primavera         | Verao                |
 |--------+------------+-------------------+----------------------|
 | Inicio | Sul        | 20 ou 21 de março | 21 ou 22 de dezembro |
@@ -292,12 +297,11 @@ Estacoes do ano:
 | Inicio | Sul        | 20 ou 21 de março | 21 de junho    |
 |        | Norte      | 23 de setembro    | 22 de dezembro |
 |--------+------------+-------------------+----------------|
-
-
-Mudanca de hora:
- > Verao/Inverno Marco/Outubro 
-
 '
+   f_talk; echo "Mudanca de hora:"
+           echo " > Verao/Inverno Marco/Outubro"
+           echo
+
 }
 
 # -----------------------------------------------
