@@ -1694,7 +1694,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "21. " ]] && f_gnu_privacy_guard_menu
+         [[ $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
          [[ $v_list =~ "20. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
          [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
@@ -2222,9 +2222,6 @@ function f_help_installing_specific_packages {
 
 
 
-function f_gnu_privacy_guard_menu {
-   echo "uDev: \`gpg\` command comes from 'gnupg' package"
-}
 
 
 
@@ -3615,7 +3612,7 @@ elif [ $1 == "zip" ] ; then
 elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ]; then 
    # Encrypt and Decript personal, private abd sensitive data
 
-   f_gnu_privacy_guard_menu
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
 
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
