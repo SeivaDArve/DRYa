@@ -22,7 +22,8 @@ set -u  # Uma boa prática: faz com que qualquer variável não inicializada cau
 
 GPG=$(command -v gpg || true)  # Permite saber o path para o executavel OU acabar com um valor positivo. De ambas as formas o script nao acaba nem com erro nem com um valor inexistente
 if [[ -z "$GPG" ]]; then
-  echo "gpg não encontrado. Por favor instala o GnuPG e tenta novamente."
+  f_talk; echo "gpg não encontrado. Por favor instala o GnuPG e tenta novamente."
+          echo " > Experiementa \`D gpg i\` para instalar"
   exit 1
 fi
 
@@ -44,17 +45,27 @@ function f_header {
    set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
 }
 
+function f_hline {
+   set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
+   f_hzl
+   set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
+}
+
 f_run_with_confirm() {
 
    local func="$1"
    shift
    local message="$*"
 
-   echo "--------------------------------------"
-   echo "Instruções \`$func\` : "
+   f_header
+   f_talk; echo "Instruções \`$func\` : "
    echo " > $message"
-   echo "--------------------------------------"
-   if confirm "Deseja continuar com esta ação?"; then
+   f_hline
+
+   v_ask=$(f_talk)
+   v_ask="$v_ask Deseja continuar com esta ação?"
+
+   if confirm "$v_ask"; then
      echo
      $func
    else
@@ -111,10 +122,10 @@ symmetric_store() {
 }
 
 encrypt_for_recipient() {
-  read -rp "Ficheiro a encriptar: " infile
+  read -e -rp "Ficheiro a encriptar: " infile
   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
   read -rp "UID/KEYID do destinatário: " recipient
-  read -rp "Ficheiro de saída: " outfile
+  read -e   -rp "Ficheiro de saída: " outfile
   outfile=${outfile:-"${infile}.gpg"}
   if confirm "Deseja assinar o ficheiro com a sua chave privada?"; then
     $GPG --encrypt --sign --recipient "$recipient" --output "$outfile" "$infile"
@@ -249,38 +260,58 @@ function f_main_menu {
    echo "$LQ"
 }
 
-# MENU PRINCIPAL
-while true; do
-   f_header
-   f_talk; echo "Main Menu for \`gpg\` (with chatGPT):"
-           echo 
-   f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
+function f_GnuPG_main_menu {
+   # MENU PRINCIPAL
 
-   f_main_menu
-   echo
+   set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
 
-   f_talk; echo -n "Escolha uma opção: "
-   read -r opt
-   case "${opt,,}" in
-      1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
-      2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
-      3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
-      4)   f_run_with_confirm import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
-      5)   f_run_with_confirm export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
-      6)   f_run_with_confirm export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
-      7)   f_run_with_confirm symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
-      8)   f_run_with_confirm encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
-      9)   f_run_with_confirm decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
-      10)  f_run_with_confirm sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
-      11)  f_run_with_confirm verify_signature "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."; ;;
-      12)  f_run_with_confirm change_passphrase "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."; ;;
-      13)  f_run_with_confirm delete_key "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"; ;;
-      14)  f_run_with_confirm backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
-      15)  f_run_with_confirm restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
-      16)  f_run_with_confirm show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
+   while true
+   do
+      f_header
+      f_talk; echo "Main Menu for \`gpg\` (with chatGPT):"
+              echo 
+      f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
 
-      h)   f_header; f_talk; echo "Info"; echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"; pause ;;
-      q|Q) echo "Adeus!"; exit 0 ;;
-      *)   echo "Opção inválida."; pause ;;
-  esac
-done
+      f_main_menu
+      echo
+
+      f_talk; echo -n "Escolha uma opção: "
+      read -r opt
+      case "${opt,,}" in
+         1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
+         2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
+         3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
+         4)   f_run_with_confirm import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
+         5)   f_run_with_confirm export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
+         6)   f_run_with_confirm export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
+         7)   f_run_with_confirm symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
+         8)   f_run_with_confirm encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
+         9)   f_run_with_confirm decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
+         10)  f_run_with_confirm sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
+         11)  f_run_with_confirm verify_signature "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."; ;;
+         12)  f_run_with_confirm change_passphrase "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."; ;;
+         13)  f_run_with_confirm delete_key "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"; ;;
+         14)  f_run_with_confirm backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
+         15)  f_run_with_confirm restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
+         16)  f_run_with_confirm show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
+
+         h)   f_header; f_talk; echo "Info"; echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"; pause ;;
+         q|Q) echo "Adeus!"; exit 0 ;;
+         *)   echo "Opção inválida."; pause ;;
+     esac
+   done
+}
+
+
+set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
+
+if [ -z $1 ]; then
+   f_GnuPG_main_menu 
+
+elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
+   bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh 
+
+elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
+   bash pk + gnupg
+
+fi
