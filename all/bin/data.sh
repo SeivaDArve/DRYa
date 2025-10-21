@@ -47,7 +47,7 @@ function f_complete_date {
 
    # Montagem da data
       # Display: Titulo em linha com o restante
-         v_texto="(Data atual) -"
+         v_texto="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
 
       # Display: Grupo data hora
          v_txt="GDH"
@@ -57,11 +57,13 @@ function f_complete_date {
          v_min=$(date +'%M')
          v_mes=$(date +'%b')
          v_ano=$(date +'%Y')
-         v_texto="${v_texto} ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"
+        #v_texto="${v_texto} ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"  # Versao anterior, antes de usar drya-lib-1
+         v_text1=" > ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano})"
    
       # Display: Ano sozinho
          v_ano=$(date +'%Y')
-         v_texto="${v_texto} (Ano $v_ano) -"
+        #v_texto="${v_texto} (Ano $v_ano) -"  # Versao anterior, antes de usar drya-lib-1
+         v_texto="(Ano $v_ano) -"
 
       # Display: Mes sozinho
          v_mes=$(date +'%m %b')
@@ -73,14 +75,16 @@ function f_complete_date {
 
       # Display: Hora + minutos + segundos
          v_hora=$(date +'%H:%M:%S')
-         v_texto="${v_texto} (Hora $v_hora)"
+         v_texto=" > ${v_texto} (Hora $v_hora)"
 
    # Instrucoes ao desenvolvedor:
       # echo -ne "\r"      ## Move o cursor para o inicio da linha
       # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
 
       # Montrar o resultado no terminal
-         echo -ne "\r\033[K$v_texto "  
+         f_talk; echo "Horas (neste momento):"
+                 echo "$v_text1"
+                 echo -ne "\r\033[K$v_texto "  
 }
 
 function f_complete_date_loop {
@@ -98,10 +102,8 @@ function f_complete_date_loop {
 }
 
 function f_complete_date_loop_plus_figlet {
-   clear
    f_greet
    f_talk; echo "complete (+loop) (+ASCII):"
-   f_hzl
    echo 
    f_complete_date_loop
 }
@@ -283,6 +285,12 @@ function f_estacoes {
    # source https://www.google.com/search?q=estacoes+do+ano&oq=estacoes+do+ano&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQABiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABDIHCAoQABiABDIHCAsQABiABDIHCAwQABiABDIHCA0QABiABDIHCA4QABiABNIBCDI3NzVqMGo0qAICsAIB&client=ms-android-oppo-rvo3&sourceid=chrome-mobile&ie=UTF-8
    # source: Toda a info: https://www.calendarr.com/portugal/mudanca-de-hora-em-portugal/
 
+   # Último domingo de março
+      v_last_mar=$(date -d "$(date +%Y)-03-31 -$(date -d "$(date +%Y)-03-31" +%u) days" +%Y-%m-%d)
+
+   # Último domingo de outubro
+      v_last_out=$(date -d "$(date +%Y)-10-31 -$(date -d "$(date +%Y)-10-31" +%u) days" +%Y-%m-%d)
+
    f_greet
    f_talk; echo "Estacoes do Ano:"
    echo '
@@ -298,8 +306,16 @@ function f_estacoes {
 |        | Norte      | 23 de setembro    | 22 de dezembro |
 |--------+------------+-------------------+----------------|
 '
-   f_talk; echo "Mudanca de hora:"
-           echo " > Verao/Inverno Marco/Outubro"
+   f_talk; echo "Datas da Mudanca de hora em Portugal Continental:"
+           echo " > Verao:"
+           echo "   Dia          | Ultimo domingo de Marco     (fixo)"
+           echo "   Hora         | as 01h00 adianta para 02h00 (fixo)"
+           echo "   Proxima data | $v_last_mar"
+           echo
+           echo " > Inverno:"
+           echo "   Dia          | Ultimo domingo de Outubro  (fixo)"
+           echo "   Hora         | as 02h00 atrasa para 01h00 (fixo)"
+           echo "   Proxima data | $v_last_out"
            echo
 
 }
@@ -391,7 +407,6 @@ elif  [ $1 == "b" ]; then
     
 elif  [ $1 == "r" ]; then
    # Data completa esclarecida em loop com ASCII
-
    f_complete_date_loop_plus_figlet
 
 elif  [ $1 == "l" ]; then
