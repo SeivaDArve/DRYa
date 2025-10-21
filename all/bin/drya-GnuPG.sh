@@ -38,12 +38,7 @@ confirm() {
   [[ "$ans" =~ ^[Yy]$ ]]
 }
 
-header() {
-   #clear
-   #echo "==============================================="
-   #echo "        DRYa GnuPG Menu (with chatGPT)"
-   #echo "==============================================="
-
+function f_header {
    set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
    f_greet  # esta fx liga    a permissao de erros silenciosos (a falta de inicializacao de variaveis, tal como $1)
    set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
@@ -70,7 +65,8 @@ f_run_with_confirm() {
 
 list_public_keys() {
   echo "Chaves públicas (gpg --list-keys):"
-  $GPG --list-keys --keyid-format LONG
+  v_list=$($GPG --list-keys --keyid-format LONG)
+  [[ -n $v_list ]] && echo "$v_list" || echo " > Nao existe nenhuma"
 }
 
 list_private_keys() {
@@ -211,38 +207,60 @@ check_gpg_agent() {
   fi
 }
 
+function f_main_menu {
+    L0="0)  Instucoes Base"
+    L1="1)  Listar chaves públicas"
+    L2="2)  Listar chaves privadas / verificar existência"
+    L3="3)  Gerar nova chave (interativo)"
+    L4="4)  Importar chave"
+    L5="5)  Exportar chave pública"
+    L6="6)  Exportar chave privada (cuidado)"
+    L7="7)  Encriptação simétrica (com passphrase)"
+    L8="8)  Encriptar para destinatário (chave pública)"
+    L9="9)  Desencriptar ficheiro"
+   L10="10) Assinar ficheiro"
+   L11="11) Verificar assinatura"
+   L12="12) Mudar passphrase de uma chave"
+   L13="13) Apagar chave"
+   L14="14) Backup de todas as chaves"
+   L15="15) Restaurar chaves"
+   L16="16) Mostrar fingerprints"
+    LQ="Q)  Sair"
+
+   echo "$L0"
+   echo "$L1"
+   echo "$L2"
+   echo "$L3"
+   echo "$L4"
+   echo "$L5"
+   echo "$L6"
+   echo "$L7"
+   echo "$L8"
+   echo "$L9"
+   echo "$L10"
+   echo "$L11"
+   echo "$L12"
+   echo "$L13"
+   echo "$L14"
+   echo "$L15"
+   echo "$L16"
+   echo "$LQ"
+}
+
 # MENU PRINCIPAL
 while true; do
-  header
+   f_header
+   f_talk; echo "DRYa GnuPG Main Menu (with chatGPT):"
+           echo 
+   f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
 
-  f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
-  cat <<EOF
- 0) Instucoes Base
- 1) Listar chaves públicas
- 2) Listar chaves privadas / verificar existência
- 3) Gerar nova chave (interativo)
- 4) Importar chave
- 5) Exportar chave pública
- 6) Exportar chave privada (cuidado)
- 7) Encriptação simétrica (com passphrase)
- 8) Encriptar para destinatário (chave pública)
- 9) Desencriptar ficheiro
-10) Assinar ficheiro
-11) Verificar assinatura
-12) Mudar passphrase de uma chave
-13) Apagar chave
-14) Backup de todas as chaves
-15) Restaurar chaves
-16) Mostrar fingerprints
- Q) Sair
+   f_main_menu
+   echo
 
-EOF
-
-  f_talk; echo -n "Escolha uma opção: "
-  read -r opt
-  case "${opt,,}" in
-  
-      0)   clear; f_talk; echo "uDev: \`gpg\` command comes from 'gnupg' package"; pause ;;
+   f_talk; echo -n "Escolha uma opção: "
+   read -r opt
+   case "${opt,,}" in
+      0)   f_header; f_talk; echo "Info"; echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"; pause ;;
       1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
       2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
       3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
