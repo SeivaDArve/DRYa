@@ -208,26 +208,26 @@ check_gpg_agent() {
 }
 
 function f_main_menu {
-    L0="0)  Instucoes Base"
-    L1="1)  Listar chaves públicas"
-    L2="2)  Listar chaves privadas / verificar existência"
-    L3="3)  Gerar nova chave (interativo)"
-    L4="4)  Importar chave"
-    L5="5)  Exportar chave pública"
-    L6="6)  Exportar chave privada (cuidado)"
-    L7="7)  Encriptação simétrica (com passphrase)"
-    L8="8)  Encriptar para destinatário (chave pública)"
-    L9="9)  Desencriptar ficheiro"
-   L10="10) Assinar ficheiro"
-   L11="11) Verificar assinatura"
-   L12="12) Mudar passphrase de uma chave"
-   L13="13) Apagar chave"
-   L14="14) Backup de todas as chaves"
-   L15="15) Restaurar chaves"
-   L16="16) Mostrar fingerprints"
+    L1="1)  (Info) + Listar chaves públicas / verificar existência"
+    L2="2)  (Info) + Listar chaves privadas / verificar existência"
+    L3="3)  (Info) + Gerar nova chave (interativo)"
+    L4="4)  (Info) + Importar chave"
+    L5="5)  (Info) + Exportar chave pública"
+    L6="6)  (Info) + Exportar chave privada (cuidado)"
+    L7="7)  (Info) + Encriptação simétrica (com passphrase)"
+    L8="8)  (Info) + Encriptar para destinatário (chave pública)"
+    L9="9)  (Info) + Desencriptar ficheiro"
+   L10="10) (Info) + Assinar ficheiro"
+   L11="11) (Info) + Verificar assinatura"
+   L12="12) (Info) + Mudar passphrase de uma chave"
+   L13="13) (Info) + Apagar chave"
+   L14="14) (Info) + Backup de todas as chaves"
+   L15="15) (Info) + Restaurar chaves"
+   L16="16) (Info) + Mostrar fingerprints"
+
+    Lh="h)  Instucoes Base"
     LQ="Q)  Sair"
 
-   echo "$L0"
    echo "$L1"
    echo "$L2"
    echo "$L3"
@@ -244,13 +244,15 @@ function f_main_menu {
    echo "$L14"
    echo "$L15"
    echo "$L16"
+   echo
+   echo "$Lh"
    echo "$LQ"
 }
 
 # MENU PRINCIPAL
 while true; do
    f_header
-   f_talk; echo "DRYa GnuPG Main Menu (with chatGPT):"
+   f_talk; echo "Main Menu for \`gpg\` (with chatGPT):"
            echo 
    f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
 
@@ -260,7 +262,6 @@ while true; do
    f_talk; echo -n "Escolha uma opção: "
    read -r opt
    case "${opt,,}" in
-      0)   f_header; f_talk; echo "Info"; echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"; pause ;;
       1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
       2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
       3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
@@ -277,6 +278,8 @@ while true; do
       14)  f_run_with_confirm backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
       15)  f_run_with_confirm restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
       16)  f_run_with_confirm show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
+
+      h)   f_header; f_talk; echo "Info"; echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"; pause ;;
       q|Q) echo "Adeus!"; exit 0 ;;
       *)   echo "Opção inválida."; pause ;;
   esac
