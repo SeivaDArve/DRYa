@@ -50,8 +50,7 @@ function e {
          f_talk; echo "Escolhido editor 'vim'"
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
-            shift  # Para retirar `.`
-            shift  # Para retirar `v`
+            shift 2 # Para retirar `. v`
 
             for i in $* 
             do
@@ -64,8 +63,7 @@ function e {
          f_talk; echo "Escolhido editor 'emacs'"
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
-            shift  # Para retirar `.`
-            shift  # Para retirar `e`
+            shift 2 # Para retirar `. e`
 
             for i in $* 
             do
@@ -135,17 +133,16 @@ function ee {
       # Lista de opcoes para o menu `fzf`
          Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+         L11='11. less --wordwrap'
+         L10='10. vim in easy mode `vim -y`' 
 
-         L11='11. `clone repo` + `cd repo` + `e *example-file.txt*` + `git push`'
-         L10='10. less --wordwrap'
-          L9='9.  vim (easy mode, `vim -y`)' 
-
-          L8='8.  cat'
-          L7='7.  nano'
+          L9='9.  nvim '
+          L8='8.  cat  '
+          L7='7.  nano '
           L6='6.  less '
-          L5='5.  ed'   # Antigo editor de texto da Unix/Linux 
+          L5='5.  ed   '   # Antigo editor de texto da Unix/Linux 
           L4='4.  emacs'
-          L3='3.  vim'
+          L3='3.  vim  '
 
          #L2='2.  [ ] Adicionar 'Confirmacao' antes de abrir qualquer ficheiro
           L2='2.  Print editor atual | `ee .` ou `e ..`'
@@ -154,24 +151,24 @@ function ee {
          Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
          L0="fluNav: ee: Set/Toggle/Swap text editor: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente (deste menu)
          echo "$Lz2" >> $Lz4
    
       # Perceber qual foi a escolha da lista
          [[   $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[   $v_list =~ "11. " ]] && echo "uDev"
-         [[   $v_list =~ "10. " ]] && echo "less --wordwrap" > $trid_editor_file
-         [[   $v_list =~ "9.  " ]] && echo "vim -y"          > $trid_editor_file
+         [[   $v_list =~ "11. " ]] && echo "less --wordwrap" > $trid_editor_file
+         [[   $v_list =~ "10. " ]] && echo "vim -y"          > $trid_editor_file
+         [[   $v_list =~ "9.  " ]] && echo "nvim"            > $trid_editor_file
          [[   $v_list =~ "8.  " ]] && echo "cat"             > $trid_editor_file
          [[   $v_list =~ "7.  " ]] && echo "nano"            > $trid_editor_file
          [[   $v_list =~ "6.  " ]] && echo "less"            > $trid_editor_file
          [[   $v_list =~ "5.  " ]] && echo "ed"              > $trid_editor_file
          [[   $v_list =~ "4.  " ]] && echo "emacs"           > $trid_editor_file
          [[   $v_list =~ "3.  " ]] && echo "vim"             > $trid_editor_file
-         [[   $v_list =~ "2.  " ]] && cat $trid_editor_file
-         [[   $v_list =~ "1. "  ]] && echo "Canceled: Menu: $Lz2" 
+         [[   $v_list =~ "2.  " ]] && cat                      $trid_editor_file
+         [[   $v_list =~ "1.  " ]] && echo "Canceled: Menu: $Lz2" 
          unset v_list
 
    elif [ $1 == "." ]; then
@@ -191,6 +188,20 @@ function ee {
       echo "$v_editor"   > $trid_editor_file
       echo "DRYa: default text editor set as: $v_editor"
 
+   elif [ $1 == "V" ] || [ $1 == "nvim" ]; then
+      # Define o vim como editor de texto padrao
+
+      v_editor="nvim"
+      echo "$v_editor"   > $trid_editor_file
+      echo "DRYa: default text editor set as: $v_editor"
+   fi
+
+   if [[ -n $2 ]]; then
+      # After fast defining a text editor, commands may follow imediatly if $2 or more arg exist
+      # Note: Default text editor is permanently changed
+
+      shift 
+      eval $*
    fi
 }
 
