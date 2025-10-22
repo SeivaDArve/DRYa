@@ -16,9 +16,18 @@
 
 
 
+function f_allow_empty_vars {
+   # Liga/Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
+   set +u   
+}
+
+function f_deny_empty_vars {
+   # Desliga/Rejeita erros silenciosos (a falta de inicializacao de variaveis)
+   # Uma boa prática: faz com que qualquer variável não inicializada cause erro imediatamente — evita bugs silenciosos.
+   set -u  
+}
 
 
-set -u  # Uma boa prática: faz com que qualquer variável não inicializada cause erro imediatamente — evita bugs silenciosos.
 
 GPG=$(command -v gpg || true)  # Permite saber o path para o executavel OU acabar com um valor positivo. De ambas as formas o script nao acaba nem com erro nem com um valor inexistente
 if [[ -z "$GPG" ]]; then
@@ -27,12 +36,12 @@ if [[ -z "$GPG" ]]; then
   exit 1
 fi
 
-pause() {
+function pause {
   echo
   read -rn 1 -p 'Prima "Qualquer Tecla" para continuar... '
 }
 
-confirm() {
+function confirm {
   local msg=${1:-"Confirma?"}
   read -rn1 -p "$msg (y/N): " ans
   echo
@@ -40,18 +49,28 @@ confirm() {
 }
 
 function f_header {
-   set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
-   f_greet  # esta fx liga    a permissao de erros silenciosos (a falta de inicializacao de variaveis, tal como $1)
-   set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
+   f_allow_empty_vars 
+   f_greet  
+   f_deny_empty_vars 
 }
 
 function f_hline {
-   set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
+   f_allow_empty_vars 
    f_hzl
-   set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
+   f_deny_empty_vars 
 }
 
-f_run_with_confirm() {
+function f_ls {
+   # Usa simplesmente o comando `ls` para facilitar o autocomplete nos momentos em que algum menu pede um nome de um ficheiro de entrada
+
+   f_hline
+   f_talk; echo "Comando \`ls\` para facilitar:" 
+   echo
+   ls -pA
+   f_hline
+}
+
+function f_run_with_confirm {
 
    local func="$1"
    shift
@@ -66,7 +85,7 @@ f_run_with_confirm() {
    v_ask="$v_ask Deseja continuar com esta ação?"
 
    if confirm "$v_ask"; then
-     echo
+     #echo
      $func
    else
      echo "Ação cancelada."
@@ -74,36 +93,39 @@ f_run_with_confirm() {
    pause
 }
 
-list_public_keys() {
+function list_public_keys {
   echo "Chaves públicas (gpg --list-keys):"
   v_list=$($GPG --list-keys --keyid-format LONG)
   [[ -n $v_list ]] && echo "$v_list" || echo " > Nao existe nenhuma"
 }
 
-list_private_keys() {
+function list_private_keys {
   echo "Chaves privadas (gpg --list-secret-keys):"
   $GPG --list-secret-keys --keyid-format LONG
 }
 
-generate_key() {
+function generate_key {
   $GPG --full-generate-key
   echo "Chave gerada:"
   $GPG --list-secret-keys --keyid-format LONG
 }
 
-import_key() {
-  read -rp "Ficheiro de chave a importar: " file
-  [[ ! -f "$file" ]] && echo "Ficheiro não encontrado." && return
-  $GPG --import "$file"
+function import_key {
+   f_ls
+   f_talk; echo "Escolha o Ficheiro de chave a importar: "
+   read -erp " < " file
+   echo
+   [[ ! -f "$file" ]] && echo " < " && return
+   $GPG --import "$file"
 }
 
-export_public_key() {
-  read -rp "UID ou KEYID da chave pública a exportar: " key
-  read -rp "Ficheiro de saída: " out
+function export_public_key {
+  read -rp  "UID ou KEYID da chave pública a exportar: " key
+  read -erp "Ficheiro de saída: " out
   $GPG --export --armor "$key" >"$out" && echo "Exportado para $out"
 }
 
-export_private_key() {
+function export_private_key {
   read -rp "UID ou KEYID da chave privada a exportar: " key
   read -rp "Ficheiro de saída (CUIDADO): " out
   if confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
@@ -113,7 +135,7 @@ export_private_key() {
   fi
 }
 
-symmetric_store() {
+function symmetric_store {
   read -rp "Ficheiro a encriptar: " infile
   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
   read -rp "Ficheiro de saída: " outfile
@@ -121,7 +143,7 @@ symmetric_store() {
   $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile"
 }
 
-encrypt_for_recipient() {
+function encrypt_for_recipient {
   read -e -rp "Ficheiro a encriptar: " infile
   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
   read -rp "UID/KEYID do destinatário: " recipient
@@ -135,7 +157,7 @@ encrypt_for_recipient() {
   echo "Ficheiro encriptado para $recipient em $outfile"
 }
 
-decrypt_file() {
+function decrypt_file {
   read -rp "Ficheiro a desencriptar: " infile
   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
   read -rp "Ficheiro de saída (ou Enter para default): " outfile
@@ -143,7 +165,7 @@ decrypt_file() {
   $GPG --output "$outfile" --decrypt "$infile" && echo "Desencriptado para $outfile"
 }
 
-sign_file() {
+function sign_file {
   read -rp "Ficheiro a assinar: " infile
   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
   read -rp "Ficheiro de assinatura (.sig): " sigout
@@ -151,22 +173,22 @@ sign_file() {
   $GPG --armor --detach-sign --output "$sigout" "$infile" && echo "Assinatura criada em $sigout"
 }
 
-verify_signature() {
+function verify_signature {
 
   # Note `read -e` permite usar 'readline' do bash interativo, ou seja, permite "autocomplete" com a tecla Tab e assim, encontra ficheiros ou diretorios que existam na pasta atual
-  read -e -rp "Ficheiro original: " infile
-  read -e -rp "Ficheiro .sig: " sig
+  read -erp "Ficheiro original: " infile
+  read -erp "Ficheiro .sig: " sig
   [[ ! -f "$infile" || ! -f "$sig" ]] && echo "Ficheiro(s) não encontrado(s)." && return
   $GPG --verify "$sig" "$infile"
 }
 
-change_passphrase() {
+function change_passphrase {
   read -rp "UID/KEYID da chave: " key
   echo "No prompt GPG, escreva: passwd"
   $GPG --edit-key "$key"
 }
 
-delete_key() {
+function delete_key {
   read -rp "UID/KEYID da chave pública a apagar: " key
   if confirm "Apagar chave pública $key?"; then
     $GPG --batch --yes --delete-key "$key"
@@ -176,20 +198,20 @@ delete_key() {
   fi
 }
 
-backup_all_keys() {
+function backup_all_keys {
   read -rp "Prefixo para ficheiros de backup: " out
   $GPG --export-secret-keys --armor >"${out}.secret.asc"
   $GPG --export --armor >"${out}.pub.asc"
   echo "Backups criados: ${out}.secret.asc e ${out}.pub.asc"
 }
 
-restore_keys() {
+function restore_keys {
   read -rp "Ficheiro de chaves a importar: " file
   [[ ! -f "$file" ]] && echo "Ficheiro não encontrado." && return
   $GPG --import "$file"
 }
 
-show_key_fingerprints() {
+function show_key_fingerprints {
 
    # Mostrar lista de Fingerprints publicas
       echo "Fingerprints públicas:"
@@ -207,7 +229,7 @@ show_key_fingerprints() {
       echo
 }
 
-check_gpg_agent() {
+function check_gpg_agent {
   local count
   count=$($GPG --list-secret-keys --with-colons 2>/dev/null | grep -c '^sec' || true)
   if [[ "$count" -eq 0 ]]; then
@@ -218,34 +240,42 @@ check_gpg_agent() {
   fi
 }
 
-function f_main_menu {
-    L1="1)  (Info) + Listar chaves públicas / verificar existência"
-    L2="2)  (Info) + Listar chaves privadas / verificar existência"
-    L3="3)  (Info) + Gerar nova chave (interativo)"
-    L4="4)  (Info) + Importar chave"
-    L5="5)  (Info) + Exportar chave pública"
-    L6="6)  (Info) + Exportar chave privada (cuidado)"
-    L7="7)  (Info) + Encriptação simétrica (com passphrase)"
-    L8="8)  (Info) + Encriptar para destinatário (chave pública)"
-    L9="9)  (Info) + Desencriptar ficheiro"
-   L10="10) (Info) + Assinar ficheiro"
-   L11="11) (Info) + Verificar assinatura"
-   L12="12) (Info) + Mudar passphrase de uma chave"
-   L13="13) (Info) + Apagar chave"
-   L14="14) (Info) + Backup de todas as chaves"
-   L15="15) (Info) + Restaurar chaves"
-   L16="16) (Info) + Mostrar fingerprints"
+function f_main_menu_text {
+   L00=" | opc | fx"
+    L0=" |  0  | Info : Listar DRYa default settings"
+    L1=" |  1  | Info + Listar chaves públicas / verificar existência"
+    L2=" |  2  | Info + Listar chaves privadas / verificar existência"
+    L3=" |  3  | Info + Gerar nova chave (interativo)"
+    L4=" |  4  | Info + Importar chave"
+    L5=" |  5  | Info + Exportar chave pública"
+    L6=" |  6  | Info + Exportar chave privada (cuidado)"
+    L7=" |  7  | Info + Encriptação    simétrica (com passphrase)"
+   L17=" | 17  | Info + Desencriptação simétrica (com passphrase)"
+    L8=" |  8  | Info + Encriptar para destinatário (chave pública)"
+    L9=" |  9  | Info + Desencriptar ficheiro"
+   L10=" | 10  | Info + Assinar ficheiro"
+   L11=" | 11  | Info + Verificar assinatura"
+   L12=" | 12  | Info + Mudar passphrase de uma chave"
+   L13=" | 13  | Info + Apagar chave"
+   L14=" | 14  | Info + Backup de todas as chaves"
+   L15=" | 15  | Info + Restaurar chaves"
+   L16=" | 16  | Info + Mostrar fingerprints"
+    Lh=" |  h  | Instucoes Base"
+    LQ=" |  Q  | Sair"
 
-    Lh="h)  Instucoes Base"
-    LQ="Q)  Sair"
-
+   echo "$L00"
+   f_hline
+   echo "$L0"
    echo "$L1"
    echo "$L2"
    echo "$L3"
    echo "$L4"
    echo "$L5"
    echo "$L6"
+   f_hline
    echo "$L7"
+   echo "$L17"
+   f_hline
    echo "$L8"
    echo "$L9"
    echo "$L10"
@@ -255,36 +285,54 @@ function f_main_menu {
    echo "$L14"
    echo "$L15"
    echo "$L16"
-   echo
+   f_hline
    echo "$Lh"
    echo "$LQ"
 }
 
-function f_GnuPG_main_menu {
-   # MENU PRINCIPAL
+function f_testing_drya_defaults {
+   f_header
+   f_talk; echo "Testing DRYa defaults"
+           echo " > package 'gnupg' installed?"
+           echo " > Private key exists?"
+           echo 
+   # uDev: Se houver erros: `read -sn1` com pedido para resolver
+}
 
-   set -u   # esta fx desliga a permissao de erros silenciosos (a falta de inicializacao de variaveis)
+function f_GnuPG_main_menu {
+   # Menu Principal GnuPG
+
+   f_deny_empty_vars 
 
    while true
    do
       f_header
       f_talk; echo "Main Menu for \`gpg\` (with chatGPT):"
+              echo " > Tudo ok (uDev)"
+              echo " > Falta X (uDev)"
               echo 
       f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
 
-      f_main_menu
+      f_main_menu_text
       echo
 
       f_talk; echo -n "Escolha uma opção: "
       read -r opt
+
+      # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
+      #       Exemplo:  `case "${opt,,}" in ... esac`
+
       case "${opt,,}" in
-         1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
+         0)  f_testing_drya_defaults; read -sn1;;
+         1)   f_run_with_confirm
+              list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
          2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
          3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
          4)   f_run_with_confirm import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
          5)   f_run_with_confirm export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
          6)   f_run_with_confirm export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
          7)   f_run_with_confirm symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
+         17)  f_run_with_confirm symmetric_decrypt "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
          8)   f_run_with_confirm encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
          9)   f_run_with_confirm decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
          10)  f_run_with_confirm sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
@@ -303,15 +351,38 @@ function f_GnuPG_main_menu {
 }
 
 
-set +u   # Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
+
+
+
+
+
+
+# -------------------------------------------
+# -- Functions above --+-- Arguments Below --
+# -------------------------------------------
+
+
+
+
+
+
+
+
+
+f_allow_empty_vars 
 
 if [ -z $1 ]; then
+   f_testing_drya_defaults 
    f_GnuPG_main_menu 
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh 
 
 elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
+   #bash pk ?? gnupg  # Retorna uma var $v_last_check"
+   #echo "Last check: $v_last_check"
+   #read -sn1
+
    bash pk + gnupg
 
 fi
