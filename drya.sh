@@ -820,24 +820,29 @@ function f_dot_files_install_vimrc {
 
    f_greet
 
-   f_talk; echo -n "Installing "
-     f_c2; echo    ".vimrc"
+   f_talk; echo "Installing "
+     f_c3; echo " > .vimrc   (vim)"
+     f_c3; echo " > init.vim (nvim)"
      f_rc; echo
-   f_talk; echo    "STEP 1: Copy .vimrc"
-           echo    " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
-           echo    " > To:     ~/"
+   f_talk; echo "STEP 1: Copy .vimrc"
+           echo " > File 1: .../DRYa/all/etc/dot-files/vim/.vimrc"
+           echo " > To:     ~/"
            echo
-   f_talk; echo    "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
-           echo    " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
-           echo    " > to:   \"let g:dryaREPOS = '$v_v1' \" "
+   f_talk; echo "STEP 2: At ~/.vimrc replace global variable: dryaREPOS"
+           echo " > from: \"let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>' \" "
+           echo " > to:   \"let g:dryaREPOS = '$v_v1' \" "
            echo
+   f_talk; echo "STEP 3: Copy ~/.vimrc to ~/.config/nvim/init.vim"
+           echo
+
+   f_hzl
 
    v_txt="Install .vimrc" && f_anyK
            echo
    
    # Start STEP 1
       cp $v_file $v_place && f_talk && echo "STEP 1: Done! "
-           echo
+      echo
 
    # Start STEP 2
       # At sed, we search patterns with /pattern
@@ -845,6 +850,13 @@ function f_dot_files_install_vimrc {
       # At sed, we replace entire line with variable with c\\
       # So... /pattern/c\\<variable-here>
       sed -i "/let g:dryaREPOS/c\\$v_v2" ~/.vimrc && f_talk && echo "STEP 2: Done! "
+      echo
+
+
+   # Start STEP 3
+      # Copy ~/.vimrc to ~/.config/nvim/init.vim  (sending from `vim` to `nvim`)
+      mkdir -p          ~/.config/nvim/
+      cp       ~/.vimrc ~/.config/nvim/init.vim 
 
    # uDev: Ask if user want to install vim powerline (or echo out how to do)
 }

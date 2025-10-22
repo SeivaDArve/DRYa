@@ -45,6 +45,7 @@ function f_gr_2_hard_dependencies {
    ncurses-utils \  # Instals packages like `tput`
    less          \  # Dependency for ezGIT (example: `git diff --staged` will only list diferences if less is installed. It will claim 'pager' was not found
    vim           \  # Most Powerfull text editor
+  #nvim          \  # neovim suporta melhor o clipboard
    file          \  # Dependency for ezGIT
    fzf           \  # Fuzzyfinder
    -y
