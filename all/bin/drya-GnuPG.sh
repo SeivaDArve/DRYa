@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
-# gpg-menu.sh
-# Menu interativo para operações GnuPG com confirmação e explicações
+#!/bin/bash
+# Title: DRYa-GnuPG
+# Description: Menu para operações GnuPG com explicações e confirmacao antes de executar
 
 
 
@@ -10,9 +10,8 @@
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
-   # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-      v_greet="DRYa"
-      v_talk="DRYa-GnuPG: "
+   v_greet="DRYa"
+   v_talk="DRYa-GnuPG: "
 
 
 
@@ -28,13 +27,6 @@ function f_deny_empty_vars {
 }
 
 
-
-GPG=$(command -v gpg || true)  # Permite saber o path para o executavel OU acabar com um valor positivo. De ambas as formas o script nao acaba nem com erro nem com um valor inexistente
-if [[ -z "$GPG" ]]; then
-  f_talk; echo "gpg não encontrado. Por favor instala o GnuPG e tenta novamente."
-          echo " > Experiementa \`D gpg i\` para instalar"
-  exit 1
-fi
 
 function pause {
   echo
@@ -57,22 +49,79 @@ function f_hline {
 function f_ls {
    # Usa simplesmente o comando `ls` para facilitar o autocomplete nos momentos em que algum menu pede um nome de um ficheiro de entrada
 
+   f_allow_empty_vars 
    f_hline
    f_talk; echo "Comando \`ls\` para facilitar:" 
    echo
    ls -pA
    f_hline
+   f_deny_empty_vars 
+}
+
+function f_gpg_path {
+   # Descobrir o path para o executavel OU acabar com um valor positivo. De ambas as formas o script nao acaba nem com erro nem com um valor inexistente. 
+     #GPG=$(command -v gpg || true)  # Legacy from ChatGPT
+      GPG=$(command -v gpg)  
+}
+
+function f_detetar_path_for_gpg_command {
+   # Criar uma var $GPG com info do caminho do executavel
+
+   f_header
+
+   # Descobrir o caminho do script
+      f_gpg_path
+
+   # Se nao existir nenhum, pergunta se quer instalar
+      if [[ -z "$GPG" ]]; then
+         f_talk; echo "gpg não Instalado"
+                 echo " > Instala com \`D gpg i\`"
+
+         if confirm " > Pretende instalar agora?"; then
+               echo " > Vai ser instalado (3s)..."
+               read -sn1 -t 3
+               echo
+
+               f_talk; echo "A instalar 'gnupg':"
+               pk + gnupg
+               echo
+         else
+               echo " > Nao vai ser instalado"
+               echo
+         fi
+
+      fi
+
+   # Descobrir o caminho do script (novamente)
+      f_gpg_path
+
+   # Se continuar a nao existir nenhum, pergunta se quer realmente aceder ao menu
+      if [[ -z "$GPG" ]]; then
+         f_talk; echo "gpg não Instalado (confirmacao)"
+
+         if confirm " > Pretende a mesma aceder ao menu/comandos?"; then
+            clear
+               
+         else
+               echo " > A sair"
+               exit 1
+         fi
+
+      fi
+
+
+
+
 }
 
 function confirm {
   local msg=${1:-"Confirma?"}
-  read -rn1 -p "$msg (y/N): " ans
+  read -rn1 -p "$msg (y|N): " ans
   echo
   [[ "$ans" =~ ^[Yy]$ ]]
 }
 
 function f_run_with_confirm {
-
    f_allow_empty_vars 
    local func="$1"
    f_deny_empty_vars 
@@ -135,12 +184,26 @@ function export_private_key {
   fi
 }
 
-function symmetric_store {
-  read -rp "Ficheiro a encriptar: " infile
-  [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-  read -rp "Ficheiro de saída: " outfile
-  outfile=${outfile:-"${infile}.gpg"}
-  $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile"
+function f_symmetric_store {
+   f_ls
+   read -erp "Ficheiro a encriptar: " infile
+   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+   read -erp "Ficheiro de saída (default: {entrada}.gpg): " outfile
+   outfile=${outfile:-"${infile}.gpg"}
+   $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile"
+}
+
+function f_symmetric_decrypt {
+   f_ls
+   read -erp "Ficheiro de entrada (a desencriptar): " infile
+   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+
+   read -erp "Ficheiro de saída, novo nome. (default: Terminal Output): " outfile
+   [[ -z   "$outfile" ]] && echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" && return
+
+   [[ -n "$outfile" ]] && $GPG -o $outfile -d $infile
+   [[ -z "$outfile" ]] && $GPG -d $infile
+   pause
 }
 
 function encrypt_for_recipient {
@@ -448,10 +511,16 @@ function f_main_menu_text {
 }
 
 function f_testing_drya_defaults {
+
+   f_gpg_path
+
    f_header
    f_talk; echo "Testing DRYa defaults"
-           echo " > package 'gnupg' installed?"
+           echo " > software 'gnupg' installed?"
+           echo " > software \"zip\" \"unzip\" installed?"
            echo " > Private key exists?"
+           echo " > Apagar duplicados automaticamente?"
+           echo "   (Sim)(Nao)(Copiar; Usar copia)"
            echo 
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
 }
@@ -459,7 +528,9 @@ function f_testing_drya_defaults {
 function f_testing_drya_defaults__verbose {
    # Apos a fx f_testing_drya_defaults acumular variaveis de status, apenas as relevantes serao mesncionadas aqui, para deixar o user informado do estado atual, permanentemente
 
-   f_talk; echo "Main Menu for \`gpg\` (with chatGPT):"
+   f_talk; echo "Main Menu for \`gpg\`:"
+           echo
+   f_talk; echo "Status:"
            echo " > Tudo ok                (uDev)"
            echo " > Falta X                (uDev)"
            echo " > Permissoes de ~/.gnupg (uDev)"  # Costuma ser exigente com as permissoes. Usa `chmod 700 ~/.gnupg` para corrigir
@@ -486,8 +557,8 @@ function f_GnuPG_main_menu__take_action {
       4)   f_run_with_confirm import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
       5)   f_run_with_confirm export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
       6)   f_run_with_confirm export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
-      7)   f_run_with_confirm symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
-      17)  f_run_with_confirm symmetric_decrypt "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
+      7)   f_run_with_confirm f_symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
+      17)  f_run_with_confirm f_symmetric_decrypt "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
       8)   f_run_with_confirm encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
       9)   f_run_with_confirm decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
       10)  f_run_with_confirm sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
@@ -553,6 +624,7 @@ function f_GnuPG_main_menu {
 
 
 
+f_detetar_path_for_gpg_command 
 f_allow_empty_vars 
 
 if [ -z $1 ]; then
