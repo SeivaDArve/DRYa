@@ -174,9 +174,10 @@ function f_main_menu {
       L2='2. Nota   | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
       L1='1. Cancel'
 
+      Lh=$(echo -e "\nInfo: no-tes.sh\n - É um menu minimalista que permite editar ficheiros favoritos\n - A repo DRYa nao guarda texto em si pripria\n   Guarda texto maioritariamente na repo 'omni-log'\n - Se nao for possivel o download ou utilizacao de 'omni-log' \n   o texto é guardado temporariamente offline em drya-mail-box\n ")
       L0="DRYa: no-tes: main menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
