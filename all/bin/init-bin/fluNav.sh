@@ -395,7 +395,7 @@ function f_edit_self {
               echo 
 
    # Verbose: Actually opening the file
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+      bash e ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
 
    # Verbose: After opening the file
       f_talk; echo "Closed: fluNav original file"
@@ -656,12 +656,18 @@ function h {
    # uDev: passar esta fx para `V .` Exemplo: `V . 1`
    #       ou se junta com `V mb` ambos passavam a `V v`
 
-   L1="$HOME"                    # Linux Default home dir for current user. (For TAILS it is anmnesic and it is always empty)
-   L2='/mnt/c"  '            # On windows, this navigates to disk root 'C:\'
-   L3='/mnt/c/Users/$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")'  # Pesquisa o utilizador e naveC:\%userprofile%
-   L4='~/Persistent/HOME/"'  # Used on TAIL (Persistence is set on OS instalation; HOME is manually created after OS instalations)
-   L5='termux-bridge-android"'
-   L6='shared-HDD-home-partition"'
+   
+   L1="$HOME (defaulf ~ at current-terminal)"    # Linux Default home dir for current user. (For TAILS it is anmnesic and it is always empty)
+   L2='/mnt/c/  '            # On windows, this navigates to disk root 'C:\'
+
+  #L3'/mnt/c/Users/$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")'   # Exemplo, tudo numa so linha: Pesquisa o utilizador e navega para C:\%userprofile%
+   L3u=$(cmd.exe /C "echo %USERNAME%" | tr -d "\r")                # Pesquisa o utilizador atual no windows
+   L3="/mnt/c/Users/$L3u"                                          # Descreve o caminha da pasta do utilizador 
+   L3v="$L3    (default / at current-machine)"                       # Verbose version of the path to the user 
+
+   L4='~/Persistent/HOME/'   # Used on TAIL (Persistence is set on OS instalation; HOME is manually created after OS instalations)
+   L5='termux-bridge-android'
+   L6='shared-HDD-home-partition'
    L7="${v_REPOS_CENTER}/"
 
    if [ -z $1 ]; then
@@ -672,7 +678,7 @@ function h {
       echo "flunav: h: Arguments for home possibilities"
       echo " 1 | $L1 "
       echo " 2 | $L2 "
-      echo " 3 | $L3 "
+      echo " 3 | $L3v "
       echo " 4 | $L4 "
       echo " 5 | $L5 "
       echo " 6 | $L6 "
@@ -680,7 +686,7 @@ function h {
       echo " 8 | $L8 "
 
    elif [ $1 == "1" ]; then
-      cd $L1
+      cd $HOME
 
    elif [ $1 == "2" ]; then
       cd $L2
@@ -1379,7 +1385,7 @@ function V {
 
          # Criar um menu apartir do historico  
             # uDev: apagar linhas repetidas
-            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --wrap --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")
+            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")  # Bug: fzf no WSL2 nao suporta --wrap
       
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls -p && unset $v_hist
@@ -1554,7 +1560,7 @@ function f_action {
 
       # Buscar uma das linhas
          L0="fluNav: S: edite 1 ficheiro (do historico): "
-         v_hist=$(cat $v_temporary | fzf --tac --wrap --prompt "$L0")
+         v_hist=$(cat $v_temporary | fzf --tac --prompt "$L0")
    
       # Toggle Abs path vs Relative path
          f__S_hist__change_relative_path__to__abs_path
