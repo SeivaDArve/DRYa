@@ -3289,6 +3289,16 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
       f_presentation_info
    fi
 
+elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo" ]; then 
+   # uDev: juntar `D p` com `D P`
+
+   clear
+   figlet DRYa
+   f_talk; echo "DRYa: Presentation 3"
+           echo
+   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2
+   echo
+
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    # Step-by-step guide to create a bootable USB at windows command prompt"
 
