@@ -221,6 +221,7 @@ function MK {
 }
 
 alias grep="grep --color=auto"
+alias    t="tree"
 
 function f_ls_with_absolute_path {
    # Print for each file in `ls`, its absolute path. It is used by the alias `lll`

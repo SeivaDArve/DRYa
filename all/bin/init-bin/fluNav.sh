@@ -481,56 +481,6 @@ function . {
       # Edit this script (fluNav)
       f_edit_self
 
-   elif [ $1 == "G" ]; then 
-      # If arg 1 is 'G' then navigate to the center of seiva's repos
-      # Se houver uma pasta/ficheiro com o nome "G", precisa ser aberto com `. ... G`
-      cd $v_REPOS_CENTER
-
-   elif [ $1 == "t" ]; then 
-      # If arg 1 is 't' then use `tree` in current dir
-      # Se houver uma pasta/ficheiro com o nome "t", precisa ser aberto com `. ... t`
-
-      f_talk; echo 'fluNav: `tree` (arvore de ficheiros e pastas):'
-      tree || echo 'fluNav: `tree` nao funcionou'
-
-   elif [ $1 == "du" ]; then 
-      # If arg 1 is 'du' then use `du -h` para sabe quando espaco de memoria ocupa a pasta atual (ou ficheiro)
-      # Se houver uma pasta/ficheiro com o nome "du", precisa ser aberto com `. ... du`
-
-      f_talk; echo 'fluNav: `du -h` (disk usage, human readable):'
-      du -h || echo 'fluNav: `du -h` nao funcionou'
-
-   elif [ $1 == "..." ]; then 
-      # Se houver pastas ou ficheiros com os nomes:
-      #  > "t"
-      #  > "G" 
-      #  > "du" 
-      # entao o argumento  `...` faz com que seja literal. Para abrir esses ficheiros, usamos:
-      #  > `. ... t`
-      #  > `. ... G`
-      #  > `. ... du`
-    
-      if [ -z $2 ]; then 
-         echo 'fluNav: O argumento  `...` faz com que seja literal. '
-         echo '  Para abrir esses ficheiros t, G, du, usamos:'
-         echo '  > `. ... t`'
-         echo '  > `. ... G`'
-         echo '  > `. ... du`'
-
-      elif [ $2 == "G" ]; then 
-         # Abrir literalmente o ficheiro/pasta com o nome "G"
-         cd G 2>/dev/null || vim G
-
-      elif [ $2 == "t" ]; then 
-         # Abrir literalmente o ficheiro/pasta com o nome "t"
-         cd t 2>/dev/null || vim t
-
-      elif [ $2 == "du" ]; then 
-         # Abrir literalmente o ficheiro/pasta com o nome "du"
-         cd du 2>/dev/null || vim du
-
-      fi
-
    else
       # If argument is given, do the following:
       #  1. If arg is a directory: `cd`  into it
@@ -1132,16 +1082,18 @@ function V {
          # Lista de opcoes para o menu `fzf`
             Lz1='Save '; Lz2='V'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+            L3='3. Mostrar tamanho (Kb) da pasta atual com `du -h`'                                      
             L2='2. Apagar historico de pastas apresentadas por `V ...` (uDev)'                                      
             L1='1. Cancel'
 
             L0="fluNav: V: Menu de opcoes de Nav para Pastas: "
             
          # Ordem de Saida das opcoes durante run-time
-            v_list=$(echo -e "$L1 \n$L2 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+            v_list=$(echo -e "$L1 \n$L2 \n$L3\n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
          # Atuar de acordo com as instrucoes introduzidas pelo utilizador
             [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+            [[ $v_list =~ "3. " ]] && du -h
             [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
             [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
             unset v_list
@@ -1301,11 +1253,26 @@ function V {
 
    # Implementation of Use 4:
       elif [ $1 == "r" ]; then
-         # Navigates to repo
-         # (does not sork in sub shell)
+         # Navigates to repos
 
-         v_repo=$(ls ${v_REPOS_CENTER}/ | fzf)
-         [[ -n $v_repo ]] && cd ${v_REPOS_CENTER}/$repo
+         v_dir=~/.tmp && mkdir -p $v_dir
+         v_file="$v_dir/listing-repos-fluNav.txt"
+
+         echo "(DRYa-REPOS-CENTER)" >  $v_file
+         ls $v_REPOS_CENTER         >> $v_file
+
+         v_repo=$(cat $v_file | fzf)
+
+         if [[ -n $v_repo ]]; then
+
+            if [[ $v_repo == "(DRYa-REPOS-CENTER)" ]]; then
+               cd ${v_REPOS_CENTER}
+            else
+               cd $v_repo
+            fi
+         fi
+
+
 
    # Implementation of Use 5:
       elif [ $1 == "R" ]; then
