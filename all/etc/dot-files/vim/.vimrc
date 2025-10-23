@@ -125,4 +125,10 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    "set statusline+=%F  "Para ver o caminho inteiro
 
 
+" Centralizar Horizontalmente o cursor (permanentemente)
+   " Manter o cursor do rato sempre na linha central do ecra. O valor introduzido
+   " define quantas linhas acima e abaixo vao ficar do curso. Se o valor for
+   " muito alto, o cursor fica centrado no meio do ecra
+   set scrolloff=999
+   set scrolloff=4
 
