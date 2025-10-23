@@ -147,12 +147,16 @@ function f_run_with_confirm {
 }
 
 function f_generate_key {
+   f_vb_generate_key 
+
    $GPG --full-generate-key
    echo "Chave gerada:"
    $GPG --list-secret-keys --keyid-format LONG
 }
 
 function f_import_key {
+   f_vb_import_key 
+
    f_ls
    f_talk; echo "Importar Ficheiro de chave: "
            echo " > Comando \`gpg --import <file>\` (uDev: enviar para instrucoes)"
@@ -167,6 +171,8 @@ function f_import_key {
 }
 
 function f_export_public_key {
+   f_vb_export_public_key 
+
    echo "Cada chave 'KeyID' tem um identificador legivel 'UID'"
    echo
    read -rp  "UID ou KEYID da chave pública a exportar: " key
@@ -175,6 +181,8 @@ function f_export_public_key {
 }
 
 function f_export_private_key {
+   f_vb_export_private_key 
+
    read -rp "UID ou KEYID da chave privada a exportar: " key
    read -rp "Ficheiro de saída (CUIDADO): " out
    if confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
@@ -185,15 +193,22 @@ function f_export_private_key {
 }
 
 function f_symmetric_store {
-   f_ls
-   read -erp "Ficheiro a encriptar: " infile
-   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-   read -erp "Ficheiro de saída (default: {entrada}.gpg): " outfile
+   f_header; f_vb_symmetric_store;  f_ls
+   f_talk; echo "Ficheiro a encriptar: "
+   read -erp " > " infile
+   [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
+                           echo
+
+   f_talk; echo "Novo nome do ficheiro de saída: "
+           echo " > Default: $infile.gpg" 
+   read -erp    " > " outfile
    outfile=${outfile:-"${infile}.gpg"}
    $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile"
 }
 
 function f_symmetric_decrypt {
+   f_vb_symmetric_decrypt 
+
    f_ls
    read -erp "Ficheiro de entrada (a desencriptar): " infile
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
@@ -212,6 +227,8 @@ function f_symmetric_decrypt {
 }
 
 function f_encrypt_for_recipient {
+   f_vb_encrypt_for_recipient 
+
    read -e -rp "Ficheiro a encriptar: " infile
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
    read -rp "UID/KEYID do destinatário: " recipient
@@ -226,6 +243,8 @@ function f_encrypt_for_recipient {
 }
 
 function f_decrypt_file {
+   f_vb_decrypt_file 
+
    read -rp "Ficheiro a desencriptar: " infile
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
    read -rp "Ficheiro de saída (ou Enter para default): " outfile
@@ -234,6 +253,8 @@ function f_decrypt_file {
 }
 
 function f_sign_file {
+   f_vb_sign_file 
+
    read -rp "Ficheiro a assinar: " infile
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
    read -rp "Ficheiro de assinatura (.sig): " sigout
@@ -242,6 +263,7 @@ function f_sign_file {
 }
 
 function f_verify_signature {
+   f_vb_verify_signature 
 
    # Note `read -e` permite usar 'readline' do bash interativo, ou seja, permite "autocomplete" com a tecla Tab e assim, encontra ficheiros ou diretorios que existam na pasta atual
    read -erp "Ficheiro original: " infile
@@ -251,12 +273,15 @@ function f_verify_signature {
 }
 
 function f_change_passphrase {
+   f_vb_change_passphrase 
+
    read -rp "UID/KEYID da chave: " key
    echo "No prompt GPG, escreva: passwd"
    $GPG --edit-key "$key"
 }
 
 function f_show_key_fingerprints {
+   f_vb_show_key_fingerprints 
 
    # Mostrar lista de Fingerprints publicas
       echo "Fingerprints públicas:"
@@ -275,6 +300,12 @@ function f_show_key_fingerprints {
 }
 
 function f_list_public_keys {
+   f_header
+   f_hline
+   f_vb_list_public_keys
+   pause
+
+
    f_hline
    f_talk; echo "Lista de Chaves públicas"
            echo ' > comando: `gpg --list-keys --keyid-format LONG`'
@@ -302,6 +333,8 @@ function list_private_keys {
 }
 
 function f_delete_key {
+   f_vb_delete_key 
+
    f_list_public_keys 
 
    f_talk; echo "UID ou KEYID da chave pública a apagar: "
@@ -323,6 +356,8 @@ function f_delete_key {
 }
 
 function f_backup_all_keys {
+   f_vb_backup_all_keys 
+
    read -rp "Prefixo para ficheiros de backup: " out
    $GPG --export-secret-keys --armor >"${out}.secret.asc"
    $GPG --export --armor >"${out}.pub.asc"
@@ -330,6 +365,8 @@ function f_backup_all_keys {
 }
 
 function f_restore_keys {
+   f_vb_restore_keys 
+
    read -rp "Ficheiro de chaves a importar: " file
    [[ ! -f "$file" ]] && echo "Ficheiro não encontrado." && return
    $GPG --import "$file"
@@ -337,6 +374,8 @@ function f_restore_keys {
 
 
 function f_check_gpg_agent {
+   f_vb_check_gpg_agent 
+
    local count
    count=$($GPG --list-secret-keys --with-colons 2>/dev/null | grep -c '^sec' || true)
    if [[ "$count" -eq 0 ]]; then
@@ -457,29 +496,31 @@ function f_only_convert_content_to_OpenPGP_no_encription {
 function f_main_menu_text {
    L00=" | opc | fx"
 
-    L0=" |  0  | Info : Listar DRYa default settings"
-    L1=" |  1  | Info + Listar chaves públicas / verificar existência"
-    L2=" |  2  | Info + Listar chaves privadas / verificar existência"
-    L3=" |  3  | Info + Gerar nova chave (interativo)"
-    L4=" |  4  | Info + Importar chave"
-    L5=" |  5  | Info + Exportar chave pública"
-    L6=" |  6  | Info + Exportar chave privada (cuidado)"
+    L0=" |  0  | Info > Status > DRYa default settings"
+    L1=" |  1  | Info > Chaves > Listar as públicas / verificar existência"
+    L2=" |  2  | Info > Chaves > Listar as privadas / verificar existência"
+    L3=" |  3  | Info > Chaves > Gerar nova (interativo)"
+    L4=" |  4  | Info > Chaves > Importar"
+    L5=" |  5  | Info > Chaves > Exportar pública"
+    L6=" |  6  | Info > Chaves > Exportar privada (cuidado)"
+   L12=" | 12  | Info > Chaves > Mudar passphrase"
+   L13=" | 13  | Info > Chaves > Apagar"
+   L14=" | 14  | Info > Chaves > Backup de todas"
+   L15=" | 15  | Info > Chaves > Restaurar"
 
-    L7=" |  7  | Info + Encriptação    simétrica (com passphrase)"
-   L17=" | 17  | Info + Desencriptação simétrica (com passphrase)"
+   L20=" | 20  | Info > Convert text/file to OpenPGP (no encription)"
 
-    L8=" |  8  | Info + Encriptar para destinatário (chave pública)"
-    L9=" |  9  | Info + Desencriptar ficheiro"
-   L10=" | 10  | Info + Assinar ficheiro"
-   L11=" | 11  | Info + Verificar assinatura"
-   L12=" | 12  | Info + Mudar passphrase de uma chave"
-   L13=" | 13  | Info + Apagar chave"
-   L14=" | 14  | Info + Backup de todas as chaves"
-   L15=" | 15  | Info + Restaurar chaves"
-   L16=" | 16  | Info + Mostrar fingerprints"
-   L18=" | 18  | Info + Reset package 'gnupg' (MUITO CUIDADO)"
-   L19=" | 19  | Info : Describing all contents at ~/.gnupg"
-   L20=" | 20  | Info + Convert text/file to OpenPGP (no encription)"
+    L7=" |  7  | Info > Encryp > simétrica (com passphrase)"
+   L17=" | 17  | Info > Decryp > simétrica (com passphrase)"
+
+    L8=" |  8  | Info > Encryp > assimetrica para destinatário (chave pública)"
+    L9=" |  9  | Info > Decryp > ficheiro"
+
+   L10=" | 10  | Info > Assinaturas > Assinar ficheiro"
+   L11=" | 11  | Info > Assinaturas > Verificar assinatura"
+   L16=" | 16  | Info > Mostrar fingerprints"
+   L18=" | 18  | Info > Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   L19=" | 19  | Info > Status > Describing all contents at ~/.gnupg"
 
     Lh=" |  h  | Instucoes Base"
     LQ=" |  Q  | Sair"
@@ -493,22 +534,22 @@ function f_main_menu_text {
    echo "$L4"
    echo "$L5"
    echo "$L6"
-   f_hline
-   echo "$L7"
-   echo "$L17"
-   f_hline
-   echo "$L8"
-   echo "$L9"
-   echo "$L10"
-   echo "$L11"
    echo "$L12"
    echo "$L13"
    echo "$L14"
    echo "$L15"
+   f_hline
+   echo "$L20"
+   echo "$L7"
+   echo "$L17"
+   echo "$L8"
+   echo "$L9"
+   f_hline
+   echo "$L10"
+   echo "$L11"
    echo "$L16"
    echo "$L18"
    echo "$L19"
-   echo "$L20"
    f_hline
    echo "$Lh"
    echo "$LQ"
@@ -530,11 +571,11 @@ function f_testing_drya_defaults {
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
 }
 
-function f_testing_drya_defaults__verbose {
+function f_vb_testing_drya_defaults {
    # Apos a fx f_testing_drya_defaults acumular variaveis de status, apenas as relevantes serao mesncionadas aqui, para deixar o user informado do estado atual, permanentemente
 
    f_talk; echo "Main Menu for \`gpg\`:"
-           echo
+   f_hline
    f_talk; echo "Status:"
            echo " > Tudo ok                (uDev)"
            echo " > Falta X                (uDev)"
@@ -553,30 +594,137 @@ function f_some_help {
            echo "   Uma vez que UID é so uma descricao, nao é fixo"
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function f_vb_list_public_keys {
+   # Instrucoes/Verbose curtas, sobre f_list_public_keys
+   echo "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."
+}
+
+function f_vb_check_gpg_agent {
+   # Instrucoes/Verbose curtas, sobre f_check_gpg_agent 
+   echo "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."
+}
+
+function f_vb_generate_key {
+   # Instrucoes/Verbose curtas, sobre f_generate_key 
+   echo "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente.";
+}
+
+function f_vb_import_key {
+   # Instrucoes/Verbose curtas, sobre f_import_key 
+   echo "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."
+}
+
+function f_vb_export_public_key {
+   # Instrucoes/Verbose curtas, sobre f_export_public_key 
+   echo "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."
+}
+
+function f_vb_export_private_key {
+   # Instrucoes/Verbose curtas, sobre f_export_private_key 
+   echo  "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."
+}
+
+function f_vb_symmetric_store {
+   # Instrucoes/Verbose curtas, sobre f_symmetric_store 
+   echo  "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha vai poder desencriptar."
+}
+
+function f_vb_symmetric_decrypt {
+   # Instrucoes/Verbose curtas, sobre f_symmetric_decrypt 
+   echo  "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."
+}
+
+function f_vb_encrypt_for_recipient {
+   # Instrucoes/Verbose curtas, sobre f_encrypt_for_recipient 
+   echo  "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."
+}
+
+function f_vb_decrypt_file {
+   # Instrucoes/Verbose curtas, sobre f_decrypt_file 
+   echo  "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."
+}
+
+function f_vb_sign_file {
+   # Instrucoes/Verbose curtas, sobre f_sign_file 
+   echo  "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."
+}
+
+function f_vb_verify_signature {
+   # Instrucoes/Verbose curtas, sobre f_verify_signature 
+   echo  "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."
+}
+
+function f_vb_change_passphrase {
+   # Instrucoes/Verbose curtas, sobre f_change_passphrase 
+   echo  "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."
+}
+
+function f_vb_delete_key {
+   # Instrucoes/Verbose curtas, sobre f_delete_key 
+   echo  "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"
+}
+
+function f_vb_backup_all_keys {
+   # Instrucoes/Verbose curtas, sobre f_backup_all_keys 
+   echo  "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."
+}
+
+function f_vb_restore_keys {
+   # Instrucoes/Verbose curtas, sobre f_restore_keys 
+   echo  "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."
+}
+
+function f_vb_show_key_fingerprints {
+   # Instrucoes/Verbose curtas, sobre f_show_key_fingerprints 
+   echo  "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas.
+Serve para Verificação de identidade
+1. Quando você recebe a chave pública de alguém, a fingerprint garante que a chave realmente pertence àquela pessoa.
+2. Em vez de confiar cegamente na chave enviada, você compara a fingerprint com a que o dono publica em um site confiável ou te informa por outro meio seguro.
+"
+
+}
+
+
+
+
+
 function f_GnuPG_main_menu__take_action {
    case "$v_ans" in
       0)   f_testing_drya_defaults; pause;;
-      1)   f_run_with_confirm f_list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
-      2)   f_run_with_confirm f_check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
-      3)   f_run_with_confirm f_generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
-      4)   f_run_with_confirm f_import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
-      5)   f_run_with_confirm f_export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
-      6)   f_run_with_confirm f_export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
-      7)   f_run_with_confirm f_symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
-      17)  f_run_with_confirm f_symmetric_decrypt "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
-      8)   f_run_with_confirm f_encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
-      9)   f_run_with_confirm f_decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
-      10)  f_run_with_confirm f_sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
-      11)  f_run_with_confirm f_verify_signature "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."; ;;
-      12)  f_run_with_confirm f_change_passphrase "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."; ;;
-      13)  f_run_with_confirm f_delete_key "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"; ;;
-      14)  f_run_with_confirm f_backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
-      15)  f_run_with_confirm f_restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
-      16)  f_run_with_confirm f_show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
+      1)   f_list_public_keys       ;;
+      2)   f_check_gpg_agent        ;;
+      3)   f_generate_key           ;;
+      4)   f_import_key             ;;
+      5)   f_export_public_key      ;;
+      6)   f_export_private_key     ;;
+      7)   f_symmetric_store        ;;
+      17)  f_symmetric_decrypt      ;;
+      8)   f_encrypt_for_recipient  ;;
+      9)   f_decrypt_file           ;;
+      10)  f_sign_file              ;;
+      11)  f_verify_signature       ;;
+      12)  f_change_passphrase      ;;
+      13)  f_delete_key             ;;
+      14)  f_backup_all_keys        ;;
+      15)  f_restore_keys           ;;
+      16)  f_show_key_fingerprints  ;;
       18)  f_reset_GnuPG_like_fresh_install ;;
       19)  f_explaining_content_of_default_gnupg_directory; pause ;;
       20)  f_only_convert_content_to_OpenPGP_no_encription ;;
-
       h)   f_header; f_talk; f_some_help; pause ;;
       q|Q) echo "Adeus!"; exit 0 ;;
       *)   echo "Opção inválida."; pause ;;
@@ -588,26 +736,22 @@ function f_GnuPG_main_menu {
 
    f_deny_empty_vars 
 
-   while true
-   do
+   # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
+      f_header
+      f_vb_testing_drya_defaults
+      f_main_menu_text
 
-      # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
-         f_header
-         f_testing_drya_defaults__verbose 
-         f_main_menu_text
+   # Perguntar ao user: qual o numero da opcao que quer? (depois essa opcao, se tiver maiusculas, é convertido para minusculas)
+      f_talk; echo -n "Escolha uma opção: "
 
-      # Perguntar ao user: qual o numero da opcao que quer? (depois essa opcao, se tiver maiusculas, é convertido para minusculas)
-         f_talk; echo -n "Escolha uma opção: "
+      read -r v_ans
+      
+      v_ans=${v_ans,,}   # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
+                         #       Exemplo:  `case "${v_ans,,}" in ... esac`
 
-         read -r v_ans
-         
-         v_ans=${v_ans,,}   # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
-                            #       Exemplo:  `case "${v_ans,,}" in ... esac`
+   # Take action on the option choosen and given as answer
+      f_GnuPG_main_menu__take_action 
 
-      # Take action on the option choosen and given as answer
-         f_GnuPG_main_menu__take_action 
-
-   done
 }
 
 
