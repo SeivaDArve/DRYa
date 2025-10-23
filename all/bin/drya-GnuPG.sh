@@ -29,9 +29,9 @@ function f_deny_empty_vars {
 
 
 function pause {
-  echo
+   echo
    v_tlk=$(f_talk)
-  read -rn 1 -p "${v_tlk}Prima \"Qualquer Tecla\" para continuar..."
+   read -rn 1 -p "${v_tlk}Prima \"Qualquer Tecla\" para continuar..."
 }
 
 function f_header {
@@ -115,10 +115,10 @@ function f_detetar_path_for_gpg_command {
 }
 
 function confirm {
-  local msg=${1:-"Confirma?"}
-  read -rn1 -p "$msg (y|N): " ans
-  echo
-  [[ "$ans" =~ ^[Yy]$ ]]
+   local msg=${1:-"Confirma?"}
+   read -rn1 -p "$msg (y|N): " ans
+   echo
+   [[ "$ans" =~ ^[Yy]$ ]]
 }
 
 function f_run_with_confirm {
@@ -134,7 +134,7 @@ function f_run_with_confirm {
    f_hline
 
    v_ask=$(f_talk)
-   v_ask="$v_ask Deseja continuar com esta ação?"
+   v_ask="${v_ask}Deseja continuar com esta ação?"
 
    if confirm "$v_ask"; then
      #echo
@@ -146,13 +146,13 @@ function f_run_with_confirm {
    pause
 }
 
-function generate_key {
-  $GPG --full-generate-key
-  echo "Chave gerada:"
-  $GPG --list-secret-keys --keyid-format LONG
+function f_generate_key {
+   $GPG --full-generate-key
+   echo "Chave gerada:"
+   $GPG --list-secret-keys --keyid-format LONG
 }
 
-function import_key {
+function f_import_key {
    f_ls
    f_talk; echo "Importar Ficheiro de chave: "
            echo " > Comando \`gpg --import <file>\` (uDev: enviar para instrucoes)"
@@ -166,7 +166,7 @@ function import_key {
    $GPG --import "$file"
 }
 
-function export_public_key {
+function f_export_public_key {
    echo "Cada chave 'KeyID' tem um identificador legivel 'UID'"
    echo
    read -rp  "UID ou KEYID da chave pública a exportar: " key
@@ -174,14 +174,14 @@ function export_public_key {
    $GPG --export --armor "$key" >"$out" && echo "Exportado para $out"
 }
 
-function export_private_key {
-  read -rp "UID ou KEYID da chave privada a exportar: " key
-  read -rp "Ficheiro de saída (CUIDADO): " out
-  if confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
-    $GPG --export-secret-keys --armor "$key" >"$out" && echo "Exportado para $out"
-  else
-    echo "Cancelado."
-  fi
+function f_export_private_key {
+   read -rp "UID ou KEYID da chave privada a exportar: " key
+   read -rp "Ficheiro de saída (CUIDADO): " out
+   if confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
+      $GPG --export-secret-keys --armor "$key" >"$out" && echo "Exportado para $out"
+   else
+      echo "Cancelado."
+   fi
 }
 
 function f_symmetric_store {
@@ -199,59 +199,64 @@ function f_symmetric_decrypt {
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
 
    read -erp "Ficheiro de saída, novo nome. (default: Terminal Output): " outfile
-   [[ -z   "$outfile" ]] && echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" && return
+   
+   if [ -z "$outfile" ]; then
+      echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
+      $GPG -d $infile
 
-   [[ -n "$outfile" ]] && $GPG -o $outfile -d $infile
-   [[ -z "$outfile" ]] && $GPG -d $infile
+   else
+      $GPG -o $outfile -d $infile
+   fi
+
    pause
 }
 
-function encrypt_for_recipient {
-  read -e -rp "Ficheiro a encriptar: " infile
-  [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-  read -rp "UID/KEYID do destinatário: " recipient
-  read -e   -rp "Ficheiro de saída: " outfile
-  outfile=${outfile:-"${infile}.gpg"}
-  if confirm "Deseja assinar o ficheiro com a sua chave privada?"; then
-    $GPG --encrypt --sign --recipient "$recipient" --output "$outfile" "$infile"
-  else
-    $GPG --encrypt --recipient "$recipient" --output "$outfile" "$infile"
-  fi
-  echo "Ficheiro encriptado para $recipient em $outfile"
+function f_encrypt_for_recipient {
+   read -e -rp "Ficheiro a encriptar: " infile
+   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+   read -rp "UID/KEYID do destinatário: " recipient
+   read -e   -rp "Ficheiro de saída: " outfile
+   outfile=${outfile:-"${infile}.gpg"}
+   if confirm "Deseja assinar o ficheiro com a sua chave privada?"; then
+      $GPG --encrypt --sign --recipient "$recipient" --output "$outfile" "$infile"
+   else
+      $GPG --encrypt --recipient "$recipient" --output "$outfile" "$infile"
+   fi
+   echo "Ficheiro encriptado para $recipient em $outfile"
 }
 
-function decrypt_file {
-  read -rp "Ficheiro a desencriptar: " infile
-  [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-  read -rp "Ficheiro de saída (ou Enter para default): " outfile
-  outfile=${outfile:-"${infile%.gpg}"}
-  $GPG --output "$outfile" --decrypt "$infile" && echo "Desencriptado para $outfile"
+function f_decrypt_file {
+   read -rp "Ficheiro a desencriptar: " infile
+   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+   read -rp "Ficheiro de saída (ou Enter para default): " outfile
+   outfile=${outfile:-"${infile%.gpg}"}
+   $GPG --output "$outfile" --decrypt "$infile" && echo "Desencriptado para $outfile"
 }
 
-function sign_file {
-  read -rp "Ficheiro a assinar: " infile
-  [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-  read -rp "Ficheiro de assinatura (.sig): " sigout
-  sigout=${sigout:-"${infile}.sig"}
-  $GPG --armor --detach-sign --output "$sigout" "$infile" && echo "Assinatura criada em $sigout"
+function f_sign_file {
+   read -rp "Ficheiro a assinar: " infile
+   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+   read -rp "Ficheiro de assinatura (.sig): " sigout
+   sigout=${sigout:-"${infile}.sig"}
+   $GPG --armor --detach-sign --output "$sigout" "$infile" && echo "Assinatura criada em $sigout"
 }
 
-function verify_signature {
+function f_verify_signature {
 
-  # Note `read -e` permite usar 'readline' do bash interativo, ou seja, permite "autocomplete" com a tecla Tab e assim, encontra ficheiros ou diretorios que existam na pasta atual
-  read -erp "Ficheiro original: " infile
-  read -erp "Ficheiro .sig: " sig
-  [[ ! -f "$infile" || ! -f "$sig" ]] && echo "Ficheiro(s) não encontrado(s)." && return
-  $GPG --verify "$sig" "$infile"
+   # Note `read -e` permite usar 'readline' do bash interativo, ou seja, permite "autocomplete" com a tecla Tab e assim, encontra ficheiros ou diretorios que existam na pasta atual
+   read -erp "Ficheiro original: " infile
+   read -erp "Ficheiro .sig: " sig
+   [[ ! -f "$infile" || ! -f "$sig" ]] && echo "Ficheiro(s) não encontrado(s)." && return
+   $GPG --verify "$sig" "$infile"
 }
 
-function change_passphrase {
-  read -rp "UID/KEYID da chave: " key
-  echo "No prompt GPG, escreva: passwd"
-  $GPG --edit-key "$key"
+function f_change_passphrase {
+   read -rp "UID/KEYID da chave: " key
+   echo "No prompt GPG, escreva: passwd"
+   $GPG --edit-key "$key"
 }
 
-function show_key_fingerprints {
+function f_show_key_fingerprints {
 
    # Mostrar lista de Fingerprints publicas
       echo "Fingerprints públicas:"
@@ -269,7 +274,7 @@ function show_key_fingerprints {
       echo
 }
 
-function list_public_keys {
+function f_list_public_keys {
    f_hline
    f_talk; echo "Lista de Chaves públicas"
            echo ' > comando: `gpg --list-keys --keyid-format LONG`'
@@ -292,14 +297,14 @@ function list_public_keys {
 }
 
 function list_private_keys {
-  echo "Chaves privadas (gpg --list-secret-keys):"
-  $GPG --list-secret-keys --keyid-format LONG
+   echo "Chaves privadas (gpg --list-secret-keys):"
+   $GPG --list-secret-keys --keyid-format LONG
 }
 
-function delete_key {
-   list_public_keys 
+function f_delete_key {
+   f_list_public_keys 
 
-   f_talk; echo "UID/KEYID da chave pública a apagar: "
+   f_talk; echo "UID ou KEYID da chave pública a apagar: "
    
    if [[ $v_last_search == "keys-found" ]]; then
       read -erp " < " key
@@ -317,29 +322,29 @@ function delete_key {
    pause
 }
 
-function backup_all_keys {
-  read -rp "Prefixo para ficheiros de backup: " out
-  $GPG --export-secret-keys --armor >"${out}.secret.asc"
-  $GPG --export --armor >"${out}.pub.asc"
-  echo "Backups criados: ${out}.secret.asc e ${out}.pub.asc"
+function f_backup_all_keys {
+   read -rp "Prefixo para ficheiros de backup: " out
+   $GPG --export-secret-keys --armor >"${out}.secret.asc"
+   $GPG --export --armor >"${out}.pub.asc"
+   echo "Backups criados: ${out}.secret.asc e ${out}.pub.asc"
 }
 
-function restore_keys {
-  read -rp "Ficheiro de chaves a importar: " file
-  [[ ! -f "$file" ]] && echo "Ficheiro não encontrado." && return
-  $GPG --import "$file"
+function f_restore_keys {
+   read -rp "Ficheiro de chaves a importar: " file
+   [[ ! -f "$file" ]] && echo "Ficheiro não encontrado." && return
+   $GPG --import "$file"
 }
 
 
-function check_gpg_agent {
-  local count
-  count=$($GPG --list-secret-keys --with-colons 2>/dev/null | grep -c '^sec' || true)
-  if [[ "$count" -eq 0 ]]; then
-    echo "Nenhuma chave privada encontrada."
-  else
-    echo "Encontradas $count chaves privadas:"
-    $GPG --list-secret-keys --keyid-format LONG
-  fi
+function f_check_gpg_agent {
+   local count
+   count=$($GPG --list-secret-keys --with-colons 2>/dev/null | grep -c '^sec' || true)
+   if [[ "$count" -eq 0 ]]; then
+      echo "Nenhuma chave privada encontrada."
+   else
+      echo "Encontradas $count chaves privadas:"
+      $GPG --list-secret-keys --keyid-format LONG
+   fi
 }
 
 function f_reset_GnuPG_like_fresh_install {
@@ -551,23 +556,23 @@ function f_some_help {
 function f_GnuPG_main_menu__take_action {
    case "$v_ans" in
       0)   f_testing_drya_defaults; pause;;
-      1)   f_run_with_confirm list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
-      2)   f_run_with_confirm check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
-      3)   f_run_with_confirm generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
-      4)   f_run_with_confirm import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
-      5)   f_run_with_confirm export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
-      6)   f_run_with_confirm export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
+      1)   f_run_with_confirm f_list_public_keys "Esta opção lista todas as chaves públicas disponíveis no seu keyring GPG."; ;;
+      2)   f_run_with_confirm f_check_gpg_agent "Esta opção verifica se existem chaves privadas (secret keys) no seu sistema e lista as mesmas."; ;;
+      3)   f_run_with_confirm f_generate_key "Será iniciado o assistente interativo para gerar uma nova chave GPG. Poderá ser necessário inserir nome, email e definir uma passphrase. Esta chave será armazenada localmente."; ;;
+      4)   f_run_with_confirm f_import_key "Será importada uma chave a partir de um ficheiro existente (.asc, .gpg, etc.). Certifique-se de confiar na origem do ficheiro."; ;;
+      5)   f_run_with_confirm f_export_public_key "Irá exportar uma chave pública para um ficheiro. Pode ser partilhado com outros utilizadores para que possam encriptar mensagens para si."; ;;
+      6)   f_run_with_confirm f_export_private_key "Exporta a sua chave privada (sensível) para um ficheiro. **Atenção:** quem tiver acesso a este ficheiro poderá agir como si. Guarde com segurança."; ;;
       7)   f_run_with_confirm f_symmetric_store "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
       17)  f_run_with_confirm f_symmetric_decrypt "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."; ;;
-      8)   f_run_with_confirm encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
-      9)   f_run_with_confirm decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
-      10)  f_run_with_confirm sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
-      11)  f_run_with_confirm verify_signature "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."; ;;
-      12)  f_run_with_confirm change_passphrase "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."; ;;
-      13)  f_run_with_confirm delete_key "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"; ;;
-      14)  f_run_with_confirm backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
-      15)  f_run_with_confirm restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
-      16)  f_run_with_confirm show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
+      8)   f_run_with_confirm f_encrypt_for_recipient "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."; ;;
+      9)   f_run_with_confirm f_decrypt_file "Desencripta um ficheiro previamente encriptado (por si ou por outro), utilizando a chave apropriada ou passphrase."; ;;
+      10)  f_run_with_confirm f_sign_file "Assina um ficheiro usando a sua chave privada (assinatura detached). O ficheiro original não é modificado."; ;;
+      11)  f_run_with_confirm f_verify_signature "Verifica a autenticidade de um ficheiro usando a assinatura fornecida (.sig)."; ;;
+      12)  f_run_with_confirm f_change_passphrase "Permite alterar a passphrase de uma chave existente. Será aberta a interface interativa do GPG."; ;;
+      13)  f_run_with_confirm f_delete_key "Permite apagar uma chave pública e opcionalmente a chave privada associada. Esta ação é irreversível!"; ;;
+      14)  f_run_with_confirm f_backup_all_keys "Exporta todas as suas chaves públicas e privadas para ficheiros de backup. Guarde estes ficheiros num local seguro e cifrado."; ;;
+      15)  f_run_with_confirm f_restore_keys "Importa chaves públicas ou privadas a partir de ficheiros de backup exportados anteriormente."; ;;
+      16)  f_run_with_confirm f_show_key_fingerprints "Mostra os fingerprints (impressões digitais) de todas as suas chaves públicas e privadas."; ;;
       18)  f_reset_GnuPG_like_fresh_install ;;
       19)  f_explaining_content_of_default_gnupg_directory; pause ;;
       20)  f_only_convert_content_to_OpenPGP_no_encription ;;
