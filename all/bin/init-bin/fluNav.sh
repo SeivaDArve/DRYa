@@ -1381,7 +1381,7 @@ function V {
       
    # Implementation of Use 11:
       elif [ $1 == "gpg" ]; then
-         cd $v_drya_gpg 2>/dev/null && ls -p || f_error_cd_gpg
+         cd $v_dryaGPG 2>/dev/null && ls -p || f_error_cd_gpg
 
    # Implementation of Use ... :
       elif [ $1 == "+" ]; then

@@ -598,8 +598,10 @@ function f_testing_drya_defaults {
            echo " > Apagar duplicados automaticamente?"
            echo "   (Sim)(Nao)(Copiar; Usar copia)"
            echo " > Pasta ~/.dryaGPG existe?"  # variavel exportada para o env: $v_drya_gpg
+           echo " > Number of lines the terminal output STDOUT keeps"  #Numbers to small, allow less lines from the main menu. Or else, scroll will be needed when not using fzf
            echo 
            read -sn 1 -t $v_secs
+
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
 }
 
@@ -906,7 +908,7 @@ elif [ $1 == "ws" ]; then
    #       3. Dir is not found           > dont bother
 
    # Messages to send to ssms
-      v_msg_1="DRYa-GnuPG: Removed empty dir $v_drya_gpg"
+      v_msg_1="DRYa-GnuPG: Removed empty dir $v_dryaGPG"
       v_msg_2="DRYa-GnuPG: No directory needs to be deleted with Decrypted files"
 
    function f_message_on_startup_screen {
@@ -915,11 +917,11 @@ elif [ $1 == "ws" ]; then
         f_rc; echo
    }
 
-   if [[ -d $v_drya_gpg ]]; then
+   if [[ -d $v_dryaGPG ]]; then
       # Pasta existe
 
       # Implementar opcao 1.
-         rmdir $v_drya_gpg 2>/dev/null
+         rmdir $v_dryaGPG 2>/dev/null
 
       # Implementar opcao 2.
          v_status=$?
@@ -978,15 +980,17 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
       v_txt="Delete $v_base" 
       f_anyK
       echo
-      f_talk; echo "Deleting $v_base"
+      f_talk; echo "Removing $v_base"
 
+      #cd ~   # At drya_sadf (source-all-drya-files) then is an fx 'drya' that detects this argument first. It will `cd $HOME` and then run `D gpg rm` allowing always to remove $v_dryaGPG even if the prompt is located there
       rm -rf  $v_dryaGPG
-      [[ ! -d $v_dryaGPG ]] && echo " > done"
+      [[ ! -d $v_dryaGPG ]] && echo " > done" 
+      f_hline
 
    else
       f_talk; echo "Directory does not even exist: $v_base"
    fi
-
+         
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
    echo "Adeus!"
    exit 0 

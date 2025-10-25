@@ -32,6 +32,7 @@ function f_escape_time_at_terminal_startup {
    #       - Carregar lista (menu) dos codigos possiveis
    #       - Carregar DRYa sem atualizar com `git pull`
    #       - Ativar pin para usar DRYa da proxima vez (fx: f_startup_lock_DRYa)
+   #       - Remover todas as variaveis do env que vem da sessao anterior
 }
 
 function f_demi_fake_pin {
@@ -421,14 +422,52 @@ function f_alias_to_enforce {
       alias  rs="source ~/.bashrc" 
       alias  f5="source ~/.bashrc"
 
-   # DRYa executable
-      alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-      alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-            DRYa=${v_REPOS_CENTER}/DRYa  # To use in scripts (vim $DRYa/all/.../...)
+
+
+
+
+
+   # To use in scripts `vim $DRYa/all/.../...`
+      DRYa=${v_REPOS_CENTER}/DRYa  
 
    # List DRYa work directory
-      alias Dd="cd ${v_REPOS_CENTER}/DRYa && ls"
-      alias DD="cd ${v_REPOS_CENTER}/DRYa && ls"
+      alias Dd="cd $DRYa && ls"
+      alias DD="cd $DRYa && ls"
+
+
+
+
+
+   function drya {
+      # Forced to use fx instead of alias to allowing `cd` in sub-shells (for safety in encryption/decryption of files)
+
+      # DRYa executable (legacy)  # If GPG is not considered anymore, remove the entire fx and allow only these 2 lines to work
+         #alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+         #alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+
+
+      if [ -z $1 ]; then
+         bash $DRYa/drya.sh $*
+
+      elif [[ $1 == "gpg" ]] && [[ $2 == "rm" ]]; then
+         # The whole point of this fx is to had `cd $HOME` if these 2 arguments are found together
+
+         cd   $HOME
+         bash $DRYa/drya.sh $*
+
+      else
+         bash $DRYa/drya.sh $*
+      fi
+
+   }
+            
+   # Duplicating the fx name (shortcut)
+      alias D="drya"
+            
+
+
+
+
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
       alias    ,.="vim ~/.bashrc"
@@ -544,6 +583,7 @@ function f_GPG {
    # Default directory for Decrypted files (unsafe for the web, unsafe on repositories)
              v_dryaGPG=~/.dryaGPG
       export v_dryaGPG
+
 }
 
 function f_config_pkg_figlet {
@@ -555,6 +595,8 @@ function f_config_pkg_figlet {
 }
 
 function f__sadf_lib_1__after_clonning {
+   # Note: 'sadf' == 'source-all-drya.files
+
    v_erro="DRYa: Deu erro a clonar"
 
    cd      ${v_REPOS_CENTER}            && git clone $v_clone
@@ -562,6 +604,8 @@ function f__sadf_lib_1__after_clonning {
 }
 
 function f__sadf_lib_2__asking_to_clone {
+   # Note: 'sadf' == 'source-all-drya.files
+
    v_ask="$v_name nao instalado, deseja instalar? (S/n)"
    v_clone="https://github.com/SeivaDArve/$v_name.git"
 
@@ -969,7 +1013,7 @@ function f_exec {
       f_drya_welcome_screen  
       f_test  # Can be deleted, literally a test
    
-   # Libs for repositories: 'sadf'=='Source.All.Drya.Files.'. Libs nao precisam ser exexutadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem exiatam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
+   # Libs for repositories: 'sadf' == 'Source.All.Drya.Files'  ::  Libs nao precisam ser exexutadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem exiatam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
      #f__sadf_lib_1__after_clonning
      #f__sadf_lib_2__asking_to_clone
 
