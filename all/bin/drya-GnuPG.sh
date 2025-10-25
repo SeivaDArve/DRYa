@@ -67,16 +67,17 @@ function f_gpg_path {
 function f_detetar_path_for_gpg_command {
    # Criar uma var $GPG com info do caminho do executavel
 
-   # Descobrir o caminho do script
+   # Descobrir o caminho do script instalado no OS
       f_gpg_path
 
    # Se nao existir nenhum, pergunta se quer instalar
       if [[ -z "$GPG" ]]; then
+
          f_header
          f_talk; echo "gpg não Instalado"
                  echo " > Instala com \`D gpg i\`"
 
-         if confirm " > Pretende instalar agora?"; then
+         if f_confirm " > Pretende instalar agora?"; then
                echo " > Vai ser instalado (3s)..."
                read -sn1 -t 3
                echo
@@ -91,14 +92,14 @@ function f_detetar_path_for_gpg_command {
 
       fi
 
-   # Descobrir o caminho do script (novamente)
+   # Descobrir o caminho do script (novamente, o user pode nao ter conseguido instalar no OS)
       f_gpg_path
 
    # Se continuar a nao existir nenhum, pergunta se quer realmente aceder ao menu
       if [[ -z "$GPG" ]]; then
          f_talk; echo "gpg não Instalado (confirmacao)"
 
-         if confirm " > Pretende a mesma aceder ao menu/comandos?"; then
+         if f_confirm " > Pretende a mesma aceder ao menu/comandos?"; then
             clear
                
          else
@@ -113,11 +114,40 @@ function f_detetar_path_for_gpg_command {
 
 }
 
-function confirm {
-   local msg=${1:-"Confirma?"}
-   read -rn1 -p "$msg (y|N): " ans
-   echo
-   [[ "$ans" =~ ^[Yy]$ ]]
+function f_confirm {
+   # Confirma cada acao a ser tomada. A ultima linha de codigo vai acabar TRUE ou FALSE propositada. Aproveitando uma das palavras "reservadas" do bash 'true'
+   
+   #
+   # Exemplo de utilizacao (fx que vai executar sempre)
+   #
+   #     if true; then
+   #        echo "foo"
+   #     fi
+   #
+   #
+   #     > 'true' pode ser substituido por expressoes: $(...) ou [[ ... == ... ]]
+   #
+   #     > No Bash, o if não avalia valores diretamente, mas o status de saída do comando. Vai desde 'if' até ';'
+   #
+   #     > 'if' assim suporta argumentos $1, $var, etc...
+   #     
+   #     > Possibilidade: `if f_confirm $1`
+   #
+   #     > Possibilidade: `if f_confirm "Texto como argumento 1"`
+   #
+
+   # Definir uma var $v_msg e garantir que nao subscreve nenhuma var #v_msg que existisse antes desta fx
+      # Nota: O valor das variaveis que sao iniciadas com `local` sao valores temporarios, aplicam-se só dentro dessa fx. Quando a fx acaba, a variavel volta ao valor anterior
+      # Nota: Em bash, é possivel dar um valor standard a uma variavel caso o utilizador nao de nenhuma no promprt ou noutra fx do codigo
+
+      local v_msg=${1:-"Confirma?"}
+
+   # Perguntar Sim ou Nao (so vai preencer uma variavel)
+      read -rn1 -p "$v_msg (y|N): " ans
+      echo
+
+   # Caso as letras y ou Y sejam encontradas, sao literalmente encontradas. Isso significa que no final dessa linha, o "exit status" acaba em "0" o que significa 'true'
+      [[ "$ans" =~ ^[Yy]$ ]]
 }
 
 function f_run_with_confirm {
@@ -135,7 +165,7 @@ function f_run_with_confirm {
    v_ask=$(f_talk)
    v_ask="${v_ask}Deseja continuar com esta ação?"
 
-   if confirm "$v_ask"; then
+   if f_confirm "$v_ask"; then
      #echo
      $func
    else
@@ -206,7 +236,7 @@ function f_export_private_key {
 
    read -rp "UID ou KEYID da chave privada a exportar: " key
    read -rp "Ficheiro de saída (CUIDADO): " out
-   if confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
+   if f_confirm "Exportar chave privada para $out? Isto é sensível. Continuar?"; then
       $GPG --export-secret-keys --armor "$key" >"$out" && echo "Exportado para $out"
    else
       echo "Cancelado."
@@ -255,7 +285,7 @@ function f_encrypt_for_recipient {
    read -rp "UID/KEYID do destinatário: " recipient
    read -e   -rp "Ficheiro de saída: " outfile
    outfile=${outfile:-"${infile}.gpg"}
-   if confirm "Deseja assinar o ficheiro com a sua chave privada?"; then
+   if f_confirm "Deseja assinar o ficheiro com a sua chave privada?"; then
       $GPG --encrypt --sign --recipient "$recipient" --output "$outfile" "$infile"
    else
       $GPG --encrypt --recipient "$recipient" --output "$outfile" "$infile"
@@ -365,10 +395,10 @@ function f_delete_key {
    if [[ $v_last_search == "keys-found" ]]; then
       read -erp " < " key
 
-      if confirm "Apagar chave pública $key?"; then
+      if f_confirm "Apagar chave pública $key?"; then
          $GPG --batch --yes --delete-key "$key"
       fi
-      if confirm "Apagar também a chave privada (se existir)?"; then
+      if f_confirm "Apagar também a chave privada (se existir)?"; then
          $GPG --batch --yes --delete-secret-and-public-key "$key"
       fi
 
@@ -429,7 +459,7 @@ function f_reset_GnuPG_like_fresh_install {
       v_ask=$(f_talk)
       v_ask="${v_ask}Quer apagar a pasta?"
 
-      if confirm "$v_ask"; then
+      if f_confirm "$v_ask"; then
         #echo
         rm -rf $v_dir
       else
