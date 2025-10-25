@@ -1,5 +1,5 @@
 #!/bin/bash
-# Title: source-all-drya-files (dryaSRC)
+# Title: dryaSRC 
 # Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
 
 # File vars
@@ -83,7 +83,7 @@ function f_drya_msgs_init {
    # drya-messages: | 1. A file like neofetch for DRYa
    # > drya -m      | 2. Place in this file all script you need ~/.bashrc to recognize
    #                     At ~/.bashrc you should place only ONE line to source this file for DRYa, and this file should source all others
-   #                | 3. We cannot run this command because variable is not defined yet): echo "file: source-all-drya-files: first line" >> $DRYa_MESSAGES
+   #                | 3. We cannot run this command because variable is not defined yet: `echo "file: dryaSRC: first line" >> $v_ssms`
 
    # drya-plus:     | 1. Instead of printing a lot of text on the Termux welcoke screen, lets hide under the function: drya +
    #  > drya +      | 2. It has: DRYa welcome message, termux welcome message (if running on Android). Neofetch. More info
@@ -114,7 +114,7 @@ function f_traitsID {
       #f_debug
 
    # Nome do ficheiro SOURCE 
-      trid_source="${v_REPOS_CENTER}/DRYa/all/source-all-drya-files"
+      trid_source="${v_REPOS_CENTER}/DRYa/all/$__name__"
       trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
    # Nome do ficheiro SCRIPT traitsID.sh
@@ -482,16 +482,15 @@ function f_alias_to_enforce {
 function f_internal_drya_files_nr_1 {
    # Repository: DRYa (internal files - (1/2) )
 
-   # uDev: v_nm_src_bash  = source-all-drya-files = drya-src-frm-bashrc
-   #       v_nm_pre_alias = nil                   = drya-pre-alias.sh
-   #       v_nm_mid_alias = config-bash-alias     = drya-mid-alias.sh
-   #       v_nm_pos_alias = .dryarc               = drya-pos-alias.sh
+   # uDev: v_nm_src_bash  = dryaSRC           = drya-src-frm-bashrc
+   #       v_nm_pre_alias = nil               = drya-pre-alias.sh
+   #       v_nm_mid_alias = config-bash-alias = drya-mid-alias.sh
+   #       v_nm_pos_alias = .dryarc           = drya-pos-alias.sh
 
    f_demi_fake_pin 
 
    # Include this file name in a variable
-     v_name_dryaSRC="source-all-drya-files"  # Legacy
-     v_name_dryaSRC="dryaSRC"
+     v_name_dryaSRC="$__name__"
      v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_dryaSRC
 
      v_name_drya_alias="config-bash-alias"
@@ -594,8 +593,7 @@ function f_config_pkg_figlet {
    alias figlet="figlet -f standard.flf" # My favourite font is called standard.flf ## CAREFULL, this font may be missing
 }
 
-function f__sadf_lib_1__after_clonning {
-   # Note: 'sadf' == 'source-all-drya.files
+function f__dryaSRC_lib_1__after_clonning {
 
    v_erro="DRYa: Deu erro a clonar"
 
@@ -603,8 +601,7 @@ function f__sadf_lib_1__after_clonning {
    [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo     "$v_erro"
 }
 
-function f__sadf_lib_2__asking_to_clone {
-   # Note: 'sadf' == 'source-all-drya.files
+function f__dryaSRC_lib_2__asking_to_clone {
 
    v_ask="$v_name nao instalado, deseja instalar? (S/n)"
    v_clone="https://github.com/SeivaDArve/$v_name.git"
@@ -613,9 +610,9 @@ function f__sadf_lib_2__asking_to_clone {
            read -p " > " v_ans
 
    # A fx anterior tem de ter respondido a uma pergunta. Caso essa pergunta tenha sido evitada ou nao obteve a respota certa, sera filtrada de seguida: 
-      [[ -z $v_ans        ]] && f__sadf_lib_1__after_clonning 
-      [[    $v_ans == "s" ]] && f__sadf_lib_1__after_clonning 
-      [[    $v_ans == "S" ]] && f__sadf_lib_1__after_clonning 
+      [[ -z $v_ans        ]] && f__dryaSRC_lib_1__after_clonning 
+      [[    $v_ans == "s" ]] && f__dryaSRC_lib_1__after_clonning 
+      [[    $v_ans == "S" ]] && f__dryaSRC_lib_1__after_clonning 
       unset  v_ans
 
 }
@@ -741,7 +738,7 @@ function f_repository_Tesoro {
 
 
       # Se o Tesoro nao existir, pergunta se quer clonar
-         [[ ! -f $v_script ]] && f__sadf_lib_2__asking_to_clone 
+         [[ ! -f $v_script ]] && f__dryaSRC_lib_2__asking_to_clone 
 
       bash $v_script $* 
    }
@@ -917,8 +914,8 @@ function f_async__ezGIT_pull_All__at_startup {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y='DRYa: source-all-drya-files: ezGIT: `git pull recursive` (done, Success)'
-   v_toast_message_n='DRYa: source-all-drya-files: ezGIT: `git pull recursive` (done, Fail. Repo may not exist)'
+   v_toast_message_y="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Success)"
+   v_toast_message_n="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
 
    if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
       # ezGIT existe (atuar)
@@ -1013,9 +1010,9 @@ function f_exec {
       f_drya_welcome_screen  
       f_test  # Can be deleted, literally a test
    
-   # Libs for repositories: 'sadf' == 'Source.All.Drya.Files'  ::  Libs nao precisam ser exexutadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem exiatam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
-     #f__sadf_lib_1__after_clonning
-     #f__sadf_lib_2__asking_to_clone
+   # Libs for repositories ::  Libs nao precisam ser executadas. Permitem que os comandos dos scripts dos repos possam ser chamados/executados mesmo que os repos nem existam ainda. Estas libs vao mandar clonar e mantar os comandos pretendidos para os scripts posteriormente. 
+     #f__dryaSRC_lib_1__after_clonning
+     #f__dryaSRC_lib_2__asking_to_clone
 
    # Loading repositories (some have their .../source.../ files)
       f_repository_dWiki   

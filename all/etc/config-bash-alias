@@ -734,6 +734,11 @@ function arco {
 
 
 
+function grep-here {
+   # udev: send to `D grep <arg $1>`
+   clear
+   grep -R --color=always "$1" .
+}
 
 # Verbose file (variables and outputs)
    # uDev: Cria drya-lib-X para isto
