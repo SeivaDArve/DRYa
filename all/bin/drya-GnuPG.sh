@@ -67,13 +67,12 @@ function f_gpg_path {
 function f_detetar_path_for_gpg_command {
    # Criar uma var $GPG com info do caminho do executavel
 
-   f_header
-
    # Descobrir o caminho do script
       f_gpg_path
 
    # Se nao existir nenhum, pergunta se quer instalar
       if [[ -z "$GPG" ]]; then
+         f_header
          f_talk; echo "gpg não Instalado"
                  echo " > Instala com \`D gpg i\`"
 
@@ -147,11 +146,33 @@ function f_run_with_confirm {
 }
 
 function f_generate_key {
-   f_vb_generate_key 
+   v_fx="f_generate_key"
+   f_header;
+   f_talk; echo "Opcao: $v_ans: $v_fx"
+           echo 
+   f_talk; echo "Mini Instrucoes:"
+           echo
 
-   $GPG --full-generate-key
-   echo "Chave gerada:"
-   $GPG --list-secret-keys --keyid-format LONG
+   f_vb_generate_key; f_hline
+
+
+   # Gerar chaves com o prompt interativo do `gpg`
+      f_talk; echo "Chaves > Gerar (interativo)"
+              echo
+
+      $GPG --full-generate-key
+
+              echo
+
+   # Print das chaves geradas
+      v_generated=$($GPG --list-secret-keys --keyid-format LONG)
+
+      f_talk; echo "Chave gerada:"
+      [[ -n $v_generated ]] && echo " > $v_generated" || echo " > (nenhuma)"
+      echo
+
+   # Concluir com uma divisao
+      f_hline
 }
 
 function f_import_key {
@@ -163,8 +184,8 @@ function f_import_key {
            echo
 
    f_talk; echo "Escolha o Ficheiro de chave a importar: "
-   read -erp " < " file
-   echo
+   read    -erp " < " file
+           echo
 
    [[ ! -f "$file" ]] && echo " < " && return
    $GPG --import "$file"
@@ -309,6 +330,7 @@ function f_list_public_keys {
    f_hline
    f_talk; echo "Lista de Chaves públicas"
            echo ' > comando: `gpg --list-keys --keyid-format LONG`'
+           echo
 
    v_list=$($GPG --list-keys --keyid-format LONG)
 
@@ -330,6 +352,7 @@ function f_list_public_keys {
 function list_private_keys {
    echo "Chaves privadas (gpg --list-secret-keys):"
    $GPG --list-secret-keys --keyid-format LONG
+   echo
 }
 
 function f_delete_key {
@@ -493,6 +516,10 @@ function f_only_convert_content_to_OpenPGP_no_encription {
    echo "uDev: gpg --store ..."
 }
 
+function f_only_convert_content_from_OpenPGP_no_encription {
+   echo "uDev"
+}
+
 function f_main_menu_text {
    L00=" | opc | fx"
 
@@ -508,13 +535,14 @@ function f_main_menu_text {
    L14=" | 14  | Info > Chaves > Backup de todas"
    L15=" | 15  | Info > Chaves > Restaurar"
 
-   L20=" | 20  | Info > Convert text/file to OpenPGP (no encription)"
+   L20=" | 20  | Info > Convert > text/file to OpenPGP   (no encription)"
+   L21=" | 21  | Info > Convert > OpenPGP   to text/file (no encription)"
 
-    L7=" |  7  | Info > Encryp > simétrica (com passphrase)"
-   L17=" | 17  | Info > Decryp > simétrica (com passphrase)"
+    L7=" |  7  | Info > Encrypt > simétrica (com passphrase)"
+   L17=" | 17  | Info > Decrypt > simétrica (com passphrase)"
 
-    L8=" |  8  | Info > Encryp > assimetrica para destinatário (chave pública)"
-    L9=" |  9  | Info > Decryp > ficheiro"
+    L8=" |  8  | Info > Encrypt > assimetrica para destinatário (chave pública)"
+    L9=" |  9  | Info > Decrypt > ficheiro"
 
    L10=" | 10  | Info > Assinaturas > Assinar ficheiro"
    L11=" | 11  | Info > Assinaturas > Verificar assinatura"
@@ -540,6 +568,7 @@ function f_main_menu_text {
    echo "$L15"
    f_hline
    echo "$L20"
+   echo "$L21"
    echo "$L7"
    echo "$L17"
    echo "$L8"
@@ -560,14 +589,17 @@ function f_testing_drya_defaults {
 
    f_gpg_path
 
-   f_header
-   f_talk; echo "Testing DRYa defaults"
+   v_secs=1
+
+   f_talk; echo "Testing DRYa defaults (${v_secs}s)"
            echo " > software 'gnupg' installed?"
            echo " > software \"zip\" \"unzip\" installed?"
            echo " > Private key exists?"
            echo " > Apagar duplicados automaticamente?"
            echo "   (Sim)(Nao)(Copiar; Usar copia)"
+           echo " > Pasta ~/.dryaGPG existe?"  # variavel exportada para o env: $v_drya_gpg
            echo 
+           read -sn 1 -t $v_secs
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
 }
 
@@ -592,6 +624,11 @@ function f_some_help {
            echo "   Alguém finge ser outra pessoa ou sistema (as chaves privadas podem sofrer spoofing)"
            echo "   As UID 'Name (comentario) <email>' podem ter por tras outras 'sec' (par de chaves) que nao aquele que parece"
            echo "   Uma vez que UID é so uma descricao, nao é fixo"
+           echo
+           echo " > fluNav: V"
+           echo "   Existe \`V x\` para navegar para \$v_drya_gpg"
+           echo "   (variavel exportada para o env) que normalmente aponta"
+           echo "   para ~/.dryaGPG"
 }
 
 
@@ -725,6 +762,7 @@ function f_GnuPG_main_menu__take_action {
       18)  f_reset_GnuPG_like_fresh_install ;;
       19)  f_explaining_content_of_default_gnupg_directory; pause ;;
       20)  f_only_convert_content_to_OpenPGP_no_encription ;;
+      21)  f_only_convert_content_from_OpenPGP_no_encription ;;
       h)   f_header; f_talk; f_some_help; pause ;;
       q|Q) echo "Adeus!"; exit 0 ;;
       *)   echo "Opção inválida."; pause ;;
@@ -738,19 +776,18 @@ function f_GnuPG_main_menu {
 
    # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
       f_header
-      f_vb_testing_drya_defaults
+      #f_vb_testing_drya_defaults
       f_main_menu_text
 
    # Perguntar ao user: qual o numero da opcao que quer? (depois essa opcao, se tiver maiusculas, é convertido para minusculas)
-      f_talk; echo -n "Escolha uma opção: "
-
-      read -r v_ans
+      #f_talk; echo -n "Escolha uma opção: "
+      #read -r v_ans
       
-      v_ans=${v_ans,,}   # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
+      #v_ans=${v_ans,,}   # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
                          #       Exemplo:  `case "${v_ans,,}" in ... esac`
 
    # Take action on the option choosen and given as answer
-      f_GnuPG_main_menu__take_action 
+      #f_GnuPG_main_menu__take_action 
 
 }
 
@@ -789,5 +826,172 @@ elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
    #read -sn1
 
    bash pk + gnupg
+
+elif [ $1 == "0" ]; then
+   f_testing_drya_defaults; pause
+
+elif [ $1 == "1" ]; then
+   f_list_public_keys       
+
+elif [ $1 == "2" ]; then
+   f_check_gpg_agent        
+
+elif [ $1 == "3" ]; then
+   f_generate_key           
+
+elif [ $1 == "4" ]; then
+   f_import_key             
+
+elif [ $1 == "5" ]; then
+   f_export_public_key      
+
+elif [ $1 == "6" ]; then
+   f_export_private_key     
+
+elif [ $1 == "7" ]; then
+   f_symmetric_store        
+
+elif [ $1 == "17" ]; then
+   f_symmetric_decrypt      
+
+elif [ $1 == "8" ]; then
+   f_encrypt_for_recipient  
+
+elif [ $1 == "9" ]; then
+   f_decrypt_file           
+
+elif [ $1 == "10" ]; then
+   f_sign_file              
+
+elif [ $1 == "11" ]; then
+   f_verify_signature       
+
+elif [ $1 == "12" ]; then
+   f_change_passphrase      
+
+elif [ $1 == "13" ]; then
+   f_delete_key             
+
+elif [ $1 == "14" ]; then
+   f_backup_all_keys        
+
+elif [ $1 == "15" ]; then
+   f_restore_keys           
+
+elif [ $1 == "16" ]; then
+   f_show_key_fingerprints  
+
+elif [ $1 == "18" ]; then
+   f_reset_GnuPG_like_fresh_install 
+
+elif [ $1 == "19" ]; then
+   f_explaining_content_of_default_gnupg_directory; pause 
+
+elif [ $1 == "20" ]; then
+   f_only_convert_content_to_OpenPGP_no_encription 
+
+elif [ $1 == "21" ]; then
+   f_only_convert_content_from_OpenPGP_no_encription 
+
+elif [ $1 == "h" ]; then
+   f_header; f_talk; f_some_help; pause 
+
+elif [ $1 == "ws" ]; then
+   # Opcao dedicada ao DRYa Welcome screen
+   # Managing and Informing about existent decrypted files in the system
+
+   # Note: There are 3 situations:
+   #       1. Dir is     found empty     > delete > dont bother (mention only to ssms)
+   #       2. Dir is     found not empty > give a warning
+   #       3. Dir is not found           > dont bother
+
+   # Messages to send to ssms
+      v_msg_1="DRYa-GnuPG: Removed empty dir $v_drya_gpg"
+      v_msg_2="DRYa-GnuPG: No directory needs to be deleted with Decrypted files"
+
+   function f_message_on_startup_screen {
+      f_talk; echo -n       "GPG directory : "
+        f_c8; echo          "existent!"
+        f_rc; echo
+   }
+
+   if [[ -d $v_drya_gpg ]]; then
+      # Pasta existe
+
+      # Implementar opcao 1.
+         rmdir $v_drya_gpg 2>/dev/null
+
+      # Implementar opcao 2.
+         v_status=$?
+         [[ $v_status == "0" ]] && echo "$v_msg_1" >> $v_ssms
+         [[ $v_status == "1" ]] && f_message_on_startup_screen 
+
+   else
+      # Implementar opcao 3.
+         echo "$v_msg_2" >> $v_ssms
+   fi
+
+
+elif [ $1 == "op" ]; then
+   :'
+O GPG (GNU Privacy Guard) implementa o padrão OpenPGP (RFC 4880).
+
+Um ficheiro .gpg é basicamente um container binário que pode conter:
+
+dados cifrados (simétrica ou assimetricamente),
+
+dados assinados (sem cifragem),
+
+dados apenas “empacotados” (literal data packet),
+
+ou combinações (ex.: cifrado + assinado).
+
+O formato interno tem “packets” (estruturas identificadas por tipo): Public-Key Encrypted Session Key, Symmetrically Encrypted Data Packet, Literal Data Packet, etc.
+'
+
+:'Listar os conteudos de um pacote/ficheiro .gpg
+gpg --list-packets ficheiro.gpg
+'
+   ls
+
+elif [ $1 == "add" ] || [ $1 == "add-dryaGPG-dir" ]; then
+   mkdir -p $v_dryaGPG
+   touch    $v_dryaGPG/y
+
+elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
+
+   v_base=$(basename $v_dryaGPG)
+   v_base="~/$v_base"
+
+   if [[ -d $v_dryaGPG ]]; then
+      # So se existir a pasta é que executa o processo todo de apagar
+
+      f_header
+      f_talk; echo "Removing $v_base"
+      f_hline
+
+      f_talk; echo 'Listing storage `ls` helping decision:'
+      echo
+      ls -pA $v_dryaGPG
+      f_hline
+      echo
+      v_txt="Delete $v_base" 
+      f_anyK
+      echo
+      f_talk; echo "Deleting $v_base"
+
+      rm -rf  $v_dryaGPG
+      [[ ! -d $v_dryaGPG ]] && echo " > done"
+
+   else
+      f_talk; echo "Directory does not even exist: $v_base"
+   fi
+
+elif [ $1 == "q" ] || [ $1 == "Q" ]; then
+   echo "Adeus!"
+   exit 0 
+
+else
+   echo "Opcao nao reconhecida"
 
 fi

@@ -21,13 +21,17 @@ function f_escape_time_at_terminal_startup {
    read -sn 1 -t 1 v_escape
 
    if [[ -n $v_escape ]]; then 
-      echo    "DRYa: escaped main DRYa loader..."
-      echo    " > Press 'Ctrl-C' to stop loading DRYa"
-      echo    " > Press 'ENTER'  to load DRYa normally"
-      echo -n " > "
-      read -s  # Existe oportunidade para codigos secretos aqui, carregar DRYa de forma especial
+      echo     "DRYa: escaped main DRYa loader..."
+      echo     " > Press 'Ctrl-C' to stop loading DRYa"
+      echo     " > Press 'ENTER'  to load DRYa normally"
+      read -sp " > "  # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
       echo
    fi
+
+   # uDev: Lista de codigos secretos possiveis
+   #       - Carregar lista (menu) dos codigos possiveis
+   #       - Carregar DRYa sem atualizar com `git pull`
+   #       - Ativar pin para usar DRYa da proxima vez (fx: f_startup_lock_DRYa)
 }
 
 function f_demi_fake_pin {
@@ -53,11 +57,11 @@ function f_test {
 }
 
 function f_drya_libs {
-   # uDev: Test if actually there are any libs, then `read` and inform
+   # Note: Includes an fx for debugging: `db` 
 
-   # Sourcing drya-lib-1: File with colors 
-      v_lib1=$__repo__/all/lib/libs/drya-lib-1-colors-greets.sh
-      [[ -f $v_lib1 ]] && source $v_lib1 || read -s -n 1 -p "$__name__: drya-lib-1 does not exist (error)"
+   # Sourcing DRYa Lib 1: Color schemes
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
       v_greet="DRYa"
       v_talk="DRYa: "
@@ -310,7 +314,7 @@ function f_drya_welcome_screen {
       fi
    }
 
-   function f_ws_drya_presentation {
+   function f_ws_drya_ascii_presentation {
       # Display info about DRYa at the screen with `figlet` when DRYa is first loaded by the terminal. Figlet is a depependency. If it does not exist, text will be echoed to inform (as a failsafe system)
 
       figlet -v &>/dev/null  # Testing if figlet is installed
@@ -328,7 +332,7 @@ function f_drya_welcome_screen {
       echo
    }
 
-   function f_ws_verbose {
+   function f_ws_drya_startup_instructions {
       # Verbose Initial DRYa Message
 
       f_talk; echo          "Startup Instructions"
@@ -337,6 +341,13 @@ function f_drya_welcome_screen {
         f_rc; echo -n "      Menu 'Instructions' : "
         f_c4; echo                                "D help"
         f_rc; echo
+   }
+
+   function f_ws_drya_about_decrypted_gpg_dir {
+      # Verbose DRYa Message about the existence of directories where there may be DECRYPTED documents
+
+      bash $v_DRYa_GnuPG ws
+      echo
    }
 
    function f_ws_neofetch {
@@ -351,10 +362,11 @@ function f_drya_welcome_screen {
       bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
    }
 
-   f_ws_drya_presentation
-  #f_ws_termux               # uDev: create/removing ~/.hushlogin will disable/enable termux verbose startup
+   f_ws_drya_ascii_presentation
+  #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
-   f_ws_verbose 
+   f_ws_drya_startup_instructions
+   f_ws_drya_about_decrypted_gpg_dir
    f_ws_neofetch
   #f_ws_seiva_up_time 
 
@@ -471,8 +483,8 @@ function f_internal_drya_files_1_of_3 {
      touch    $v_file_fzf_H $v_drya_fzf_menu_hist
      export    v_file_fzf_H  v_drya_fzf_menu_hist Lz4
 
-   # Main alias for the most important DRYa files of all
-     f_alias_to_enforce
+   # Main alias for the most important DRYa files of all. For safety this may overwrite some other repos configs
+      f_alias_to_enforce
 
    # Clipboard for DRYa: drya-clipboard (send to this file, only absolute paths to files and directories, for now)
       v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
@@ -484,12 +496,12 @@ function f_internal_drya_files_1_of_3 {
 
 }
 
-function f_internal_drya_files_3_of_3 {
+function f_internal_drya_files_3_of_4 {
    # Adding .../DRYa/all/bin to the envirnoment variable $PATH so that, script at that .../DRYa/all/bin/ can be automatically recognized by yhe system
 
    v_add=${v_REPOS_CENTER}/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
 
-   v_msg='DRYa: exporting $PATH: Pattern $v_add'
+   v_msg='DRYa: Adding $v_add to $PATH Patten and export'
    v_ys="$v_msg found (ok)"
    v_no="$v_msg not found (not ok)"
 
@@ -522,6 +534,16 @@ function f_internal_drya_files_3_of_3 {
 
    f_solve_PATH_befor_test
    f_solve_PATH_after_test 
+}
+
+function f_GPG {
+   # Managing Encryption and Private files: Providing env variables for usage in .../DRYa-GnuPG.sh
+
+   v_DRYa_GnuPG=${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
+
+   # Default directory for Decrypted files (unsafe for the web, unsafe on repositories)
+             v_dryaGPG=~/.dryaGPG
+      export v_dryaGPG
 }
 
 function f_config_pkg_figlet {
@@ -749,7 +771,7 @@ function f_repository_luxam {
 }
 
 function f_internal_drya_files_2_of_3 {
-   # Repository: DRYa (internal files - (2/2) )
+   # Repository: DRYa (internal files - (2/4) )
 
    # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
 
@@ -787,7 +809,7 @@ function f_internal_drya_files_2_of_3 {
    # Sourcing 'dryarc' last configs to overwrite other configs (Machine specific @Host, does not get centralized and uploaded @DRYa)
       source $v_path_dryarc 2>/dev/null
 
-   # Main alias for the most important DRYa files of all
+   # Main alias for the most important DRYa files of all. For safety this may overwrite some other repos configs
       f_alias_to_enforce
 
    # Send pending updates to repos
@@ -937,10 +959,11 @@ function f_exec {
      #f_startup_lock_DRYa
       f_internal_drya_files_1_of_3
      #f_check_missing_dependencies
-      f_drya_libs  # Includes an fx for debugging: `db` 
+      f_drya_libs  
       f_drya_ssms_start
       f_drya_fzf_history
       f_traitsID           
+      f_GPG    
       f_dv_PS1    
       f_config_pkg_figlet  
       f_drya_welcome_screen  
@@ -970,9 +993,9 @@ function f_exec {
       f_repository_cao_lendario
       f_repository_luxam
       
-   # Last default configs (again, if needed will overwriting configs, for safety)
-      f_internal_drya_files_2_of_3
-      f_internal_drya_files_3_of_3
+   # Default DRYa configs 
+      f_internal_drya_files_2_of_3  # Source 'boot' and 'config-alias' :: Remove ~/.tmp 
+      f_internal_drya_files_3_of_4  # Exporting $PATH
 
    # Start loading background tasks (jarve)
       # (DRYa:  foreground tasks, once.       (at startup and on command))

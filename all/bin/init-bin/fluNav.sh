@@ -1041,7 +1041,6 @@ function V {
          `V h`  or `V help`         # 
          `V m`  or `V Menu`         # Menu fzf
          `V mb` or `V mobile`       # 
-         `V +`  or `V add`          # Serve para adicionar PWD ao historico de loop
          `V -`  or `V rm`           # Serve para remover   PWD ao historico de loop
          `V RM` or `V erase-hist`   # Prompt the user if he wants to delete the entire list of locations
          `V rm` or `V remove
@@ -1056,17 +1055,22 @@ function V {
          ...
    
       # Help and Usage (internal instructions):
-         # Use 0:  `V h      `    # Help and instructions
-         # Use 1:  `V        `    # Present a Menu
-         # Use 2:  `V drya   `    # Travels to favorites  # uDev: to be absorved by the 'function . { }'
-         # Use 3:  `V p <dir>`    # Create new dir and travel to it
-         # Use 4:  `V r      `    # finds all repos with fzf to navigate
-         # Use 5:  `V rm  <dir>`  # Removes dir recommended to confirm which dir will be removed 
-         # Use 6:  `V .      `    # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
-         # Use 7:  `V ..     `    # Navigate to last dir in the history list
-         # Use 8:  `V ...    `    # Read the history file and select one path from there
-         # Use 9:  `V ....   `    # ...
-         # Use 10: `V pwd    `    # uDev: Fazer a mesma fx que `lll` faz neste momento. Chamar menu fzf para apresentar `ls -a` e listar o caminho absoluto para todos os ficheiros selecionados
+         # Use 0:  `V h        `  # Help and instructions
+         # Use 1:  `V          `  # Present a Menu
+         # Use 2:  `V drya     `  # Travels to favorites  # uDev: to be absorved by the 'function . { }'
+         # Use 3:  `V p <dir>  `  # Create new dir and travel to it
+         # Use 4:  `V r        `  # finds all repos with fzf to navigate
+         # Use 5:  `V rm <dir> `  # Removes dir recommended to confirm which dir will be removed 
+         # Use 6:  `V .        `  # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
+         # Use 7:  `V ..       `  # Navigate to last dir in the history list
+         # Use 8:  `V ...      `  # Read the history file and select one path from there
+         # Use 9:  `V ....     `  # ...
+         # Use 10: `V pwd      `  # uDev: Fazer a mesma fx que `lll` faz neste momento. Chamar menu fzf para apresentar `ls -a` e listar o caminho absoluto para todos os ficheiros selecionados
+         # Use 11: `V gpg      `  # Navigate do $v_drya_gpg: ~/.dryaGPG
+         # Use 11: `V gpg .    `  # DRYa, when decrypting files, checks their realite path with directories and places it under ~/.dryaGPG/<path-found-from-original-file>/<original-input-file> Then `V gpg .` will search for the files with fzf
+         # Use 11: `V gpg <dir>`  # Navigate to predicted, existent directory
+
+         `V +`  or `V add`          # Serve para adicionar PWD ao historico de loop
    '
    }
 
@@ -1075,6 +1079,11 @@ function V {
       f_talk; echo "V: Such Dir does not exist (or repo not cloned)"
    }
 
+   function f_error_cd_gpg {
+      # If `V` could not navigate to the directory of decrypted DRYa files, then mention
+      f_talk; echo "V: Navigating to GPG Directory"
+              echo " > does not exist"
+   }
    # Implementation of Use 1:
       if [ -z $1 ]; then 
          # Se nao for dado nenhum comando, abre o menu principal
@@ -1370,6 +1379,9 @@ function V {
       elif [ $1 == "pwd" ]; then
          eval lll  # Function usually at config-bash-alias
       
+   # Implementation of Use 11:
+      elif [ $1 == "gpg" ]; then
+         cd $v_drya_gpg 2>/dev/null && ls -p || f_error_cd_gpg
 
    # Implementation of Use ... :
       elif [ $1 == "+" ]; then
