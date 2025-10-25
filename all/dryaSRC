@@ -418,9 +418,9 @@ function f_alias_to_enforce {
    # These variavles and alias will be set twice, to ensure they are not overwritten by mistake
 
    # To refresh the terminal
-      alias src="source ~/.bashrc"
-      alias  rs="source ~/.bashrc" 
-      alias  f5="source ~/.bashrc"
+      alias src="cd ~ && source ~/.bashrc"
+      alias  rs="cd ~ && source ~/.bashrc" 
+      alias  f5="cd ~ && source ~/.bashrc"
 
 
 

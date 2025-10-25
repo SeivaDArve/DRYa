@@ -984,6 +984,21 @@ elif [ $1 == "op" ]; then
 
    f_ls
 
+elif [ $1 == "v" ] || [ $1 == "navigate-to-dryaGPG" ]; then
+   mkdir -p $v_dryaGPG
+   cd       $v_dryaGPG  # Not working in a sub-shell
+   
+elif [ $1 == "+" ] || [ $1 == "add-text-file-info-confidenntial-info" ]; then
+   mkdir -p $v_dryaGPG
+   f_talk; echo "Creating plain text file (for sensitive data)"
+           echo " > Default: <current-date-time>"
+   
+   read -p " > " v_sens
+   [[ -n $v_sens ]] && touch $v_dryaGPG/$v_sens || echo " > <current-date-time>"
+   
+   echo
+   echo "(uDev)"
+
 elif [ $1 == "add" ] || [ $1 == "add-dryaGPG-dir" ]; then
    mkdir -p $v_dryaGPG
    touch    $v_dryaGPG/y
