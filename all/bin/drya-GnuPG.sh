@@ -15,7 +15,7 @@
 
 
 
-function f_allow_empty_vars {
+function f_permitir_variaveis_vazias {
    # Liga/Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
    set +u   
 }
@@ -35,13 +35,13 @@ function pause {
 }
 
 function f_header {
-   f_allow_empty_vars 
+   f_permitir_variaveis_vazias
    f_greet  
    f_deny_empty_vars 
 }
 
 function f_hline {
-   f_allow_empty_vars 
+   f_permitir_variaveis_vazias
    f_hzl
    f_deny_empty_vars 
 }
@@ -49,7 +49,7 @@ function f_hline {
 function f_ls {
    # Usa simplesmente o comando `ls` para facilitar o autocomplete nos momentos em que algum menu pede um nome de um ficheiro de entrada
 
-   f_allow_empty_vars 
+   f_permitir_variaveis_vazias
    f_hline
    f_talk; echo "Comando \`ls\` para facilitar:" 
    echo
@@ -60,11 +60,22 @@ function f_ls {
 
 function f_gpg_path {
    # Descobrir o path para o executavel OU acabar com um valor positivo. De ambas as formas o script nao acaba nem com erro nem com um valor inexistente. 
-     #GPG=$(command -v gpg || true)  # Legacy from ChatGPT
-      GPG=$(command -v gpg)  
+
+   GPG=$(command -v gpg)  
 }
 
-function f_detetar_path_for_gpg_command {
+function f_install_now {
+   # Confirmar se quer instalar ja o `gnupg`
+  
+   # Usa drya-lib-1 para perguntar ao user se realmente quer Instalar
+      v_txt="Install GPG" && f_anyK
+
+   # Comando DRYa para detetar o pkg manager e adicionar o pacote
+      bash pk + gnupg -y
+      echo
+}
+
+function f_detetar_se_instalado {
    # Criar uma var $GPG com info do caminho do executavel
 
    # Descobrir o caminho do script instalado no OS
@@ -75,21 +86,10 @@ function f_detetar_path_for_gpg_command {
 
          f_header
          f_talk; echo "gpg não Instalado"
-                 echo " > Instala com \`D gpg i\`"
+                 echo ' > Se nao quiser instalar, acede ao menu com `D gpg m`'
+                 echo
 
-         if f_confirm " > Pretende instalar agora?"; then
-               echo " > Vai ser instalado (3s)..."
-               read -sn1 -t 3
-               echo
-
-               f_talk; echo "A instalar 'gnupg':"
-               pk + gnupg
-               echo
-         else
-               echo " > Nao vai ser instalado"
-               echo
-         fi
-
+         f_install_now  # uDev: Adicionar qqr outro comando para fazer bypass a esta fx e poder ser o menu a mesma
       fi
 
    # Descobrir o caminho do script (novamente, o user pode nao ter conseguido instalar no OS)
@@ -99,19 +99,8 @@ function f_detetar_path_for_gpg_command {
       if [[ -z "$GPG" ]]; then
          f_talk; echo "gpg não Instalado (confirmacao)"
 
-         if f_confirm " > Pretende a mesma aceder ao menu/comandos?"; then
-            clear
-               
-         else
-               echo " > A sair"
-               exit 1
-         fi
-
+         v_txt="Ver lista de comando à mesma" && f_anyK
       fi
-
-
-
-
 }
 
 function f_confirm {
@@ -151,7 +140,7 @@ function f_confirm {
 }
 
 function f_run_with_confirm {
-   f_allow_empty_vars 
+   f_permitir_variaveis_vazias
    local func="$1"
    f_deny_empty_vars 
    shift
@@ -842,8 +831,9 @@ function f_GnuPG_main_menu {
 
 
 
-f_detetar_path_for_gpg_command 
-f_allow_empty_vars 
+# Standard inicial fx
+   f_detetar_se_instalado 
+   f_permitir_variaveis_vazias
 
 if [ -z $1 ]; then
    f_testing_drya_defaults 
@@ -852,12 +842,13 @@ if [ -z $1 ]; then
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh 
 
-elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
-   #bash pk ?? gnupg  # Retorna uma var $v_last_check"
-   #echo "Last check: $v_last_check"
-   #read -sn1
+elif [ $1 == "h" ]; then
+   f_header; f_talk; f_some_help; pause 
 
-   bash pk + gnupg
+elif [ $1 == "m" ] || [ $1 == "menu" ]; then
+   # Permite ver o menu à mesma, caso gpg nao esteja instalado
+   f_talk; echo "Menu Principal"
+   f_main_menu_text
 
 elif [ $1 == "0" ]; then
    f_testing_drya_defaults; pause
@@ -925,8 +916,12 @@ elif [ $1 == "20" ]; then
 elif [ $1 == "21" ]; then
    f_only_convert_content_from_OpenPGP_no_encription 
 
-elif [ $1 == "h" ]; then
-   f_header; f_talk; f_some_help; pause 
+elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
+   #bash pk ?? gnupg  # Retorna uma var $v_last_check"
+   #echo "Last check: $v_last_check"
+   #read -sn1
+
+   f_install_now 
 
 elif [ $1 == "ws" ]; then
    # Opcao dedicada ao DRYa Welcome screen
@@ -965,26 +960,29 @@ elif [ $1 == "ws" ]; then
 
 
 elif [ $1 == "op" ]; then
-   :'
-O GPG (GNU Privacy Guard) implementa o padrão OpenPGP (RFC 4880).
+   # Tentar detetar que tipo de pacote é fornecido como arg $3 e tentar abrir
 
-Um ficheiro .gpg é basicamente um container binário que pode conter:
+   #
+   #  O GPG (GNU Privacy Guard) implementa o padrão OpenPGP (RFC 4880).
+   #
+   #  Um ficheiro .gpg é basicamente um container binário que pode conter:
+   #   > dados cifrados (simétrica ou assimetricamente),
+   #   > dados assinados (sem cifragem),
+   #   > dados apenas “empacotados” (literal data packet),
+   #   > combinações. Ex: cifrado + assinado
+   #
+   #  O formato interno tem “packets”  (estruturas identificadas por tipo): Public-Key Encrypted Session Key,
+   #                                                                        Symmetrically Encrypted Data Packet, 
+   #                                                                        Literal Data Packet, 
+   #                                                                        etc.
+   #
 
-dados cifrados (simétrica ou assimetricamente),
+   #
+   #  Listar os conteudos de um pacote/ficheiro .gpg
+   #   > gpg --list-packets ficheiro.gpg
+   #
 
-dados assinados (sem cifragem),
-
-dados apenas “empacotados” (literal data packet),
-
-ou combinações (ex.: cifrado + assinado).
-
-O formato interno tem “packets” (estruturas identificadas por tipo): Public-Key Encrypted Session Key, Symmetrically Encrypted Data Packet, Literal Data Packet, etc.
-'
-
-:'Listar os conteudos de um pacote/ficheiro .gpg
-gpg --list-packets ficheiro.gpg
-'
-   ls
+   f_ls
 
 elif [ $1 == "add" ] || [ $1 == "add-dryaGPG-dir" ]; then
    mkdir -p $v_dryaGPG
@@ -1007,8 +1005,7 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
       ls -pA $v_dryaGPG
       f_hline
       echo
-      v_txt="Delete $v_base" 
-      f_anyK
+      v_txt="Delete $v_base" && f_anyK
       echo
       f_talk; echo "Removing $v_base"
 
@@ -1021,11 +1018,12 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
       f_talk; echo "Directory does not even exist: $v_base"
    fi
          
+
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
-   echo "Adeus!"
+   echo " > Exit"
    exit 0 
 
 else
-   echo "Opcao nao reconhecida"
+   f_talk; echo "Opcao desconhecida"
 
 fi
