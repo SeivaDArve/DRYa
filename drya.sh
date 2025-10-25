@@ -984,27 +984,43 @@ function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
 
    # Obtendo o IP público usando curl e um serviço online
-      PUBLIC_IP=$(curl -s ifconfig.me)
+      PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
 
    # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
-      LOCAL_IP=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
 
-      # Alternativa 1: 
-         #LOCAL_IP=$(hostname -I | awk '{print $1}')
+      # Tentativa 1:
+         command ifconfig &>/dev/null
+         [[ $? == 0 ]] && echo a1
+         LOCAL_IP_1=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+         
+      # Tentativa 2:
+         command hostname &>/dev/null
+         [[ $? == 0 ]] && echo a2
+         LOCAL_IP_2=$(hostname -I | awk '{print $1}')
 
-      # Alternativa 2: 
-         #LOCAL_IP=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+      # Tentativa 3: 
+         command ip &>/dev/null
+         [[ $? == 0 ]] && echo a3
+         LOCAL_IP_3=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+
+      # Defining final variable
+         ( [[ -n $LOCAL_IP_1 ]] && LOCAL_IP=$LOCAL_IP_1 )  || \
+         ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_2 )  || \
+         ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_3 )  || \
+         echo "No command could find Local IP: 'ifconfig', 'hostname', 'ip'" 
 
    # Imprimindo os resultados
       echo "IP Público: $PUBLIC_IP"
       echo "IP Local:   $LOCAL_IP"
+
+   # Testar se existe algum comando `ifconfig` que se instala com o pacote 'net-tools'
 }
 
 function f_menu_internet_network_ip_options {
    # uDev: criar fx para verificar se existem novos bookmark no browser
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='menu-ip-options'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='D ip'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L6='6. Print  | javascript tricks (for browser console)'
       L5='5. Menu   | `web` (navegar na internet)'
