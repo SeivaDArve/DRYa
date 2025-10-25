@@ -155,7 +155,7 @@ function f_fzf_power_options {
 # uDev: 
 #     -------------------------------------------------------
 #     Reserved alias/variables for DRYa
-#     uDev: init-bin: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
+#     uDev: .../all/boot: fluNav: app que usa apenas o numpad para TUDO no pc, navegacao, menus... TUDO...
 #
 #     2468   = DRYa app ------------------------------- (bash ~/Repositories/DRYa/drya.sh)
 #     24685  = DRYa's Repository Center --------------- (cd ~/Repositories)

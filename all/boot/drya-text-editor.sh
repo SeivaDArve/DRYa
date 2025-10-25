@@ -41,7 +41,7 @@ function e {
    elif [ $1 == "." ]; then
 
       # Variable to edit self (this script)
-         v_self=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/drya-text-editor.sh
+         v_self=${v_REPOS_CENTER}/DRYa/all/boot/drya-text-editor.sh
 
       if [ -z $2 ]; then
          vim $v_self

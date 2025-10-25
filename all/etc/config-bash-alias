@@ -63,7 +63,7 @@ alias stop-termux-gui="vncserver -kill :1"        # Termina o servidor VNC no ec
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 
-# Function for web options. (Sent to .../DRYa/bin/init-bin/web.sh
+# Function for web options. (Sent to .../DRYa/boot/web.sh
 #  function web { ... } 
 #
 #  Shortcuts for fx `web`

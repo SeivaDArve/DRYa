@@ -66,7 +66,7 @@ function f_talk {
 
 function f_horiz_line {
    # Using the in-built horizontal line from DRYa
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
+   bash ${v_REPOS_CENTER}/DRYa/all/boot/f_horizontal_line.sh
    echo $v_line
 }
 
@@ -388,14 +388,14 @@ function f_edit_self {
 
    # Verbose: Before opening file
       f_talk; echo "Editing fluNav original file"
-              echo " > .../DRYa/all/bin/init-bin/fluNav.sh"
+              echo " > .../DRYa/all/boot/fluNav.sh"
               echo
               read -s -n 1 -p "[Press any key to continue] "
               echo 
               echo 
 
    # Verbose: Actually opening the file
-      bash e ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh
+      bash e ${v_REPOS_CENTER}/DRYa/all/boot/fluNav.sh
 
    # Verbose: After opening the file
       f_talk; echo "Closed: fluNav original file"
@@ -431,7 +431,7 @@ function f_up {
    f_talk; echo "uDev: Upload updates using drya-lib-4 (after closing file)"
 }
 
-# functions for text editor `e` `ee` `eee` exist at .../DRYa/all/bin/init-bin/drya-text-editor
+# functions for text editor `e` `ee` `eee` exist at .../DRYa/all/boot/drya-text-editor
 
 
 alias dcim='cd ~/storage/dcim/Camera || echo " \> You are trying to navige to a dir usually present on Android using Termux"'
@@ -1459,8 +1459,8 @@ function f_action {
 
       f_greet1 
 
-      cd  ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/
-      vim ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/tm-tmux
+      cd  ${v_REPOS_CENTER}/DRYa/all/boot/
+      vim ${v_REPOS_CENTER}/DRYa/all/boot/tm-tmux
 
 
    elif [ $v_nm == "search_history_files" ]; then
@@ -1644,7 +1644,7 @@ function S {
    # List fav files for edition (fluNav)
    
    # Reload the amount of '-' are needed to create an horizontal line
-      v_file=${v_REPOS_CENTER}/DRYa/all/bin/init-bin/f_horizontal_line.sh
+      v_file=${v_REPOS_CENTER}/DRYa/all/boot/f_horizontal_line.sh
       [[ -f $v_file ]] && source $v_file 1>/dev/null
 
    # If there are no arguments, present the fluNav
@@ -1676,7 +1676,7 @@ function S {
       elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="initVIM";                f_action; f_edit__init_file_emacs__with_vim; f_up
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
-      elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/init-bin && vim traitsID.sh; f_up
+      elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd ${v_REPOS_CENTER}/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
       elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
       elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up

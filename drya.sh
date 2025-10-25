@@ -1464,7 +1464,7 @@ function f_menu_edit_centralized_then_install {
    
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[    $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/init-bin/fluNav.sh 2
+      [[    $v_list =~ "2. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/boot/fluNav.sh 2
       [[    $v_list =~ "1. " ]] && echo "Canceled" 
       unset  v_list
 

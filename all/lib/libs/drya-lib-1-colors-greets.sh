@@ -442,7 +442,7 @@ function f_prsD {
 
 function f_hzl {
    # Prints an horizontal line according to the amount to line existent in the current terminal
-   # This fx exists also at .../init-bin/horizontal-line.sh
+   # This fx exists also at .../boot/horizontal-line.sh
 
    # If the script that used this library does not set the variable that fills the line, then the character is set as default here
       [[ -z $v_hzl ]] && v_hzl="-"

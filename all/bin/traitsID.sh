@@ -19,7 +19,7 @@ __name__="traitsID.sh"  # Change to the name of the script. Example: DRYa.sh, ez
       #which apt-get >/dev/null && { echo Debian based;  }
 
 
-# uDev: Send all this to a file: .../DRYa/all/bin/init-bin/traitsID.sh
+# uDev: Send all this to a file: .../DRYa/all/boot/traitsID.sh
 # uDev: Detetar WM (window manager, se estar a usar GNOME, KDE...
 # uDev: Se o dispositivo nao for reconhecido, mostrar outro comportamento, por exemplo, nao mostrar que Jarve e DRYa existe no dispositivo
 # uDev: set raspberry pi Screen Resolution (when using "Silver" TV) for: 1360x768
