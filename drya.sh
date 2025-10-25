@@ -281,14 +281,14 @@ function f_calcular_tempo_decorrido_apos_data {
 
 function f_output_drya_welcome_screen_msg_with_vimscript {
    # Repetir os comandos que criam a mensagem de apresentacao DRYa
-   # (Esta sequencia de comandos ja existem em .../source-all-drya-files
+   # (Esta sequencia de comandos ja existem em .../DRYa/all/dryaSRC
 
    # Ficheiro vimscript.vim (que vai servir de modelo para a proxima busca)
       v_scr=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/vimscript_1_*
       v_copy=~/.tmp/vimscript-1-copy.vim
    
    # Ficheiro que queremos depois pesquisar funcoes
-      v_file=${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+      v_file=${v_REPOS_CENTER}/DRYa/all/dryaSRC
       v_out=~/.tmp/vimscript-1-output.txt
       rm $v_out 2>/dev/null  # Remove o ficheoiro temporario caso ja haja algum com esse nome
 
@@ -1865,7 +1865,7 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
    #       But such fx was already set before
    
    # Variable for the file names
-      # Original file name (this var was created at source-all-drya-files)
+      # Original file name (this var was created at dryaSRC)
       v_original=$v_drya_fzf_menu_hist
 
       # Temporary file name
@@ -2197,7 +2197,7 @@ function f_clone_main_menu {
 
 function f_menu_install_drya_dependencies__1st {
    # Menu para a detecao e instalacao de dependencias, com PRESETS
-   # uDev: Esta fx tambem tem de ser util para utilizacao no ficheiro source-all-drya-files
+   # uDev: Esta fx tambem tem de ser util para utilizacao no ficheiro dryaSRC
    # uDev: This may use drya-lib-4
 
    # Lista de opcoes para o menu `fzf`
@@ -2257,7 +2257,7 @@ function f_help_installing_specific_packages {
 
 # ARGUMENTS: for the Function DRYa
    # Use the programming structure provided below (if elif else fi) along 
-   # with the Alias "drya" or "D" (defined in the file "source-all-drya-files")
+   # with the Alias "drya" or "D" (defined in the file "dryaSRC")
       # Examples at the teminal: 
       #
       #  drya (with-no-arguments)
@@ -2383,9 +2383,9 @@ elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then
    # Edit the file that starts DRYa's loading sequence
    vim ~/.bashrc
 
-elif [ $1 == "1" ] || [ $1 == "edit-source-all-drya-files" ]; then 
+elif [ $1 == "1" ] || [ $1 == "edit-dryaSRC" ]; then 
    # Edit first file in DRYa's loading sequence
-   vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+   vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
 
 elif [ $1 == "2" ] || [ $1 == "config-bash-alias" ]; then 
    # Edit second file in DRYa's loading sequence
@@ -2871,17 +2871,17 @@ elif [ $1 == "edit" ]; then
             # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
                # '$ F'
 
-            # Using the alias set on 'source-all-drya-files'
+            # Using the alias set on 'dryaSRC'
                # '$ ,.' 
       ;;
-      src | source | source-drya | source-all-drya-files) 
-         vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+      src | source | source-drya | dryaSRC) 
+         vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
 
          # Other ways to open the same file: 
             # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
                # '$ F'
 
-            # Using the alias set on 'source-all-drya-files'
+            # Using the alias set on 'dryaSRC'
                # '$ ,..' 
       ;;
       termux)
@@ -3498,7 +3498,7 @@ elif [ $1 == "copy" ]; then
       v_files=$(ls -1F | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
       v_pwd=$(pwd)
  
-      echo > $v_clip   # Variable already set on file: 'source-all-drya-files'
+      echo > $v_clip   # Variable already set on file: 'dryaSRC'
 
       if [[ -n $v_files ]]; then
          for i in $v_files
@@ -3733,7 +3733,7 @@ elif [ $1 == ".." ]; then
    # `D .. c` edita copia desse ficheiro de historico (se existir)
 
    # Variavel com o nome/caminho do ficheiro de historico fzf
-      # v_drya_fzf_menu_hist  # Ja foi definido em source-all-drya-files
+      # v_drya_fzf_menu_hist  # Ja foi definido em dryaSRC
 
    # Se o ficheiro que queremos manipular nao existir, abortar todo o script
       if [[ -f $v_drya_fzf_menu_hist ]]; then

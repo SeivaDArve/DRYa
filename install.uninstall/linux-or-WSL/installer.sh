@@ -10,7 +10,7 @@ function f_greet {
 	figlet "DRYa" 2>/dev/null || echo "DRYa: greetings ;)" 
 }
 
-function f_find_source-all-drya-files 
+function f_find_dryaSRC
 {
 	# uDev: Process of instalation:
 		# 1. Must know the full location from where this script is running from (script installer.sh)
@@ -22,9 +22,9 @@ function f_find_source-all-drya-files
 				# If another location is mentioned, there are 2 otpions:
 				# 2.4.1 Give the full path to it
 				# 2.4.2 Allow interactive navigation with '$ cd' command	
-		# 3. After the current file location is found, must know the location of source-all-drya-files
+		# 3. After the current file location is found, must know the location of dryaSRC
 		# 4. Must run the script (or import the sscript) that places that 
-			# file "source-all-drya-files" into ~/.bashrc
+			# file "dryaSRC" into ~/.bashrc
 
 
 
@@ -37,7 +37,7 @@ function f_find_source-all-drya-files
 
 
 
-	# The file "source-all-drya-files" must be found for installation because 
+	# The file "dryaSRC" must be found for installation because 
 		# it is the one that is mentioned at the ~/.bashrc
 	
 	# uDev: Find a recursive way to find this file without using the command '$ tree'
@@ -46,9 +46,9 @@ function f_find_source-all-drya-files
 		# The recursive solution that we should find to replace '$ tree' may start every
 		# search at "DRYa/all" because while it is under development it may change for some reason
 	
-	# hard coded version of the search for the file: "source-all-drya-files":
-		v_file="source-all-drya-files"
-		v_file_relative="../../all/source-all-drya-files"
+	# hard coded version of the search for the file: "dryaSRC":
+		v_file="dryaSRC"
+		v_file_relative="../../all/dryaSRC"
 		echo "DRYa: Linux Installer: My script name is: ./$0"
 		echo "DRYa: Linux Installer: My relative dir path is: ./$(dirname $0)"
 
@@ -90,12 +90,12 @@ function f_export_updated_dryarc {
 }
 
 function f_add_drya_to_bashrc {
-   #Add file "source-all-drya-files" to ~/.bashrc
+   #Add file "dryaSRC" to ~/.bashrc
       # which is the first file and only file
       # inside ~/.bashrc that re-directs to all others
 
       # uDev: Ask permission to continue first
-      bash ~/Repositories/DRYa/all/bin/re-direct-bashrc_to_source-all-drya-files.sh
+      bash ~/Repositories/DRYa/all/bin/re-direct-bashrc_to_dryaSRC.sh
 
 }
 
@@ -133,7 +133,7 @@ function f_export_DRYa_repo-location {
 function f_exec {
 	#f_greet
 f_list_github_public_repositories
-	#f_find_source-all-drya-files	
+	#f_find_dryaSRC
 	#f_export_variables
 	#f_export_updated_dryarc
 	#f_add_drya_to_bashrc
@@ -149,7 +149,7 @@ f_exec
 # 2. Creates a file .dryarc ~/.config/h.h/drya (for temporary DRYa configs
 # 3. Reads the file ~/.bashrc to see it it has a shebang
 #	3.1. If if doesn't than adds it
-# 4. Reads the file ~/.bashrc again to see if it recognizes ~/Repositories/DRYa/all/source-all-drya-files 
+# 4. Reads the file ~/.bashrc again to see if it recognizes ~/Repositories/DRYa/all/dryaSRC
 # 	4.1 If it doesn't than adds it
 # 5. Sources ~/.bashrc to apply the changes done manually
 # 6. Ask if user want to add the GUI layer to DRYa

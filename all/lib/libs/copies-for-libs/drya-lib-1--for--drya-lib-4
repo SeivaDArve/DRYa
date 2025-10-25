@@ -510,8 +510,8 @@ function F_debug {
 
 function F_pin {
    # Adicionar pin aos pedidos de certas fx
-   # V_pin is defined at source-all-drya-files
-   # V_pin=$(grep "v_pin" ${v_REPOS_CENTER}/DRYa/all/source-all-drya-file)
+   # V_pin is defined at dryaSRC 
+   # V_pin=$(grep "v_pin" ${v_REPOS_CENTER}/DRYa/all/dryaSRC)
    V_pin=0000
 
    # Se no 'main' script o user definiu texto para apresentar no ecra, entao esse texto é apresentado
@@ -528,7 +528,7 @@ function F_pin {
 
 
 # {----------------------------------------------------------------------
-# Material do center text (vertically, horizontally) found in source-all-drya-files
+# Material do center text (vertically, horizontally) found in dryaSRC
 #
 #  # For the lines: 
 #     # Count number of lines in the terminal:

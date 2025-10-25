@@ -50,13 +50,13 @@ function f_trid_0_1_2 {
 
 
    # Nome do ficheiro SOURCE (este mesmo ficheiro, que mantem alias 'trid' do script 'traitsID.sh')
-      # (Definido em source-all-drya-files)
+      # (Definido em dryaSRC)
 
    # Nome do ficheiro SCRIPT traitsID.sh
-      # (Definido em source-all-drya-files)
+      # (Definido em dryaSRC)
 
    # Nome do ficheiro OUTPUT traitsID.sh
-      # (Definido em source-all-drya-files)
+      # (Definido em dryaSRC)
 
 
 
@@ -240,7 +240,7 @@ function f_trid_7 {
    # Nota: tem de funcionar em sintonia com a fx `.` e `ee` em "fluNav" e `e` em .../DRYa/bin/e
 
    # Nome do ficheiro 
-      trid_editor_file=$trid_dir/trid_editor  # variavel 'trid_dir' configurado em source-all-drya-files
+      trid_editor_file=$trid_dir/trid_editor  # variavel 'trid_dir' configurado em dryaSRC
    
    # Se o ficheiro que menciona qual o editor de texto pre-definido nao existir, entao, cria um
       if [ -f $trid_editor_file ]; then
@@ -390,11 +390,11 @@ function f_neofetch {
 function f_help {
    # Como na versão atual de Bash não da para exportar arrays, será usado um metodo mais arcaico
    echo "Este ficheiro é:"
-   echo "> \$trid_script"  # Esta variavel foi criada e exportada em 'source-all-drya-files'
+   echo "> \$trid_script"  # Esta variavel foi criada e exportada em 'dryaSRC'
    echo 
    echo "Elemento [0] do array arcaico:"
    echo " > Cujo 'Key' + 'Pair' estao separados por '::'"
-   echo " >> \$trid_0"   # esta variavel foi criada e exportada em 'source-all-drya-file'
+   echo " >> \$trid_0"   # esta variavel foi criada e exportada em 'dryaSRC'
    echo 
    echo "DRYa: traitsID: Source Location:"
    echo " > $trid_source"

@@ -15,7 +15,7 @@
 
 # For ezGIT
    alias 1="G"
-  #alias 10="cd ${v_REPOS_CENTER} && ls"  # Set on source-all-drya-files
+  #alias 10="cd ${v_REPOS_CENTER} && ls"  # Set on dryaSRC
 
    alias 11="G ."
    alias 111="G . A"

@@ -519,8 +519,8 @@ function f_define_env_vars {
 	  #  v_REPOS_CENTER="/home/user/Repositories"
 	  #  DRYa_HEART
 	  
-   # Finding path to 'source-all-drya-files' (the file that contains reference for all other seiva's repositories when downloaded
-	  declare DRYa_HEART="all/source-all-drya-files"
+   # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
+	  declare DRYa_HEART="all/dryaSRC"
 	  declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
 
 	  echo "The Heart of DRYa is located at:"
@@ -686,7 +686,7 @@ function f_DRYa-install-me-at-bashrc {
       #read -sn 1
 	  
    # Defining the environment variable:
-	  DRYa_HEART="${found_DRYa_at}/all/source-all-drya-files"
+	  DRYa_HEART="${found_DRYa_at}/all/dryaSRC"
 	  export DRYa_HEART
 	  echo " > DRYa: My file that awakes all others is located at: $DRYa_HEART"
    

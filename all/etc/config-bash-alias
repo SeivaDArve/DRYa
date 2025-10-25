@@ -2,7 +2,7 @@
 # Title: config-bash-alias
 __name__="config-bash-alias.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 # Description: Dv List of all alias and Functions (for Linux terminal)
-# Use: This file is meant to be sourced from "~/Repositories/DRYa/all/source-all-drya-files"
+# Use: This file is meant to be sourced from "~/Repositories/DRYa/all/dryaSRC"
 
 # At drya-text-editor: functions: op go 
 #                      alias:     em Em EM xdg

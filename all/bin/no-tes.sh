@@ -253,9 +253,9 @@ elif [ $1 == "-" ]; then
 elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # Edit file: "To Do list"
    # --- File to be edited: $v_file_td (variable set at the top of this script)
-   # --- Alias also defined as `td` in 'source-all-drya-files'
+   # --- Alias also defined as `td` in 'dryaSRC'
 
-   # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
+   # uDev: join "toDo" from: moedaz (alias on dryaSRC), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
    
    # Ensuring omni-log with drya-lib-4
@@ -281,9 +281,9 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
 elif [ $1 == "sv" ] || [ $1 == "seiva" ]; then
    # Edit file: "To Do list"
    # --- File to be edited: $v_file_sv (variable set at the top of this script)
-   # --- Alias also defined as `td` in 'source-all-drya-files'
+   # --- Alias also defined as `td` in 'dryaSRC'
 
-   # uDev: join "toDo" from: moedaz (alias on source-all-drya-files), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
+   # uDev: join "toDo" from: moedaz (alias on dryaSRC), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
 
    
    # Ensuring omni-log with drya-lib-4

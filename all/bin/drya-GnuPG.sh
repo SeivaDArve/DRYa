@@ -982,7 +982,7 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
       echo
       f_talk; echo "Removing $v_base"
 
-      #cd ~   # At drya_sadf (source-all-drya-files) then is an fx 'drya' that detects this argument first. It will `cd $HOME` and then run `D gpg rm` allowing always to remove $v_dryaGPG even if the prompt is located there
+      #cd ~   # At dryaSRC then is an fx 'drya' that detects this argument first. It will `cd $HOME` and then run `D gpg rm` allowing always to remove $v_dryaGPG even if the prompt is located there
       rm -rf  $v_dryaGPG
       [[ ! -d $v_dryaGPG ]] && echo " > done" 
       f_hline

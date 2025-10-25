@@ -1,9 +1,9 @@
 #!/bin/bash
-# Title: source-all-drya-files
+# Title: source-all-drya-files (dryaSRC)
 # Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
 
 # File vars
-   __name__="source-all-drya-files.sh"
+   __name__="dryaSRC"
    __repo__="${v_REPOS_CENTER}/DRYa"
 
 
@@ -71,7 +71,7 @@ function f_drya_libs {
 function f_drya_msgs_init {
    # drya-messages: Verbose file (variables and outputs)
       echo "DRYa: Sub-Operative System"
-      echo " > ~/.bashrc redirected to DRYa's 1st file to load: $v_name_drya_source, it's path:"
+      echo " > ~/.bashrc redirected to DRYa's 1st file to load: $v_name_dryaSRC, it's path:"
       echo "   ${DRYa_HEART}"
       echo 
       echo " > drya-status-msgs file located at:"
@@ -479,7 +479,7 @@ function f_alias_to_enforce {
       alias 10="cd ${v_REPOS_CENTER} && ls"
 }
 
-function f_internal_drya_files_1_of_3 {
+function f_internal_drya_files_nr_1 {
    # Repository: DRYa (internal files - (1/2) )
 
    # uDev: v_nm_src_bash  = source-all-drya-files = drya-src-frm-bashrc
@@ -490,9 +490,9 @@ function f_internal_drya_files_1_of_3 {
    f_demi_fake_pin 
 
    # Include this file name in a variable
-     v_name_drya_source="source-all-drya-files"
-     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_drya_source
-     # uDev: Dar um nome mais explicito: drya_source_all_files ou drya_sadf
+     v_name_dryaSRC="source-all-drya-files"  # Legacy
+     v_name_dryaSRC="dryaSRC"
+     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_dryaSRC
 
      v_name_drya_alias="config-bash-alias"
      v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/$v_name_drya_alias
@@ -535,7 +535,7 @@ function f_internal_drya_files_1_of_3 {
 
 }
 
-function f_internal_drya_files_3_of_4 {
+function f_internal_drya_files_nr_3 {
    # Adding .../DRYa/all/bin to the envirnoment variable $PATH so that, script at that .../DRYa/all/bin/ can be automatically recognized by yhe system
 
    v_add=${v_REPOS_CENTER}/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
@@ -814,7 +814,7 @@ function f_repository_luxam {
    alias    L="bash $v_luxam"
 }
 
-function f_internal_drya_files_2_of_3 {
+function f_internal_drya_files_nr_2 {
    # Repository: DRYa (internal files - (2/4) )
 
    # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
@@ -864,7 +864,7 @@ function f_internal_drya_files_2_of_3 {
 
 function f_drya_ssms_end {
    # Send to drya-messages the info that all the file was loaded
-   echo -e "DRYa: file finished loading: $v_name_drya_source \n" >> $v_MSGS
+   echo -e "DRYa: file finished loading: $v_name_dryaSRC \n" >> $v_MSGS
 }
 
 function f_make_sound {
@@ -1001,7 +1001,7 @@ function f_exec {
    # Config Internal scripts and settings
       f_escape_time_at_terminal_startup
      #f_startup_lock_DRYa
-      f_internal_drya_files_1_of_3
+      f_internal_drya_files_nr_1
      #f_check_missing_dependencies
       f_drya_libs  
       f_drya_ssms_start
@@ -1038,8 +1038,8 @@ function f_exec {
       f_repository_luxam
       
    # Default DRYa configs 
-      f_internal_drya_files_2_of_3  # Source 'boot' and 'config-alias' :: Remove ~/.tmp 
-      f_internal_drya_files_3_of_4  # Exporting $PATH
+      f_internal_drya_files_nr_2  # Source 'boot' and 'config-alias' :: Remove ~/.tmp 
+      f_internal_drya_files_nr_3  # Exporting $PATH
 
    # Start loading background tasks (jarve)
       # (DRYa:  foreground tasks, once.       (at startup and on command))

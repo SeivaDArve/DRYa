@@ -216,10 +216,10 @@ function f_edit__notes {
    note  # This is an alias set on config-bash-alias file
 }
 
-function f_edit__source_all_drya_files {
-   vim ${v_REPOS_CENTER}/DRYa/all/source-all-drya-files
+function f_edit__dryaSRC {
+   vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
    f_greet1
-   echo "edited: source-all-drya-files"
+   echo "edited: dryaSRC"
 }
 
 function f_edit__bashrc {
@@ -685,7 +685,7 @@ function f_menu_fzf_S {
 
       L15='15. Edit | vim   | config-bash-alias'
       L14='14. Edit | vim   | notes'
-      L13='13. Edit | vim   | source-all-drya-files'
+      L13='13. Edit | vim   | dryaSRC'
       L12='12. Edit | vim   | .bashrc'
       L11='11. Edit | vim   | source-all-moedaz-files'
       L10='10. Edit | vim   | .vimrc'
@@ -709,7 +709,7 @@ function f_menu_fzf_S {
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "15. " ]] && f_edit__config_bash_alias
       [[ $v_list =~ "14. " ]] && f_edit__notes
-      [[ $v_list =~ "13. " ]] && f_edit__source_all_drya_files 
+      [[ $v_list =~ "13. " ]] && f_edit__dryaSRC 
       [[ $v_list =~ "12. " ]] && f_edit__bashrc
       [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
       [[ $v_list =~ "10. " ]] && f_edit__vimrc
