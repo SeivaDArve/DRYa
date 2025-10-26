@@ -985,19 +985,87 @@ elif [ $1 == "op" ]; then
    f_ls
 
 elif [ $1 == "v" ] || [ $1 == "navigate-to-dryaGPG" ]; then
+   # Create and Navigate to $v_dryaGPG
+   # Note: It is using dryaSRC to allow `cd` in the main shell (does not `cd` in a sub-shell)
+
    mkdir -p $v_dryaGPG
-   cd       $v_dryaGPG  # Not working in a sub-shell
+   cd       $v_dryaGPG  # Not working in a sub-shell (it is using dryaSRC to do it)
    
 elif [ $1 == "+" ] || [ $1 == "add-text-file-info-confidenntial-info" ]; then
+    f_header
+
+
+   #  {
+   #    "name": "GitHub",
+   #    "username": "joao",
+   #    "password": "abc123",
+   #    "url": "https://github.com",
+   #    "ultima-alteracao-de-password": "2025-10-25"
+   #    "notes": "2FA ativo"
+   #  }
+
+
+
+   # Desencriptar um .tar
+   #  gpg -d minha_pasta.tar.gz.gpg | tar -xz
+
+
+
+   function f_create_new_nano_name {
+      # Criar novo nome de ficheiro usando data com: Ano + Mes + Dia + Nanosegundos
+
+      v_data=$(date +'%Y-%m-%d-%N')
+      v_data="$v_data.txt"
+   }
+
+   # Garantir que esse nome nao existe ja, para nao dar erro ao criar
+      f_create_new_nano_name 
+      [[ -f $v_dryaGPG/$v_data ]] && echo "Nome ja existe (incrivel), reenicia este comando"
+
    mkdir -p $v_dryaGPG
-   f_talk; echo "Creating plain text file (for sensitive data)"
-           echo " > Default: <current-date-time>"
-   
-   read -p " > " v_sens
-   [[ -n $v_sens ]] && touch $v_dryaGPG/$v_sens || echo " > <current-date-time>"
-   
+
+   f_talk; echo "Creating sensitive data:"
+
+   f_hline
+   f_talk; echo "Options:"
+   echo " > Plain text file (empty, with JSON)"
+   echo " > Directory       (empty, with JSON)"
    echo
-   echo "(uDev)"
+   echo " > If prompt is not at .dryGPG dir, New creations will be moved there"
+
+   f_hline  
+   f_talk; echo "New name:"
+           echo " > Default: '$v_data' (current date)"
+   read -p      " > " v_sens
+   echo
+
+   v_sens=${v_sens:-"$v_data"}
+
+   if [[ -n $v_sens ]]; then
+      touch $v_dryaGPG/$v_sens
+      echo " > Criado: $v_sens"
+
+   else
+      echo " > Nao Criado: $v_sens"
+   fi
+
+   f_hline  
+   f_talk; echo "File content:"
+   echo         " > (N)one (J)son (D)irectory (defaulti none)"
+   read -p      " > " v_content
+   echo
+
+   
+   f_hline
+   f_talk; echo -n "Ready to edit "
+     f_c5; echo -n "$v_sens"
+     f_rc; echo    
+
+   echo
+   v_txt="Editar Ficheiro"; f_anyK
+   echo
+
+   bash e $v_sens
 
 elif [ $1 == "add" ] || [ $1 == "add-dryaGPG-dir" ]; then
    mkdir -p $v_dryaGPG

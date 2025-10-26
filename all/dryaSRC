@@ -441,11 +441,6 @@ function f_alias_to_enforce {
    function drya {
       # Forced to use fx instead of alias to allowing `cd` in sub-shells (for safety in encryption/decryption of files)
 
-      # DRYa executable (legacy)  # If GPG is not considered anymore, remove the entire fx and allow only these 2 lines to work
-         #alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-         #alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-
-
       if [ -z $1 ]; then
          bash $DRYa/drya.sh $*
 
@@ -455,10 +450,18 @@ function f_alias_to_enforce {
          cd   $HOME
          bash $DRYa/drya.sh $*
 
+      elif [[ $1 == "gpg" ]] && [[ $2 == "v" ]]; then
+         mkdir -p $v_dryaGPG
+         cd       $v_dryaGPG
+
       else
          bash $DRYa/drya.sh $*
       fi
 
+
+      # DRYa executable (legacy)  # If GPG is not considered anymore, remove the entire fx and allow only these 2 lines to work
+         #alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+         #alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
    }
             
    # Duplicating the fx name (shortcut)
@@ -812,7 +815,7 @@ function f_repository_luxam {
 }
 
 function f_internal_drya_files_nr_2 {
-   # Repository: DRYa (internal files - (2/4) )
+   # Loading Boot scripts  ::  rm ~/.tmp
 
    # uDev: Load alias AGAIN, forcing safety (example: alias: ,.)
 
