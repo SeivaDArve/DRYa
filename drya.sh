@@ -983,31 +983,62 @@ function f_dot_files_install_netrc {
 function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
 
-   # Obtendo o IP público usando curl e um serviço online
-      PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
-
    # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
+      f_talk; echo "Searching installed commands to provide Local IP..."
+              echo
 
       # Tentativa 1:
-         command ifconfig &>/dev/null
-         [[ $? == 0 ]] && echo a1
-         LOCAL_IP_1=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
-         
+         if $(command -v ifconfig &>/dev/null); then
+            echo " > 1. Command 'ifconfig' is installed"
+            LOCAL_IP_1=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+         else
+            echo " > 1. Command 'ifconfig' not installed (from package 'net-tools')"
+         fi
+         echo
+
       # Tentativa 2:
-         command hostname &>/dev/null
-         [[ $? == 0 ]] && echo a2
-         LOCAL_IP_2=$(hostname -I | awk '{print $1}')
+         if $(command -v hostname &>/dev/null); then
+            echo " > 2. Command 'hostname' is installed"
+            LOCAL_IP_2=$(hostname -I | awk '{print $1}')
+         else
+            echo " > 2. Command 'hostname' not installed"
+         fi
+         echo
 
       # Tentativa 3: 
-         command ip &>/dev/null
-         [[ $? == 0 ]] && echo a3
-         LOCAL_IP_3=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+         if $(command -v ip &>/dev/null); then
+            echo " > 3. Command 'ip' is installed"
+            #LOCAL_IP_3=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+         else
+            echo " > 3. Command 'ip' not installed"
+         fi
+         echo
+        
 
       # Defining final variable
          ( [[ -n $LOCAL_IP_1 ]] && LOCAL_IP=$LOCAL_IP_1 )  || \
          ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_2 )  || \
          ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_3 )  || \
          echo "No command could find Local IP: 'ifconfig', 'hostname', 'ip'" 
+
+   echo
+
+   # Obtendo o IP público usando curl e um serviço online
+      f_talk; echo "Searching the web to provide Public IP"
+              echo " 1. http://ifconfig.me"
+      PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
+      echo " > $PUBLIC_IP"
+      echo
+
+   # Send last IP numbers to ssms
+      echo "Sending to ssms"
+      echo
+   # Clear the screen
+      v_secs=3
+      f_talk; echo "Clearing the screen in ${v_secs} seconds..."
+      read -sn1 # -t $v_secs
+      f_greet
+
 
    # Imprimindo os resultados
       echo "IP Público: $PUBLIC_IP"
@@ -1831,6 +1862,9 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L9='9. Emergency help: SBV (Suporte Basico de Vida)'
+      L8='8. Emergency help: Arco-Iris (esquema de cores)'
+
       L7='7. About: drya-fast-tg-sys-vars (see README.md)'  
       L6='6. About: Developer (seiva-up-time)'
       L5='5. About: DRYa extentions (ezGIT, trid, jarve, ...)'  
@@ -1841,13 +1875,15 @@ function f_drya_help_menu {
 
       L0="$v_fzf_talk: Menu X: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9\n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "9. " ]] && echo "uDev"
+      [[ $v_list =~ "8. " ]] && echo "uDev"
       [[ $v_list =~ "7. " ]] && echo "uDev"
       [[ $v_list =~ "6. " ]] && f_seiva_up_time
       [[ $v_list =~ "5. " ]] && echo "uDev"
