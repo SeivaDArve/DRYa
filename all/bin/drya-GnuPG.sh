@@ -1102,6 +1102,9 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
    fi
          
 
+elif [ $1 == "crack" ] || [ $1 == "bruteforce-crack" ]; then
+   echo "uDev: Developing a tool to test cracking delays (simetric with passphrase)"
+
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
    echo " > Exit"
    exit 0 
