@@ -203,30 +203,32 @@ function f_trid_6 {
    if [[ $v_uname =~ "Android" ]]; then 
       # Detetar se é Android
       trid_OS="Android"
-      trid_os=A
+      trid_os="A"
       
-   elif  [[ $v_uname =~ "microsoft" ]]; then 
-      # Detetar se é Windows
-      # uDev: Verificar se o sistema está no WSL2
-      trid_OS="Linux-Microsoft"
-      trid_os=W
 
    elif [[ $v_uname =~ "raspberrypi" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
       trid_OS="RaspberryPi"
-      trid_os=R
+      trid_os="R"
 
    elif [[ $v_uname =~ "Linux" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
       trid_OS="Linux"
-      trid_os=L
+      trid_os="L"
 
    else
       # Se nao for detetado nenhum dos anteriores, entao é desconhecido
       trid_OS="NotDetected"
-      trid_os=U
+      trid_os="U"
 
    fi 
+
+   if [[ $v_uname =~ "Microsoft" ]]; then 
+      # Detetar se é Windows 
+      # NOTA: esta fx tem de ficar após `=~ Linux` para poder re-definir a variavel (fora do mesmo `if`). Porque o WSL tem menciona 'Linux'
+      trid_OS="Windows"
+      trid_os="W"
+   fi
 
    # Send out results
       echo "trid_6=\"trid_OS::$trid_OS\"" >> $trid_output 
