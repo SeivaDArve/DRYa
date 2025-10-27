@@ -223,13 +223,13 @@ function f_trid_6 {
 
    fi 
 
-   if [[ $v_uname =~ "Microsoft" ]]; then 
+   if [[ $v_uname =~ "Microsoft" ]] || [[ $v_uname =~ "microsoft" ]]; then 
       # Detetar se é Windows 
       # NOTA: esta fx tem de ficar após `=~ Linux` para poder re-definir a variavel (fora do mesmo `if`). Porque o WSL tem menciona 'Linux'
-      trid_OS="Windows"
+      trid_OS="Linux-Windows"
       trid_os="W"
    fi
-
+   
    # Send out results
       echo "trid_6=\"trid_OS::$trid_OS\"" >> $trid_output 
       echo "trid_OS=\"$trid_OS\""         >> $trid_output 
