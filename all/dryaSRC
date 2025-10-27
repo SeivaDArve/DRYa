@@ -13,27 +13,42 @@
 
 # uDev: fix dependency bugs (in case DRYa is running on a fresh install of some new OS)
 
+
+
+function f_list_of_escape_codes {
+   L0='# Lista de codigos secretos possiveis'
+   L1='| key | Description                                        |'
+   L2='|-----+----------------------------------------------------|'
+   L3='| l   | Load/Read this code List                           |'
+   L4='| g   | Load DRYa without recursive `git pull`             |'
+   L5='| b   | Lock DRYa boot with code (fx: f_startup_lock_DRYa) |'
+   L6='| d   | Delete all env variables before loading            |'
+   L7='|-----+----------------------------------------------------|'
+   L8='Example: `gd` to set option "g" + "d"'
+
+   echo -e "\n$L0 \n$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8"
+   read -sn1
+}
+
 function f_escape_time_at_terminal_startup {
    # Allowing the user to escape DRYa for 1 second
    # It is best to use any key to 'escape' rather than 'Ctrl-C' directly, because 'Ctrl-C' are 2 keys, and 'Ctrl' key might not be enabled on termux "extra keys" at all
 
-   unset v_escape
+   unset v_escape v_escape_code
    read -sn 1 -t 1 v_escape
 
    if [[ -n $v_escape ]]; then 
+      clear
       echo     "DRYa: escaped main DRYa loader..."
       echo     " > Press 'Ctrl-C' to stop loading DRYa"
       echo     " > Press 'ENTER'  to load DRYa normally"
-      read -sp " > "  # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
+      read -sp " > " v_escape_code # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
       echo
    fi
 
-   # uDev: Lista de codigos secretos possiveis
-   #       - Carregar lista (menu) dos codigos possiveis
-   #       - Carregar DRYa sem atualizar com `git pull`
-   #       - Ativar pin para usar DRYa da proxima vez (fx: f_startup_lock_DRYa)
-   #       - Remover todas as variaveis do env que vem da sessao anterior
+   [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
 }
+
 
 function f_demi_fake_pin {
    # Demi-fake pin for fzf menus (scare away curious people)
@@ -917,18 +932,29 @@ function f_async__ezGIT_pull_All__at_startup {
    # When ezGIT is installed, run async fx at startup (downloading repository updates):
    # --- `disown` makes the process run in a sub-shell
 
-   v_toast_message_y="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Success)"
-   v_toast_message_n="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
+   function f_when_recursive_git_pull_is_allowed {
+      # Runs only if $v_escape_code is "G"
 
-   if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
-      # ezGIT existe (atuar)
-      f_ezGIT_exists #&>/dev/null #& disown  # Run last fx
+      v_toast_message_y="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Success)"
+      v_toast_message_n="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
 
+      if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
+         # ezGIT existe (atuar)
+         f_ezGIT_exists #&>/dev/null #& disown  # Run last fx
+
+      else
+         # ezGIT nao existe (nao atuar)
+
+         # Informar a conclusao em drya-status-messages
+            echo -e "\n$v_toast_message_n \n" >> $v_MSGS
+      fi
+   }
+
+   if [[ $v_escape_code =~ "g" ]] || [[ $v_escape_code =~ "G" ]]; then
+      echo "Git pull not allowed this time" 
+      echo "Git pull not allowed this time" >> v_ssms
    else
-      # ezGIT nao existe (nao atuar)
-
-      # Informar a conclusao em drya-status-messages
-         echo -e "\n$v_toast_message_n \n" >> $v_MSGS
+      f_when_recursive_git_pull_is_allowed 
    fi
 } 
 
