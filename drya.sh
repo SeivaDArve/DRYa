@@ -1023,6 +1023,8 @@ function f_list_ip_public_n_local {
 
    echo
 
+   # uDev: Se todos falharem, perguntar se quer experimentar fazer download de algum pacote e tentar novamente
+
    # Obtendo o IP público usando curl e um serviço online
       f_talk; echo "Searching the web to provide Public IP"
               echo " 1. http://ifconfig.me"
