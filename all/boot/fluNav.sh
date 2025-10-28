@@ -1270,7 +1270,8 @@ function V {
          echo "(DRYa-REPOS-CENTER)" >  $v_file
          ls $v_REPOS_CENTER         >> $v_file
 
-         v_repo=$(cat $v_file | fzf)
+         L0="DRYa: fluNav: V: Navigate to Repos: "
+         v_repo=$(cat $v_file | fzf --prompt="$L0")
 
          if [[ -n $v_repo ]]; then
 
