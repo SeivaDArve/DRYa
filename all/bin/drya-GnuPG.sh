@@ -650,6 +650,17 @@ function f_some_help {
            echo "   Existe \`V x\` para navegar para \$v_drya_gpg"
            echo "   (variavel exportada para o env) que normalmente aponta"
            echo "   para ~/.dryaGPG"
+
+
+
+           # Flags para reduzir verbose do `gpg`
+           #   --quiet → reduz a verbosidade (silencia mensagens de status).
+
+           #   --batch → impede prompts interativos.
+           #   
+           #   --yes → assume “sim” nas confirmações.
+           #   
+           #   --no-tty → evita que o GPG use o terminal para entrada/saída (evita mensagens no TTY).
 }
 
 
@@ -1002,6 +1013,7 @@ elif [ $1 == "+" ] || [ $1 == "add-text-file-info-confidenntial-info" ]; then
    #    "url": "https://github.com",
    #    "ultima-alteracao-de-password": "2025-10-25"
    #    "notes": "2FA ativo"
+   #    "permissoes-de-leitura-desta-chave": "Naghori" "Dv!" "DvR+IsM" "DArve" "Flowreshe"
    #  }
 
 
