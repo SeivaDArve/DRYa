@@ -1864,6 +1864,8 @@ function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      # uDev: Emergency tem de ser um menu a parte, para poder crescer em tamanho sem distacoes
+     #L10='10. Emergency help: Extintores (instrucoes de uso)'
       L9='9. Emergency help: SBV (Suporte Basico de Vida)'
       L8='8. Emergency help: Arco-Iris (esquema de cores)'
 
@@ -2075,34 +2077,33 @@ function f_backup_helper {
 
       # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
       # Pode ser usado o SyncThing
-      echo "DRYa: uDev: in the future you may call this function to send files from one device to another device using the web"
-      echo 
-      echo "DRYa backup options:"
-      echo " - Smartphone >> Raspberry Pi (cloud) >> External HDD"
-      echo
-      echo "DRYa: type 'drya backup list' to be listed a sugestion of files to backup"
-      echo "Backup on Smartphone (sugestions):"
-      echo " > Contacts"
-      echo " > Gmail accounts and passwords"
-      echo " > Social media login credentials"
-      echo " > Snapshot all installed apps"
-      echo " > Browser bookmarks"
-      echo " > Update all Repositories on termux"
-      echo " > All SD CARD and Internal Storage content"
-      echo " > ..."
-      echo
-      echo "Backup on Computer (sugestions):"
-      echo " > ..."
-      echo
-      echo "uDev: criar opcoes que criam um dir, nesse dir, guarda certos dot-files atualmente na maquina"
-      echo " > Depois, apartir desse exemplo, o user pode usar para outros fins"
-      echo
-      echo
-      echo
-      echo "uDev: criar .dotfile que guarde uma lista de enderecos de pastas que um dia podem precisar serv revistos (para backup)"
-      echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
-
-
+      f_greet 
+      f_talk; echo "Ajuda na execucao de Backups"
+              echo 
+      f_talk; echo "Lista uDev:"
+              echo " > Send files from one device to another device using the web (FTP, ssh)"
+              echo "   Smartphone > Raspberry Pi (cloud) > External HDD"
+              echo " > DRYa will suggest specific files to backup"
+              echo " > criar um dir, nesse dir, guarda certos dot-files atualmente na maquina"
+              #echo "uDev: criar .dotfile que guarde uma lista de enderecos de pastas que um dia podem precisar serv revistos (para backup)"
+              #echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
+              echo
+      f_talk; echo "Backup Checklist (Smartphone):"
+              echo " > Contacts"
+              echo " > Gmail accounts and passwords"
+              echo " > Social media login credentials"
+              echo " > Snapshot all installed apps (\`cmd package list packages\` to dump list)"
+              echo " > Browser bookmarks"
+              echo " > Update all Repositories from termux to github"
+              echo " > All SD CARD and Internal Storage content"
+              echo " > Confirmar primeiro os dados de acesso ao email de recuperacao de conta (email secundario do google), so depois reset a conta principal (email principal do google)"
+              echo " > Current wallpaper (principal, de bloqueio)"
+              echo " > Alarm custom music"
+              echo " > Dados de aplicacoes (notas, etc)"
+              echo
+      f_talk; echo "Backup Checklist (computer):"
+              echo " > ..."
+              echo
 }
 
 
@@ -2692,10 +2693,10 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L12='12. Help | Factory reset + ghost (in.out)'
+         L12='12. Help | Factory-Reset (Terminal) + Ghost-Mode (in.out)'
          L11='11. Menu | Install | PRESETS              | `D ui pr`'
-         L10='10. Menu | helper  | backups              | `D ui bk`'
-          L9='9.  Menu |  clone  | repos                | `D cln`'
+         L10='10. Menu | helper  | Backup Maker         | `D ui bk`'
+          L9='9.  Menu | Script  | Clone Repos          | `D cln`'
           L8='8.  Menu | install | specific packages    | `D iu p` | `D iu <package>`'
           L7='7.  Menu | install | dot-files            | `D iu d`'
           L6='6.  Menu |   1st   | Dependencies         | `D ui dp`'  # uDev: adicionar a este menu "populate machines"
