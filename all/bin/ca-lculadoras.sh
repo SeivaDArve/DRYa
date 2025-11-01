@@ -815,6 +815,29 @@ function f_cronometro_multi_datas {
 }
 
 
+function f_calculations_from_the_prompt_instructions {
+   f_greet
+   f_talk; echo "Instrucoes sobre 'D clc ='"
+           echo " > Calculator from the prompt"
+           echo
+           echo -n "No prompt '"
+     f_c7; echo -n "~/.../.../ "
+     f_rc; echo -n "$' permite ativar a calculadora em linha com '='" 
+           echo
+           echo
+           echo    "Exemplo de calculo em linha no prompt:"
+           echo -n " > '" 
+     f_c7; echo -n "~/.../.../ "
+     f_rc; echo -n "$ D ca = "
+     f_c3; echo -n "600 + 1.34 *3"
+     f_rc; echo    "'"
+           echo
+   f_talk; echo    'uDev'
+           echo    ' > Mandar para os registos'
+           echo    ' > Trocar simbolos "x" por "*"'
+
+}
+
 function f_calculations_from_the_prompt {
    # If arg $2 has no white spaces in it, calculation is possible
    # Working example: `D ca x "4+4"`
@@ -906,7 +929,7 @@ function f_clc_main_menu {
       [[ $v_list =~ "6.  " ]] && f_clc_bc
       [[ $v_list =~ "5.  " ]] && echo "uDev: Open APK on Android"
 
-      [[ $v_list =~ "22. " ]] && f_calculations_from_the_prompt 
+      [[ $v_list =~ "22. " ]] && f_calculations_from_the_prompt_instructions
       [[ $v_list =~ "4.  " ]] && echo "uDev"
       [[ $v_list =~ "3.  " ]] && echo "uDev"
       [[ $v_list =~ "2.  " ]] && vim $v_reg
@@ -976,7 +999,7 @@ elif [ $1 == "p" ]; then
    fi
 
 elif [ $1 == "=" ]; then
-   f_calculations_from_the_prompt
+   f_calculations_from_the_prompt $*
 
 elif [ $1 == "h" ]; then
    echo "uDev: help"
