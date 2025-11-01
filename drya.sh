@@ -983,29 +983,54 @@ function f_dot_files_install_netrc {
 function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
 
-   # Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
-      f_talk; echo "Searching installed commands to provide Local IP..."
-              echo
+   v_satisfied="no"
 
-      # Tentativa 1:
-         if $(command -v ifconfig &>/dev/null); then
-            echo " > 1. Command 'ifconfig' is installed"
-            LOCAL_IP_1=$(ifconfig | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
-         else
-            echo " > 1. Command 'ifconfig' not installed (from package 'net-tools')"
-         fi
-         echo
+   f_greet 
+   f_talk; echo "Searching installed commands to provide Local IP..."
+           echo
 
-      # Tentativa 2:
-         if $(command -v hostname &>/dev/null); then
-            echo " > 2. Command 'hostname' is installed"
-            LOCAL_IP_2=$(hostname -I | awk '{print $1}')
-         else
-            echo " > 2. Command 'hostname' not installed"
-         fi
+
+   function f_1 {
+      # Tentativa 1: Obtendo o IP local usando  'ifconfig'
+
+      f_talk; echo "Testing ifconfig"
+
+      if $(command -v ifconfig &>/dev/null); then
+         echo " > Command: is installed"
+         v_ip=$(ifconfig 2>/dev/null | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+         echo " > Ip:      $v_ip"
          echo
+         v_satisfied="yes"
+
+      else
+         echo " > Command not installed (from package 'net-tools')"
+         echo
+      fi
+   }
+
+   function f_2 {
+      # Tentativa 2: Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
+
+      f_talk; echo "Testing hostname"
+
+      if $(command -v hostname 1>/dev/null); then
+         echo " > Command is installed"
+         v_ip=$(hostname -I | awk '{print $1}')
+         echo " > Ip:      $v_ip"
+         echo
+      else
+         echo " > Command not installed"
+         echo
+      fi
+   }
+
+   f_1
+   db
+   [[ $v_satisfied == "no" ]] && echo "continue" && f_2
+   db
 
       # Tentativa 3: 
+         # Obtendo o IP local usando 'ip'
          if $(command -v ip &>/dev/null); then
             echo " > 3. Command 'ip' is installed"
             #LOCAL_IP_3=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
@@ -1074,7 +1099,7 @@ function f_menu_internet_network_ip_options {
       [[ $v_list =~ "5. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/web.sh
       [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
       [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash ${v_REPOS_CENTER}/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
-      [[ $v_list =~ "2. " ]] && f_greet && f_list_ip_public_n_local
+      [[ $v_list =~ "2. " ]] && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
@@ -2287,8 +2312,20 @@ function f_help_installing_specific_packages {
 
 
 
+function f_kbd_greet {
+   f_greet
+   f_talk; echo "Keyboard options"
+           echo
+}
 
-
+function f_config_kbd_kali {
+   f_kbd_greet
+   f_talk; echo "$L4"
+   echo " > setxkbmap -layout pt"
+   echo
+   v_txt="Proceed to set keyboard" && f_anyK
+   setxkbmap -layout pt
+}
 
 
 
@@ -2342,7 +2379,7 @@ if [ -z "$*" ]; then
 
    # Info when no args are given
       f_talk; echo "is installed!"
-              echo ' > Command: `D --help` (for `fzf` menu for help)'
+              echo ' > Command: `D --help` (for `fzf` help menu)'
               echo ' > Command: `D .`      (for `fzf` main menu)'
               echo
 
@@ -2508,17 +2545,26 @@ elif [ $1 == "gps" ]; then
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
 
+   v_file=${v_REPOS_CENTER}/omni-log/all/parts/headers/GPS-notes.org
+
    if [ -z "$2" ]; then
-      echo "uDev: repo omni-log: registo de coordenadas GPS favoritas"
+      f_talk; echo "Opcoes para GPS"
+              echo " | -z  | Mostrar esta info                             |"
+              echo " |  v  | Buscar coordenadas GPS termux-API \"gps\"       |"
+              echo " |  n  | Buscar coordenadas GPS termux-API \"network\"   |"
+              echo " |  f  | editar notas GPS em omni-log                  |"
+              echo " |  F  | Buscar coordenadas + Concat em GPS-notes.sh   |"
 
    elif [ $2 == "v" ]; then 
       # Displays current GPS location using GPS as provider
       termux-location -p gps  # The termux gps provider is `gps` by default
 
-   elif [ $2 == "network" ]; then 
+   elif [ $2 == "n" ]; then 
       # Displays current GPS location using network as provider
       termux-location -p network
 
+   elif [ $2 == "f" ]; then 
+      bash e $v_file
    fi
 
    # uDev: now ask the user if he wants to save to omni-log
@@ -2645,7 +2691,11 @@ elif [ $1 == "seiva-up-time" ]; then
    f_seiva_up_time
 
 elif [ $1 == "ip" ]; then 
-   f_menu_internet_network_ip_options
+   if [[ -z $2 ]]; then 
+      f_menu_internet_network_ip_options
+   elif [ $2 == "b" ]; then 
+      f_list_ip_public_n_local 
+   fi
 
 elif [ $1 == "mac" ]; then 
 
@@ -3183,11 +3233,6 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
    if [ -z $2 ]; then
 
-      function f_kbd_greet {
-         f_greet
-         f_talk; echo "Keyboard options"
-      }
-       
 
       # Lista de opcoes para o menu `fzf`
          Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -3223,7 +3268,7 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
          [[ $v_list =~ "7. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
          [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
          [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
-         [[ $v_list =~ "4. " ]] && f_kbd_greet && echo && f_talk && echo "$L4" && echo " > setxkbmap -layout pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap -layout pt
+         [[ $v_list =~ "4. " ]] && f_config_kbd_kali
          [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && f_talk && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
          [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 
          [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
@@ -3472,10 +3517,6 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    
    # Independent of the activity before closing, it still closes in the end
       exit 0
-
-elif [ $1 == "web" ]; then 
-   # All options for web
-   f_menu_internet_network_ip_options
 
 elif [ $1 == "player" ] || [ $1 == "plr" ]; then 
    f_menu_audio_media_player 
@@ -3768,6 +3809,11 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > https://seivadarve.github.io/Curriculum-Vitae/"
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
+
+elif [ $1 == "o" ] || [ $1 == "other" ] ; then 
+   # Scripts less important here, like scratch-paper
+
+   bash $v_spr/drya-other.sh $*  # Variable set at dryaSRC
 
 elif [ $1 == "..." ]; then  
    # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
