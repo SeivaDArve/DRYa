@@ -1060,6 +1060,7 @@ function V {
          # Use 2:  `V drya     `  # Travels to favorites  # uDev: to be absorved by the 'function . { }'
          # Use 3:  `V p <dir>  `  # Create new dir and travel to it
          # Use 4:  `V r        `  # finds all repos with fzf to navigate
+         # Use 4:  `V R        `  # Navigates to Repos Center
          # Use 5:  `V rm <dir> `  # Removes dir recommended to confirm which dir will be removed 
          # Use 6:  `V .        `  # From current directory and below, uses `fzf` to search for a file. Then only navigate to its directory 
          # Use 7:  `V ..       `  # Navigate to last dir in the history list
@@ -1282,13 +1283,18 @@ function V {
             fi
          fi
 
+   # Implementation of Use 4:
+      elif [ $1 == "R" ]; then
+         # Navigates to repos center
+         cd ${v_REPOS_CENTER}
 
 
    # Implementation of Use 5:
-      elif [ $1 == "R" ]; then
+      elif [ $1 == "rm" ]; then
          rm -rf $2
          ls
       # uDev: provide more safety
+      # uDev: include `V rm .`
 
 
 
