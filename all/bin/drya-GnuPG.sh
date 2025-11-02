@@ -257,7 +257,8 @@ function f_symmetric_decrypt {
    
    if [ -z "$outfile" ]; then
       echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
-      $GPG -d $infile
+      f_hline
+      $GPG --quiet --batch -d $infile
 
    else
       $GPG -o $outfile -d $infile
@@ -540,34 +541,37 @@ function f_only_convert_content_from_OpenPGP_no_encription {
 }
 
 function f_main_menu_text {
-   L00=" | opc | fx"
+   L00=" | opc | fx (all with info, except if \$1 is 'x')"
 
-    L0=" |  0  | Info > Status > DRYa default settings"
-    L1=" |  1  | Info > Chaves > Listar as públicas / verificar existência"
-    L2=" |  2  | Info > Chaves > Listar as privadas / verificar existência"
-    L3=" |  3  | Info > Chaves > Gerar nova (interativo)"
-    L4=" |  4  | Info > Chaves > Importar"
-    L5=" |  5  | Info > Chaves > Exportar pública"
-    L6=" |  6  | Info > Chaves > Exportar privada (cuidado)"
-   L12=" | 12  | Info > Chaves > Mudar passphrase"
-   L13=" | 13  | Info > Chaves > Apagar"
-   L14=" | 14  | Info > Chaves > Backup de todas"
-   L15=" | 15  | Info > Chaves > Restaurar"
+    L0=" |  0  | Status > DRYa default settings"
+    L1=" |  1  | Chaves > Listar as públicas / verificar existência"
+    L2=" |  2  | Chaves > Listar as privadas / verificar existência"
+    L3=" |  3  | Chaves > Gerar nova (interativo)"
+    L4=" |  4  | Chaves > Importar"
+    L5=" |  5  | Chaves > Exportar pública"
+    L6=" |  6  | Chaves > Exportar privada (cuidado)"
+   L12=" | 12  | Chaves > Mudar passphrase"
+   L13=" | 13  | Chaves > Apagar"
+   L14=" | 14  | Chaves > Backup de todas"
+   L15=" | 15  | Chaves > Restaurar"
 
-   L20=" | 20  | Info > Convert > text/file to OpenPGP   (no encription)"
-   L21=" | 21  | Info > Convert > OpenPGP   to text/file (no encription)"
+   L20=" | 20  | Convert > text/file to OpenPGP   (no encription)"
+   L21=" | 21  | Convert > OpenPGP   to text/file (no encription)"
 
-    L7=" |  7  | Info > Encrypt > simétrica (com passphrase)"
-   L17=" | 17  | Info > Decrypt > simétrica (com passphrase)"
+    L7=" |  7  | Encrypt > simétrica (com passphrase)"
+   L17=" | 17  | Decrypt > simétrica (com passphrase)"
 
-    L8=" |  8  | Info > Encrypt > assimetrica para destinatário (chave pública)"
-    L9=" |  9  | Info > Decrypt > ficheiro"
+    L8=" |  8  | Encrypt > assimetrica para destinatário (chave pública)"
+    L9=" |  9  | Decrypt > ficheiro"
 
-   L10=" | 10  | Info > Assinaturas > Assinar ficheiro"
-   L11=" | 11  | Info > Assinaturas > Verificar assinatura"
-   L16=" | 16  | Info > Mostrar fingerprints"
-   L18=" | 18  | Info > Status > Reset package 'gnupg' (MUITO CUIDADO)"
-   L19=" | 19  | Info > Status > Describing all contents at ~/.gnupg"
+   L10=" | 10  | Assinaturas > Assinar ficheiro"
+   L11=" | 11  | Assinaturas > Verificar assinatura"
+   L16=" | 16  | Mostrar fingerprints"
+   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
+
+   L22=" | 22  | Tar ball > Create (zip) "
+   L23=" | 23  | Tar ball > Create (unzip) "
 
     Lh=" |  h  | Instucoes Base"
     LQ=" |  Q  | Sair"
@@ -598,6 +602,9 @@ function f_main_menu_text {
    echo "$L16"
    echo "$L18"
    echo "$L19"
+   f_hline
+   echo "$L22"
+   echo "$L23"
    f_hline
    echo "$Lh"
    echo "$LQ"
