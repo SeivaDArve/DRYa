@@ -16,18 +16,20 @@
 
 
 function f_list_of_escape_codes {
-   L0='# Lista de codigos secretos possiveis'
-   L1='| key | Description                                        |'
-   L2='|-----+----------------------------------------------------|'
-   L3='| l   | Load/Read this code List                           |'
-   L4='| g   | Load DRYa without recursive `git pull`             |'
-   L5='| b   | Lock DRYa boot with code (fx: f_startup_lock_DRYa) |'
-   L6='| d   | Delete all env variables before loading            |'
-   L7='|-----+----------------------------------------------------|'
-   L8='Example: `gd` to set option "g" + "d"'
+    L0='# Lista de codigos secretos possiveis'
+    L1='| key | Description                                        |'
+    L2='|-----+----------------------------------------------------|'
+    L3='| l   | Show this code List                                |'
+    L4="| b   | Lock boot with PIN. fx 'f_startup_lock_DRYa'       |"
+    L5='| g   | Load, but without "recursive git pull"             |'
+    L6='| d   | Load, but delete all previous env variables        |'
+    L7='| k   | Load, but without f_backend                        |'
+    L8='| n   | Load, but delete ~/.netrc                          |' 
+    L9='|-----+----------------------------------------------------|'
+   L10='--Example-- `gd` to set option "g" + "d"'
 
-   echo -e "\n$L0 \n$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8"
-   read -sn1
+   echo -e "\n$L0 \n$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10"
+   echo
 }
 
 function f_escape_time_at_terminal_startup {
@@ -47,6 +49,10 @@ function f_escape_time_at_terminal_startup {
    fi
 
    [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
+
+   echo "DRYa: Options given so far:"
+   echo " > $v_escape_code"
+   read -sn1
 }
 
 
