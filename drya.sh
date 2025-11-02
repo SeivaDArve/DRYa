@@ -1780,7 +1780,7 @@ function f_drya_fzf_MM_Toolbox {
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
+         [[ $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
          [[ $v_list =~ "20. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
          [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
@@ -1823,7 +1823,8 @@ function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      #Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Menu Shortcut: '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
 
       L4="4. | Help Menu";                    L4c="drya help"
       L3="3. | DRYa: Greet & Present itself"; L3c="D p"
@@ -1833,18 +1834,31 @@ function f_drya_fzf_MM {
 
       L0='DRYa: Main Menu: '
 
+      Lm1=$(f_talk)
+      Lm2="Info about last Menu:\n > Usa \`$Lz2\`"
+      Lm3=" (ultimo 'Shortcut' para aceder ao ultimo menu visitado)"
+      Lm4=" > Usa \`D ..\` para Aceder a todos os historicos"
+      Lm5=" > Usa \`ssms\` para Ver atalhos alternativos a \`$Lz2\`" 
+      Lm0="${Lm1}$Lm2 \n  $Lm3 \n\n$Lm4 \n$Lm5 \n$Lm1"
+
+      #Lm1="Info about last Menu:\n > Usa \`$Lz2\` \n   (ultimo 'Shortcut' para aceder ao ultimo menu visitado) \n\n > Usa \`D ..\` para Aceder a todos os historicos\n > Usa \`ssms\` para Ver atalhos alternativos a \`$Lz2\`" && echo -e "$Lz5" >> $v_ssms
+
       v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+     #[[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+     #[[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2" && echo -e "$Lz5" >> $v_ssms
+      [[ $v_list =~ $Lz3  ]] && echo -e "$Lm0" && echo -e "$Lz5" >> $v_ssms
       [[ $v_list =~ "4. " ]] && echo "$L4c" >> $Lz4 && f_drya_help_menu 
       [[ $v_list =~ "3. " ]] && echo "$Lc3" >> $Lz4 && f_greet2 && f_talk && echo "Sub-Operative system: Installed and ready!" 
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       #unset v_list
+
+
 }
 
 function f_exec {
@@ -1977,15 +1991,18 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
          # Testar se essa linha da variavel ja existe no ficheiro temporario
             grep --fixed-strings "$v_line" $v_temporary &>/dev/null
 
+         # Saving last command status 
+            v_status=$?  
+
          # Se o ultimo comando falhar, vai dar o codigo de erro de "1" que o bash guarda na variavel `$?` e se der erro, ainda nao existe essa linha la no ficheiro temporario e sera para la enviada essa linha
-            [[ $? == 1 ]] && echo $v_line >> $v_temporary
+            [[ $v_status == 1 ]] && echo $v_line >> $v_temporary
       done
 
    # Overwrite original file with the content of temporary file
       tac $v_temporary > $v_original                    # Mater TODAS as linhas
    
    # Variable $v_max_lines was already set before (to cut excessive lines, avoiding creating huge files)
-      tail -n $v_max_lines  $v_original > $v_temporary  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
+      tail -n $v_max_lines $v_original  > $v_temporary  # Manter apenas as ultimas $v_max_lines do documento, eliminando todas as outras a mais
       cat                  $v_temporary > $v_original   # O ficheiro com apenas X linhas passa a ser o ficheiro original
 
    # Removing the tmp file in the end to clean dir
@@ -1994,6 +2011,7 @@ function f_remove_duplicated_lines_drya_fzf_history_file {
 
 function f__D_hist__recall_one_command {
    # Aceder ao historico drya-fzf-menu e repetir esse comando
+
 
    # 1. Verificar existencia desse ficheiro
    # 3. Apagar linhas em branco
@@ -2011,13 +2029,15 @@ function f__D_hist__recall_one_command {
       f_remove_duplicated_lines_drya_fzf_history_file
 
    # Do ficheiro de historico, buscar apenas 1 linha
-      v_line=$(tac $v_drya_fzf_menu_hist | fzf --cycle --prompt "DRYa: Choose a command to repeat (from fzf history): ")
+      v_line=$(tac $v_drya_fzf_menu_hist | fzf --cycle --prompt "DRYa: Choose a command to repeat (menu fzf history): ")
 
    # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
       v_line=$(sed    "s#^D #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
       v_line=$(sed "s#^drya #${v_REPOS_CENTER}/DRYa/drya.sh #g" <(echo $v_line))
 
       v_line=$(sed "s#^3sab #${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh #g" <(echo $v_line))
+
+      v_line=$(sed "s#^P #${v_REPOS_CENTER}/patuscas/patuscas.sh #g" <(echo $v_line))
 
    # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
       [[ -n $v_line ]] && bash $v_line 
@@ -2555,6 +2575,9 @@ elif [ $1 == "gps" ]; then
               echo " |  n  | Buscar coordenadas GPS termux-API \"network\"   |"
               echo " |  f  | editar notas GPS em omni-log                  |"
               echo " |  F  | Buscar coordenadas + Concat em GPS-notes.sh   |"
+
+   elif [ $2 == "r" ] || [ $2 == "grep" ]; then 
+      echo "uDev: filtra texto do ficheiro em omni-log sobre coordenadas de GPS"
 
    elif [ $2 == "v" ]; then 
       # Displays current GPS location using GPS as provider
@@ -3727,7 +3750,7 @@ elif [ $1 == "hush" ]; then
 elif [ $1 == "zip" ] ; then 
    f_zip_unzip
 
-elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ]; then 
+elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ]; then 
    # Encrypt and Decript personal, private abd sensitive data
 
    shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
@@ -3787,6 +3810,7 @@ elif [ $1 == "wam" ]; then
 
 elif [ $1 == "morse" ]; then 
    # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
+   # uDev: Passar video/menemonica para Imagem: https://www.facebook.com/share/v/19uVyHMg1P/
    f_morse
 
 elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
@@ -3856,19 +3880,20 @@ elif [ $1 == ".." ]; then
       elif [ $2 == "s" ]; then
          # Guardar copia do ficheiro de historico)
          cp $v_drya_fzf_menu_hist ${v_drya_fzf_menu_hist}.copia
-         echo "DRYa: criada uma copia do ficheiro de historico dos menus fzf"
+
+         f_talk; echo "Criada uma copia do ficheiro de historico dos menus fzf"
 
       elif [ $2 == "S" ]; then
          # Substituir o original pela copia
          [[ -f ${v_drya_fzf_menu_hist}.copia ]] \
             && cp ${v_drya_fzf_menu_hist}.copia $v_drya_fzf_menu_hist
 
-         echo "DRYa: a copia do ficheiro de historico dos menus fzf foi APLICADO como original"
+         f_talk; echo "A copia do ficheiro de historico dos menus fzf foi APLICADO como original"
 
       elif [ $2 == "c" ]; then
-         echo "DRYa: a editar o ficheiro copiado de historico dos menus fzf (se existir)"
-         [[ -f ${v_drya_fzf_menu_hist}.copia ]] && vim ${v_drya_fzf_menu_hist}.copia || echo " > Nao existe ficheiro nenhum"
+         f_talk; echo "A editar o ficheiro copiado de historico dos menus fzf (se existir)"
 
+         [[ -f ${v_drya_fzf_menu_hist}.copia ]] && vim ${v_drya_fzf_menu_hist}.copia || echo " > Nao existe ficheiro nenhum"
       fi
 
 elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
