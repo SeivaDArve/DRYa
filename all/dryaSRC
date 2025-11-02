@@ -648,7 +648,13 @@ function f_repository_dWiki {
 function f_repository_scratch-paper {
    # Repository: scratch-paper
 
+   # Scratch Paper Repo (variable)
+      v_spr="${v_REPOS_CENTER}/scratch-paper"
+      export v_spr
+
    alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
+
+   # Note: drya.sh will have a script to follow .../scratch-paper/o.o/o.sh
 }
 
 function f_repository_ezGIT {
