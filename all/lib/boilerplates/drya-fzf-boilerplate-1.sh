@@ -40,7 +40,7 @@
    #    f_example_busca_L6b; echo "$Lb6"
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Saved '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='CMD used: '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
 
       L6="6. Opcao com variavel externa | $L6b" # Variable L6b may be set and may be empty to give more info to the user
       L5='5. Opcao com Pin'                                       
@@ -68,7 +68,7 @@
    #  }
 
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2" && echo $Lz5 >> $v_ssms
       [[    $v_list =~ "6. " ]] && echo "uDev: $L6" 
       [[    $v_list =~ "5. " ]] && f_pin && echo "uDev"
       [[    $v_list =~ "4. " ]] && f_example
