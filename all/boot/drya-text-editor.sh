@@ -96,7 +96,7 @@ function e {
 
          # Mencionar se funciona ou nao
             f_talk; echo "A editar (em $v_secs segundos) ficheiros com: $trid_editor_name"
-            read -sn1 -t $v_secs
+            read -sn1 -t $v_secs  # uDev: usar uma tecla extra 'v' ou 'e' para alterar so neste ficheiro o editor
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
             for i in $* 
