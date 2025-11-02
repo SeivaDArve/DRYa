@@ -75,7 +75,7 @@ function f_install_now {
       echo
 }
 
-function f_detetar_se_instalado {
+function f_detetar_se_instalado_gpg {
    # Criar uma var $GPG com info do caminho do executavel
 
    # Descobrir o caminho do script instalado no OS
@@ -841,7 +841,8 @@ function f_GnuPG_main_menu {
 
 
 # Standard inicial fx
-   f_detetar_se_instalado 
+   f_detetar_se_instalado_gpg 
+  #f_detetar_se_instalado_tar  (uDev)
    f_permitir_variaveis_vazias
 
 if [ -z $1 ]; then
