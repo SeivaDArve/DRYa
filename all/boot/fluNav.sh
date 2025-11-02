@@ -701,9 +701,9 @@ function f_menu_fzf_S {
        L1='1.  Cancel'
 
        Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`S .. a\`):\n - \`S a\`: (uDev)  \n - \`S b\`: (uDev)  \n - \`S c\`: (uDev)  \n   ")
-      L0="fluNav: S: SELECT (1 ou +) ficheiros para editar: "
+       L0="fluNav: S: Menu + Ficheiros Fav para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -1095,7 +1095,7 @@ function V {
             L2='2. Apagar historico de pastas apresentadas por `V ...` (uDev)'                                      
             L1='1. Cancel'
 
-            L0="fluNav: V: Menu de opcoes de Nav para Pastas: "
+            L0="fluNav: V: Menu + Pastas Fav para navegar: "
             
          # Ordem de Saida das opcoes durante run-time
             v_list=$(echo -e "$L1 \n$L2 \n$L3\n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
@@ -1143,7 +1143,7 @@ function V {
          cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls -p || f_error_cd
       
 
-      elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "ez" ] || [ $1 == "g" ]; then
+      elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
          cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls -p || f_error_cd
          
 
