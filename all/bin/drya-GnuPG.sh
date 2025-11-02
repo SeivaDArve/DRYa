@@ -996,12 +996,23 @@ elif [ $1 == "op" ]; then
    f_ls
 
 elif [ $1 == "v" ] || [ $1 == "navigate-to-dryaGPG" ]; then
-   # Create and Navigate to $v_dryaGPG
+   # Navigate to $v_dryaGPG (if it does not exist, ask previously if should be created)
    # Note: It is using dryaSRC to allow `cd` in the main shell (does not `cd` in a sub-shell)
+
+   # uDev: Se a pasta nao existir, perguntar primeiro se quer criar com 'y' para nao criar lixo
 
    mkdir -p $v_dryaGPG
    cd       $v_dryaGPG  # Not working in a sub-shell (it is using dryaSRC to do it)
    
+elif [ $1 == "V" ] || [ $1 == "create-and-navigate-to-dryaGPG" ]; then
+   # Create and Navigate to $v_dryaGPG
+   # Note: It is using dryaSRC to allow `cd` in the main shell (does not `cd` in a sub-shell)
+
+   # uDev: Se a pasta nao existir, perguntar primeiro se quer criar com 'y' para nao criar lixo
+
+   mkdir -p $v_dryaGPG
+   cd       $v_dryaGPG  # Not working in a sub-shell (it is using dryaSRC to do it)
+
 elif [ $1 == "+" ] || [ $1 == "add-text-file-info-confidenntial-info" ]; then
     f_header
 
