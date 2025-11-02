@@ -46,13 +46,13 @@ function f_escape_time_at_terminal_startup {
       echo     " > Press 'ENTER'  to load DRYa normally"
       read -sp " > " v_escape_code # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
       echo
+
+      [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
+
+      echo "DRYa: Options given so far:"
+      echo " > $v_escape_code"
+      read -sn1
    fi
-
-   [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
-
-   echo "DRYa: Options given so far:"
-   echo " > $v_escape_code"
-   read -sn1
 }
 
 
