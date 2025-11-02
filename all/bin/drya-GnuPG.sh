@@ -540,77 +540,6 @@ function f_only_convert_content_from_OpenPGP_no_encription {
    echo "uDev"
 }
 
-function f_main_menu_text {
-   L00=" | opc | fx (all with info, except if \$1 is 'x')"
-
-    L0=" |  0  | Status > DRYa default settings"
-    L1=" |  1  | Chaves > Listar as públicas / verificar existência"
-    L2=" |  2  | Chaves > Listar as privadas / verificar existência"
-    L3=" |  3  | Chaves > Gerar nova (interativo)"
-    L4=" |  4  | Chaves > Importar"
-    L5=" |  5  | Chaves > Exportar pública"
-    L6=" |  6  | Chaves > Exportar privada (cuidado)"
-   L12=" | 12  | Chaves > Mudar passphrase"
-   L13=" | 13  | Chaves > Apagar"
-   L14=" | 14  | Chaves > Backup de todas"
-   L15=" | 15  | Chaves > Restaurar"
-
-   L20=" | 20  | Convert > text/file to OpenPGP   (no encription)"
-   L21=" | 21  | Convert > OpenPGP   to text/file (no encription)"
-
-    L7=" |  7  | Encrypt > simétrica (com passphrase)"
-   L17=" | 17  | Decrypt > simétrica (com passphrase)"
-
-    L8=" |  8  | Encrypt > assimetrica para destinatário (chave pública)"
-    L9=" |  9  | Decrypt > ficheiro"
-
-   L10=" | 10  | Assinaturas > Assinar ficheiro"
-   L11=" | 11  | Assinaturas > Verificar assinatura"
-   L16=" | 16  | Mostrar fingerprints"
-   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
-   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
-
-   L22=" | 22  | Tar ball > Create (zip) "
-   L23=" | 23  | Tar ball > Create (unzip) "
-
-    Lh=" |  h  | Instucoes Base"
-    LQ=" |  Q  | Sair"
-
-   echo "$L00"
-   f_hline
-   echo "$L0"
-   echo "$L1"
-   echo "$L2"
-   echo "$L3"
-   echo "$L4"
-   echo "$L5"
-   echo "$L6"
-   echo "$L12"
-   echo "$L13"
-   echo "$L14"
-   echo "$L15"
-   f_hline
-   echo "$L20"
-   echo "$L21"
-   echo "$L7"
-   echo "$L17"
-   echo "$L8"
-   echo "$L9"
-   f_hline
-   echo "$L10"
-   echo "$L11"
-   echo "$L16"
-   echo "$L18"
-   echo "$L19"
-   f_hline
-   echo "$L22"
-   echo "$L23"
-   f_hline
-   echo "$Lh"
-   echo "$LQ"
-   echo
-}
-
 function f_testing_drya_defaults {
 
    f_gpg_path
@@ -672,9 +601,29 @@ function f_some_help {
 
 
 
+function f_zip {
+   # tar é o nome do pacote
+   #tar -czf arquivo.tar.gz nome_da_pasta/
+   #     `-c` create  (cria um novo arquivo tar)
+   #     `-z` gzip    (comprime usando gzip, gerando .tar.gz)
+   #     `-f` file    (indica o nome do arquivo de saída)
+   #     `-v` verbose (mostra cada ficheiro extraido)
+
+   echo "uDev: zip"   
+
+}
 
 
+function f_unzip {
+   # Ver conteudo sem extrair
+   #     tar -tzf arquivo.tar.gz
+   #
+   # Extrair
+   #     tar -xzf arquivo.tar.gz
 
+   echo "uDev: unzip"   
+
+}
 
 
 
@@ -777,36 +726,78 @@ Serve para Verificação de identidade
 
 
 
+function f_main_menu_text {
+   L00=" | opc | fx (all with info, except if \$1 is 'x')"
 
-function f_GnuPG_main_menu__take_action {
-   case "$v_ans" in
-      0)   f_testing_drya_defaults; pause;;
-      1)   f_list_public_keys       ;;
-      2)   f_check_gpg_agent        ;;
-      3)   f_generate_key           ;;
-      4)   f_import_key             ;;
-      5)   f_export_public_key      ;;
-      6)   f_export_private_key     ;;
-      7)   f_symmetric_store        ;;
-      17)  f_symmetric_decrypt      ;;
-      8)   f_encrypt_for_recipient  ;;
-      9)   f_decrypt_file           ;;
-      10)  f_sign_file              ;;
-      11)  f_verify_signature       ;;
-      12)  f_change_passphrase      ;;
-      13)  f_delete_key             ;;
-      14)  f_backup_all_keys        ;;
-      15)  f_restore_keys           ;;
-      16)  f_show_key_fingerprints  ;;
-      18)  f_reset_GnuPG_like_fresh_install ;;
-      19)  f_explaining_content_of_default_gnupg_directory; pause ;;
-      20)  f_only_convert_content_to_OpenPGP_no_encription ;;
-      21)  f_only_convert_content_from_OpenPGP_no_encription ;;
-      h)   f_header; f_talk; f_some_help; pause ;;
-      q|Q) echo "Adeus!"; exit 0 ;;
-      *)   echo "Opção inválida."; pause ;;
-  esac
+    L0=" |  0  | Status > DRYa default settings"
+    L1=" |  1  | Chaves > Listar as públicas / verificar existência"
+    L2=" |  2  | Chaves > Listar as privadas / verificar existência"
+    L3=" |  3  | Chaves > Gerar nova (interativo)"
+    L4=" |  4  | Chaves > Importar"
+    L5=" |  5  | Chaves > Exportar pública"
+    L6=" |  6  | Chaves > Exportar privada (cuidado)"
+   L12=" | 12  | Chaves > Mudar passphrase"
+   L13=" | 13  | Chaves > Apagar"
+   L14=" | 14  | Chaves > Backup de todas"
+   L15=" | 15  | Chaves > Restaurar"
+
+   L20=" | 20  | Convert > text/file to OpenPGP   (no encription)"
+   L21=" | 21  | Convert > OpenPGP   to text/file (no encription)"
+
+    L7=" |  7  | Encrypt > simétrica (com passphrase)"
+   L17=" | 17  | Decrypt > simétrica (com passphrase)"
+
+    L8=" |  8  | Encrypt > assimetrica para destinatário (chave pública)"
+    L9=" |  9  | Decrypt > ficheiro"
+
+   L10=" | 10  | Assinaturas > Assinar ficheiro"
+   L11=" | 11  | Assinaturas > Verificar assinatura"
+   L16=" | 16  | Mostrar fingerprints"
+   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
+
+   L22=" | 22  | Tar ball > Create (zip) "
+   L23=" | 23  | Tar ball > Create (unzip) "
+
+    Lh=" |  h  | Instucoes Base"
+    LQ=" |  Q  | Sair"
+
+   echo "$L00"
+   f_hline
+   echo "$L0"
+   echo "$L1"
+   echo "$L2"
+   echo "$L3"
+   echo "$L4"
+   echo "$L5"
+   echo "$L6"
+   echo "$L12"
+   echo "$L13"
+   echo "$L14"
+   echo "$L15"
+   f_hline
+   echo "$L20"
+   echo "$L21"
+   echo "$L7"
+   echo "$L17"
+   echo "$L8"
+   echo "$L9"
+   f_hline
+   echo "$L10"
+   echo "$L11"
+   echo "$L16"
+   echo "$L18"
+   echo "$L19"
+   f_hline
+   echo "$L22"
+   echo "$L23"
+   f_hline
+   echo "$Lh"
+   echo "$LQ"
+   echo
 }
+
+
 
 function f_GnuPG_main_menu {
    # Menu Principal GnuPG
@@ -1131,6 +1122,12 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
       f_talk; echo "Directory does not even exist: $v_base"
    fi
          
+
+elif [ $1 == "22" ] || [ $1 == "zip" ]; then
+   f_zip 
+
+elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
+   f_unzip
 
 elif [ $1 == "crack" ] || [ $1 == "bruteforce-crack" ]; then
    echo "uDev: Developing a tool to test cracking delays (simetric with passphrase)"
