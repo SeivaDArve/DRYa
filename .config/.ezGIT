@@ -26,7 +26,7 @@ function f_run {
 
    elif [[ $1 == "hook-git-status-recursive" ]]; then
 
-      echo hit $v_dryaGPG
+      #echo "DRYa .ezGIT: hook running: recursive git status $v_dryaGPG"
 
       if [[ -f $v_dryaGPG ]]; then
                  echo
