@@ -1,2 +1,42 @@
+#!/bin/bash
 # Title: ezGIT executable
 # Description: Place a .ezGIT file at each git repo at the working dir, to allow ezGIT.sh to run the script (if existent) after the command `G v`
+
+# Asking ezGIT repo to help DRYa at `git status`
+
+# Sourcing DRYa Lib 1: Color schemes
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   v_greet="DRYa"
+   v_talk="DRYa: "
+
+   # Examples: `db` (an fx to use during debug)
+   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   #
+
+
+
+
+function f_run {
+   local v_talk="ezGIT hooks: DRYa: "
+
+   if [[ -z $1 ]]; then
+      f_talk; echo "No argument given for hooks"
+
+   elif [[ $1 == "hook-git-status-recursive" ]]; then
+
+      echo hit $v_dryaGPG
+
+      if [[ -f $v_dryaGPG ]]; then
+                 echo
+         f_hzl 
+         f_talk; echo "$1"
+                 echo "Cuidado: Existe~/.dryaGPG"
+      else
+         echo "Nao existe ~/.dryaGPG (tudo ok)" 1>/dev/null
+      fi
+
+   fi
+}
+f_run $*
