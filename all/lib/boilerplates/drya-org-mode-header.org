@@ -1,19 +1,15 @@
-#+Title: dailyLog.org
+#+Title: example-boilerplate-org-mode-header.org
 #+Description: 
-#+Author: David Rodrigues <mydvr7@gmail.com>
 
 - Settings
 :PROPERTIES:
 #+STARTUP: overview
 #+STARTUP: hidestars
 #+STARTUP: indent
-
-;; Para criar verdadeiros links internos (sem a divisao criada por search-backward e search-forward) é preciso que cada vez que queiramos saltar para o target do nosso link, todo o elisp deste ficheiro seja executado. Como? é preciso criar (char-point) no local do nosso target para que é lido e introduzido no sistema como uma variavel. Sempre que quero saltar para um link, todos is char-point sao refrescados (refresh), lidos como variaveis e de seguida o nosso link (que inclu elisp) salta para essa variavel e da um (org-reveal).
-
-;; 1. Criar Fx elisp: "(setq <target-name-here> (char-point (point))"
-;; 2. Criar Fx no inicio do ficheiro para que neste documento va recursivamente a procura das Fx anteriores e so execute essas
-;; 3. Usar um link para a variavel definida com o setq (exiatira 1 target-name e 1 char-point para isso
-
 :END:
 
+Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]]
+
 [[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
+
+
