@@ -3836,6 +3836,20 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
 
+elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then 
+   if [[ -n $(command -v cal) ]]; then
+      clear 
+      f_talk; echo "Calendario"
+      cal -y
+   else 
+      f_talk; echo "cal does not xist. Installing... "
+      echo 
+      pk + ncal
+      clear 
+      f_talk; echo "Calendario"
+      cal -y
+   fi
+
 elif [ $1 == "o" ] || [ $1 == "other" ] ; then 
    # Scripts less important here, like scratch-paper
 
