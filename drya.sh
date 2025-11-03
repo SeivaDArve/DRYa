@@ -293,7 +293,7 @@ function f_output_drya_welcome_screen_msg_with_vimscript {
       rm $v_out 2>/dev/null  # Remove o ficheoiro temporario caso ja haja algum com esse nome
 
    # Ficheiro que tem apenas o cabecalho da drya-lib-1 para se concatenar ao ficheiro de output
-      v_lib_1=${v_REPOS_CENTER}/DRYa/all/lib/cat/cat-drya-lib-1-colors-greets.sh
+      v_lib_1=${v_REPOS_CENTER}/DRYa/all/lib/libs/cat/cat-drya-lib-1-colors-greets.sh
 
    # Fazer uma copia desse script. Para que possamos alterar o contudo daquilo que buscamos
       mkdir -p ~/.tmp
@@ -1901,39 +1901,40 @@ function f_seiva_up_time {
 
 function f_drya_help_menu {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='drya help'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Shortcut '; Lz2='D h'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       # uDev: Emergency tem de ser um menu a parte, para poder crescer em tamanho sem distacoes
-     #L10='10. Emergency help: Extintores (instrucoes de uso)'
-      L9='9. Emergency help: SBV (Suporte Basico de Vida)'
-      L8='8. Emergency help: Arco-Iris (esquema de cores)'
+     L10='10. Emergency help: Extintores (instrucoes de uso)'
+      L9='9.  Emergency help: SBV (Suporte Basico de Vida)'
+      L8='8.  Emergency help: Arco-Iris (esquema de cores)'
 
-      L7='7. About: drya-fast-tg-sys-vars (see README.md)'  
-      L6='6. About: Developer (seiva-up-time)'
-      L5='5. About: DRYa extentions (ezGIT, trid, jarve, ...)'  
-      L4='4. Read drya-msgs'  
-      L3='3. Welcome Screen'
-      L2='2. Print All' 
-      L1='1. Cancel'
+      L7='7.  About: drya-fast-tg-sys-vars (see README.md)'  
+      L6='6.  About: Developer (seiva-up-time)'
+      L5='5.  About: DRYa extentions (ezGIT, trid, jarve, ...)'  
+      L4='4.  Read drya-msgs'  
+      L3='3.  Welcome Screen'
+      L2='2.  Print All' 
+      L1='1.  Cancel'
 
-      L0="$v_fzf_talk: Menu X: "
+      L0="$v_fzf_talk: Help Menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9\n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
-      [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[ $v_list =~ "9. " ]] && echo "uDev"
-      [[ $v_list =~ "8. " ]] && echo "uDev"
-      [[ $v_list =~ "7. " ]] && echo "uDev"
-      [[ $v_list =~ "6. " ]] && f_seiva_up_time
-      [[ $v_list =~ "5. " ]] && echo "uDev"
-      [[ $v_list =~ "4. " ]] && less $v_MSGS
-      [[ $v_list =~ "3. " ]] && f_output_drya_welcome_screen_msg_with_vimscript
-      [[ $v_list =~ "2. " ]] && f_drya_help
-      [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
+      [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "10. " ]] && echo "uDev"
+      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "8.  " ]] && echo "uDev"
+      [[ $v_list =~ "7.  " ]] && echo "uDev"
+      [[ $v_list =~ "6.  " ]] && f_seiva_up_time
+      [[ $v_list =~ "5.  " ]] && echo "uDev"
+      [[ $v_list =~ "4.  " ]] && less $v_MSGS
+      [[ $v_list =~ "3.  " ]] && f_output_drya_welcome_screen_msg_with_vimscript
+      [[ $v_list =~ "2.  " ]] && f_drya_help
+      [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
       unset v_list
 }
 
