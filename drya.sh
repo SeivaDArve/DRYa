@@ -1398,6 +1398,14 @@ function f_drya_help {
            echo " 8. dee-pages: filter real commands from their own script"
            echo " 9. Welcome screen DRYa's instructions"
            echo " 10. DRYa é como uma luva que acenta no PC ou Phone e sabe o que instalar e como instalar"
+
+
+            #            mo *
+            #            |  -m *
+            #            |  |  A
+            #            |  |  U
+            #            |  +  <ID>
+            #            |  |  qr
 }
 
 function f_dot_files_list_available {
@@ -2272,7 +2280,7 @@ function f_clone_main_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Saving '; Lz2='D clone'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. Visit github.com (defaul browser) (uDev)'
+      L4='4. Visit github.com (default browser) (uDev)'
       L3='3. Clone by fzf menu        | `D cln .`'                                      
       L2='2. Help (how to clone DRYa) | `D cln h`'                                      
       L1='1. Cancel'

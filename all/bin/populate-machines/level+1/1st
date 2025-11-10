@@ -94,18 +94,20 @@ function f_usefull {
       exiftool
       tree
       linx
-      tsu \          # To grant sudo permissions, may be needed to enable phone screenshots
-      gnupg \        # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
-      tar \          # Comprimit pastas com gzip para ficheiros .tar.gz
-      ssh \          # Need to connect to raspberry Pi
-      sshfs \        # Mout ssh as a file system 
-      whiptail \     # Tool to give GUI menus on Bash
-      dialog \       # Tool to give GUI menus on Bash (like whiptail but with more options
-      termux-api \   # Plug-in for termux
-      awk \          # Serve para procurar e substituir texto
-      upower \       # To enable the possibility to read battery status
-      which \        # Used to detect the path of installed scripts
-      man \          # Man pages. Software to present manual pages (it does not come default in arch, for example)
+      tsu \            # To grant sudo permissions, may be needed to enable phone screenshots
+      gnupg \          # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
+      tar \            # Comprimit pastas com gzip para ficheiros .tar.gz
+      ssh \            # Need to connect to raspberry Pi
+      sshfs \          # Mout ssh as a file system 
+      whiptail \       # Tool to give GUI menus on Bash
+      dialog \         # Tool to give GUI menus on Bash (like whiptail but with more options
+      termux-api \     # Plug-in for termux
+      awk \            # Serve para procurar e substituir texto
+      upower \         # To enable the possibility to read battery status
+      which \          # Used to detect the path of installed scripts
+      man \            # Man pages. Software to present manual pages (it does not come default in arch, for example)
+      translate-shell  # Software tradutor de idiomas. exemplo: `trans -b :en "Olá, detetando a lingua e passando para en"`
+      playwright-cli \ # Headless browser, mais poderoso que puppeteer, util para webcrawling e webscraping. Precisa de node.js
       emacs
       espeak     # Text to speach
       termimage  # Terminal images

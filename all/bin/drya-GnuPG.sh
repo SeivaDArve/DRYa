@@ -15,6 +15,33 @@
 
 
 
+
+function f_some_help {
+   f_talk; echo "Info"
+           echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"
+           echo
+           echo " > Cuidado com 'Spoofing' significa falsificação de identidade digital."
+           echo "   Alguém finge ser outra pessoa ou sistema (as chaves privadas podem sofrer spoofing)"
+           echo "   As UID 'Name (comentario) <email>' podem ter por tras outras 'sec' (par de chaves) que nao aquele que parece"
+           echo "   Uma vez que UID é so uma descricao, nao é fixo"
+           echo
+           echo " > fluNav: V"
+           echo "   Existe \`V x\` para navegar para \$v_drya_gpg"
+           echo "   (variavel exportada para o env) que normalmente aponta"
+           echo "   para ~/.dryaGPG"
+
+
+
+           # Flags para reduzir verbose do `gpg`
+           #   --quiet → reduz a verbosidade (silencia mensagens de status).
+
+           #   --batch → impede prompts interativos.
+           #   
+           #   --yes → assume “sim” nas confirmações.
+           #   
+           #   --no-tty → evita que o GPG use o terminal para entrada/saída (evita mensagens no TTY).
+}
+
 function f_permitir_variaveis_vazias {
    # Liga/Permite erros silenciosos, por exemplo a falta de iniciacao de variaveis (neste caso $1)
    set +u   
@@ -25,8 +52,6 @@ function f_deny_empty_vars {
    # Uma boa prática: faz com que qualquer variável não inicializada cause erro imediatamente — evita bugs silenciosos.
    set -u  
 }
-
-
 
 function pause {
    echo
@@ -67,6 +92,13 @@ function f_gpg_path {
 function f_install_now {
    # Confirmar se quer instalar ja o `gnupg`
   
+
+   #bash pk ?? gnupg  # Retorna uma var $v_last_check"
+   #echo "Last check: $v_last_check"
+   #read -sn1
+
+
+
    # Usa drya-lib-1 para perguntar ao user se realmente quer Instalar
       v_txt="Install GPG" && f_anyK
 
@@ -573,32 +605,36 @@ function f_vb_testing_drya_defaults {
    f_talk; echo "Escolha uma opção (com instrucoes primeiro): "
 }
 
-function f_some_help {
-   f_talk; echo "Info"
-           echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"
-           echo
-           echo " > Cuidado com 'Spoofing' significa falsificação de identidade digital."
-           echo "   Alguém finge ser outra pessoa ou sistema (as chaves privadas podem sofrer spoofing)"
-           echo "   As UID 'Name (comentario) <email>' podem ter por tras outras 'sec' (par de chaves) que nao aquele que parece"
-           echo "   Uma vez que UID é so uma descricao, nao é fixo"
-           echo
-           echo " > fluNav: V"
-           echo "   Existe \`V x\` para navegar para \$v_drya_gpg"
-           echo "   (variavel exportada para o env) que normalmente aponta"
-           echo "   para ~/.dryaGPG"
 
+function f_remove-dryaGPG-dir {
+   v_base=$(basename $v_dryaGPG)
+   v_base="~/$v_base"
 
+   if [[ -d $v_dryaGPG ]]; then
+      # So se existir a pasta é que executa o processo todo de apagar
 
-           # Flags para reduzir verbose do `gpg`
-           #   --quiet → reduz a verbosidade (silencia mensagens de status).
+      f_header
+      f_talk; echo "Removing $v_base"
+      f_hline
 
-           #   --batch → impede prompts interativos.
-           #   
-           #   --yes → assume “sim” nas confirmações.
-           #   
-           #   --no-tty → evita que o GPG use o terminal para entrada/saída (evita mensagens no TTY).
+      f_talk; echo 'Listing storage `ls` helping decision:'
+      echo
+      ls -pA $v_dryaGPG
+      f_hline
+      echo
+      v_txt="Delete $v_base" && f_anyK
+      echo
+      f_talk; echo "Removing $v_base"
+
+      #cd ~   # At dryaSRC then is an fx 'drya' that detects this argument first. It will `cd $HOME` and then run `D gpg rm` allowing always to remove $v_dryaGPG even if the prompt is located there
+      rm -rf  $v_dryaGPG
+      [[ ! -d $v_dryaGPG ]] && echo " > done" 
+      f_hline
+
+   else
+      f_talk; echo "Directory does not even exist: $v_base"
+   fi
 }
-
 
 
 function f_zip {
@@ -727,7 +763,7 @@ Serve para Verificação de identidade
 
 
 function f_main_menu_text {
-   L00=" | opc | fx (all with info, except if \$1 is 'x')"
+   L00=" | opc | fx (all with info, except if \$1 is 'v')"
 
     L0=" |  0  | Status > DRYa default settings"
     L1=" |  1  | Chaves > Listar as públicas / verificar existência"
@@ -845,6 +881,10 @@ function f_GnuPG_main_menu {
   #f_detetar_se_instalado_tar  (uDev)
    f_permitir_variaveis_vazias
 
+# Se $1 for "v" isso impede as fx de enviar as info/instrucoes
+   v_verbose=on                               # Valor pre-definido
+   [[ $1 == "v" ]] && shift && v_verbose=offa # Altera o valor pre-definido 
+
 if [ -z $1 ]; then
    f_testing_drya_defaults 
    f_GnuPG_main_menu 
@@ -927,10 +967,6 @@ elif [ $1 == "21" ]; then
    f_only_convert_content_from_OpenPGP_no_encription 
 
 elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
-   #bash pk ?? gnupg  # Retorna uma var $v_last_check"
-   #echo "Last check: $v_last_check"
-   #read -sn1
-
    f_install_now 
 
 elif [ $1 == "ws" ]; then
@@ -996,23 +1032,37 @@ elif [ $1 == "op" ]; then
 
 elif [ $1 == "v" ] || [ $1 == "navigate-to-dryaGPG" ]; then
    # Navigate to $v_dryaGPG (if it does not exist, ask previously if should be created)
-   # Note: It is using dryaSRC to allow `cd` in the main shell (does not `cd` in a sub-shell)
 
-   # uDev: Se a pasta nao existir, perguntar primeiro se quer criar com 'y' para nao criar lixo
 
-   mkdir -p $v_dryaGPG
-   cd       $v_dryaGPG  # Not working in a sub-shell (it is using dryaSRC to do it)
+   #  # Note: This code is written at dryaSRC to allow `cd` in the main shell (does not `cd` in this sub-shell)
+   #     if [ -d $v_dryaGPG ]; then
+   #        # Se a pasta existir, navegar para la
+   #        cd $v_dryaGPG 2>/dev/null
+   #     else 
+   #        # Se nao existir, mencionar so o erro
+   #        echo -e "DRYa-GnuPG: Directory does not exist: \n > $v_dryaGPG"
+   #     fi
+
+   echo "This fx is working from dryaSRC" 1>/dev/null
+         
    
 elif [ $1 == "V" ] || [ $1 == "create-and-navigate-to-dryaGPG" ]; then
    # Create and Navigate to $v_dryaGPG
-   # Note: It is using dryaSRC to allow `cd` in the main shell (does not `cd` in a sub-shell)
 
-   # uDev: Se a pasta nao existir, perguntar primeiro se quer criar com 'y' para nao criar lixo
+   #  # Note: This code is written at dryaSRC to allow `cd` in the main shell (does not `cd` in this sub-shell)
+   #     if [ ! -d $v_dryaGPG ]; then
+   #        # Se a pasta nao existir, criar a pasta, depois navegar la
+   #        mkdir -p $v_dryaGPG
+   #        cd       $v_dryaGPG 2>/dev/null
+   #     else 
+   #        # Se a pasta existir, navegar la
+   #        cd $v_dryaGPG 2>/dev/null
+   #     fi
 
-   mkdir -p $v_dryaGPG
-   cd       $v_dryaGPG  # Not working in a sub-shell (it is using dryaSRC to do it)
+   echo "This fx is working from dryaSRC" 1>/dev/null
 
-elif [ $1 == "+" ] || [ $1 == "add-text-file-info-confidenntial-info" ]; then
+
+elif [ $1 == "+" ] || [ $1 == "add-text-file-confidential-info" ]; then
     f_header
 
 
@@ -1094,35 +1144,7 @@ elif [ $1 == "add" ] || [ $1 == "add-dryaGPG-dir" ]; then
    touch    $v_dryaGPG/y
 
 elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
-
-   v_base=$(basename $v_dryaGPG)
-   v_base="~/$v_base"
-
-   if [[ -d $v_dryaGPG ]]; then
-      # So se existir a pasta é que executa o processo todo de apagar
-
-      f_header
-      f_talk; echo "Removing $v_base"
-      f_hline
-
-      f_talk; echo 'Listing storage `ls` helping decision:'
-      echo
-      ls -pA $v_dryaGPG
-      f_hline
-      echo
-      v_txt="Delete $v_base" && f_anyK
-      echo
-      f_talk; echo "Removing $v_base"
-
-      #cd ~   # At dryaSRC then is an fx 'drya' that detects this argument first. It will `cd $HOME` and then run `D gpg rm` allowing always to remove $v_dryaGPG even if the prompt is located there
-      rm -rf  $v_dryaGPG
-      [[ ! -d $v_dryaGPG ]] && echo " > done" 
-      f_hline
-
-   else
-      f_talk; echo "Directory does not even exist: $v_base"
-   fi
-         
+   f_remove-dryaGPG-dir 
 
 elif [ $1 == "22" ] || [ $1 == "zip" ]; then
    f_zip 
@@ -1130,12 +1152,26 @@ elif [ $1 == "22" ] || [ $1 == "zip" ]; then
 elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
    f_unzip
 
+elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
+   f_header
+   f_talk; echo "Mostrar metadados de um pacote"
+   f_ls
+
+   f_talk; echo "Ficheiro a mostrar os metadados: "
+   read -ep " > " v_ans
+   echo
+
+   #[[ -n $v_ans ]] && gpg --list-packets --verbose $v_ans || echo " > Nao selecionou nenhum ficheiro"
+
+   [[ -n $v_ans ]] && gpg --list-packets --quiet $v_ans || echo " > Nao selecionou nenhum ficheiro"
+
 elif [ $1 == "crack" ] || [ $1 == "bruteforce-crack" ]; then
-   echo "uDev: Developing a tool to test cracking delays (simetric with passphrase)"
+   # Developing a tool to test cracking delays (simetric with passphrase)"
+   f_talk; echo "uDev: Bruteforce attack on symmetric"
 
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
-   echo " > Exit"
-   exit 0 
+   # Opcao de saisa deste script caso esteja a ser usado um menu com loop
+   f_talk; echo "Exit"; exit 0 
 
 else
    f_talk; echo "Opcao desconhecida"

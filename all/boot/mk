@@ -1,0 +1,55 @@
+#!/bib/bash
+ 
+#alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
+ #uDev: `mk .` to go to last created dir
+ #uDev: `mk dir1 . dir2 dir3` to make all dirs and navigate do dir2
+function mk {
+
+   f_talk; echo "mk"
+
+   if [[ -z $* ]]; then
+      # Creates a directory and navigates to it imediatly
+      read -p "New directory name: " v_dir
+      mkdir -p $v_dir
+      cd $v_dir
+
+   elif [ $1 == "h" ]; then
+      echo "Instructions for Mk"
+      echo ' > `Mk`      : Ask for new dir && cd $dir'
+      echo ' > `Mk $dir` : Automatically create $dir && cd $dir'
+
+   elif [ $1 == "." ]; then
+      shift
+
+      echo hit
+
+      if [[ -z $* ]]; then
+         echo "No args remaining"
+
+      else
+         echo "vao ser criadas todas as pastas fornecidas como args"
+         echo "depois, navega para a ultima pasta criada"
+
+         #
+         # Notas: Como funciona esta detecao de argumentos:
+         #     $#       devolve o número total de argumentos.
+         #     ${!#}    usa indireção, ou seja, devolve o valor do argumento cujo número é $#.
+         #     Exemplo: se $# for 4, ${!#} = ${4}.)
+         #
+
+         # Detetar qual é o ultimo argumento
+            var=${!#}
+            echo "Último argumento: $var"
+
+         mkdir -p $*
+         cd $var
+      fi
+
+
+   else 
+      for i in $*
+      do
+         mkdir -p $i
+      done
+   fi
+}

@@ -462,6 +462,7 @@ function f_alias_to_enforce {
    function drya {
       # Forced to use fx instead of alias to allowing `cd` in sub-shells (for safety in encryption/decryption of files)
 
+
       if [ -z $1 ]; then
          bash $DRYa/drya.sh $*
 
@@ -472,8 +473,27 @@ function f_alias_to_enforce {
          bash $DRYa/drya.sh $*
 
       elif [[ $1 == "gpg" ]] && [[ $2 == "v" ]]; then
-         mkdir -p $v_dryaGPG
-         cd       $v_dryaGPG
+         # Change directory. Not working in a sub-shell (it is using dryaSRC to do it)
+
+         if [ -d $v_dryaGPG ]; then
+            # Se a pasta existir, navegar para la
+            cd $v_dryaGPG 2>/dev/null
+         else 
+            # Se nao existir, mencionar so o erro
+            echo -e "DRYa-GnuPG: Directory does not exist: \n > $v_dryaGPG"
+         fi
+
+      elif [[ $1 == "gpg" ]] && [[ $2 == "V" ]]; then
+
+         # Change directory. Byt Not working in a sub-shell (it is using dryaSRC to do it)
+         if [ ! -d $v_dryaGPG ]; then
+            # Se a pasta nao existir, criar a pasta, depois navegar la
+            mkdir -p $v_dryaGPG
+            cd       $v_dryaGPG 2>/dev/null
+         else 
+            # Se a pasta existir, navegar la
+            cd $v_dryaGPG 2>/dev/null
+         fi
 
       else
          bash $DRYa/drya.sh $*
