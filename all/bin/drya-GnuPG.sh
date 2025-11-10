@@ -265,6 +265,9 @@ function f_export_private_key {
 }
 
 function f_symmetric_store {
+   # Criptografia simetrica: encriptar
+   # -c ou --symetric 
+
    f_header; f_vb_symmetric_store;  f_ls
    f_talk; echo "Ficheiro a encriptar: "
    read -erp " > " infile
@@ -279,6 +282,9 @@ function f_symmetric_store {
 }
 
 function f_symmetric_decrypt {
+   # Criptografia simetrica: desencriptar
+   # -d ou --decrypt
+
    f_vb_symmetric_decrypt 
 
    f_ls
@@ -300,6 +306,9 @@ function f_symmetric_decrypt {
 }
 
 function f_encrypt_for_recipient {
+   # Criptografia assimetrica: encriptar
+   # -e ou --encrypt
+
    f_vb_encrypt_for_recipient 
 
    read -e -rp "Ficheiro a encriptar: " infile
@@ -636,9 +645,110 @@ function f_remove-dryaGPG-dir {
    fi
 }
 
+function f_about_possible_compression_dependencias {
+   echo '
+   Lista de pacotes disponiveis para compactar e descompactar ficheiros
+
+
+
+
+
+
+
+   1. TAR, GZIP, BZIP2, XZ (nativos do Linux). Esses geralmente já vêm instalados por padrão.
+
+   Se precisar garantir:
+      sudo apt install tar gzip bzip2 xz-utils
+
+   | .tar     | empacotador (não comprime)
+   | .tar.gz  | usa gzip
+   | .tar.bz2 | usa bzip2
+   | .tar.xz  | usa xz
+
+
+
+
+
+
+   2. ZIP (Dois pacotes a instalar, Ambos são open-source e amplamente compatíveis com Windows/macOS.)
+
+   Se precisar garantir:
+      sudo apt install zip unzip
+
+   | zip   | cria arquivos .zip
+   | unzip | extrai .zip
+
+
+
+
+
+
+
+   3. RAR (Dois pacotes, um nao é FOSS. O outro que é FOSS so vai ate a versao 5)
+   Se precisar garantir:
+      sudo apt install unrar
+
+   ou, se quiser uma alternativa livre:
+      sudo apt install unar
+
+
+   | unrar | extrai .rar (proprietário, leitura apenas)
+   | rar   | cria .rar (também proprietário, pode baixar do site da RARLAB)
+   | unar  | leitura livre, suporta RAR5+
+
+
+
+
+
+
+
+
+   4. 7-Zip (.7z) Altamente recomendado no Linux: taxa de compressão excelente e software livre.
+
+   Se precisar garantir:
+      sudo apt install p7zip-full
+
+   | 7z | cria e extrai .7z, .zip, .tar, etc.
+
+
+
+
+
+
+
+
+
+   5. DAR (.dar) Pouco usado, mas poderoso para backups.
+
+   Se precisar garantir:
+      sudo apt install dar
+
+   | dar | cria/extrai .dar
+
+
+
+
+
+
+
+
+
+   6. Outros formatos úteis
+      | Formato           | Pacote              | Comando
+      ---------------------------------------------------------
+      | .xz	              | xz-utils            | xz, unxz
+      | .bz2              | bzip2               | bzip2, bunzip2
+      | .lzma             | lzma                | lzma, unlzma
+      | .zst  (Zstandard) | zstd                | zstd, unzstd
+      | .iso	           | p7zip-full ou mount | 7z x arquivo.iso ou mount -o loop
+   '
+
+}
+
 
 function f_zip {
-   # tar é o nome do pacote
+   # tar é o nome do pacote a instalar
+
    #tar -czf arquivo.tar.gz nome_da_pasta/
    #     `-c` create  (cria um novo arquivo tar)
    #     `-z` gzip    (comprime usando gzip, gerando .tar.gz)
@@ -651,6 +761,8 @@ function f_zip {
 
 
 function f_unzip {
+   # tar é o nome do pacote a instalar
+
    # Ver conteudo sem extrair
    #     tar -tzf arquivo.tar.gz
    #
@@ -711,7 +823,7 @@ function f_vb_symmetric_decrypt {
 
 function f_vb_encrypt_for_recipient {
    # Instrucoes/Verbose curtas, sobre f_encrypt_for_recipient 
-   echo  "Irá encriptar um ficheiro para um destinatário específico, utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."
+   echo  "Irá encriptar um ficheiro para um destinatário específico utilizando a chave pública dele. Pode também optar por assinar o ficheiro com a sua chave privada."
 }
 
 function f_vb_decrypt_file {
@@ -1151,6 +1263,9 @@ elif [ $1 == "22" ] || [ $1 == "zip" ]; then
 
 elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
    f_unzip
+
+elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
+   f_about_possible_compression_dependencias
 
 elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
    f_header
