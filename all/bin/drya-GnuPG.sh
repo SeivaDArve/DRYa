@@ -646,6 +646,7 @@ function f_remove-dryaGPG-dir {
 }
 
 function f_about_possible_compression_dependencias {
+   f_header
    echo '
    Lista de pacotes disponiveis para compactar e descompactar ficheiros
 
@@ -742,6 +743,51 @@ function f_about_possible_compression_dependencias {
       | .zst  (Zstandard) | zstd                | zstd, unzstd
       | .iso	           | p7zip-full ou mount | 7z x arquivo.iso ou mount -o loop
    '
+
+
+
+   read -sn1 -p "Enter, para testar quais comandos exiatem no sistema"
+   f_header
+
+
+
+
+   # ===========================================
+   # 🧩 Verificador de ferramentas de compactação e criptografia
+   # ===========================================
+
+   # Lista de comandos a verificar
+   comandos=(
+     tar
+     gzip
+     bzip2
+     xz
+     zip
+     unzip
+     rar
+     unrar
+     7z
+     dar
+     gpg
+     unar
+     atool
+     zstd
+   )
+
+   echo "🔍 Verificando comandos instalados no sistema..."
+   echo "==============================================="
+
+   # Loop pelos comandos
+   for cmd in "${comandos[@]}"; do
+     if command -v "$cmd" &> /dev/null; then
+       echo "✅ $cmd encontrado em: $(command -v "$cmd")"
+     else
+       echo "❌ $cmd não encontrado — instale com: sudo apt install $cmd"
+     fi
+   done
+
+   echo "==============================================="
+   echo "✅ Verificação concluída!"
 
 }
 
