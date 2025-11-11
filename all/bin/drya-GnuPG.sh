@@ -751,6 +751,7 @@ function f_about_possible_compression_dependencias {
 
 
 
+   # uDev: passar isto para DRYa pre-requisitos
 
    # ===========================================
    # 🧩 Verificador de ferramentas de compactação e criptografia
