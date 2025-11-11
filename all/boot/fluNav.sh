@@ -1279,7 +1279,7 @@ function V {
             if [[ $v_repo == "(DRYa-REPOS-CENTER)" ]]; then
                cd ${v_REPOS_CENTER}
             else
-               cd $v_repo
+               cd ${v_REPOS_CENTER}/$v_repo
             fi
          fi
 
