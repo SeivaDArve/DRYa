@@ -645,7 +645,7 @@ function f_remove-dryaGPG-dir {
    fi
 }
 
-function f_about_possible_compression_dependencias {
+function f_about_possible_compression_dependencies {
    f_header
    echo '
    Lista de pacotes disponiveis para compactar e descompactar ficheiros
@@ -746,8 +746,9 @@ function f_about_possible_compression_dependencias {
 
 
 
-   read -sn1 -p "Enter, para testar quais comandos exiatem no sistema"
-   f_header
+}
+
+function f_test_existent_compression_dependencies {
 
 
 
@@ -768,27 +769,32 @@ function f_about_possible_compression_dependencias {
      rar
      unrar
      7z
-     dar
+     #dar
      gpg
-     unar
-     atool
-     zstd
+     #unar
+     #atool
+     #zstd
    )
 
-   echo "🔍 Verificando comandos instalados no sistema..."
-   echo "==============================================="
+   f_talk; echo "Verificando comandos instalados no sistema..."
+           echo "            (Compactacao e Criptografia)"
+           echo 
 
    # Loop pelos comandos
-   for cmd in "${comandos[@]}"; do
-     if command -v "$cmd" &> /dev/null; then
-       echo "✅ $cmd encontrado em: $(command -v "$cmd")"
-     else
-       echo "❌ $cmd não encontrado — instale com: sudo apt install $cmd"
-     fi
-   done
+      n=0  # Variavel que conta o numero de loops
 
-   echo "==============================================="
-   echo "✅ Verificação concluída!"
+      for cmd in "${comandos[@]}"
+      do
+         ((n++))           # Adiciona +1 a variavel n   # Opcao alternativa: `((n += 1))`
+         #echo -n "(${n}) "  # Adiciona no Verbose/Output o numero do loop sem quebra de linha. Este numero fica in-line com o `if then else` que se segue
+
+         if command -v "$cmd" &> /dev/null; then
+            echo "✅ ($n) $cmd    encontrado em: $(command -v "$cmd")"
+         else
+            echo "❌ ($n) $cmd    não encontrado — instale com: sudo apt install $cmd"
+         fi
+      done
+
 
 }
 
@@ -802,7 +808,43 @@ function f_zip {
    #     `-f` file    (indica o nome do arquivo de saída)
    #     `-v` verbose (mostra cada ficheiro extraido)
 
-   echo "uDev: zip"   
+   f_header
+   f_talk; echo "uDev: zip"   
+   f_hline
+   f_test_existent_compression_dependencies 
+
+   # Escolha do formato
+      f_hline
+      f_talk; echo "Escolha qual formato para 'Compactar'"
+              echo "            (dependencias serao instaladas)"
+              echo "            (default: \`5\` \`zip\`)"
+
+      read -p " > " v_formt
+      v_formt=${v_formt:-"zip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+
+      echo " > Selecionado: $v_formt"
+      echo " > Sera usado : 'zip' (outros formatos: uDev)"
+
+
+   # Testar se 'zip' existe no sistema
+      f_hline
+              echo
+      f_talk; echo "Testar se 'zip' existe"
+
+      if [[ -n $(command -v zip) ]]; then
+         echo " > zip existe no sistema"
+      else
+         echo " > zip nao existe no sistema" 
+         echo
+         v_txt="Instalar 'zip'"
+         f_anyK && pk + zip
+      fi
+
+   f_ls
+   f_talk; echo "Escolha uma pasta para compactar"   
+   read -ep " > " v_dir
+
+   [[ -d $v_dir ]] && echo " > Confirmado, é pasta" || echo " > Rejeitado, Nao é pasta"
 
 }
 
@@ -816,7 +858,18 @@ function f_unzip {
    # Extrair
    #     tar -xzf arquivo.tar.gz
 
-   echo "uDev: unzip"   
+   f_header
+   f_talk; echo "uDev: unzip"   
+   f_hline
+   f_test_existent_compression_dependencies 
+   f_ls
+   f_talk; echo "Escolha qual formato para 'descompactar'"
+           echo "            (dependencias serao instaladas)"
+           echo "            (default: \`6\` \`unzip\`)"
+
+   read -p " > " v_formt
+   v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+   echo " > Escolhido: $v_formt (outros formatos: uDev)"
 
 }
 
@@ -1312,7 +1365,7 @@ elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
    f_unzip
 
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
-   f_about_possible_compression_dependencias
+   f_about_possible_compression_dependencies
 
 elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
    f_header
