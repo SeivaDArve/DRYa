@@ -400,7 +400,7 @@ function f_fun_after_welcome_screen {
    echo                          1>/dev/null  # It must have at least one command permenently running in an fx where everything else is commented
 
    #f_fun_apprendre_le_francais
-   #f_fun_memorize_sutras      2>/dev/null
+    f_fun_memorize_sutras      2>/dev/null
    #f_fun_open_random_shells
    #f_fun_memorize_sanskrit      (uDev)
    #f_fun_memorize_font_kamida   (uDev)
@@ -996,10 +996,7 @@ function f_fun_memorize_sutras {
    # Uses the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
 
    # Fx que tras um Sutra aleatorio
-      f_hzl
-      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r2
-      echo
-      f_hzl
+      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r3
 }
 
 function f_fun_open_random_shells {
