@@ -261,6 +261,10 @@ function f_edit__1st_vim {
    echo "edited: 1st"
 }
 
+function f_edit_dryaGPG {
+   vim ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
+}
+
 function f_edit__init_file_emacs__with_emacs {
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
    # This way we know we can easily upload the file
@@ -1681,7 +1685,7 @@ function S {
       elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; source ~/.bashrc
       elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; #f_up
       elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
-      elif [ $1 == "2"        ]; then v_nm="initVIM";                f_action; f_edit__init_file_emacs__with_vim; f_up
+      elif [ $1 == "2"        ]; then v_nm="dryaGPG";                f_action; f_edit_dryaGPG
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
       elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd ${v_REPOS_CENTER}/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
@@ -1711,6 +1715,6 @@ if [ -z $1 ]; then
    echo 1>/dev/null
 
 elif [ $1 == "2" ]; then
-   f_edit__init_file_emacs__with_vim
+   f_edit_dryaGPG
 fi
 

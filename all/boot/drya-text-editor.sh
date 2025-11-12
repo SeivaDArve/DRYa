@@ -259,7 +259,7 @@ function op {
 
       # Buscar um ficheiro apartir da pasta atual até todas as subpastas
          unset v_item
-         v_item=$(fzf -m --prompt="DRYa: op: Select ficheiros para abrir com xdg-open: ")
+         v_item=$(fzf -m --pointer=">" --prompt="DRYa: op: Select ficheiros para abrir com xdg-open: ")
 
       # So se houver algum nome na variavel $v_item, tenta abrir com xdg (evita `xdg-open` de reclamar erro por falta de argumentos)
          [[ -n $v_item ]] && for i in $(echo $v_item); do echo "DRYa: opening: $i"; xdg-open $i; done
