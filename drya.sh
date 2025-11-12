@@ -2097,7 +2097,7 @@ function f_drya_get_all_repo_names_private_public {
    # Juntar a lista de repos publicas + privadas
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_list_options="---Invert-Selection---"
-      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines oneFile-bau dandarez dWiki Tesoro dial-mono yogaBashApp-private autoPay Dv-Indratena"
+      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena"
 
       # will give a $v_tmp with a new file with abs path
          f_create_tmp_file  # Vai criar o ficheiro $v_tmp
