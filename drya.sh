@@ -14,6 +14,7 @@
 
 # uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
 # uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS). Tambem chamado 'failsafe'
+# uDev: Addicionar xKill; adicionar OT: confirmar acessos aos tty
 
 # uDev: Criar menus 'failsafe' semelhantes a este:
 #
