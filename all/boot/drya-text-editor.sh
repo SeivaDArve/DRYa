@@ -36,7 +36,9 @@ function e {
       trid_editor_name=$(cat $trid_editor_file 2>/dev/null)
 
    if [ -z $1 ]; then
-      f_talk; echo "Qual o ficheiro que quer editar? (com $trid_editor_name)"
+      v_editor=$(f_c1; echo -n $trid_editor_name; f_rc)
+      f_talk; echo "Qual o ficheiro que quer editar? (com $v_editor)" 
+      f_talk; echo "Nota: \`S .\` Para editar ficheiros, procurando recursivamente"
 
    elif [ $1 == "." ]; then
 

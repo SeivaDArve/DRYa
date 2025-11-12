@@ -1500,7 +1500,7 @@ function f_action {
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
-         L0="fluNav: S: edite 1 ficheiro: "
+         L0="fluNav: S: Procure e edite 1 ficheiro: "
 
          unset v_list
                v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
