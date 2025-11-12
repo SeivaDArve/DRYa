@@ -1185,7 +1185,7 @@ function V {
          
 
       elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp 2>/dev/null && ls -p || f_error_cd
+         cd ${v_REPOS_CENTER}/yoga-bash-app 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "shamb" ]]; then
