@@ -761,10 +761,10 @@ function f_repository_112-Shiva-Sutras {
    alias links="cd   $v_path/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 }
 
-function f_repository_yogaBashApp {
-   # Repository: yogaBashApp
+function f_repository_yoga_bash_app {
+   # Repository: yoga-bash-app
 
-   v_path=${v_REPOS_CENTER}/yogaBashApp
+   v_path=${v_REPOS_CENTER}/yoga-bash-app
 
    alias t-stop="termux-media-player stop"  # Existe duplicado em config-bash-alias
 
@@ -1082,7 +1082,7 @@ function f_exec {
       f_repository_upK  
       f_repository_upK-diario-Dv 
       f_repository_112-Shiva-Sutras
-      f_repository_yogaBashApp
+      f_repository_yoga_bash_app
       f_repository_Tesoro
       f_repository_row-reader
       f_repository_omni-log
