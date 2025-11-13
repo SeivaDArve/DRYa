@@ -93,18 +93,32 @@ function e {
             done
 
       else
-         # Temporizador (em segundo)
-            v_secs=2
+         # Variaveis para esta fase 'else'
+            v_secs=2                      # Temporizador (em segundo)
+            v_editor=$trid_editor_name    # Editor de texto pre-definido
 
          # Mencionar se funciona ou nao
             f_talk; echo "A editar (em $v_secs segundos) ficheiros com: $trid_editor_name"
-            read -sn1 -t $v_secs  # uDev: usar uma tecla extra 'v' ou 'e' para alterar so neste ficheiro o editor
+
+            unset v_ans                # Reset a variavel que permite um editornde texto temporario
+            read -sn3 -t $v_secs v_ans # uDev: Permite selecionar temporariamente um editor de texto diferente. Exemplo: usar a tecla 'v' ou 'e' para alterar so neste ficheiro o editor para vim ou emacs respetivamente
+
+         # Testar o resultado de $v_ans e decidir se usamos o editor pre-definido oubse usamos outro temporariamente
+            if [[ -n $v_ans        ]]; then
+
+               [[    $v_ans =~ "v" ]] && echo " > Detetato 'v' Editar temporariamente com 'vim'"    && v_editor="vim"   
+               [[    $v_ans =~ "e" ]] && echo " > Detetato 'e' Editar temporariamente com 'emacs'"  && v_editor="emacs"
+               [[    $v_ans =~ "t" ]] && echo " > (uDev) Detetato 't' Nao sera guardado historico em 'S ..'"
+
+               echo
+               read -sn1 -t 4
+            fi
 
          # Para cada item fornecido como arg, editar com o editor que existir no ficheiro de config
             for i in $* 
             do
-               echo " > $trid_editor_name $i"  # Tambem funciona como Debug
-               eval $trid_editor_name $i
+               echo " > $v_editor $i"  # Tambem funciona como Debug
+               eval     $v_editor $i
             done
       fi
 

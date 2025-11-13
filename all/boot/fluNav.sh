@@ -1493,6 +1493,7 @@ function f_action {
       # `S .`
 
       # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
+      # uDev: add $2 (argument 2) to enable Opening the file without recording it at fzf history file. Example: `S . t` (for 'Search Here, but temporary')
 
       # Used only to centralize the history file into one single variable across the file
          f__S_hist__refresh_file_name
@@ -1505,15 +1506,13 @@ function f_action {
          unset v_list
                v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
 
-
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
-         v_pwd=$(pwd)
-
-         [[ -n $v_file ]] \
-            && echo "$v_pwd/$v_file" >> $v_fluNav_S_hist_file \
-            && f_talk \
-            && echo "a Editar: $v_file" \
-            && bash e $v_file  
+         if [[ -n $v_file ]]; then
+            v_pwd=$(pwd)
+            echo "$v_pwd/$v_file" >> $v_fluNav_S_hist_file 
+            f_talk; echo "a Editar: $v_file" 
+            bash e $v_file  
+         fi
 
 
 
