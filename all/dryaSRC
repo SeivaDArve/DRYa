@@ -1,6 +1,14 @@
 #!/bin/bash
 # Title: dryaSRC 
-# Description: This file is the 1st DRYa's file to run. This Initializes all other apps and initiate persistent functions
+
+# Description: 
+#     "dryaSRC" = "DRYa Source"
+#     dryaSRc (this file) is the 1st DRYa's file to run. 
+#     It is Called/Loaded/Sourced by '~/.bashrc' which is the first file the terminal loads at startup
+#     It Initializes all other apps and initiate persistent functions
+#     dryaSRC is a file meant to work like "On/Off" 
+#     Turns On or Off anything under DRYa (scripts, alias, repositories, ...)
+#     Very usefull for debug misterious behavious among all the repos. 
 
 # File vars
    __name__="dryaSRC"
@@ -1050,6 +1058,17 @@ function f_backdoor {
 
 }
 
+function f_once_tasks {
+   # Notes: 
+   #    f_once_tasks is a script that checks a file with tasks meant to run only once per machine
+   #    For the current machine maybe there are some action pending (like an update, or CRITICAL bugfix). 
+   #    This fx is for machine specific "once-tasks". 
+   #    It is a list/file/script to run only once per machine. 
+   #    Uses traitsID. Used whenever there is a task so rare that is not worth embed into DRYa or any other repository, not repetitive enough. 
+
+   echo 1>/dev/null
+}
+
 function f_exec { 
    # Running all functions by sequence 
 
@@ -1118,6 +1137,8 @@ function f_exec {
       f_async__ezGIT_pull_All__at_startup
       f_backdoor  # Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa and traitsID
 
+   # Run script "once-tasks" 
+      f_once_tasks
 
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
       f_fun_after_welcome_screen
