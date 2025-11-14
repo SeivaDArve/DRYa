@@ -5,3 +5,4 @@ Seiva_MSI_Leopard_pro
 Seiva_Lenovo_330
 Seiva_ASUS_15_OLED
 seivaDArve
+Seiva_Rasp1

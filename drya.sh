@@ -686,7 +686,7 @@ function f_dotFiles_install_git_set_machine_name {
          v_prompt="DRYa: Git: Qual é o nome que quer dar a maquina atual: "
          v_ask_for_another_name=" > Inserir outro nome manualmente..."
 
-         v_mach=$( (echo "$v_ask_for_another_name"; cat $v_list_of_machines) | fzf --prompt "$v_prompt")
+         v_mach=$( (echo "$v_ask_for_another_name"; cat $v_list_of_machines) | fzf --cycle --prompt "$v_prompt")
          
       # If user asked in the menu to insert a different name:
          if [[ $v_mach == "$v_ask_for_another_name" ]]; then
