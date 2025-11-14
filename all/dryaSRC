@@ -377,12 +377,12 @@ function f_drya_welcome_screen {
       # Verbose DRYa Message about the existence of directories where there may be DECRYPTED documents
 
       bash $v_DRYa_GnuPG ws
-      echo
    }
 
    function f_ws_neofetch {
       # Apresentar apenas o icon ASCII do `neofetch`
 
+      echo
       neofetch -L 2>/dev/null
    }
 
@@ -392,7 +392,14 @@ function f_drya_welcome_screen {
       bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
    }
 
+   function f_seiva_greetings {
+      f_talk; echo "Seiva greetings: "
+              echo "      Haux Haux ( Verbal expression of Joy and Hapiness! )" 
+              echo
+   }
+   
    f_ws_drya_ascii_presentation
+   f_seiva_greetings 
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
    f_ws_drya_startup_instructions
