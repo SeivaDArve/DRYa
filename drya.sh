@@ -3890,7 +3890,7 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       f_talk; echo "Calendario"
       cal -y
    else 
-      f_talk; echo "cal does not xist. Installing... "
+      f_talk; echo "cal does not exist. Installing... "
       echo 
       pk + ncal
       clear 

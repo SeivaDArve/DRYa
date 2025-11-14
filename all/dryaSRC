@@ -1060,6 +1060,7 @@ function f_exec {
      #f_check_missing_dependencies
       f_drya_libs  
       f_drya_ssms_start
+     #f_drya_perm_ssms_config  # uDev: config a file on the host to info/register significant changes
       f_drya_fzf_history
       f_traitsID           
       f_GPG    
