@@ -1758,6 +1758,7 @@ function f_drya_fzf_MM_Toolbox {
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
          # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
+         L22='22. Menu   |  pid  | Kill process by PID (process ID)'
          L21='21. Menu   |  gpg  | gnu-privacy-guard (encrypt and decript files)'
          L20='20. Menu   |  zip  | zip unzip'
          L19='19. Script |  `d`  | Datas (menu)'
@@ -1783,12 +1784,13 @@ function f_drya_fzf_MM_Toolbox {
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[ $v_list =~ "22. " ]] && f_kill_process_by_PID
          [[ $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
          [[ $v_list =~ "20. " ]] && f_zip_unzip
          [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
@@ -2359,6 +2361,43 @@ function f_config_kbd_kali {
 }
 
 
+function f_kill_process_by_PID {
+   # Kill process by Process ID (PID)
+
+   f_greet
+   f_talk; echo "Escolher um PID para eliminar (PID)"
+
+   L0="DRYa: Choose a Process to kill: "
+   v_list=$(ps -aux | fzf --tac --cycle --pointer="|" --prompt="$L0")
+
+   v_label=$(ps -aux | head -n 1)
+
+   echo
+   f_hzl
+   echo $v_label
+   echo $v_list
+   f_hzl
+   echo
+   echo
+
+   f_talk; echo "Notas:" 
+   echo    " < (A coluna do PID é a segunda)"
+   echo    " < (uDev: detecao automatica do PID"
+   echo
+   read -p " > Insira manualmente o numero do PID: " v_ans
+
+   if [[ -n $v_ans ]]; then 
+      echo " > Escolhido para eliminar: $v_ans"
+      echo
+   
+      v_txt="Eliminar '$v_ans'"  && f_anyK
+
+      kill -9 $v_ans
+   else
+      echo " > Nenhum numero inserido (uDev: Detetar automaticamente)"
+   fi
+}
+   
 
 
 
@@ -2940,7 +2979,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo "Now run emacs like you normally would"
          echo "Done!"
 
-   elif [[ $2 == "xrandr" ]] || [ $2 == "" ]; then 
+   elif [[ $2 == "xrandr" ]] || [ $2 == "xrr" ]; then 
       # Config the correct screen resolution with `xrandr`
       # uDev: This is a config to set, not an instalation
 
@@ -3858,6 +3897,8 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       f_talk; echo "Calendario"
       cal -y
    fi
+elif [ $1 == "pid" ] || [ $1 == "kill-pid" ] ; then 
+   f_kill_process_by_PID 
 
 elif [ $1 == "o" ] || [ $1 == "other" ] ; then 
    # Scripts less important here, like scratch-paper
