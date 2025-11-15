@@ -2352,11 +2352,15 @@ function f_kbd_greet {
 }
 
 function f_config_kbd_kali {
+   # Set keyboard when using Kali
+
    f_kbd_greet
    f_talk; echo "$L4"
    echo " > setxkbmap -layout pt"
    echo
-   v_txt="Proceed to set keyboard" && f_anyK
+   v_txt="Proceed to set keyboard" && f_anyK 
+
+   echo "Attempting to set ..."
    setxkbmap -layout pt
 }
 
@@ -3308,7 +3312,7 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
 
       # Lista de opcoes para o menu `fzf`
-         Lz1='Save '; Lz2='D set-keyboard'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+         Lz1='Save '; Lz2='D kbd'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       #  Instrucoes: Para usar 'ç' na palacra 'caça', com a variavel $c_1 que contem o valor 'ç', usa o `eval` no terminal: `eval ca${c_1}a`
       #
@@ -3322,15 +3326,15 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       #     | ç | $c_1 |
       #
 
-         L7='7. DRYa emergency keyboard 2'
-         L6='6. DRYa emergency keyboard 1'
+         L7='7. |   | DRYa emergency keyboard 2'
+         L6='6. |   | DRYa emergency keyboard 1'
 
-         L5='5. Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
-         L4='4. Config keyboard layout: Kali   Linux (sess atual)'
-         L3='3. Config keyboard layout: Ubuntu Linux (sess atual)'
+         L5='5. |   | Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
+         L4='4. |   | Config keyboard layout: Kali   Linux (sess atual)'
+         L3='3. |   | Config keyboard layout: Ubuntu Linux (sess atual)'
 
-         L2='2. Verificar teclado atual' 
-         L1='1. Cancel + Instructions'
+         L2='2. |   | Verificar teclado atual' 
+         L1='1. |   | Cancel + Instructions'
 
          L0="DRYa: Keyboard: "
          
