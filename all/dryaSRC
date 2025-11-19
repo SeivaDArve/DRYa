@@ -33,6 +33,7 @@ function f_list_of_escape_codes {
     L6='| d   | Load, but delete all previous env variables        |'
     L7='| k   | Load, but without f_backend                        |'
     L8='| n   | Load, but delete ~/.netrc                          |' 
+   #L8='| t   | Load, do not delete ~/.tmp                         |' 
     L9='|-----+----------------------------------------------------|'
    L10='--Example-- `gd` to set option "g" + "d"'
 
