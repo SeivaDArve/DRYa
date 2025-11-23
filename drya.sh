@@ -3803,7 +3803,7 @@ elif [ $1 == "hush" ]; then
 elif [ $1 == "zip" ] ; then 
    f_zip_unzip
 
-elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ]; then 
+elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
    # Encrypt and Decript personal, private abd sensitive data
 
    shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*

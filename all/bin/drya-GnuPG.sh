@@ -599,6 +599,7 @@ function f_testing_drya_defaults {
            read -sn 1 -t $v_secs
 
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
+   # [[ -z $GPG ]] && v_txt="Continuar a buscar comandos"
 }
 
 function f_vb_testing_drya_defaults {
