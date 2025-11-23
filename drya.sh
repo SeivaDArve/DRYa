@@ -6,6 +6,8 @@
 # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
    v_fzf_talk=DRYa
 
+   __name__=drya.sh
+   __repo__=${v_REPOS_CENTER}/DRYa
 
 
 
@@ -1725,7 +1727,6 @@ function f_drya_fzf_MM_Toolbox {
       # Lista de opcoes para o menu `fzf`
 
          # Void: Lv, ...
-         # L12='12. Supporte basico de Vida: Melhorar o formulario: .../var/suporte-basico-de-vida.txt
          # L12='12. Host website on Android, using Abdroid as web server (exemplo: https://youtu.be/V-B-HGWAJac?feature=shared)
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='12. Comboios CP web-scraping
@@ -1936,8 +1937,8 @@ function f_drya_help_menu {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[ $v_list =~ "10. " ]] && echo "uDev"
-      [[ $v_list =~ "9.  " ]] && echo "uDev"
+      [[ $v_list =~ "10. " ]] && f_visitar_extintores
+      [[ $v_list =~ "9.  " ]] && f_visitar_sbv 
       [[ $v_list =~ "8.  " ]] && echo "uDev"
       [[ $v_list =~ "7.  " ]] && echo "uDev"
       [[ $v_list =~ "6.  " ]] && f_seiva_up_time
@@ -2402,7 +2403,38 @@ function f_kill_process_by_PID {
    fi
 }
    
+function f_visitar_extintores {
+   echo "uDev: Escrever formula de extintores"
+   echo "      ficheiro: .../var/extintores-info.txt"
+}
 
+function f_visitar_sbv {
+   # Apresentar um script de SBV
+
+   # uDev: se o comando less nao existir, tentar instalar em background
+      v_test=$(command -v less)
+      [[ -z $v_test ]] && echo "Comando less nao existe. Sera instalado em background" && read -sn1 -t 3
+
+
+
+   # Localiacao do ficheiro
+      v_file=$__repo__/all/var/suporte-basico-de-vida.txt
+      
+   f_greet
+   f_talk; echo "Suporte Basico de Vida"
+           echo " > uDev: Melhorar a formula"
+           echo
+   f_talk; echo "Localizacao do ficheiro:"
+           echo ' > $__repo__/all/var/suporte-basico-de-vida.txt'
+           echo " > $v_file"
+           echo
+
+   read -sn1 -p "Enter para ler com Less... "
+   echo
+
+   less $v_file 2>/dev/null || echo 'O comando `less` nao funcionou'
+
+}
 
 
 
@@ -3866,9 +3898,11 @@ elif [ $1 == "morse" ]; then
    # uDev: Passar video/menemonica para Imagem: https://www.facebook.com/share/v/19uVyHMg1P/
    f_morse
 
-elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
-   echo "uDev: Escrever formula de 1.os Socorros"
-   echo "      fichiro: .../var/suporte-basico-de-vida.txt"
+# uDev: Fazer um menu so para SOS
+#elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
+
+elif [ $1 == "sbv" ]; then 
+   f_visitar_sbv
 
 elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then 
    
