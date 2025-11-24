@@ -261,6 +261,7 @@ alias   A="cd all && ls"
 
 
 
+alias xrr=xrandr
 
 
 alias grep="grep --color=auto"

@@ -3018,9 +3018,45 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "xrandr" ]] || [ $2 == "xrr" ]; then 
       # Config the correct screen resolution with `xrandr`
       # uDev: This is a config to set, not an instalation
+      
+      f_greet 
 
-      echo "DRYa: By detecting the traitsID and detecting a raspberry pi, then we know we are using a Tv. And, if no args are given, such tV is brand "silver" therefore, this script applies the screen resolution of:"
-      echo " > 1360x768 "
+      # Detetar ambiente grafico  (uDev: passar para o traitsID)
+         v_amb=$XDG_SESSION_TYPE
+
+      f_talk; echo "Help for scree Resolution"
+              echo " > uDev: use traitsID"
+              echo
+      f_talk; echo "Ambiente grafico detetado: $v_amb"
+              echo " > If 'wayland' or 'weston' use \`wlr-randr\`"
+              echo " > If 'x11'     or 'xorg'   use \`xrandr\`"
+              echo
+      f_talk; echo "Detetar Conexoes HDMI:"
+      
+      if [[ $trid_os == "R" ]]; then
+         # Se o OS detetado for RaspberryPi
+         
+         v_tv="1360x768"
+
+         if [[ $v_amb == "x11" ]] || [[ $v_amb == "x11" ]]; then
+            # Se for detetado a necessidade de xrandr
+
+            # Busca do HDMI connectado
+               v_connected=$(xrandr | grep -i " connected" | cut -f 1,2 -d " ")
+               echo " > $v_connected"
+
+            # Busca so do numero do HDMI
+               v_nr=$(echo $v_connected | cut -f 2 -d "-" | cut -f 1 -d " " ) 
+
+            echo
+         fi
+
+         f_talk; echo "If detected 'Pi' + 'Silver TV' + 'X11':"
+                 echo " > 1360x768 "
+                 echo " > exemplo: \`xrandr --output HDMI-1 --mode 1360x768\`"
+                 echo
+                 echo "Tente: \`xrandr --output HDMI-$v_nr --mode $v_tv\`"
+   fi
 
    elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
       # Makes all dependencies for upk repo available
@@ -3033,7 +3069,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
 
    else
-      echo "drya: What do you want to install? (invalid arg)"
+      f_talk; echo "What do you want to install? (invalid arg)"
    fi
 
 
