@@ -1,8 +1,9 @@
 Indratena_TAB_TB132FU
 Seiva_Android_A6_plus
 Seiva_Android_OPPO_A16s_Mike_2
+Seiva_Android_J5
 Seiva_MSI_Leopard_pro
 Seiva_Lenovo_330
 Seiva_ASUS_15_OLED
-seivaDArve
 Seiva_Rasp1
+seivaDArve

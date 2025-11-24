@@ -693,6 +693,7 @@ function f_dotFiles_install_git_set_machine_name {
       # If user asked in the menu to insert a different name:
          if [[ $v_mach == "$v_ask_for_another_name" ]]; then
             f_talk; echo    "What other name do you want to add?"
+                    echo    " > Exemplo: Seiva_Android_"
                     echo -n " > "
 
             read v_mach
