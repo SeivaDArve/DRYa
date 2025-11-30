@@ -1789,34 +1789,35 @@ function f_drya_fzf_MM_Toolbox {
          v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
-         [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
-         [[ $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
+         [[   $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
+         [[   $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
-         [[ $v_list =~ "22. " ]] && f_kill_process_by_PID
-         [[ $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
-         [[ $v_list =~ "20. " ]] && f_zip_unzip
-         [[ $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
-         [[ $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
-         [[ $v_list =~ "17. " ]] && echo "uDev"
-         [[ $v_list =~ "16. " ]] && echo "uDev"
-         [[ $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
-         [[ $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
-         [[ $v_list =~ "13. " ]] && f_menu_audio_media_player
-         [[ $v_list =~ "12. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
-         [[ $v_list =~ "11. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
-         [[ $v_list =~ "10. " ]] && f_morse
-         [[ $v_list =~ "9.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
-         [[ $v_list =~ "8.  " ]] && f_win_to_linux_pwd
-         [[ $v_list =~ "7.  " ]] && echo "uDev"
-         [[ $v_list =~ "6.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
-         [[ $v_list =~ "5.  " ]] && f_QR_code_fzf_menu
+         [[   $v_list =~ "22. " ]] && f_kill_process_by_PID
+         [[   $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
+         [[   $v_list =~ "20. " ]] && f_zip_unzip
+         [[   $v_list =~ "19. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh .
+         [[   $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
+         [[   $v_list =~ "17. " ]] && echo "uDev"
+         [[   $v_list =~ "16. " ]] && echo "uDev"
+         [[   $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
+         [[   $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
+         [[   $v_list =~ "13. " ]] && f_menu_audio_media_player
+         [[   $v_list =~ "12. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
+         [[   $v_list =~ "11. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
+         [[   $v_list =~ "10. " ]] && f_morse
+         [[   $v_list =~ "9.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh 
+         [[   $v_list =~ "8.  " ]] && f_win_to_linux_pwd
+         [[   $v_list =~ "7.  " ]] && f_menu_kill_running_process 
+         [[   $v_list =~ "6.  " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+         [[   $v_list =~ "5.  " ]] && f_QR_code_fzf_menu
 
-         [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
+         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
 
-         [[ $v_list =~ "3.  " ]] && f_dot_files_menu
-         [[ $v_list =~ "2.  " ]] && echo "uDev"
-         [[ $v_list =~ "1.  " ]] && echo "Canceled"
+         [[   $v_list =~ "3.  " ]] && f_dot_files_menu
+         [[   $v_list =~ "2.  " ]] && echo "uDev"
+         [[   $v_list =~ "1.  " ]] && echo "Canceled"
+         unset v_list
 
       # Evitar loops a mais
          # A fx "...loop" pode ser chamada varias vezes para a alteracao da checkbox
@@ -2438,6 +2439,55 @@ function f_visitar_sbv {
 }
 
 
+function f_set_keyboard_tty_RetroPie {
+   # Instructions to set keyboard on tty
+
+   echo "DRYa: Configure keyboard on tty"
+   echo 
+   echo  
+   echo "Set TTY font size (for RetroPi OS)" 
+   echo ' > Problem: tty does not support `Ctrl +` to zoom {'
+   echo " > Solution: set a bigger font size with:"
+   echo '   `sudo vim /etc/default/console-setup`'
+   echo  
+   echo " > Content of the file:"
+   echo '   FONTFACE="TerminusBold"'
+   echo '   FONTFACE="16x32"'
+   echo "}"
+   echo  
+   echo  
+   echo "Set Keyboard layout (for RetroPi OS) {"
+   echo ' > Problem: Wrong layout'
+   echo " > Solution: edit the config file"
+   echo '   `sudo vim /etc/default/keyboard`'
+   echo  
+   echo " > Content of the file:"
+   echo '   XKBMODEL="pc105"'
+   echo '   XKBLAYOUT="pt"'
+   echo '   XKBVARIANT=""'
+   echo '   XKBOPTIONS=""'
+   echo "}"
+   echo
+   echo
+   echo "Refresh all setings in the end with:"
+   echo ' > `sudo setupcon` or `sudo reboot`'
+
+}
+
+function f_menu_kill_running_process {
+   echo "DRYa: Help killing process"
+   echo
+   echo 'PID: '
+   echo ' > Try `D pid` to kill a process by Process ID (PID)'
+   echo 
+   echo 'TTY: '
+   echo ' > Acess it with: `Ctrl + Alt + F1`'
+   echo ' > Try `D tty` to see a list of default root users' 
+   echo 
+   echo 'xKill: '
+   echo ' > This software does not exist in most OS'
+
+}
 
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
@@ -3374,7 +3424,7 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
 elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then 
    # Comandos para configurar o layout do teclado
 
-   # uDev: nem sempre existe fzf quando é preciso configurar o teclado
+   # uDev: - nem sempre existe fzf e ddrya-lib-1 quando é preciso configurar o teclado
    #       - Apresentar verbose sobre como configurar cada teclado
 
    if [ -z $2 ]; then
@@ -3395,9 +3445,10 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       #     | ç | $c_1 |
       #
 
+         L8='8. |   | DRYa emergency keyboard 2'
          L7='7. |   | DRYa emergency keyboard 2'
-         L6='6. |   | DRYa emergency keyboard 1'
 
+         L6='6. |   | Config keyboard layout: RetroPi (tty)'              
          L5='5. |   | Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
          L4='4. |   | Config keyboard layout: Kali   Linux (sess atual)'
          L3='3. |   | Config keyboard layout: Ubuntu Linux (sess atual)'
@@ -3407,15 +3458,16 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
          L0="DRYa: Keyboard: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "7. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
-         [[ $v_list =~ "6. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+         [[ $v_list =~ "8. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
+         [[ $v_list =~ "7. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+         [[ $v_list =~ "6. " ]] && f_kbd_greet && f_set_keyboard_tty_RetroPie
          [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
          [[ $v_list =~ "4. " ]] && f_config_kbd_kali
-         [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && f_talk && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
+         [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
          [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 
          [[ $v_list =~ "1. " ]] && f_kbd_greet && echo "Canceled: $Lz2" && echo "DRYa: try CTRL-X to open fzf-keyboard-alternative in the middle of the prompt"
          unset v_list
@@ -3972,6 +4024,11 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       f_talk; echo "Calendario"
       cal -y
    fi
+elif [ $1 == "tty" ] ; then 
+   # Info sobre tty
+   echo "Default usernames and passwords for root users:"
+   echo " > 'RetroPi OS' pi:raspberry"
+    
 elif [ $1 == "pid" ] || [ $1 == "kill-pid" ] ; then 
    f_kill_process_by_PID 
 
