@@ -4024,6 +4024,12 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       f_talk; echo "Calendario"
       cal -y
    fi
+
+elif [ $1 == "games" ] ; then 
+   # Inicia jogos
+   
+   emulationstation  # Inicia o emulador do RetroPie
+
 elif [ $1 == "tty" ] ; then 
    # Info sobre tty
    echo "Default usernames and passwords for root users:"
