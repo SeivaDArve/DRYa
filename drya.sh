@@ -2375,33 +2375,47 @@ function f_kill_process_by_PID {
    f_talk; echo "Escolher um PID para eliminar (PID)"
 
    L0="DRYa: Choose a Process to kill: "
-   v_list=$(ps -aux | fzf --tac --cycle --pointer="|" --prompt="$L0")
-
-   v_label=$(ps -aux | head -n 1)
-
-   echo
-   f_hzl
-   echo $v_label
-   echo $v_list
-   f_hzl
-   echo
-   echo
-
-   f_talk; echo "Notas:" 
-   echo    " < (A coluna do PID é a segunda)"
-   echo    " < (uDev: detecao automatica do PID"
-   echo
-   read -p " > Insira manualmente o numero do PID: " v_ans
-
-   if [[ -n $v_ans ]]; then 
-      echo " > Escolhido para eliminar: $v_ans"
-      echo
+   v_list=$(ps -aux | fzf --tac --cycle -m --pointer=">" --prompt="$L0")
    
-      v_txt="Eliminar '$v_ans'"  && f_anyK
+   if [[ -n $v_list ]]; then
+      v_pid=$(echo $v_list | cut -f 2 -d " ")
 
-      kill -9 $v_ans
+      v_label=$(ps -aux | head -n 1)
+
+      echo
+      f_hzl
+      echo $v_label
+      echo $v_list
+
+      f_hzl
+      echo
+      echo
+      
+      unset v_ans
+      f_talk; echo    "Notas:" 
+              echo    " < (A coluna do PID é a segunda)"
+              echo    " < (uDev: detecao automatica do PID"
+              echo
+              echo    " > Insira manualmente o numero do PID:"
+              echo    "    > (default: $v_pid )"
+              read -p "    >  " v_ans
+              echo
+           
+      if [[ -n $v_ans ]]; then 
+         echo " > Escolhido para eliminar: $v_ans"
+         echo
+      
+         v_txt="Eliminar '$v_ans'"  && f_anyK
+
+         kill -9 $v_ans
+
+      else
+         echo " > A terminar o PID: $v_pid"
+         kill -9 $v_pid
+      fi
+
    else
-      echo " > Nenhum numero inserido (uDev: Detetar automaticamente)"
+      echo "No process choosen"
    fi
 }
    
