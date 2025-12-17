@@ -31,6 +31,7 @@ __name__="traitsID.sh"  # Change to the name of the script. Example: DRYa.sh, ez
 # uDev: Detetar qual o numero da shell ou sub shell em que estamos (por exemplo `bash bash` que entra em uma sub shell)
 # uDev: Detetar IP, local + publico
 # uDev: Detetar nome da network atual
+# uDev: No Pi, para saber o nome da versao de OS atual: `cat /etc/os-release`
 
 #udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
 #udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
