@@ -477,7 +477,12 @@ function f_clone_repos {
       }
 
       function f_clone_scratch_paper {
-         echo "cloning: scratch-paper"; git clone https://github.com/SeivaDArve/scratch-paper.git
+         v_git=https://github.com/SeivaDArve/scratch-paper.git
+         #v_cwd="<custom-working-directory>"  # If this variable is set, then the repo will be cloned into that custom working directory
+         #v_cwd=~/.tmp/scratch_paper
+         #mkdir -p $v_cwd
+         echo -e "cloning: scratch-paper \n > $v_git"
+         git clone $v_git $v_cwd
       }
 
       function f_clone_patuscas {
@@ -2817,7 +2822,7 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
          # uDev: Ver em bash como se faz para saber os nomes dos restantes arg (para guargar todos)
          v_arg2=$2
 
-      f_clone_by_inserting_correct_name
+     f_clone_by_inserting_correct_name
    fi
 
 
@@ -3001,6 +3006,14 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # uDev: This is a config to set, not an instalation
       cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
 
+   elif [[ $2 == "fzf" ]]; then 
+      # Instalar fzf como foi recomendado pelos desenvolvedores
+
+      v_txt="Install fzf like original developers" && f_anyK
+      echo
+      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+      ~/.fzf/install
+
    elif [[ $2 == "bitcoin-core" ]]; then 
       # Install a full Bitcoin node to validade blocks and allow mining
       sudo snap install bitcoin-core
@@ -3068,13 +3081,18 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    elif [[ $2 == "xrandr" ]] || [ $2 == "xrr" ]; then 
       # Config the correct screen resolution with `xrandr`
+
       # uDev: This is a config to set, not an instalation
+      # uDev: Criar um ficheiro local @host para que DRYa busque e execute
       
-      f_greet 
 
       # Detetar ambiente grafico  (uDev: passar para o traitsID)
-         v_amb=$XDG_SESSION_TYPE
+         v_amb=${XDG_SESSION_TYPE:-"<nenhum>"}
 
+      # Resolucao da TV 'Silver'
+         v_tv="1360x768" 
+
+      f_greet 
       f_talk; echo "Help for scree Resolution"
               echo " > uDev: use traitsID"
               echo
@@ -3082,32 +3100,32 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
               echo " > If 'wayland' or 'weston' use \`wlr-randr\`"
               echo " > If 'x11'     or 'xorg'   use \`xrandr\`"
               echo
-      f_talk; echo "Detetar Conexoes HDMI:"
+      f_talk; echo "Conexoes HDMI detetadas:"
       
+      if [[ $v_amb == "x11" ]] || [[ $v_amb == "x11" ]]; then
+         # Se for detetado a necessidade de xrandr
+
+         # Busca do HDMI connectado
+            v_connected=$(xrandr | grep -i " connected" | cut -f 1,2 -d " ")
+            v_connected=${v_connected:-"<nenhuma>"}
+            echo " > $v_connected"
+
+         # Busca so do numero do HDMI
+            v_nr=$(echo $v_connected | cut -f 2 -d "-" | cut -f 1 -d " " ) 
+
+         echo
+      fi
+
       if [[ $trid_os == "R" ]]; then
          # Se o OS detetado for RaspberryPi
          
-         v_tv="1360x768"
-
-         if [[ $v_amb == "x11" ]] || [[ $v_amb == "x11" ]]; then
-            # Se for detetado a necessidade de xrandr
-
-            # Busca do HDMI connectado
-               v_connected=$(xrandr | grep -i " connected" | cut -f 1,2 -d " ")
-               echo " > $v_connected"
-
-            # Busca so do numero do HDMI
-               v_nr=$(echo $v_connected | cut -f 2 -d "-" | cut -f 1 -d " " ) 
-
-            echo
-         fi
 
          f_talk; echo "If detected 'Pi' + 'Silver TV' + 'X11':"
                  echo " > 1360x768 "
                  echo " > exemplo: \`xrandr --output HDMI-1 --mode 1360x768\`"
                  echo
                  echo "Tente: \`xrandr --output HDMI-$v_nr --mode $v_tv\`"
-   fi
+      fi
 
    elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
       # Makes all dependencies for upk repo available

@@ -291,6 +291,26 @@ function op {
 
       fi
 
+   elif [[ $1 == "dcim" ]]; then
+      # Quando estamos num smartphone, abre imagens (ou ficheiros) do SD card qhe inclui a pasta DCIM
+
+      if [[ -d /sdcard ]]; then
+         f_greet
+         echo "existe"
+
+         if [[ -n $2 ]]; then
+            cd /sdcard
+                      v_file=$(tree -f | grep $2 | rev | cut -f 1 -d " " | rev)
+            echo    "$v_file"
+            xdg-open $v_file  
+         else
+            echo "Nao existe arg 2, a buscar listas de img fav em omni-log (uDev)"
+         fi
+
+      else
+         echo "nao existe"
+      fi
+
    else
       # Try to find the file opener at each OS (for the given files, given as arguments):
          if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
