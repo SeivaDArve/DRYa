@@ -3,6 +3,44 @@
 # Description: 
 # Use:
 
+###############
+# Info
+#
+# tty default username + password:
+#  > pi:raspberry
+#
+# Repositories sources file (path):
+#  > /etc/apt/sources.list
+#
+# Verificar o OS atual:
+#  > cat /etc/os-release
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+###############
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Usefull variables:
    __name__="retroPi-games.sh"                     # Used to describe the name of current file with extention. Example: .exe .jpg .mp3
    __repo__="${v_REPOS_CENTER}/DRYa"  # Used to describe the name of current repo, the repository that contains __name__

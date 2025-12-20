@@ -2416,7 +2416,7 @@ function f_kill_process_by_PID {
 
       else
          echo " > A terminar o PID: $v_pid"
-         kill -9 $v_pid
+         kill -9 $v_pid && sudo kill -9 $v_pid
       fi
 
    else
