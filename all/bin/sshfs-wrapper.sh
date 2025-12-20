@@ -97,9 +97,13 @@ function f_is_rooted {
    # Verificar se estamos no termux. Se estivermos no termux, sera verificado se temos permissoes root
 
    # No termux, a variavel $PREFIX nao vem vazia. Costuma conter "/data/data/com.termux/files/usr"
-      if  [ $traits_termux == "true" ]; then 
-   
-         # Verificar se o comando 'su' está disponível
+      if  [ -z $trid_termux ]; then 
+         echo "DRYa: bug: variavel n econtrada"
+
+      else
+         if  [ $trid_termux == "true" ]; then 
+            # Verificar se o comando 'su' está disponível
+
             if command -v su > /dev/null 2>&1; then
                 #echo "O comando 'su' está disponível. Verificando permissões de root..."
 
@@ -115,6 +119,7 @@ function f_is_rooted {
                #echo "O comando 'su' não está disponível. Você não tem permissões de root."
                v_rooted="false"
             fi
+         fi
       fi
 
 }
@@ -124,7 +129,7 @@ function f_is_rooted_verbose {
 
    if [[ -z $v_rooted ]]; then
             echo -n " > Esta no termux: "
-      f_c8; echo    "Nao!"
+      f_c8; echo    "Nao"
       f_rc
 
    elif [[ $v_rooted == "true" ]]; then
@@ -434,12 +439,12 @@ function f_check_ssh_daemon_is_on {
 
    f_talk; echo "Verificado o Status do Daemon:"
    
-   if [ $traits_pkgm == "pkg" ]; then 
+   if [ $trid_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
       v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
 
-   elif [ $traits_pkgm == "apt" ]; then 
-      if [ $traits_OS == "Windows" ]; then
+   elif [ $trid_pkgm == "apt" ]; then 
+      if [ $trid_OS == "Windows" ]; then
          echo " > Detetado windows" 
 
       else
