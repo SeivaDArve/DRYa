@@ -3515,6 +3515,8 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
    elif [ $2 == "help" ] || [ $2 == "h" ]; then 
       echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
 
+   elif [ $2 == "tty" ]; then 
+      f_set_keyboard_tty_RetroPie
    fi
 
 elif [ $1 == "k" ]; then 
