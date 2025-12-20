@@ -4057,7 +4057,7 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       cal -y
    fi
 
-elif [ $1 == "games" ] ; then 
+elif [ $1 == "game" ] && [ $1 == "games" ] ; then 
    # Inicia jogos
    
    emulationstation  # Inicia o emulador do RetroPie
