@@ -3284,15 +3284,31 @@ elif [ $1 == "save-backup" ]; then
 elif [ $1 == "ssh" ]; then 
    # Options for SSH File System
 
-   # Para transportar os argumento de script para script, exportamos para o env
-      # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
-      ARG1=$1
-      ARG2=$2
-      ARG3=$3
-      export ARG1 ARG2 ARG3
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
+
+   #     # (legacy. errado. Este erro nao sera apagado para info no futuro):
+   #        Para transportar os argumento de script para script, exportamos para o env 
+   #           # uDev: fazer destes EXPORT o standard deste script drya.sh no inicio do ficheiro, para que qualquer sub-script possa beneficiar destes argumentos
+   #           ARG1=$1
+   #           ARG2=$2
+   #           ARG3=$3
+   #           export ARG1 ARG2 ARG3
+   #
+   #     # (Correto: `bash /example/example/example.sh $*`)
    
-   # Executamos o wrapper do SSHFS
-      bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
+   if [ -z $2 ]; then
+      # Executamos o wrapper do SSHFS
+      bash $v_script
+
+   elif [ $2 == "." ]; then 
+      # Editar o script com editor de texto
+      bash e $v_script
+
+   else 
+      # Envia todos os argumentos para o script
+      bash $v_script $*
+   fi
+
 
 elif [ $1 == "news" ]; then 
    # Runs a script inside DRYa directories that continuously rolls information
