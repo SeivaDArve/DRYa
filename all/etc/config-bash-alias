@@ -486,16 +486,42 @@ function hr {
 }
 
 function shebang {
+   # Creating all file names given as arguments and placing bash boilerplate into them
+   # 'shebang' is the name given to the first line of code of each bash script file, so this fx applies only to bash
+   
+   v_bash_boilerplate=${v_REPOS_CENTER}/DRYa/all/lib/boilerplates/drya-shebang-boilerplate.sh
+
    if [ -z $1 ]; then
       # Prompt for a filename
-      echo
-      v_talk="Config"
-      f_talk; echo "Name?"
+         echo "shebang: what are the script names to create?"
+         read -p " > " v_list 
+         echo
+
+      # Verbose list on terminal and copying each one. Also changing text inside each
+         echo  "Creating these scripts (with bash boilerplate):"
+
+
+         for i in $(echo $v_list)
+         do
+            # Making sure no file is overwiten
+               ls $i &>/dev/null && echo " > File '$i' exists, choose other name..." && continue 
+
+            echo " > $i"
+            cp $v_bash_boilerplate ./$i
+            sed -i "s/example.sh/$i/g" $i
+         done
 
    else
+      echo  "Creating these scripts (with bash boilerplate):"
+
       for i in $*
       do
-         ls $i &>/dev/null && echo "File $i exists, choose other name" 
+         # Making sure no file is overwiten
+            ls $i &>/dev/null && echo " > File '$i' exists, choose other name..." && continue 
+
+         echo " > $i"
+         cp $v_bash_boilerplate ./$i
+         sed -i "s/example.sh/$i/g" $i
       done
    fi
 
