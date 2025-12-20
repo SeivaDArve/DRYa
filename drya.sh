@@ -4057,10 +4057,14 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       cal -y
    fi
 
-elif [ $1 == "game" ] && [ $1 == "games" ] ; then 
+elif [ $1 == "game" ] || [ $1 == "games" ] ; then 
    # Inicia jogos
+
+   # Path to the dedicated lib/script for all the games
+      v_game_script=${v_REPOS_CENTER}/DRYa/all/bin/retroPi-games.sh 
    
-   emulationstation  # Inicia o emulador do RetroPie
+   shift   # To remove the arg 'game'
+   bash $v_game_script $*
 
 elif [ $1 == "tty" ] ; then 
    # Info sobre tty
