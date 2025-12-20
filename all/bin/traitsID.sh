@@ -32,6 +32,7 @@ __name__="traitsID.sh"  # Change to the name of the script. Example: DRYa.sh, ez
 # uDev: Detetar IP, local + publico
 # uDev: Detetar nome da network atual
 # uDev: No Pi, para saber o nome da versao de OS atual: `cat /etc/os-release`
+# uDev: `cat /proc/cpuinfo` reveals info about raspberry pi
 
 #udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
 #udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
@@ -214,8 +215,13 @@ function f_trid_6 {
 
    elif [[ $v_uname =~ "Linux" ]]; then 
       # Linux has to be the last one, because it means Windows and Android are not present
-      trid_OS="Linux"
-      trid_os="L"
+
+      # Searching  deeper if it is Pi board
+         unset v_board
+         v_board=$(grep "Raspberry" /proc/cpuinfo 2>/dev/null)
+         
+      [[ -z $v_board ]] && trid_OS="Linux"       && trid_os="L"
+      [[ -n $v_board ]] && trid_OS="RaspberryPi" && trid_os="R"
 
    else
       # Se nao for detetado nenhum dos anteriores, entao é desconhecido

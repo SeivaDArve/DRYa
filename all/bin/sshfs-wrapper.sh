@@ -490,6 +490,21 @@ function f_ver_as_pastas_pre_definidas {
       f_check_mounting_point_array
 }
 
+function f_how_to_connect_client_to_server {
+   # Prints the correct command for the client to connect to the server
+   echo "Printing the correct command for the client to connect to the server"
+   echo " > uDev: should be same as output file"
+   echo
+   echo " > uDev: get server username"
+   echo " > uDev: get local  ip"
+   echo " > uDev: get public ip"
+   echo
+   echo "Tipical comand for SSH connection (client machine)"
+   echo " > ssh utilizador@ip_do_servidor (exemplo)"
+   echo " > ssh pi@192.168.1.50 (exemplo por IP)"
+   echo " > ssh pi@retropi.local (exemplo por hostname)"
+}
+
 function f_check_ssh_daemon_is_on_verbose {
    echo
    if [[ $v_started =~ "No superuser binary detected" ]]; then
@@ -1092,6 +1107,12 @@ function f_help {
            echo "   - Verbose-lines (repository, if exists)"
            echo "   - ~/.config     (if repo does not exist)"
            echo "   - Creates a QR code for the CLIENT to acess easily"
+           echo 
+           echo "Tipical comand for SSH connection (client machine)"
+           echo " > ssh utilizador@ip_do_servidor (exemplo)"
+           echo " > ssh pi@192.168.1.50 (exemplo por IP)"
+           echo " > ssh pi@retropi.local (exemplo por hostname)"
+
 }
 
 
@@ -1108,33 +1129,39 @@ function f_main_menu {
       # List of menu options
          Lz="DRYa: sshfs-wrapper.sh"
 
-         L8="8. |   | Help"
+         L9="9. | h   | Help"
 
-         L7="7. |   | Delete   | SSH key" 
+         L8="8. |     | Delete   | SSH key" 
 
-         L6="6. |   | Lista    | Mounting Points pre-definidos"
-         L5="5. |   | Ver      | Consult Output file"
+         L7="7. |     | Lista    | Mounting Points pre-definidos"
+         L6="6. |     | Ver      | Consult Output file"
+         L5="5. | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
 
-         L4="4. |   | Desligar | Servico SSH ou SSHFS"
-         L3="3. |   | Ligar    | Servico SSH ou SSHFS"
+         L4="4. |     | Desligar | Servico SSH ou SSHFS"
+         L3="3. |     | Ligar    | Servico SSH ou SSHFS"
 
-         L2="2. | s | Ver      | Estado atual do sistema"
+         L2="2. |  s  | Ver      | Estado atual do sistema"
          L1="1. Cancelar" 
 
+         Lh=$(echo -e "\nInfo:\n - Output file: ... \n ")
          L0="DRYa: SSH: Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n\n$L8 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n\n$Lz" | fzf --header="$Lh" --prompt "$L0")
 
       # Executar de acordo com o resultado
-         [[ $v_menu =~ "8." ]] && f_help
-         [[ $v_menu =~ "7." ]] && f_delete_ssh_key
-         [[ $v_menu =~ "6." ]] && f_ver_as_pastas_pre_definidas
-         [[ $v_menu =~ "5." ]] && less $v_verbose_line_file
+         [[ $v_menu =~ "9." ]] && f_help
+         [[ $v_menu =~ "8." ]] && f_delete_ssh_key
+         [[ $v_menu =~ "7." ]] && f_ver_as_pastas_pre_definidas
+         [[ $v_menu =~ "6." ]] && less $v_verbose_line_file
+         [[ $v_menu =~ "5." ]] && f_how_to_connect_client_to_server
          [[ $v_menu =~ "4." ]] && f_disable_everything
          [[ $v_menu =~ "3." ]] && f_enable_everything
          [[ $v_menu =~ "2." ]] && f_verbose_check
          [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
          unset v_menu
+
+   elif [ $1 == "h" ]; then
+      f_help
 
    elif [ $1 == "s" ]; then
       # See the current state
@@ -1156,6 +1183,9 @@ function f_main_menu {
       # See default Seiva directories as mounting points
       f_ver_as_pastas_pre_definidas
 
+   elif [ $1 == "ccc" ]; then
+      # Client Connect Command (verbose)
+      f_how_to_connect_client_to_server
    fi
 }
 
@@ -1164,7 +1194,7 @@ function f_main_menu {
 function f_exec {
 
    f_declare_variables
-   f_main_menu
+   f_main_menu $*
 
    # Status (each fx separate, for debug)
       #f_check_current_user
@@ -1224,4 +1254,4 @@ function f_exec {
       #f_ser_cliente
    # Instructions and wizzard to Uninstall everything
 }
-f_exec
+f_exec $*

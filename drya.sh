@@ -3128,7 +3128,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          v_tv="1360x768" 
 
       f_greet 
-      f_talk; echo "Help for scree Resolution"
+      f_talk; echo "Help for screen Resolution"
               echo " > uDev: use traitsID"
               echo
       f_talk; echo "Ambiente grafico detetado: $v_amb"
@@ -3151,9 +3151,10 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo
       fi
 
+      echo 
+
       if [[ $trid_os == "R" ]]; then
          # Se o OS detetado for RaspberryPi
-         
 
          f_talk; echo "If detected 'Pi' + 'Silver TV' + 'X11':"
                  echo " > 1360x768 "
