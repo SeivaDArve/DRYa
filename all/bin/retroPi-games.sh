@@ -10,14 +10,20 @@
 
 
 if [ -z "$*" ]; then
-   echo "D game   : Print this message"
-   echo "D game h : Print help message + info "
+   echo "D game    : Print this message"
+   echo "D game h  : Print help message + info "
+   echo "D game .  : edit 'retroPi-games.sh "
+   echo "D game go : Start RetroPi emulation station"
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    echo "Resret all retroPi configs: "
    echo " > "
 
 elif [ $1 == "." ]; then
+   # Edit self (this script)
+   bash e $__repo__/all/bin/$__name__
+
+elif [ $1 == "go" ]; then
    # Inicia o emulador do RetroPie
    emulationstation  
 fi
