@@ -66,9 +66,18 @@ elif [ $1 == "." ]; then
    # Edit self (this script)
    bash e $__repo__/all/bin/$__name__
 
+elif [ $1 == "rom" ]; then
+   # Print ROMs location
+   echo "By default, ROMs      location: ~/RetroPi/roms"
+   echo "By default, USB stick location: /media"
+
 elif [ $1 == "net" ]; then
    # Testar se ha net com `ping` 
    ping -c 3 google.com
+
+elif [ $1 == "sources" ]; then
+   # Debugging the repositories sources file
+   sudo vim /etc/apt/sources.list
 
 elif [ $1 == "tty" ]; then
    # Alterar o tamanho da letra/fonte no tty

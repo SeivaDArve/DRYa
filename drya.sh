@@ -4063,7 +4063,7 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
    # Inicia jogos
 
    # Path to the dedicated lib/script for all the games
-      v_game_script=${v_REPOS_CENTER}/DRYa/all/bin/retroPi-games.sh 
+      v_game_script=${v_REPOS_CENTER}/DRYa/all/bin/games-RetroPi.sh 
    
    shift   # To remove the arg 'game'
    bash $v_game_script $*
