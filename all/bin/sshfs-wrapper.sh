@@ -14,11 +14,6 @@ __name__="sshfs-wrapper.sh"  # Change to the name of the script. Example: DRYa.s
    # Usar f_c4 para CLIENTE
 
 
-# Para Debug:
-   # Este script nao reconhecia os arg $1 $2 $3 porque este script era chamado apartir de outro script (nomeadamente 'drya.sh'). Portanto, no script inicial, as variaveis $1, $2, $3 foram exportadas como ARG1, ARG2, ARG3
-   #echo $0, $ARG1, $ARG2, $ARG3...
-   #read
-
 function f_declare_variables {
    # Se nao existir $USER no env, entao usar o comando `whoami` para o redefinir
       [[ -z $USER ]] && USER=$(whoami) && export USER
@@ -58,6 +53,8 @@ function f_declare_variables {
 
 function f_corresponder_local_com_remota {
 
+   # uDev: a Lista de maquinas disponiveis tem de ser a mesma lista usada por .gitconfig ($__repo__/all/etc/dot-files/git-github/list-machine-names)
+   
    unset $v_current_local
    contador=0
    L0="QUAL o nome desta maquina SERVIDOR (para facilitar no aparelho do CLIENTE): "
@@ -98,7 +95,7 @@ function f_is_rooted {
 
    # No termux, a variavel $PREFIX nao vem vazia. Costuma conter "/data/data/com.termux/files/usr"
       if  [ -z $trid_termux ]; then 
-         echo "DRYa: bug: variavel n econtrada"
+         echo "DRYa: ssh bug: variavel n econtrada"
 
       else
          if  [ $trid_termux == "true" ]; then 
@@ -316,18 +313,21 @@ function f_check_installed_ssh_key {
 function f_check_installed_ssh_key_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
+   echo -n " > SSH key: "
+
    if [[ $v_ssh_installed_key == "true" ]]; then
-            echo -n " > SSH key: "
-      f_c7; echo    "installed."
-      f_rc; echo 
+      f_c7; echo "exists."
+      f_rc; echo "   (at: $v_public_key)"
+            echo
 
    elif [[ $v_ssh_installed_key == "false" ]]; then
-            echo -n " > SSH key: "
-      f_c8; echo    "not installed."
-      f_rc; echo 
+      f_c8; echo "does not exist."
+      f_rc; echo "   (at: $v_public_key)"
+            echo
    
    else
-      echo "O software nao conseguiu detetar se está ou nao está instalado SSH key devido a um erro"
+      echo "Not detected (error)"
+      echo
       exit 1
    fi
 }
@@ -654,6 +654,29 @@ function f_check_mounting_point_array {
       do
          echo " > $v_parent_dir/$i"
       done
+}
+
+function f_delete_ssh_key {
+   # Delete key file
+
+   echo "Default path for SSH key file:"
+   echo " > $v_public_key"
+   echo 
+
+   if [[   -f $v_public_key ]]; then
+      echo " > File exists..."
+      echo
+      read -p "Delete SSH key? (y)es: " v_ans
+      
+      [[ $v_ans == "y" ]] && rm $v_public_key
+      [[ $v_ans == "Y" ]] && rm $v_public_key
+      
+      [[   -f $v_public_key ]] && echo "File still exists..."
+      [[ ! -f $v_public_key ]] && echo "File no longger exists..."
+
+   else 
+      echo " > File does not exist"
+   fi
 }
 
 function f_delete_DRYa_mounting_points {
@@ -1085,22 +1108,26 @@ function f_main_menu {
       # List of menu options
          Lz="DRYa: sshfs-wrapper.sh"
 
-         L7="7. Help"
-         L6="6. Lista    | Mounting Points pre-definidos"
-         L5="5. Ver      | Consult Output file"
+         L8="8. |   | Help"
 
-         L4="4. Desligar | Servico SSH ou SSHFS"
-         L3="3. Ligar    | Servico SSH ou SSHFS"
+         L7="7. |   | Delete   | SSH key" 
 
-         L2="2. Ver      | Estado atual do sistema"
+         L6="6. |   | Lista    | Mounting Points pre-definidos"
+         L5="5. |   | Ver      | Consult Output file"
+
+         L4="4. |   | Desligar | Servico SSH ou SSHFS"
+         L3="3. |   | Ligar    | Servico SSH ou SSHFS"
+
+         L2="2. | s | Ver      | Estado atual do sistema"
          L1="1. Cancelar" 
 
-         L0="DRYa: Menu para os servicos SSH"
+         L0="DRYa: SSH: Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n\n$L8 \n\n$Lz" | fzf --prompt "$L0")
 
       # Executar de acordo com o resultado
-         [[ $v_menu =~ "7." ]] && f_help
+         [[ $v_menu =~ "8." ]] && f_help
+         [[ $v_menu =~ "7." ]] && f_delete_ssh_key
          [[ $v_menu =~ "6." ]] && f_ver_as_pastas_pre_definidas
          [[ $v_menu =~ "5." ]] && less $v_verbose_line_file
          [[ $v_menu =~ "4." ]] && f_disable_everything
@@ -1109,7 +1136,7 @@ function f_main_menu {
          [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
          unset v_menu
 
-   elif [ $1 == "." ]; then
+   elif [ $1 == "s" ]; then
       # See the current state
       f_verbose_check
       

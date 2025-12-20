@@ -3319,7 +3319,7 @@ elif [ $1 == "ssh" ]; then
    
    if [ -z $2 ]; then
       # Executamos o wrapper do SSHFS
-      bash $v_script
+      bash $v_script 
 
    elif [ $2 == "." ]; then 
       # Editar o script com editor de texto
@@ -3327,6 +3327,7 @@ elif [ $1 == "ssh" ]; then
 
    else 
       # Envia todos os argumentos para o script
+      shift
       bash $v_script $*
    fi
 
