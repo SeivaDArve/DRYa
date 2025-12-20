@@ -754,45 +754,60 @@ function f_dotFiles_install_git_set_machine_name {
 
 function f_dot_files_install_git {
    # Install .gitconfig on the system
+   # Note: If this cmd runs, it means user wants `git`, `fzf`, `ezGIT`, "dot-files". They will be tested and installed
 
-   # uDev: test if `git` itself is installed
-   # uDev: at least in this fx, fzf dependency should be tested
+   # uDev: A registry file may be created by DRYa at Host Machine to solve amnesia (when misconfigured settings are detected)
 
-      f_greet
-      fzf -h &>/dev/null 
-      v_status=$?
-      [[ $v_status == "1"   ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
-      [[ $v_status == "127" ]] && echo 'Aborting instalation of `git...` fzf is not installed' && exit 1 
+   f_greet
 
    # Atualizar historico fzf (inserir esta fx):
       echo "D ui d i git" >> $Lz4
 
-   v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
-   v_place=~
+   # Testing if `git` is installed
+      v_git=$(command -v git)
+      [[ -z $v_git ]] && echo " > Command git does not exist (not installed)"
+      # uDev: Ask if user wants to install
 
-   f_greet
+   # Testing if `fzf` is installed
+      v_fzf=$(command -v fzf)
+      [[ -z $v_fzf ]] && echo " > Command fzf does not exist (not installed)"
+      # uDev: Ask if user wants to install
 
-   f_talk; echo -n "Installing "
-     f_c2; echo    ".gitconfig"
-     f_rc; echo
+   # Testing if 'ezGIT' is cloned
+      # uDev
 
-   f_talk; echo    "STEP 1: "
-           echo    " > Task | Copy .gitconfig"
-           echo    " > From | .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-           echo    " > To   | ~/"
-           echo
-   f_talk; echo    "STEP 2: "
-           echo    " > Change Machine name"
-           echo    "   Insert <New name> or choose from default fzf list"
-           echo
+   # Testing if 'machine name' exists in 'drya-registry' (uDev)
+      # uDev: create a file at host to save some persistent configs on local machine
 
-   f_hzl
-   v_txt="Step 1: Install .gitconfig file" && f_anyK
-   echo
+   # Starting dot-files instalation
+      v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/.gitconfig 
+      v_place=~
 
-   f_hzl
-   echo
-   echo
+      f_greet
+
+      f_talk; echo -n "Installing "
+        f_c3; echo    "dot files for 'git'"
+        f_rc; echo
+      f_talk; echo    "STEP 1: "
+              echo    " > Task | Copy .gitconfig"
+              echo    " > From | .../DRYa/all/etc/dot-files/git-github/.gitconfig"
+              echo    " > To   | ~/"
+              echo
+      f_talk; echo    "STEP 2: "
+              echo    " > Change Machine name"
+              echo    "   Insert 'New Name' or choose 'Name' from a list"
+              echo
+      f_talk; echo    "STEP 3: "
+              echo    " > Add .gitignore file (uDev)"
+
+              f_hzl
+
+   # Ask to start installation
+      v_txt="Install all 'git' dot files" && f_anyK && echo
+
+      f_hzl
+      echo
+      echo
 
    # Start STEP 1
       f_talk; echo "Starting STEP 1:"
@@ -811,7 +826,11 @@ function f_dot_files_install_git {
 
       f_dotFiles_install_git_set_machine_name
 
-   f_talk; echo "Done! "
+   # Start STEP 3
+      # uDev
+
+   # Inform process finished
+      f_talk; echo "Done! "
 }
 
 function f_dot_files_install_vimrc {
@@ -2077,6 +2096,8 @@ function f_clone_selected_from_list_no_invertion {
    echo
    v_txt="Iniciar os downloads"; f_anyK
    echo
+
+   # uDev: v_destin é a variavel que define para que pasta personalizada vao ser clonados os ficheiros, caso nao queira clonar para a pre-definida
 
    for i in $v_multiple
    do
