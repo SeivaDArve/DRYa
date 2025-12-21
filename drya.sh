@@ -1016,6 +1016,7 @@ function f_list_ip_public_n_local {
    mkdir -p $v_dir
    v_tmp_1=$v_dir/${v_name}_1
    v_tmp_2=$v_dir/${v_name}_2
+   v_reslt=$v_dir/${v_name}_results  # Last output file, can be 'sourced' by bash
    
    f_greet 
    f_talk; echo "Print current IP (local + public)"
@@ -1095,10 +1096,10 @@ function f_list_ip_public_n_local {
    f_2   # Testing 'hostname'
    f_3   # Testing 'ip'
 
-   echo "Vars:"
-   echo " > $v_f1_ip"
-   echo " > $v_f2_ip"
-   echo " > $v_f3_ip"
+   #echo "Vars (debug):"
+   #echo " > $v_f1_ip"
+   #echo " > $v_f2_ip"
+   #echo " > $v_f3_ip"
 
    # Defining final variable
       if [ -n $v_f1_ip ]; then
@@ -1131,13 +1132,24 @@ function f_list_ip_public_n_local {
       echo "Sending to ssms"
       echo
 
+   # Send results to a file
+      echo "ip_local=$v_ip"        > $v_reslt
+      echo "ip_public=$PUBLIC_IP" >> $v_reslt
+      rm $v_tmp_1 $v_tmp_2
+
    # Clear the screen
+      v_secs=3
       f_talk; echo "[Enter] to clean screen and Print results"
-      read -sn1 # -t $v_secs
+              echo " > [wait $v_secs secs] for automatic clean"
+              echo " > [Ctrl + C]    to cancel next step"
+      read -sn1 -t $v_secs
       f_greet
 
 
    # Imprimindo os resultados
+      echo "Results sent to:"
+      echo " > $v_reslt" 
+      echo
       echo "IP Público: $PUBLIC_IP"
       echo "IP Local:   $v_ip"
 
@@ -1150,12 +1162,12 @@ function f_menu_internet_network_ip_options {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D ip'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L6='6. Print  | javascript tricks (for browser console)'
-      L5='5. Menu   | `web` (navegar na internet)'
+      L6='6. Print  |   | javascript tricks (for browser console)'
+      L5='5. Menu   |   | `web` (navegar na internet)'
 
-      L4='4. Ver    | User info (saved @host system)'
-      L3='3. Assign | New random IP'                                      
-      L2='2. Ver    | IP publico e local'                                      
+      L4='4. Ver    |   | User info (saved @host system)'
+      L3='3. Assign |   | New random IP'                                      
+      L2='2. Ver    | b | IP publico e local'                                      
    
       L1='1. Cancel'
 
