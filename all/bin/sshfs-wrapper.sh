@@ -147,18 +147,34 @@ function f_is_rooted_verbose {
    fi
 }
 
-function f_menu_para_ver_resumo {
+function f_menu_visualizar_output_files {
       # Apos decidir todas as configurações para ser Servidor, apresentar um menu para ler tudo o que foi definido
-         echo "Press [ENTER] para opções"; read -s
-         while true
-         do
-            v_menu=$(echo -e "1. Ver com \`less\` o ficheiro verboso (na repo Verbose-lines) \n2. Ver com \`less\` o ficheiro da chave publica) \n3. Sair" | fzf --prompt "SELECIONE ")
+         echo "Press [ENTER] para: Menu visualizador de Outputs"; read -s
 
-            [[ $v_menu =~ "1." ]] && less $v_verbose_line_file   && break
-            [[ $v_menu =~ "2." ]] && less $v_temporary_file && break
-            [[ $v_menu =~ "3." ]] && break
-            unset v_menu
-         done
+      # Getting variable of current text editor
+         Lhc=$(cat $trid_editor_file)
+
+      # Lista de opcoes para o menu `fzf`
+         Lz1='CMD used: '; Lz2='D ssh ..'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
+
+         L5='5. Ver | ficheiro da chave publica'                                      
+         L4='4. Ver | ficheiro output: temporario, local'                                      
+         L3='3. Ver | ficheiro output: repo omni-log'                                      
+         L2='2. Ver | ficheiro output: repo Verbose-lines'                                      
+         L1='1. Cancel'
+
+         Lh=$(echo -e "\nTrocar de visualizador: \`ee\` \nVisualizador atual:     '$Lhc' \n")
+         L0="DRYa: SSH: Menu de visualizacao de Output: "
+
+      # Ordem de Saida das opcoes durante run-time
+         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+
+      [[   $v_list =~ "5." ]] && less $v_temporary_file        
+      [[   $v_list =~ "4." ]] && less $v_verbose_line_tmp_file 
+      [[   $v_list =~ "3." ]] && echo '$v_verbose_line_file_omni_log not set yet'
+      [[   $v_list =~ "2." ]] && less $v_verbose_line_file     
+      [[   $v_list =~ "1." ]] && echo "Canceled"
+      unset v_list
 }
 
 function f_install_ssh_key {
@@ -168,7 +184,7 @@ function f_install_ssh_key {
 
 #  function f_install_ssh {
 #     # Installing ssh
-#     # "$traits_pkgm"  # Variavel que carrega a info do package manager atual. Detetado pela DRYa
+#     # "$trid_pkgm"  # Variavel que carrega a info do package manager atual. Detetado pela DRYa
 #  
 #  
 #     if [ -n "$TERMUX_VERSION" ]; then
@@ -207,8 +223,8 @@ function f_install_ssh {
 
    else
       # Usar traitsID para detetar o package manager na variavel $traits_pkgm e aplicar
-         eval "sudo $traits_pkgm install openssh-clients"
-         eval "sudo $traits_pkgm install openssh-server"
+         eval "sudo $trid_pkgm install openssh-clients"
+         eval "sudo $trid_pkgm install openssh-server"
    fi
   
 }
@@ -477,7 +493,7 @@ function f_check_ssh_daemon_is_on {
          v_started=$(sudo systemctl status ssh | grep Active) 
       fi 
 
-   elif [ $traits_pkgm == "dnf" ]; then 
+   elif [ $trid_pkgm == "dnf" ]; then 
       echo "   Detetado Fedora (buscando ...)" 
       # para quando o daemos de chama `sshd`
       v_started=$(sudo systemctl status sshd.service | grep Active)
@@ -680,14 +696,14 @@ function f_verbose_check {
 
 function f_iniciar_daemon_ssh {
    # Iniciar o servico (Daemon) do ssh
-      if [ $traits_pkgm == "pkg" ]; then 
+      if [ $trid_pkgm == "pkg" ]; then 
          sshd
 
-      elif [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "pacman" ]; then 
+      elif [ $trid_pkgm == "apt" ] || [ $trid_pkgm == "pacman" ]; then 
          sudo service ssh start
          echo " > Daemon iniciado,mas é preciso confirmar"
 
-      elif [ $traits_pkgm == "dnf" ]; then
+      elif [ $trid_pkgm == "dnf" ]; then
          sudo systemctl start sshd
          sudo systemctl enable sshd  # Para iniciar automaticamente no boot
       fi
@@ -827,7 +843,8 @@ function f_ser_servidor {
    # Mostrar a chave publica da maquina atual no ecra
       f_cat_this_public_key  
 
-   f_menu_para_ver_resumo
+   # Menu para consultar todos os ficheiros de output pre-definidos
+      f_menu_visualizar_output_files 
 }
 
 function f_ser_cliente {
@@ -1061,7 +1078,7 @@ function f_confirmado_tornar_ssh_offline {
    # Parar o serviço
 
       # Parar no termux
-      if [ $traits_pkgm == "pkg" ]; then 
+      if [ $trid_pkgm == "pkg" ]; then 
 
          # Detetar qual é o PID do `sshd` 
             v_proc=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "bash" | grep -v "grep" | awk '{ print $1 }')
@@ -1071,7 +1088,7 @@ function f_confirmado_tornar_ssh_offline {
       fi 
 
       # Parar noutros OS
-      if [ $traits_pkgm == "apt" ] || [ $traits_pkgm == "dnf" ] || [ $traits_pkgm == "pacman" ]; then sudo service ssh stop; fi
+      if [ $trid_pkgm == "apt" ] || [ $trid_pkgm == "dnf" ] || [ $trid_pkgm == "pacman" ]; then sudo service ssh stop; fi
       
 
 
@@ -1174,7 +1191,7 @@ function f_main_menu {
          L8="8. |     | Delete   | SSH key" 
 
          L7="7. |     | Lista    | Mounting Points pre-definidos"
-         L6="6. |     | Ver      | Consult Output file"
+         L6="6. |     | Ver      | Consult Output files"
          L5="5. | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
 
          L4="4. |     | Desligar | Servico SSH ou SSHFS"
@@ -1192,7 +1209,7 @@ function f_main_menu {
          [[ $v_menu =~ "9." ]] && f_help
          [[ $v_menu =~ "8." ]] && f_delete_ssh_key
          [[ $v_menu =~ "7." ]] && f_ver_as_pastas_pre_definidas
-         [[ $v_menu =~ "6." ]] && less $v_verbose_line_file
+         [[ $v_menu =~ "6." ]] && f_menu_visualizar_output_files  
          [[ $v_menu =~ "5." ]] && f_how_to_connect_client_to_server
          [[ $v_menu =~ "4." ]] && f_disable_everything
          [[ $v_menu =~ "3." ]] && f_enable_everything
@@ -1217,7 +1234,7 @@ function f_main_menu {
 
    elif [ $1 == ".." ]; then
       # See last output file
-      less $v_verbose_line_file
+      f_menu_visualizar_output_files
 
    elif [ $1 == "dir" ]; then
       # See default Seiva directories as mounting points
