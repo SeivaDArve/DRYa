@@ -84,6 +84,14 @@ elif [ $1 == "tty" ]; then
    echo 'Info `D tty`     para saber user:passwords pre-definidas de tty'
    echo 'Info `D kbd tty` para saber alterar a letra do tty'
 
+elif [ $1 == "install-retropi-on-raspberryOS" ]; then
+   # If we have RaspberyOS and don't want to flash a different SD card with RetroPi, this is to install on same card
+
+   # Step 1  (RetroPi on RaspberryOS)
+      git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
+
+   # Step 2  (Installing wayland)
+    
 elif [ $1 == "go" ]; then
    # Inicia o emulador do RetroPie
    emulationstation  

@@ -1010,13 +1010,19 @@ function f_dot_files_install_netrc {
 
 function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
-
-   v_satisfied="no"
-
+   
+   v_name=ip
+             v_dir=~/.tmp
+   mkdir -p $v_dir
+   v_tmp_1=$v_dir/${v_name}_1
+   v_tmp_2=$v_dir/${v_name}_2
+   
    f_greet 
-   f_talk; echo "Searching installed commands to provide Local IP..."
+   f_talk; echo "Print current IP (local + public)"
            echo
 
+   f_talk; echo "Searching commands for local IP:"
+           echo
 
    function f_1 {
       # Tentativa 1: Obtendo o IP local usando  'ifconfig'
@@ -1024,16 +1030,28 @@ function f_list_ip_public_n_local {
       f_talk; echo "Testing ifconfig"
 
       if $(command -v ifconfig &>/dev/null); then
-         echo " > Command: is installed"
-         v_ip=$(ifconfig 2>/dev/null | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
-         echo " > Ip:      $v_ip"
-         echo
-         v_satisfied="yes"
+         echo " > 'ifconfig' is installed"
+
+         #v_ip=$(ifconfig 1>/dev/null| grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
+         #v_ip=$(cat $v_tmp)
+
+         ifconfig           > $v_tmp_1 
+         grep -w  inet        $v_tmp_1 > $v_tmp_2
+         grep -v  127.0.0.1   $v_tmp_2 > $v_tmp_1
+         awk     '{print $2}' $v_tmp_1 > $v_tmp_2
+
+         for i in $(cat $v_tmp_2);
+         do
+            echo " > Ip:      $i"
+            v_f1_ip=$i  # Last number ($i) will be the ip from f_1
+         done
+
 
       else
-         echo " > Command not installed (from package 'net-tools')"
-         echo
+         echo " > 'ifconfig' not installed (from package 'net-tools')"
       fi
+
+      echo
    }
 
    function f_2 {
@@ -1042,30 +1060,48 @@ function f_list_ip_public_n_local {
       f_talk; echo "Testing hostname"
 
       if $(command -v hostname 1>/dev/null); then
-         echo " > Command is installed"
+         echo " > 'hostname' is installed"
          v_ip=$(hostname -I | awk '{print $1}')
          echo " > Ip:      $v_ip"
-         echo
+
+         v_f2_ip=$v_ip  # Last number from f_2
       else
-         echo " > Command not installed"
-         echo
+         echo " > 'hostname' not installed"
       fi
+
+      echo
    }
 
-   f_1
-   db
-   [[ $v_satisfied == "no" ]] && echo "continue" && f_2
+   function f_3 {
+      # Tentativa 3: 
+      # Obtenr o IP local usando 'ip'
+
+      f_talk; echo "Testing 'ip' command"
+
+      if $(command -v ip &>/dev/null); then
+         echo " > 3. Command 'ip' is installed"
+         v_ip=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+         echo " > Ip:      $v_ip"
+         v_f3_ip=$LOCAL_IP_3  # Last number from f_3
+
+      else
+         echo " > 3. Command 'ip' not installed"
+      fi
+      echo
+   }
+
+
+   f_1   # Testing 'ifconfig'
+   f_2   # Testing 'hostname'
+   f_3   # Testing 'ip'
+
+   echo "Vars:"
+   echo $v_f1_ip
+   echo $v_f2_ip
+   echo $v_f3_ip
+   
    db
 
-      # Tentativa 3: 
-         # Obtendo o IP local usando 'ip'
-         if $(command -v ip &>/dev/null); then
-            echo " > 3. Command 'ip' is installed"
-            #LOCAL_IP_3=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
-         else
-            echo " > 3. Command 'ip' not installed"
-         fi
-         echo
         
 
       # Defining final variable
@@ -2891,9 +2927,12 @@ elif [ $1 == "seiva-up-time" ]; then
    f_seiva_up_time
 
 elif [ $1 == "ip" ]; then 
+
    if [[ -z $2 ]]; then 
       f_menu_internet_network_ip_options
-   elif [ $2 == "b" ]; then 
+
+   elif [ $2 == "b" ] || [ $2 == "both" ]; then 
+      # Show both IP: Local + public
       f_list_ip_public_n_local 
    fi
 
