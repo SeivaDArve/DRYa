@@ -1,14 +1,14 @@
 #/bin/bash
-# Title: retroPi-games.sh
+# Title: games-RetroPi.sh
 # Description: 
 # Use:
 
 
 
 # Usefull variables:
-   __name__="retroPi-games.sh"                     # Used to describe the name of current file with extention. Example: .exe .jpg .mp3
+   __name__="games-RetroPi.sh"                     # Used to describe the name of current file with extention. Example: .exe .jpg .mp3
    __repo__="${v_REPOS_CENTER}/DRYa"  # Used to describe the name of current repo, the repository that contains __name__
-   v_ftf_talk="retroPi-games.sh: "                 # Used to better present text at `fzf` menus in the prompt area
+   v_ftf_talk="games-RetroPi.sh: "                 # Used to better present text at `fzf` menus in the prompt area
 
 
 
@@ -84,13 +84,40 @@ elif [ $1 == "tty" ]; then
    echo 'Info `D tty`     para saber user:passwords pre-definidas de tty'
    echo 'Info `D kbd tty` para saber alterar a letra do tty'
 
-elif [ $1 == "install-retropi-on-raspberryOS" ]; then
+elif [[ $1 == "install" ]] || [ $1 == "install-retropi-on-raspberryOS" ]; then
    # If we have RaspberyOS and don't want to flash a different SD card with RetroPi, this is to install on same card
 
-   # Step 1  (RetroPi on RaspberryOS)
-      git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
+   clear 
+   echo "Installing RetroPi"
+   echo
 
-   # Step 2  (Installing wayland)
+   # Step 1  (cloning RetroPi for RaspberryOS)
+      echo "---- Step 1: cloning ----"
+
+      v_repo=https://github.com/RetroPie/RetroPie-Setup.git
+      v_destination=~/Downloads/RetroPie-Setup
+      
+      [[   -d $v_destination ]] && echo " > Ja existe"
+      [[ ! -d $v_destination ]] && git clone --depth=1 $v_repo $v_destination
+
+      echo
+
+   # Step 2  (Installing RetroPi on RaspberryOS)
+      echo "---- Step 2: Installing ----"
+      echo
+      echo "To install:"
+      echo " > \`bash $v_destination/retropie_setup.sh\`"
+      echo
+
+   # Step 3  (Installing wayland)
+      echo "---- Step 3: Installing X11 ----"
+      echo
+      echo "RetroPi does not use wayland, it uses X11"
+      echo " > If it mentions 'wayland not available', it means you must switch"
+      echo
+      echo ' > 1 `sudo raspi-config`'
+      echo ' > 2 `6. Advanced Options`'
+      echo ' > 3 `A7. Wayland (switch between both)`'
     
 elif [ $1 == "go" ]; then
    # Inicia o emulador do RetroPie
