@@ -87,7 +87,7 @@ function f_check_current_user {
    # Get the current username
          echo -n " > Username: "
    f_c1; echo    "$v_current_username"
-   f_rc
+   f_rc; echo
 }
 
 function f_is_rooted {
@@ -127,17 +127,17 @@ function f_is_rooted_verbose {
    if [[ -z $v_rooted ]]; then
             echo -n " > Esta no termux: "
       f_c8; echo    "Nao"
-      f_rc
+      f_rc; echo
 
    elif [[ $v_rooted == "true" ]]; then
             echo -n " > Tem permissoes root: "
       f_c7; echo    "Sim"
-      f_rc
+      f_rc; echo
 
    elif [[ $v_rooted == "false" ]]; then
             echo -n " > Tem permissoes root: "
       f_c8; echo    "Nao"
-      f_rc
+      f_rc; echo
    fi
 }
 
@@ -348,12 +348,12 @@ function f_check_installed_ssh_verbose {
    if [[ $v_ssh_installed == "true" ]]; then
             echo -n " > SSH is:  "
       f_c7; echo    "installed."
-      f_rc
+      f_rc; echo
 
    elif [[ $v_ssh_installed == "false" ]]; then
             echo -n " > SSH is:  "
       f_c8; echo    "not installed."
-      f_rc
+      f_rc; echo
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH devido a um erro"
@@ -432,29 +432,32 @@ function f_check_if_user_is_on_fuse_group_verbose {
    else
       echo "O software nao conseguiu detetar se está ou nao está no grupo fuse devido a um erro"
    fi
+
+   echo
 }
 
 function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
 
-   f_talk; echo "Verificado o Status do Daemon:"
+   echo " > Status do Daemon:"
    
    if [ $trid_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
       v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
+      echo "   Detetado Termux (buscando ...)" 
 
    elif [ $trid_pkgm == "apt" ]; then 
       if [ $trid_OS == "Windows" ]; then
-         echo " > Detetado windows" 
+         echo "   Detetado windows" 
 
       else
-         echo " > Detetado que não é windows"
+         echo "   Detetado que não é windows (buscando ...)"
          # para quando o daemos de chama `ssh`
          v_started=$(sudo systemctl status ssh | grep Active) 
       fi 
 
    elif [ $traits_pkgm == "dnf" ]; then 
-      echo " > Detetado Fedora" 
+      echo "   Detetado Fedora (buscando ...)" 
       # para quando o daemos de chama `sshd`
       v_started=$(sudo systemctl status sshd.service | grep Active)
    
@@ -467,10 +470,10 @@ function f_check_ssh_daemon_is_on {
    
    if [[ -z $v_started ]]; then
       # Se a variavel $v_started estiver vazia, nenhum processo ou Daemon foi encontrado, logo, está desligado
-      echo " > Servico nao iniciado"
+      echo "   Servico nao iniciado"
    
    else
-      echo "$v_started"    # Print do estado, independentemente de como se chama o Daemon
+      echo "   $v_started"    # Print do estado, independentemente de como se chama o Daemon
    fi
 
 }
@@ -603,13 +606,18 @@ function f_check_mounting_point_parent {
 }
 
 function f_check_port_22_open {
-   f_talk; echo "Listing open ports (default for ssh: 22)"
-   sudo firewall-cmd --list-all | grep "ports: "
+   echo " > Listing open ports (default for ssh: 22)"
+
+   if command -v firewall-cmd &>/dev/null; then
+      sudo firewall-cmd --list-all | grep "ports: "
+   else
+      echo "   'firewall-cmd' not installed"
+   fi
 }
       
 function f_verbose_check {
       f_greet
-      f_talk; echo "Current status of SSHFS: "
+      f_talk; echo "Current status of SSH and SSHFS: "
 
       f_check_current_user
 
