@@ -15,6 +15,10 @@ __name__="sshfs-wrapper.sh"  # Change to the name of the script. Example: DRYa.s
 
 
 function f_declare_variables {
+
+   # Creating temporary dir
+      mkdir -p ~/.tmp
+
    # Se nao existir $USER no env, entao usar o comando `whoami` para o redefinir
       [[ -z $USER ]] && USER=$(whoami) && export USER
       v_current_username=$USER
@@ -27,6 +31,8 @@ function f_declare_variables {
  
    # Variaveis que guardam a localização da chave publica SSH
       v_public_key=~/.ssh/id_rsa.pub
+
+      v_verbose_line_tmp_file=~/.tmp/ssh_output.txt
 
       v_verbose_line_repo=${v_REPOS_CENTER}/verbose-lines  # uDev: usar omni-log
       v_verbose_line_file=$v_verbose_line_repo/all/ssh.txt
@@ -273,24 +279,39 @@ function f_send_public_key_to_verbose_line_repo {
       # Comando que o cliente vai introduzir
          v_comando="Comando a ser introduzido no terminal (cliente)"
 
-      echo                          > $v_verbose_line_file
-      echo "$v_data"               >> $v_verbose_line_file
-      echo                         >> $v_verbose_line_file
-      echo "$v_public "            >> $v_verbose_line_file
-      cat $v_public_key            >> $v_verbose_line_file  # Despeja a chave publica no nosso ficheiro verboso
-      echo                         >> $v_verbose_line_file
-      echo "$v_user"               >> $v_verbose_line_file
-      echo                         >> $v_verbose_line_file
-      echo "IP publico: $v_ip"     >> $v_verbose_line_file
-      echo "IP local:   $v_loc_ip" >> $v_verbose_line_file
-      echo                         >> $v_verbose_line_file
-      echo "$v_texto_mq_atual"     >> $v_verbose_line_file
-      echo                         >> $v_verbose_line_file
-      echo "$v_mont"               >> $v_verbose_line_file 
-      echo                         >> $v_verbose_line_file
-      echo "$v_comando"            >> $v_verbose_line_file 
-      echo "   $v_com_IP_local  "  >> $v_verbose_line_file 
-      echo "   $v_com_IP_publico"  >> $v_verbose_line_file
+      # Despeja a chave publica no nosso ficheiro verboso temporario (antes de enviar para uma repo centralizada com DRYa)
+         echo                          > $v_verbose_line_tmp_file
+         echo "$v_data"               >> $v_verbose_line_tmp_file
+         echo                         >> $v_verbose_line_tmp_file
+         echo "$v_public "            >> $v_verbose_line_tmp_file
+         cat $v_public_key            >> $v_verbose_line_tmp_file  
+         echo                         >> $v_verbose_line_tmp_file
+         echo "$v_user"               >> $v_verbose_line_tmp_file
+         echo                         >> $v_verbose_line_tmp_file
+         echo "IP publico: $v_ip"     >> $v_verbose_line_tmp_file
+         echo "IP local:   $v_loc_ip" >> $v_verbose_line_tmp_file
+         echo                         >> $v_verbose_line_tmp_file
+         echo "$v_texto_mq_atual"     >> $v_verbose_line_tmp_file
+         echo                         >> $v_verbose_line_tmp_file
+         echo "$v_mont"               >> $v_verbose_line_tmp_file 
+         echo                         >> $v_verbose_line_tmp_file
+         echo "$v_comando"            >> $v_verbose_line_tmp_file 
+         echo "   $v_com_IP_local  "  >> $v_verbose_line_tmp_file 
+         echo "   $v_com_IP_publico"  >> $v_verbose_line_tmp_file
+
+      # Copia o ficheiro de output para uma repo centralizada com DRYa
+         if [ -d $v_verbose_line_file ]; then
+
+            cat $v_verbose_line_tmp_file  > $v_verbose_line_file
+
+            echo "O ficheiro temporario de output foi copiado"
+            echo " > de:   $v_verbose_line_tmp_file"
+            echo " > para: $v_verbose_line_file"
+
+         else
+            echo "O ficheiro nao existe:"
+            echo " > $v_verbose_line_file"
+         fi
 
       # Enviar o mesmo tempo para um ficheiro tmp (para quem nao tem a repo 'verbose-lines' 
          cat $v_public_key > $v_temporary_file  ## Foi definido no inicio deste script
@@ -612,9 +633,18 @@ function f_check_port_22_open {
       sudo firewall-cmd --list-all | grep "ports: "
    else
       echo "   'firewall-cmd' not installed"
+      echo 
    fi
+
 }
-      
+
+function f_check_output_files {
+   echo " > Ficheiros de saida (ao configurar Servidor):"
+   echo "   $v_verbose_line_tmp_file"
+   echo "   $v_verbose_line_file"
+   echo 
+}
+
 function f_verbose_check {
       f_greet
       f_talk; echo "Current status of SSH and SSHFS: "
@@ -644,6 +674,8 @@ function f_verbose_check {
 
       f_check_mounting_point_parent
       f_check_port_22_open
+
+      f_check_output_files
 }
 
 function f_iniciar_daemon_ssh {
