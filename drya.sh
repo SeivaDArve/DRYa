@@ -958,54 +958,73 @@ function f_dot_files_install_netrc {
    #    This file allows the user to avoid repetitive autentication (user and password) for github.com
    #    In this file, a stroken (token with a bug) is written, then corrected manually by the user, then used it is all set, no more repetition
    
-   f_greet
+   function f_install_netrc {
+      f_greet
 
-   f_talk; echo "Installing Stroken as ~/.netrc"
-           echo
-   f_talk; echo "Steps of the process:"
-           echo " > 1: Copy: .../DRYa/all/etc/dot-files/git-github/current-stroken"
-           echo " > 2: To:   ~/.netrc"
-           echo " > 3: Edit: ~/.netrc"
-           echo
-   f_talk; echo "Instructions:"
-           echo "This script will install Current Seiva's github.com"
-           echo "personal access token in this machine at the location"
-           echo "of ~/.netrc but with a bug (also called stroken). "
-           echo "In the end, this script will also open the file"
-           echo "To be manually edited and manually removing the bug"
-           echo "If the bug is fixed, github will not ask for credentials"
-           echo "when uploading new commits"
-           echo
-           echo "Token:   Correct hashed password"
-           echo "Stroken: Incorrect hashed password (allowing to be pushed to gihub)"
-           echo
+      f_talk; echo "Installing Stroken as ~/.netrc"
+              echo
+      f_talk; echo "Steps of the process:"
+              echo " > 1: Copy: .../DRYa/all/etc/dot-files/git-github/current-stroken"
+              echo " > 2: To:   ~/.netrc"
+              echo " > 3: Edit: ~/.netrc"
+              echo
+      f_talk; echo "Instructions:"
+              echo "This script will install Current Seiva's github.com"
+              echo "personal access token in this machine at the location"
+              echo "of ~/.netrc but with a bug (also called stroken). "
+              echo "In the end, this script will also open the file"
+              echo "To be manually edited and manually removing the bug"
+              echo "If the bug is fixed, github will not ask for credentials"
+              echo "when uploading new commits"
+              echo
+              echo "Token:   Correct hashed password"
+              echo "Stroken: Incorrect hashed password (allowing to be pushed to gihub)"
+              echo
 
-   v_txt="(Step 1, 2): Install .netrc"; f_anyK
-
-
-   # We need that stroken message in these 2 variables, username and token: 
-      v__file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken"
-
-      v_uName=$(cat $v__file | head -n 1)
-      v_token=$(cat $v__file | tail -n 1)
+      v_txt="(Step 1, 2): Install .netrc"; f_anyK
 
 
-   # Creating a file ~/.netrc with our new stroken info
-      v_machn="Machine github.com"
-      v_login="login $v_uName"
-      v_stokn="password $v_token"
+      # We need that stroken message in these 2 variables, username and token: 
+         v__file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken"
 
-      v_messg="$v_machn $v_login $v_stokn"
+         v_uName=$(cat $v__file | head -n 1)
+         v_token=$(cat $v__file | tail -n 1)
 
-      echo "$v_messg" > ~/.netrc && f_suc1 || f_suc2
-      echo
 
-   # Opening the file to edit
-      v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_anyK
-      vim ~/.netrc && f_suc1 || f_suc2
+      # Creating a file ~/.netrc with our new stroken info
+         v_machn="Machine github.com"
+         v_login="login $v_uName"
+         v_stokn="password $v_token"
 
-   # Finished 
-      echo; f_done
+         v_messg="$v_machn $v_login $v_stokn"
+
+         echo "$v_messg" > ~/.netrc && f_suc1 || f_suc2
+         echo
+
+      # Opening the file to edit
+         v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_anyK
+         vim ~/.netrc && f_suc1 || f_suc2
+
+      # Finished 
+         echo; f_done
+   }
+
+   # After defining how to install .netrc check if it is not installed alreDY
+      if [ -f ~/.netrc ]; then
+         # If file is already installed:
+         echo "File ~/.netrc already exists"
+         echo " > Repeat instalation? (y)es? "
+         read v_ans
+
+         [[ $v_ans == "y" ]] && f_install_netrc
+         [[ $v_ans == "Y" ]] && f_install_netrc
+
+      else
+         # If file is not yet installed:
+         f_install_netrc
+
+      fi
+
 }
 
 function f_list_ip_public_n_local {
@@ -1568,14 +1587,15 @@ function f_quick_install_all_upk {
 
    # Install dependencies (and automatically answering YES to all questions)
       # uDev: Test if it is windows and install GUI version also
-      f_talk; echo "install emacs figlet vim"
-      yes | pkg install emacs figlet vim 
+      f_talk; echo "installing: emacs figlet vim"
+      yes | bash $trid_pkgm install emacs figlet vim 
 
    # Repo: upk
       f_talk; echo "Cloning: upK" && git clone https://github.com/SeivaDArve/upK.git
-      
+              echo 
    # Repo: upk-diario-dv
       f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+              echo 
 
       read
    # Installing .netrc
@@ -1592,7 +1612,7 @@ function f_quick_install_all_upk {
 }
 
 function f_install_presets {
-   Lz='`D ui pr`'
+   Lz='`D ui i pr`'
 
    L2="2. Quick Install | upk + upkd + dependencies "
    L1="1. Cancel "
@@ -3038,8 +3058,104 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
          unset v_list
 
-   elif [[ $2 == "me" ]] || [ $2 == "DRYa" ] || [ $2 == "drya" ]; then 
-      f_install_drya__with_Select
+   elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
+
+      if [[ -z $3 ]]; then 
+         echo "What do you want to install?"
+
+      elif [[ $3 == "me" ]] || [ $3 == "DRYa" ] || [ $3 == "drya" ]; then 
+         f_install_drya__with_Select
+
+      elif [[ $3 == "presets" ]] || [ $3 == "pr" ]; then 
+         # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
+
+         if [[ -z $4 ]]; then 
+            f_install_presets
+
+         elif [[ $4 == "upk-at-work" ]] || [[ $4 == "upk-tmp-phone" ]] || [[ $4 == "upk" ]]; then 
+            # Makes all dependencies for upk repo available
+            # This might be used most likely at in-job phone
+            f_quick_install_all_upk
+         fi
+
+      elif [[ $3 == "ps1" ]] || [ $2 == "PS1" ]; then 
+         # uDev: This is a config to set, not an instalation
+         cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
+
+      elif [[ $3 == "fzf" ]]; then 
+         # Instalar fzf como foi recomendado pelos desenvolvedores
+
+         v_txt="Install fzf like original developers" && f_anyK
+         echo
+         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+         ~/.fzf/install
+
+      elif [[ $3 == "bitcoin-core" ]]; then 
+         # Install a full Bitcoin node to validade blocks and allow mining
+         sudo snap install bitcoin-core
+
+      elif [[ $3 == "pycharm" ]]; then 
+         # Install a dedicated GUI text editor for python
+
+         f_greet
+
+         echo "Installing PyCharm on Fedora"
+         echo " > Press ENTER to continue; Press Ctrl-C to Abort"
+         echo 
+         read -sn 1
+         echo "Tutorial source: https://snapcraft.io/install/pycharm-community/fedora#install"
+         echo 
+         # Installing Snap Store and from there, installing pycharm-community
+            sudo dnf install snapd
+            sudo ln -s /var/lib/snapd/snap /snap
+            sudo snap install pycharm-community --classic
+         echo
+         echo "PyCharm installed"
+         echo " > Logout the session or restart to update and use pyCharm"
+     
+      elif [[ $3 == "doom-emacs-windows" ]]; then 
+         # installing Doom Emacs on Windows
+         echo "uDev: Tutorial here:"
+         echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
+
+      elif [[ $3 == "doom-emacs" ]]; then 
+         # installing Doom Emacs on Linux
+         echo "Installing Doom Emacs on Linux "
+         read -p " > Do you want to continue?"
+
+         # Dependencies
+            sudo apt install git emacs ripgrep fd find
+         
+         # Now, doom itself
+            git clone --depth 1 http://github.com/hlissner/doom-emacs ~/.emacs.d
+         
+         # Installing doom
+            cd ~
+            bash .emacs.d/bin/doom install
+         
+         # Utilities found in bin/doom
+            #bash .emacs.d/bin/doom sync
+            #bash .emacs.d/bin/doom upgrade
+            #bash .emacs.d/bin/doom doctor
+            #bash .emacs.d/bin/doom purge
+            #bash .emacs.d/bin/doom help
+            
+         # Instead of giving the full path to the command, we can add the dir to ou PATH variable
+            export PATH="$HOME/.emacs.d/bin:$PATH"
+
+         # The standard emacs dir is ~/.emacs.d
+            # DistroTube (DT) says to never play in this directory
+            # Play in the directory ~/.doom.d instead
+            # An alternative, instead of using ~/.doom.d you can use ~/.config/.doom.d (you move the dir, you do not duplicate it)
+            
+            # Let's move our dir
+               mv ~/.doom.d ~/.config/.doom.d
+
+         # Now just launch
+            echo "Now run emacs like you normally would"
+            echo "Done!"
+      fi
+
 
    elif [[ $2 == "dependencies" ]] || [ $2 == "dp" ]; then 
       # uDev: source file '1st' and exec instalation of selected group of dependencies
@@ -3059,10 +3175,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       
       fi
 
-   elif [[ $2 == "presets" ]] || [ $2 == "pr" ]; then 
-      # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
-      f_install_presets
-
    elif [[ $2 == "backups" ]] || [ $2 == "bk" ]; then 
       f_backup_helper
 
@@ -3073,7 +3185,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       f_help_installing_specific_packages
 
    elif [[ $2 == "fig" ]]; then 
-      echo "uDev: testing and installimg existence of figlet"
+      echo "uDev: testing and installing existence of figlet"
 
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
@@ -3093,83 +3205,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[    $4 == "vim"   ]] && f_dot_files_install_vimrc
          [[    $4 == "vimrc" ]] && f_dot_files_install_vimrc
       fi
-
-   elif [[ $2 == "ps1" ]] || [ $2 == "PS1" ]; then 
-      # uDev: This is a config to set, not an instalation
-      cd ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
-
-   elif [[ $2 == "fzf" ]]; then 
-      # Instalar fzf como foi recomendado pelos desenvolvedores
-
-      v_txt="Install fzf like original developers" && f_anyK
-      echo
-      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-      ~/.fzf/install
-
-   elif [[ $2 == "bitcoin-core" ]]; then 
-      # Install a full Bitcoin node to validade blocks and allow mining
-      sudo snap install bitcoin-core
-
-   elif [[ $2 == "pycharm" ]]; then 
-      # Install a dedicated GUI text editor for python
-
-      f_greet
-
-      echo "Installing PyCharm on Fedora"
-      echo " > Press ENTER to continue; Press Ctrl-C to Abort"
-      echo 
-      read -sn 1
-      echo "Tutorial source: https://snapcraft.io/install/pycharm-community/fedora#install"
-      echo 
-      # Installing Snap Store and from there, installing pycharm-community
-         sudo dnf install snapd
-         sudo ln -s /var/lib/snapd/snap /snap
-         sudo snap install pycharm-community --classic
-      echo
-      echo "PyCharm installed"
-      echo " > Logout the session or restart to update and use pyCharm"
-  
-   elif [[ $2 == "doom-emacs-windows" ]]; then 
-      # installing Doom Emacs on Windows
-      echo "uDev: Tutorial here:"
-      echo " > https://dev.to/scarktt/installing-doom-emacs-on-windows-23ja"
-
-   elif [[ $2 == "doom-emacs" ]]; then 
-      # installing Doom Emacs on Linux
-      echo "Installing Doom Emacs on Linux "
-      read -p " > Do you want to continue?"
-
-      # Dependencies
-         sudo apt install git emacs ripgrep fd find
-      
-      # Now, doom itself
-         git clone --depth 1 http://github.com/hlissner/doom-emacs ~/.emacs.d
-      
-      # Installing doom
-         cd ~
-         bash .emacs.d/bin/doom install
-      
-      # Utilities found in bin/doom
-         #bash .emacs.d/bin/doom sync
-         #bash .emacs.d/bin/doom upgrade
-         #bash .emacs.d/bin/doom doctor
-         #bash .emacs.d/bin/doom purge
-         #bash .emacs.d/bin/doom help
-         
-      # Instead of giving the full path to the command, we can add the dir to ou PATH variable
-         export PATH="$HOME/.emacs.d/bin:$PATH"
-
-      # The standard emacs dir is ~/.emacs.d
-         # DistroTube (DT) says to never play in this directory
-         # Play in the directory ~/.doom.d instead
-         # An alternative, instead of using ~/.doom.d you can use ~/.config/.doom.d (you move the dir, you do not duplicate it)
-         
-         # Let's move our dir
-            mv ~/.doom.d ~/.config/.doom.d
-
-      # Now just launch
-         echo "Now run emacs like you normally would"
-         echo "Done!"
 
    elif [[ $2 == "xrandr" ]] || [ $2 == "xrr" ]; then 
       # Config the correct screen resolution with `xrandr`
@@ -3220,11 +3255,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
                  echo "Tente: \`xrandr --output HDMI-$v_nr --mode $v_tv\`"
       fi
 
-   elif [[ $2 == "upk-at-work" ]] || [[ $2 == "upk-tmp-phone" ]]; then 
-      # Makes all dependencies for upk repo available
-      # This might be used most likely at in-job phone
-
-      f_quick_install_all_upk
 
    elif [[ $2 == "1" ]]; then 
       # Edit script "DRYa fzf installer"
