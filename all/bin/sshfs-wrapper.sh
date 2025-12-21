@@ -158,9 +158,9 @@ function f_menu_visualizar_output_files {
          Lz1='CMD used: '; Lz2='D ssh ..'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
 
          L5='5. Ver | ficheiro da chave publica'                                      
-         L4='4. Ver | ficheiro output: temporario, local'                                      
-         L3='3. Ver | ficheiro output: repo omni-log'                                      
-         L2='2. Ver | ficheiro output: repo Verbose-lines'                                      
+         L4='4. Ver | ficheiro output: repo omni-log'                                      
+         L3='3. Ver | ficheiro output: repo Verbose-lines'                                      
+         L2='2. Ver | ficheiro output: temporario, local'                                      
          L1='1. Cancel'
 
          Lh=$(echo -e "\nTrocar de visualizador: \`ee\` \nVisualizador atual:     '$Lhc' \n")
@@ -169,10 +169,10 @@ function f_menu_visualizar_output_files {
       # Ordem de Saida das opcoes durante run-time
          v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
-      [[   $v_list =~ "5." ]] && less $v_temporary_file        
-      [[   $v_list =~ "4." ]] && less $v_verbose_line_tmp_file 
-      [[   $v_list =~ "3." ]] && echo '$v_verbose_line_file_omni_log not set yet'
-      [[   $v_list =~ "2." ]] && less $v_verbose_line_file     
+      [[   $v_list =~ "5." ]] && bash e $v_temporary_file        
+      [[   $v_list =~ "4." ]] && echo '$v_verbose_line_file_omni_log not set yet'
+      [[   $v_list =~ "3." ]] && bash e $v_verbose_line_file     
+      [[   $v_list =~ "2." ]] && bash e $v_verbose_line_tmp_file 
       [[   $v_list =~ "1." ]] && echo "Canceled"
       unset v_list
 }
@@ -268,7 +268,7 @@ function f_concat_IP {
       v_com_IP_publico="IP publico: 'sshfs $USER@$v_ip:$v_r_dir $v_dir_to_mount'"
       echo " > $v_com_IP_publico"
       echo
-      v_com_IP_local="IP local: 'sshfs $USER@$v_loc_ip:$v_r_dir $v_dir_to_mount'" 
+      v_com_IP_local="IP local:   'sshfs $USER@$v_loc_ip:$v_r_dir $v_dir_to_mount'" 
       echo " > $v_com_IP_local" 
 }
 
@@ -292,28 +292,36 @@ function f_send_public_key_to_verbose_line_repo {
       # Texto que indica ao cliente, em qual pasta montar os ficheiros do servidor
          v_mont="Pasta onde montar (cliente): $v_dir_to_mount"
 
-      # Comando que o cliente vai introduzir
-         v_comando="Comando a ser introduzido no terminal (cliente)"
+      # Comando SSHFS que o cliente vai introduzir
+         v_comando_sshfs="Comando SSHFS a ser introduzido no terminal (cliente)"
+
+      # Comando SSH que o cliente vai introduzir
+         v_comando_ssh="Comando SSH a ser introduzido no terminal (cliente)"
 
       # Despeja a chave publica no nosso ficheiro verboso temporario (antes de enviar para uma repo centralizada com DRYa)
-         echo                          > $v_verbose_line_tmp_file
-         echo "$v_data"               >> $v_verbose_line_tmp_file
-         echo                         >> $v_verbose_line_tmp_file
-         echo "$v_public "            >> $v_verbose_line_tmp_file
-         cat $v_public_key            >> $v_verbose_line_tmp_file  
-         echo                         >> $v_verbose_line_tmp_file
-         echo "$v_user"               >> $v_verbose_line_tmp_file
-         echo                         >> $v_verbose_line_tmp_file
-         echo "IP publico: $v_ip"     >> $v_verbose_line_tmp_file
-         echo "IP local:   $v_loc_ip" >> $v_verbose_line_tmp_file
-         echo                         >> $v_verbose_line_tmp_file
-         echo "$v_texto_mq_atual"     >> $v_verbose_line_tmp_file
-         echo                         >> $v_verbose_line_tmp_file
-         echo "$v_mont"               >> $v_verbose_line_tmp_file 
-         echo                         >> $v_verbose_line_tmp_file
-         echo "$v_comando"            >> $v_verbose_line_tmp_file 
-         echo "   $v_com_IP_local  "  >> $v_verbose_line_tmp_file 
-         echo "   $v_com_IP_publico"  >> $v_verbose_line_tmp_file
+         echo                             > $v_verbose_line_tmp_file
+         echo "$v_data"                  >> $v_verbose_line_tmp_file
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_public "               >> $v_verbose_line_tmp_file
+         cat $v_public_key               >> $v_verbose_line_tmp_file  
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_user"                  >> $v_verbose_line_tmp_file
+         echo                            >> $v_verbose_line_tmp_file
+         echo "IP publico: $v_ip"        >> $v_verbose_line_tmp_file
+         echo "IP local:   $v_loc_ip"    >> $v_verbose_line_tmp_file
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_texto_mq_atual"        >> $v_verbose_line_tmp_file
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_mont"                  >> $v_verbose_line_tmp_file 
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_comando_sshfs"         >> $v_verbose_line_tmp_file 
+         echo "   $v_com_IP_local  "     >> $v_verbose_line_tmp_file 
+         echo "   $v_com_IP_publico"     >> $v_verbose_line_tmp_file
+         echo                            >> $v_verbose_line_tmp_file
+         echo "$v_comando_ssh"           >> $v_verbose_line_tmp_file 
+         echo "   'ssh $USER@$v_loc_ip'" >> $v_verbose_line_tmp_file
+         echo "   'ssh $USER@$v_ip'"     >> $v_verbose_line_tmp_file
+         
 
       # Copia o ficheiro de output para uma repo centralizada com DRYa
          if [ -d $v_verbose_line_file ]; then
@@ -1186,16 +1194,16 @@ function f_main_menu {
       # List of menu options
          Lz="DRYa: sshfs-wrapper.sh"
 
-         L9="9. | h   | Help"
+         L9="9. |  h  | Help"
 
          L8="8. |     | Delete   | SSH key" 
 
          L7="7. |     | Lista    | Mounting Points pre-definidos"
-         L6="6. |     | Ver      | Consult Output files"
+         L6="6. | ..  | Ver      | Consult Output files"
          L5="5. | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
 
-         L4="4. |     | Desligar | Servico SSH ou SSHFS"
-         L3="3. |     | Ligar    | Servico SSH ou SSHFS"
+         L4="4. | off | Desligar | Servico SSH ou SSHFS"
+         L3="3. | on  | Ligar    | Servico SSH ou SSHFS"
 
          L2="2. |  s  | Ver      | Estado atual do sistema"
          L1="1. Cancelar" 
