@@ -1096,19 +1096,25 @@ function f_list_ip_public_n_local {
    f_3   # Testing 'ip'
 
    echo "Vars:"
-   echo $v_f1_ip
-   echo $v_f2_ip
-   echo $v_f3_ip
-   
-   db
+   echo " > $v_f1_ip"
+   echo " > $v_f2_ip"
+   echo " > $v_f3_ip"
 
-        
-
-      # Defining final variable
-         ( [[ -n $LOCAL_IP_1 ]] && LOCAL_IP=$LOCAL_IP_1 )  || \
-         ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_2 )  || \
-         ( [[ -n $LOCAL_IP_3 ]] && LOCAL_IP=$LOCAL_IP_3 )  || \
-         echo "No command could find Local IP: 'ifconfig', 'hostname', 'ip'" 
+   # Defining final variable
+      if [ -n $v_f1_ip ]; then
+         v_ip=$v_f1_ip
+      else
+         if [ -n $v_f2_ip ]; then
+            v_ip=$v_f2_ip
+         else
+            if [ -n $v_f3_ip ]; then
+               v_ip=$v_f3_ip
+            else
+               echo "These could find Local IP:"
+               echo " > 'ifconfig', 'hostname', 'ip'" 
+            fi         
+         fi
+      fi
 
    echo
 
@@ -1124,16 +1130,16 @@ function f_list_ip_public_n_local {
    # Send last IP numbers to ssms
       echo "Sending to ssms"
       echo
+
    # Clear the screen
-      v_secs=3
-      f_talk; echo "Clearing the screen in ${v_secs} seconds..."
+      f_talk; echo "[Enter] to clean screen and Print results"
       read -sn1 # -t $v_secs
       f_greet
 
 
    # Imprimindo os resultados
       echo "IP Público: $PUBLIC_IP"
-      echo "IP Local:   $LOCAL_IP"
+      echo "IP Local:   $v_ip"
 
    # Testar se existe algum comando `ifconfig` que se instala com o pacote 'net-tools'
 }
