@@ -391,14 +391,16 @@ function f_check_installed_ssh_verbose {
    # Check if ssh command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_ssh_installed == "true" ]]; then
-            echo -n " > SSH is:  "
-      f_c7; echo    "installed."
-      f_rc; echo
+            echo -n " > SSH is: "
+      f_c8; echo -n "installed."
+      f_rc; echo    " (Client)"
+            echo
 
    elif [[ $v_ssh_installed == "false" ]]; then
-            echo -n " > SSH is:  "
-      f_c8; echo    "not installed."
-      f_rc; echo
+            echo -n " > SSH is: "
+      f_c8; echo -n "not installed."
+      f_rc; echo    " (Client)"
+            echo
    
    else
       echo "O software nao conseguiu detetar se está ou nao está instalado SSH devido a um erro"
@@ -618,16 +620,17 @@ function f_check_if_fuse_exists_verbose {
    # Check if sshfs command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_group == "true" ]]; then
-      echo " > Group fuse exists."
+      echo " > Group fuse exists. (Cliente)"
 
    elif [[ $v_group == "false" ]]; then
-      echo " > Group fuse does not exist."
+      echo " > Group fuse does not exist. (Cliente)"
    
    else
       echo "O software nao conseguiu detetar se existe ou nao um grupo FUSE devido a um erro"
       exit 1
    fi
 
+   echo "   (Para o o root user controlar quem pode montar filesystems)"
    echo
 }
 
@@ -1177,6 +1180,9 @@ function f_help {
            echo " > ssh utilizador@ip_do_servidor (exemplo)"
            echo " > ssh pi@192.168.1.50 (exemplo por IP)"
            echo " > ssh pi@retropi.local (exemplo por hostname)"
+      echo '
+Acerca do grupo FUSE:
+O root user da maquina do cliente pode nao querer que outros users nao tenham permissoes para montar filesystems com sshfs, entao, na maquina do cliente so os users nesse grupo é que podem usar sshfs'
 
 }
 
