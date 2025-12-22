@@ -687,7 +687,7 @@ function f_dotFiles_install_git_set_machine_name {
          echo
 
       # Path to the list of preset possible machine names
-         v_list_of_machines="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/list-machine-names.txt"
+         v_list_of_machines="${v_REPOS_CENTER}/DRYa/all/etc/list-machine-names.txt"
 
       # Creating fzf menu
          v_prompt="DRYa: Git: Qual é o nome que quer dar a maquina atual: "
