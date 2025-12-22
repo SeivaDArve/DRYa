@@ -1866,7 +1866,7 @@ function f_drya_fzf_MM_Toolbox {
          L17='17. Menu   |  cln  | Clone Repositories (github)'
          L16='16. Menu   | mt-ls | Metadata management'
          L15='15. Menu   |  ip   | Internet / Network / IP'
-         L14='14. Script |  ssh  | sshfs-wrapper'
+         L14='14. Script |  ssh  | drya-ssh-sshfs'
          L13='13. Menu   |  plr  | Audio (Media Player + Voice Recorder)'  
          L12='12. Print  |       | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
          L11='11. Print  |       | `curl` tricks: Online man pages'  
@@ -1898,7 +1898,7 @@ function f_drya_fzf_MM_Toolbox {
          [[   $v_list =~ "17. " ]] && echo "uDev"
          [[   $v_list =~ "16. " ]] && echo "uDev"
          [[   $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
-         [[   $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh 
+         [[   $v_list =~ "14. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-ssh-sshfs.sh
          [[   $v_list =~ "13. " ]] && f_menu_audio_media_player
          [[   $v_list =~ "12. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[   $v_list =~ "11. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
@@ -3393,7 +3393,7 @@ elif [ $1 == "save-backup" ]; then
 elif [ $1 == "ssh" ]; then 
    # Options for SSH File System
 
-   v_script=${v_REPOS_CENTER}/DRYa/all/bin/sshfs-wrapper.sh
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-ssh-sshfs.sh
 
    #     # (legacy. errado. Este erro nao sera apagado para info no futuro):
    #        Para transportar os argumento de script para script, exportamos para o env 
@@ -3406,7 +3406,7 @@ elif [ $1 == "ssh" ]; then
    #     # (Correto: `bash /example/example/example.sh $*`)
    
    if [ -z $2 ]; then
-      # Executamos o wrapper do SSHFS
+      # Executamos o wrapper drya do SSHFS
       bash $v_script 
 
    elif [ $2 == "." ]; then 
