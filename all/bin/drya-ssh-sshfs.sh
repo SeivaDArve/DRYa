@@ -1,6 +1,6 @@
 #!/bin/bash
-# Title: DRYa: sshfs-wrapper
-__name__="sshfs-wrapper.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+# Title: drya-ssh-sshfs.sh
+__name__="drya-ssh-sshfs.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 
 # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
@@ -790,7 +790,7 @@ function f_ser_servidor {
 
    
    # Lista de opcoes
-      Lz="DRYa: sshfs-wrapper.sh"
+      Lz="drya-ssh-sshfs.sh"
 
       L4="4. Dar acesso a: .  (pasta atual)"
       L3="3. Dar acesso a: /  (raiz do sistema)"
@@ -805,7 +805,7 @@ function f_ser_servidor {
       [[ $v_menu =~ "4." ]] && echo " > Quer deixar aceder a: . "   && v_r_dir=.
       [[ $v_menu =~ "3." ]] && echo " > Quer deixar aceder a: / "   && v_r_dir=/
       [[ $v_menu =~ "2." ]] && echo " > Quer deixar aceder a: ~ "   && v_r_dir=~
-      [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh" && exit 0
+      [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz" && exit 0
       #unset v_menu
       cd $v_r_dir
 
@@ -1030,7 +1030,7 @@ function f_enable_everything {
 
    ##########################################################################
    # Perguntar: Cliente ou Servidor?
-         Lz="DRYa: sshfs-wrapper.sh"
+         Lz="drya-ssh-sshfs.sh"
 
          L3="3. Quero ser CLIENTE"
          L2="2. Quero ser SERVIDOR"
@@ -1042,7 +1042,7 @@ function f_enable_everything {
 
          [[ $v_menu =~ "3." ]] && f_ser_cliente  
          [[ $v_menu =~ "2." ]] && f_ser_servidor 
-         [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
+         [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz"
          unset v_menu
 
    ##########################################################################
@@ -1192,7 +1192,7 @@ function f_main_menu {
       # If no arguments are given, present the main menu
 
       # List of menu options
-         Lz="DRYa: sshfs-wrapper.sh"
+         Lz="drya-ssh-sshfs.sh"
 
          L9="9. |  h  | Help"
 
@@ -1222,7 +1222,7 @@ function f_main_menu {
          [[ $v_menu =~ "4." ]] && f_disable_everything
          [[ $v_menu =~ "3." ]] && f_enable_everything
          [[ $v_menu =~ "2." ]] && f_verbose_check
-         [[ $v_menu =~ "1." ]] && echo "Canceled: sshfs-wrapper.sh"
+         [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz"
          unset v_menu
 
    elif [ $1 == "h" ]; then
