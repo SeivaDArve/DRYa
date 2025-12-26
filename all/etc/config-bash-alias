@@ -820,3 +820,5 @@ function grep-here {
 # Horarios dos barcos softlusa
  alias barco="bash ${v_REPOS_CENTER}/omni-log/all/cp/barcos.sh"
  alias barcos="bash ${v_REPOS_CENTER}/omni-log/all/cp/barcos.sh"
+
+ alias mapa="telnet mapscii.me"

@@ -2,6 +2,7 @@
 # Title: drya-ssh-sshfs.sh
 __name__="drya-ssh-sshfs.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 __repo__="${v_REPOS_CENTER}/DRYa"
+v_fzf="DRYa: SSH:"
 
 # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
@@ -59,6 +60,64 @@ function f_declare_variables {
          #echo "Array elements: ${v_array_A_remote_dir[@]}"
 }
 
+function f_help {
+   f_greet
+   f_talk; echo "Help and instructions:"
+           echo 
+           echo '
+When the USER wants to be a CLIENT ans acess another SERVER
+ > uses ~/ssfhs/default-dir as mounting point
+
+When the USER wants to a SERVE and allow other machine as CLIENT
+ > Writes credentials at:
+   - Verbose-lines (repository, if exists)
+   - ~/.config     (if repo does not exist)
+   - Creates a QR code for the CLIENT to acess easily
+
+Tipical comand for SSH connection (client machine)
+ > ssh utilizador_do_servidor@ip_do_servidor (exemplo)
+ > ssh pi@192.168.1.50 (exemplo por IP)
+ > ssh pi@retropi.local (exemplo por hostname)
+
+
+Acerca do grupo FUSE:
+O root user da maquina do cliente pode nao querer que outros users nao tenham permissoes para montar filesystems com sshfs, entao, na maquina do cliente so os users nesse grupo é que podem usar sshfs
+
+
+
+Para ser servidor SSH num Android e Cliente SSH noutro Android:
+   no "Android 1 + Termux + AP (hotspot)"
+   no "Android 2 + Termux"
+
+ - Passos (Android 1) ------------------ :
+ - Ligar access point
+ - Instalar "sshd" e executar
+ - Pode confirmar que o processo existe com "top"
+ - existem ferramentas que detetam em que porta o sshd esta a escutar
+   tal como "ss -tlnp | grep ssh" 
+   ou "ss -tlnp | grep ssh | grep -v grep"
+   do package "iproute2"
+   em bash, se ja houver um alias para "ss" podemos executar \ss
+
+ - Passos (Android 2) ------------------ :
+
+ - Copiar ficheiros entre ambos ------------------ :
+   Do servidor para o cliente:
+   scp -P    8022 ficheiro.txt user_cliente@ip_do_cliente:/data/data/com.termux/files/home/
+   scp -r -P 8022 pasta/       user_cliente@ip_do_cliente:/data/data/com.termux/files/home/
+
+
+Nota: É possivel GUI via ssh com X11
+
+Ping sweep: Procurar um espectro (range) de IPs 
+   (Para quando nao temos a certeza qual é o IP do servidor ao qual nos ligarmos
+   for i in $(seq 1 254); do ping -c 1 -W 1 192.168.1.$i >/dev/null && echo "ativo: 192.168.1.$i"; done
+'
+
+}
+
+
+
 function f_corresponder_local_com_remota {
 
    # uDev: a Lista de maquinas disponiveis tem de ser a mesma lista usada por .gitconfig ($__repo__/all/etc/dot-files/git-github/list-machine-names)
@@ -66,7 +125,7 @@ function f_corresponder_local_com_remota {
    function f_get_current_machine_by_array {
       unset $v_current_local
       contador=0
-      L0="QUAL o nome desta maquina SERVIDOR (para facilitar no aparelho do CLIENTE): "
+      L0="$v_fzf QUAL o nome desta maquina SERVIDOR (para facilitar no aparelho do CLIENTE): "
 
       v_current_local=$(for i in ${v_array_B_this_machine[@]}; do 
                            echo "$contador. $i"; 
@@ -91,6 +150,9 @@ function f_corresponder_local_com_remota {
 
    function f_get_current_machine_by_list_of_machine_names {
       echo "uDev: usar fzf e $__repo__/all/etc/list-machine-names.txt" 
+      cat "$__repo__/all/etc/list-machine-names.txt" | fzf
+
+
    }
 
     f_get_current_machine_by_array
@@ -178,7 +240,7 @@ function f_menu_visualizar_output_files {
          L1='1. Cancel'
 
          Lh=$(echo -e "\nTrocar de visualizador: \`ee\` \nVisualizador atual:     '$Lhc' \n")
-         L0="DRYa: SSH: Menu de visualizacao de Output: "
+         L0="$v_fzf Menu de visualizacao de Output: "
 
       # Ordem de Saida das opcoes durante run-time
          v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
@@ -460,6 +522,7 @@ function f_check_installed_sshfs_verbose {
       exit 1
 
    fi
+      echo "   (SSHFS é um software sempre cliente)"
 
    echo
 }
@@ -498,12 +561,14 @@ function f_check_if_user_is_on_fuse_group_verbose {
 function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
 
-   echo " > Status do Daemon:"
+   echo " > Status do Daemon (Servidor a escutar SSH e SSHFS):"
    
    if [ $trid_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
+
       v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
-      echo "   Detetado Termux (buscando ...)" 
+
+      echo "   Detetado Termux, buscando processo 'sshd'..." 
 
    elif [ $trid_pkgm == "apt" ]; then 
       if [ $trid_OS == "Windows" ]; then
@@ -532,7 +597,8 @@ function f_check_ssh_daemon_is_on {
       echo "   Servico nao iniciado"
    
    else
-      echo "   $v_started"    # Print do estado, independentemente de como se chama o Daemon
+      echo "   Servico iniciado"    # Print do estado, independentemente de como se chama o Daemon
+
    fi
 
 }
@@ -632,10 +698,10 @@ function f_check_if_fuse_exists_verbose {
    # Check if sshfs command is available (WITH VERBOSE OUTPUT)
 
    if [[ $v_group == "true" ]]; then
-      echo " > Group fuse exists. (Cliente)"
+      echo " > Group fuse exists. (Cliente SSHFS)"
 
    elif [[ $v_group == "false" ]]; then
-      echo " > Group fuse does not exist. (Cliente)"
+      echo " > Group fuse does not exist. (Cliente SSHFS)"
    
    else
       echo "O software nao conseguiu detetar se existe ou nao um grupo FUSE devido a um erro"
@@ -753,9 +819,9 @@ function f_check_mounting_point_array {
 function f_delete_ssh_key {
    # Delete key file
 
-   echo "Default path for SSH key file:"
-   echo " > $v_public_key"
-   echo 
+   f_talk; echo "Default path for SSH key file:"
+           echo " > $v_public_key"
+           echo 
 
    if [[   -f $v_public_key ]]; then
       echo " > File exists..."
@@ -798,11 +864,11 @@ function f_create_DRYa_mounting_points {
    #echo "First element: ${my_array[0]}"
 }
 
-function f_ser_servidor_ssh {
+function f_ser_cliente_ssh {
    echo "uDev"
 }
 
-function f_ser_servidor_sshfs {
+function f_ser_servidor {
    # Perguntar ao servidor, a que pasta quer deixar aceder o cliente
 
    f_talk; echo "Quero ser: Servidor SSHFS"
@@ -817,7 +883,7 @@ function f_ser_servidor_sshfs {
       L2="2. Dar aceeso a: ~  (documentos do utilizador)"
       L1="1. Calcelar"
 
-      L0="Para SERVIDOR: A que pasta quer dar acesso?"
+      L0="$v_fzf Memu 'SERVIDOR': A que pasta quer dar acesso?"
 
       v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
 
@@ -876,14 +942,13 @@ function f_ser_servidor_sshfs {
       f_menu_visualizar_output_files 
 }
 
-function f_ser_cliente {
+function f_ser_cliente_sshfs {
    # Perguntar: Qual maquina remota quer aceder?
 
    f_greet
 
    f_talk; echo "Quero ser: Cliente"
            echo
-
    f_talk; echo "Qual o nome da maquina remota a que quer aceder?"
            echo " > (para assegurar criar pasta pre-definida nesta maquina)"
            echo
@@ -934,9 +999,9 @@ function f_enable_everything {
    # Instalar SSHFS (verificando primeiro se ja está instalado)
 
       # Verificar se ja está instalado:
-         f_check_installed_ssh      # Vai traser a variavel $v_sshfs_installed "true" ou "false"
-         f_check_installed_ssh_key  # Vai traser a variavel $v_sshfs_installed "true" ou "false"
-         f_check_installed_sshfs    # Vai traser a variavel $v_sshfs_installed "true" ou "false"
+         f_check_installed_ssh      # Retorna $v_ssh_installed     "true" ou "false"
+         f_check_installed_ssh_key  # Retorna $v_ssh_installed_key "true" ou "false"
+         f_check_installed_sshfs    # Retorna $v_sshfs_installed   "true" ou "false"
       
       # se nao estiver instalada ssh, vai instalar
          if [[ $v_ssh_installed == "false" ]]; then 
@@ -1054,22 +1119,29 @@ function f_enable_everything {
 
    ##########################################################################
    # Perguntar: Cliente ou Servidor?
-         Lz="drya-ssh-sshfs.sh"
+         Lz="D ssh on"
 
-         L5="5. Criar Reverse Shell (uDev)"
-         L4="4. Quero ser CLIENTE"
-         L3="3. Quero ser SERVIDOR SSH"
-         L2="2. Quero ser SERVIDOR SSHFS"
+         L8="8. Router home page (Reserve Mac -> IP)"
+         L7="7. Router home page (port forwarding)"
+         L6="6. Criar Reverse Shell (uDev)"
+         L5="5. 'Termux ssh' + 'Termux sshd AP'"
+
+         L4="4. Quero ser CLIENTE SSHFS"
+         L3="3. Quero ser CLIENTE SSH"
+         L2="2. Quero ser SERVIDOR (SSH ou SSHFS)"
          L1="1. Cancelar"
 
-         L0="SELECIONE 1 para ligar o servico (ON)"
+         L0="$v_fzf Menu 'enable': "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lz" | fzf --prompt "$L0")
 
-         [[ $v_menu =~ "5." ]] && echo "uDev: Criar reverse shell, onde é o Servidor quem liga ao Cliente"
-         [[ $v_menu =~ "4." ]] && f_ser_cliente
-         [[ $v_menu =~ "3." ]] && f_ser_servidor_ssh
-         [[ $v_menu =~ "2." ]] && f_ser_servidor_sshfs
+         [[ $v_menu =~ "8." ]] && echo "uDev"
+         [[ $v_menu =~ "7." ]] && echo "uDev"
+         [[ $v_menu =~ "6." ]] && echo "uDev: Criar reverse shell, onde é o Servidor quem liga ao Cliente"
+         [[ $v_menu =~ "5." ]] && echo "uDev"
+         [[ $v_menu =~ "4." ]] && f_ser_cliente_sshfs
+         [[ $v_menu =~ "3." ]] && f_ser_cliente_ssh
+         [[ $v_menu =~ "2." ]] && f_ser_servidor
          [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz"
          unset v_menu
 
@@ -1080,6 +1152,8 @@ function f_enable_everything {
 
 
 function f_confirmar_turn_ssh_offline {
+   # uDev: este menu de confirmacao so deve aparecer se houver conexao atual entre cliente e servidor, senao nao faz sentido perguntar se quer interrumper alguma ligacao
+
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='Tornar SSH Offline'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
@@ -1087,7 +1161,7 @@ function f_confirmar_turn_ssh_offline {
       L2='2. Nao | Nao fazer nada'
       L1='1. Cancel'
 
-      L0="SELECT 1 do menu 'Go offline': "
+      L0="$v_fzf SELECT 1 do menu 'Go offline': "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -1132,33 +1206,35 @@ function f_confirmado_tornar_ssh_offline {
 
 function f_confirmar_desinstalacao_ssh {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='Uninstall ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='D ssh u'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L3='3. Sim | Tenho a certeza, quero desinstalar tudo'
-      L2='2. Nao | Tenho a certeza, cancelar desinstalacao'
+      L4="4. Apagar chaves RSI"
+      L3="3. Desinstalar Servidor/Daemon ('sshd')"
+      L2='2. Desinstalar tudo'
       L1='1. Cancel'
 
-      L0="SELECT 1 do menu 'Disable': "
+      L0="$v_fzf Menu 'Desinstalar': "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "3. " ]] && f_uninstall_sshfs
-      [[ $v_list =~ "2. " ]] && echo "Canceled: Uninstalation of ssh"
+      [[ $v_list =~ "4. " ]] && f_delete_ssh_key 
+      [[ $v_list =~ "3. " ]] && echo "uDev"
+      [[ $v_list =~ "2. " ]] && f_uninstall_sshfs
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2"
       unset v_list
 }
 
 function f_disable_ev_1st_menu {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='SSH Disable'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='D ssh off'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L3='3. Menu Desinstalar'
       L2='2. Desligar (colocar Offline)'                                      
       L1='1. Cancel'
 
-      L0="SELECIONE 1 do menu 'Disable': "
+      L0="$v_fzf Menu 'Desligar': "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -1185,26 +1261,11 @@ function f_disable_everything {
 
 
 
-function f_help {
-   f_greet
-   f_talk; echo "Help and instructions:"
-           echo 
-           echo "When the USER wants to be a CLIENT ans acess another SERVER"
-           echo " > uses ~/ssfhs/default-dir as mounting point"
-           echo 
-           echo "When the USER wants to a SERVE and allow other machine as CLIENT"
-           echo " > Writes credentials at:"
-           echo "   - Verbose-lines (repository, if exists)"
-           echo "   - ~/.config     (if repo does not exist)"
-           echo "   - Creates a QR code for the CLIENT to acess easily"
-           echo 
-           echo "Tipical comand for SSH connection (client machine)"
-           echo " > ssh utilizador@ip_do_servidor (exemplo)"
-           echo " > ssh pi@192.168.1.50 (exemplo por IP)"
-           echo " > ssh pi@retropi.local (exemplo por hostname)"
-      echo '
-Acerca do grupo FUSE:
-O root user da maquina do cliente pode nao querer que outros users nao tenham permissoes para montar filesystems com sshfs, entao, na maquina do cliente so os users nesse grupo é que podem usar sshfs'
+
+function f_ver_output_1 {
+   # Ver o ultimo output de dados/configs
+   [[ -f $v_output_1 ]] && bash e $v_output_1 || echo "File does not exist"
+
 
 }
 
@@ -1222,34 +1283,36 @@ function f_main_menu {
       # List of menu options
          Lz="drya-ssh-sshfs.sh"
 
-         L9="9. |  h  | Help"
+         L10="10. |  h  | Help"
 
-         L8="8. |     | Delete   | SSH key" 
+          L9="9.  |     | Delete   | SSH key" 
 
-         L7="7. |     | Lista    | Mounting Points pre-definidos (sshfs)"
-         L6="6. | ..  | Ver      | Consult Output files"
-         L5="5. | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
+          L8="8.  |     | Lista    | Mounting Points pre-definidos (sshfs)"
+          L7="7.  | ..  | Ver      | Consult Output files"
+          L6="6.  | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
 
-         L4="4. | off | Desligar | Servico SSH ou SSHFS"
-         L3="3. | on  | Ligar    | Servico SSH ou SSHFS"
+          L5="5.  | off | Desligar | Servico SSH ou SSHFS"
+          L4="4.  | on  | Ligar    | Servico SSH ou SSHFS"
 
-         L2="2. |  s  | Ver      | Estado atual do sistema"
-         L1="1. Cancelar" 
+          L3="3.  |  o  | Ver      | Ultimo Output de dados/configs"
+          L2="2.  |  s  | Ver      | Estado atual do sistema"
+          L1="1. Cancelar" 
 
-         L0="DRYa: SSH: Menu Principal: "
+         L0="$v_fzf Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n\n$L8 \n\n$L9 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n\n$L10 \n\n$Lz" | fzf --prompt "$L0")
 
       # Executar de acordo com o resultado
-         [[ $v_menu =~ "9." ]] && f_help
-         [[ $v_menu =~ "8." ]] && f_delete_ssh_key
-         [[ $v_menu =~ "7." ]] && f_ver_as_pastas_pre_definidas
-         [[ $v_menu =~ "6." ]] && f_menu_visualizar_output_files  
-         [[ $v_menu =~ "5." ]] && f_how_to_connect_client_to_server
-         [[ $v_menu =~ "4." ]] && f_disable_everything
-         [[ $v_menu =~ "3." ]] && f_enable_everything
-         [[ $v_menu =~ "2." ]] && f_verbose_check
-         [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz"
+         [[   $v_menu =~ "10." ]] && f_help
+         [[   $v_menu =~ "9. " ]] && f_delete_ssh_key
+         [[   $v_menu =~ "8. " ]] && f_ver_as_pastas_pre_definidas
+         [[   $v_menu =~ "7. " ]] && f_menu_visualizar_output_files  
+         [[   $v_menu =~ "6. " ]] && f_how_to_connect_client_to_server
+         [[   $v_menu =~ "5. " ]] && f_disable_everything
+         [[   $v_menu =~ "4. " ]] && f_enable_everything
+         [[   $v_menu =~ "3. " ]] && f_ver_output_1 
+         [[   $v_menu =~ "2. " ]] && f_verbose_check
+         [[   $v_menu =~ "1. " ]] && echo "Canceled: $Lz"
          unset v_menu
 
    elif [ $1 == "h" ]; then
@@ -1267,6 +1330,10 @@ function f_main_menu {
       # Go directly to the OFF option
       f_disable_everything
 
+   elif [ $1 == "u" ]; then
+      # Menu de desinstalacao
+      f_confirmar_desinstalacao_ssh 
+
    elif [ $1 == ".." ]; then
       # See last output file
       f_menu_visualizar_output_files
@@ -1278,6 +1345,10 @@ function f_main_menu {
    elif [ $1 == "ccc" ]; then
       # Client Connect Command (verbose)
       f_how_to_connect_client_to_server
+
+   elif [ $1 == "o" ]; then
+      # Ver o ultimo output de dados/configs
+      f_ver_output_1
    fi
 }
 
@@ -1342,9 +1413,9 @@ function f_exec {
       #f_delete_DRYa_mounting_points
 
    # Dados de connexao
-      #f_ser_servidor_sshfs
-      #f_ser_servidor_ssh
-      #f_ser_cliente
+      #f_ser_servidor
+      #f_ser_cliente_ssh
+      #f_ser_cliente_sshfs
    # Instructions and wizzard to Uninstall everything
 }
 f_exec $*

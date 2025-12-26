@@ -4,7 +4,7 @@
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
-   v_fzf_talk=DRYa
+   v_fzf_talk=DRYa  # uDev: passar para v_fzf
 
    __name__=drya.sh
    __repo__=${v_REPOS_CENTER}/DRYa

@@ -98,6 +98,10 @@ function f_usefull {
       gnupg \          # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
       tar \            # Comprimit pastas com gzip para ficheiros .tar.gz
       ssh \            # Need to connect to raspberry Pi
+         # openssh-client  (debian)
+         # openssh-clients (red-hat)
+         # openssh         (arch)
+         # sshd            (servidor, usado nas 3 distribuicoes)
       sshfs \          # Mout ssh as a file system 
       whiptail \       # Tool to give GUI menus on Bash
       dialog \         # Tool to give GUI menus on Bash (like whiptail but with more options
