@@ -1349,6 +1349,10 @@ function f_main_menu {
    elif [ $1 == "o" ]; then
       # Ver o ultimo output de dados/configs
       f_ver_output_1
+
+   elif [ $1 == "uu" ] || [ $1 == "uDev" ]]; then
+      # Serve para testar funcoes que normalemte nao tem menu ou acesso direto
+      f_corresponder_local_com_remota 
    fi
 }
 
