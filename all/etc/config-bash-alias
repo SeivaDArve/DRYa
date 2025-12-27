@@ -493,7 +493,7 @@ function shebang {
 
    if [ -z $1 ]; then
       # Prompt for a filename
-         echo "shebang: what are the script names to create?"
+         echo "shebang: what are the script names to create? (bash)"
          read -p " > " v_list 
          echo
 

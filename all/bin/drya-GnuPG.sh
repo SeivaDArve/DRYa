@@ -585,7 +585,7 @@ function f_testing_drya_defaults {
 
    f_gpg_path
 
-   v_secs=1
+   v_secs=0.3
 
    f_talk; echo "Testing DRYa defaults (${v_secs}s)"
            echo " > software 'gnupg' installed?"
@@ -1063,7 +1063,7 @@ function f_GnuPG_main_menu {
       #read -r v_ans
       
       #v_ans=${v_ans,,}   # Nota: Em bash, as virgulas dentro de ${var,,} servem para converter o texto em minusculas
-                         #       Exemplo:  `case "${v_ans,,}" in ... esac`
+                          #       Exemplo:  `case "${v_ans,,}" in ... esac`
 
    # Take action on the option choosen and given as answer
       #f_GnuPG_main_menu__take_action 
@@ -1310,19 +1310,21 @@ elif [ $1 == "+" ] || [ $1 == "add-text-file-confidential-info" ]; then
    mkdir -p $v_dryaGPG
 
    f_talk; echo "Creating sensitive data:"
-
    f_hline
-   f_talk; echo "Options:"
-   echo " > Plain text file (empty, with JSON)"
-   echo " > Directory       (empty, with JSON)"
-   echo
-   echo " > If prompt is not at .dryGPG dir, New creations will be moved there"
+   f_talk; echo    "Options:"
+           echo    " > Plain text file (empty, with JSON)"
+           echo    " > Directory       (empty, with JSON)"
+           echo
+           echo    " > If prompt is not at .dryGPG dir, New creations will be moved there"
 
    f_hline  
-   f_talk; echo "New name:"
-           echo " > Default: '$v_data' (current date)"
-   read -p      " > " v_sens
-   echo
+
+   f_talk; echo    "New name:"
+           echo    " > Default: '$v_data' (current date)"
+
+           read -p " > " v_sens
+           echo
+
 
    v_sens=${v_sens:-"$v_data"}
 

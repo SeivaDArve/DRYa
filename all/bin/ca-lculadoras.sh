@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Title: Calculator-with-registry
 
@@ -56,7 +57,7 @@ function f_set_history_reg {
       #    registos da calculadora é $v_reg_om
 
       # Debug
-         echo -n " > Test 1: testing DB omni-log existence" && f_suc3
+         echo -n " > Test 1: Testing DB omni-log existence" && f_suc3
 
       # Assegurar que existe dentro de omni-log... :
          mkdir -p $v_reg_om/$v_dir       # ...A pasta onde vao ser guardados os ficheiros de registo
@@ -123,10 +124,13 @@ function f_set_history_reg {
       echo "   $v_reg"
       echo
 
-   v_secs=4
-   f_talk; echo "Any key to continue (or wait $v_secs secs)... "
+   # drya-fast-toggle-for-vars
+      v_secs=4
+      v_secs=0.3
+      
+   f_talk; echo             "Any key to continue (or wait $v_secs secs)... "
    read -sn 1 -t $v_secs -p " > "
-   echo
+           echo
 }
 
 
