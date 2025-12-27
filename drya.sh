@@ -2226,10 +2226,8 @@ function f_drya_get_all_repo_names_private_public {
 }
 
 function f_zip_unzip {
-   echo "uDev: Menu com opcoes zip/unzip"
-
-   # uDev: aprender bruteforce para unzip: https://www.instagram.com/reel/DJfFjNpuvwW/?igsh=YTA3eDVuYTc2cmFt
-   #                                       https://www.instagram.com/reel/DHzW9hboyfH/?igsh=dWgyMnRnZWE4bGJo
+   shift
+   bash $__repo__/all/bin/drya-zip-unzip.sh $*
 }
 
 
@@ -4081,7 +4079,8 @@ elif [ $1 == "hush" ]; then
    # Ligar/Desligar o output verboso do Termux. 
    f_toggle_termux_hushlogin 
 
-elif [ $1 == "zip" ] ; then 
+elif [ $1 == "zp" ] ; then 
+   # Menu for 'zip' and 'unzip' commands
    f_zip_unzip
 
 elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 

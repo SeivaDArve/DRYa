@@ -10,3 +10,10 @@
 
 
 
+# uDev: aprender bruteforce para unzip: https://www.instagram.com/reel/DJfFjNpuvwW/?igsh=YTA3eDVuYTc2cmFt
+#                                       https://www.instagram.com/reel/DHzW9hboyfH/?igsh=dWgyMnRnZWE4bGJo
+
+
+
+echo "uDev: Menu com opcoes zip/unzip"
+echo "uDev: Menu com opcoes zip/unzip"
