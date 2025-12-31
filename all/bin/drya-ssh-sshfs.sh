@@ -160,6 +160,10 @@ Port Forwarding
        `sudo vim /etc/ssh/sshd_config`
        descomentar: "PasswordAuthentication no"
        necessario reeniciar o daemon para fazer efeito
+
+   11. Configurar DHCP no router (IP reservation)
+       (definir um IP fixo para um MAC fixo)
+       uDev
 '
 
 }
