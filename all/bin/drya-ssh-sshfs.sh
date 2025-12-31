@@ -145,6 +145,21 @@ Port Forwarding
       - Chaves SSh
       - login root
       - portao nao padrao (8171 está otimo)
+
+   8. Criar uma ssh key no cliente (obrigatorio)
+      `ssh-keygen -t ed25519`  
+      (o "ed25519" é um nome de alegoritmo de criptografia)
+      confirmar que esta criada: `ls ~/.ssh`
+
+   9. No cliente, enviar a ssh key para o servidor
+      `ssh-copy-id -p 8171 <user>@<ip-do-servidor>`
+      confirmar que esta criada: `ls ~/.ssh`
+      isto cria ~/.ssh/authorized_keys
+
+   10. Opcional (mas recomendado), desligar passwords:
+       `sudo vim /etc/ssh/sshd_config`
+       descomentar: "PasswordAuthentication no"
+       necessario reeniciar o daemon para fazer efeito
 '
 
 }
