@@ -65,7 +65,7 @@ function f_help {
    f_talk; echo "Help and instructions:"
            echo 
            echo '
-When the USER wants to be a CLIENT ans acess another SERVER
+When the user wants to be a CLIENT and access a SERVER
  > uses ~/ssfhs/default-dir as mounting point
 
 When the USER wants to a SERVE and allow other machine as CLIENT
@@ -79,6 +79,11 @@ Tipical comand for SSH connection (client machine)
  > ssh pi@192.168.1.50 (exemplo por IP)
  > ssh pi@retropi.local (exemplo por hostname)
 
+Flags:
+ > ssh -v -X -p 8172 pi@192.168.1.50 
+   -v  verbose
+   -X  forwarding GUI com X11 (quem tem de ter X11 instalado é o cliente)
+   -p  Numero da porta de acesso pelo router caso nao ser 22 padrai«o
 
 Acerca do grupo FUSE:
 O root user da maquina do cliente pode nao querer que outros users nao tenham permissoes para montar filesystems com sshfs, entao, na maquina do cliente so os users nesse grupo é que podem usar sshfs
@@ -112,6 +117,34 @@ Nota: É possivel GUI via ssh com X11
 Ping sweep: Procurar um espectro (range) de IPs 
    (Para quando nao temos a certeza qual é o IP do servidor ao qual nos ligarmos
    for i in $(seq 1 254); do ping -c 1 -W 1 192.168.1.$i >/dev/null && echo "ativo: 192.168.1.$i"; done
+
+
+
+Port Forwarding
+   1. Aceder ao website do router 192.168.1.1
+   2. Procurar a seccao certa "Port Forwarding"
+   3. Criar uma nova regra
+   4. Preencher os campos
+      Descricao: SSH_PI
+      Protocolo: TCP
+      Porta externa: 8171 (WAN / Public port) 
+      Porta interna: 8171 ou 22 (LAN / Private port) 
+      (Normalmente porta interna = externa)
+      IP interno / Servidor: 192.168.1.50 (exemplo)
+      Interface: WAN
+      Ativar: Sim
+   5. Testar fora da rede:
+      `curl ifconfig.me`
+      `ssh -p 8171 pi@IP_publico (no cliente)
+   6. A firewall do Pi mesmo assim pode bloquear a conexao
+      (Resultanto em "Connection Timed Out" no Client)
+      Teste no Pi: `sudo \ss -tlnp | grep sshd`
+      Deve resultar em: "0.0.0.0:8171"
+   7. Dicas de seguranca, nao expor SSh sem:
+      - Passwaords
+      - Chaves SSh
+      - login root
+      - portao nao padrao (8171 está otimo)
 '
 
 }
@@ -209,13 +242,13 @@ function f_is_rooted_verbose {
 
    if [[ -z $v_rooted ]]; then
             echo -n " > Esta no termux: "
-      f_c8; echo    "Nao"
-      f_rc; echo
+            echo    "Nao"
+            echo
 
    elif [[ $v_rooted == "true" ]]; then
             echo -n " > Tem permissoes root: "
-      f_c7; echo    "Sim"
-      f_rc; echo
+            echo    "Sim"
+            echo
 
    elif [[ $v_rooted == "false" ]]; then
             echo -n " > Tem permissoes root: "
@@ -731,6 +764,20 @@ function f_check_mounting_point_parent {
    echo
 }
 
+function f_check_default_ssh_config_file {
+   v_default=/etc/ssh/sshd_config
+   [[   -f $v_default ]] && echo " > Default system file exists:"
+   [[ ! -f $v_default ]] && echo " > Default system file does not exist:"
+
+   echo "   $v_default"
+   echo "   (info about what ports are the server listening)"
+   v_text=$(grep "Port " $v_default)
+         echo -n "   Text found: '"
+   f_c2; echo -n                 "$v_text"
+   f_rc; echo                           "'"
+         echo
+}
+
 function f_check_port_22_open {
    echo " > Listing open ports (default for ssh: 22)"
 
@@ -780,6 +827,7 @@ function f_verbose_check {
       f_check_mounting_point_parent
       f_check_port_22_open
 
+      f_check_default_ssh_config_file
       f_check_output_files
 }
 
@@ -877,22 +925,27 @@ function f_ser_servidor {
    # Lista de opcoes
       Lz="drya-ssh-sshfs.sh"
 
-      L5="5. Dar acesso a: <introduzir-absolute-path> (uDev)"
-      L4="4. Dar acesso a: .  (pasta atual)"
-      L3="3. Dar acesso a: /  (raiz do sistema)"
-      L2="2. Dar aceeso a: ~  (documentos do utilizador)"
-      L1="1. Calcelar"
+      L7="7. Introduzir Path manualmente (uDev)"
+      L6="6. Dar acesso a: .  (pasta atual)"
+      L5="5. Dar acesso a: /  (raiz do sistema)"
+      L4="4. Dar aceeso a: ~  (documentos do utilizador)"
 
-      L0="$v_fzf Memu 'SERVIDOR': A que pasta quer dar acesso?"
+      L3="3. Help"
+      L2="2. Calcelar"
+      L1="1. Ignorar este passo"
 
-      v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$Lz" | fzf --prompt "$L0")
+      L0="$v_fzf Quer facilitar o acesso 'CLIENTER' sshfs? Aceder a qual? "
+
+      v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n\n$Lz" | fzf --prompt "$L0")
 
    # Executar escolhas
-      [[ $v_menu =~ "5." ]] && echo " > uDev"  
-      [[ $v_menu =~ "4." ]] && echo " > Quer deixar aceder a: . "   && v_r_dir=.
-      [[ $v_menu =~ "3." ]] && echo " > Quer deixar aceder a: / "   && v_r_dir=/
-      [[ $v_menu =~ "2." ]] && echo " > Quer deixar aceder a: ~ "   && v_r_dir=~
-      [[ $v_menu =~ "1." ]] && echo "Canceled: $Lz" && exit 0
+      [[ $v_menu =~ "7." ]] && echo " > uDev"  
+      [[ $v_menu =~ "6." ]] && echo " > Quer deixar aceder a: . "   && v_r_dir=.
+      [[ $v_menu =~ "5." ]] && echo " > Quer deixar aceder a: / "   && v_r_dir=/
+      [[ $v_menu =~ "4." ]] && echo " > Quer deixar aceder a: ~ "   && v_r_dir=~
+      [[ $v_menu =~ "3." ]] && echo "help is uDev" && exit 0
+      [[ $v_menu =~ "2." ]] && echo "Canceled: $Lz" && exit 0
+      [[ $v_menu =~ "1." ]] && echo "Ignorado"
       #unset v_menu
       cd $v_r_dir
 
@@ -903,6 +956,7 @@ function f_ser_servidor {
               ls -p
 
       echo
+      read -sn1 -p "Pausa"
 
    # Mostrar se o servidor SSH está ativo e a escutar conexões:
       f_check_ssh_daemon_is_on; f_check_ssh_daemon_is_on_verbose; echo
@@ -1281,7 +1335,7 @@ function f_main_menu {
       # If no arguments are given, present the main menu
 
       # List of menu options
-         Lz="drya-ssh-sshfs.sh"
+         Lz1='CMD used: '; Lz2='D ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
 
          L10="10. |  h  | Help"
 
@@ -1298,9 +1352,10 @@ function f_main_menu {
           L2="2.  |  s  | Ver      | Estado atual do sistema"
           L1="1. Cancelar" 
 
+         Lh=$(echo -e "\nIP mais comum de router: 192.168.1.1\n ")
          L0="$v_fzf Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n\n$L10 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n\n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt "$L0")
 
       # Executar de acordo com o resultado
          [[   $v_menu =~ "10." ]] && f_help

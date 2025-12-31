@@ -109,6 +109,8 @@ elif [[ $1 == "install" ]] || [ $1 == "install-retropi-on-raspberryOS" ]; then
       echo " > \`bash $v_destination/retropie_setup.sh\`"
       echo
 
+      sudo bash $v_destination/retropie_setup.sh
+
    # Step 3  (Installing X11 replacing wayland)
       echo "---- Step 3: Installing X11 ----"
       echo
