@@ -47,7 +47,7 @@ function f_gr_2_hard_dependencies {
    vim           \  # Most Powerfull text editor
   #nvim          \  # neovim suporta melhor o clipboard
    file          \  # Dependency for ezGIT
-   fzf           \  # Fuzzyfinder
+  #fzf           \  # Fuzzyfinder (`D iu i fzf` fornece a instalacao oficial dos desenvolvedores do fzf)
    -y
 
    # uDev: Bash deve ter metodos para evitar usar `file` e assim `file` deixava de ser uma dependencia do ezGIT
@@ -202,9 +202,8 @@ function f_help_emacs {
    Emacs:
     `M-x package-install` `dracula-theme`
 
-
-    Vim:
-        ...
+   Vim:
+       ...
    '
 }
 

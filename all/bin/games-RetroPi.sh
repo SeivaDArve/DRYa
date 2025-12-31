@@ -109,7 +109,7 @@ elif [[ $1 == "install" ]] || [ $1 == "install-retropi-on-raspberryOS" ]; then
       echo " > \`bash $v_destination/retropie_setup.sh\`"
       echo
 
-   # Step 3  (Installing wayland)
+   # Step 3  (Installing X11 replacing wayland)
       echo "---- Step 3: Installing X11 ----"
       echo
       echo "RetroPi does not use wayland, it uses X11"
