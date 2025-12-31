@@ -10,3 +10,5 @@ Situation you need Ghost-In
  - You have a fresh install of Termux and NOTHING more
  - You are using the terminal of a friend
  - You are using the terminal on a public place
+
+O ficheiro em branco 'host-change-log.txt' serve para copiar para a maquina atual @host e registar la as variaveis ORIGINAIS antes de serem alteradas por DRYa. Caso seja preciso repor o sistema como estava antes, DRYa vai ter este registo

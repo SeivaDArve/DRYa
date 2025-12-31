@@ -1,0 +1,6 @@
+#!/bin/bash
+# Title: Default vars for automatic DRYa install
+# Description: Place in this valid only valid bash. It will be sourced by other scripts
+
+# Default location for 'Repositories'. the file 'ghost.in' will automate the instalation of DRYa and '1-select-installer.sh' will source this variable to ask less questions on insralation process
+   v_default_Repositories_dir=~/Repositories/DRYa
