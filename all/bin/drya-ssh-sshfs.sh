@@ -826,6 +826,9 @@ function f_verbose_check {
 
       f_check_mounting_point_parent
       f_check_port_22_open
+   
+      echo " > uDev: Test if there is any client logged in alredy"
+      echo
 
       f_check_default_ssh_config_file
       f_check_output_files
