@@ -25,6 +25,21 @@
 
 
 
+function f_help {
+   echo '
+Argumentos `tar` (compactar + descompactar)
+   -x (eXtract) é para extrair os dados do arquivo .tar.gz (usado apenas para descompactar).
+   -c (Create) é para criar um arquivo tar (usado apenas para compactar).
+   -z (gZip) é para manipular o arquivo .tar.gz em GZip.
+   -v (Verbose) é para mostrar os arquivos conforme o tar os manipula. Quando estiver em uma conexão SSH lenta, você pode retirar este comando para não receber a lista completa de arquivos que foram compactados/descompactados.
+   -f (File) é para definir que estamos trabalhando com arquivos, e não com uma fita ou outro dispositivo.
+
+   Compactar:    `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`
+   Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`
+
+   '
+}
+
 function f_about_possible_compression_dependencies {
    f_greet
    echo '
@@ -273,6 +288,9 @@ if [ -z $* ]; then
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh
 
+elif [ $1 == "h" ] || [ $1 == "help" ]; then
+   f_help
+      
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
    f_about_possible_compression_dependencies
 
