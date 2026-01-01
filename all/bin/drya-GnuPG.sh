@@ -15,6 +15,11 @@
 
 
 
+# Declare variables
+   # Variables for external script drya-zip-unzip
+   v_script_zp=${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh
+
+
 
 function f_some_help {
    f_talk; echo "Info"
@@ -646,233 +651,9 @@ function f_remove-dryaGPG-dir {
    fi
 }
 
-function f_about_possible_compression_dependencies {
-   f_header
-   echo '
-   Lista de pacotes disponiveis para compactar e descompactar ficheiros
 
 
 
-
-
-
-
-   1. TAR, GZIP, BZIP2, XZ (nativos do Linux). Esses geralmente já vêm instalados por padrão.
-
-   Se precisar garantir:
-      sudo apt install tar gzip bzip2 xz-utils
-
-   | .tar     | empacotador (não comprime)
-   | .tar.gz  | usa gzip
-   | .tar.bz2 | usa bzip2
-   | .tar.xz  | usa xz
-
-
-
-
-
-
-   2. ZIP (Dois pacotes a instalar, Ambos são open-source e amplamente compatíveis com Windows/macOS.)
-
-   Se precisar garantir:
-      sudo apt install zip unzip
-
-   | zip   | cria arquivos .zip
-   | unzip | extrai .zip
-
-
-
-
-
-
-
-   3. RAR (Dois pacotes, um nao é FOSS. O outro que é FOSS so vai ate a versao 5)
-   Se precisar garantir:
-      sudo apt install unrar
-
-   ou, se quiser uma alternativa livre:
-      sudo apt install unar
-
-
-   | unrar | extrai .rar (proprietário, leitura apenas)
-   | rar   | cria .rar (também proprietário, pode baixar do site da RARLAB)
-   | unar  | leitura livre, suporta RAR5+
-
-
-
-
-
-
-
-
-   4. 7-Zip (.7z) Altamente recomendado no Linux: taxa de compressão excelente e software livre.
-
-   Se precisar garantir:
-      sudo apt install p7zip-full
-
-   | 7z | cria e extrai .7z, .zip, .tar, etc.
-
-
-
-
-
-
-
-
-
-   5. DAR (.dar) Pouco usado, mas poderoso para backups.
-
-   Se precisar garantir:
-      sudo apt install dar
-
-   | dar | cria/extrai .dar
-
-
-
-
-
-
-
-
-
-   6. Outros formatos úteis
-      | Formato           | Pacote              | Comando
-      ---------------------------------------------------------
-      | .xz	              | xz-utils            | xz, unxz
-      | .bz2              | bzip2               | bzip2, bunzip2
-      | .lzma             | lzma                | lzma, unlzma
-      | .zst  (Zstandard) | zstd                | zstd, unzstd
-      | .iso	           | p7zip-full ou mount | 7z x arquivo.iso ou mount -o loop
-   '
-
-
-
-}
-
-function f_test_existent_compression_dependencies {
-
-
-
-   # uDev: passar isto para DRYa pre-requisitos
-
-   # ===========================================
-   # 🧩 Verificador de ferramentas de compactação e criptografia
-   # ===========================================
-
-   # Lista de comandos a verificar
-   comandos=(
-     tar
-     gzip
-     bzip2
-     xz
-     zip
-     unzip
-     rar
-     unrar
-     7z
-     #dar
-     gpg
-     #unar
-     #atool
-     #zstd
-   )
-
-   f_talk; echo "Verificando comandos instalados no sistema..."
-           echo "            (Compactacao e Criptografia)"
-           echo 
-
-   # Loop pelos comandos
-      n=0  # Variavel que conta o numero de loops
-
-      for cmd in "${comandos[@]}"
-      do
-         ((n++))           # Adiciona +1 a variavel n   # Opcao alternativa: `((n += 1))`
-         #echo -n "(${n}) "  # Adiciona no Verbose/Output o numero do loop sem quebra de linha. Este numero fica in-line com o `if then else` que se segue
-
-         if command -v "$cmd" &> /dev/null; then
-            echo "✅ ($n) $cmd    encontrado em: $(command -v "$cmd")"
-         else
-            echo "❌ ($n) $cmd    não encontrado — instale com: sudo apt install $cmd"
-         fi
-      done
-
-
-}
-
-
-function f_zip {
-   # tar é o nome do pacote a instalar
-
-   #tar -czf arquivo.tar.gz nome_da_pasta/
-   #     `-c` create  (cria um novo arquivo tar)
-   #     `-z` gzip    (comprime usando gzip, gerando .tar.gz)
-   #     `-f` file    (indica o nome do arquivo de saída)
-   #     `-v` verbose (mostra cada ficheiro extraido)
-
-   f_header
-   f_talk; echo "uDev: zip"   
-   f_hline
-   f_test_existent_compression_dependencies 
-
-   # Escolha do formato
-      f_hline
-      f_talk; echo "Escolha qual formato para 'Compactar'"
-              echo "            (dependencias serao instaladas)"
-              echo "            (default: \`5\` \`zip\`)"
-
-      read -p " > " v_formt
-      v_formt=${v_formt:-"zip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
-
-      echo " > Selecionado: $v_formt"
-      echo " > Sera usado : 'zip' (outros formatos: uDev)"
-
-
-   # Testar se 'zip' existe no sistema
-      f_hline
-              echo
-      f_talk; echo "Testar se 'zip' existe"
-
-      if [[ -n $(command -v zip) ]]; then
-         echo " > zip existe no sistema"
-      else
-         echo " > zip nao existe no sistema" 
-         echo
-         v_txt="Instalar 'zip'"
-         f_anyK && pk + zip
-      fi
-
-   f_ls
-   f_talk; echo "Escolha uma pasta para compactar"   
-   read -ep " > " v_dir
-
-   [[ -d $v_dir ]] && echo " > Confirmado, é pasta" || echo " > Rejeitado, Nao é pasta"
-
-}
-
-
-function f_unzip {
-   # tar é o nome do pacote a instalar
-
-   # Ver conteudo sem extrair
-   #     tar -tzf arquivo.tar.gz
-   #
-   # Extrair
-   #     tar -xzf arquivo.tar.gz
-
-   f_header
-   f_talk; echo "uDev: unzip"   
-   f_hline
-   f_test_existent_compression_dependencies 
-   f_ls
-   f_talk; echo "Escolha qual formato para 'descompactar'"
-           echo "            (dependencias serao instaladas)"
-           echo "            (default: \`6\` \`unzip\`)"
-
-   read -p " > " v_formt
-   v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
-   echo " > Escolhido: $v_formt (outros formatos: uDev)"
-
-}
 
 
 
@@ -1275,7 +1056,7 @@ elif [ $1 == "V" ] || [ $1 == "create-and-navigate-to-dryaGPG" ]; then
    echo "This fx is working from dryaSRC" 1>/dev/null
 
 
-elif [ $1 == "+" ] || [ $1 == "add-text-file-confidential-info" ]; then
+elif [ $1 == "+" ] || [ $1 == "add-text-file-to-confidential-dir" ]; then
     f_header
 
 
@@ -1362,13 +1143,14 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
    f_remove-dryaGPG-dir 
 
 elif [ $1 == "22" ] || [ $1 == "zip" ]; then
-   f_zip 
+   bash $v_script_zp zip
 
 elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
-   f_unzip
+   bash $v_script_zp unzip
 
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
-   f_about_possible_compression_dependencies
+   bash $v_script_zp zip-info
+
 
 elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
    f_header
