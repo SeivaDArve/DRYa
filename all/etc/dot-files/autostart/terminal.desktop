@@ -1,0 +1,9 @@
+# Title: Config to open terminal on Login
+# Description: Place this file as "~/.config/autostart/terminal.desktop" and `lxterminal` will run on startup
+# Used on: RaspberryOS (Pi 4)
+
+[Desktop Entry]
+Type=Application
+Name=Terminal
+Exec=lxterminal
+X-GNOME-Autostart-enabled=true
