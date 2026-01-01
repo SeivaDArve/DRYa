@@ -37,6 +37,28 @@ Argumentos `tar` (compactar + descompactar)
    Compactar:    `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`
    Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`
 
+   `tar` so arquiva; 
+   -z `gz`    compactar em .gz
+   -j `bzip2` compactar em 
+   -J `xz`    compactar em 
+
+
+
+
+
+
+
+Comandos linux para pesquisar texto dentro de ficheiros compactados
+
+   Tipo de ficheiro	| Comando correspondente
+   ------------------|------------------------
+   .gz	            | zgrep
+   .bz2	            | bzgrep
+   .xz	            | xzgrep
+   .lzma	            | lzgrep
+   .zst	            | zstdgrep
+   .zip	            | zipgrep
+
    '
 }
 
