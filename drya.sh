@@ -2226,7 +2226,6 @@ function f_drya_get_all_repo_names_private_public {
 }
 
 function f_zip_unzip {
-   shift
    bash $__repo__/all/bin/drya-zip-unzip.sh $*
 }
 
@@ -4081,7 +4080,9 @@ elif [ $1 == "hush" ]; then
 
 elif [ $1 == "zp" ] ; then 
    # Menu for 'zip' and 'unzip' commands
-   f_zip_unzip
+
+   shift
+   f_zip_unzip $*
 
 elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
    # Encrypt and Decript personal, private abd sensitive data
