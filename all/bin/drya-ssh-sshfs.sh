@@ -1197,19 +1197,21 @@ function f_enable_everything {
    # Perguntar: Cliente ou Servidor?
          Lz="D ssh on"
 
-         L8="8. Router home page (Reserve Mac -> IP)"
-         L7="7. Router home page (port forwarding)"
+         L8="8. Router home page (IP Reservation + MAC)"
+         L7="7. Router home page (Port forwarding)"
+
          L6="6. Criar Reverse Shell (uDev)"
          L5="5. 'Termux ssh' + 'Termux sshd AP'"
 
-         L4="4. Quero ser CLIENTE SSHFS"
-         L3="3. Quero ser CLIENTE SSH"
-         L2="2. Quero ser SERVIDOR (SSH ou SSHFS)"
+         L4="4. Quero ser CLIENTE  | SSHFS"
+         L3="3. Quero ser CLIENTE  | SSH"
+         L2="2. Quero ser SERVIDOR | SSH ou SSHFS"
+
          L1="1. Cancelar"
 
          L0="$v_fzf Menu 'enable': "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n$L7 \n$L8 \n\n$Lz" | fzf --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz" | fzf --prompt "$L0")
 
          [[ $v_menu =~ "8." ]] && echo "uDev"
          [[ $v_menu =~ "7." ]] && echo "uDev"
@@ -1304,7 +1306,7 @@ function f_confirmar_desinstalacao_ssh {
 
 function f_disable_ev_1st_menu {
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='D ssh off'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='CMD used: '; Lz2='D ssh off'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
       L3='3. Menu Desinstalar'
       L2='2. Desligar (colocar Offline)'                                      
@@ -1427,9 +1429,11 @@ function f_main_menu {
       # Ver o ultimo output de dados/configs
       f_ver_output_1
 
-   elif [ $1 == "uu" ] || [ $1 == "uDev" ]]; then
+   elif [ $1 == "uu" ] || [ $1 == "uDev" ]; then
       # Serve para testar funcoes que normalemte nao tem menu ou acesso direto
       f_corresponder_local_com_remota 
+   else
+      echo "$v_fzf Option not recognized: $*"
    fi
 }
 
