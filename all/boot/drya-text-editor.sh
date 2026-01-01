@@ -18,6 +18,7 @@ function e {
    #      Example with `e file.txt`
 
    # uDev: `e` `ee` and `eee` should be on the same file.... maybe fluNav
+   # uDev: As vezes ao abrir os ficheiros, o editor de texto nao esta instalado. Necessario correr `D ui i <editor-em-falta>`
 
    # Sourcing DRYa Lib 1: Color schemes
       v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
