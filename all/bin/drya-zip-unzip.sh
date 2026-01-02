@@ -212,6 +212,15 @@ function f_test_existent_compression_dependencies {
 
 }
 
+function f_ls {
+   # Usa simplesmente o comando `ls` para facilitar o autocomplete nos momentos em que algum menu pede um nome de um ficheiro de entrada
+
+   f_hzl
+   f_talk; echo "Comando \`ls\` para facilitar:" 
+   echo
+   ls -pA
+   f_hzl
+}
 
 function f_zip {
    # tar é o nome do pacote a instalar
@@ -260,6 +269,8 @@ function f_zip {
 
    [[ -d $v_dir ]] && echo " > Confirmado, é pasta" || echo " > Rejeitado, Nao é pasta"
 
+   echo
+   echo 'uDev: Compactar: `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
 }
 
 
@@ -285,6 +296,8 @@ function f_unzip {
    v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
    echo " > Escolhido: $v_formt (outros formatos: uDev)"
 
+   echo
+   echo 'uDev: Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`'
 }
 
 
