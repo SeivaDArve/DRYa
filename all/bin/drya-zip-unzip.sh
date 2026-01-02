@@ -59,6 +59,13 @@ Comandos linux para pesquisar texto dentro de ficheiros compactados
    .zst	            | zstdgrep
    .zip	            | zipgrep
 
+
+
+
+Para descompactar .rar
+   Tem de se intalar `unrar`
+   `unrar x <arquivo-a-descompactar.rar> `
+   `unrar x <arquivo-a-descompactar.rar> /caminho/de/destino/especifico`
    '
 }
 

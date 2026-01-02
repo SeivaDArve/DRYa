@@ -2472,7 +2472,7 @@ function f_kill_process_by_PID {
    f_talk; echo "Escolher um PID para eliminar (PID)"
 
    L0="DRYa: Choose a Process to kill: "
-   v_list=$(ps -aux | fzf --tac --cycle -m --pointer=">" --prompt="$L0")
+   v_list=$(ps -aux | fzf --tac --cycle --wrap -m --pointer=">" --prompt="$L0")
    
    if [[ -n $v_list ]]; then
       v_pid=$(echo $v_list | cut -f 2 -d " ")
