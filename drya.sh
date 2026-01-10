@@ -3068,6 +3068,20 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       if [[ -z $3 ]]; then 
          echo "What do you want to install?"
 
+      elif [[ $3 == "wsl" ]] || [ $3 == "WSL" ] || [ $3 == "WSL2" ]; then 
+         # Instructions to Install "Windows Subsystem for Linux 2"
+
+         echo '
+         # 0. Requisitos: Windows 10 (1903+) ou Windows 11  
+         # 1. Abrir CMD como Admin 
+         # 2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubunto por defeito 
+         # 3. Reeniciar o Pc
+         # 4. Configurar o Linux (ao abrir Ubuntu pela primeira vez):
+         #    4.1. Escolher User + Password
+         #    4.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"
+         #
+         '
+
       elif [[ $3 == "me" ]] || [ $3 == "DRYa" ] || [ $3 == "drya" ]; then 
          f_install_drya__with_Select
 
