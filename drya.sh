@@ -3099,6 +3099,10 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          # Install a full Bitcoin node to validade blocks and allow mining
          sudo snap install bitcoin-core
 
+      elif [[ $3 == "pi-apps" ]]; then 
+         # Install the Raspberry OS app store "Pi-Apps"
+         wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash
+
       elif [[ $3 == "pycharm" ]]; then 
          # Install a dedicated GUI text editor for python
 
