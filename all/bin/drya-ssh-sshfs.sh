@@ -141,10 +141,10 @@ Port Forwarding
       Teste no Pi: `sudo \ss -tlnp | grep sshd`
       Deve resultar em: "0.0.0.0:8171"
    7. Dicas de seguranca, nao expor SSh sem:
-      - Passwaords
-      - Chaves SSh
+      - Passwords
+      - Chaves SSH
       - login root
-      - portao nao padrao (8171 está otimo)
+      - porta nao padrao (8171 está otimo)
 
    8. Criar uma ssh key no cliente (obrigatorio)
       `ssh-keygen -t ed25519`  
@@ -161,8 +161,10 @@ Port Forwarding
        descomentar: "PasswordAuthentication no"
        necessario reeniciar o daemon para fazer efeito
 
-   11. Configurar DHCP no router (IP reservation)
-       (definir um IP fixo para um MAC fixo)
+
+Configurar DHCP no router (IP reservation)
+   (definir um IP fixo para um MAC fixo)
+   uDev
        uDev
 '
 
