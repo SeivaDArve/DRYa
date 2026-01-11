@@ -162,10 +162,19 @@ Port Forwarding
        necessario reeniciar o daemon para fazer efeito
 
 
-Configurar DHCP no router (IP reservation)
-   (definir um IP fixo para um MAC fixo)
-   uDev
-       uDev
+
+uDev: Configurar DHCP no router (IP reservation)
+      (definir um IP fixo para um MAC fixo)
+
+
+
+
+Config firewall: Allow/Deny other machines to `ping` this machine
+   Windows: Deny:  uDev
+   Windows: Allow: `netsh advfirewall firewall add rule name="Permitir ICMPv4 Ping" protocol=icmpv4:8,any dir=in action=allow`  # used in CMD as admin
+
+   Linux: uDev
+
 '
 
 }
@@ -888,6 +897,27 @@ function f_check_mounting_point_array {
       done
 }
 
+function f_ping_sweep {
+   # Fazer uma varredura com `ping` no No "range" entre .1 e .255 (desde 192.168.1.1 ate 192.168.1.255)
+   # (Para quando nao temos a certeza qual é o IP do servidor ao qual nos ligarmos)
+
+   f_greet
+   f_talk; echo "Ping sweep: Procurar um espectro (range) de IPs"
+           echo " > Desde 192.168.1.1 ate 192.168.1.255"
+           echo
+   f_talk; echo "A Iniciar o teste:"
+
+   function f_try_ip {
+      ping -c 1 -W 1 192.168.1.$i >/dev/null && echo " > ativo: 192.168.1.$i"
+   }
+
+   for i in $(seq 1 254)
+   do 
+      f_try_ip &
+   done
+   echo
+}
+
 function f_delete_ssh_key {
    # Delete key file
 
@@ -1363,37 +1393,39 @@ function f_main_menu {
       # List of menu options
          Lz1='CMD used: '; Lz2='D ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
 
-         L10="10. |  h  | Help"
+          L11="11. |  h  | Help"
 
-          L9="9.  |     | Delete   | SSH key" 
+          L10="10. |  p  | Ping sweep (escuta todos os IP disponiveis)"
+           L9="9.  |     | Delete   | SSH key" 
 
-          L8="8.  |     | Lista    | Mounting Points pre-definidos (sshfs)"
-          L7="7.  | ..  | Ver      | Consult Output files"
-          L6="6.  | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
+           L8="8.  |     | Lista    | Mounting Points pre-definidos (sshfs)"
+           L7="7.  | ..  | Ver      | Consult Output files"
+           L6="6.  | ccc | Ver      | 'Client' 'Connect' 'Cmd' (how Client connects to Sv)"
 
-          L5="5.  | off | Desligar | Servico SSH ou SSHFS"
-          L4="4.  | on  | Ligar    | Servico SSH ou SSHFS"
+           L5="5.  | off | Desligar | Servico SSH ou SSHFS"
+           L4="4.  | on  | Ligar    | Servico SSH ou SSHFS"
 
-          L3="3.  |  o  | Ver      | Ultimo Output de dados/configs"
-          L2="2.  |  s  | Ver      | Estado atual do sistema"
-          L1="1. Cancelar" 
+           L3="3.  |  o  | Ver      | Ultimo Output de dados/configs"
+           L2="2.  |  s  | Ver      | Estado atual do sistema"
+           L1="1. Cancelar" 
 
          Lh=$(echo -e "\nIP mais comum de router: 192.168.1.1\n ")
          L0="$v_fzf Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n\n$L10 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt "$L0")
 
       # Executar de acordo com o resultado
-         [[   $v_menu =~ "10." ]] && f_help
-         [[   $v_menu =~ "9. " ]] && f_delete_ssh_key
-         [[   $v_menu =~ "8. " ]] && f_ver_as_pastas_pre_definidas
-         [[   $v_menu =~ "7. " ]] && f_menu_visualizar_output_files  
-         [[   $v_menu =~ "6. " ]] && f_how_to_connect_client_to_server
-         [[   $v_menu =~ "5. " ]] && f_disable_everything
-         [[   $v_menu =~ "4. " ]] && f_enable_everything
-         [[   $v_menu =~ "3. " ]] && f_ver_output_1 
-         [[   $v_menu =~ "2. " ]] && f_verbose_check
-         [[   $v_menu =~ "1. " ]] && echo "Canceled: $Lz"
+         [[   $v_menu =~ "11. " ]] && f_help
+         [[   $v_menu =~ "10. " ]] && f_ping_sweep
+         [[   $v_menu =~ "9.  " ]] && f_delete_ssh_key
+         [[   $v_menu =~ "8.  " ]] && f_ver_as_pastas_pre_definidas
+         [[   $v_menu =~ "7.  " ]] && f_menu_visualizar_output_files  
+         [[   $v_menu =~ "6.  " ]] && f_how_to_connect_client_to_server
+         [[   $v_menu =~ "5.  " ]] && f_disable_everything
+         [[   $v_menu =~ "4.  " ]] && f_enable_everything
+         [[   $v_menu =~ "3.  " ]] && f_ver_output_1 
+         [[   $v_menu =~ "2.  " ]] && f_verbose_check
+         [[   $v_menu =~ "1.  " ]] && echo "Canceled: $Lz"
          unset v_menu
 
    elif [ $1 == "h" ]; then
@@ -1431,11 +1463,15 @@ function f_main_menu {
       # Ver o ultimo output de dados/configs
       f_ver_output_1
 
+   elif [ $1 == "p" ] || [ $1 == "ping" ]; then
+      # Ping sweep entre 192.168.1.1 e 192.168.1.255
+      f_ping_sweep 
+
    elif [ $1 == "uu" ] || [ $1 == "uDev" ]; then
       # Serve para testar funcoes que normalemte nao tem menu ou acesso direto
       f_corresponder_local_com_remota 
    else
-      echo "$v_fzf Option not recognized: $*"
+      f_talk; echo "Option not recognized: $*"
    fi
 }
 
