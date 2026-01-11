@@ -3080,6 +3080,9 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          #    4.1. Escolher User + Password
          #    4.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"
          #
+         # Instalacao manual (quando `wsl` nao existe)
+         #  > Nao funciona em Pentium 4
+
          '
 
       elif [[ $3 == "me" ]] || [ $3 == "DRYa" ] || [ $3 == "drya" ]; then 
