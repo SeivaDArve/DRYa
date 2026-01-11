@@ -14,6 +14,8 @@ function f_0 {
    echo " -0- Title: All info about the Arg 0 (the running script):"
    echo "  >  Do not \`source\` this as a lib (some functions will not be accurate)"
    echo "  >  Copy the needed functions to your script instead"
+   echo "  >  Try \`bash .../drya-lib-5*.sh/\` to test and get info of that script"
+   echo
    echo
 }
 
@@ -94,25 +96,28 @@ function f_6 {
    echo "  >  Number -5- is equal to -1- + -2-"
    echo "  >  Number -5- is equal to -3- + -4-"
    echo "  >  Number -3- is best used for instalation wizzards"
+   echo "  >  Rel: Relative"
+   echo "  >  Abs: Absolute"
    echo
 
 }
 
 function f_exec {
    # Joining all possibilities is a sequence
+   # Comment all fx below that are not supposed to run
 
-   # Comment all not supposes to run
-   clear
+      clear
 
-   f_0
-   f_1
-   f_2
-   f_3
-   f_4
-   f_5
-   f_6
+      f_0
+      f_1
+      f_2
+      f_3
+      f_4
+      f_5
+      f_6
 }
-f_exec
+
+f_exec  # On/Off to the ENTIRE file
 
 # ------------------------------------------------------------------------
 #  --+-- Functions Above: Copied from drya-lib-5-all-info-arg-0.sh --+--
