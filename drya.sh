@@ -1039,18 +1039,16 @@ function f_list_ip_public_n_local {
    
    f_greet 
    f_talk; echo "Print current IP (local + public)"
-           echo
-
-   f_talk; echo "Searching commands for local IP:"
+           echo " > Searching available commands to fetch local IP:"
            echo
 
    function f_1 {
       # Tentativa 1: Obtendo o IP local usando  'ifconfig'
 
-      f_talk; echo "Testing ifconfig"
+      f_talk; echo "Testing: ifconfig"
 
       if $(command -v ifconfig &>/dev/null); then
-         echo " > 'ifconfig' is installed"
+         echo " > Command 'ifconfig' is installed"
 
          #v_ip=$(ifconfig 1>/dev/null| grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
          #v_ip=$(cat $v_tmp)
@@ -1062,13 +1060,13 @@ function f_list_ip_public_n_local {
 
          for i in $(cat $v_tmp_2);
          do
-            echo " > Ip:      $i"
+            echo " > IP: $i"
             v_f1_ip=$i  # Last number ($i) will be the ip from f_1
          done
 
 
       else
-         echo " > 'ifconfig' not installed (from package 'net-tools')"
+         echo " > Command 'ifconfig' not installed (from package 'net-tools')"
       fi
 
       echo
@@ -1077,16 +1075,16 @@ function f_list_ip_public_n_local {
    function f_2 {
       # Tentativa 2: Obtendo o IP local usando hostname -I (funciona na maioria dos sistemas Linux)
 
-      f_talk; echo "Testing hostname"
+      f_talk; echo "Testing: hostname"
 
       if $(command -v hostname 1>/dev/null); then
-         echo " > 'hostname' is installed"
+         echo " > Command 'hostname' is installed"
          v_ip=$(hostname -I | awk '{print $1}')
-         echo " > Ip:      $v_ip"
+         echo " > IP: $v_ip"
 
          v_f2_ip=$v_ip  # Last number from f_2
       else
-         echo " > 'hostname' not installed"
+         echo " > Command 'hostname' not installed"
       fi
 
       echo
@@ -1096,16 +1094,21 @@ function f_list_ip_public_n_local {
       # Tentativa 3: 
       # Obtenr o IP local usando 'ip'
 
-      f_talk; echo "Testing 'ip' command"
+      f_talk; echo "Testing: 'ip'"
 
       if $(command -v ip &>/dev/null); then
-         echo " > 3. Command 'ip' is installed"
+         echo " > Command 'ip' is installed"
          v_ip=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
-         echo " > Ip:      $v_ip"
-         v_f3_ip=$LOCAL_IP_3  # Last number from f_3
+
+         for i in $v_ip
+         do
+            echo " > IP: $i"
+         done
+
+         v_f3_ip=$(head -n 1 <(echo "$LOCAL_IP_3"))  # Last number from f_3
 
       else
-         echo " > 3. Command 'ip' not installed"
+         echo " > Command 'ip' not installed"
       fi
       echo
    }
@@ -1136,31 +1139,33 @@ function f_list_ip_public_n_local {
          fi
       fi
 
-   echo
+   f_talk; echo "Local IP to be mentioned in the end:"
+           echo " > $v_ip"
+           echo
 
    # uDev: Se todos falharem, perguntar se quer experimentar fazer download de algum pacote e tentar novamente
 
    # Obtendo o IP público usando curl e um serviço online
       f_talk; echo "Searching the web to provide Public IP"
-              echo " 1. http://ifconfig.me"
+              echo " > Website: http://ifconfig.me"
       PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
-      echo " > $PUBLIC_IP"
+      echo " > IP: $PUBLIC_IP"
       echo
 
    # Send last IP numbers to ssms
-      echo "Sending to ssms"
-      echo
+      f_talk; echo "uDev: Send to ssms"
+              echo
 
    # Send results to a file
       echo "ip_local=$v_ip"        > $v_reslt
       echo "ip_public=$PUBLIC_IP" >> $v_reslt
-      rm $v_tmp_1 $v_tmp_2
+      rm $v_tmp_1 $v_tmp_2 2>/dev/null
 
    # Clear the screen
       v_secs=3
       f_talk; echo "[Enter] to clean screen and Print results"
               echo " > [wait $v_secs secs] for automatic clean"
-              echo " > [Ctrl + C]    to cancel next step"
+              echo " > [ Ctrl + C  ]    to cancel next step"
       read -sn1 -t $v_secs
       f_greet
 
