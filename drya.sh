@@ -1110,13 +1110,13 @@ function f_list_ip_public_n_local {
       else
          echo " > Command 'ip' not installed"
       fi
-      echo
    }
 
-
+   f_hzl
    f_1   # Testing 'ifconfig'
    f_2   # Testing 'hostname'
    f_3   # Testing 'ip'
+   f_hzl
 
    #echo "Vars (debug):"
    #echo " > $v_f1_ip"
@@ -1124,13 +1124,13 @@ function f_list_ip_public_n_local {
    #echo " > $v_f3_ip"
 
    # Defining final variable
-      if [ -n $v_f1_ip ]; then
+      if [[ -n $v_f1_ip ]]; then
          v_ip=$v_f1_ip
       else
-         if [ -n $v_f2_ip ]; then
+         if [[ -n $v_f2_ip ]]; then
             v_ip=$v_f2_ip
          else
-            if [ -n $v_f3_ip ]; then
+            if [[ -n $v_f3_ip ]]; then
                v_ip=$v_f3_ip
             else
                echo "These could find Local IP:"
@@ -1147,10 +1147,11 @@ function f_list_ip_public_n_local {
 
    # Obtendo o IP público usando curl e um serviço online
       f_talk; echo "Searching the web to provide Public IP"
-              echo " > Website: http://ifconfig.me"
+              echo " > Website used: http://ifconfig.me"
       PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
       echo " > IP: $PUBLIC_IP"
-      echo
+
+   f_hzl
 
    # Send last IP numbers to ssms
       f_talk; echo "uDev: Send to ssms"
@@ -1167,15 +1168,18 @@ function f_list_ip_public_n_local {
               echo " > [wait $v_secs secs] for automatic clean"
               echo " > [ Ctrl + C  ]    to cancel next step"
       read -sn1 -t $v_secs
-      f_greet
 
 
    # Imprimindo os resultados
-      echo "Results sent to:"
-      echo " > $v_reslt" 
-      echo
-      echo "IP Público: $PUBLIC_IP"
-      echo "IP Local:   $v_ip"
+      f_greet
+      f_talk; echo "List of IP found for this machine"
+              echo " > IP Público: $PUBLIC_IP"
+              echo " > IP Local:   $v_ip"
+              echo
+      f_talk; echo "Results sent to:"
+              echo " > $v_reslt" 
+              echo " > ssms (uDev)"
+              echo
 
    # Testar se existe algum comando `ifconfig` que se instala com o pacote 'net-tools'
 }
