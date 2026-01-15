@@ -107,8 +107,8 @@ function e {
          # Testar o resultado de $v_ans e decidir se usamos o editor pre-definido oubse usamos outro temporariamente
             if [[ -n $v_ans        ]]; then
 
-               [[    $v_ans =~ "v" ]] && echo " > Detetato 'v' Editar temporariamente com 'vim'"    && v_editor="vim"   
-               [[    $v_ans =~ "e" ]] && echo " > Detetato 'e' Editar temporariamente com 'emacs'"  && v_editor="emacs"
+               [[    $v_ans =~ "v" ]] && echo " > Detetado 'v' Editar temporariamente com 'vim'"    && v_editor="vim"   
+               [[    $v_ans =~ "e" ]] && echo " > Detetado 'e' Editar temporariamente com 'emacs'"  && v_editor="emacs"
                [[    $v_ans =~ "t" ]] && echo " > (uDev) Detetato 't' Nao sera guardado historico em 'S ..'"
 
                echo
