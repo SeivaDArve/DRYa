@@ -424,8 +424,7 @@ function f_fun_after_welcome_screen {
    #f_fun_memorize_font_diedro   (uDev)
    #f_fun_quotes_from_yogis      (uDev)
    #f_fun_dance_move_time        (uDev)
-   #f_fun_vibrato                (uDev, imitar um fantasma)
-   bash ~/.code/oOo.sh
+    f_fun_vibrato                
  }
 
 function f_any_key_b4_open_msgs {
@@ -1016,6 +1015,12 @@ function f_fun_memorize_sutras {
 
    # Fx que tras um Sutra aleatorio
       bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r3
+}
+
+function f_fun_vibrato {
+   # Reminder about vocal skills, vocal exercise: vibrato (like a ghost)
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/oOo.sh
+   [[ -f $v_script ]] && bash $v_script
 }
 
 function f_fun_open_random_shells {
