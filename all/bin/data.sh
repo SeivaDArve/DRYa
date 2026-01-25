@@ -46,6 +46,7 @@ function f_background_process {
 function f_complete_date {
    # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
+   # uDev: O grupo data hora neste momento nao é apresentado na mesma linha que o resto da data-hora. Mas isso é desnecessario caso seja adiconado tput para contar as coluas atuais do terminal. O GDH nao faz uma quebra de linha para satisfazer termux, mas nem sempre é necessario
    # Montagem da data
       # Display: Titulo em linha com o restante
          v_texto="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
