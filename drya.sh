@@ -3,11 +3,10 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
-# Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
-   v_fzf_talk=DRYa  # uDev: passar para v_fzf
 
-   __name__=drya.sh
-   __repo__=${v_REPOS_CENTER}/DRYa
+__name__=drya.sh
+__repo__=${v_REPOS_CENTER}/DRYa
+v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
 
 
 
@@ -769,8 +768,8 @@ function f_dot_files_install_git {
       # uDev: Ask if user wants to install
 
    # Testing if `fzf` is installed
-      v_fzf=$(command -v fzf)
-      [[ -z $v_fzf ]] && echo " > Command fzf does not exist (not installed)"
+      v_cmd_fzf=$(command -v fzf)
+      [[ -z $v_cmd_fzf ]] && echo " > Command fzf does not exist (not installed)"
       # uDev: Ask if user wants to install
 
    # Testing if 'ezGIT' is cloned
@@ -2037,7 +2036,7 @@ function f_drya_help_menu {
       L2='2.  Print All' 
       L1='1.  Cancel'
 
-      L0="$v_fzf_talk: Help Menu: "
+      L0="$v_fzf: Help Menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -3817,7 +3816,7 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
          L1='1. Cancel'
 
          Lh=$(echo -e "\nInstrucoes sobre editor de texto:\n - Altere o editor com a fx \`ee\`\n ")
-         L0="$v_fzf_talk: SELECT 1: Menu X: "
+         L0="$v_fzf: SELECT 1: Menu X: "
          
       # Ordem de Saida das opcoes durante run-time
          v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
