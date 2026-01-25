@@ -831,6 +831,11 @@ function f_repository_omni-log {
       echo
    }
    #f_get_birthdays_from_db 
+
+   function f_upload_local_ip {
+      echo uDev
+   }
+   f_upload_local_ip
 }
 
 function f_repository_3_sticks_alpha_bravo {
