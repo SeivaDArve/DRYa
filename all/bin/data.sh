@@ -1,6 +1,7 @@
 #!/bin/bash
 # Title: data.sh
 __name__="data.sh"
+v_fzf="DRYa-data:"
 
 
 
@@ -368,7 +369,7 @@ elif  [ $1 == "." ]; then
        L1='1.  Cancelar'
 
       Lh=$(echo -e "\nInfo: Ja esta a ser aplicado automaticamente 'd f' para se usar com 'ZD' no 'vim'\n ")
-      L0="[m+] data.sh: main menu: "
+      L0="$v_fzf Main menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lz3" | fzf --no-info -m --cycle --header="$Lh" --prompt="$L0")
 
