@@ -833,7 +833,7 @@ function f_repository_omni-log {
    #f_get_birthdays_from_db 
 
    function f_upload_local_ip {
-      echo uDev
+      echo uDev 1>/dev/null
    }
    f_upload_local_ip
 }
@@ -1162,7 +1162,7 @@ function f_exec {
       f_once_tasks
 
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
-      f_fun_after_welcome_screen
+      #f_fun_after_welcome_screen
 
    # Last Verbose output for drya-status-messages
       f_drya_ssms_end

@@ -8,3 +8,4 @@ Seiva_ASUS_15_OLED
 Seiva_pi_RaspberryOS__miau
 Seiva_pi_RetroPi__pi
 seivaDArve
+Gama_pi3_raspberryOS_vascogama
