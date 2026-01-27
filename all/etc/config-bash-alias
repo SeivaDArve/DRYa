@@ -822,3 +822,5 @@ function grep-here {
  alias barcos="bash ${v_REPOS_CENTER}/omni-log/all/cp/barcos.sh"
 
  alias mapa="telnet mapscii.me"
+
+ alias pi-config="raspi-config"
