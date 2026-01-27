@@ -32,6 +32,12 @@
 
 
 
+
+
+
+
+
+
 # ------------------------------------------------------------------------
 #  --+-- Functions Below: Copied from drya-lib-5-all-info-arg-0.sh --+--
 # ------------------------------------------------------------------------
@@ -40,8 +46,9 @@
 function f_0 {
    # The sole purpose of this f_0 function is to avoid Hard Coded names on f_0_verbose function
    v_basename=$(basename $0)  # Same line of code as f_6
-}
 
+   # uDev: $v_0
+}
 function f_0_verbose {
    echo " -0- Title: All info about the Arg 0 (the running script):"
    echo "  >  Do not \`source\` this as a lib (some functions will not be accurate)"
@@ -57,6 +64,7 @@ function f_1 {
    # Mostrar sem sufixo
    v_pwd=$(pwd)
 
+   # uDev: $v_1
 }
 function f_1_verbose {
    echo " -1- Rel path: Prompt location \`pwd\` (Current CLI working directory, without sufix / ):"
@@ -69,6 +77,8 @@ function f_2 {
    # Mostrar com sufixo
    v_pwd=$(pwd)
    v_pwd="$v_pwd/"
+
+   # uDev: $v_2
 }
 function f_2_verbose {
    echo " -2- Rel path: Prompt location \`pwd\` (Current CLI working directory with sufix / ):"
@@ -80,6 +90,8 @@ function f_2_verbose {
 function f_3 {
    # Without ensuring text the text ./
       v_Name=$0
+
+   # uDev: $v_4
 }
 function f_3_verbose {
       echo " -3- Rel path: Between the current prompt ./ and script name \$0 without prefix './' :"
@@ -100,6 +112,7 @@ function f_4 {
       v_name=$(echo "$0" | sed ':a; s/^\.\///; ta')
       v_name="./$v_name"
 
+   # uDev: $v_4
 }
 function f_4_verbose {
       echo " -4- Rel path: Between the current prompt ./ and script name \$0 with prefix './' :"
@@ -118,6 +131,8 @@ function f_5 {
 
 
    v_basename=$(basename $0)  # Same line of code as f_6
+
+   # uDev: $v_5
 }
 function f_5_verbose {
    echo " -5- Abs Path: working dir of running script \"$v_basename\":"; 
@@ -126,12 +141,12 @@ function f_5_verbose {
    echo
 }
 
-
 function f_6 {
    # Give only the name of the script itself without any path at all
 
    v_basename=$(basename $0)
 
+   # uDev: $v_6
 }
 function f_6_verbose {
    echo " -6- Abs Name: \`basename \$0\` when running the script:"
@@ -147,6 +162,7 @@ function f_7 {
    v_basename=$(basename $0)
    v_script=$v_script_directory/$v_basename
 
+   # uDev: $v_7
 }
 function f_7_verbose {
    echo " -7- Abs path: the running script:"
@@ -166,6 +182,35 @@ function f_8_verbose {
    echo '  >  "Rel" = Relative'
    echo '  >  "Abs" = Absolute'
    echo
+}
+
+function f_9 {
+   # Detect abs name of dir (excluding path to it, like `basedir`)
+
+   function f_5_copy {
+      # This is literally a copy of f_5 avoiding functions to depend on each other. f_9 will not depend on original f_5
+      # Gives working directory where the script is placed (without the name ib the end)
+
+      # No matter from where we will execute this script $v_script_directory will indicate the correct directory where this script is located
+
+      v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+      v_script_directory="$v_script_directory/"
+
+
+      v_basename=$(basename $0)  # Same line of code as f_6
+      v_5=$v_basename
+
+   }
+
+   f_5_copy  # Retorna $v_5
+   v_9=$(basename $v_5)
+   echo " 5: $v_5"
+   echo " 9: $v_9"
+}
+function f_9_verbose {
+   echo " -9- Abs Name: do diretorio do script, exluindo o caminho ate esse nome"
+   echo "  > $v_9"
+
 }
 
 function f_exec {
@@ -198,6 +243,9 @@ function f_exec {
    f_7_verbose
 
    f_8_verbose
+
+   f_9
+   f_9_verbose
 }
 
 f_exec  # On/Off to the ENTIRE file
