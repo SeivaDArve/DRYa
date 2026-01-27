@@ -400,8 +400,13 @@ function f_drya_welcome_screen {
               echo
    }
    
+   function f_seiva_greetings_public {
+      f_talk; echo "Seiva greetings: Haux haux!"
+              echo
+   }
+   
    f_ws_drya_ascii_presentation
-   f_seiva_greetings 
+   [[ $trid_gmn =~ "Gama" ]] && f_seiva_greetings_public || f_seiva_greetings 
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
    f_ws_drya_startup_instructions
