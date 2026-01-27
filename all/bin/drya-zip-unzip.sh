@@ -292,16 +292,24 @@ function f_unzip {
 
    f_greet
    f_talk; echo "uDev: unzip"   
-   f_hzl
-   f_test_existent_compression_dependencies 
-   f_ls
-   f_talk; echo "Escolha qual formato para 'descompactar'"
-           echo "            (dependencias serao instaladas)"
-           echo "            (default: \`6\` \`unzip\`)"
 
-   read -p " > " v_formt
-   v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
-   echo " > Escolhido: $v_formt (outros formatos: uDev)"
+   # Testar quais as dependencias de descompacatmento que existem instaladas
+      f_hzl
+      f_test_existent_compression_dependencies 
+
+   # Escolher o formato para descompactar
+      f_hzl
+      f_talk; echo "Escolha qual formato para 'descompactar' (default: \`6\` \`unzip\`)"
+              echo "         (dependencias serao instaladas, uDev)"
+              #echo "         (default: \`6\` \`unzip\`)"
+
+              read -p " > " v_formt
+      v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+      echo " > Escolhido: $v_formt (outros formatos: uDev)"
+
+
+   # Listar `ls` os ficheiros a introduzir para descompactar
+      f_ls
 
    echo
    echo 'uDev: Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`'
