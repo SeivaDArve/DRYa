@@ -129,6 +129,7 @@ function f_usefull {
       nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
       lf             # Terminal file explorer
       GParted
+      htop           # Task manager com hotkeys para `kill`processos
    '
 }
 
