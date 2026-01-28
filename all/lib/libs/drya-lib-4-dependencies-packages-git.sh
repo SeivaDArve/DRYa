@@ -260,8 +260,8 @@ function f_get_stroken {
                function f_stroken_print {
                   F_talk; echo -n "Presenting \""
                     F_c3; echo -n "stroken"
-                    F_rc; echo    "\""
-                          echo    " > Automatic sync (config file) not configured"
+                    F_rc; echo    '"'
+                          echo    " > Automatic sync (with config file) not configured for github."
                           echo -n "   Use: "
                     F_c2; echo    "seivadarve"
                     F_rc; echo -n           "   And: ";
