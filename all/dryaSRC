@@ -352,7 +352,7 @@ function f_drya_welcome_screen {
    function f_seiva_greetings {
       # This fx only detects which fx (Public vs. Private) to run
       
-      [[ $trid_gmn =~ "Gama" ]] && f_seiva_greetings_public || f_seiva_greetings_private
+      [[ $trid_gmn =~ "publicDVC" ]] && f_seiva_greetings_public || f_seiva_greetings_private
    }
 
    function f_ws_termux {
@@ -418,7 +418,7 @@ function f_drya_welcome_screen {
    function f_ws_cmatrix {
       # If we detect that current PC/device is a public one, after Terminal startup, most likely nobody will know how to use the terminal, so nobody need DRYa's welcome message. In that case, cmatrix will fill the screen
       
-      [[ $trid_gmn =~ "Gama" ]] && sleep 2 && cmatrix
+      [[ $trid_gmn =~ "publicDVC" ]] && sleep 2 && cmatrix
    }
 
    f_ws_drya_ascii_presentation
@@ -450,7 +450,7 @@ function f_fun_after_welcome_screen {
        f_fun_vibrato                
    }
 
-   [[ ! $trid_gmn =~ "Gama" ]] && f_exec_fun 
+   [[ ! $trid_gmn =~ "publicDVC" ]] && f_exec_fun 
  }
 
 function f_any_key_b4_open_msgs {

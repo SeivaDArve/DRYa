@@ -172,7 +172,7 @@ function f_drya-messages {
 }
 
 # joke:
-   alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
+   alias research="mkdir -p ~/.tmp; tree / > ~/.tmp/research ;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;tree /";
 
 
 alias tc="touch"

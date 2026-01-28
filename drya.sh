@@ -652,7 +652,7 @@ function f_dotFiles_install_git_set_machine_name {
          # If name is empty, tell it very clearly:
             [[ -z $v_current_name ]] && v_current_name="(empty)"
 
-            f_talk; echo "Current git name (@host machine) is:"
+            f_talk; echo "Current git name (@ host machine) is:"
                  echo " > $v_current_name"
                  echo
    }
@@ -785,12 +785,13 @@ function f_dot_files_install_git {
       f_greet
 
       f_talk; echo -n "Installing "
-        f_c3; echo    "dot files for 'git'"
+        f_c3; echo    "configurations for 'git'"
         f_rc; echo
       f_talk; echo    "STEP 1: "
-              echo    " > Task | Copy .gitconfig"
+              echo    " > Task | Copy dotfiles: .gitconfig"
+              echo    "        |"
               echo    " > From | .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-              echo    " > To   | ~/"
+              echo    " > To   | ~/.gitconfig"
               echo
       f_talk; echo    "STEP 2: "
               echo    " > Change Machine name"
@@ -802,7 +803,7 @@ function f_dot_files_install_git {
               f_hzl
 
    # Ask to start installation
-      v_txt="Install all 'git' dot files" && f_anyK && echo
+      v_txt="Start all configurations for 'git'" && f_anyK && echo
 
       f_hzl
       echo
@@ -815,7 +816,7 @@ function f_dot_files_install_git {
 
    # Start STEP 2
       f_talk; echo "Starting STEP 2:"
-      echo
+              echo
 
       # Para verificar o nome atual:
       #  > `git config --global user.name` 
