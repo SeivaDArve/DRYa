@@ -444,6 +444,8 @@ function F_hzl {
    # Prints an horizontal line according to the amount to line existent in the current terminal
    # This fx exists also at .../boot/horizontal-line.sh
 
+   # uDev: Testar primeiro se `tput` existe. Se nao existir, usar $COLUMNS em vez disso
+
    # If the script that used this library does not set the variable that fills the line, then the character is set as default here
       [[ -z $V_hzl ]] && V_hzl="-"
    
