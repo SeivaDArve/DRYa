@@ -1393,8 +1393,9 @@ function f_main_menu {
       # List of menu options
          Lz1='CMD used: '; Lz2='D ssh'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
 
-          L11="11. |  h  | Help"
+          L12="12. |  h  | Help"
 
+          L11="11. |     | Chat via SSH"
           L10="10. |  p  | Ping sweep (escuta todos os IP disponiveis)"
            L9="9.  |     | Delete   | SSH key" 
 
@@ -1412,10 +1413,11 @@ function f_main_menu {
          Lh=$(echo -e "\nIP mais comum de router: 192.168.1.1\n ")
          L0="$v_fzf Menu Principal: "
 
-         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n\n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt "$L0")
+         v_menu=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n\n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt "$L0")
 
       # Executar de acordo com o resultado
-         [[   $v_menu =~ "11. " ]] && f_help
+         [[   $v_menu =~ "12. " ]] && f_help
+         [[   $v_menu =~ "11. " ]] && echo uDev
          [[   $v_menu =~ "10. " ]] && f_ping_sweep
          [[   $v_menu =~ "9.  " ]] && f_delete_ssh_key
          [[   $v_menu =~ "8.  " ]] && f_ver_as_pastas_pre_definidas
