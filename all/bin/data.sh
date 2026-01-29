@@ -51,35 +51,42 @@ function f_complete_date {
    
    # Montagem da data
       # Display: Titulo em linha com o restante
-         v_texto="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
+         v_TIT="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
 
       # Display: Grupo data hora
-         v_txt="GDH"
+         v_nom="GDH"
          v_dia=$(date +'%d')
          v_hor=$(date +'%H')
-         #v_fuso=$(date +'%z')
+
+         # drya-fst-tg-sys-for-vars  (define $v_fuso in many diferent ways. BUT only the last line will count. This is a fast toggle system for variables)
+              v_fuso=$(date +'%Z')
+        unset v_fuso
+
          v_min=$(date +'%M')
          v_mes=$(date +'%b')
          v_ano=$(date +'%Y')
-        #v_texto="${v_texto} ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"  # Versao anterior, antes de usar drya-lib-1
-         v_text1=" > ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano})"
+         v_GDH="($v_nom ${v_dia}${v_hor}${v_min}${v_fuso}${v_mes}${v_ano}) -"
    
       # Display: Ano sozinho
          v_ano=$(date +'%Y')
-        #v_texto="${v_texto} (Ano $v_ano) -"  # Versao anterior, antes de usar drya-lib-1
-         v_texto="(Ano $v_ano) -"
+         v_ANO="(Ano $v_ano) -"
 
       # Display: Mes sozinho
          v_mes=$(date +'%m %b')
-         v_texto="${v_texto} (Mês $v_mes) -"
+         v_MES="(Mês $v_mes) -"
 
       # Display: Dia sozinho
          v_dia=$(date +'%d %a')
-         v_texto="${v_texto} (Dia $v_dia) -"
+         v_DIA="(Dia $v_dia) -"
 
       # Display: Hora + minutos + segundos
          v_hora=$(date +'%H:%M:%S')
-         v_texto=" > ${v_texto} (Hora $v_hora)"
+         v_HORA="(Hora $v_hora)"
+
+      # Concatnar Todas as variaveis anterires
+         v_final="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+   
+
 
    # Instrucoes ao desenvolvedor:
       # echo -ne "\r"      ## Move o cursor para o inicio da linha
@@ -87,8 +94,23 @@ function f_complete_date {
 
       # Montrar o resultado no terminal
          f_talk; echo "Horas (neste momento):"
-                 echo "$v_text1"
-                 echo -ne "\r\033[K$v_texto "  
+                #echo             " > $v_GDH"
+                 echo -ne "\r\033[K > $v_final "  
+
+
+
+
+
+
+   function f_detect_terminal_size {
+      # Vai ser contabilizado o numero de colunas do terminal, para que a data/hora nao tenha quebras de linha quando nao é preciso
+              echo
+              echo
+      f_talk; echo "uDev: Contar linhas e colunas"
+              echo "Nr. Linhas:  $LINES (desnecessario para esta tarefa)"
+              echo "Nr. Colunas: $COLUMNS"
+   }
+   f_detect_terminal_size 
 }
 
 function f_complete_date_loop {
