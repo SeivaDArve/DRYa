@@ -46,9 +46,6 @@ function f_background_process {
 function f_complete_date {
    # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
-   # uDev: O grupo data hora neste momento nao é apresentado na mesma linha que o resto da data-hora. Mas isso é desnecessario caso seja adiconado tput para contar as coluas atuais do terminal. O GDH nao faz uma quebra de linha para satisfazer termux, mas nem sempre é necessario
-   #       ou seja, usar $LINES e $COLUMNS
-   
    # Montagem da data
       # Display: Titulo em linha com o restante
          v_TIT="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
@@ -96,21 +93,130 @@ function f_complete_date {
          f_talk; echo "Horas (neste momento):"
                 #echo             " > $v_GDH"
                  echo -ne "\r\033[K > $v_final "  
-
+                 #echo hit
 
 
 
 
 
    function f_detect_terminal_size {
-      # Vai ser contabilizado o numero de colunas do terminal, para que a data/hora nao tenha quebras de linha quando nao é preciso
-              echo
-              echo
-      f_talk; echo "uDev: Contar linhas e colunas"
-              echo "Nr. Linhas:  $LINES (desnecessario para esta tarefa)"
-              echo "Nr. Colunas: $COLUMNS"
+      # Criar data/hora responsiva ao tamanho do terminal
+
+      # uDev: O grupo data hora neste momento nao é apresentado na mesma linha que o resto da data-hora. Mas isso é desnecessario caso seja adiconado tput para contar as coluas atuais do terminal. O GDH nao faz uma quebra de linha para satisfazer termux, mas nem sempre é necessario
+      #       ou seja, usar $LINES e $COLUMNS
+   
+
+      #   # Vai ser contabilizado o numero de colunas do terminal, para que a data/hora nao tenha quebras de linha quando nao é preciso
+      #           echo
+      #           echo
+      #   f_talk; echo "uDev: Contar linhas e colunas"
+      #           echo "Nr. Linhas:  $LINES (desnecessario para esta tarefa)"
+      #           echo "Nr. Colunas: $COLUMNS"
+
+      #   v_cols=$COLUMNS
+      #   echo $v_cols
+
+      # Calcular e atuar de acordo com o numero de caracteres e numero de colunas do termial
+         
+      #    # Calculo do numero de caracteres (media )
+      #       v_TIT_siz=${#v_TIT}  # Calculo do numero de caracteres
+      #       echo "Tamanho v_TIT: $v_TIT_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_GDH_siz=${#v_GDH}
+      #       echo "Tamanho v_GDH: $v_GDH_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_ANO_siz=${#v_ANO}
+      #       echo "Tamanho v_ANO: $v_ANO_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_MES_siz=${#v_MES}
+      #       echo "Tamanho v_MES: $v_MES_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_DIA_siz=${#v_DIA}
+      #       echo "Tamanho v_DIA: $v_DIA_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_HORA_siz=${#v_HORA}
+      #       echo "Tamanho v_HORA: $v_HORA_siz"
+
+
+
+
+      # Calculo do numero de caracteres (media )
+         v_tam_0_txt="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+         v_tam_0=${#v_tam_0_txt}
+         #echo "Tamanho v_tam_0: $v_tam_0"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_1_txt="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA"
+         v_tam_1=${#v_tam_1_txt}
+         #echo "Tamanho v_tam_1: $v_tam_1"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_2_txt="$v_TIT $v_GDH $v_ANO $v_MES"
+         v_tam_2=${#v_tam_2_txt}
+         #echo "Tamanho v_tam_2: $v_tam_2"  # Debug
+      
+      # Calculo do numero de caracteres
+         v_tam_3_txt="$v_TIT $v_GDH $v_ANO"
+         v_tam_3=${#v_tam_3_txt}
+         #echo "Tamanho v_tam_3: $v_tam_3"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_4_txt="$v_TIT $v_GDH"
+         v_tam_4=${#v_tam_4_txt}
+         #echo "Tamanho v_tam_4: $v_tam_4"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_5_txt="$v_TIT"
+         v_tam_5=${#v_tam_5_txt}
+         #echo "Tamanho v_tam_5: $v_tam_5"  # Debug
+
+
+
+      if [[ $v_cols -gt $v_tam_0 ]]; then
+         # 1 Linha: Se o terminal for maior que tudo, imprime tudo
+         echo $v_tam_0
+         echo $v_tam_0_txt
+         echo "$v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_1 ]]; then
+         # 2 Linhas: 
+         echo $v_tam_1_txt
+         echo "$v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_2 ]]; then
+         # 3 Linhas: 
+         echo $v_tam_2
+         echo $v_tam_1_txt
+         echo "$v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_3 ]]; then
+         # 4 Linhas: 
+         echo $v_tam_3
+         echo $v_tam_3_txt
+         echo "$v_ANO $v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_4 ]]; then
+         # 5 Linhas: 
+         echo $v_tam_4
+         echo $v_tam_4_txt
+         echo "$v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_5 ]]; then
+         # 6 Linhas: 
+         echo $v_tam_5
+         echo $v_tam_5_txt
+
+      else
+         echo "O terminal é menor que \$v_final_siz"
+      fi
+
    }
-   f_detect_terminal_size 
+   #f_detect_terminal_size 
 }
 
 function f_complete_date_loop {
