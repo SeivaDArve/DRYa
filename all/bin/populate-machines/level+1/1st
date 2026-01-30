@@ -129,6 +129,8 @@ function f_usefull {
       nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
       lf             # Terminal file explorer
       GParted
+         
+      http://strudel.cc  # Live coding para padroes de musica em javascript
    '
 }
 
