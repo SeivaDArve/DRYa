@@ -171,8 +171,6 @@ function f_about_possible_compression_dependencies {
 
 function f_test_existent_compression_dependencies {
 
-
-
    # uDev: passar isto para DRYa pre-requisitos
 
    # ===========================================
@@ -180,25 +178,24 @@ function f_test_existent_compression_dependencies {
    # ===========================================
 
    # Lista de comandos a verificar
-   comandos=(
-     tar
-     gzip
-     bzip2
-     xz
-     zip
-     unzip
-     rar
-     unrar
-     7z
-     #dar
-     gpg
-     #unar
-     #atool
-     #zstd
-   )
+   comandos=( tar
+              gzip
+              bzip2
+              xz
+              zip
+              unzip
+              rar
+              unrar
+              7z
+              #dar
+              gpg
+              #unar
+              #atool
+              #zstd 
+            )
 
-   f_talk; echo "Verificando comandos instalados no sistema..."
-           echo "            (Compactacao e Criptografia)"
+   f_talk; echo "A verificar existencia de softwares no sistema..."
+           echo " > Ferramentas de compactacao:"
            echo 
 
    # Loop pelos comandos
@@ -333,7 +330,7 @@ function f_unzip {
 
 
 if [ -z $* ]; then
-   f_talk; echo "uDev: Menu"
+   f_talk; echo "uDev: Menu + Info se ZIP esta instalado"
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh
@@ -343,6 +340,11 @@ elif [ $1 == "h" ] || [ $1 == "help" ]; then
       
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
    f_about_possible_compression_dependencies
+
+elif [ $1 == "test" ] || [ $1 == "test-dependencies" ]; then
+   # Testar se as dependencias para zipara + deszipar existem e estao instaladas
+
+   f_test_existent_compression_dependencies 
 
 elif [ $1 == "zip" ]; then
    f_zip
