@@ -763,6 +763,7 @@ Serve para Verificação de identidade
 
 function f_main_menu_text {
    L00=" | opc | fx (all with info, except if \$1 is 'v')"
+   L00=' | Arg | Descricao da fx (+ info  || `v` for no info)'
 
     L0=" |  0  | Status > DRYa default settings"
     L1=" |  1  | Chaves > Listar as públicas / verificar existência"
@@ -841,6 +842,8 @@ function f_GnuPG_main_menu {
 
    # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
       f_header
+      f_talk; echo "Menu GPG: Encriptacao/Desencriptacao"
+              echo
       #f_vb_testing_drya_defaults
       f_main_menu_text
 
