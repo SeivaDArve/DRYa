@@ -44,6 +44,29 @@ function f_background_process {
 }
 
 function f_complete_date {
+
+   
+   f_complete_date_variable 
+   f_talk; echo "Horas (neste momento):"  # Se esta linha for ativada, cria bug
+
+
+
+   # Montrar o resultado no terminal
+      # Mostrar em apenas 1 linha a data completa
+
+      # Instrucoes ao desenvolvedor:
+         # echo -ne "\r"      ## Move o cursor para o inicio da linha
+         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+
+     #echo             " > $v_GDH"
+      echo -ne "\r\033[K $v_final "  
+
+
+
+
+}
+
+function f_complete_date_variable {
    # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
    # Montagem da data
@@ -83,20 +106,6 @@ function f_complete_date {
       # Concatnar Todas as variaveis anterires
          v_final="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
    
-
-
-   # Instrucoes ao desenvolvedor:
-      # echo -ne "\r"      ## Move o cursor para o inicio da linha
-      # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
-
-      # Montrar o resultado no terminal
-         f_talk; echo "Horas (neste momento):"
-                #echo             " > $v_GDH"
-                 echo -ne "\r\033[K > $v_final "  
-                 #echo hit
-
-
-
 
 
    function f_detect_terminal_size {
@@ -224,7 +233,8 @@ function f_complete_date_loop {
 
    while true
    do
-      f_complete_date
+      f_complete_date_variable
+      echo -ne "\r\033[K > $v_final "  
       sleep 1
 
       #read -t 1 -s v_key
@@ -236,7 +246,6 @@ function f_complete_date_loop {
 function f_complete_date_loop_plus_figlet {
    f_greet
    f_talk; echo "complete (+loop) (+ASCII):"
-   echo 
    f_complete_date_loop
 }
 
