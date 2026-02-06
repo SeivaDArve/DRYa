@@ -1229,8 +1229,8 @@ function f_list_ip_public_n_local {
    # Imprimindo os resultados
       f_greet
       f_talk; echo "List of IP found for this machine"
-              echo " > IP Público:  $PUBLIC_IP"
-              echo " > IP Local:    $v_ip"
+              echo " > Public IP : $PUBLIC_IP"
+              echo " > Local IP  : $v_ip"
               echo
       f_talk; echo "Results sent to:"
               echo " > $v_reslt" 
