@@ -700,7 +700,10 @@ function f_vb_export_private_key {
 
 function f_vb_symmetric_store {
    # Instrucoes/Verbose curtas, sobre f_symmetric_store 
-   echo  "Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha vai poder desencriptar."
+
+   f_talk; echo "Info sobre esta fx: "
+           echo  "  Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha vai poder desencriptar."
+           echo  "  uDev: Informar se o resultado final (ficheiro final) é uma copia e mantem o original (ou se apaga o original e fica so o ficheiro final"
 }
 
 function f_vb_symmetric_decrypt {
