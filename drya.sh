@@ -3,11 +3,10 @@
 # Description: The central script that manages other scripts and repos. You may use this app in many ways. Specially as a toolbox
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
-# Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
-   v_fzf_talk=DRYa  # uDev: passar para v_fzf
 
-   __name__=drya.sh
-   __repo__=${v_REPOS_CENTER}/DRYa
+__name__=drya.sh
+__repo__=${v_REPOS_CENTER}/DRYa
+v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
 
 
 
@@ -653,7 +652,7 @@ function f_dotFiles_install_git_set_machine_name {
          # If name is empty, tell it very clearly:
             [[ -z $v_current_name ]] && v_current_name="(empty)"
 
-            f_talk; echo "Current git name (@host machine) is:"
+            f_talk; echo "Current git name (@ host machine) is:"
                  echo " > $v_current_name"
                  echo
    }
@@ -769,8 +768,8 @@ function f_dot_files_install_git {
       # uDev: Ask if user wants to install
 
    # Testing if `fzf` is installed
-      v_fzf=$(command -v fzf)
-      [[ -z $v_fzf ]] && echo " > Command fzf does not exist (not installed)"
+      v_cmd_fzf=$(command -v fzf)
+      [[ -z $v_cmd_fzf ]] && echo " > Command fzf does not exist (not installed)"
       # uDev: Ask if user wants to install
 
    # Testing if 'ezGIT' is cloned
@@ -786,12 +785,13 @@ function f_dot_files_install_git {
       f_greet
 
       f_talk; echo -n "Installing "
-        f_c3; echo    "dot files for 'git'"
+        f_c3; echo    "configurations for 'git'"
         f_rc; echo
       f_talk; echo    "STEP 1: "
-              echo    " > Task | Copy .gitconfig"
+              echo    " > Task | Copy dotfiles: .gitconfig"
+              echo    "        |"
               echo    " > From | .../DRYa/all/etc/dot-files/git-github/.gitconfig"
-              echo    " > To   | ~/"
+              echo    " > To   | ~/.gitconfig"
               echo
       f_talk; echo    "STEP 2: "
               echo    " > Change Machine name"
@@ -803,7 +803,7 @@ function f_dot_files_install_git {
               f_hzl
 
    # Ask to start installation
-      v_txt="Install all 'git' dot files" && f_anyK && echo
+      v_txt="Start all configurations for 'git'" && f_anyK && echo
 
       f_hzl
       echo
@@ -816,7 +816,7 @@ function f_dot_files_install_git {
 
    # Start STEP 2
       f_talk; echo "Starting STEP 2:"
-      echo
+              echo
 
       # Para verificar o nome atual:
       #  > `git config --global user.name` 
@@ -1030,43 +1030,51 @@ function f_dot_files_install_netrc {
 function f_list_ip_public_n_local {
    # Mencionar no terminsl qual é o endereço de IP publico e local
    
-   v_name=ip
-             v_dir=~/.tmp
-   mkdir -p $v_dir
+   # uDev: confirmar primeiro se existe internet ou intranet (algum tipo de IP)
+
+   # A variable $v_vrb can decide weather to print all the output to the terminal or not
+      v_vrb=${v_vrb:=on}  # The variable $v_vrb, if not set either to `v_vrb=off` or `v_vrb=off` will be set automatically to on
+
+      #echo "Verbose=$v_vrb"
+      #read
+
+   # `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+
+   [[ $v_vrb == "on" ]] && f_greet 
+   [[ $v_vrb == "on" ]] && f_talk; echo "Print current IP (local + public)"
+   [[ $v_vrb == "on" ]] &&         echo " > Searching available commands to fetch local IP:"
+   [[ $v_vrb == "on" ]] &&         echo
+
+   v_dir=~/.tmp  ;  v_name=ip  ;  mkdir -p $v_dir
+
+   v_tmp_0=$v_dir/${v_name}_0
    v_tmp_1=$v_dir/${v_name}_1
    v_tmp_2=$v_dir/${v_name}_2
    v_reslt=$v_dir/${v_name}_results  # Last output file, can be 'sourced' by bash
    
-   f_greet 
-   f_talk; echo "Print current IP (local + public)"
-           echo " > Searching available commands to fetch local IP:"
-           echo
-
    function f_1 {
       # Tentativa 1: Obtendo o IP local usando  'ifconfig'
 
-      f_talk; echo "Testing: ifconfig"
+      [[ $v_vrb == "on" ]] && f_talk; echo "Testing: ifconfig"
 
       if $(command -v ifconfig &>/dev/null); then
-         echo " > Command 'ifconfig' is installed"
+         [[ $v_vrb == "on" ]] && echo " > Command 'ifconfig' is installed"
 
          #v_ip=$(ifconfig 1>/dev/null| grep -w inet | grep -v 127.0.0.1 | awk '{print $2}')
          #v_ip=$(cat $v_tmp)
 
-         ifconfig           > $v_tmp_1 
-         grep -w  inet        $v_tmp_1 > $v_tmp_2
-         grep -v  127.0.0.1   $v_tmp_2 > $v_tmp_1
-         awk     '{print $2}' $v_tmp_1 > $v_tmp_2
+
+         ifconfig 2>/dev/null | grep -w  inet | grep -v  127.0.0.1  | awk '{print $2}' > $v_tmp_2
 
          for i in $(cat $v_tmp_2);
          do
-            echo " > IP: $i"
+            [[ $v_vrb == "on" ]] && echo " > IP: $i"
             v_f1_ip=$i  # Last number ($i) will be the ip from f_1
          done
 
 
       else
-         echo " > Command 'ifconfig' not installed (from package 'net-tools')"
+         [[ $v_vrb == "on" ]] && echo " > Command 'ifconfig' not installed (from package 'net-tools')"
       fi
 
       echo
@@ -1079,10 +1087,21 @@ function f_list_ip_public_n_local {
 
       if $(command -v hostname 1>/dev/null); then
          echo " > Command 'hostname' is installed"
-         v_ip=$(hostname -I | awk '{print $1}')
-         echo " > IP: $v_ip"
+
+         # Se 'hostname' existe, testar se a versao permite a flag `-I`
+            hostname -I &>/dev/null
+            v_status=$?
+            # echo "Status $v_status" # Se o status code for 64, entao a flag `-I` nao existe na versao atual do pacote 'hostname'
+
+         if [[ $v_status == 0 ]]; then
+            v_ip=$(hostname -I | awk '{print $1}')
+            echo " > IP: $v_ip"
+         else
+            echo " > A versao atual de 'hostname' nao tem a flag '-I'"
+         fi
 
          v_f2_ip=$v_ip  # Last number from f_2
+
       else
          echo " > Command 'hostname' not installed"
       fi
@@ -1098,12 +1117,23 @@ function f_list_ip_public_n_local {
 
       if $(command -v ip &>/dev/null); then
          echo " > Command 'ip' is installed"
-         v_ip=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
 
-         for i in $v_ip
-         do
-            echo " > IP: $i"
-         done
+         # Testar se no é permitido (com acesso root) ler o comando `ip addr show`
+            ip addr show 2>/dev/null
+            v_status=$?
+            #echo "Status $v_status" # Se o status code for 64, entao a flag `-I` nao existe na versao atual do pacote 'hostname'
+
+         if [[ $v_status == 0 ]]; then
+            v_ip=$(ip addr show | grep "inet\b" | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+
+            for i in $v_ip
+            do
+               echo " > IP: $i"
+            done
+
+         else
+            echo " > Command 'ip addr show' needs root privileges to run"
+         fi
 
          v_f3_ip=$(head -n 1 <(echo "$LOCAL_IP_3"))  # Last number from f_3
 
@@ -1112,11 +1142,21 @@ function f_list_ip_public_n_local {
       fi
    }
 
+   function f_4 {
+      # Using termux:API to git IP
+      echo "termux-wifi-connectioninfo"
+   }
+
+   function f_5 {
+      echo "'busybox ifconfig' do pacote busybox"
+   }
+
    f_hzl
    f_1   # Testing 'ifconfig'
    f_2   # Testing 'hostname'
    f_3   # Testing 'ip'
-   f_hzl
+
+   echo
 
    #echo "Vars (debug):"
    #echo " > $v_f1_ip"
@@ -1141,16 +1181,32 @@ function f_list_ip_public_n_local {
 
    f_talk; echo "Local IP to be mentioned in the end:"
            echo " > $v_ip"
-           echo
+   f_hzl
 
    # uDev: Se todos falharem, perguntar se quer experimentar fazer download de algum pacote e tentar novamente
+           echo
 
    # Obtendo o IP público usando curl e um serviço online
       f_talk; echo "Searching the web to provide Public IP"
-              echo " > Website used: http://ifconfig.me"
-      PUBLIC_IP=$(curl -s ifconfig.me)  # Alternativa: `curl ifconfig.co`
-      echo " > IP: $PUBLIC_IP"
 
+              echo " > Website used: http://ifconfig.me"
+              PUBLIC_IP=$(curl -s ifconfig.me) 
+              echo " > IP: $PUBLIC_IP"
+              echo
+
+              echo " > Website used: http://ipinfo.io/ip"
+              PUBLIC_IP=$(curl -s ipinfo.io/ip) 
+              echo " > IP: $PUBLIC_IP"
+              echo
+
+              echo " > Website used: http://ifconfig.co"
+              PUBLIC_IP=$(curl -s ifconfig.co)
+              echo " > IP: $PUBLIC_IP"
+              echo
+
+   f_hzl
+   echo "IP router (default gateway): usually 192.168.0.1 or 192.168.1.1"
+   echo "IP Loopback: 127.0.0.1 or 127.1.0.0"
    f_hzl
 
    # Send last IP numbers to ssms
@@ -2037,7 +2093,7 @@ function f_drya_help_menu {
       L2='2.  Print All' 
       L1='1.  Cancel'
 
-      L0="$v_fzf_talk: Help Menu: "
+      L0="$v_fzf: Help Menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n$L10 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -2980,12 +3036,27 @@ elif [ $1 == "seiva-up-time" ]; then
 
 elif [ $1 == "ip" ]; then 
 
+   #elif "ping sweeep":  `D ssh p`
+
    if [[ -z $2 ]]; then 
       f_menu_internet_network_ip_options
 
    elif [ $2 == "b" ] || [ $2 == "both" ]; then 
       # Show both IP: Local + public
+
+      v_vrb=on  # This variable will decide weather the next function will print to terminal or not
       f_list_ip_public_n_local 
+
+   elif [ $2 == "B" ] || [ $2 == "both-non-verbose" ]; then 
+      # Show both IP: Local + public
+
+      v_vrb=off  # This variable will decide weather the next function will print to terminal or not
+      f_list_ip_public_n_local 
+
+   elif [ $2 == "i" ] || [ $2 == "install-if-needed" ]; then 
+      # Opcao para instalar todos os pacotes conhecidos ate que um deles encontre o IP local
+      # uDev: nao esquecer que pode nao estar conectado a internet
+      echo "uDev"
    fi
 
 elif [ $1 == "mac" ]; then 
@@ -3817,7 +3888,7 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
          L1='1. Cancel'
 
          Lh=$(echo -e "\nInstrucoes sobre editor de texto:\n - Altere o editor com a fx \`ee\`\n ")
-         L0="$v_fzf_talk: SELECT 1: Menu X: "
+         L0="$v_fzf: SELECT 1: Menu X: "
          
       # Ordem de Saida das opcoes durante run-time
          v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")

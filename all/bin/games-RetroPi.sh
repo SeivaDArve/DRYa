@@ -68,7 +68,7 @@ elif [ $1 == "." ]; then
 
 elif [ $1 == "rom" ]; then
    # Print ROMs location
-   echo "By default, ROMs      location: ~/RetroPi/roms"
+   echo "By default, ROMs      location: ~/RetroPie/roms"
    echo "By default, USB stick location: /media"
 
 elif [ $1 == "net" ]; then
@@ -114,7 +114,7 @@ elif [[ $1 == "install" ]] || [ $1 == "install-retropi-on-raspberryOS" ]; then
    # Step 3  (Installing X11 replacing wayland)
       echo "---- Step 3: Installing X11 ----"
       echo
-      echo "RetroPi does not use wayland, it uses X11"
+      echo "RetroPie does not use wayland, it uses X11"
       echo " > If it mentions 'wayland not available', it means you must switch"
       echo
       echo ' > 1 `sudo raspi-config`'

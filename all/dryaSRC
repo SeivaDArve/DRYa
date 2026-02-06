@@ -333,6 +333,28 @@ function f_drya_welcome_screen {
    # uDev: send to drya-messages too
    # uDev: Ask if the user want to see more than just the OS that is running
       
+   function f_seiva_greetings_private {
+      # When DRYa was installed on personal and private PC/device, use this fx
+      
+      f_talk; echo "Seiva greetings: Haux haux!"
+              echo "      ( Verbal expression of Joy and Hapiness! )" 
+              echo "      ( From Brazil tribe Huni Kuin - AKA kaxinawá )" 
+              echo
+   }
+   
+   function f_seiva_greetings_public {
+      # When DRYa was installed on public PC/device, use this fx
+      
+      f_talk; echo "Seiva greetings: Haux haux!"
+              echo
+   }
+
+   function f_seiva_greetings {
+      # This fx only detects which fx (Public vs. Private) to run
+      
+      [[ $trid_gmn =~ "publicDVC" ]] && f_seiva_greetings_public || f_seiva_greetings_private
+   }
+
    function f_ws_termux {
       # Display the standard welcome termux message
 
@@ -392,39 +414,43 @@ function f_drya_welcome_screen {
 
       bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
    }
-
-   function f_seiva_greetings {
-      f_talk; echo "Seiva greetings: Haux haux!"
-              echo "      ( Verbal expression of Joy and Hapiness! )" 
-              echo "      ( From Brazil tribe Huni Kuin - AKA kaxinawá )" 
-              echo
+ 
+   function f_ws_cmatrix {
+      # If we detect that current PC/device is a public one, after Terminal startup, most likely nobody will know how to use the terminal, so nobody need DRYa's welcome message. In that case, cmatrix will fill the screen
+      
+      [[ $trid_gmn =~ "publicDVC" ]] && sleep 2 && cmatrix
    }
-   
+
    f_ws_drya_ascii_presentation
-   f_seiva_greetings 
+   f_seiva_greetings
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
    f_ws_drya_startup_instructions
    f_ws_drya_about_decrypted_gpg_dir
    f_ws_neofetch
   #f_ws_seiva_up_time 
+   f_ws_cmatrix
 
 }
 
 function f_fun_after_welcome_screen {
    # For practice, fun, entetainment. After DRYa welcome messages, a chalenge is given
 
-   echo                          1>/dev/null  # It must have at least one command permenently running in an fx where everything else is commented
+   function f_exec_fun {
+      echo                          1>/dev/null  # It must have at least one command permenently running in an fx where everything else is commented
 
-   #f_fun_apprendre_le_francais
-    f_fun_memorize_sutras        2>/dev/null
-   #f_fun_open_random_shells
-   #f_fun_memorize_sanskrit      (uDev)
-   #f_fun_memorize_font_kamida   (uDev)
-   #f_fun_memorize_font_diedro   (uDev)
-   #f_fun_quotes_from_yogis      (uDev)
-   #f_fun_dance_move_time        (uDev)
-    f_fun_vibrato                
+      #f_fun_apprendre_le_francais
+       f_fun_memorize_sutras        2>/dev/null
+      #f_fun_open_random_shells
+      #f_fun_memorize_sanskrit      (uDev)
+      #f_fun_memorize_font_kamida   (uDev)
+      #f_fun_memorize_font_diedro   (uDev)
+      #f_fun_quotes_from_yogis      (uDev)
+      #f_fun_dance_move_time        (uDev)
+       f_fun_vibrato                
+   }
+
+   [[ ! $trid_gmn =~ "publicDVC" ]] && f_exec_fun 
  }
 
 function f_any_key_b4_open_msgs {
@@ -831,6 +857,11 @@ function f_repository_omni-log {
       echo
    }
    #f_get_birthdays_from_db 
+
+   function f_upload_local_ip {
+      echo uDev 1>/dev/null
+   }
+   f_upload_local_ip
 }
 
 function f_repository_3_sticks_alpha_bravo {

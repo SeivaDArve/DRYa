@@ -129,8 +129,12 @@ function f_usefull {
       nodejs         # Node.js for Javascript (sometimes it brings npm (node package manager))
       lf             # Terminal file explorer
       GParted
+<<<<<<< HEAD
          
       http://strudel.cc  # Live coding para padroes de musica em javascript
+=======
+      htop           # Task manager com hotkeys para `kill`processos
+>>>>>>> 1183eb5987cf46a11213e4486cdcc41217cc6b64
    '
 }
 

@@ -1,0 +1,28 @@
+#!/bin/bash
+# Title: .dryaLOGOUT
+# Description: file that runs all functions from every app before shell logs out
+
+
+if [ $traits_OS == "Android" ]; then
+   # Run at termux android at terminal logout
+
+   # Present a brief title
+      clear
+      figlet DRYa
+
+   # Create a separation line to distinguish changes easier
+      f_hzl
+
+   # Message to show at last minite
+      echo "DRYa: Restoring files and configs before terminal exit"
+
+   # Create a separation line to distinguish changes easier
+      f_hzl
+
+   # Restoring termux touch keybord to omni-key's default key (if we are running Android)
+      cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/ && echo " > Omni-key default key: restored"
+
+   # Time to allow the user to read
+      sleep 1
+fi
+

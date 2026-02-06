@@ -1,6 +1,7 @@
 #!/bin/bash
 # Title: data.sh
 __name__="data.sh"
+v_fzf="DRYa-data:"
 
 
 
@@ -43,48 +44,188 @@ function f_background_process {
 }
 
 function f_complete_date {
+
+   
+   f_complete_date_variable 
+   f_talk; echo "Horas (neste momento):"  # Se esta linha for ativada, cria bug
+
+
+
+   # Montrar o resultado no terminal
+      # Mostrar em apenas 1 linha a data completa
+
+      # Instrucoes ao desenvolvedor:
+         # echo -ne "\r"      ## Move o cursor para o inicio da linha
+         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+
+     #echo             " > $v_GDH"
+      echo -ne "\r\033[K $v_final "  
+
+
+
+
+}
+
+function f_complete_date_variable {
    # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
    # Montagem da data
       # Display: Titulo em linha com o restante
-         v_texto="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
+         v_TIT="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
 
       # Display: Grupo data hora
-         v_txt="GDH"
+         v_nom="GDH"
          v_dia=$(date +'%d')
          v_hor=$(date +'%H')
-         #v_fuso=$(date +'%z')
+
+         # drya-fst-tg-sys-for-vars  (define $v_fuso in many diferent ways. BUT only the last line will count. This is a fast toggle system for variables)
+              v_fuso=$(date +'%Z')
+        unset v_fuso
+
          v_min=$(date +'%M')
          v_mes=$(date +'%b')
          v_ano=$(date +'%Y')
-        #v_texto="${v_texto} ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano}) -"  # Versao anterior, antes de usar drya-lib-1
-         v_text1=" > ($v_txt ${v_dia}${v_hor}${v_min}${v_mes}${v_ano})"
+         v_GDH="($v_nom ${v_dia}${v_hor}${v_min}${v_fuso}${v_mes}${v_ano}) -"
    
       # Display: Ano sozinho
          v_ano=$(date +'%Y')
-        #v_texto="${v_texto} (Ano $v_ano) -"  # Versao anterior, antes de usar drya-lib-1
-         v_texto="(Ano $v_ano) -"
+         v_ANO="(Ano $v_ano) -"
 
       # Display: Mes sozinho
          v_mes=$(date +'%m %b')
-         v_texto="${v_texto} (Mês $v_mes) -"
+         v_MES="(Mês $v_mes) -"
 
       # Display: Dia sozinho
          v_dia=$(date +'%d %a')
-         v_texto="${v_texto} (Dia $v_dia) -"
+         v_DIA="(Dia $v_dia) -"
 
       # Display: Hora + minutos + segundos
          v_hora=$(date +'%H:%M:%S')
-         v_texto=" > ${v_texto} (Hora $v_hora)"
+         v_HORA="(Hora $v_hora)"
 
-   # Instrucoes ao desenvolvedor:
-      # echo -ne "\r"      ## Move o cursor para o inicio da linha
-      # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+      # Concatnar Todas as variaveis anterires
+         v_final="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+   
 
-      # Montrar o resultado no terminal
-         f_talk; echo "Horas (neste momento):"
-                 echo "$v_text1"
-                 echo -ne "\r\033[K$v_texto "  
+
+   function f_detect_terminal_size {
+      # Criar data/hora responsiva ao tamanho do terminal
+
+      # uDev: O grupo data hora neste momento nao é apresentado na mesma linha que o resto da data-hora. Mas isso é desnecessario caso seja adiconado tput para contar as coluas atuais do terminal. O GDH nao faz uma quebra de linha para satisfazer termux, mas nem sempre é necessario
+      #       ou seja, usar $LINES e $COLUMNS
+   
+
+      #   # Vai ser contabilizado o numero de colunas do terminal, para que a data/hora nao tenha quebras de linha quando nao é preciso
+      #           echo
+      #           echo
+      #   f_talk; echo "uDev: Contar linhas e colunas"
+      #           echo "Nr. Linhas:  $LINES (desnecessario para esta tarefa)"
+      #           echo "Nr. Colunas: $COLUMNS"
+
+      #   v_cols=$COLUMNS
+      #   echo $v_cols
+
+      # Calcular e atuar de acordo com o numero de caracteres e numero de colunas do termial
+         
+      #    # Calculo do numero de caracteres (media )
+      #       v_TIT_siz=${#v_TIT}  # Calculo do numero de caracteres
+      #       echo "Tamanho v_TIT: $v_TIT_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_GDH_siz=${#v_GDH}
+      #       echo "Tamanho v_GDH: $v_GDH_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_ANO_siz=${#v_ANO}
+      #       echo "Tamanho v_ANO: $v_ANO_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_MES_siz=${#v_MES}
+      #       echo "Tamanho v_MES: $v_MES_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_DIA_siz=${#v_DIA}
+      #       echo "Tamanho v_DIA: $v_DIA_siz"
+
+      #    # Calculo do numero de caracteres (media )
+      #       v_HORA_siz=${#v_HORA}
+      #       echo "Tamanho v_HORA: $v_HORA_siz"
+
+
+
+
+      # Calculo do numero de caracteres (media )
+         v_tam_0_txt="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+         v_tam_0=${#v_tam_0_txt}
+         #echo "Tamanho v_tam_0: $v_tam_0"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_1_txt="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA"
+         v_tam_1=${#v_tam_1_txt}
+         #echo "Tamanho v_tam_1: $v_tam_1"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_2_txt="$v_TIT $v_GDH $v_ANO $v_MES"
+         v_tam_2=${#v_tam_2_txt}
+         #echo "Tamanho v_tam_2: $v_tam_2"  # Debug
+      
+      # Calculo do numero de caracteres
+         v_tam_3_txt="$v_TIT $v_GDH $v_ANO"
+         v_tam_3=${#v_tam_3_txt}
+         #echo "Tamanho v_tam_3: $v_tam_3"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_4_txt="$v_TIT $v_GDH"
+         v_tam_4=${#v_tam_4_txt}
+         #echo "Tamanho v_tam_4: $v_tam_4"  # Debug
+
+      # Calculo do numero de caracteres
+         v_tam_5_txt="$v_TIT"
+         v_tam_5=${#v_tam_5_txt}
+         #echo "Tamanho v_tam_5: $v_tam_5"  # Debug
+
+
+
+      if [[ $v_cols -gt $v_tam_0 ]]; then
+         # 1 Linha: Se o terminal for maior que tudo, imprime tudo
+         echo $v_tam_0
+         echo $v_tam_0_txt
+         echo "$v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_1 ]]; then
+         # 2 Linhas: 
+         echo $v_tam_1_txt
+         echo "$v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_2 ]]; then
+         # 3 Linhas: 
+         echo $v_tam_2
+         echo $v_tam_1_txt
+         echo "$v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_3 ]]; then
+         # 4 Linhas: 
+         echo $v_tam_3
+         echo $v_tam_3_txt
+         echo "$v_ANO $v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_4 ]]; then
+         # 5 Linhas: 
+         echo $v_tam_4
+         echo $v_tam_4_txt
+         echo "$v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+
+      elif [[ $v_cols -gt $v_tam_5 ]]; then
+         # 6 Linhas: 
+         echo $v_tam_5
+         echo $v_tam_5_txt
+
+      else
+         echo "O terminal é menor que \$v_final_siz"
+      fi
+
+   }
+   #f_detect_terminal_size 
 }
 
 function f_complete_date_loop {
@@ -92,7 +233,8 @@ function f_complete_date_loop {
 
    while true
    do
-      f_complete_date
+      f_complete_date_variable
+      echo -ne "\r\033[K > $v_final "  
       sleep 1
 
       #read -t 1 -s v_key
@@ -104,7 +246,6 @@ function f_complete_date_loop {
 function f_complete_date_loop_plus_figlet {
    f_greet
    f_talk; echo "complete (+loop) (+ASCII):"
-   echo 
    f_complete_date_loop
 }
 
@@ -352,10 +493,10 @@ elif  [ $1 == "." ]; then
       L15='15. | F | Data curta para ficheiros (+ verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
       L14='14. | f | Data curta para ficheiros (- verbose, envia para drya-date-now e drya-status-messages)'
       L13='13. | c | Data curta para terminal  (+ verbose, com segundos, envia para drya-date-now e drya-status-messages, define variavel v_data_shrt_plus_secs)'
-      L12='12. | b | Data longa esclarecida (- loop)(- ASCII) - (background test)'
+      L12='12. | b | Data longa esclarecida (- loop)(- ASCII)(+ background test)'
       L11='11. | d | Data longa esclarecida (- loop)(- ASCII)'
       L10='10. | r | Data longa esclarecida (+ loop)(+ ASCII)'
-       L9='9.  | l | Data longa esclarecida (+ loop)'
+       L9='9.  | l | Data longa esclarecida (+ loop)(- ASCII)'
        L8='8.  | v | Data em formato util para variaveis'
        L7='7.  | H | Data que foca na hora (+ loop)(- ASCII)'
        L6='6.  | m | Imprime linhas:  com a hora durante 1 min'
@@ -368,7 +509,7 @@ elif  [ $1 == "." ]; then
        L1='1.  Cancelar'
 
       Lh=$(echo -e "\nInfo: Ja esta a ser aplicado automaticamente 'd f' para se usar com 'ZD' no 'vim'\n ")
-      L0="[m+] data.sh: main menu: "
+      L0="$v_fzf Main menu: "
       
       v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n\n$Lz3" | fzf --no-info -m --cycle --header="$Lh" --prompt="$L0")
 

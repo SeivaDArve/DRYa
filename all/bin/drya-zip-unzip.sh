@@ -171,8 +171,6 @@ function f_about_possible_compression_dependencies {
 
 function f_test_existent_compression_dependencies {
 
-
-
    # uDev: passar isto para DRYa pre-requisitos
 
    # ===========================================
@@ -180,25 +178,24 @@ function f_test_existent_compression_dependencies {
    # ===========================================
 
    # Lista de comandos a verificar
-   comandos=(
-     tar
-     gzip
-     bzip2
-     xz
-     zip
-     unzip
-     rar
-     unrar
-     7z
-     #dar
-     gpg
-     #unar
-     #atool
-     #zstd
-   )
+   comandos=( tar
+              gzip
+              bzip2
+              xz
+              zip
+              unzip
+              rar
+              unrar
+              7z
+              #dar
+              gpg
+              #unar
+              #atool
+              #zstd 
+            )
 
-   f_talk; echo "Verificando comandos instalados no sistema..."
-           echo "            (Compactacao e Criptografia)"
+   f_talk; echo "A verificar existencia de softwares no sistema..."
+           echo " > Ferramentas de compactacao:"
            echo 
 
    # Loop pelos comandos
@@ -292,16 +289,24 @@ function f_unzip {
 
    f_greet
    f_talk; echo "uDev: unzip"   
-   f_hzl
-   f_test_existent_compression_dependencies 
-   f_ls
-   f_talk; echo "Escolha qual formato para 'descompactar'"
-           echo "            (dependencias serao instaladas)"
-           echo "            (default: \`6\` \`unzip\`)"
 
-   read -p " > " v_formt
-   v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
-   echo " > Escolhido: $v_formt (outros formatos: uDev)"
+   # Testar quais as dependencias de descompacatmento que existem instaladas
+      f_hzl
+      f_test_existent_compression_dependencies 
+
+   # Escolher o formato para descompactar
+      f_hzl
+      f_talk; echo "Escolha qual formato para 'descompactar' (default: \`6\` \`unzip\`)"
+              echo "         (dependencias serao instaladas, uDev)"
+              #echo "         (default: \`6\` \`unzip\`)"
+
+              read -p " > " v_formt
+      v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+      echo " > Escolhido: $v_formt (outros formatos: uDev)"
+
+
+   # Listar `ls` os ficheiros a introduzir para descompactar
+      f_ls
 
    echo
    echo 'uDev: Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`'
@@ -325,7 +330,7 @@ function f_unzip {
 
 
 if [ -z $* ]; then
-   f_talk; echo "uDev: Menu"
+   f_talk; echo "uDev: Menu + Info se ZIP esta instalado"
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh
@@ -335,6 +340,11 @@ elif [ $1 == "h" ] || [ $1 == "help" ]; then
       
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
    f_about_possible_compression_dependencies
+
+elif [ $1 == "test" ] || [ $1 == "test-dependencies" ]; then
+   # Testar se as dependencias para zipara + deszipar existem e estao instaladas
+
+   f_test_existent_compression_dependencies 
 
 elif [ $1 == "zip" ]; then
    f_zip

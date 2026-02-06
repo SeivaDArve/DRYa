@@ -172,7 +172,7 @@ function f_drya-messages {
 }
 
 # joke:
-   alias research="tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /;tree /";
+   alias research="mkdir -p ~/.tmp; tree / > ~/.tmp/research ;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;sleep 2; tree /;tree /";
 
 
 alias tc="touch"
@@ -818,7 +818,10 @@ function grep-here {
 
 
 # Horarios dos barcos softlusa
- alias barco="bash ${v_REPOS_CENTER}/omni-log/all/cp/barcos.sh"
- alias barcos="bash ${v_REPOS_CENTER}/omni-log/all/cp/barcos.sh"
+ alias barco="bash ${v_REPOS_CENTER}/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
+ alias barcos="bash ${v_REPOS_CENTER}/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
+
 
  alias mapa="telnet mapscii.me"
+
+ alias pi-config="raspi-config"

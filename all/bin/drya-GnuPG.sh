@@ -140,6 +140,13 @@ function f_detetar_se_instalado_gpg {
       fi
 }
 
+function f_detetar_se_instalado_dependencias_zip_unzip {
+   # Chamar drya-zip.unzip.sh para informar quais dependencias existem no sistema
+
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh test-dependencies
+}
+   
+
 function f_confirm {
    # Confirma cada acao a ser tomada. A ultima linha de codigo vai acabar TRUE ou FALSE propositada. Aproveitando uma das palavras "reservadas" do bash 'true'
    
@@ -590,10 +597,9 @@ function f_testing_drya_defaults {
 
    f_gpg_path
 
-   v_secs=0.3
 
-   f_talk; echo "Testing DRYa defaults (${v_secs}s)"
-           echo " > software 'gnupg' installed?"
+   f_talk; echo "Testing DRYa defaults"
+           echo " > software 'gnupg' installed? '$GPG'" 
            echo " > software \"zip\" \"unzip\" installed?"
            echo " > Private key exists?"
            echo " > Apagar duplicados automaticamente?"
@@ -601,7 +607,6 @@ function f_testing_drya_defaults {
            echo " > Pasta ~/.dryaGPG existe?"  # variavel exportada para o env: $v_drya_gpg
            echo " > Number of lines the terminal output STDOUT keeps"  #Numbers to small, allow less lines from the main menu. Or else, scroll will be needed when not using fzf
            echo 
-           read -sn 1 -t $v_secs
 
    # uDev: Se houver erros: `read -sn1` com pedido ao user para resolver
    # [[ -z $GPG ]] && v_txt="Continuar a buscar comandos"
@@ -758,6 +763,7 @@ Serve para Verificação de identidade
 
 function f_main_menu_text {
    L00=" | opc | fx (all with info, except if \$1 is 'v')"
+   L00=' | Arg | Descricao da fx (+ info  || `v` for no info)'
 
     L0=" |  0  | Status > DRYa default settings"
     L1=" |  1  | Chaves > Listar as públicas / verificar existência"
@@ -836,6 +842,8 @@ function f_GnuPG_main_menu {
 
    # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
       f_header
+      f_talk; echo "Menu GPG: Encriptacao/Desencriptacao"
+              echo
       #f_vb_testing_drya_defaults
       f_main_menu_text
 
@@ -880,7 +888,17 @@ function f_GnuPG_main_menu {
    [[ $1 == "v" ]] && shift && v_verbose=offa # Altera o valor pre-definido 
 
 if [ -z $1 ]; then
+
+   f_greet 
    f_testing_drya_defaults 
+   f_detetar_se_instalado_dependencias_zip_unzip
+
+   # Tempo de espera, para que o utilizador possa ler o ecra
+      v_secs=4
+      echo
+      read -sn 1 -t $v_secs -p " ... "
+      echo
+
    f_GnuPG_main_menu 
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
