@@ -5,10 +5,5 @@
 
 # Note: ~/.bash_logout is executed by bash(1) when login shell exits.
 
-# when leaving the console, clear the screen to increase privacy
-   if [ "$SHLVL" = 1 ]; then
-       [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
-   fi
-
-# DRYa files (loads logout-all-drya-files)
-    source ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
+# DRYa logout file (.dryaLOGOUT) concat this next line to ~/.bash_logout 
+    source ${v_REPOS_CENTER}/DRYa/all/etc/dot-file/bashrc/bash-logout/.dryaLOGOUT

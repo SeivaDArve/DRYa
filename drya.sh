@@ -697,7 +697,8 @@ function f_dotFiles_install_git_set_machine_name {
       # If user asked in the menu to insert a different name:
          if [[ $v_mach == "$v_ask_for_another_name" ]]; then
             f_talk; echo    "What other name do you want to add?"
-                    echo    " > Exemplo: Seiva_Android_"
+                    echo    " > Example:    Seiva__Galaxy-x__Android-x__name"
+                    echo    " > Recomended: <real-life-owner-of-device>__<real-life-device-name>__<OS>__<user-name>"
                     echo -n " > "
 
             read v_mach
@@ -1742,7 +1743,7 @@ function f_menu_install_dot_files {
      L6="6.  | vim     | .vimrc "
      L5="5.  | DRYa    | .dryarc "
     #L0="1.  | .bashrc (redundante, ja existe)
-    #L0="1.  | .logout (logout-all-drya-file)
+    #L0="1.  | .logout (.dryaLOGOUT)
 
      L4="4.  | Install | PRESETS" # uDev: Presets tem de passar para a fx f_dot_files_menu
      L3="3.  | Install | ALL "    # uDev: esta opc tem de passar para --invert-selection--
@@ -2942,22 +2943,43 @@ elif [ $1 == "update" ]; then
 
       source ~/.bashrc 1>/dev/null && echo " > Done!" && echo
 
-elif [ $1 == "logout" ]; then 
-   # If you made modifications at ...DRYa/all/etc/logout-all-drya-files 
+elif [ $1 == "logout" ] || [ $1 == "out" ]; then 
+   # If you made modifications at ...DRYa/all/etc/.dryaLOGOUT
    # and you want to conveniently apply it's changes at ~/.bash_logout
    # just run this command
    #
    # The file ~/.bash_logout has an fx that calls logout-all-drya-files
 
-   if [ -z "$2" ]; then
+   v_original=~/.bash_logout
+   v_2install=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout
+   v_dryaLOGOUT=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.dryaLOGOUT
+
+   if [[ -z $2 ]]; then
       # If nothing was specified to clone
-         echo "What option do you want to perform around the logout file?"
+      f_talk; echo "What option do you want to perform around the logout file?"
 
-   elif [ $2 == "edit" ]; then
-      vim ${v_REPOS_CENTER}/DRYa/all/etc/logout-all-drya-files
+   elif [ $2 == "edit-logout" ] || [ $2 == "out" ] || [ $2 == "." ]; then
+      # Edit centralized .dryaLOGOUT
+      f_talk; echo "Editing .dryaLOGOUT"
+      bash e $v_dryaLOGOUT
 
-   #elif [ $2 == "install" ]; then
-      # It is ready and was sent to DRYa fzf main menu
+   elif [ $2 == "edit-at-drya" ] || [ $2 == "drya" ] || [ $2 == "^" ]; then
+      # Edit centralized .bash_logout
+      f_talk; echo "Editing __repo__/.../.bash_logout"
+      bash e $v_2install
+
+   elif [ $2 == "edit-at-host" ] || [ $2 == "host" ] || [ $2 == "v" ]; then
+      # Edit ~/bash_logout at host machine
+      f_talk; echo "Editing ~/.bash_logout"
+      bash e $v_original
+
+
+   elif [ $2 == "install" ]; then
+      # Note: It is ready and was sent to DRYa fzf main menu
+      # 
+      # uDev: Has to test -f .dryaLOGOUT
+      #       Install centralized .bash_logout into ~/.bash_logout
+      echo "uDev: Confirmar se realmente ja existe esta opcao nos fzf menus"
 
    else
       echo "Option not recognized"

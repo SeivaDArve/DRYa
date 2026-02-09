@@ -2,6 +2,10 @@
 # Title: .dryaLOGOUT
 # Description: file that runs all functions from every app before shell logs out
 
+# when leaving the console clear the screen to increase privacy (linux default)
+   if [ "$SHLVL" = 1 ]; then
+      [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+   fi
 
 if [ $traits_OS == "Android" ]; then
    # Run at termux android at terminal logout
