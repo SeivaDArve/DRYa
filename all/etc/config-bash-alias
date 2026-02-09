@@ -781,7 +781,7 @@ function arco {
    if [ -z $1 ]; then
 
       LH="(Pode selecionar varios, isso imprime no terminal)"
-      L0="Arco-Iris: Pesquise na Tabela de Codigos: "
+      L0="Arco-Iris: Pesquise (por texto) na Tabela de Codigos: "
       v_separador="|-----------------------+---------------------------|"
 
       v=$(f_arco | fzf --layout=reverse --no-info -m --header="$LH" --prompt="$L0")
