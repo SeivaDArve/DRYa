@@ -752,6 +752,26 @@ function f_dotFiles_install_git_set_machine_name {
       f_finish_by_setting_choosen_name 
 }
 
+function f_dot_files_install_bash_logout {
+   # Installing .dryaLOGOUT by conzatenating .bash_logout @DRYa with the file .bash_lohout @Host
+   
+   v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout 
+   v_destination=~/.bash_logout
+   v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
+
+   [[ -f $v_file        ]] && echo "1 exists"
+   [[ -f $v_destination ]] && echo "2 exists"
+   read
+   read
+   read
+   read
+   read
+   read
+   # uDev: Test|grep if text "dryaLOGOUT" exists inside the file ~/.bash_logout and if it does exist, concac .bash_logout file from DRYa to .bash_logout from Host
+
+   cat $v_file $v_destination && echo "$v_msg"
+}
+
 function f_dot_files_install_git {
    # Install .gitconfig on the system
    # Note: If this cmd runs, it means user wants `git`, `fzf`, `ezGIT`, "dot-files". They will be tested and installed
@@ -1737,13 +1757,12 @@ function f_menu_install_dot_files {
     L12="12. | termux  | termux.properties + colors.termux"
     L11='11. | emacs   | .emacs.d/'  # uDev: remove from flunav `S 2`
     L10="10. | tmux    | .tmux.conf"
-     L9="9.  | bash    | .bash_logout"
+     L9="9.  | bash    | .bash_logout"  
      L8="8.  | git     | .gitconfig "
      L7="7.  | git     | .netrc "
      L6="6.  | vim     | .vimrc "
      L5="5.  | DRYa    | .dryarc "
-    #L0="1.  | .bashrc (redundante, ja existe)
-    #L0="1.  | .logout (.dryaLOGOUT)
+    #L0="1.  | .bashrc (redundante, ja existe em alias `,.`)
 
      L4="4.  | Install | PRESETS" # uDev: Presets tem de passar para a fx f_dot_files_menu
      L3="3.  | Install | ALL "    # uDev: esta opc tem de passar para --invert-selection--
@@ -1760,7 +1779,7 @@ function f_menu_install_dot_files {
       [[ $v_list =~ "12. " ]] && f_dotFiles_install_termux_properties
       [[ $v_list =~ "11. " ]] && echo "emacs dot-files: uDev"
       [[ $v_list =~ "10. " ]] && f_dotFiles_install_tm_tmux
-      [[ $v_list =~ "9.  " ]] && cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout ~ && echo "DRYa: file .bash_logout copied to ~/.bash_logout"
+      [[ $v_list =~ "9.  " ]] && f_dot_files_install_bash_logout 
       [[ $v_list =~ "8.  " ]] && f_dot_files_install_git 
       [[ $v_list =~ "7.  " ]] && f_dot_files_install_netrc
       [[ $v_list =~ "6.  " ]] && f_dot_files_install_vimrc
@@ -2956,7 +2975,14 @@ elif [ $1 == "logout" ] || [ $1 == "out" ]; then
 
    if [[ -z $2 ]]; then
       # If nothing was specified to clone
-      f_talk; echo "What option do you want to perform around the logout file?"
+      f_talk; echo "Bash_Logout: No valid args given"
+              echo ' > `out`  | edit .dryaLOGOUT'
+              echo ' > `drya` | edit .bash_logout @DRYa'
+              echo ' > `host` | edit .bash_logout @Host '
+              echo ' > `i`    | install bash_logout (same as `D ui d i out`)'
+              echo ''
+              echo ''
+              echo ''
 
    elif [ $2 == "edit-logout" ] || [ $2 == "out" ] || [ $2 == "." ]; then
       # Edit centralized .dryaLOGOUT
@@ -2974,12 +3000,13 @@ elif [ $1 == "logout" ] || [ $1 == "out" ]; then
       bash e $v_original
 
 
-   elif [ $2 == "install" ]; then
+   elif [ $2 == "install" ] || [ $2 == "i" ]; then
       # Note: It is ready and was sent to DRYa fzf main menu
       # 
       # uDev: Has to test -f .dryaLOGOUT
       #       Install centralized .bash_logout into ~/.bash_logout
-      echo "uDev: Confirmar se realmente ja existe esta opcao nos fzf menus"
+
+      f_dot_files_install_bash_logout 
 
    else
       echo "Option not recognized"

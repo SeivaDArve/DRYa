@@ -7,7 +7,7 @@
       [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
    fi
 
-if [ $traits_OS == "Android" ]; then
+if [ $trid_OS == "Android" ]; then
    # Run at termux android at terminal logout
 
    # Present a brief title
@@ -27,6 +27,11 @@ if [ $traits_OS == "Android" ]; then
       cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux/ && echo " > Omni-key default key: restored"
 
    # Time to allow the user to read
-      sleep 1
+      read -sn1 -t 2
 fi
 
+if [ $trid_gnm =~ "publicDVC" ]; then
+   # Delete .netrc and private repos when the device is public
+   echo "Public device detected"
+   read -sn1 -t 2
+fi
