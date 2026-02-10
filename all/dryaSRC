@@ -33,11 +33,11 @@ function f_list_of_escape_codes {
     L6='| d   | Load, but delete all previous env variables        |'
     L7='| k   | Load, but without f_backend                        |'
     L8='| n   | Load, but delete ~/.netrc                          |' 
-   #L8='| t   | Load, do not delete ~/.tmp                         |' 
-    L9='|-----+----------------------------------------------------|'
-   L10='--Example-- `gd` to set option "g" + "d"'
+    L9='| t   | Load, do not delete ~/.tmp nor temporary-private repos (configured to be deleted at startup or logout     |'  
+   L10='|-----+----------------------------------------------------|'
+   L11='--Example-- `gd` to set option "g" + "d"'
 
-   echo -e "\n$L0 \n$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10"
+   echo -e "\n$L0 \n$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11"
    echo
 }
 

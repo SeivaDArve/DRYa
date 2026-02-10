@@ -1205,8 +1205,8 @@ function V {
          cd ${v_REPOS_CENTER}/scratch-paper 2>/dev/null && ls -p || f_error_cd
 
 
-      elif [ $1 == "dota" ]; then
-         cd ${v_REPOS_CENTER}/Dota-2-guide 2>/dev/null && ls -p || f_error_cd
+      elif [ $1 == "game" ]; then
+         cd ${v_REPOS_CENTER}/DRYa-game 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "luxam" ]; then
@@ -1404,7 +1404,7 @@ function V {
          f_talk; echo '`pwd` adicionado ao historico'
 
       else 
-         echo DRYa: fluNav: V: file/dir/option/menu/place/history not found. 
+         f_talk; echo "arg|file|dir|option|menu|place|history not found."
    fi
 
 }

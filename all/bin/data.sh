@@ -618,5 +618,8 @@ elif  [ $1 == "M" ]; then
 elif  [ $1 == "I" ]; then
    f_estacoes 
 
+elif  [ $1 == "tarifa" ]; then
+   # Mencionar em qual estamos: 1.8.1, 1.8.2, 1.8.3
+   echo uDev
 fi
 
