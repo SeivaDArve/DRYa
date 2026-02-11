@@ -759,8 +759,27 @@ function f_dot_files_install_bash_logout {
    v_destination=~/.bash_logout
    v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
 
-   [[ -f $v_file        ]] && echo "1 exists"
-   [[ -f $v_destination ]] && echo "2 exists"
+   # Test if all files exist
+      [[ -f $v_file        ]] && echo "1 exists"
+      [[ -f $v_destination ]] && echo "2 exists"
+
+   # Test if it is installed
+      grep "dryaLOGOUT" $v_destination
+      v_status=$?
+      [[ $v_status == "0" ]] && echo "Installed"
+      [[ $v_status == "1" ]] && echo "Not installed"
+
+      # Install, if needed
+         if [[ $v_status == 0 ]]; then
+            # If it is already installed
+            echo "Already installed"
+           
+         elif [[ $v_status == 1 ]]; then
+            # If it is not installed yet
+            echo "Not installed"
+         fi
+         
+         
    read
    read
    read
