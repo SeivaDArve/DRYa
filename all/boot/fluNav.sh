@@ -888,11 +888,13 @@ function f_mobile_android_going_termux_bridge_android {
 
    f_greet1
 
+   v_dir=/sdcard/Termux-bridge-Android
    echo "Directory: Internal Storage: Termux-bridge-Android"
 
    f_horiz_line
 
-   cd /sdcard/Termux-bridge-Android && ls -p
+   [[ ! -d $v_dir ]] && read -p "Inexistent dir. [ANY KEY] to create... " && mkdir -p $v_dir
+   cd      $v_dir    && ls   -p
 }
 
 function f_mobile_android_going_wsl {
