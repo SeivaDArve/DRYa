@@ -752,43 +752,56 @@ function f_dotFiles_install_git_set_machine_name {
       f_finish_by_setting_choosen_name 
 }
 
-function f_dot_files_install_bash_logout {
-   # Installing .dryaLOGOUT by conzatenating .bash_logout @DRYa with the file .bash_lohout @Host
+function f_dot_files_test_installation_of_bash_logout {
+   # Test instalation of ...
    
-   v_file=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout 
-   v_destination=~/.bash_logout
-   v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
+   f_talk; echo "Status for this 'Logout' configuration:"
+
+   v_file_1=".dryaLOGOUT"
+   v_file_2=".bash_logout @DRYa" 
+   v_file_3=".bash_logout @Host"
 
    # Test if all files exist
-      [[ -f $v_file        ]] && echo "1 exists"
-      [[ -f $v_destination ]] && echo "2 exists"
+      [[ -f $v_dryaLOGOUT  ]] && echo " > File 1 exists: $v_file_1" || echo " > File 1 inexistent: $v_file_1" 
+      [[ -f $v_2install    ]] && echo " > File 2 exists: $v_file_2" || echo " > File 2 inexistent: $v_file_2"
+      [[ -f $v_original    ]] && echo " > File 3 exists: $v_file_3" || echo " > File 3 inexistent: $v_file_3"
+
+      echo
 
    # Test if it is installed
-      grep "dryaLOGOUT" $v_destination
-      v_status=$?
-      [[ $v_status == "0" ]] && echo "Installed"
-      [[ $v_status == "1" ]] && echo "Not installed"
+      grep -s "dryaLOGOUT" $v_original 1>/dev/null
+      v_install_status=$?
+      [[ $v_install_status == "0" ]] && echo " > Status: Installed"
+      [[ $v_install_status != "0" ]] && echo " > Status: Not installed"  # Is true if it is different than 0
 
-      # Install, if needed
-         if [[ $v_status == 0 ]]; then
-            # If it is already installed
-            echo "Already installed"
-           
-         elif [[ $v_status == 1 ]]; then
-            # If it is not installed yet
-            echo "Not installed"
-         fi
+      echo
+
+}
+
+function f_dot_files_install_bash_logout {
+   # Installing .dryaLOGOUT by conzatenating .bash_logout @DRYa with the file .bash_lohout @Host
+
+   # Install, if needed
+      if [[ $v_install_status == 0 ]]; then
+         # If it is already installed
+         echo "Already installed"
+        
+      elif [[ $v_install_status == 1 ]]; then
+         # If it is not installed yet
+         echo "Not installed"
+         echo >> $v_original
+         cat $v_2install >> $v_original
+      fi
+      
          
-         
    read
    read
    read
-   read
-   read
-   read
+
    # uDev: Test|grep if text "dryaLOGOUT" exists inside the file ~/.bash_logout and if it does exist, concac .bash_logout file from DRYa to .bash_logout from Host
 
-   cat $v_file $v_destination && echo "$v_msg"
+   v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
+   cat $v_2install >> $v_original && echo "$v_msg"
 }
 
 function f_dot_files_install_git {
@@ -2988,32 +3001,35 @@ elif [ $1 == "logout" ] || [ $1 == "out" ]; then
    #
    # The file ~/.bash_logout has an fx that calls logout-all-drya-files
 
+   f_greet
+
    v_original=~/.bash_logout
-   v_2install=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout
    v_dryaLOGOUT=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.dryaLOGOUT
+   v_2install=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout
+
 
    if [[ -z $2 ]]; then
       # If nothing was specified to clone
       f_talk; echo "Bash_Logout: No valid args given"
-              echo ' > `out`  | edit .dryaLOGOUT'
-              echo ' > `drya` | edit .bash_logout @DRYa'
-              echo ' > `host` | edit .bash_logout @Host '
-              echo ' > `i`    | install bash_logout (same as `D ui d i out`)'
-              echo ''
-              echo ''
-              echo ''
+              echo ' > `out`  | `.` | `1` | edit .dryaLOGOUT'
+              echo ' > `drya` | `^` | `2` | edit .bash_logout @DRYa'
+              echo ' > `host` | `v` | `3` | edit .bash_logout @Host '
+              echo ' > `install`    | `i` | install bash_logout (same as `D ui d i out`)'
+              echo
 
-   elif [ $2 == "edit-logout" ] || [ $2 == "out" ] || [ $2 == "." ]; then
+      f_dot_files_test_installation_of_bash_logout 
+
+   elif [ $2 == "edit-logout" ] || [ $2 == "out" ] || [ $2 == "." ] || [ $2 == "1" ]; then
       # Edit centralized .dryaLOGOUT
       f_talk; echo "Editing .dryaLOGOUT"
       bash e $v_dryaLOGOUT
 
-   elif [ $2 == "edit-at-drya" ] || [ $2 == "drya" ] || [ $2 == "^" ]; then
+   elif [ $2 == "edit-at-drya" ] || [ $2 == "drya" ] || [ $2 == "^" ] || [ $2 == "2" ]; then
       # Edit centralized .bash_logout
       f_talk; echo "Editing __repo__/.../.bash_logout"
       bash e $v_2install
 
-   elif [ $2 == "edit-at-host" ] || [ $2 == "host" ] || [ $2 == "v" ]; then
+   elif [ $2 == "edit-at-host" ] || [ $2 == "host" ] || [ $2 == "v" ] || [ $2 == "3" ]; then
       # Edit ~/bash_logout at host machine
       f_talk; echo "Editing ~/.bash_logout"
       bash e $v_original
