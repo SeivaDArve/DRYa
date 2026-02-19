@@ -662,6 +662,10 @@ function f_internal_drya_files_nr_3 {
    f_solve_PATH_after_test 
 }
 
+function f_internal_drya_files_nr_4 {
+   echo uDev 1>/dev/null 
+}
+
 function f_GPG {
    # Managing Encryption and Private files: Providing env variables for usage in .../DRYa-GnuPG.sh
 
@@ -1162,6 +1166,7 @@ function f_exec {
    # Default DRYa configs 
       f_internal_drya_files_nr_2  # Source 'boot' and 'config-alias' :: Remove ~/.tmp 
       f_internal_drya_files_nr_3  # Exporting $PATH
+      f_internal_drya_files_nr_4  # Workaround 'Bash Login Shell'
 
    # Start loading background tasks (jarve)
       # (DRYa:  foreground tasks, once.       (at startup and on command))

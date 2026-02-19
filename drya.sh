@@ -776,10 +776,31 @@ function f_dot_files_test_installation_of_bash_logout {
 
       echo
 
+   # Teste ao bash (se é login shell)
+      
+      # Notas:
+      #     Se a shell com bash nao for 'login shell' entao ~/.bashrc é lido, mas ~/.bash_logout nao é lido.
+      #     
+      #     Usando o comando `echo $?`:
+      #        Se o resultado for '-bash'  ==  login shell
+      #        Se o resultado for 'bash'   ==  nao é login shell
+      #
+      #     Usando o comando `shopt login_shell`:
+      #        Se o resultado for 'on'   ==  login shell
+      #        Se o resultado for 'off'  ==  nao é login shell
+      #
+      
+      f_talk; echo "Teste ao 'login shell' (on | off): "
+      v_tst=$(shopt login_shell | cut -f 2)
+      echo " > $v_tst"
+     
+
 }
 
 function f_dot_files_install_bash_logout {
    # Installing .dryaLOGOUT by conzatenating .bash_logout @DRYa with the file .bash_lohout @Host
+
+   f_dot_files_test_installation_of_bash_logout 
 
    # Install, if needed
       if [[ $v_install_status == 0 ]]; then
@@ -787,21 +808,16 @@ function f_dot_files_install_bash_logout {
          echo "Already installed"
         
       elif [[ $v_install_status == 1 ]]; then
-         # If it is not installed yet
-         echo "Not installed"
+         # If it is not installed already, install now
+         echo "Starting instalation"
          echo >> $v_original
-         cat $v_2install >> $v_original
+
+         v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
+         cat $v_2install >> $v_original && echo "$v_msg"
       fi
       
-         
-   read
-   read
-   read
-
    # uDev: Test|grep if text "dryaLOGOUT" exists inside the file ~/.bash_logout and if it does exist, concac .bash_logout file from DRYa to .bash_logout from Host
 
-   v_msg="DRYa: file .bash_logout copied to ~/.bash_logout"
-   cat $v_2install >> $v_original && echo "$v_msg"
 }
 
 function f_dot_files_install_git {

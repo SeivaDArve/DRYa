@@ -2,8 +2,9 @@
 # Title: .dryaLOGOUT
 # Description: file that runs all functions from every app before shell logs out
 
-read -t 3 -p "DRYa: Bash Logout: Working"
-sleep
+# Debug
+   read -t 3 -p "DRYa: Bash Logout: Working"
+   sleep 2
 
 # when leaving the console clear the screen to increase privacy (linux default)
    if [ "$SHLVL" = 1 ]; then
