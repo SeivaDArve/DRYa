@@ -2374,6 +2374,9 @@ function f_backup_helper {
               echo " > Current wallpaper (principal, de bloqueio)"
               echo " > Alarm custom music"
               echo " > Dados de aplicacoes (notas, etc)"
+              echo " > Conteudos GPG"
+              echo ' > No Android, $HOME do termux é invisivel no explorador de arquivos normais'
+              echo ' > Transferir Conversas das app: Whatsapp, Telegram, SMS...'
               echo
       f_talk; echo "Backup Checklist (computer):"
               echo " > ..."
