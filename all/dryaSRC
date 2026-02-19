@@ -663,7 +663,24 @@ function f_internal_drya_files_nr_3 {
 }
 
 function f_internal_drya_files_nr_4 {
-   echo uDev 1>/dev/null 
+   # Executar bash_logout ao sair de qualquer shell interativa
+
+   # Notas: O que isto faz?
+   #        `[[ $- == *i* ]]`         # Garante que só funciona em shell interativa
+   #        `trap ... EXIT`           # Executa o comando quando o bash termina
+   #        `source ~/.bash_logout`   # Força a execução do teu ficheiro de logout
+   #  
+   #        Funciona quando:
+   #         > Digitas exit
+   #         > Usas Ctrl+D
+   #         > Fechas a janela com o rato
+   #        
+   #        O terminal assim envia SIGHUP ao bash
+
+   if [[ $- == *i* ]]; then
+       trap '[[ -f ~/.bash_logout ]] && source ~/.bash_logout' EXIT
+   fi
+
 }
 
 function f_GPG {
