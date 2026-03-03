@@ -1124,6 +1124,8 @@ function f_backdoor {
 
    }
 
+
+   # uDev: Ping DRYa server: Ao iniciar o terminal criar um ping. Estimar o numero de utilizadores ativos a usar o software
 }
 
 function f_once_tasks {
