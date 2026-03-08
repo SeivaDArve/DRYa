@@ -1317,7 +1317,7 @@ function V {
 
          # Menu fzf que procura subpastas 
             L0="fluNav: V: Nevegue o prompt para a pasta selecionada: "
-            v_dir=$(fzf --header="$LH" --prompt="$L0")
+            v_dir=$(fzf --cycle --header="$LH" --prompt="$L0")
             #echo " > $_dir"
             #v_dir=$(echo $v_dir | sed 's/ /\ /g')
 
