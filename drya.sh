@@ -1464,6 +1464,8 @@ function f_win_to_linux_pwd {
          sed -i 's#d:\\#/mnt/d/#g'  $v_file  # Convert d:\ into /mnt/d
          sed -i 's#E:\\#/mnt/e/#g'  $v_file  # Convert E:\ into /mnt/e
          sed -i 's#e:\\#/mnt/e/#g'  $v_file  # Convert e:\ into /mnt/e
+         sed -i 's#G:\\#/mnt/g/#g'  $v_file  # Convert G:\ into /mnt/e
+         sed -i 's#g:\\#/mnt/g/#g'  $v_file  # Convert g:\ into /mnt/e
          sed -i 's#^\\#\./#g'       $v_file  # Convert / if it exists in the begining of the line (relative path) into ./ (relative path)
          sed -i 's/\\/\//g'         $v_file  # Convert \ into /
          sed -i 's/ /\\ /g'         $v_file  # Convert with spaces " " into "\ "
