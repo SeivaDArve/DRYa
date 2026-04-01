@@ -5,5 +5,7 @@
 
 # Note: ~/.bash_logout is executed by bash(1) when login shell exits.
 
+read -p "Debug 2" -t 2
+
 # DRYa logout file (.dryaLOGOUT) concat this next line to ~/.bash_logout 
     source ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/bashrc/bash-logout/.dryaLOGOUT

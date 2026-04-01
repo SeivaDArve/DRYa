@@ -3,7 +3,7 @@
 # Description: file that runs all functions from every app before shell logs out
 
 # Debug
-   read -t 3 -p "DRYa: Bash Logout: Working"
+   read -t 3 -p "DRYa: Bash Logout: Working: debug 1"
    sleep 2
 
 # when leaving the console clear the screen to increase privacy (linux default)
