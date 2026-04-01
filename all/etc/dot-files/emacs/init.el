@@ -54,6 +54,14 @@
 
 
 
+;;;; Tecla de atalho para demote Headers: Tree + Sub-tree
+   ;; Usar Alt-Shift-<Left>/<Right>
+
+   ;; uDev: Tem bug ambas as linhas de codigo. Ira servir para emacs no pc C-M-<letf> ou entao C-c-<letf> como alternativa
+   ;;   (global-set-key (kbd "C-c-<right>") (lambda () (interactive) (org-promote-subtree)))
+   ;;   (global-set-key (kbd "C-c-<left>")  (lambda () (interactive) (org-demote-subtree)))
+
+
 
 ;;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
  ;; Otherwise, it's default is: "~/.config/emacs/"

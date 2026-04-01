@@ -790,9 +790,9 @@ function f_dot_files_test_installation_of_bash_logout {
       #        Se o resultado for 'off'  ==  nao é login shell
       #
       
-      f_talk; echo "Teste ao 'login shell' (on | off): "
       v_tst=$(shopt login_shell | cut -f 2)
-      echo " > $v_tst"
+      f_talk; echo "Teste ao 'login shell' (on | off): "
+              echo " > $v_tst"
      
 
 }
@@ -838,11 +838,11 @@ function f_dot_files_install_git {
 
    # Testing if `fzf` is installed
       v_cmd_fzf=$(command -v fzf)
-      [[ -z $v_cmd_fzf ]] && echo " > Command fzf does not exist (not installed)"
+      [[ -z $v_cmd_fzf ]] && echo " > Command fzf does not exist (not installed)" 
       # uDev: Ask if user wants to install
 
    # Testing if 'ezGIT' is cloned
-      # uDev
+      [[ ! -d ${v_REPOS_CENTER}/ezGIT  ]] && echo " > Repo ezGIT does not exist (not cloned)" && read -s
 
    # Testing if 'machine name' exists in 'drya-registry' (uDev)
       # uDev: create a file at host to save some persistent configs on local machine
@@ -852,7 +852,6 @@ function f_dot_files_install_git {
       v_place=~
 
       f_greet
-
       f_talk; echo -n "Installing "
         f_c3; echo    "configurations for 'git'"
         f_rc; echo
@@ -879,9 +878,9 @@ function f_dot_files_install_git {
       echo
 
    # Start STEP 1
-      f_talk; echo "Starting STEP 1:"
       cp $v_file $v_place && f_suc1 || f_suc2
-      echo
+      f_talk; echo "Starting STEP 1:"
+              echo
 
    # Start STEP 2
       f_talk; echo "Starting STEP 2:"
