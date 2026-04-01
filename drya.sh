@@ -3208,35 +3208,38 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L12='12. Help | Factory-Reset (Terminal) + Ghost-Mode (in.out)'
-         L11='11. Menu | Install | PRESETS              | `D ui pr`'
-         L10='10. Menu | helper  | Backup Maker         | `D ui bk`'
-          L9='9.  Menu | Script  | Clone Repos          | `D cln`'
-          L8='8.  Menu | install | specific packages    | `D iu p` | `D iu <package>`'
-          L7='7.  Menu | install | dot-files            | `D iu d`'
-          L6='6.  Menu |   1st   | Dependencies         | `D ui dp`'  # uDev: adicionar a este menu "populate machines"
+         L12='12. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
+         L11='11. | `D ui pr`  | Menu | Install | PRESETS             ' # uDev: adicionar a este menu "populate machines"
+         L10='10. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
+          L9='9.  | `D cln`    | Menu | Script  | Clone Repos         '
+          L8='8.  | `D iu <p>` | Menu | Install | specific <packages> | Alternative: `D iu <package>`'
+          L7='7.  | `D iu d`   | Menu | Install | dot-files           '
+          L6='6.  | `D ui dp`  | Menu |   1st   | Dependencies        ' 
+                                 
+          L4='4.  | `D ui fzf` | Install DRYa | `fzf`    installer    '
+          L3='3.  | `D ui sel` | Install DRYa | `select` installer    '
+                                 
+          L5='5.  | `D cln h`  | Info: clone DRYa (for other devices) '
 
-          L4='4.  Install DRYa | `fzf`    installer     | `D ui fzf`'
-          L3='3.  Install DRYa | `select` installer     | `D ui sel`'
+         L15='15. |            | Install git    | (via internet `git` is needed for the instalation)'
+         L14='14. |            | Install Termux |'
+         L13='13. |            | Install WSL2   |'
 
-          L5='5.  Info: clone DRYa (for other devices) | `D cln h`'
-         #L4='4.  Install git    | (via internet `git` is needed for the instalation)
-
-         #L4='4.  Install Termux | 
-         #L4='4.  Install WSL2   | 
-
-          L2='2.  List Status  | `D iu ls`'
+          L2='2.  | `D iu ls`  | List Status  '
           L1='1.  Cancel'
 
          L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n\n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L13 \n$L14 \n$L15 \n\n$L3 \n$L4 \n\n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "15. " ]] && echo "uDev"
+         [[ $v_list =~ "14. " ]] && echo "uDev"
+         [[ $v_list =~ "13. " ]] && echo "uDev"
          [[ $v_list =~ "12. " ]] && f_ghost
          [[ $v_list =~ "11. " ]] && f_install_presets
          [[ $v_list =~ "10. " ]] && f_backup_helper
