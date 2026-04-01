@@ -3216,11 +3216,15 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L8='8.  Menu | install | specific packages    | `D iu p` | `D iu <package>`'
           L7='7.  Menu | install | dot-files            | `D iu d`'
           L6='6.  Menu |   1st   | Dependencies         | `D ui dp`'  # uDev: adicionar a este menu "populate machines"
-   
-          L5='5.  How To clone DRYa (for other devices) | `D cln h`'
 
           L4='4.  Install DRYa | `fzf`    installer     | `D ui fzf`'
           L3='3.  Install DRYa | `select` installer     | `D ui sel`'
+
+          L5='5.  Info: clone DRYa (for other devices) | `D cln h`'
+         #L4='4.  Install git    | (via internet `git` is needed for the instalation)
+
+         #L4='4.  Install Termux | 
+         #L4='4.  Install WSL2   | 
 
           L2='2.  List Status  | `D iu ls`'
           L1='1.  Cancel'
@@ -3259,14 +3263,14 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          echo '
          # 0. Requisitos: Windows 10 (1903+) ou Windows 11  
          # 1. Abrir CMD como Admin 
-         # 2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubunto por defeito 
+         # 2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubuntu por defeito 
          # 3. Reeniciar o Pc
          # 4. Configurar o Linux (ao abrir Ubuntu pela primeira vez):
          #    4.1. Escolher User + Password
          #    4.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"
          #
          # Instalacao manual (quando `wsl` nao existe)
-         #  > Nao funciona em Pentium 4
+         #  > Nao funciona em Pentium 4 porque a motherboard nao suporta virtualizacao
 
          '
 
