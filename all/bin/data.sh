@@ -69,6 +69,8 @@ function f_complete_date {
 function f_complete_date_variable {
    # Exemplo: (Data atual) - (GDH 130622Sep2025) - (Ano 2025) - (Mês 09 Sep) - (Dia 13 Sat) - (Hora 06:22:56)
 
+   # uDev: Adicionar aqui uma variavel para traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
+
    # Montagem da data
       # Display: Titulo em linha com o restante
          v_TIT="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
@@ -77,6 +79,7 @@ function f_complete_date_variable {
          v_nom="GDH"
          v_dia=$(date +'%d')
          v_hor=$(date +'%H')
+         # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
 
          # drya-fst-tg-sys-for-vars  (define $v_fuso in many diferent ways. BUT only the last line will count. This is a fast toggle system for variables)
               v_fuso=$(date +'%Z')
@@ -94,10 +97,12 @@ function f_complete_date_variable {
       # Display: Mes sozinho
          v_mes=$(date +'%m %b')
          v_MES="(Mês $v_mes) -"
+         # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
 
       # Display: Dia sozinho
          v_dia=$(date +'%d %a')
          v_DIA="(Dia $v_dia) -"
+         # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
 
       # Display: Hora + minutos + segundos
          v_hora=$(date +'%H:%M:%S')
