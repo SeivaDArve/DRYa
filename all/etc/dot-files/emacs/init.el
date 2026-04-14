@@ -53,6 +53,16 @@
       (global-set-key (kbd "<f7>") (lambda () (interactive)(save-buffer)(kill-emacs)))
 
 
+;;;; (uDev: Bug) Teclas de atalho: 'Scroll Up' + 'Scroll Down' de uma pagina inteira com 'Shift + Up' e 'Shift + Down'
+   ;; Desligar o uso de Shift para a ferramenta de selecao de texto
+      (setq shift-select-mode nil)  
+
+   ;; (global-set-key (kbd "S-<down>") #'scroll-up-command)
+      (global-set-key (kbd "S-<down>") (lambda () (interactive) (scroll-down-command)))
+
+   ;; (global-set-key (kbd "S-<up>")   #'scroll-down-command)   
+      (global-set-key (kbd "S-<up>") (lambda () (interactive) (scroll-up-command)))
+
 
 ;;;; Tecla de atalho para demote Headers: Tree + Sub-tree
    ;; Usar Alt-Shift-<Left>/<Right>
@@ -445,6 +455,17 @@
   (global-display-line-numbers-mode)
   (message "Dv: toggled line numbers mode globaly"))
     
+(defun dv-org-header-focus-current-only ()
+  (interactive)
+   (message "Dv: A Focar o header atual, simulando que mais nenhum header existe no buffer `C-x n s` usa `C-x n w` para sair desse modo")
+   (org-narrow-to-subtree))
+
+(defun dv-org-header-focus-all ()
+  (interactive)
+  (message "Dv: A nao Focar so o header atual, mas sim todos os headers do buffer `C-x n w`. Usa `C-x n s` para focar outro header")
+  (widen))
+
+   
 
 (defun copy-target-number-from-current-line-to-kill-ring ()
   ;; Function used at: dv-add-id-line as 'copy'
