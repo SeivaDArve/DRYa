@@ -3208,6 +3208,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+        #L20='20. | Install Arch/Ubuntu/Fedora on Android with x11 to run actuall Linux software there'
          L12='12. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
          L11='11. | `D ui pr`  | Menu | Install | PRESETS             ' # uDev: adicionar a este menu "populate machines"
          L10='10. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
