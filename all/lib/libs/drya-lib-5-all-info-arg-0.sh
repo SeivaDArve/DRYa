@@ -52,7 +52,7 @@ function f_0 {
 function f_0_verbose {
    echo " -0- Title: All info about the Arg 0 (the running script):"
    echo "  >  Do not \`source\` this as a lib (some functions will not be accurate)"
-   echo "  >  Copy the needed functions to your script instead"
+   echo "  >  Copy the needed code and functions into your script instead"
    echo "  >  Try \`bash .../$v_basename\` as a test to get info of that script"
    echo
    echo
@@ -67,7 +67,7 @@ function f_1 {
    # uDev: $v_1
 }
 function f_1_verbose {
-   echo " -1- Rel path: Prompt location \`pwd\` (Current CLI working directory, without sufix / ):"
+   echo " -1- Rel path: Prompt location \`pwd\` (Current CLI working directory, without sufix '/' ):"
    echo "  >  $v_pwd"
    echo
    echo
@@ -81,7 +81,7 @@ function f_2 {
    # uDev: $v_2
 }
 function f_2_verbose {
-   echo " -2- Rel path: Prompt location \`pwd\` (Current CLI working directory with sufix / ):"
+   echo " -2- Rel path: Prompt location \`pwd\` (Current CLI working directory with sufix '/' ):"
    echo "  >  $v_pwd"
    echo
    echo
@@ -124,7 +124,7 @@ function f_4_verbose {
 function f_5 {
    # Gives working directory where the script is placed (without the name ib the end)
 
-   # No matter from where we will execute this script $v_script_directory will indicate the correct directory where this script is located
+   # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
 
    v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
    v_script_directory="$v_script_directory/"
@@ -135,7 +135,7 @@ function f_5 {
    # uDev: $v_5
 }
 function f_5_verbose {
-   echo " -5- Abs Path: working dir of running script \"$v_basename\":"; 
+   echo " -5- Abs Path: working dir of running script \"$v_basename\" (with sufix '/'):"; 
    echo "  >  $v_script_directory";
    echo
    echo
@@ -168,30 +168,16 @@ function f_7_verbose {
    echo " -7- Abs path: the running script:"
    echo "  >  $v_script"
    echo
-   echo
 }
 
-function f_8_verbose {
-   echo " -8- Notes: "
-   echo "  >  Number -1- and -2- are the same, but -2- adds more text"
-   echo "  >  Number -3- and -4- are the same, but -4- adds more text"
-   echo "  >  Number -5- is best used for instalation wizzards"
-   echo "  >  Number -6- is similar to __name__ in python"
-   echo "  >  Number -7- is equal to -1- + -4-"
-   echo "  >  Number -7- is equal to -2- + -3-"
-   echo '  >  "Rel" = Relative'
-   echo '  >  "Abs" = Absolute'
-   echo
-}
-
-function f_9 {
+function f_8 {
    # Detect abs name of dir (excluding path to it, like `basedir`)
 
    function f_5_copy {
-      # This is literally a copy of f_5 avoiding functions to depend on each other. f_9 will not depend on original f_5
-      # Gives working directory where the script is placed (without the name ib the end)
+      # This is literally a copy of f_5 avoiding functions to depend on each other. f_8 will not depend on original f_5
+      # Gives working directory where the script is placed (without the name in the end)
 
-      # No matter from where we will execute this script $v_script_directory will indicate the correct directory where this script is located
+      # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
 
       v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
       v_script_directory="$v_script_directory/"
@@ -201,16 +187,30 @@ function f_9 {
       v_5=$v_basename
 
    }
-
    f_5_copy  # Retorna $v_5
-   v_9=$(basename $v_5)
-   echo " 5: $v_5"
-   echo " 9: $v_9"
-}
-function f_9_verbose {
-   echo " -9- Abs Name: do diretorio do script, exluindo o caminho ate esse nome"
-   echo "  > $v_9"
 
+   v_8=$(basename $v_script_directory)
+   v_8="$v_8/"  # Foibcolocado sufixo '/'
+}
+function f_8_verbose {
+   echo " -8- Abs Name: do diretorio do script, exluindo o caminho ate esse nome (com sufixo '/')"
+   echo "  > $v_8"
+   echo
+
+}
+
+function f_notes_verbose {
+   echo " -N- Notes: "
+   echo "  >  Number -1- and -2- are the same, but -2- adds more text"
+   echo "  >  Number -3- and -4- are the same, but -4- adds more text"
+   echo "  >  Number -5- is best used for instalation wizzards"
+   echo "  >  Number -6- is similar to __name__ in python"
+   echo "  >  Number -7- is equal to -1- + -4-"
+   echo "  >  Number -7- is equal to -2- + -3-"
+   echo '  >  Number -8- is `basedir` of -5-'
+   echo '  >  "Rel" = Relative'
+   echo '  >  "Abs" = Absolute'
+   echo
 }
 
 function f_exec {
@@ -242,10 +242,10 @@ function f_exec {
    f_7
    f_7_verbose
 
+   f_8
    f_8_verbose
 
-   f_9
-   f_9_verbose
+   f_notes_verbose
 }
 
 f_exec  # On/Off to the ENTIRE file
