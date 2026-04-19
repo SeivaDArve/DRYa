@@ -712,7 +712,7 @@ function f__dryaSRC_lib_1__after_clonning {
 
 function f__dryaSRC_lib_2__asking_to_clone {
 
-   v_ask="$v_name nao instalado, deseja instalar? (S/n)"
+   v_ask="$v_name nao instalado, deseja instalar? [S/n]"
    v_clone="https://github.com/SeivaDArve/$v_name.git"
 
    f_talk; echo        "$v_ask" 
@@ -729,8 +729,8 @@ function f__dryaSRC_lib_2__asking_to_clone {
 function f_repository_dWiki {
    # Repository: dWiki
 
-   alias dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
-   alias    dw="dwiki"
+   alias     dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
+   alias dw="dwiki"
       
    # App under TODO-apps:
       alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
@@ -755,13 +755,13 @@ function f_repository_ezGIT {
       source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
    # Define a key to call the entire program
-      # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso))
-      alias ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias ezgit="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
-      alias     G="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"        
-      alias    GG="cd   ${v_REPOS_CENTER}"
+      # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso)
+      alias        ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias ezgit="ezGIT"
+      alias     G="ezGIT"
 
-      alias  GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
+      alias   GG="cd   ${v_REPOS_CENTER}"
+      alias GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
    #       `f_async__ezGIT_pull_All__at_startup`
@@ -773,13 +773,16 @@ function f_repository_wikiD {
 
 function f_repository_moedaz {
    # Repository: moedaz
-
    # uDev: Put all files to be open under menuFAV F   
-   alias    M="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
-   alias   mo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh" ## Exists inside the file 'source-all-moedaz-files'
-   alias todo="bash ${v_REPOS_CENTER}/moedaz/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
-   source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files 2>/dev/null
-   source ~/.config/h.h/moedaz/terminal-text-color             2>/dev/null
+
+   v_moedazREPO=${v_REPOS_CENTER}/moedaz
+
+   source $v_moedazREPO/all/source-all-moedaz-files 2>/dev/null
+
+   alias    mo="bash $v_moedazREPO/moedaz.sh" ## Alias also exists inside 'source-all-moedaz-files'
+   alias M="mo"
+
+   alias  todo="bash $v_moedazREPO/moedaz.sh todo"  # Tambem esta presente em: source-all-moedaz-files
 }
 
 function f_repository_patuscas {
@@ -796,9 +799,9 @@ function f_repository_upK {
    source ${v_REPOS_CENTER}/upK/all/source-all-upk-files 2>/dev/null
 
    # Open with github sync
-   alias upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
-      alias Upk="upk" # Same as previous alias but with capital letter for fast call at termux startup
-      alias UPK="upk" # Same as previous alias but with capital letter for fast call at termux startup
+   alias      upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
+   alias Upk="upk" 
+   alias UPK="upk"
 
 }
 
@@ -814,22 +817,24 @@ function f_repository_112-Shiva-Sutras {
    # Repository: 112-Shiva-Sutras
    # uDev: Enviar a maipr parte destes alias para `if elif fi` dentro de ss.sh
 
-   v_path="${v_REPOS_CENTER}/112-Shiva-Sutras"
+   # uDev: Se SS nao existir, perguntar se quer clonar
 
-   alias    ss="bash $v_path/ss.sh"
-   alias   ss.="vim  $v_path/ss.sh"
+   v_ssREPO="${v_REPOS_CENTER}/112-Shiva-Sutras"
+
+   alias    ss="bash $v_ssREPO/ss.sh"
+   alias   ss.="vim  $v_ssREPO/ss.sh"
 
    alias    SS="ss all | less"  # Attempt to clear `less` output where 1st line of text has buggy encodings. alias SS="mkdir -p ~/.tmp; ss all > ~/.tmp/SS; less ~/.tmp/SS | head -n -1 | less --wordwrap" 
    alias    Ss="SS"             # Creates case insensitivity for the last alias
 
-   alias   exp="vim  $v_path/all/exp112.txt"
-   alias links="cd   $v_path/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
+   alias   exp="vim  $v_ssREPO/all/exp112.txt"
+   alias links="cd   $v_ssREPO/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 }
 
 function f_repository_yoga_bash_app {
    # Repository: yoga-bash-app
 
-   v_path=${v_REPOS_CENTER}/yoga-bash-app
+   v_path=${v_REPOS_CENTER}/yogaBashApp
 
    alias t-stop="termux-media-player stop"  # Existe duplicado em config-bash-alias
 
@@ -898,9 +903,9 @@ function f_repository_3_sticks_alpha_bravo {
 function f_repository_jarve {
    v_jarve="${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
 
-   alias jarve="bash $v_jarve"
-   alias    jv="bash $v_jarve"
-   alias     J="bash $v_jarve"
+   alias     jarve="bash $v_jarve"
+   alias jv="jarve"
+   alias  J="jarve"
 }
 
 function f_drya_mail_box {
