@@ -1,12 +1,99 @@
 #!/bin/bash
+# Title: 1-select-installer.sh
+# Description: Install DRYa witout any dependency
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
-# uDev: Se DRYa ainda nao existir no systema, criar a hipotese de ghost-in ghost-out
+# uDev: Se DRYa ainda nao existir no sistema, criar a hipotese de ghost-in ghost-out
 
-function f_greet {
-   # This fx ensures some correct ASCII greet is used
-   clear
-   f_greet_standard || f_greet_failsafe
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Functions below copied from drya-lib-5 
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+function f_5 {
+   # Gives working directory where the script is placed (without the name ib the end)
+
+   # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
+
+   v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+   #v_script_directory="$v_script_directory/"  # Adding sufix /
+
+   # For beter verbose (Same line of code as f_6)
+      v_basename=$(basename $0)
+
+   # Finally
+      v_5_verbose=$v_basename
+      v_5=$v_script_directory
+}
+function f_5_verbose {
+   echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+   echo "  >  $v_5";
+   echo
+   echo
+}
+
+# Exec
+   f_5
+   #f_5_verbose
+
+
+
+
+read -sn1 -p "Continue to target? (testing this wizzard) "
+echo
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Above: Functions copied from drya-lib-5 --+-- Function Below: Testing the wizzard --
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+# After $v_5 is found (abs path), can be complemented with relative paths
+   v_target=target.sh
+   v_dryaSH=../../../drya.sh
+
+bash $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
+
+read -sn1 -p "Continue to wizzard? (DRYa's installer) "
+echo
+
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------
+# -- Above: Functions to test the wizzard --+-- Function Below:  Installer 1-select-installed.sh  --
+# --------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+function f_internal_vars {
+   v_talk="DRYa: select-installer: "
 }
 
 function f_greet_standard {
@@ -48,8 +135,10 @@ function f_greet_failsafe {
     f_one || f_two
 }
 
-function f_internal_vars {
-   v_talk="DRYa: select-installer: "
+function f_greet {
+   # This fx ensures some correct ASCII greet is used
+   clear
+   f_greet_standard || f_greet_failsafe
 }
 
 function f_talk {
@@ -389,7 +478,8 @@ function f_menu {
                   clear; f_greet; 
                ;;
                Instructions) 
-                  echo "For instalation instructions, please open th README.md file"
+                  #echo "For instalation instructions, please open th README.md file"
+                  less $v_5/README.txt
                   read -sn 1
                   clear; f_greet; 
                ;;
@@ -415,9 +505,9 @@ function f_discard_every_unused_function {
 			unset f_explain
 			unset f_create_backup
 			unset f_delete_empty_lines
-			unset f_delete-previous-DRYa-installation
-			unset f_DRYa-install-me-at-bashrc
-			unset f_unset-DRYa-installer
+			unset f_delete_previous_DRYa_installation
+			unset f_DRYa_install_me_at_bashrc
+			unset f_unset_DRYa_installer
 			unset f_source_bashrc
 #	   fi
    
@@ -533,32 +623,32 @@ function f_explain {
       # First determine where to install
         echo "Welcome to DRYa"
         echo " > Don't Repeat Yoursel (app)"
-        sleep 0.5
+        read -sn1 -t 0.5
         echo 
         echo "This script running is meant to install DRYa"
         echo " > Please choose one centralized directory"
         echo "   where DRYa and all other Seiva's Software"
         echo "   can be installed (e.g. /home/Repositories)"
-        #echo " > You should prefer absolute paths instead of relative paths"
-        #echo " > In order go cross platform"
+       #echo " > You should prefer absolute paths instead of relative paths"
+       #echo " > In order go cross platform"
         echo
-        sleep 0.5
+        read -sn1 -t 0.5
         echo "Instalation - Step 1 - by sourcing this file:"
         echo " > Issue the command '$ source <name-of-this-file>' and then"
         echo "   travel to the directory you want the software to be installed in"
         echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
         echo 
-        sleep 0.5
+        read -sn1 -t 0.5
         echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
         echo " > If you were able to source this file, you must have a copy of DRYa"
         echo "   and that copy (this copy) should be moved into the directory in which"
         echo "   you did invoke DRYa-install-me-at_bashrc"
         echo "   uDev: create a function that automatically moves the directory"
         echo 
-        sleep 0.5
+        read -sn1 -t 0.5
         echo "After instalation:"
         echo " > You cat unload the function that was sourced for instalation"
-        echo "   you loaded: f_DRYa-install-me-at-bashrc that exports the variable \$DRYa_PATH"
+        echo "   you loaded: f_DRYa_install_me_at_bashrc that exports the variable \$DRYa_PATH"
         echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
         echo "   by invoking: unset-DRYa-installer"
         echo
@@ -648,7 +738,7 @@ function f_delete_empty_lines {
 		fi
 }
 
-function f_delete-previous-DRYa-installation {
+function f_delete_previous_DRYa_installation {
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
 	  # This deletes only the 2 lines of code inside ~/.bashrc
@@ -679,7 +769,7 @@ function f_delete-previous-DRYa-installation {
    
 }
 
-function f_DRYa-install-me-at-bashrc {
+function f_DRYa_install_me_at_bashrc {
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
@@ -778,10 +868,10 @@ function f_run_every_used_function {
 			#f_DRYa_instalation_state
 			#f_explain
 			f_create_backup
-			f_delete-previous-DRYa-installation
+			f_delete_previous_DRYa_installation
 			f_delete_empty_lines
-			f_DRYa-install-me-at-bashrc
-			#f_unset-DRYa-installer
+			f_DRYa_install_me_at_bashrc
+			#f_unset_DRYa_installer
 			#f_source_bashrc
 #	fi
 }

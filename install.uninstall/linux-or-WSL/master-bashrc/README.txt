@@ -1,3 +1,6 @@
+# Title: README.txt
+# Description: File to help installing DRYa
+
 # Explanation on how it works
 	If you are trying to install this repository (DRYa) from the terminal, 
 	   then we know that you can issue commands across the entire 
@@ -6,10 +9,10 @@
 	If you are using a terminal we know that your current directory may be your home directory
 	   and still listing and running files from the root of your drive (for exemple)
 
-	But this script was made in such a way that it needs you to navigate to the directory in which this file is located
-	   Because it will need to evaluate your current location
+	In the past this script was made in such a way that it needs you to navigate to the directory in which this file is located
+	   Because it usually needed to evaluate your current prompt location
 
-	This happens because the user MAY clone a git repository for any part of the file system
+	This happened because the user MAY clone a git repository for any part of the file system
 	   And the script is trying to facilitate the user at the point of instalation where the entire DRYa directoy is MOVED
 	   to a new location choosen by the user
 	   If the user already downloads DRYa repository to exactly where the user wants to dir to be, 
