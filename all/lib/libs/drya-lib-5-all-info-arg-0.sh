@@ -47,13 +47,13 @@ function f_0 {
    # The sole purpose of this f_0 function is to avoid Hard Coded names on f_0_verbose function
    v_basename=$(basename $0)  # Same line of code as f_6
 
-   # uDev: $v_0
+   v_0=$v_basename
 }
 function f_0_verbose {
    echo " -0- Title: All info about the Arg 0 (the running script):"
    echo "  >  Do not \`source\` this as a lib (some functions will not be accurate)"
    echo "  >  Copy the needed code and functions into your script instead"
-   echo "  >  Try \`bash .../$v_basename\` as a test to get info of that script"
+   echo "  >  Try \`bash .../$v_0\` as a test to get info of that script"
    echo
    echo
 }
@@ -64,11 +64,11 @@ function f_1 {
    # Mostrar sem sufixo
    v_pwd=$(pwd)
 
-   # uDev: $v_1
+   v_1=$v_pwd
 }
 function f_1_verbose {
    echo " -1- Rel path: Prompt location \`pwd\` (Current CLI working directory, without sufix '/' ):"
-   echo "  >  $v_pwd"
+   echo "  >  $v_1"
    echo
    echo
 }
@@ -76,13 +76,13 @@ function f_1_verbose {
 function f_2 {
    # Mostrar com sufixo
    v_pwd=$(pwd)
-   v_pwd="$v_pwd/"
+   v_pwd="$v_pwd/"  # Adding sufix /
 
-   # uDev: $v_2
+   v_2=$v_pwd
 }
 function f_2_verbose {
    echo " -2- Rel path: Prompt location \`pwd\` (Current CLI working directory with sufix '/' ):"
-   echo "  >  $v_pwd"
+   echo "  >  $v_2"
    echo
    echo
 }
@@ -91,11 +91,11 @@ function f_3 {
    # Without ensuring text the text ./
       v_Name=$0
 
-   # uDev: $v_4
+   v_3=$v_Name
 }
 function f_3_verbose {
       echo " -3- Rel path: Between the current prompt ./ and script name \$0 without prefix './' :"
-      echo "  >  $v_Name"
+      echo "  >  $v_3"
       echo
       echo
 }
@@ -112,11 +112,11 @@ function f_4 {
       v_name=$(echo "$0" | sed ':a; s/^\.\///; ta')
       v_name="./$v_name"
 
-   # uDev: $v_4
+   v_4=$v_name
 }
 function f_4_verbose {
       echo " -4- Rel path: Between the current prompt ./ and script name \$0 with prefix './' :"
-      echo "  >  $v_name"
+      echo "  >  $v_4"
       echo
       echo
 }
@@ -127,16 +127,19 @@ function f_5 {
    # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
 
    v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-   v_script_directory="$v_script_directory/"
+   #v_script_directory="$v_script_directory/"  # Adding sufix /
 
 
-   v_basename=$(basename $0)  # Same line of code as f_6
+   # For beter verbose (Same line of code as f_6)
+      v_basename=$(basename $0)
 
-   # uDev: $v_5
+   # Finally
+      v_5_verbose=$v_basename
+      v_5=$v_script_directory
 }
 function f_5_verbose {
-   echo " -5- Abs Path: working dir of running script \"$v_basename\" (with sufix '/'):"; 
-   echo "  >  $v_script_directory";
+   echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+   echo "  >  $v_5";
    echo
    echo
 }
@@ -146,11 +149,11 @@ function f_6 {
 
    v_basename=$(basename $0)
 
-   # uDev: $v_6
+   v_6=$v_basename
 }
 function f_6_verbose {
    echo " -6- Abs Name: \`basename \$0\` when running the script:"
-   echo "  >  $v_basename"
+   echo "  >  $v_6"
    echo
    echo
 }
@@ -162,11 +165,11 @@ function f_7 {
    v_basename=$(basename $0)
    v_script=$v_script_directory/$v_basename
 
-   # uDev: $v_7
+   v_7=$v_script
 }
 function f_7_verbose {
    echo " -7- Abs path: the running script:"
-   echo "  >  $v_script"
+   echo "  >  $v_7"
    echo
 }
 
@@ -183,14 +186,19 @@ function f_8 {
       v_script_directory="$v_script_directory/"
 
 
-      v_basename=$(basename $0)  # Same line of code as f_6
-      v_5=$v_basename
+      # For beter verbose (Same line of code as f_6)
+         v_basename=$(basename $0)
 
+      # Finally
+         v_5_verbose=$v_basename
+         v_5=$v_script_directory
    }
    f_5_copy  # Retorna $v_5
 
-   v_8=$(basename $v_script_directory)
-   v_8="$v_8/"  # Foibcolocado sufixo '/'
+   v_directory=$(basename $v_script_directory)
+   v_directory="$v_directory/"  # Adding sufix /
+
+   v_8=$v_directory
 }
 function f_8_verbose {
    echo " -8- Abs Name: do diretorio do script, exluindo o caminho ate esse nome (com sufixo '/')"
