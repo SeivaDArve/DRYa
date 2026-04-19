@@ -12,7 +12,33 @@
 v_talk="DRYa: (pk + $trid_pkgm):"
 
 
-
+# Notes (Arch) {
+#
+#   How to install/remove packages/software from Arch based Linux
+#
+#      Install: 
+#         `sudo pacman -Syu <package-name>`
+#
+#         -S   | instalar pacote
+#         -Sy  | atualizar base de dados
+#         -Syu | atualizar tudo (sistema completo)
+#
+#
+#
+#      Remove:
+#         `sudo pacman -Rns <package-name>`
+#
+#         -R   | remove pacote
+#         -Rs  | remove + dependências inúteis
+#         -Rns | remove tudo (incluindo configs)
+#         -Rdd | força (perigoso)
+#
+#
+#
+#      Clean orfan dependencies:
+#         `sudo pacman -Rns $(pacman -Qtdq)`
+#         `yay -Yc`
+# }
 
 
 

@@ -976,6 +976,11 @@ function f_internal_drya_files_nr_2 {
    # Send pending updates to repos
       #f_drya_mail_box 
 
+   # Define Terminal cursor's appearence to 'Block' 
+      printf '\e[2 q'
+      printf '\e[?12h'   # ativa o piscar
+      #printf '\e[?12l'   # desativa o piscar
+
    # uDev: colocar o processo a correr em background: `data.sh F` ou semelhante. Ou seja, uma fx que cada minuto atualiza o ficheiro drya-date-now
 }
 
@@ -1185,7 +1190,7 @@ function f_exec {
    # Default DRYa configs 
       f_internal_drya_files_nr_2  # Source 'boot' and 'config-alias' :: Remove ~/.tmp 
       f_internal_drya_files_nr_3  # Exporting $PATH
-      f_internal_drya_files_nr_4  # Workaround 'Bash Login Shell'
+      f_internal_drya_files_nr_4  # Workaround 'Bash Login Shell' to `Remove ~/.tmp`; Remove private repos; Remove ~/.netrc 
 
    # Start loading background tasks (jarve)
       # (DRYa:  foreground tasks, once.       (at startup and on command))

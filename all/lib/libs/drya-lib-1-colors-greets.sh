@@ -440,6 +440,78 @@ function f_prsD {
       unset v_txt
 }
 
+function f_prsYN {
+   # This fx can simulate a file of instructions. 
+   # If it is about bash, It reads each line of instructions and for each line it asks Y or N to actually run/do/execute/take care of it
+   #
+   # For for each line of instructions, y or n will be asked
+   # If user say N everytime, than it is just a real text of instructions step by step
+   # If user say Y everytime, than it is reads the text and also runs code about it after Y
+   #
+   # uDev: Allow giving multiple pair of arguments, first item in first pair is the instruction, second pair is the name of the fx to run
+   #
+   # Variable v_txt: can be taken as an argument
+
+   
+   function f_fx_test {
+      # Internal fx to use as debug
+      echo "Command executed properly"
+   }
+
+   # Message is the first argument
+      v_txt=$1
+      shift 
+
+   # Detect action or function to run (if terminal argument is empty or it is '1' then nothing will run)
+      v_fx=$1
+      shift
+
+   # Message
+      v_msg=" ... (Continue: (y/N) | Cancel: Ctrl-C ) "
+
+   # Set $v_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $v_txt ]] && v_txt=" ... "
+   
+   # Set $v_fx to " .... " in case the user forgets to set it (must be unset before this fx finishes
+      [[ -z $v_txt ]] && v_fx=" .... "
+
+   # Text to print
+         #echo
+   f_talk; echo -n 'Follow instruction? (y/N): `'
+     f_c5; echo -n "$v_txt"   # A variavel $v_txt tem de ser definida antes desta fx ser chamada
+     f_rc; echo '`'
+
+           [[ -n $v_fx ]] && echo 
+           [[ -n $v_fx ]] && echo " > It WILL RUN code!"
+
+           echo -n "$v_msg"
+           read -sn1 v_ans
+           echo 
+     
+     [[ -z $v_ans        ]] &&              echo -e "\r\033[K ... No valid instruction given (doing nothing)"
+
+     [[    $v_ans == "y" ]] && v_run=yes && echo -e "\r\033[K ... Yes! Executing last given instruction" 
+     [[    $v_ans == "Y" ]] && v_run=yes && echo -e "\r\033[K ... Yes! Executing last given instruction"
+
+     [[    $v_ans == "n" ]] &&              echo -e "\r\033[K ... No! Not executing last given instruction" 
+     [[    $v_ans == "N" ]] &&              echo -e "\r\033[K ... No! Not executing last given instruction" 
+
+   
+   # Attempt to run argument $v_fx if it is the name of a real function
+     [[ $v_run == "yes" ]] && echo && echo " > Running code:"
+
+     [[ $v_run == "yes" ]] && f_fx_test  # Debug
+   
+   # Removing variables before the fx finished
+      unset v_txt
+      unset v_fx
+      unset v_run
+
+   # Last line of text
+      echo 
+}
+
+
 function f_hzl {
    # Prints an horizontal line according to the amount to line existent in the current terminal
    # This fx exists also at .../boot/horizontal-line.sh
