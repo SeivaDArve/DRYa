@@ -71,6 +71,8 @@
    ;;   (global-set-key (kbd "C-c-<right>") (lambda () (interactive) (org-promote-subtree)))
    ;;   (global-set-key (kbd "C-c-<left>")  (lambda () (interactive) (org-demote-subtree)))
 
+;;;; Tecla de atalho para inserir comandos do 'vim'
+   ;; Alguns emacs para PC vem com 'C-.' como atalho para inserir comandos vim
 
 
 ;;; Changing emacs variable equivalent to $HOME: startup--xdg-config-home-emacs
