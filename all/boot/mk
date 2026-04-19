@@ -3,30 +3,37 @@
 #alias mk="mkdir -p" # Creates one directory for each name given as an argument and in case that succeeds, changes working directory for the directory given as the first argument
  #uDev: `mk .` to go to last created dir
  #uDev: `mk dir1 . dir2 dir3` to make all dirs and navigate do dir2
+
+
+
+
 function mk {
 
-   f_talk; echo "mk"
+   f_talk; echo "mk: "
 
    if [[ -z $* ]]; then
-      # Creates a directory and navigates to it imediatly
-      read -p "New directory name: " v_dir
+      # Creates a directory
+      read -p " > New directory name: " v_dir
       mkdir -p $v_dir
-      cd $v_dir
+      ls 
 
    elif [ $1 == "h" ]; then
-      echo "Instructions for Mk"
-      echo ' > `Mk`       : Ask for new dir && cd $dir'
-      echo ' > `Mk <dir>` : Automatically create <dir> && cd <dir>'
+      echo "Instructions for mk"
+      echo ' > `mk`       : Ask for new dir && cd $dir'
+      echo ' > `mk <dir>` : Automatically create <dir> && cd <dir>'
+      echo ' > `mk . <dir-1> <dir-2> <dir-3> ` : Automatically create all dirs'
+      echo ' > `mk . h`   : To create a directory "h" as name'
 
    elif [ $1 == "." ]; then
       shift
 
       if [[ -z $* ]]; then
-         echo "No args remaining"
+        f_talk; echo "No args remaining"
 
       else
-         echo "vao ser criadas todas as pastas fornecidas como args"
-         echo "depois, navega para a ultima pasta criada"
+         f_talk; echo "vao ser criadas todas as pastas fornecidas como args"
+
+         # uDev: o arg '.' pode ser adicionado DEPOIS da pasta para a qual se quer navegar. assim o '.' pode ser o ultimo argumento
 
          #
          # Notas: Como funciona esta detecao de argumentos:
@@ -35,21 +42,17 @@ function mk {
          #     Exemplo: se $# for 4, ${!#} = ${4}.)
          #
 
-         # Detetar qual é o ultimo argumento
-            var=${!#}
-            echo "Último argumento: $var"
-
-         # uDev: o arg '.' pode ser adicionado DEPOIS da pasta para a qual se quer navegar. assim o '.' pode ser o ultimo argumento
 
          for i in $@
          do
             mkdir -p $*
-            cd $var
          done
       fi
 
 
    else 
+      # All arguments will be converted into new directories
+      
       for i in $*
       do
          mkdir -p $i
