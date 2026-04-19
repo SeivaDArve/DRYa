@@ -3123,7 +3123,7 @@ elif [ $1 == "eysek" ]; then
    f_greet 
 
    # Frase bonita
-      echo "Desde o filme..." 
+      echo "Desde o filme com IsM..." 
       echo
 
    # Variavel com a data

@@ -494,7 +494,7 @@ elif  [ $1 == "." ]; then
       L19='19. | e | Data em formato numerico "ano-mes-dia"'
       L18='18. | I | Estacoes do ano + Mudanca de hora '
       L17='17. | n | Nanoseconds only'
-      L16='16. | i | Data da internet (nao confiar no pc)'
+      L16='16. |   | Data da internet (nao confiar no pc): abrir website'
       L15='15. | F | Data curta para ficheiros (+ verbose + instrucoes)  # uDev: iniciar background process para continuamente atualizar drya-date-now'
       L14='14. | f | Data curta para ficheiros (- verbose, envia para drya-date-now e drya-status-messages)'
       L13='13. | c | Data curta para terminal  (+ verbose, com segundos, envia para drya-date-now e drya-status-messages, define variavel v_data_shrt_plus_secs)'
@@ -523,7 +523,7 @@ elif  [ $1 == "." ]; then
       [[ $v_list =~ "19. " ]] && f_data_ano_mes_dia
       [[ $v_list =~ "18. " ]] && f_estacoes 
       [[ $v_list =~ "17. " ]] && f_nanoseconds 
-      [[ $v_list =~ "16. " ]] && echo "uDev"
+      [[ $v_list =~ "16. " ]] && xdg-open https://time.is/pt/Portugal
       [[ $v_list =~ "15. " ]] && f_variables_date_to_file_verbose
       [[ $v_list =~ "14. " ]] && f_variables_date_to_file
       [[ $v_list =~ "13. " ]] && f_short_with_seconds
