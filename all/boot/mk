@@ -7,22 +7,28 @@
 
 
 
+# Sourcing DRYa Lib 1: Color schemes
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   v_greet="DRYa"
+   v_talk="DRYa: mk: "
+
+   # Examples: `db` (an fx to use during debug)
+   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+
+
+
+
+
 function mk {
 
-   f_talk; echo "mk: "
-
    if [[ -z $* ]]; then
-      # Creates a directory
-      read -p " > New directory name: " v_dir
-      mkdir -p $v_dir
-      ls 
-
-   elif [ $1 == "h" ]; then
-      echo "Instructions for mk"
-      echo ' > `mk`       : Ask for new dir && cd $dir'
-      echo ' > `mk <dir>` : Automatically create <dir> && cd <dir>'
-      echo ' > `mk . <dir-1> <dir-2> <dir-3> ` : Automatically create all dirs'
-      echo ' > `mk . h`   : To create a directory "h" as name'
+      f_talk; echo "mk: Instructions"
+              echo ' > `mk`                   : Show these instructions'
+              echo ' > `mk <dir>`             : Automatically create <dir> && cd <dir>'
+              echo ' > `mk <dir> <dir> <...>` : Automatically create all dirs'
+              echo ' > If `fzf` is installed, will ask to which dir to navigate'
 
    elif [ $1 == "." ]; then
       shift

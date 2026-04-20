@@ -1,7 +1,30 @@
 #!/bin/bash
 # Title: fluNav (fluent navigation)
 
-# Dependencies: figlet, file, fzf (may be instaled with `pkg install figlet file fzf`)
+# Dependencies: drya-lib-1, figlet, file, fzf (may be instaled with `pkg install figlet file fzf`)
+
+
+
+
+
+
+# Sourcing DRYa Lib 1: Color schemes
+   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   v_greet="DRYa"
+   v_talk="DRYa: fluNav: "
+
+   # Examples: `db` (an fx to use during debug)
+   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+
+
+
+
+
+
+
+
 
 # uDev: 
 #       letra S para ABRIR ficheiros com SYNC
@@ -31,44 +54,6 @@
 #       word="morse ..., ,.., .,,"
 
 
-
-
-function f_c1 {
-   tput setaf 5
-}
-
-function f_c5 {
-   tput setaf 6
-}
-
-function f_rc { 
-   # This function is to be used to CLEAR all styles
-   tput sgr0
-}
-
-function f_done {
-   f_c5; echo ": Done!"
-   f_rc
-}
-
-function f_greet1 { 
-   # Avoiding repetition
-   clear
-   f_c5; figlet fluNav
-   f_rc
-}
-      
-function f_talk {
-   # Copied from: ezGIT
-   f_c5; echo -n "DRYa: fluNav: "
-   f_rc
-}
-
-function f_horiz_line {
-   # Using the in-built horizontal line from DRYa
-   bash ${v_REPOS_CENTER}/DRYa/all/boot/f_horizontal_line.sh
-   echo $v_line
-}
 
 
 
@@ -207,57 +192,57 @@ function f__V_hist__remove_duplicated_lines {
 
 function f_edit__config_bash_alias {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-   f_greet1
+   f_greet
    echo "edited: config-bash-alias"
 }
 
 function f_edit__notes {
-   f_greet1
+   f_greet
    note  # This is an alias set on config-bash-alias file
 }
 
 function f_edit__dryaSRC {
    vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
-   f_greet1
+   f_greet
    echo "edited: dryaSRC"
 }
 
 function f_edit__bashrc {
    vim ~/.bashrc
-   f_greet1  
+   f_greet
    echo "edited: ~/.bashrc"
    f_uDev
 }
 
 function f_edit__source_all_moedaz_files {
-   f_greet1
+   f_greet
    vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
    echo "edited: source-all-moedaz-files"
 }
 
 function f_edit__vimrc {
    vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
-   f_greet1
+   f_greet
    echo "edited: .vimrc on DRYa"
    cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
    echo "copied: from DRYa to ~"
 }
 
 function f_edit__1st_emacs {
-   f_greet1
+   f_greet
    echo "Editing the list of 1st apps to install"
    read -s -t 2
    EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-   f_greet1
+   f_greet
    echo "edited: 1st"
 }
 
 function f_edit__1st_vim {
-   f_greet1
+   f_greet
    echo "Editing the list of 1st apps to install"
    read -s -t 2
    vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
-   f_greet1
+   f_greet
    echo "edited: 1st"
 }
 
@@ -301,7 +286,7 @@ function f_edit__init_file_emacs__with_vim {
 
 function f_help {
    # uDev: this fx is overwriten. Must be either renamed or merged with the other existing f_help from V
-   f_greet1
+   f_greet
    echo "fluNav"
    echo " > Edits files inside 'DRYa repository' then copies those files across the system"
    echo " > Inside ~/.config/h.h/ you can install configs that are not meant to go online and they are machine-specific"
@@ -354,7 +339,7 @@ function f_manage_init_and_libraries_after_mod {
    #    "emacs-init (emacs)" and 
    #    "emacs-init (vim)"
 
-   f_greet1
+   f_greet
    f_talk; echo "Edited file is now closed:"
            echo " > $v_init_file"
            echo
@@ -388,7 +373,7 @@ function f_manage_init_and_libraries_after_mod {
 
 function f_edit_self {
 
-   f_greet1
+   f_greet
 
    # Verbose: Before opening file
       f_talk; echo "Editing fluNav original file"
@@ -464,7 +449,7 @@ function . {
       # Describe all these navigation alias
       # uDev: Se houver uma pasta ou ficheiro com o nome "h", perguntar com `fzf` se quer abrir esse destino ou se quer ir para onde fluNav tem pre-destinado
 
-      f_greet1
+      f_greet
       f_talk; echo "Instructions:"
       echo
       echo '`. ?` or `. h`  Shows this help menu'
@@ -593,7 +578,7 @@ function ,,, {
 
 function ,,,, {
    clear
-   f_greet1
+   f_greet
    ls
 }
 
@@ -789,9 +774,9 @@ function f_mobile_android_going_internal_storage {
    pwd
    echo
 
-   f_greet1
+   f_greet
    echo "Internal Storage"
-   f_horiz_line
+   f_hzl
 
    cd /sdcard && ls -p
 }
@@ -803,7 +788,7 @@ function f_mobile_android_going_SD_card_storage {
    v_place_2=/storage/0123-4567
    v_place_3=/storage/
 
-   f_greet1
+   f_greet
 
    echo "SD card storage"
    echo
@@ -819,10 +804,10 @@ function f_mobile_android_going_SD_card_storage {
    echo
 
    echo "SD card Storage"
-   f_horiz_line
+   f_hzl
 
    cd $v_place_2 && ls -p
-   f_horiz_line
+   f_hzl
    cd $v_place_3 && ls -p
 }
 
@@ -834,9 +819,9 @@ function f_mobile_android_going_external_USB {
    pwd
    echo
 
-   f_greet1
+   f_greet
    echo "USB Storage"
-   f_horiz_line
+   f_hzl
 
    cd /storage/83DB-10EA && ls -p || cd /storage && ls -p
 }
@@ -849,9 +834,9 @@ function f_mobile_android_going_USB_mnt_dir {
    pwd
    echo
 
-   f_greet1
+   f_greet
    echo "Listing possible USB plugged in"
-   f_horiz_line
+   f_hzl
 
    cd /storage && ls -p
 
@@ -864,9 +849,9 @@ function f_mobile_android_going_USB_mnt_dir {
    echo "file explorer, MOVE it to the SD card"
    echo
 
-   f_greet1
+   f_greet
    echo "SD card Storage"
-   f_horiz_line
+   f_hzl
 
    echo "Do you need directories to be created in order to MOVE"
    echo "internal things to external SD?"
@@ -886,12 +871,12 @@ function f_mobile_android_going_termux_bridge_android {
    # Navigate to termux-bridge-android
    #    For `V mb` it is the arg $2 "b"
 
-   f_greet1
+   f_greet
 
    v_dir=/sdcard/Termux-bridge-Android
    echo "Directory: Internal Storage: Termux-bridge-Android"
 
-   f_horiz_line
+   f_hzl
 
    [[ ! -d $v_dir ]] && read -p "Inexistent dir. [ANY KEY] to create... " && mkdir -p $v_dir
    cd      $v_dir    && ls   -p
@@ -1167,7 +1152,7 @@ function V {
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet1 && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
+         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -1418,7 +1403,7 @@ function f_action {
    if [ $v_nm == "fx_test" ]; then
       # fluNav testing (opening a file after downloading updates from github and sending it back after to github).
 
-      f_greet1
+      f_greet
       f_down  # uDev: f_tst_repo: test if correspondant repo is already cloned (with drya-lib-4)
 
       echo "$v_nm: Testing fluNav"
@@ -1428,7 +1413,7 @@ function f_action {
    elif [ $v_nm == "car" ]; then
       # uDev: Fix this fx to ask the user to clone respective repo from github.com if inexistent
 
-      f_greet1   
+      f_greet
 
       # Variables for this task
          v_respective_repo=${v_REPOS_CENTER}/moedaz 
@@ -1470,7 +1455,7 @@ function f_action {
    
    elif [ $v_nm == "tmux" ]; then
 
-      f_greet1 
+      f_greet
 
       cd  ${v_REPOS_CENTER}/DRYa/all/boot/
       vim ${v_REPOS_CENTER}/DRYa/all/boot/tm-tmux
@@ -1585,7 +1570,7 @@ function f_action {
       # 
       #    Ou colocar so um ficheiro "nanD.txt" em todas as pastas que quremos que ele busque
 
-      f_greet1 
+      f_greet
 
       #f_down
       echo "$v_nm: Menu to support UPK"
@@ -1603,7 +1588,7 @@ function f_action {
 
    elif [ $v_nm == "trade" ]; then
 
-      f_greet1
+      f_greet
 
       echo "$v_nm being edited"
       cd ${v_REPOS_CENTER}/moedaz/trade && \
@@ -1630,7 +1615,7 @@ function f_action {
          v_parent="omni-log"
          #v_editor= Em || Vim
 
-      f_greet1
+      f_greet
 
       echo "$v_nm being edited (file: omni-log.org)"
       echo " > Alias: 'F om' (sync)"
@@ -1655,6 +1640,8 @@ function f_action {
 function S {
    # List fav files for edition (fluNav)
    
+   v_talk="DRYa: fluNav: "
+
    # Reload the amount of '-' are needed to create an horizontal line
       v_file=${v_REPOS_CENTER}/DRYa/all/boot/f_horizontal_line.sh
       [[ -f $v_file ]] && source $v_file 1>/dev/null
