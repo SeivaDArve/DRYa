@@ -2575,13 +2575,6 @@ function f_menu_install_drya_dependencies__1st {
       unset  v_list
 }
 
-function f_help_installing_specific_packages {
-   echo
-}
-
-
-
-
 function f_kbd_greet {
    f_greet
    f_talk; echo "Keyboard options"
@@ -3208,19 +3201,18 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-        #L20='20. | Install Arch/Ubuntu/Fedora on Android with x11 to run actuall Linux software there'
+         L16='16. |            | Install Arch/Ubuntu/Fedora on Android with x11 GUI'  # to run actuall Linux software there
          L12='12. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
-         L11='11. | `D ui pr`  | Menu | Install | PRESETS             ' # uDev: adicionar a este menu "populate machines"
+         L11='11. | `D ui pr`  | Menu | Install | PRESETS + Packages + Populate Machines ' 
          L10='10. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
           L9='9.  | `D cln`    | Menu | Script  | Clone Repos         '
-          L8='8.  | `D iu <p>` | Menu | Install | specific <packages> | Alternative: `D iu <package>`'
           L7='7.  | `D iu d`   | Menu | Install | dot-files           '
           L6='6.  | `D ui dp`  | Menu |   1st   | Dependencies        ' 
                                  
           L4='4.  | `D ui fzf` | Install DRYa | `fzf`    installer    '
           L3='3.  | `D ui sel` | Install DRYa | `select` installer    '
                                  
-          L5='5.  | `D cln h`  | Info: clone DRYa (for other devices) '
+          L5='5.  | `D cln h`  | Info: clone DRYa (for other devices too) '
 
          L15='15. |            | Install git    | (via internet `git` is needed for the instalation)'
          L14='14. |            | Install Termux |'
@@ -3231,13 +3223,14 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
          L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L13 \n$L14 \n$L15 \n\n$L3 \n$L4 \n\n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L13 \n$L14 \n$L15 \n\n$L5 \n\n$L3 \n$L4 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && echo "uDev"
          [[ $v_list =~ "13. " ]] && echo "uDev"
@@ -3245,7 +3238,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "11. " ]] && f_install_presets
          [[ $v_list =~ "10. " ]] && f_backup_helper
          [[ $v_list =~ "9.  " ]] && f_clone_main_menu
-         [[ $v_list =~ "8.  " ]] && f_help_installing_specific_packages
          [[ $v_list =~ "7.  " ]] && f_dot_files_menu  
          [[ $v_list =~ "6.  " ]] && f_menu_install_drya_dependencies__1st
          [[ $v_list =~ "5.  " ]] && f_clone_info
@@ -3280,7 +3272,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       elif [[ $3 == "me" ]] || [ $3 == "DRYa" ] || [ $3 == "drya" ]; then 
          f_install_drya__with_Select
 
-      elif [[ $3 == "presets" ]] || [ $3 == "pr" ]; then 
+      elif [[ $3 == "presets" ]] || [ $3 == "p" ]; then 
          # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
 
          if [[ -z $4 ]]; then 
@@ -3395,12 +3387,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    elif [[ $2 == "backups" ]] || [ $2 == "bk" ]; then 
       f_backup_helper
-
-   elif [[ $2 == "p" ]]; then 
-      # Verbose that mentions what packages exist to install
-      # uDev: Create a menu instead
-
-      f_help_installing_specific_packages
 
    elif [[ $2 == "fig" ]]; then 
       echo "uDev: testing and installing existence of figlet"
