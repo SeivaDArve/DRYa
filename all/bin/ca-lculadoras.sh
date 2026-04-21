@@ -865,6 +865,23 @@ function f_calculations_from_the_prompt {
       echo " > $v_result"
 }
 
+function f_supermercado {
+   f_greet
+   f_talk; echo "Supermercado"
+           echo " > uDev: Comparar 2 precos/volumes/capacidades/pesos... de ingredientes de supermercado e ver qual compensa mais adquirir."
+
+   echo '
+     +  |-------|
+     |  |       |
+  1. |  |   A   |  |-----|  +
+     |  |       |  |  B  |  | 3.
+     +  |_______|  |_____|  +
+
+        |-------|  |-----|  
+            2.        4.
+   '
+      
+}
 
 function f_clc_main_menu {
    # Texto do menu
@@ -923,7 +940,7 @@ function f_clc_main_menu {
       [[ $v_list =~ "14. " ]] && f_exec_calculadora_percentagens
 
       [[ $v_list =~ "13. " ]] && f_eletricidade
-      [[ $v_list =~ "12. " ]] && echo "uDev: Comparar precos, volumes, capacidades, pesos... de ingredientes de supermercado"
+      [[ $v_list =~ "12. " ]] && f_supermercado 
       [[ $v_list =~ "11. " ]] && f_exec_calculadora_trim
       [[ $v_list =~ "10. " ]] && f_exec_calculadora_regra_de_3
       [[ $v_list =~ "9.  " ]] && f_exec_calculadora_cambios
