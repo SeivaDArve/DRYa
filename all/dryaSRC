@@ -777,7 +777,7 @@ function f_repository_moedaz {
 
    v_moedazREPO=${v_REPOS_CENTER}/moedaz
 
-   source $v_moedazREPO/all/source-all-moedaz-files 2>/dev/null
+   source $v_moedazREPO/all/moedazSRC 2>/dev/null
 
    alias    mo="bash $v_moedazREPO/moedaz.sh" ## Alias also exists inside 'source-all-moedaz-files'
    alias M="mo"
