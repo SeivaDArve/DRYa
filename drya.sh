@@ -3234,7 +3234,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "14. " ]] && f_ghost
          [[ $v_list =~ "13. " ]] && f_install_presets
          [[ $v_list =~ "12. " ]] && f_backup_helper
-         [[ $v_list =~ "11  " ]] && f_clone_main_menu
+         [[ $v_list =~ "11  " ]] && f_clone_main_menu  # bug?? nao busca o menu??
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
