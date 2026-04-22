@@ -7,94 +7,13 @@
 
 
 
-
-
-
-
-
 # ----------------------------------------------------------------------------------------------
-# -- Functions below copied from drya-lib-5 
+# -- Provide Visuals at the start 
 # ----------------------------------------------------------------------------------------------
 
 
 
-
-
-
-
-function f_5 {
-   # Gives working directory where the script is placed (without the name ib the end)
-
-   # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
-
-   v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-   #v_script_directory="$v_script_directory/"  # Adding sufix /
-
-   # For beter verbose (Same line of code as f_6)
-      v_basename=$(basename $0)
-
-   # Finally
-      v_5_verbose=$v_basename
-      v_5=$v_script_directory
-}
-function f_5_verbose {
-   echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
-   echo "  >  $v_5";
-   echo
-   echo
-}
-
-# Exec
-   f_5
-   #f_5_verbose
-
-
-
-
-read -sn1 -p "Continue to target? (testing this wizzard) "
-echo
-
-
-
-
-# ----------------------------------------------------------------------------------------------
-# -- Above: Functions copied from drya-lib-5 --+-- Function Below: Testing the wizzard --
-# ----------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-# After $v_5 is found (abs path), can be complemented with relative paths
-   v_target=target.sh
-   v_dryaSH=../../../drya.sh
-
-bash $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
-
-read -sn1 -p "Continue to wizzard? (DRYa's installer) "
-echo
-
-
-
-
-
-
-# --------------------------------------------------------------------------------------------------
-# -- Above: Functions to test the wizzard --+-- Function Below:  Installer 1-select-installed.sh  --
-# --------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-function f_internal_vars {
-   v_talk="DRYa: select-installer: "
-}
+v_talk="DRYa: Installer: "
 
 function f_greet_standard {
    # If installed, use `figlet`
@@ -145,20 +64,118 @@ function f_talk {
    echo -n "$v_talk"
 }
 
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Above: Provide visuals at the start --+-- Below: Functions copied from drya-lib-5 
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+function f_5 {
+   # Gives working directory where the script is placed (without the name ib the end)
+
+   # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
+
+   v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+   #v_script_directory="$v_script_directory/"  # Adding sufix /
+
+   # For beter verbose (Same line of code as f_6)
+      v_basename=$(basename $0)
+
+   # Finally
+      v_5_verbose=$v_basename
+      v_5=$v_script_directory
+}
+function f_5_verbose {
+   echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+   echo "  >  $v_5";
+   echo
+   echo
+}
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Above: Functions copied from drya-lib-5 --+-- Below: Testing the wizzard --
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+function f_test_proper_functionality_of_drya_lib_5 {
+
+   f_greet
+
+   # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
+      f_talk; echo "Step 1"
+              echo " > Test DRYa's installer."
+      read -sn1 -p "   [ENTER = Continue] or [CTRL-C = Cancel]: "
+      echo
+
+   # After $v_5 is found (abs path), can be complemented with relative paths
+      v_target=target.sh
+      v_dryaSH=../../../drya.sh
+
+   source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
+   [[ $v_double_check == "code-34y6" ]] && echo " > Double checked, all ok!"     # Will function properlly if $v_target is `sourced` instead of `bashed`
+   [[ $v_double_check != "code-34y6" ]] && echo " > Something is wrong!"  # If this var does not exist, $v_target was not sourced properly
+   echo
+
+   read -sn1 -p "Proceed to install DRYa? [ENTER = Continue] or [CTRL-C = Cancel]: "
+   echo
+
+}
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------
+# -- Above: Functions to test the wizzard --+-- Function Below:  Installer 1-select-installed.sh  --
+# --------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
 
-	touch ~/.bashrc
+   v_bash=~/.bashrc
+
+   f_greet 
+   f_talk; echo "Step 2"
+           echo " > Ensuring 'non empty' + 'proper existence' of: $v_bash"
+
+	touch $v_bash
 
    # If file ~/.bashrc does not exist, DRYa cannot be installed
-      [[ -f ~/.bashrc ]] && f_talk && ((echo "File ~/.bashrc exists" ||  echo "File ~/.bashrc doe not exist") || exit 1)
+      [[ -f $v_bash ]] && ((echo " > File exists: $v_bash" || echo " > File does not exist: $v_bash") || exit 1)
 
    # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors
-   # uDev: Sempre que este installer é aberto, esta linha vai adicionando continuamente linhas vazias spam no fundo do ficheiro desnecessariamente. Precisa ser corrigido
-      echo " " >> ~/.bashrc
+      # If there are no characters inside the file, these lines of code will add at least one
+      v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
+      echo 
+   
+      echo " Number of chars inside .bashrc: $v_char_count"  # Debug
+      [[ $v_char_count -gt 1 ]] && echo "  > Does not need filling, all ok!"
+      [[ $v_char_count -lt 1 ]] && echo "  > Does need filling..." && echo " " >> $v_bash && echo "  > Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
+      echo
 
    # Waiting for user to read
-      read -sn 1 -p " > [Any key to continue]"
+      read -sn 1 -p "Press Any key to continue to main menu ..."
 }
 
 
@@ -901,8 +918,10 @@ function f_decide_to_run {
 
 function f_exec {
 
-   f_internal_vars
-   f_greet
+   f_5; #f_5_verbose
+
+   f_test_proper_functionality_of_drya_lib_5 
+
    f_debug_bashrc_existence
    f_menu
 
