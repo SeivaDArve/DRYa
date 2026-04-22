@@ -3201,48 +3201,52 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L16='16. |            | Install Arch/Ubuntu/Fedora on Android with x11 GUI'  # to run actuall Linux software there
-         L12='12. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
-         L11='11. | `D ui pr`  | Menu | Install | PRESETS + Packages + Populate Machines ' 
-         L10='10. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
-          L9='9.  | `D cln`    | Menu | Script  | Clone Repos         '
-          L7='7.  | `D iu d`   | Menu | Install | dot-files           '
-          L6='6.  | `D ui dp`  | Menu |   1st   | Dependencies        ' 
+         L15='15. |            | Install Arch/Ubuntu/Fedora on Android with x11 GUI'  # to run actuall Linux software there
+         L14='14. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
+         L13='13. | `D ui pr`  | Menu | Install | PRESETS + Packages + Populate Machines ' 
+         L12='12. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
+         L11='11. | `D cln`    | Menu | Script  | Clone Repos         '
+         L10='10. | `D iu d`   | Menu | Install | dot-files           '
+          L9='9.  | `D ui dp`  | Menu |   1st   | Dependencies        ' 
                                  
-          L4='4.  | `D ui fzf` | Install DRYa | `fzf`    installer    '
-          L3='3.  | `D ui sel` | Install DRYa | `select` installer    '
-                                 
-          L5='5.  | `D cln h`  | Info: clone DRYa (for other devices too) '
+          L8='8.  | `D ui fzf` | Install DRYa | `fzf`    installer    '
+          L7='7.  | `D ui sel` | Install DRYa | `select` installer    '
+                                  
+          L6='6.  | `D cln h`  | Info: clone DRYa (for other devices too) '
 
-         L15='15. |            | Install git    | (via internet `git` is needed for the instalation)'
-         L14='14. |            | Install Termux |'
-         L13='13. |            | Install WSL2   |'
+          L5='5.  |            | Install git    | (via internet `git` is needed for the instalation)'
+          L4='4.  |            | Install Termux |'
+          L3='3.  |            | Install WSL2   |'
 
           L2='2.  | `D iu ls`  | List Status  '
           L1='1.  Cancel'
 
          L0="DRYa: Installers Menu: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L13 \n$L14 \n$L15 \n\n$L5 \n\n$L3 \n$L4 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "16. " ]] && echo "uDev"
          [[ $v_list =~ "15. " ]] && echo "uDev"
-         [[ $v_list =~ "14. " ]] && echo "uDev"
-         [[ $v_list =~ "13. " ]] && echo "uDev"
-         [[ $v_list =~ "12. " ]] && f_ghost
-         [[ $v_list =~ "11. " ]] && f_install_presets
-         [[ $v_list =~ "10. " ]] && f_backup_helper
-         [[ $v_list =~ "9.  " ]] && f_clone_main_menu
-         [[ $v_list =~ "7.  " ]] && f_dot_files_menu  
-         [[ $v_list =~ "6.  " ]] && f_menu_install_drya_dependencies__1st
-         [[ $v_list =~ "5.  " ]] && f_clone_info
-         [[ $v_list =~ "4.  " ]] && f_install_drya__with_fzf
-         [[ $v_list =~ "3.  " ]] && f_install_drya__with_Select
+         [[ $v_list =~ "14. " ]] && f_ghost
+         [[ $v_list =~ "13. " ]] && f_install_presets
+         [[ $v_list =~ "12. " ]] && f_backup_helper
+         [[ $v_list =~ "11  " ]] && f_clone_main_menu
+         [[ $v_list =~ "10. " ]] && f_dot_files_menu  
+         [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
+
+         [[ $v_list =~ "8.  " ]] && f_install_drya__with_fzf
+         [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select
+
+         [[ $v_list =~ "6.  " ]] && f_clone_info
+
+         [[ $v_list =~ "5.  " ]] && echo "uDev"
+         [[ $v_list =~ "4.  " ]] && echo "uDev"
+         [[ $v_list =~ "3.  " ]] && echo "uDev"
+
          [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
          [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
          unset v_list
