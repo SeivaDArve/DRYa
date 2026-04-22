@@ -13,7 +13,7 @@
 
 
 
-v_talk="DRYa: Installer: "
+v_talk="Installing DRYa: "
 
 function f_greet_standard {
    # If installed, use `figlet`
@@ -150,10 +150,18 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
 
 
+
+
+function f_variables {
+   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily. Also allows faster uninstall
+      v_dee="  # --hashtag-drya-- "
+
+   # For better code reading 
+      v_bash=~/.bashrc
+}
+
 function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
-
-   v_bash=~/.bashrc
 
    f_greet 
    f_talk; echo "Step 2"
@@ -175,8 +183,15 @@ function f_debug_bashrc_existence {
       echo
 
    # Waiting for user to read
-      read -sn 1 -p "Press Any key to continue to main menu ..."
+      read -sn 1 -p "Press Any key to continue to main menu... "
 }
+
+
+
+
+
+
+
 
 
 function f_title {
@@ -220,7 +235,7 @@ function f_4th {
    echo -e " [X] Do you have any dedicated dir for  repositories?"
    echo -e " [X] Move DRYa repository into that place (or git clone it)"
    echo -e " [X] Running this script only side-by-side?"
-   echo -e "  -  Everything seems ok tostart modifications"
+   echo -e "  -  Everything seems ok to start modifications"
    echo -e " [ ] Shall we stat the magic?\n"
 } 
 
@@ -240,192 +255,202 @@ function f_break_select_loops {
 }
 
 function f_1st_select {
-   # Initial Statements (prompting the questions):
-	   # First Question:
-         clear; f_greet; f_1st
+   # First question of the instalation process
 
-         select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
-         do
-            case $i in
-               "(yes) to continue")
-                  f_2nd_select;
-                  # Last, allow to script to flow by breaking all 'select loops'
-                     f_break_select_loops; eval $_break
+   f_greet; f_1st
 
-               ;;
-               "(no) to abort")
-                  echo " For a correct instalation, you should create a directory where all other"
-                  echo " Repositories go... (aborting)"
+   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
+   do
+      case $i in
+         "(yes) to continue")
+            f_2nd_select;
+            # Last, allow to script to flow by breaking all 'select loops'
+               f_break_select_loops; eval $_break
 
-                  # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
+         ;;
+         "(no) to abort")
+            echo " For a correct instalation, you should create a directory where all other"
+            echo " Repositories go... (aborting)"
 
-                    load_remaining_functions="no"
-                    #export v_unload ## Aparently scripts cannot export variables while being sorced
-                    exit 1
-               ;;
-               "(help) to explain") 
-                  clear; f_greet
-                  echo " Explanation of the First question"
-                    # Explain what a centralized directory is
-                  echo " First Create a dedicated directory for all your repositories like ~/Repositories"
-                  echo "   > Does it exist?"
-                    echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
-                    echo 
-                    echo "This script running is meant to install DRYa"
-                    echo " > Please choose one centralized directory"
-                    echo "   where DRYa and all other Seiva's Software"
-                    echo "   can be installed (e.g. /home/Repositories)"
-                    echo
-                    read -sn 1
-                    clear; f_greet ; f_1st
-               ;;
-               "(back to Menu)")
-                  clear; f_greet; f_title; break
-               ;;
-               "exit") echo "Bye"; exit 0 ;;
-               *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_1st ;;
-              esac
-         done
+            # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
+
+              load_remaining_functions="no"
+              #export v_unload ## Aparently scripts cannot export variables while being sorced
+              exit 1
+         ;;
+         "(help) to explain") 
+            f_greet
+            echo " Explanation of the First question"
+              # Explain what a centralized directory is
+            echo " First Create a dedicated directory for all your repositories like ~/Repositories"
+            echo "   > Does it exist?"
+              echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
+              echo 
+              echo "This script running is meant to install DRYa"
+              echo " > Please choose one centralized directory"
+              echo "   where DRYa and all other Seiva's Software"
+              echo "   can be installed (e.g. /home/Repositories)"
+              echo
+              read -sn 1
+              f_greet ; f_1st
+         ;;
+         "(back to Menu)")
+            f_greet; f_title; break
+         ;;
+         "exit") echo "Bye"; exit 0 ;;
+         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_1st ;;
+        esac
+   done
 }
 
 function f_2nd_select {
-   # Second question:
-      clear; f_greet; f_2nd
+   # Second question of the instalation process
 
-      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
-      do
-         case $i in 
-            "(yes) to continue")
+   f_greet; f_2nd
 
-               f_3rd_select;
+   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
+   do
+      case $i in 
+         "(yes) to continue")
 
-               # Last, allow to script to flow by breaking all 'select loops'
-                  f_break_select_loops; eval $_break
-
-
-          ;;
-          "(no) to abort")
-            echo " Second question answered NO"
-                    exit 1
-          ;;
-          "(help) to explain") 
-               clear; f_greet
-               echo "Explanation for the Second Question"
-               echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
-
-            # Explain what a centralized directory is
-               echo "Move the DRYa repo into the dir you choose"
-               echo " > If you were run this file, you must have a copy of DRYa"
-               echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
-               echo
-         ;;
-         "(back to Q1)")
-            clear; f_greet; f_1st; break
-         ;;
-         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_2nd ;;
-        esac
-      done
-
-}
-
-function f_3rd_select {
-   # Third question:
-      clear; f_greet; f_3rd
-
-      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q2)" "$v_line"  
-      do 
-        case $i in 
-          "(yes) to continue")
-            echo " Third question answered YES"
-
-            f_4rd_select
+            f_3rd_select;
 
             # Last, allow to script to flow by breaking all 'select loops'
                f_break_select_loops; eval $_break
 
-          ;;
-          "(no) to abort")
-            echo " Third question answered NO"
-                    exit 1
-          ;;
-          "(help) to explain") 
-            clear; f_greet
-            echo "Explanation for the Third Question"
-               echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
-               echo " Asked for help at Third question"
-               echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
 
-            # Explanation
-               echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
-               echo "In order to properly source this file,"
-               echo "you must navigate to the directory in which"
-               echo "this file is located."
-               echo 
-               echo "Are you there? (At the terminal you could "
-               echo "be sourcing or running this script from anywhere"
-               echo "and that would not work)"
-          ;;
-          "(back to Q2)") clear; f_greet; f_2nd; break
-          ;;
-          *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_3rd ;;
-         esac
-      done
+       ;;
+       "(no) to abort")
+         echo " Second question answered NO"
+                 exit 1
+       ;;
+       "(help) to explain") 
+            f_greet
+            echo "Explanation for the Second Question"
+            echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
+
+         # Explain what a centralized directory is
+            echo "Move the DRYa repo into the dir you choose"
+            echo " > If you were run this file, you must have a copy of DRYa"
+            echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
+            echo
+      ;;
+      "(back to Q1)")
+         f_greet; f_1st; break
+      ;;
+      *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_2nd ;;
+     esac
+   done
+
+}
+
+function f_3rd_select {
+   # Third question of the instalation process
+
+   f_greet; f_3rd
+
+   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q2)" "$v_line"  
+   do 
+     case $i in 
+       "(yes) to continue")
+         echo " Third question answered YES"
+
+         f_4rd_select
+
+         # Last, allow to script to flow by breaking all 'select loops'
+            f_break_select_loops; eval $_break
+
+       ;;
+       "(no) to abort")
+         echo " Third question answered NO"
+                 exit 1
+       ;;
+       "(help) to explain") 
+         f_greet
+         echo "Explanation for the Third Question"
+            echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
+            echo " Asked for help at Third question"
+            echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
+
+         # Explanation
+            echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
+            echo "In order to properly source this file,"
+            echo "you must navigate to the directory in which"
+            echo "this file is located."
+            echo 
+            echo "Are you there? (At the terminal you could "
+            echo "be sourcing or running this script from anywhere"
+            echo "and that would not work)"
+       ;;
+       "(back to Q2)") f_greet; f_2nd; break
+       ;;
+       *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_3rd ;;
+      esac
+   done
 }
 
 
 function f_4rd_select {
-   # Fourth question:
-      clear; f_greet; f_4th
+   # Fourth question of the instalation process
 
-      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q3)" "$v_line"  
-      do
-         case $i in 
-            "(yes) to continue")
-               echo " All questions answered... Continuing the script"
-               read -sn1
+   f_greet; f_4th
 
-               # After the 'select' loop breaks, it should carry this variable to indicate the next function
-                  # That the process of reaching this line of code was sucessfull or not
-                  # If the user used the script until this line, it means that the user wants to continue the installation
-                  # This variable enables the remaining of the instalation 
-                     load_remaining_functions="yes"
+   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q3)" "$v_line"  
+   do
+      case $i in 
+         "(yes) to continue")
+            echo " All questions answered... Continuing the script"
+            read -sn1
 
-                     #export v_unload ## Aparently scripts cannot export variables while being sourced
+            # After the 'select' loop breaks, it should carry this variable to indicate the next function
+               # That the process of reaching this line of code was sucessfull or not
+               # If the user used the script until this line, it means that the user wants to continue the installation
+               # This variable enables the remaining of the instalation 
+                  load_remaining_functions="yes"
 
-               # Last, allow to script to flow by breaking all 'select loops'
-                  v_break_select_loops="yes"; f_break_select_loops; eval $_break
-           ;;
+                  #export v_unload ## Aparently scripts cannot export variables while being sourced
 
-           "(no) to abort")
-             echo " Not ready to see magic... I see..."
-             exit 1
-           ;;
+            # Last, allow to script to flow by breaking all 'select loops'
+               v_break_select_loops="yes"; f_break_select_loops; eval $_break
+        ;;
 
-           "(help) to explain") 
-             clear; f_greet
-             echo "Explanation for the Forth Question"
+        "(no) to abort")
+          echo " Not ready to see magic... I see..."
+          exit 1
+        ;;
 
-             # Explanation
-               echo " Magic is the instalation of such usefull software"
-          ;;
+        "(help) to explain") 
+          f_greet
+          echo "Explanation for the Forth Question"
 
-          "(back to Q3)") clear; f_greet; f_3rd; break
-          ;;
+          # Explanation
+            echo " Magic is the instalation of such usefull software"
+       ;;
 
-          *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; clear; f_greet; f_4th 
-          ;;
-         esac
-      done
+       "(back to Q3)") f_greet; f_3rd; break
+       ;;
+
+       *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_4th 
+       ;;
+      esac
+   done
 }
 
 function f_options_menu {
-   clear; f_greet; echo "Options not ready yet"
+   f_greet
+   f_talk; echo
+           echo "Options not ready yet"
 }
 
 
 function f_uninstall_1st {
    # First question when uninstalling DRYa
-   echo "Uninstalling Done!"
+   
+   f_greet
+   echo "Uninstalling DRYa:"
+   sed "/$v_dee/d" $v_bash 1>/dev/null
+   echo "Done!"
+   # uDev: Confirmation would be good to avoid bugs
 }
 
 function f_hzl {
@@ -462,49 +487,53 @@ function f_hzl {
             v_line=$v_underscoreCount
 }
 
-function f_menu {
-   # The first menu of the Installer/Uninstaller
+function f_help {
+   # Instrucoes
+   
+           echo 
+   f_talk; echo "Instructions"
+           echo " > Will be presented with \`less\` text editor"
+           echo "   (It uses 'Q' letter to exit the instructions doc)"
+           read -sn1
 
-   # The following function gives the variable v_line (vertical line to use as an option inside 'select' menu)
-      f_hzl
+   less $v_5/README.txt
+   f_menu_principal 
+}
 
-   # Display a menu, using the 'select' in-built bash loop function
-      clear; f_greet; f_title
-      PS3=" ----- Menu ---- > "
-      select i in "$v_line" "DRYa install" "DRYa uninstall" "" "CLEAR SCREEN" options "Instructions" "exit" "$v_line"
-         do
-            case $i in
-               "DRYa install") 
+function f_menu_principal {
+   # Menu principal, baseado em `read`
 
-                  # Start the first of a few questions in a row
-                     f_1st_select 
+   A="-------------------------------"
+   a=" | 1 | DRYa install"
+   b=" | 2 | DRYa uninstall"
+   c=" |   |"
+   d=" | 3 | Options"
+   e=" | 4 | Instructions"
+   f=" | 5 | Exit"
 
-                  # If the answers were all answered, allow to script to flow by breaking all 'select loops'
-                     f_break_select_loops; eval $_break
-               ;;
-               "DRYa uninstall") echo "uninstalling"; f_uninstall_1st; break;;
-               options) 
-                  f_options_menu
-               ;;
-               exit) echo "Bye"; break ;;
-               "CLEAR SCREEN") 
-                  clear; f_greet; 
-                  echo "In this bash menu, you can clear the screen if unwanted output in displayed"
-                  echo "By entering any unexpected input and pressing enter 2x"
-                  read -sn 1
-                  clear; f_greet; 
-               ;;
-               Instructions) 
-                  #echo "For instalation instructions, please open th README.md file"
-                  less $v_5/README.txt
-                  read -sn 1
-                  clear; f_greet; 
-               ;;
-               *) clear; f_greet; f_title ;;
-            esac
-         done
+   f_greet
+   f_talk; echo "Menu Principal"
 
-   echo "Last line of menu"
+   echo "$A"
+   echo "$a"
+   echo "$b"
+   echo "$c"
+   echo "$d"
+   echo "$e"
+   echo "$f"
+   echo "$A"
+
+   v_allow="no"  # By default, if no valid answer is given from the menu, this variable will not allow to continue the script.
+
+   read -p "   < " v_ans
+
+   [[ $v_ans == "1" ]] && v_allow="yes" && f_1st_select 
+   [[ $v_ans == "2" ]] && v_allow="yes" && f_uninstall_1st
+   [[ $v_ans == "3" ]] && v_allow="yes" && f_options_menu
+   [[ $v_ans == "4" ]] && v_allow="yes" && f_help 
+   [[ $v_ans == "5" ]] && v_allow="yes" && echo "   > exit" && echo && exit
+
+   [[ $v_allow == "no" ]] && echo && echo "   > Invalid option: $v_ans" && echo "     [Any key to reload Menu]" && read -sn1 && f_menu_principal
 }
 
 function f_discard_every_unused_function {
@@ -805,9 +834,6 @@ function f_DRYa_install_me_at_bashrc {
    echo " > Or press Ctrl-c to abort"
    read -sn 1
 
-   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily
-      v_dee="  # --drya-line-- "
-
    # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
 	   # Pasting 1 empty line + 4 lines of code:
 
@@ -919,11 +945,12 @@ function f_decide_to_run {
 function f_exec {
 
    f_5; #f_5_verbose
-
    f_test_proper_functionality_of_drya_lib_5 
 
+   f_variables
    f_debug_bashrc_existence
-   f_menu
+
+   f_menu_principal
 
    # The previous function f_initial_statement brings a variable that allows 
 	  # the next function to decide wether to run the remaining of the code or not
