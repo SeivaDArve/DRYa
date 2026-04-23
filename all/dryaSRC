@@ -1146,7 +1146,10 @@ function f_once_tasks {
    #    It is a list/file/script to run only once per machine. 
    #    Uses traitsID. Used whenever there is a task so rare that is not worth embed into DRYa or any other repository, not repetitive enough. 
 
-   echo 1>/dev/null
+   v_once_file=${v_REPOS_CENTER}/DRYa/all/var/once-tasks-list.txt
+
+   [[ ! -f $v_once_file ]] && touch $v_once_file  # If the file does not exist, will be created automatically
+
 }
 
 function f_exec { 

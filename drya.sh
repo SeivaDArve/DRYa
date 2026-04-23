@@ -122,22 +122,34 @@ function f_stroken {
 }
 
 function f_install_drya__with_fzf {
-   echo "uDev"
+   bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh
 }
 
 function f_install_drya__with_Select {
    # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
 
+   # Variables to the same file
+      # Used if DRYa is not yet installed
+         v_installer_v1=./install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
+
+      # Used also to Uninstall DRYa
+         v_installer_v2=${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+
+
    f_greet
 
-   f_talk; echo "uDev: Are you sure you want to install DRYa?"; 
-           echo
-           echo "If you want to install drya itself, 3 ways:"
-           echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
-           echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
-           echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
-           echo 
-           echo " ... uDev"
+   #  f_talk; echo "For this one, your prompt must be next to the file drya.sh"
+   #          echo
+   #          echo "uDev: Are you sure you want to install DRYa?"; 
+   #          echo "If you want to install drya itself, 3 ways:"
+   #          echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
+   #          echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+   #          echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
+   #          echo 
+   #          echo " ... uDev"
+
+   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh"
+   [[   -f $v_installer_v1 ]] && bash $v_installer_v1
 }
 
 function f_git_status {
@@ -1747,17 +1759,21 @@ function f_quick_install_all_upk {
 }
 
 function f_install_presets {
-   Lz='`D ui i pr`'
+   Lz='`D ui p`'
 
-   L2="2. Quick Install | upk + upkd + dependencies "
+   LN="---- Title ----  |  -- Actions --"
+   L3="3. Safe Logout   | (-).netrc (-)Sc (-)moedaz (?)GPG-dir"
+   L2="2. Quick Install | (+)upk (+)upkd (+)dependencies "
    L1="1. Cancel "
 
-   L0="DRYa: presets menu: "
+   L0="DRYa: PRESETS menu: "
+   Lh=$(echo -e "\nInformation:\n - (-)File-will-be-removed\n - (+)File-will-be-added\n - (.)File-ignored\n - (?)Action-for-file-will-be-prompted\n ")
 
-   v_list=$(echo -e "$L1 \n$L2 \n\n$Lz" | fzf --cycle --pointer=">" -m --prompt="$L0")
+   v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$LN\n\n$Lz" | fzf --no-info --cycle --pointer=">" -m --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz" ]] && echo "$Lz" 
+      [[ $v_list =~ "3. " ]] && echo "uDev"
       [[ $v_list =~ "2. " ]] && f_quick_install_all_upk
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       unset v_list
@@ -3201,35 +3217,38 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-         L15='15. |            | Install Arch/Ubuntu/Fedora on Android with x11 GUI'  # to run actuall Linux software there
-         L14='14. |            | Info: Factory-Reset (Terminal) + Ghost-Mode (in.out)'
-         L13='13. | `D ui pr`  | Menu | Install | PRESETS + Packages + Populate Machines ' 
-         L12='12. | `D ui bk`  | Menu | helper  | Backup Maker        ' 
-         L11='11. | `D cln`    | Menu | Script  | Clone Repos         '
-         L10='10. | `D iu d`   | Menu | Install | dot-files           '
-          L9='9.  | `D ui dp`  | Menu |   1st   | Dependencies        ' 
-                                 
-          L8='8.  | `D ui fzf` | Install DRYa | `fzf`    installer    '
-          L7='7.  | `D ui sel` | Install DRYa | `select` installer    '
+         L16="16. |           | Update | View 'once-tasks-list'"
+         L15='15. |           | Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
+         L14='14. |           | Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
+         L13='13. | `D ui i`  |  Menu  | Install | PRESETS + Packages + Populate Machines ' 
+         L12='12. | `D ui b`  |  Menu  | helper  | Backup Maker        ' 
+         L11='11. | `D cln`   |  Menu  | Script  | Clone Repos         '
+         L10='10. | `D iu d`  |  Menu  | Install | dot-files           '
+          L9='9.  | `D ui dp` |  Menu  |   1st   | Dependencies        ' 
+                               
+          L8='8.  | `D ui 1f` |  Edit  | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
+          L7='7.  | `D ui 1s` |  Menu  | `select` DRYa installer    '
                                   
-          L6='6.  | `D cln h`  | Info: clone DRYa (for other devices too) '
+          L6='6.  | `D cln h` | Guide  | clone DRYa (for other devices too) '
 
-          L5='5.  |            | Install git    | (via internet `git` is needed for the instalation)'
-          L4='4.  |            | Install Termux |'
-          L3='3.  |            | Install WSL2   |'
+          L5='5.  |           | Install git'    
+          L4='4.  |           | Install Termux' 
+          L3='3.  |           | Install WSL2'   
 
-          L2='2.  | `D iu ls`  | List Status  '
+          L2='2.  | `D iu ls` | List Status  '
           L1='1.  Cancel'
 
          L0="DRYa: Installers Menu: "
+         Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github 'git' is needed\n ")
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[ $v_list =~ "16. " ]] && bash e ${v_REPOS_CENTER}/DRYa/all/var/once-tasks-list.txt
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && f_ghost
          [[ $v_list =~ "13. " ]] && f_install_presets
@@ -3251,8 +3270,32 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
          unset v_list
 
-   elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
 
+
+
+   elif [[ $2 == "1-fzf" ]] || [ $2 == "1f" ] || [ $2 == "1-fzf-installer" ]; then 
+      # Edit script "DRYa fzf installer"
+      f_install_drya__with_fzf
+
+   elif [[ $2 == "1-sel" ]] || [ $2 == "1s" ] || [ $2 == "1-select-installer" ]; then 
+      # Run 1-select-installer
+      f_install_drya__with_Select
+
+   elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
+      # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
+
+      if [[ -z $3 ]]; then 
+         f_install_presets
+
+      elif [[ $3 == "upk-at-work" ]] || [[ $3 == "upk-tmp-phone" ]] || [[ $3 == "upk" ]]; then 
+         # Makes all dependencies for upk repo available
+         # This might be used most likely at in-job phone
+         f_quick_install_all_upk
+      fi
+
+
+
+   elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
       if [[ -z $3 ]]; then 
          echo "What do you want to install?"
 
@@ -3273,20 +3316,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
          '
 
-      elif [[ $3 == "me" ]] || [ $3 == "DRYa" ] || [ $3 == "drya" ]; then 
-         f_install_drya__with_Select
-
-      elif [[ $3 == "presets" ]] || [ $3 == "p" ]; then 
-         # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
-
-         if [[ -z $4 ]]; then 
-            f_install_presets
-
-         elif [[ $4 == "upk-at-work" ]] || [[ $4 == "upk-tmp-phone" ]] || [[ $4 == "upk" ]]; then 
-            # Makes all dependencies for upk repo available
-            # This might be used most likely at in-job phone
-            f_quick_install_all_upk
-         fi
 
       elif [[ $3 == "ps1" ]] || [ $2 == "PS1" ]; then 
          # uDev: This is a config to set, not an instalation
@@ -3308,25 +3337,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          # Install the Raspberry OS app store "Pi-Apps"
          wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash
 
-      elif [[ $3 == "pycharm" ]]; then 
-         # Install a dedicated GUI text editor for python
-
-         f_greet
-
-         echo "Installing PyCharm on Fedora"
-         echo " > Press ENTER to continue; Press Ctrl-C to Abort"
-         echo 
-         read -sn 1
-         echo "Tutorial source: https://snapcraft.io/install/pycharm-community/fedora#install"
-         echo 
-         # Installing Snap Store and from there, installing pycharm-community
-            sudo dnf install snapd
-            sudo ln -s /var/lib/snapd/snap /snap
-            sudo snap install pycharm-community --classic
-         echo
-         echo "PyCharm installed"
-         echo " > Logout the session or restart to update and use pyCharm"
-     
       elif [[ $3 == "doom-emacs-windows" ]]; then 
          # installing Doom Emacs on Windows
          echo "uDev: Tutorial here:"
@@ -3389,7 +3399,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       
       fi
 
-   elif [[ $2 == "backups" ]] || [ $2 == "bk" ]; then 
+   elif [[ $2 == "backups" ]] || [ $2 == "b" ]; then 
       f_backup_helper
 
    elif [[ $2 == "fig" ]]; then 
@@ -3463,10 +3473,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
                  echo "Tente: \`xrandr --output HDMI-$v_nr --mode $v_tv\`"
       fi
 
-
-   elif [[ $2 == "1" ]]; then 
-      # Edit script "DRYa fzf installer"
-      vim ./install.uninstall/linux-or-WSL/master-bashrc/1-installer-fzf-alternative.sh
 
    else
       f_talk; echo "What do you want to install? (invalid arg)"

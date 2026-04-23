@@ -117,8 +117,9 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
       f_talk; echo "Step 1"
-              echo " > Test DRYa's installer."
+              echo " > Test DRYa's installer itself."
       read -sn1 -p "   [ENTER = Continue] or [CTRL-C = Cancel]: "
+      echo
       echo
 
    # After $v_5 is found (abs path), can be complemented with relative paths
@@ -126,11 +127,11 @@ function f_test_proper_functionality_of_drya_lib_5 {
       v_dryaSH=../../../drya.sh
 
    source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
-   [[ $v_double_check == "code-34y6" ]] && echo " > Double checked, all ok!"     # Will function properlly if $v_target is `sourced` instead of `bashed`
-   [[ $v_double_check != "code-34y6" ]] && echo " > Something is wrong!"  # If this var does not exist, $v_target was not sourced properly
+   [[ $v_double_check == "code-34y6" ]] && echo "   Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
+   [[ $v_double_check != "code-34y6" ]] && echo "   Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
    echo
 
-   read -sn1 -p "Proceed to install DRYa? [ENTER = Continue] or [CTRL-C = Cancel]: "
+   read -sn1 -p " [ENTER = Continue] or [CTRL-C = Cancel]: "
    echo
 
 }
@@ -527,7 +528,7 @@ function f_menu_principal {
 
    read -p "   < " v_ans
 
-   [[ $v_ans == "1" ]] && v_allow="yes" && f_1st_select 
+   [[ $v_ans == "1" ]] && v_allow="yes" && f_debug_bashrc_existence && f_1st_select 
    [[ $v_ans == "2" ]] && v_allow="yes" && f_uninstall_1st
    [[ $v_ans == "3" ]] && v_allow="yes" && f_options_menu
    [[ $v_ans == "4" ]] && v_allow="yes" && f_help 
@@ -948,7 +949,6 @@ function f_exec {
    f_test_proper_functionality_of_drya_lib_5 
 
    f_variables
-   f_debug_bashrc_existence
 
    f_menu_principal
 

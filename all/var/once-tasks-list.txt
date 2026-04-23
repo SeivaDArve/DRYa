@@ -1,0 +1,3 @@
+#!/bin/bash
+# Title: once-tasks-list
+# Description: To Do list (with code) to act on specific DRYa updates and to trace which machine did not receive the update
