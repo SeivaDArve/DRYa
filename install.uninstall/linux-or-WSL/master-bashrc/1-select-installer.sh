@@ -64,10 +64,109 @@ function f_talk {
    echo -n "$v_talk"
 }
 
+function f_hzl {
+   # At every 'select' menu, I want the first 
+      # and last option of the menu to be an
+      # horizontal split.
+      # If there was no nested loops, there was no need
+      # for these. Another reasob to create these horizontal
+      # split lines, is force the menu to be vertical 
+   # I want the last line of the menu to be all dashes
+      # That forces the menu to be vertical always
+      # For that, I will count hoe many lines does the
+      # terminal has, store that into a variable v_cols
+      # and insert it into the menu
+
+   clear
+
+   # Finding ANY way possible to find value $COLUMNS
+      unset           v_cols    # Preventing loading wrong values from past memory
+                      v_cols="$COLUMNS"
+      [[ -z           $v_cols  ]] && v_cols=$(stty size | awk '{print $2}')  2>/dev/null  # Caso `printenv` nao contenha $COLUMNS
+      [[ -z           $v_cols  ]] && v_cols=$(stty size | cut -f 2 -d " " )  2>/dev/null  # Caso `awk`      nao esteja instalado
+      [[ -z           $v_cols  ]] && v_cols=$(tput cols                   )  2>/dev/null    # Caso `cut`      nao esteja instalado
+      [[ -z           $v_cols  ]] && echo "An error does not allow counting Terminal Columns Size to create f_hzl"
+     #echo "Columns = $v_cols"  # Debug
+
+   # Subtrair alguns caracteres
+      let "v_count = $v_cols - 5"
+      #echo "Count = $v_count"  # debug
+         #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+         #read -sn1
+
+      # You may choose the apropriate symbol here
+         v_underscore="-"
+
+      # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+         v_underscoreCount=""
+
+         for i in $(seq $v_count); do 
+            v_underscoreCount="$v_underscoreCount$v_underscore"
+         done
+
+      # The result is an horizontal line
+         #echo "var is $v_underscoreCount"
+         #read -sn1
+         v_line=$v_underscoreCount
+
+      echo $v_line
+}
+
+# ----------------------------------------------------------------------------------------------
+# -- Above: Provide visuals at the start --+-- Below: Define Variables
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+
+function f_variables {
+   # Variables
+
+   # After $v_5 is found (abs path), can be complemented with relative paths
+      v_target=./target.sh
+      v_dryaSH=../../../drya.sh
+      v_readme=../../../README.org
+
+   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily. Also allows faster uninstall
+      v_dee="  # --hashtag-drya-- "
+
+   # For better code reading 
+      v_bash=~/.bashrc
+}
+
+function f_variables_recalculated {
+   # uDev: add option to simplify `/home/user/a/b/c/../../../file.org` into a simpler path
+   v=uDev
+   #'realpath /home/a/../b'
+}
+
+function f_define_env_vars {
+   # AFTER running the function f_cut_4_fields_relative_path and finding $found_DRYa_at, only then 
+	  # The remaining of this script comes. This function is based on that previous function
+
+   # Printing Environment variables based on $found_DRYa_at
+	  # List of variables to be created:
+	  #  v_REPOS_CENTER="/home/user/Repositories"
+	  #  DRYa_HEART
+	  
+   # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
+	  DRYa_HEART="all/dryaSRC"
+	  DRYa_HEART=$found_DRYa_at/$DRYa_HEART
+
+     echo
+	  echo "The Heart of DRYa is located at:"
+	  echo " > $DRYa_HEART"
+     echo
+     read -sn1
+}
+
+
+
 
 
 # ----------------------------------------------------------------------------------------------
-# -- Above: Provide visuals at the start --+-- Below: Functions copied from drya-lib-5 
+# -- Above: Define Variables --+-- Below: Functions copied from drya-lib-5 
 # ----------------------------------------------------------------------------------------------
 
 
@@ -122,10 +221,6 @@ function f_test_proper_functionality_of_drya_lib_5 {
       echo
       echo
 
-   # After $v_5 is found (abs path), can be complemented with relative paths
-      v_target=target.sh
-      v_dryaSH=../../../drya.sh
-
    source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
    [[ $v_double_check == "code-34y6" ]] && echo "   Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
    [[ $v_double_check != "code-34y6" ]] && echo "   Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
@@ -141,7 +236,7 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
 
 # --------------------------------------------------------------------------------------------------
-# -- Above: Functions to test the wizzard --+-- Function Below:  Installer 1-select-installed.sh  --
+# -- Above: Functions to test the wizzard --+-- Function Below: Installer 1-select-installed.sh  --
 # --------------------------------------------------------------------------------------------------
 
 
@@ -153,18 +248,11 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
 
 
-function f_variables {
-   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily. Also allows faster uninstall
-      v_dee="  # --hashtag-drya-- "
-
-   # For better code reading 
-      v_bash=~/.bashrc
-}
-
 function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
 
-   f_greet 
+
+   f_greet
    f_talk; echo "Step 2"
            echo " > Ensuring 'non empty' + 'proper existence' of: $v_bash"
 
@@ -454,39 +542,6 @@ function f_uninstall_1st {
    # uDev: Confirmation would be good to avoid bugs
 }
 
-function f_hzl {
-   # At every 'select' menu, I want the first 
-      # and last option of the menu to be an
-      # horizontal split.
-      # If there was no nested loops, there was no need
-      # for these. Another reasob to create these horizontal
-      # split lines, is force the menu to be vertical 
-   # I want the last line of the menu to be all dashes
-      # That forces the menu to be vertical always
-      # For that, I will count hoe many lines does the
-      # terminal has, store that into a variable v_cols
-      # and insert it into the menu
-
-         v_cols="$COLUMNS"
-         let "v_count = $v_cols - 5"
-            #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
-            #read -sn1
-
-         # You may choose the apropriate symbol here
-            v_underscore="+"
-
-         # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
-            v_underscoreCount=""
-
-            for i in $(seq $v_count); do 
-               v_underscoreCount="$v_underscoreCount$v_underscore"
-            done
-
-         # The result is an horizontal line
-            #echo "var is $v_underscoreCount"
-            #read -sn1
-            v_line=$v_underscoreCount
-}
 
 function f_help {
    # Instrucoes
@@ -509,8 +564,10 @@ function f_menu_principal {
    b=" | 2 | DRYa uninstall"
    c=" |   |"
    d=" | 3 | Options"
-   e=" | 4 | Instructions"
-   f=" | 5 | Exit"
+   e=" | 4 | Instructions 1 - (local readme)"
+   f=" | 5 | Instructions 2 - (internal instructions)"
+   g=" | 6 | Instructions 3 - (main DRYa README.org)"
+   h=" | 7 | Exit"
 
    f_greet
    f_talk; echo "Menu Principal"
@@ -522,6 +579,8 @@ function f_menu_principal {
    echo "$d"
    echo "$e"
    echo "$f"
+   echo "$g"
+   echo "$h"
    echo "$A"
 
    v_allow="no"  # By default, if no valid answer is given from the menu, this variable will not allow to continue the script.
@@ -531,33 +590,25 @@ function f_menu_principal {
    [[ $v_ans == "1" ]] && v_allow="yes" && f_debug_bashrc_existence && f_1st_select 
    [[ $v_ans == "2" ]] && v_allow="yes" && f_uninstall_1st
    [[ $v_ans == "3" ]] && v_allow="yes" && f_options_menu
-   [[ $v_ans == "4" ]] && v_allow="yes" && f_help 
-   [[ $v_ans == "5" ]] && v_allow="yes" && echo "   > exit" && echo && exit
+   [[ $v_ans == "4" ]] && v_allow="yes" && f_explain
+   [[ $v_ans == "5" ]] && v_allow="yes" && f_help 
+   [[ $v_ans == "6" ]] && v_allow="yes" && less $v_5/$v_readme
+   [[ $v_ans == "7" ]] && v_allow="yes" && echo "   > exit" && echo && exit
 
    [[ $v_allow == "no" ]] && echo && echo "   > Invalid option: $v_ans" && echo "     [Any key to reload Menu]" && read -sn1 && f_menu_principal
 }
 
 function f_discard_every_unused_function {
 
-#	# Evaluate the answer given by the user
-#	   if [[ $v_unload == "1" ]]; then
-#
-#			 echo 
-#			 echo " WILL NOT RUN"
-#			 read -sn1
-
-		 # Discard every function if the instalation is to be aborted
-			unset f_cut_4_fields_relative_path
-			unset f_DRYa_instalation_state
-			unset f_explain
-			unset f_create_backup
-			unset f_delete_empty_lines
-			unset f_delete_previous_DRYa_installation
-			unset f_DRYa_install_me_at_bashrc
-			unset f_unset_DRYa_installer
-			unset f_source_bashrc
-#	   fi
-   
+   # Discard every function if the instalation is to be aborted
+      unset f_cut_4_fields_relative_path
+      unset f_explain
+      unset f_create_backup
+      unset f_delete_empty_lines
+      unset f_delete_previous_DRYa_installation
+      unset f_DRYa_install_me_at_bashrc
+      unset f_unset_DRYa_installer
+      unset f_source_bashrc
 
    # Uninstalling: 
       f_remove_DRYA_desktop_icon
@@ -647,58 +698,45 @@ function f_cut_4_fields_relative_path {
      read -sn 1 -t 4
 }
 
-function f_define_env_vars {
-   # AFTER running the function f_cut_4_fields_relative_path and finding $found_DRYa_at, only then 
-	  # The remaining of this script comes. This function is based on that previous function
-
-   # Printing Environment variables based on $found_DRYa_at
-	  # List of variables to be created:
-	  #  v_REPOS_CENTER="/home/user/Repositories"
-	  #  DRYa_HEART
-	  
-   # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
-	  declare DRYa_HEART="all/dryaSRC"
-	  declare DRYa_HEART=$found_DRYa_at/$DRYa_HEART
-
-	  echo "The Heart of DRYa is located at:"
-	  echo " > $DRYa_HEART"
-}
-
 function f_explain {
    # uDev: this explanation is to delete, and the content to absorved by the menu
 
-      # First determine where to install
-        echo "Welcome to DRYa"
-        echo " > Don't Repeat Yoursel (app)"
-        read -sn1 -t 0.5
-        echo 
-        echo "This script running is meant to install DRYa"
-        echo " > Please choose one centralized directory"
-        echo "   where DRYa and all other Seiva's Software"
-        echo "   can be installed (e.g. /home/Repositories)"
-       #echo " > You should prefer absolute paths instead of relative paths"
-       #echo " > In order go cross platform"
-        echo
-        read -sn1 -t 0.5
-        echo "Instalation - Step 1 - by sourcing this file:"
-        echo " > Issue the command '$ source <name-of-this-file>' and then"
-        echo "   travel to the directory you want the software to be installed in"
-        echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
-        echo 
-        read -sn1 -t 0.5
-        echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
-        echo " > If you were able to source this file, you must have a copy of DRYa"
-        echo "   and that copy (this copy) should be moved into the directory in which"
-        echo "   you did invoke DRYa-install-me-at_bashrc"
-        echo "   uDev: create a function that automatically moves the directory"
-        echo 
-        read -sn1 -t 0.5
-        echo "After instalation:"
-        echo " > You cat unload the function that was sourced for instalation"
-        echo "   you loaded: f_DRYa_install_me_at_bashrc that exports the variable \$DRYa_PATH"
-        echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
-        echo "   by invoking: unset-DRYa-installer"
-        echo
+   f_greet
+
+   echo "Welcome to DRYa"
+   echo " > Don't Repeat Yoursel (app)"
+   read -sn1 -t 0.5
+   echo 
+   echo "This script running is meant to install DRYa"
+   echo " > Please choose one centralized directory"
+   echo "   where DRYa and all other Seiva's Software"
+   echo "   can be installed (e.g. /home/Repositories)"
+   #echo " > You should prefer absolute paths instead of relative paths"
+   #echo " > In order go cross platform"
+   echo
+   read -sn1 -t 0.5
+   echo "Instalation - Step 1 - by sourcing this file:"
+   echo " > Issue the command '$ source <name-of-this-file>' and then"
+   echo "   travel to the directory you want the software to be installed in"
+   echo "   and from there, invoke this script with the command '$ DRYa-install-me-at-bashrc' " 
+   echo 
+   read -sn1 -t 0.5
+   echo "Instalation - Step 2 - Move the DRYa repo into the dir you choose"
+   echo " > If you were able to source this file, you must have a copy of DRYa"
+   echo "   and that copy (this copy) should be moved into the directory in which"
+   echo "   you did invoke DRYa-install-me-at_bashrc"
+   echo "   uDev: create a function that automatically moves the directory"
+   echo 
+   read -sn1 -t 0.5
+   echo "After instalation:"
+   echo " > You cat unload the function that was sourced for instalation"
+   echo "   you loaded: f_DRYa_install_me_at_bashrc that exports the variable \$DRYa_PATH"
+   echo "   Now, if the place for instalation is how you like, you can prevent it from changing"
+   echo "   by invoking: unset-DRYa-installer"
+   echo
+
+   read -s -p "ENTER to Main Menu... "
+   f_menu_principal
 }
 
 function f_create_backup {
@@ -724,9 +762,7 @@ function f_create_backup {
                n | N)
                   echo "	 > You are choosing not to create a backup"
                   echo "	 > Ctrl + C:  to CANCEL, or"
-                  echo "	 > 3 x ENTER: to CONTINUE"
-                  read -sn 1
-                  read -sn 1
+                  echo "	 > [Any Key to Continue...] "
                   read -sn 1
                   break
                ;;
@@ -876,7 +912,7 @@ function f_source_bashrc {
    #alias src="source ~/.bashrc"
 
    # CORRECT WAY (you can paste these following functions inside ~/.bashrc or inside a side script called by ~/.bashrc):
-   alias src="go gnome-terminal; exit" ## This command is same as: "source ~/.bashrc" (but needs the function: go)
+   alias src="go gnome-terminal; exit" ## This command is similar to `source ~/.bashrc` but needs the function `go` and the specific Gnome terminal
 
    function go {
 	  # This function opens applications apart from the terminal. It means that you can close the terminal after the aplications launch and the terminal being killed does not kill the apps it created
@@ -890,27 +926,20 @@ function f_source_bashrc {
 
 function f_install_figlet_font {
    # Not every instalation of figlet comes with my favourite figlet font, lets correct that
-   echo "# uDev: Not ready yet"
-   
-   # Command to invoke at the terminal to display where figlet stores all fonts
-       #figlet -I2
-
-   # Directoty where Seiva stored his favourit figlet font
-      #cd ${REPOS_CENTER}/DRYa/all/dotFiles/figlet-fonts
+   echo "# 'figlet' will be install in the first dependencies package"
+   echo "# 'figlet' fonts are automatically installed by dryaSRC (when the terminal reloads)"
 }
 
 
 function f_run_every_used_function {
    # Installer sequence
    
-   echo "Press enter to start the installation sequence"
+   echo "Any Key to start the installation... "
    read -sn 1
 
-         #f_install_DRYA_desktop_icon
-         #f_install_figlet_font
+         f_install_DRYA_desktop_icon
+         f_install_figlet_font
 			f_cut_4_fields_relative_path
-			#f_DRYa_instalation_state
-			#f_explain
 			f_create_backup
 			f_delete_previous_DRYa_installation
 			f_delete_empty_lines
@@ -926,16 +955,16 @@ function f_decide_to_run {
 
    # Making use of that variable:
 	  if [ -z $load_remaining_functions ]; then
-		 echo "You are not cooperating!"
+		 echo "Permission to run autom-installer: Invalid"
 		 v=0
 
 	  elif [ $load_remaining_functions == "yes" ]; then
-		 echo "permission to run installer: Yep"
+		 echo "Permission to run autom-installer: Yep"
 		 read -sn1
 		 f_run_every_used_function
 
 	  elif [ $load_remaining_functions == "no" ]; then
-		 echo "permission to run installer: nope"
+		 echo "Permission to run autom-installer: nope"
 		 read -sn1
 		 #f_discard_every_unused_function
 
@@ -945,15 +974,15 @@ function f_decide_to_run {
 
 function f_exec {
 
-   f_5; #f_5_verbose
-   f_test_proper_functionality_of_drya_lib_5 
-
    f_variables
+      f_5
+     #f_5_verbose
+   f_variables_recalculated 
 
+   f_test_proper_functionality_of_drya_lib_5 
    f_menu_principal
 
-   # The previous function f_initial_statement brings a variable that allows 
-	  # the next function to decide wether to run the remaining of the code or not
+   # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
 	  f_decide_to_run
 }
 f_exec
