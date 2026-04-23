@@ -1093,7 +1093,7 @@ function f_dot_files_install_netrc {
       if [ -f ~/.netrc ]; then
          # If file is already installed:
          echo "File ~/.netrc already exists"
-         echo " > Repeat instalation? (y)es? "
+         echo " > Repeat instalation? (y/N)? "
          read v_ans
 
          [[ $v_ans == "y" ]] && f_install_netrc
@@ -1722,12 +1722,16 @@ function f_quick_install_all_upk {
    f_greet
 
    # Echo a list of things that are going to be installed:
-      # uDev
-      # uDev
-      # uDev
-      # uDev
-      # uDev
-      # uDev
+      echo "(+) Install: .netrc"
+      echo
+      echo "(+) Clone repo: upk"
+      echo "(+) Clone repo: upkd"
+      echo
+      echo "(+) Install: emacs (terminal)"
+      echo "(+) Install: init.el"
+      echo
+      read -sn1
+      
 
    # Change dir, to avoid changing at every command
       cd ${v_REPOS_CENTER}
@@ -1744,7 +1748,6 @@ function f_quick_install_all_upk {
       f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
               echo 
 
-      read
    # Installing .netrc
       f_dot_files_install_netrc
 
@@ -1763,7 +1766,7 @@ function f_install_presets {
 
    LN="---- Title ----  |  -- Actions --"
    L3="3. Safe Logout   | (-).netrc (-)Sc (-)moedaz (?)GPG-dir"
-   L2="2. Quick Install | (+)upk (+)upkd (+)dependencies "
+   L2="2. Quick Install | (+)upk (+)upkd (+)dependencies (+)..."
    L1="1. Cancel "
 
    L0="DRYa: PRESETS menu: "

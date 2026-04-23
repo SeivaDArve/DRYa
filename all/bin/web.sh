@@ -88,7 +88,7 @@
       cd ~/.tmp
 
       #termux-open-url "$v_URL" &
-      nohup termux-open-url "$v_URL" & disown
+      nohup termux-open-url "$v_URL" & disown 
       cd -
    
    elif [[ $traits_OS == "Linux" ]]; then      # When using Linux 
