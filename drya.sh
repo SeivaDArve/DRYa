@@ -3241,7 +3241,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L2='2.  | `D iu ls` | List Status  '
           L1='1.  Cancel'
 
-         L0="DRYa: Installers Menu: "
+         L0="DRYa: Menu install.uninstall: "
          Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github 'git' is needed\n ")
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
