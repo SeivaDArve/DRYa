@@ -928,10 +928,13 @@ function f_repository_dota_2 {
 
 function f_repository_Cucoo {
    # App: Agenda, Notifications, Calendar
-   v_cucoo="${v_REPOS_CENTER}/Cucoo/cucoo.sh"
+   v_cucoo="${v_REPOS_CENTER}/Cucoo"
 
-   alias cucoo="bash $v_cucoo" 
-   alias     C="bash $v_cucoo" 
+   alias cucoo="bash $v_cucoo/cucoo.sh" 
+   alias     C="bash $v_cucoo/cucoo.sh" 
+   
+   [[ -f $v_cucoo/all/cucooSRC.sh ]] && source $v_cucoo/all/cucooSRC.sh
+
    
 }
 
