@@ -765,7 +765,7 @@ function f_repository_ezGIT {
       alias ezgit="ezGIT"
       alias     G="ezGIT"
 
-      alias   GG="cd   ${v_REPOS_CENTER}"
+      alias   GG="cd   ${v_REPOS_CENTER} && ls -p"
       alias GvA.="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A ."  # This alias is meant to help drya-termux-omni-key to call this script
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
@@ -926,12 +926,12 @@ function f_repository_dota_2 {
    alias dota="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
 }
 
-function f_repository_cao_lendario {
-   v_lendario="${v_REPOS_CENTER}/Cao-Lendario/lendario.sh"
+function f_repository_Cucoo {
+   # App: Agenda, Notifications, Calendar
+   v_cucoo="${v_REPOS_CENTER}/Cucoo/cucoo.sh"
 
-   alias  cao="bash $v_lendario" 
-   alias lend="bash $v_lendario" 
-   alias    C="bash $v_lendario"
+   alias cucoo="bash $v_cucoo" 
+   alias     C="bash $v_cucoo" 
    
 }
 
@@ -1197,7 +1197,7 @@ function f_exec {
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
       f_repository_dota_2
-      f_repository_cao_lendario
+      f_repository_Cucoo
       f_repository_luxam
       
    # Default DRYa configs 
