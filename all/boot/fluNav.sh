@@ -1211,8 +1211,8 @@ function V {
       elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
          cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
-      elif [ $1 == "Cucoo" ] || [ $1 == "cucoo" ] || [ $1 == "C" ]; then
-         cd ${v_REPOS_CENTER}/Cao-Lendario 2>/dev/null && ls -p || f_error_cd
+      elif [ $1 == "Cucoo" ] || [ $1 == "cucoo" ] || [ $1 == "C" ] || [ $1 == "c" ]; then
+         cd ${v_REPOS_CENTER}/Cucoo 2>/dev/null && ls -p || f_error_cd
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
