@@ -4062,14 +4062,17 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 
       [ -d $v_repo/scratch-paper ] && cd && rm -rf $v_repo1 && f_talk && echo "Sc removed"
 
-   elif [ $2 == "2" ]; then 
+   elif [ $2 == "2" ] || [ $2 == "prv" ]; then 
       # Delete all personal-data repos (private + scratch-paper + .netrc)
-      [ -d $v_repo/scratch-paper ] && cd && rm -rf $v_repo/scratch-paper && f_talk && echo "Sc removed"
-      [ -d $v_repo/omni-log      ] && cd && rm -rf $v_repo/omni-log      && f_talk && echo "omni-log removed"
-      [ -d $v_repo/moedaz        ] && cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz removed"
-      [ -f ~/.netrc              ] &&       rm ~/.netrc                  && f_talk && echo ".netrc removed"
       
-      sleep 3
+      v_rmd=" > Removed"
+      v_inx=" > Inexistent"
+      [ -d $v_repo/scratch-paper ] && (cd && rm -rf $v_repo/scratch-paper && f_talk && echo "Sc $v_rmd"       ) || (f_talk && echo "Sc $v_inx"       )
+      [ -d $v_repo/omni-log      ] && (cd && rm -rf $v_repo/omni-log      && f_talk && echo "omni-log $v_rmd" ) || (f_talk && echo "omni-log $v_inx" )
+      [ -d $v_repo/moedaz        ] && (cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz $v_rmd"   ) || (f_talk && echo "moedaz $v_inx"   )
+      [ -f ~/.netrc              ] && (      rm ~/.netrc                  && f_talk && echo ".netrc $v_rmd"   ) || (f_talk && echo ".netrc $v_inx"   )
+      
+      read -sn1 -p "[Any Key] to Clear screen" && echo 
       clear
 
    elif [ $2 == "3" ]; then 
