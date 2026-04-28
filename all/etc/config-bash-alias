@@ -693,8 +693,7 @@ function teste {
       "$name2"
 }
 
-function hist {
-   # history-recall sub-app
+function f_history_w_read {
    mkdir -p ~/.tmp/
    history > ~/.tmp/fileA.txt
    history
@@ -737,6 +736,37 @@ function hist {
 
    # Trying to run the text of the file. If it the shell has executables that are called the same way as this txt is written, then run this text at the terminal as if it was written to trigger an executable
    eval $v_eval
+}
+function f_history_w_fzf {
+
+   # Testing fzf existence
+      command -v fzf &>/dev/null
+      v_status=$?
+
+   if [[ $v_status == 0 ]]; then  
+      # Se o comando 'fzf' existe, usa-o para filtrar o historico
+      v_item=$(history | fzf --tac --wrap --prompt "DRYa-fzf-history: ")
+      
+      #v_item=$(echo $v_item | cut -f 2 -d " ")
+
+      #v_resto="${v_item##* }"  # remover a primeira palavra (até ao primeiro espaço)
+      v_resto=$(echo "$v_item" | awk '{$1=""; sub(/^ /, ""); print}')
+
+
+      #echo $v_item
+      echo " > $v_resto"
+      eval $v_resto
+
+   else
+      # Se o comando 'fzf' nao existe
+      f_history_w_read 
+   fi
+}
+function hst {
+   # history-recall. It is an alternative to regular `history`. 
+
+  #f_history_w_read 
+   f_history_w_fzf
 }
 
 
