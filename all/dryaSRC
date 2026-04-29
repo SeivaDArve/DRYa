@@ -930,6 +930,9 @@ function f_repository_Cucoo {
    # App: Agenda, Notifications, Calendar
    v_cucoo="${v_REPOS_CENTER}/Cucoo"
 
+   # Before feeding Candendar App called "Cucoo", it will recursively search all repos to find a file "feed-cucoo" and concant into a temporary file. This file will then be sourced as valid bash with valid Events:
+      v_concat=~/.config/h.h/Cucoo/concat-all-tasks.sh
+
    alias cucoo="bash $v_cucoo/cucoo.sh" 
    alias     C="bash $v_cucoo/cucoo.sh" 
    

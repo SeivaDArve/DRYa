@@ -2667,7 +2667,7 @@ function f_kill_process_by_PID {
    
 function f_visitar_extintores {
    echo "uDev: Escrever formula de extintores"
-   echo "      ficheiro: .../var/extintores-info.txt"
+   echo '      ficheiro: $__repo__/all/lib/emergencia/FOGO-extintores-info.txt'
 }
 
 function f_visitar_sbv {
@@ -2680,14 +2680,14 @@ function f_visitar_sbv {
 
 
    # Localiacao do ficheiro
-      v_file=$__repo__/all/var/suporte-basico-de-vida.txt
+      v_file=$__repo__/all/lib/emergencia/SBV-suporte-basico-de-vida.txt
       
    f_greet
    f_talk; echo "Suporte Basico de Vida"
            echo " > uDev: Melhorar a formula"
            echo
    f_talk; echo "Localizacao do ficheiro:"
-           echo ' > $__repo__/all/var/suporte-basico-de-vida.txt'
+           echo ' > $__repo__/all/lib/emergencia/SBV-suporte-basico-de-vida.txt'
            echo " > $v_file"
            echo
 
@@ -3212,7 +3212,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
    # Var: file for DRYa dependencies
-      v_1st=${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+      v_1st=${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
 
    if [[ -z $2 ]]; then 
       # If there are no args:
@@ -3231,6 +3231,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
                                
           L8='8.  | `D ui 1f` |  Edit  | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
           L7='7.  | `D ui 1s` |  Menu  | `select` DRYa installer    '
+         L17='17. | `D ui S ` |  Edit  | `select` DRYa installer    '
                                   
           L6='6.  | `D cln h` | Guide  | clone DRYa (for other devices too) '
 
@@ -3244,7 +3245,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L0="DRYa: Menu install.uninstall: "
          Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github 'git' is needed\n ")
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
@@ -3262,6 +3263,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
          [[ $v_list =~ "8.  " ]] && f_install_drya__with_fzf
          [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select
+         [[ $v_list =~ "17. " ]] && bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
 
@@ -3283,6 +3285,9 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "1-sel" ]] || [ $2 == "1s" ] || [ $2 == "1-select-installer" ]; then 
       # Run 1-select-installer
       f_install_drya__with_Select
+
+   elif [ $2 == "S" ]; then 
+      bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
    elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
