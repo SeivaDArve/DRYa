@@ -374,8 +374,8 @@ function f_drya_welcome_screen {
       v_status=$?            # Guardar o status code para saber se o comando anterior deu algum erro
 
       [[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
-      [[ $v_status ==  1  ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
-      [[ $v_status == 127 ]] && echo -e "DRYa: Don't Repeat Yourself (app) \n"  
+      [[ $v_status ==  1  ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
+      [[ $v_status == 127 ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
    }
 
    function f_ws_trid {
@@ -969,7 +969,7 @@ function f_internal_drya_files_nr_2 {
          echo " > .../DRYa/all/boot/"          >> $v_MSGS
          echo                                          >> $v_MSGS
 
-         for i in $(ls $v_init)
+         for i in $(ls -p $v_init)
          do
             source $v_init/$i 1>/dev/null && echo " > Sorced $i" >> $v_MSGS
          done
