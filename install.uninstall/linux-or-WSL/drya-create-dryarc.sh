@@ -1,6 +1,6 @@
 #!/bin/bash
 # Title: Update Me Locally
-# Description: executable that creates a file at ~/.config/h.h/drya/ called .dryarc which ia meant to store temporary configs for DRYa.
+# Description: executable that creates a file at ~/.config/h.h/drya/ called .dryarc which is meant to store temporary configs for DRYa.
 # Use: drya-create-dryarc to create new .dryarc file ##Function is stored under .../DRYa/all/config-bash-alias
 # Use: drya-edit-tmp-config to add text to ~/.config/h.h/drya/.dryarc ## uDev: this function does not exiat yet
 # Use: drya-updateMe-Locally to append ~/.config/h.h/drya/.dryarc into ~/DRYa/all/config-bash-alias and create new empty ~/.config/h.h/drya/.dryarc BY CALLING THIS SCRIPT

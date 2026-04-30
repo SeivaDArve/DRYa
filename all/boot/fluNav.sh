@@ -232,7 +232,7 @@ function f_edit__1st_emacs {
    f_greet
    echo "Editing the list of 1st apps to install"
    read -s -t 2
-   EM ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+   EM ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
    f_greet
    echo "edited: 1st"
 }
@@ -241,7 +241,7 @@ function f_edit__1st_vim {
    f_greet
    echo "Editing the list of 1st apps to install"
    read -s -t 2
-   vim ${v_REPOS_CENTER}/DRYa/all/bin/populate-machines/level+1/1st
+   vim ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
    f_greet
    echo "edited: 1st"
 }

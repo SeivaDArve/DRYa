@@ -567,6 +567,11 @@ function f_menu_principal {
    e=" | 4 | Instructions 1 - (local readme)"
    f=" | 5 | Instructions 2 - (internal instructions)"
    g=" | 6 | Instructions 3 - (main DRYa README.org)"
+   c=" |   |"
+   Z=" |   | Instrucoes: Create Dual Boot" # com o esquema de perticoes
+   Z=" |   | Instrucoes: Create Live Windows USB"
+   Z=" |   | .fishrc to .bashrc" # ~/.config/fish/config.fish 
+   Z=" |   | drya man pages"
    h=" | 7 | Exit"
 
    f_greet
@@ -581,6 +586,7 @@ function f_menu_principal {
    echo "$f"
    echo "$g"
    echo "$h"
+   echo "$c"
    echo "$A"
 
    v_allow="no"  # By default, if no valid answer is given from the menu, this variable will not allow to continue the script.
@@ -777,7 +783,7 @@ function f_create_backup {
 
 function f_delete_empty_lines {
    echo "Press enter to start the backup removal of empty lines sequence"
-   read -sn 1
+   read -sn1
 
    # Deleting empty lines found only at the bottom of the file 
       # It deletes one by one with a while loop (while the last line is found empty)
@@ -793,11 +799,9 @@ function f_delete_empty_lines {
 	   # The meaning of -z is "empty". Therefore is $last_line = -z (empty), then do something
 
 	   if [ ! -z "$last_line" ]; then 
-
 		  echo "Last line not empty"
 
 	   elif [ -z "$last_line" ]; then
-
 		  echo "Last line is empty.. proceeding to remove"
 
 		  while [ -z "$last_line" ]; do 
@@ -806,17 +810,17 @@ function f_delete_empty_lines {
 				  head -n -1 ~/.bashrc > ~/.tmp/tmp_file
 
 			 # Deleting ~/.bashrc with empty space before restpring it WITHOUT empty space
-			 rm ~/.bashrc
+             rm ~/.bashrc
 
 			 # Renaming tmp file (with .bashrc contents) to it's real name
-			 mv ~/.tmp/tmp_file ~/.bashrc
+             mv ~/.tmp/tmp_file ~/.bashrc
 
 			 # Evaluate the file againg to check if there is more empty lines needed to be removed the next loop
-			 last_line=$(tail -n 1 ~/.bashrc )
+             last_line=$(tail -n 1 ~/.bashrc )
 		  done
 
 		  echo "Done removing empty lines. PRESS any key"
-	      read -sn 1
+	     read -sn1
 
 		fi
 }
@@ -830,7 +834,7 @@ function f_delete_previous_DRYa_installation {
 	  echo " > to remove the 4 lines of code maybe present inside"
 	  echo "   ~/.bashrc from a possible previous DRYa instalation?"
 	  echo "   (ignore if you never installed DRYa before)"
-	  read -sn 1 -p " > Remove? (y/n)" v_ans
+	  read -sn1 -p " > Remove? (y/n)" v_ans
 	  
 	  case $v_ans in
 		 y | Y)
@@ -867,9 +871,9 @@ function f_DRYa_install_me_at_bashrc {
       echo "You have chosen $v_REPOS_CENTER to be a dedicated directory to receive every kind of repositories"
 	   #$v_REPOS_CENTER
    
-   echo "If you agree with this, press any key to concat this info into ~/.bashrc"
+   echo "If you agree with this, press [ANY KEY] to concat this info into ~/.bashrc"
    echo " > Or press Ctrl-c to abort"
-   read -sn 1
+   read -sn1
 
    # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
 	   # Pasting 1 empty line + 4 lines of code:

@@ -23,7 +23,7 @@ function f_find_dryaSRC
 				# 2.4.1 Give the full path to it
 				# 2.4.2 Allow interactive navigation with '$ cd' command	
 		# 3. After the current file location is found, must know the location of dryaSRC
-		# 4. Must run the script (or import the sscript) that places that 
+		# 4. Must run the script (or import the script) that places that 
 			# file "dryaSRC" into ~/.bashrc
 
 
