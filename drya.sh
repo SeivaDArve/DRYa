@@ -693,7 +693,11 @@ function f_dotFiles_install_git_set_machine_name {
    }
 
    function f_choose_a_name_from_list {
-      # Ask what name to change to (and tell dedault, if user do not choose)
+      # Ask what name to change to (and tell default, if user do not choose)
+
+      # failsafe: if fzf does not exist, `cat` the file 'list-machine-names' and ask the user to input the name manually
+
+      # Ask what name to change to (and tell default, if user do not choose)
          v_txt="Step 2: Choose a Machine name"; f_anyK
          echo
 
