@@ -177,18 +177,28 @@ function f_traitsID {
 }
 
 function f_dv_PS1 {
-   # Defining the favourite Terminal PS1 variable:
+   # Defining the favourite Terminal PS1 variable
+   # Also avoiding other Software to take over the prompt astetics with their personal $PROMPT_COMMAND 
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
+   # uDev: Usar a variavel de ambiente $PRMPT_COMMAND para coisas uteis. Normalmente o valor dessa var é o nome de uma fx. Exemplo: `PROMPT_COMMAND=starship_precmd`
 
-   echo "DRYa: PS1 defined as per the user Dv"
-   echo -n " > Last PS1: "
-   echo    "$PS1"
+   # Introcucing 
+      echo "DRYa: PS1 will now be defined as per the user Seiva"
+      echo -n " > Previous PS1: "
+      echo    "$PS1"
 
-   PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+   # Configuring
+      PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
 
-   echo -n " > New  PS1: "
-   echo    "$PS1"
-   echo
+   # Confirming
+      echo -n " > New PS1: "
+      echo    "$PS1"
+      echo
+      echo -n " > Variable PROMPT_COMMAND also unset (for traditional PS1 to aplly): "
+
+   # Ensuring
+      #unset PROMPT_COMMAND
+   
 
 }  >> $v_MSGS
 
