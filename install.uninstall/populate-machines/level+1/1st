@@ -39,6 +39,8 @@ function f_gr_1_installing_terminal {
 
 function f_gr_2_hard_dependencies {
    # List of DRYa dependencies (to be installed by DRYa installer)
+   
+   # uDev: `pkg` will give an error
 
    pkg install   \  
    figlet        \  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
