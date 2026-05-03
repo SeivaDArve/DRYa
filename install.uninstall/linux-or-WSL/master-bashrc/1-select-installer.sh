@@ -571,6 +571,7 @@ function f_menu_principal {
    Z=" |   | Instrucoes: Create Dual Boot" # com o esquema de perticoes
    Z=" |   | Instrucoes: Create Live Windows USB"
    Z=" |   | .fishrc to .bashrc" # ~/.config/fish/config.fish 
+   Z=" |   | F2 to BIOS at Lenovo ideapad 330"
    Z=" |   | drya man pages"
    h=" | 7 | Exit"
 

@@ -80,6 +80,14 @@ function e {
       # Fx to simply output the NAME of the current text editor
       echo $trid_editor_name
       
+   elif [ $1 == "v" ] || [ $1 == "vim" ] || [ $1 == "ignore-preset-n-open-vim" ]; then
+      f_talk; echo "A abrir diretamente com 'vim'"
+      vim $*
+
+   elif [ $1 == "e" ] || [ $1 == "emacs" ] || [ $1 == "ignore-preset-n-open-emacs" ]; then
+      f_talk; echo "A abrir diretamente com 'vim'"
+      emacs $*
+
    else
 
       if [[ -z $trid_editor_name ]]; then

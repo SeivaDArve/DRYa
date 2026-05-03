@@ -1765,6 +1765,27 @@ function f_quick_install_all_upk {
    f_talk; echo "udev: install all dependencies for upk repo to run"
 }
 
+function f_instalation_guide_to_wsl {
+   # Guia para instalar WSL (Windows Sub-System for Linux, dentro do windows) 
+
+   # uDev: adicionar failsafe
+
+   f_greet
+   f_talk; echo 'Instalacao manual WSL2 (`wsl` nao existe)'
+           echo '  > Nao funciona em Pentium 4 porque a motherboard nao suporta virtualizacao'
+           echo
+           echo '0. Requisitos: Windows 10 (1903+) ou Windows 11'
+           echo '1. Abrir CMD como Admin'
+           echo '2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubuntu por defeito'
+           echo '3. Reeniciar o Pc'
+           echo '4. Na BIOS ativar: "Intel Virtual Technology"'
+           echo '5. Configurar o Linux (ao abrir Ubuntu pela primeira vez):'
+           echo '   5.1. Escolher User + Password'
+           echo '   5.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"'
+           echo
+           echo "6. Then update && upgrade system"
+}
+
 function f_install_presets {
    Lz='`D ui p`'
 
@@ -1957,7 +1978,7 @@ function f_dot_files_menu {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "8. " ]] && f_ghost
-      [[ $v_list =~ "7. " ]] && f_backup_helper
+      [[ $v_list =~ "7. " ]] && f_backup_guide
       [[ $v_list =~ "6. " ]] && f_dot_files_menu_edit_host_files
       [[ $v_list =~ "5. " ]] && echo uDev 
       [[ $v_list =~ "4. " ]] && f_menu_edit_centralized_then_install
@@ -2356,11 +2377,12 @@ function f_clone_selected_from_list_with_invertion {
 }
 
 function f_drya_get_all_repo_names_private_public {
+   # dee:DclnPv
 
-   # Juntar a lista de repos publicas + privadas
+   # Juntar a lista de repos publicas + privadas 
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_list_options="---Invert-Selection---"
-      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena Cucoo"
+      v_list_private="dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena DRYa-Subeat"
 
       # will give a $v_tmp with a new file with abs path
          f_create_tmp_file  # Vai criar o ficheiro $v_tmp
@@ -2387,7 +2409,7 @@ function f_zip_unzip {
 }
 
 
-function f_backup_helper {
+function f_backup_guide {
 
       # uDev: at DRYa/all/bin/.../3-steps-formater a script will be available to make such backups and prepare format
       # Pode ser usado o SyncThing
@@ -2399,6 +2421,7 @@ function f_backup_helper {
               echo "   Smartphone > Raspberry Pi (cloud) > External HDD"
               echo " > DRYa will suggest specific files to backup"
               echo " > criar um dir, nesse dir, guarda certos dot-files atualmente na maquina"
+              echo " > criar um NAS"
               #echo "uDev: criar .dotfile que guarde uma lista de enderecos de pastas que um dia podem precisar serv revistos (para backup)"
               #echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
               echo
@@ -2418,9 +2441,14 @@ function f_backup_helper {
               echo ' > No Android, $HOME do termux é invisivel no explorador de arquivos normais'
               echo ' > Transferir Conversas das app: Whatsapp, Telegram, SMS...'
               echo
-      f_talk; echo "Backup Checklist (computer):"
+      f_talk; echo "Backup Checklist (computer files to external HDD):"
               echo " > ..."
               echo
+      f_talk; echo "Backup Checklist (Clone entire computer HDD - Clonezilla):"
+              echo " > img name: 2026-05-04-10h-DRYa-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
+              echo
+      f_talk; echo "How to use Ethernet cable to share files between 2 computers:"
+              echo " > ..."
 }
 
 
@@ -3212,6 +3240,8 @@ elif [ $1 == "mac" ]; then
 elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ] || [[ $1 == "ui" ]];  then 
    # Install DRYa and more stuff
    # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
+   
+   # failsafe: este menu tem de ter alternativa ao fzf
 
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
@@ -3224,14 +3254,17 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Lista de opcoes para o menu `fzf`
          Lz1='Saved '; Lz2='D install.uninstall'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+        #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
+
+        #L16="16. |           | Install batch files for windows
          L16="16. |           | Update | View 'once-tasks-list'"
          L15='15. |           | Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
          L14='14. |           | Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
-         L13='13. | `D ui i`  |  Menu  | Install | PRESETS + Packages + Populate Machines ' 
-         L12='12. | `D ui b`  |  Menu  | helper  | Backup Maker        ' 
-         L11='11. | `D cln`   |  Menu  | Script  | Clone Repos         '
-         L10='10. | `D iu d`  |  Menu  | Install | dot-files           '
-          L9='9.  | `D ui dp` |  Menu  |   1st   | Dependencies        ' 
+         L13='13. | `D ui i`  |  Menu  | PRESETS + Packages + Populate Machines ' 
+         L12='12. | `D ui b`  |  Menu  | Backups Maker        ' 
+         L11='11. | `D cln`   |  Menu  | Clone Repos         '
+         L10='10. | `D iu d`  |  Menu  | dot-files           '
+          L9='9.  | `D ui dp` |  Menu  | 1st (Dependencies )       ' 
                                
           L8='8.  | `D ui 1f` |  Edit  | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
           L7='7.  | `D ui 1s` |  Menu  | `select` DRYa installer    '
@@ -3240,8 +3273,13 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L6='6.  | `D cln h` | Guide  | clone DRYa (for other devices too) '
 
           L5='5.  |           | Install git'    
-          L4='4.  |           | Install Termux' 
-          L3='3.  |           | Install WSL2'   
+          L4='4.  |           | Guide Install: Termux' 
+          L3='3.  |           | Guide Install: WSL'   
+
+         L18='18. |           | Guide Install: Dual|Multiboot HDD'   
+         L19='19. |           | Guide Create: Live USB' #  Create Live Windows USB; Live TAILS; Live OS with Persistence; USB with Ventoy with Persistence
+
+        #L19='19. |           | Clonezilla + DRYa-dualbooted-HDD-snapshot-1: Clone Dual boot backuped image to current disk  # Prepare: remove .netrc
 
           L2='2.  | `D iu ls` | List Status  '
           L1='1.  Cancel'
@@ -3260,7 +3298,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && f_ghost
          [[ $v_list =~ "13. " ]] && f_install_presets
-         [[ $v_list =~ "12. " ]] && f_backup_helper
+         [[ $v_list =~ "12. " ]] && f_backup_guide
          [[ $v_list =~ "11  " ]] && f_clone_main_menu  # bug?? nao busca o menu??
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
@@ -3272,8 +3310,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "6.  " ]] && f_clone_info
 
          [[ $v_list =~ "5.  " ]] && echo "uDev"
-         [[ $v_list =~ "4.  " ]] && echo "uDev"
-         [[ $v_list =~ "3.  " ]] && echo "uDev"
+         [[ $v_list =~ "4.  " ]] && echo "uDev: Guide install termux, guide config termux, then update && upgrade system"
+         [[ $v_list =~ "3.  " ]] && f_instalation_guide_to_wsl
 
          [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
          [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
@@ -3313,21 +3351,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       elif [[ $3 == "wsl" ]] || [ $3 == "WSL" ] || [ $3 == "WSL2" ]; then 
          # Instructions to Install "Windows Subsystem for Linux 2"
-
-         echo '
-         # 0. Requisitos: Windows 10 (1903+) ou Windows 11  
-         # 1. Abrir CMD como Admin 
-         # 2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubuntu por defeito 
-         # 3. Reeniciar o Pc
-         # 4. Configurar o Linux (ao abrir Ubuntu pela primeira vez):
-         #    4.1. Escolher User + Password
-         #    4.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"
-         #
-         # Instalacao manual (quando `wsl` nao existe)
-         #  > Nao funciona em Pentium 4 porque a motherboard nao suporta virtualizacao
-
-         '
-
+         f_instalation_guide_to_wsl
 
       elif [[ $3 == "ps1" ]] || [ $2 == "PS1" ]; then 
          # uDev: This is a config to set, not an instalation
@@ -3412,7 +3436,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       fi
 
    elif [[ $2 == "backups" ]] || [ $2 == "b" ]; then 
-      f_backup_helper
+      f_backup_guide
 
    elif [[ $2 == "fig" ]]; then 
       echo "uDev: testing and installing existence of figlet"

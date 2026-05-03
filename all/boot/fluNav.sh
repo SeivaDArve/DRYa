@@ -27,12 +27,12 @@
 
 
 # uDev: 
-#       letra S para ABRIR ficheiros com SYNC
-#       letra . para abrir ficheiros sem s
+#       letra F para ABRIR ficheiros File|Find|Fav
+#       letra . para abrir ficheiros sem F
 
 
 # Leters to be used:
-#     function S     (Sync files before/after editing at: DRYa/locally/maybe github)
+#     function F     (can sync files before/after editing at DRYa@host or DRYa@github)
 #     function V     (NaVigate to dirs)
 #     function PNpn  (Replaced with `fzf` + `V`    ---->    `V +`  `V -`  `V .`  `V ..`  `V --` (To create a tmp favourite list of dirs  @verbose-lines or @~/.config/h.h/drya/)
 #     function PNpn  (Replaced with `fzf` + `S`    ---->    `S +`  `S -`  `S .`  `S ..`  `S --` (To create a tmp favourite list of files @Verbose-lines or @~/.config/h.h/drya/)
@@ -45,8 +45,6 @@
 # uDev: Set traitsID_Editor to avoid:
 #       > Open X (with vim)
 #       > Open X (with emacs)
-
-# uDev: bind Ctrl-F to F5 (refresh terminal and source files)
 
 # uDev: morse-code-style
 #       Dot="morse ."
@@ -62,7 +60,7 @@ function f__omni_log__push_hist_file_only {
    echo "uDev: Will be used drya-lib-4 here to work with omni-log"
 }
 
-function f__S_hist__refresh_file_name {
+function f__F_hist__refresh_file_name {
    # Criar nomes para: Ficheiro de historico (para listar de ficheiros visualizados recentemente)
 
    # Variaveis para o nome do ficheiro de historico (o original e o temporario)
@@ -107,9 +105,9 @@ function f__V_hist__refresh_file_name {
    #       f__omni_log__push_hist_file_only
 }
 
-function f__S_hist__remove_duplicated_lines {
+function f__F_hist__remove_duplicated_lines {
    # Removes duplicated lines from the history files using a temporary file
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
    
    # Creates a temporary file
       rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
@@ -142,23 +140,23 @@ function f_escape_sed_characters {
 }
 
 
-function f__S_hist__change_abs_path__to__relative_path {
+function f__F_hist__change_abs_path__to__relative_path {
    # Taking file $v_fluNav_S_hist_file and replace text:
    #  from: ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
    #  to:   (DRYa-REPOS-CENTER)
 
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
 
    # Before `fzf` chooses a line from $v_temporary, send all text from $v_original to $v_temporary and change in it's text the values "absolute path" to "relative path" 
       cat $v_original | sed "s|$v_A|$v_B|g" > $v_temporary
 }
 
-function f__S_hist__change_relative_path__to__abs_path {
+function f__F_hist__change_relative_path__to__abs_path {
    # Taking file $v_fluNav_S_hist_file and replace text:
    #  from: (DRYa-REPOS-CENTER)
    #  to:   ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
 
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
 
    # After `fzf` chooses a line from $v_temporary, replace in it"s text the values "relative path" to "absolute path"
       v_hist=$(sed "s|$v_B|$v_A|g" <(echo $v_hist) )
@@ -168,7 +166,7 @@ function f__S_hist__change_relative_path__to__abs_path {
 
 function f__V_hist__remove_duplicated_lines {
    # Removes duplicated lines from the history files using a temporary file
-   # Note: This fx is meant to run only after history file's name was refreshed with f__S_hist__refresh_file_name
+   # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
    
    # Creates a temporary file
       rm    $v_temporary 2>/dev/null   # Removes file if it exists. If it does not exist, then do not mention the error
@@ -654,11 +652,11 @@ function h {
 # uDev: passar esta fx para `V`
    alias hh="mkdir -p ~/.config/h.h && cd ~/.config/h.h"
 
-function f_menu_fzf_S {
+function f_menu_fzf_F {
    # Menu Quick file edit (para quando S nao recebe argumentos no terminal)
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='Save '; Lz2='S'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+      Lz1='Save '; Lz2='F'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
        #L2='2. Opt 1   | S ....'
        #L2='2. Opt 1   | S ...'
@@ -686,11 +684,11 @@ function f_menu_fzf_S {
        L5='5.  Help'
        L4='4.  Toggle file editor'
        L3='3.  Reload  | dot-files + DRYa + Terminal'
-       L2='2.  Reload  | Terminal | `S 0` or `rs`'
+       L2='2.  Reload  | Terminal | `F 0` or `rs`'
        L1='1.  Cancel'
 
-       Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`S .. a\`):\n - \`S a\`: (uDev)  \n - \`S b\`: (uDev)  \n - \`S c\`: (uDev)  \n   ")
-       L0="fluNav: S: Menu + Ficheiros Fav para editar: "
+       Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F c\`: (uDev)  \n   ")
+       L0="DRYa fluNav: F: Menu + Ficheiros Fav para editar: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
 
@@ -798,14 +796,11 @@ function f_mobile_android_going_SD_card_storage {
    echo "instead of internal, copy it to 'd -m 0' (internal storage) and with your"
    echo "file explorer, MOVE it to the SD card"
    echo
-
    echo "Listing: $v_place_2"
    echo "Listing: $v_place_3"
    echo
-
    echo "SD card Storage"
    f_hzl
-
    cd $v_place_2 && ls -p
    f_hzl
    cd $v_place_3 && ls -p
@@ -841,7 +836,6 @@ function f_mobile_android_going_USB_mnt_dir {
    cd /storage && ls -p
 
    read -p "pause..."
-
    echo "Maybe Termux cannot WRITE to SD card,"
    echo "but can READ and RUN bash scripts from it"
    echo "If you have a huge database to store into SD external"
@@ -1167,10 +1161,6 @@ function V {
          cd ${v_REPOS_CENTER}/mastering-GPS 2>/dev/null && ls -p || f_error_cd
 
 
-      elif [[ $1 == "verbose-line" ]] || [ $1 == "vbl" ] || [ $1 == "vb" ]; then
-         cd ${v_REPOS_CENTER}/verbose-lines 2>/dev/null && ls -p || f_error_cd
-         
-
       elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
          cd ${v_REPOS_CENTER}/yogaBashApp 2>/dev/null && ls -p || f_error_cd
          
@@ -1211,8 +1201,8 @@ function V {
       elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
          cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
-      elif [ $1 == "Cucoo" ] || [ $1 == "cucoo" ] || [ $1 == "C" ] || [ $1 == "c" ]; then
-         cd ${v_REPOS_CENTER}/Cucoo 2>/dev/null && ls -p || f_error_cd
+      elif [ $1 == "subeat" ] || [ $1 == "S" ] || [ $1 == "calendar" ]; then
+         cd ${v_REPOS_CENTER}/Memoo 2>/dev/null && ls -p || f_error_cd
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
@@ -1463,11 +1453,11 @@ function f_action {
 
    elif [ $v_nm == "search_history_files" ]; then
       # Search files with fzf menu and open with vim (but only those who are already listed in the history file)
-      # `S ,`
+      # `F ,`
 
       # Used only to centralize the history file into one single variable across the file
-         f__S_hist__refresh_file_name
-         f__S_hist__remove_duplicated_lines
+         f__F_hist__refresh_file_name
+         f__F_hist__remove_duplicated_lines
 
       # Menu fzf that lists recent files
          unset v_list
@@ -1477,18 +1467,18 @@ function f_action {
 
    elif [ $v_nm == "search_files" ]; then
       # From current directory, search files with fzf menu and open with vim 
-      # `S .`
+      # `F .`
 
       # uDev: add: `basename $(pwd)` ou absolute path no ficheiro de historico. Depois para pesquisar, remover $PREFIX com `sed`
       # uDev: add $2 (argument 2) to enable Opening the file without recording it at fzf history file. Example: `S . t` (for 'Search Here, but temporary')
 
       # Used only to centralize the history file into one single variable across the file
-         f__S_hist__refresh_file_name
-         f__S_hist__remove_duplicated_lines
+         f__F_hist__refresh_file_name
+         f__F_hist__remove_duplicated_lines
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
          Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
-         L0="fluNav: S: Procure e edite 1 ficheiro: "
+         L0="fluNav: F: Procure e edite 1 ficheiro: "
 
          unset v_list
                v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
@@ -1509,37 +1499,37 @@ function f_action {
 
    elif [ $v_nm == "edit_last_h_file" ]; then
       # Editar o ultimo ficheiro de historico
-      # `S ..` 
+      # `F ..` 
 
       # Used only to centralize the history file into one single variable across the file
-         f__S_hist__refresh_file_name
-         f__S_hist__remove_duplicated_lines
+         f__F_hist__refresh_file_name
+         f__F_hist__remove_duplicated_lines
 
       # Verificar qual é a ultima linha do ficheiro de historico
          [[ -f $v_fluNav_S_hist_file ]] && v_last=$(tail -n 1 $v_fluNav_S_hist_file)
 
       # Se a variavel nao vier vazia (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
-         [[ -n $v_last ]] && bash e $v_last || echo "fluNav: S: Nothing written in history file to edit"
+         [[ -n $v_last ]] && bash e $v_last || echo "fluNav: F: Nothing written in history file to edit"
 
 
 
    elif [ $v_nm == "fzf_one_hist_file" ]; then
       # Selecionar de um historico de ficheiro, um ficheiro para voltar a abrir
-      # `S ...`
+      # `F ...`
 
       # Used only to centralize the history file into one single variable across the file
-         f__S_hist__refresh_file_name
-         f__S_hist__remove_duplicated_lines
+         f__F_hist__refresh_file_name
+         f__F_hist__remove_duplicated_lines
       
       # Toggle Abs path vs Relative path
-         f__S_hist__change_abs_path__to__relative_path
+         f__F_hist__change_abs_path__to__relative_path
 
       # Buscar uma das linhas
-         L0="fluNav: S: edite 1 ficheiro (do historico): "
+         L0="fluNav: F: edite 1 ficheiro (do historico): "
          v_hist=$(cat $v_temporary | fzf --tac --prompt "$L0")
    
       # Toggle Abs path vs Relative path
-         f__S_hist__change_relative_path__to__abs_path
+         f__F_hist__change_relative_path__to__abs_path
 
       # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
          [[ -n $v_hist ]] && vim $v_hist && unset $v_hist
@@ -1553,10 +1543,10 @@ function f_action {
 
    elif [ $v_nm == "edit_hist_file" ]; then
       # Editar o ficheiro de historico
-      # `S ....`
+      # `F ....`
 
-      f__S_hist__refresh_file_name  # Used only to centralize the history file into one single variable across the script
-      f__S_hist__remove_duplicated_lines
+      f__F_hist__refresh_file_name  # Used only to centralize the history file into one single variable across the script
+      f__F_hist__remove_duplicated_lines
       
       vim $v_fluNav_S_hist_file
 
@@ -1599,7 +1589,7 @@ function f_action {
       v_file="all/trade/trade.org"
       v_parent="moedaz"
 
-      echo " > Alias: 'S trade'"
+      echo " > Alias: 'F trade'"
       echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
       echo 
       echo "Parent repo: moedaz"
@@ -1637,7 +1627,9 @@ function f_action {
       #f_down
 }
 
-function S {
+function F {
+   # Legacy: `S` from "Search" ... (Now: `File|Find|Fav`)
+
    # List fav files for edition (fluNav)
    
    v_talk="DRYa: fluNav: "
@@ -1649,9 +1641,9 @@ function S {
    # If there are no arguments, present the fluNav
       if [ -z $1 ]; then
 
-      f_menu_fzf_S  # Menu fzf
+      f_menu_fzf_F  # Menu fzf
 
-   # When function S is presented with arguments:
+   # When function F is presented with arguments:
       # Acts on the file, And syncs with github after
       # Across the system, many files may have many alias. But to sync with fluNav, they must be listed here:
       # The v_nm variable is meant to dump data from the $1 variable, enabling the $1 to be used again for other reson
@@ -1669,7 +1661,7 @@ function S {
       elif [ $1 == ","        ]; then v_nm="search_history_files";   f_action;     # Asks i
       elif [ $1 == "-2"       ]; then v_nm="test";                   f_action; echo "Test is working for 19"; f_up
       elif [ $1 == "-1"       ]; then v_nm="fx_test";                f_action; ## Just test if this file is working
-      elif [ $1 == "S"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
+      elif [ $1 == "F"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
       elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; source ~/.bashrc
       elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; #f_up
       elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up

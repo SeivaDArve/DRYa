@@ -134,6 +134,7 @@ function f_usefull {
       GParted
       http://strudel.cc  # Live coding para padroes de musica em javascript
       htop           # Task manager com hotkeys para `kill`processos
+      tmate          # Similar to TeamViewer or AnyDesk (but to CLI interface with tmux)
    '
 }
 
@@ -241,6 +242,24 @@ function f_termux_help {
         > For Samsung A6+ : https://youtu.be/Zm6vh2W4Hxs?si=OHEOzvSZbI0ZxVMU
    '
 }
+
+# function f_after_fresh_windows_format {
+#    - Depois de formatar o windows:
+#      - window update
+#      - Resolucao
+#      - Ativar windows
+#      - Language pack (se preciso)
+#      - Ponto de restauro do sistema
+#      - drivers
+#      - Desativar updates automaticos (permanentemente, com software)
+#      - Ponto de restauro do sistema novamente
+#      - impressoras
+#      - browser
+#      - winRAR, winZIP
+#      - Photoshop
+#      - Instalar WSL2
+#
+# }
 
 function f_exec {
    echo "DRYa: file: 1st: Running groups of apps to install"

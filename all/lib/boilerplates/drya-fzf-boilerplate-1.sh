@@ -40,7 +40,7 @@
    #    f_example_busca_L6b; echo "$Lb6"
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='CMD used: '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos possiveis: \nExemplo 1\n \n"
+      Lz1='CMD used: '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Alt Abrv CMD: \nExemplo 1\n \n"  # This $Lz5 is "Alternative abreviated Commands" which are alternative to the longest command $Lz2
 
       L6="6. Opcao com variavel externa | $L6b" # Variable L6b may be set and may be empty to give more info to the user
       L5='5. Opcao com Pin'                                       
@@ -50,7 +50,7 @@
      #L2='2. ---Invert Selection---'
       L1='1. Cancel'
 
-      Lh=$(echo -e "\nInstrucoes multi texto:\n -Aqui\n ")
+      Lh=$(echo -e "\nInstrucoes multi texto:\n -apagar texto introduzido da busca: \`Ctrl-U\` \n ")
       L0="$v_fzf_talk: SELECT 1: Menu X: "
       
    # Ordem de Saida das opcoes durante run-time
