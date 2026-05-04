@@ -2444,8 +2444,18 @@ function f_backup_guide {
       f_talk; echo "Backup Checklist (computer files to external HDD):"
               echo " > ..."
               echo
-      f_talk; echo "Backup Checklist (Clone entire computer HDD - Clonezilla):"
+      f_talk; echo "Backup with "Clonezilla Live OS" (Clone entire computer HDD into image):"
               echo " > img name: 2026-05-04-10h-DRYa-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
+              echo
+      f_talk; echo 'Backup with `dd` (clone HDD into another HDD, byte by byte):'
+              echo ' > `sudo dd if=/dev/sda of=/dev/sdb bs=64K status=progress conv=noerror,sync`' 
+              echo '   In file: /dev/sda  (example)'
+              echo '   Out file: /dev/sdb (example)'
+              echo '   bs: "block size"'
+              echo '   status: activating visual status, otherwise there is none'
+              echo '   Conv: noerror: means "do not stop at errors"' 
+              echo '   Conv: sync:    means "fill erros blocks with zeros, keep the alignment"'
+              echo '   Note: you can use `lsblk` to list discs'
               echo
       f_talk; echo "How to use Ethernet cable to share files between 2 computers:"
               echo " > ..."
