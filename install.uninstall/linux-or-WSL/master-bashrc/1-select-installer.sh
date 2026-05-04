@@ -217,14 +217,14 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
       f_talk; echo
-              echo " > Testing DRYa's installer itself."
+              echo " > Testing DRYa's installer itself, if it can detect relative|absolute paths."
 
    source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
    [[ $v_double_check == "code-34y6" ]] && echo "   Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
    [[ $v_double_check != "code-34y6" ]] && echo "   Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
    echo
 
-   read -sn1 -p " [ENTER = Continue] or [CTRL-C = Cancel]: "
+   read -sn1 -p " [ENTER = Continue to main Menu] or [CTRL-C = Cancel]: "
    echo
 
 }
@@ -346,48 +346,76 @@ function f_1st_select {
 
    f_greet; f_1st
 
-   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
-   do
-      case $i in
-         "(yes) to continue")
-            f_2nd_select;
-            # Last, allow to script to flow by breaking all 'select loops'
-               f_break_select_loops; eval $_break
+   function f_1st_by_select {
+      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
+      do
+         case $i in
+            "(yes) to continue")
+               f_2nd_select;
+               # Last, allow to script to flow by breaking all 'select loops'
+                  f_break_select_loops; eval $_break
 
-         ;;
-         "(no) to abort")
-            echo " For a correct instalation, you should create a directory where all other"
-            echo " Repositories go... (aborting)"
+            ;;
+            "(no) to abort")
+               echo " For a correct instalation, you should create a directory where all other"
+               echo " Repositories go... (aborting)"
 
-            # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
+               # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
 
-              load_remaining_functions="no"
-              #export v_unload ## Aparently scripts cannot export variables while being sorced
-              exit 1
-         ;;
-         "(help) to explain") 
-            f_greet
-            echo " Explanation of the First question"
-              # Explain what a centralized directory is
-            echo " First Create a dedicated directory for all your repositories like ~/Repositories"
-            echo "   > Does it exist?"
-              echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
+                 load_remaining_functions="no"
+                 #export v_unload ## Aparently scripts cannot export variables while being sorced
+                 exit 1
+            ;;
+            "(help) to explain") 
+               f_greet
+               echo " Explanation of the First question"
+                 # Explain what a centralized directory is
+               echo " First Create a dedicated directory for all your repositories like ~/Repositories"
+               echo "   > Does it exist?"
+                 echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
+                 echo 
+                 echo "This script running is meant to install DRYa"
+                 echo " > Please choose one centralized directory"
+                 echo "   where DRYa and all other Seiva's Software"
+                 echo "   can be installed (e.g. /home/Repositories)"
+                 echo
+                 read -sn 1
+                 f_greet ; f_1st
+            ;;
+            "(back to Menu)")
+               f_greet; f_title; break
+            ;;
+            "exit") echo "Bye"; exit 0 ;;
+            *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_1st ;;
+           esac
+      done
+   }
+
+   function f_1st_by_read {
+      # This function belongs to the First Question
+
+      f_greet
+      f_talk; echo "(1/4)"
               echo 
-              echo "This script running is meant to install DRYa"
-              echo " > Please choose one centralized directory"
-              echo "   where DRYa and all other Seiva's Software"
-              echo "   can be installed (e.g. /home/Repositories)"
-              echo
-              read -sn 1
-              f_greet ; f_1st
-         ;;
-         "(back to Menu)")
-            f_greet; f_title; break
-         ;;
-         "exit") echo "Bye"; exit 0 ;;
-         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_1st ;;
-        esac
-   done
+              echo ' |   | Defining the path to (DRYa-REPOS-CENTER)/'
+              echo " |   | It is DRYa's centralized directory for repositories"
+              echo "-----------------------------------------------------------"
+              echo " | 1 | - [X] ~/home/Repositories/  (default)"
+              echo " |   |"
+              echo " | 2 | - [ ] '/mnt/c/\$USER'       (recommended at WSL2)"
+              echo " |   |       which is the C:\ drive, but with a directory created by hand with"
+              echo " |   |       the user's account name (or similar) in order to better open files"
+              echo " |   |       with windows's native software. This way, navigation through"
+              echo " |   |       explorer.exe is easier"
+              echo " |   |"
+              echo " | 3 | - [ ] Current prompt location"
+      read
+   }
+
+   f_1st_by_read
+   f_1st_by_select
+
+   read -s -p "finish"
 }
 
 function f_2nd_select {
@@ -559,7 +587,7 @@ function f_menu_principal {
 
 
 
-#f_1st_select
+f_1st_select
 
    A="-------------------------------"
    a=" | 1 | DRYa install"
