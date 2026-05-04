@@ -129,11 +129,11 @@ function f_install_drya__with_Select {
    # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
 
    # Variables to the same file
-      # Used if DRYa is not yet installed
-         v_installer_v1=./install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
-
       # Used also to Uninstall DRYa
-         v_installer_v2=${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+         v_installer_v1=${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+
+      # Used if DRYa is not yet installed
+         v_installer_v2=./install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
 
 
    f_greet
@@ -148,7 +148,7 @@ function f_install_drya__with_Select {
    #          echo 
    #          echo " ... uDev"
 
-   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh"
+   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh" && read -sn1 && bash $v_installer_v2
    [[   -f $v_installer_v1 ]] && bash $v_installer_v1
 }
 
@@ -2446,6 +2446,7 @@ function f_backup_guide {
               echo
       f_talk; echo "Backup with "Clonezilla Live OS" (Clone entire computer HDD into image):"
               echo " > img name: 2026-05-04-10h-DRYa-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
+              echo '   Also: `rm .netrc trash browser-history browser-passwords private-repos'
               echo
       f_talk; echo 'Backup with `dd` (clone HDD into another HDD, byte by byte):'
               echo ' > `sudo dd if=/dev/sda of=/dev/sdb bs=64K status=progress conv=noerror,sync`' 
@@ -3267,37 +3268,36 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
         #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
 
         #L16="16. |           | Install batch files for windows
-         L16="16. |           | Update | View 'once-tasks-list'"
-         L15='15. |           | Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
-         L14='14. |           | Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
-         L13='13. | `D ui i`  |  Menu  | PRESETS + Packages + Populate Machines ' 
-         L12='12. | `D ui b`  |  Menu  | Backups Maker        ' 
-         L11='11. | `D cln`   |  Menu  | Clone Repos         '
-         L10='10. | `D iu d`  |  Menu  | dot-files           '
-          L9='9.  | `D ui dp` |  Menu  | 1st (Dependencies )       ' 
+         L16="16. |           |  Update | View 'once-tasks-list'"
+         L15='15. |           |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
+         L14='14. |           |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
+         L13='13. | `D ui i`  |  Menu   | PRESETS + Packages + Populate Machines ' 
+         L12='12. | `D ui b`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
+         L11='11. | `D cln`   |  Menu   | Clone Repos         '
+         L10='10. | `D iu d`  |  Menu   | dot-files           '
+          L9='9.  | `D ui dp` |  Menu   | 1st (Dependencies )       ' 
                                
-          L8='8.  | `D ui 1f` |  Edit  | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
-          L7='7.  | `D ui 1s` |  Menu  | `select` DRYa installer    '
-         L17='17. | `D ui S ` |  Edit  | `select` DRYa installer    '
+          L8='8.  | `D ui 1f` |  Edit   | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
+          L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
+         L17='17. | `D ui S ` |  Edit   | `select` DRYa installer    '
                                   
-          L6='6.  | `D cln h` | Guide  | clone DRYa (for other devices too) '
+          L6='6.  | `D cln h` |  Guide  | clone DRYa (for other devices too) '
 
-          L5='5.  |           | Install git'    
-          L4='4.  |           | Guide Install: Termux' 
-          L3='3.  |           | Guide Install: WSL'   
+          L5='5.  |           | Install | git'    
+          L4='4.  |           |  Guide  | Install: Termux' 
+          L3='3.  |           |  Guide  | Install: WSL'   
 
-         L18='18. |           | Guide Install: Dual|Multiboot HDD'   
-         L19='19. |           | Guide Create: Live USB' #  Create Live Windows USB; Live TAILS; Live OS with Persistence; USB with Ventoy with Persistence
-
-        #L19='19. |           | Clonezilla + DRYa-dualbooted-HDD-snapshot-1: Clone Dual boot backuped image to current disk  # Prepare: remove .netrc
+         L18='18. |           |  Guide  | Install: Dual|Multiboot HDD'   
+         L19='19. |           |  Guide  | Create:  Live USB' #  Create Live Windows USB; Live TAILS; Live OS with Persistence; USB with Ventoy with Persistence
 
           L2='2.  | `D iu ls` | List Status  '
+
           L1='1.  Cancel'
 
          L0="DRYa: Menu install.uninstall: "
-         Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github 'git' is needed\n ")
+         Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github, 'git' is needed\n - Some options Install directly, others only Guide on How to install\n ")
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
@@ -3338,7 +3338,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Run 1-select-installer
       f_install_drya__with_Select
 
-   elif [ $2 == "S" ]; then 
+   elif [ $2 == "s" ]; then 
       bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
    elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
