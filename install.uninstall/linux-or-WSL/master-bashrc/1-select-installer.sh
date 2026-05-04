@@ -5,6 +5,7 @@
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no sistema, criar a hipotese de ghost-in ghost-out
 
+# uDev: Redirect zsh and fish to our bashrc
 
 
 # ----------------------------------------------------------------------------------------------
