@@ -174,7 +174,20 @@ function f_define_env_vars {
 
 
 
+function f_1 {
+   # Gives the terminal's current directory name (the directory from where, the user is calling a script. This script)
 
+   # Mostrar sem sufixo
+   v_pwd=$(pwd)
+
+   v_1=$v_pwd
+}
+function f_1_verbose {
+   echo " -1- Rel path: Prompt location \`pwd\` (Current CLI working directory, without sufix '/' ):"
+   echo "  >  $v_1"
+   echo
+   echo
+}
 
 function f_5 {
    # Gives working directory where the script is placed (without the name ib the end)
@@ -215,16 +228,24 @@ function f_test_proper_functionality_of_drya_lib_5 {
 
    f_greet
 
+   echo "|" 
+   echo "| History of activities (Clean, it will grow here)"
+   echo "|" 
+   echo 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
       f_talk; echo
-              echo " > Testing DRYa's installer itself, if it can detect relative|absolute paths."
+              echo "---------------------------------------"
+              echo " |   | Testing DRYa's installer itself, "
+              echo " |   | if it can detect relative|absolute paths."
+              echo " |   | "
 
-   source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
-   [[ $v_double_check == "code-34y6" ]] && echo "   Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
-   [[ $v_double_check != "code-34y6" ]] && echo "   Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
-   echo
+              source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
+              [[ $v_double_check == "code-34y6" ]] && echo " |   | - [X]  Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
+              [[ $v_double_check != "code-34y6" ]] && echo " |   | - [ ]  Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
 
-   read -sn1 -p " [ENTER = Continue to main Menu] or [CTRL-C = Cancel]: "
+              echo "---------------------------------------"
+
+   read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
    echo
 
 }
@@ -249,28 +270,34 @@ function f_test_proper_functionality_of_drya_lib_5 {
 function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
 
-
    f_greet
-   f_talk; echo "Step 2"
-           echo " > Ensuring 'non empty' + 'proper existence' of: $v_bash"
+   echo "|" 
+   echo "| $v_talk (1) Wizzard tested"
+   echo "| $v_talk (2) Main Menu: Install"
+   echo "|" 
+   echo
+
+
+   f_talk; echo 
+           echo "-------------------------------"
+           echo " |   | Ensuring 'non empty' + 'proper existence' of: $v_bash"
 
 	touch $v_bash
 
    # If file ~/.bashrc does not exist, DRYa cannot be installed
-      [[ -f $v_bash ]] && ((echo " > File exists: $v_bash" || echo " > File does not exist: $v_bash") || exit 1)
+      [[ -f $v_bash ]] && ((echo " |   | - [X] File exists: $v_bash" || echo " |   | - [ ] File does not exist: $v_bash") || exit 1)
 
    # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors
       # If there are no characters inside the file, these lines of code will add at least one
       v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
-      echo 
-   
-      echo " Number of chars inside .bashrc: $v_char_count"  # Debug
-      [[ $v_char_count -gt 1 ]] && echo "  > Does not need filling, all ok!"
-      [[ $v_char_count -lt 1 ]] && echo "  > Does need filling..." && echo " " >> $v_bash && echo "  > Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
-      echo
+      echo " |   | "
+      echo " |   | Number of chars inside .bashrc: $v_char_count"  # Debug
+      [[ $v_char_count -gt 1 ]] && echo " |   | - [X] Does not need filling, all ok!"
+      [[ $v_char_count -lt 1 ]] && echo " |   | - [ ] Does need filling..." && echo " " >> $v_bash && echo " |   | - [X] Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
+      echo "-------------------------------"
 
    # Waiting for user to read
-      read -sn 1 -p "Press Any key to continue to main menu... "
+      read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
 }
 
 
@@ -394,28 +421,57 @@ function f_1st_select {
    function f_1st_by_read {
       # This function belongs to the First Question
 
+      function f_test_existence_repos_center_default {
+         [[   -d ~/Repositories ]] && echo " |   |       > It already exists"
+         [[ ! -d ~/Repositories ]] && echo " |   |       > It will be created"
+      }
+
       f_greet
+
+      echo "|" 
+      echo "| $v_talk (1) Wizzard tested"
+      echo "| $v_talk (2) Main Menu: Install"
+      echo "| $v_talk (3) Existensce of bashrc: tested"
+      echo "|" 
+      echo
+
       f_talk; echo "(1/4)"
               echo 
-              echo ' |   | Defining the path to (DRYa-REPOS-CENTER)/'
+              echo ' |   | Defining the path to .../(DRYa-REPOS-CENTER)/'
               echo " |   | It is DRYa's centralized directory for repositories"
-              echo "-----------------------------------------------------------"
-              echo " | 1 | - [X] ~/home/Repositories/  (default)"
+              echo "-------------------------------------------------------------"
               echo " |   |"
-              echo " | 2 | - [ ] '/mnt/c/\$USER'       (recommended at WSL2)"
-              echo " |   |       which is the C:\ drive, but with a directory created by hand with"
-              echo " |   |       the user's account name (or similar) in order to better open files"
-              echo " |   |       with windows's native software. This way, navigation through"
-              echo " |   |       explorer.exe is easier"
+              echo " | 1 | - [X] ~/Repositories/  (default)"
+              f_test_existence_repos_center_default 
               echo " |   |"
-              echo " | 3 | - [ ] Current prompt location"
-      read
+              echo " | 2 | - [ ] '/mnt/c/\$USER/Repositories/'  (at WSL2)"
+              echo " |   |       > It is at the C:\ drive, inside a new directory"
+              echo " |   |         with the same name as the USER "
+              echo " |   |         This way, navigation through explorer.exe is)"
+              echo " |   |         easier. (Not safe only if there are more than"
+              echo " |   |         one user in the current machine)"
+              echo " |   |"
+              echo " | 3 | - [ ] '/mnt/c/\$USER/Repositories/'  (at WSL2)"
+              echo " |   |       > "
+              echo " |   |"
+              echo " | 4 | - [ ] Current prompt location"
+              echo " |   |       > $v_1"
+              echo " |   |"
+              echo " | 5 | - [ ] Insert location manually"
+              echo " |   |"
+              echo " | 6 | Back to Main Menu"
+              echo " | 7 | Abort everything"
+              echo " |   |"
+              echo "-------------------------------------------------------------"
+           read -p "   > " v_ans
+
+           [[ $v_ans == 6 ]] && f_menu_principal
    }
 
-   f_1st_by_read
+   #f_1st_by_read
    f_1st_by_select
 
-   read -s -p "finish"
+   #read -s -p "finish"
 }
 
 function f_2nd_select {
@@ -587,11 +643,12 @@ function f_menu_principal {
 
 
 
-f_1st_select
+#f_1st_select
 
    A="-------------------------------"
-   a=" | 1 | DRYa install"
-   b=" | 2 | DRYa uninstall"
+   c=" |   |"
+   a=" | 1 | Install DRYa"
+   b=" | 2 | Uninstall DRYa"
    c=" |   |"
    d=" | 3 | Options"
    e=" | 4 | Instructions 1 - (local readme)"
@@ -606,6 +663,10 @@ f_1st_select
    h=" | 7 | Exit"
 
    f_greet
+   echo "|" 
+   echo "| $v_talk (1) Wizzard tested"
+   echo "|" 
+           echo
    f_talk; echo "Menu Principal"
 
    echo "$A"
@@ -617,7 +678,6 @@ f_1st_select
    echo "$f"
    echo "$g"
    echo "$h"
-   echo "$c"
    echo "$A"
 
    v_allow="no"  # By default, if no valid answer is given from the menu, this variable will not allow to continue the script.
@@ -1012,6 +1072,8 @@ function f_exec {
    f_variables
       f_5
      #f_5_verbose
+      f_1
+     #f_1_verbose
    f_variables_recalculated 
 
    f_test_proper_functionality_of_drya_lib_5 

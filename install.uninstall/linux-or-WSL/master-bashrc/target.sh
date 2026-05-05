@@ -4,5 +4,5 @@
 # Example: Run 1-select-installer.sh where there is info about it's absolute path, but in the first lines, try using that absolute path to adress and run this file
 
 # Giving info this script was found and ran perfectly:
-   echo "   Test 1: Success!"
+   echo " |   | - [X]  Test 1: Success!"
    v_double_check="code-34y6"  # If this file is `sourced` then this var will be available there
