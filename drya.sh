@@ -4110,10 +4110,18 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       
       v_rmd=" > Removed"
       v_inx=" > Inexistent"
-      [ -d $v_repo/scratch-paper ] && (cd && rm -rf $v_repo/scratch-paper && f_talk && echo "Sc $v_rmd"       ) || (f_talk && echo "Sc $v_inx"       )
-      [ -d $v_repo/omni-log      ] && (cd && rm -rf $v_repo/omni-log      && f_talk && echo "omni-log $v_rmd" ) || (f_talk && echo "omni-log $v_inx" )
-      [ -d $v_repo/moedaz        ] && (cd && rm -rf $v_repo/moedaz        && f_talk && echo "moedaz $v_rmd"   ) || (f_talk && echo "moedaz $v_inx"   )
-      [ -f ~/.netrc              ] && (      rm ~/.netrc                  && f_talk && echo ".netrc $v_rmd"   ) || (f_talk && echo ".netrc $v_inx"   )
+
+      v_sc="scratch-paper"; v_SC="sc"
+      v_om="omni-log"
+      v_mo="moedaz"
+      v_dv="upk-diario-Dv"
+      v_rc=".netrc"
+
+      [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_SC $v_rmd" ) || (f_talk && echo "$v_SC $v_inx" )
+      [ -d $v_repo/$v_om ] && (cd && rm -rf $v_repo/$v_om && f_talk && echo "$v_om $v_rmd" ) || (f_talk && echo "$v_om $v_inx" )
+      [ -d $v_repo/$v_mo ] && (cd && rm -rf $v_repo/$v_mo && f_talk && echo "$v_mo $v_rmd" ) || (f_talk && echo "$v_mo $v_inx" )
+      [ -d $v_repo/$v_dv ] && (cd && rm -rf $v_repo/$v_dv && f_talk && echo "$v_dv $v_rmd" ) || (f_talk && echo "$v_dv $v_inx" )
+      [ -f       ~/$v_rc ] && (      rm           ~/$v_rc && f_talk && echo "$v_rc $v_rmd" ) || (f_talk && echo "$v_rc $v_inx" )
       # uDev: remove all private repos too
       
       read -sn1 -p "[Any Key] to Clear screen" && echo 
