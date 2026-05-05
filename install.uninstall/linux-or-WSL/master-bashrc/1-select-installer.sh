@@ -236,21 +236,49 @@ function f_test_proper_functionality_of_drya_lib_5 {
       f_talk; echo
               echo "---------------------------------------"
               echo " |   | Testing DRYa's installer itself, "
-              echo " |   | if it can detect relative|absolute paths."
               echo " |   | "
+              echo " |   | if it can detect relative|absolute paths."
 
               source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
               [[ $v_double_check == "code-34y6" ]] && echo " |   | - [X]  Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
               [[ $v_double_check != "code-34y6" ]] && echo " |   | - [ ]  Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
 
-              echo "---------------------------------------"
+   echo " |   | "
 
-   read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
-   echo
+
+  
 
 }
 
 
+function f_create_tmp_history_file {
+   # Create a temporary file to save all steps taken as history log
+
+   # Creating directory and file
+      v_tmp_dir=~/.tmp/DRYa-instalation-wizzard
+      v_tmp_file="history-log"
+
+   # Merging both in one sinlge variable
+      v_historyF=$v_tmp_dir/$v_tmp_file
+
+   # If there is any file already, remove it. If no file is found, do not mention any error too
+      rm $v_historyF 2>/dev/null 
+
+   # Create the hosting directoru if it does not exist
+      mkdir -p $v_tmp_dir
+
+   # Creating an empty file
+      touch $v_historyF
+   
+   echo " |   | if history file can be created"
+
+   # Testing if file actually exists (debugging process)
+      [[   -f $v_historyF ]] && echo " |   | - [X] History file exists"
+      [[ ! -f $v_historyF ]] && echo " |   | - [ ] History file exists"
+   
+   echo "---------------------------------------"
+   read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
+}
 
 
 
@@ -1077,6 +1105,8 @@ function f_exec {
    f_variables_recalculated 
 
    f_test_proper_functionality_of_drya_lib_5 
+   f_create_tmp_history_file
+
    f_menu_principal
 
    # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
