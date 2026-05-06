@@ -1792,12 +1792,13 @@ function f_instalation_guide_to_wsl {
 function f_install_presets {
    Lz='`D ui p`'
 
-   LN="---- Title ----  |  -- Actions --"
-   L3="3. Safe Logout   | (-).netrc (-)Sc (-)moedaz (?)GPG-dir"
-   L2="2. Quick Install | (+)upk (+)upkd (+)dependencies (+)..."
+   LN="   |     | --- Title --- |  -- Actions --"
+   L3="3. |     | Safe Logout   | (-).netrc (-)Sc (-)moedaz (?)GPG-dir"
+   L2="2. | upk | Quick Install | (+)upk (+)upkd (+)dependencies (+)..."
+
    L1="1. Cancel "
 
-   L0="DRYa: PRESETS menu: "
+   L0="DRYa: install.uninstall PRESETS: "
    Lh=$(echo -e "\nInformation:\n - (-)File-will-be-removed\n - (+)File-will-be-added\n - (.)File-ignored\n - (?)Action-for-file-will-be-prompted\n ")
 
    v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$LN\n\n$Lz" | fzf --no-info --cycle --pointer=">" -m --header="$Lh" --prompt="$L0")
@@ -2969,6 +2970,9 @@ elif [ $1 == "6" ] || [ $1 == "config-drya-hh" ] || [ $1 == "hh" ]; then
    # Instructions on how to navigate to the directory where all D'Arve repos save configs
    echo 'Navigate to ~/.config/h.h/ with the alias `hh`'
 
+elif [ $1 == "7" ] || [ $1 == "navigate-to-DRYa-Repos-Center" ] || [ $1 == "gg" ]; then 
+   # Navigating only to ${v_REPOS_CENTER}/ 
+   GG
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ] || [ $1 == "ghost.in" ]; then  # Usado em aparelhos/dispositivos publicos
    # Ao instalar DRYa, fica autimaticamente ativo
