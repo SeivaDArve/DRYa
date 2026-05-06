@@ -1726,16 +1726,21 @@ function f_quick_install_all_upk {
    f_greet
 
    # Echo a list of things that are going to be installed:
-      echo "(+) Install: .netrc"
+      f_talk; echo "This preset will:"
+              echo " > (+) Install: .netrc"
+              echo
+              echo " > (+) Clone repo: upk"
+              echo " > (+) Clone repo: upkd"
+              echo
+              echo " > (+) Install: emacs (terminal)"
+              echo " > (+) Install: init.el"
+              echo
+
+      v_txt="Continue installing"; f_anyK
       echo
-      echo "(+) Clone repo: upk"
-      echo "(+) Clone repo: upkd"
-      echo
-      echo "(+) Install: emacs (terminal)"
-      echo "(+) Install: init.el"
-      echo
-      read -sn1
       
+   # Installing .netrc
+      f_dot_files_install_netrc
 
    # Change dir, to avoid changing at every command
       cd ${v_REPOS_CENTER}
@@ -1743,6 +1748,7 @@ function f_quick_install_all_upk {
    # Install dependencies (and automatically answering YES to all questions)
       # uDev: Test if it is windows and install GUI version also
       f_talk; echo "installing: emacs figlet vim"
+
       yes | bash $trid_pkgm install emacs figlet vim 
 
    # Repo: upk
@@ -1751,9 +1757,6 @@ function f_quick_install_all_upk {
    # Repo: upk-diario-dv
       f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
               echo 
-
-   # Installing .netrc
-      f_dot_files_install_netrc
 
 
    # Refresh the terminal
