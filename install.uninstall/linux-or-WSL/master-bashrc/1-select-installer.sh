@@ -8,8 +8,24 @@
 # uDev: Redirect zsh and fish to our bashrc
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ----------------------------------------------------------------------------------------------
-# -- Provide Visuals at the start 
+# -- Below: Provide Visuals at the start 
 # ----------------------------------------------------------------------------------------------
 
 
@@ -121,7 +137,7 @@ function f_hzl {
 
 
 
-function f_variables {
+function f_internal_variables {
    # Variables
 
    # After $v_5 is found (abs path), can be complemented with relative paths
@@ -134,6 +150,29 @@ function f_variables {
 
    # For better code reading 
       v_bash=~/.bashrc
+
+   # Restarting history log from scratch
+      unset v_hst_00
+      unset v_hst_01
+      unset v_hst_02
+      unset v_hst_03
+      unset v_hst_04
+      unset v_hst_05
+      unset v_hst_06
+      unset v_hst_07
+      unset v_hst_08
+      unset v_hst_09
+      unset v_hst_10
+      unset v_hst_11
+      unset v_hst_12
+      unset v_hst_13
+      unset v_hst_14
+      unset v_hst_15
+      unset v_hst_16
+      unset v_hst_17
+      unset v_hst_18
+      unset v_hst_19
+      unset v_hst_20
 }
 
 function f_variables_recalculated {
@@ -144,20 +183,20 @@ function f_variables_recalculated {
 
 function f_define_env_vars {
    # AFTER running the function f_cut_4_fields_relative_path and finding $found_DRYa_at, only then 
-	  # The remaining of this script comes. This function is based on that previous function
+	#   The remaining of this script comes. This function is based on that previous function
 
    # Printing Environment variables based on $found_DRYa_at
 	  # List of variables to be created:
 	  #  v_REPOS_CENTER="/home/user/Repositories"
-	  #  DRYa_HEART
+	  #  DRYa_v_SRC
 	  
    # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
-	  DRYa_HEART="all/dryaSRC"
-	  DRYa_HEART=$found_DRYa_at/$DRYa_HEART
+	  DRYa_v_SRC="all/dryaSRC"
+	  DRYa_v_SRC=$found_DRYa_at/$DRYa_v_SRC
 
      echo
-	  echo "The Heart of DRYa is located at:"
-	  echo " > $DRYa_HEART"
+	  echo "The Heart|Source of DRYa is located at:"
+	  echo " > $DRYa_v_SRC"
      echo
      read -sn1
 }
@@ -171,7 +210,7 @@ function f_define_env_vars {
 # ----------------------------------------------------------------------------------------------
 
 
-
+# Functions in this section are just copied from drya-lib-5
 
 
 function f_1 {
@@ -226,28 +265,20 @@ function f_5_verbose {
 
 function f_test_proper_functionality_of_drya_lib_5 {
 
-   f_greet
+   function f_tst_target {
+      # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
+      source $v_5/$v_target 2>/dev/null
+   }
 
-   echo "|" 
-   echo "| History of activities (Clean, it will grow here)"
-   echo "|" 
-   echo 
-   # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
-      f_talk; echo
-              echo "---------------------------------------"
-              echo " |   | Testing DRYa's installer itself, "
-              echo " |   | "
-              echo " |   | if it can detect relative|absolute paths."
+   function f_ckY {
+      # Will function properlly if $v_target is `sourced` instead of `bashed`
+      [[ $v_double_check == "code-34y6" ]] && v_chk=" |   | - [X]  Test 2: Success!" 
+   }
 
-              source $v_5/$v_target  # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
-              [[ $v_double_check == "code-34y6" ]] && echo " |   | - [X]  Test 2: Success!" # Will function properlly if $v_target is `sourced` instead of `bashed`
-              [[ $v_double_check != "code-34y6" ]] && echo " |   | - [ ]  Test 2: Fail!"    # If this var does not exist, $v_target was not sourced properly
-
-   echo " |   | "
-
-
-  
-
+   function f_ckN {
+      # If this var does not exist, $v_target was not sourced properly
+      [[ $v_double_check != "code-34y6" ]] && v_chk=" |   | - [ ]  Test 2: Fail!"    
+   }
 }
 
 
@@ -269,17 +300,37 @@ function f_create_tmp_history_file {
 
    # Creating an empty file
       touch $v_historyF
+}
+
+
+function f_initialization_verbose {
+
+   f_history_log  # if already includes f_greet
+
+   # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
+      f_talk; echo                "Initialization (1/X)"
+              echo                "---------------------------------------"
+              echo                " |   | Testing DRYa's installer itself, "
+              echo                " |   | "
+              echo                " |   | if it can detect relative|absolute paths."
+      f_tst_target 
+      f_ckY && echo "$v_chk"  ### " |   | - [X]  Test 2: Success!" 
+      f_ckN && echo "$v_chk"  ### " |   | - [ ]  Test 2: Fail!"    
+
+              echo                " |   | "
+
+  
+
    
    echo " |   | if history file can be created"
 
    # Testing if file actually exists (debugging process)
-      [[   -f $v_historyF ]] && echo " |   | - [X] History file exists"
-      [[ ! -f $v_historyF ]] && echo " |   | - [ ] History file exists"
+      [[   -f $v_historyF ]] && echo " |   | - [X] History was created"
+      [[ ! -f $v_historyF ]] && echo " |   | - [ ] History was created"
    
    echo "---------------------------------------"
    read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
 }
-
 
 
 # --------------------------------------------------------------------------------------------------
@@ -288,6 +339,49 @@ function f_create_tmp_history_file {
 
 
 
+
+function f_history_log {
+
+   f_greet
+
+   # Example of output
+   #
+   # | 
+   # | History: Clean (it will grow here)
+   # | 
+   # 
+
+
+   v_hst_br="|" 
+   v_hst_00="| History: Clean (it will grow here)"
+   v_hst_br="|" 
+
+
+                         echo  $v_hst_br
+   [[ -n $v_hst_00 ]] && echo "$v_hst_00"
+   [[ -n $v_hst_01 ]] && echo "$v_hst_01"
+   [[ -n $v_hst_02 ]] && echo "$v_hst_02"
+   [[ -n $v_hst_03 ]] && echo "$v_hst_03"
+   [[ -n $v_hst_04 ]] && echo "$v_hst_04"
+   [[ -n $v_hst_05 ]] && echo "$v_hst_05"
+   [[ -n $v_hst_06 ]] && echo "$v_hst_06"
+   [[ -n $v_hst_07 ]] && echo "$v_hst_07"
+   [[ -n $v_hst_08 ]] && echo "$v_hst_08"
+   [[ -n $v_hst_09 ]] && echo "$v_hst_09"
+   [[ -n $v_hst_10 ]] && echo "$v_hst_10"
+   [[ -n $v_hst_11 ]] && echo "$v_hst_11"
+   [[ -n $v_hst_12 ]] && echo "$v_hst_12"
+   [[ -n $v_hst_13 ]] && echo "$v_hst_13"
+   [[ -n $v_hst_14 ]] && echo "$v_hst_14"
+   [[ -n $v_hst_15 ]] && echo "$v_hst_15"
+   [[ -n $v_hst_16 ]] && echo "$v_hst_16"
+   [[ -n $v_hst_17 ]] && echo "$v_hst_17"
+   [[ -n $v_hst_18 ]] && echo "$v_hst_18"
+   [[ -n $v_hst_19 ]] && echo "$v_hst_19"
+   [[ -n $v_hst_20 ]] && echo "$v_hst_20"
+                         echo  $v_hst_br
+                         echo
+}
 
 
 
@@ -299,21 +393,23 @@ function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
 
    f_greet
-   echo "|" 
-   echo "| $v_talk (1) Wizzard tested"
-   echo "| $v_talk (2) Main Menu: Install"
+   echo "|"   
+   echo "| History: Wizzard tested"
+   echo "| History: Main Menu: Install"
    echo "|" 
    echo
 
 
    f_talk; echo 
            echo "-------------------------------"
-           echo " |   | Ensuring 'non empty' + 'proper existence' of: $v_bash"
+           echo " |   | "
+           echo " |   | Ensuring 'non empty' + 'proper existence' of:"
+           echo " |   | $v_bash"
 
 	touch $v_bash
 
    # If file ~/.bashrc does not exist, DRYa cannot be installed
-      [[ -f $v_bash ]] && ((echo " |   | - [X] File exists: $v_bash" || echo " |   | - [ ] File does not exist: $v_bash") || exit 1)
+      [[ -f $v_bash ]] && ((echo " |   | - [X] File exists" || echo " |   | - [ ] File does not exist") || exit 1)
 
    # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors
       # If there are no characters inside the file, these lines of code will add at least one
@@ -322,6 +418,7 @@ function f_debug_bashrc_existence {
       echo " |   | Number of chars inside .bashrc: $v_char_count"  # Debug
       [[ $v_char_count -gt 1 ]] && echo " |   | - [X] Does not need filling, all ok!"
       [[ $v_char_count -lt 1 ]] && echo " |   | - [ ] Does need filling..." && echo " " >> $v_bash && echo " |   | - [X] Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
+           echo " |   | "
       echo "-------------------------------"
 
    # Waiting for user to read
@@ -496,8 +593,8 @@ function f_1st_select {
            [[ $v_ans == 6 ]] && f_menu_principal
    }
 
-   #f_1st_by_read
-   f_1st_by_select
+   f_1st_by_read
+   #f_1st_by_select
 
    #read -s -p "finish"
 }
@@ -692,10 +789,10 @@ function f_menu_principal {
 
    f_greet
    echo "|" 
-   echo "| $v_talk (1) Wizzard tested"
+   echo "| History: Wizzard test: Wworking!"
    echo "|" 
            echo
-   f_talk; echo "Menu Principal"
+   f_talk; echo "Menu Principal (Step 2)"
 
    echo "$A"
    echo "$a"
@@ -982,9 +1079,9 @@ function f_DRYa_install_me_at_bashrc {
       #read -sn 1
 	  
    # Defining the environment variable:
-	  DRYa_HEART="${found_DRYa_at}/all/dryaSRC"
-	  export DRYa_HEART
-	  echo " > DRYa: My file that awakes all others is located at: $DRYa_HEART"
+	  DRYa_v_SRC="${found_DRYa_at}/all/dryaSRC"
+	  export DRYa_v_SRC
+	  echo " > DRYa: Initial ramification file, redirects all others is located at: $DRYa_v_SRC"
    
    # This variable comes from the function that cuts the string
       echo "You have chosen $v_REPOS_CENTER to be a dedicated directory to receive every kind of repositories"
@@ -1000,8 +1097,8 @@ function f_DRYa_install_me_at_bashrc {
       L1=""
       L2="# Sourcing Seiva's main repo: DRYa"
       L3="   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER  # Dedicated dir for repos"
-      L4="   DRYa_HEART=\"$DRYa_HEART\"; export DRYa_HEART  # setting one file that wakes all others"
-      L5='   source ${DRYa_HEART}'
+      L4="   DRYa_v_SRC=\"$DRYa_v_SRC\"; export DRYa_v_SRC  # setting one file that wakes all others"
+      L5='   source ${DRYa_v_SRC}'
 
       echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc
@@ -1095,21 +1192,25 @@ function f_decide_to_run {
 
 }
 
-function f_exec {
+function f_initialization {
+   # Testing the wizzard and setting up History log
 
-   f_variables
-      f_5
-     #f_5_verbose
-      f_1
-     #f_1_verbose
+   f_internal_variables
+
+   # Defining Libraries
+      f_5; #f_5_verbose
+      f_1; #f_1_verbose
+
+   f_test_proper_functionality_of_drya_lib_5
+   f_create_tmp_history_file
    f_variables_recalculated 
 
-   f_test_proper_functionality_of_drya_lib_5 
-   f_create_tmp_history_file
+   f_initialization_verbose
+}
 
-   f_menu_principal
-
-   # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
-	  f_decide_to_run
+function f_exec {
+   f_initialization  # Step (1/x)
+   f_menu_principal  # Step (2/x)
+   f_decide_to_run   # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
 }
 f_exec
