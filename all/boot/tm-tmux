@@ -91,10 +91,49 @@ function f_drya_workspace_1 {
 
 }
 
+function f_tmux_split3_panels {
+   # Divide uma janela em 3 partes iguais verticais
+
+    # Tipo de divisão: 'h' para horizontal, 'v' para vertical
+    local dir=${1:-h}
+
+    # Verifica se estamos dentro de uma sessão tmux
+    if [ -z "$TMUX" ]; then
+        echo "Erro: deves estar dentro de uma sessão tmux."
+        return 1
+    fi
+
+    if [ "$dir" = "h" ]; then
+        local width=$(tmux display -p '#{window_width}')
+        local w1=$((width / 3))
+        local w2=$(((width - w1) / 2))
+        tmux split-window -h -l $w1      # Primeiro painel
+        tmux select-pane -R
+        tmux split-window -h -l $w2      # Segundo painel
+        tmux select-pane -L               # Volta para o primeiro painel
+    elif [ "$dir" = "v" ]; then
+        local height=$(tmux display -p '#{window_height}')
+        local h1=$((height / 3))
+        local h2=$(((height - h1) / 2))
+        tmux split-window -v -l $h1      # Primeiro painel
+        tmux select-pane -D
+        tmux split-window -v -l $h2      # Segundo painel
+        tmux select-pane -U               # Volta para o primeiro painel
+    else
+        echo "Uso: tmux_split3 [h|v]"
+        echo "   h = horizontal (lado a lado)"
+        echo "   v = vertical (empilhado)"
+        return 1
+    fi
+}
+
 function f_tmux_panels {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='tm panels'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L5='5. Panels | Split equaly in 3 even vertical panels' 
+
+      L4='4. Panels | Previous pane        |'
       L3='3. Panels | Next pane            | `C-b o`'
       L2='2. Panels | Split pane: Vertical | `C-b %`'
 
@@ -102,13 +141,15 @@ function f_tmux_panels {
 
       L0="tm-tmux: menu panels: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "5. " ]] && f_tmux_split3_panels 
+      [[ $v_list =~ "4. " ]] && echo uDev
       [[ $v_list =~ "3. " ]] && tmux select-pane -t :.+
       [[ $v_list =~ "2. " ]] && tmux split-window -h  # `Ctrl-b %`
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
@@ -145,25 +186,27 @@ function f_tmux_sessions {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='tm sessions'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-       L6='6. DRYa    | Criar um worspace (nr.1)'
+       L7='7. DRYa    |   | Criar um worspace (nr.1)'
 
-       L5='5. Session | Detach Session'
-       L4='4. Session | Attach Session'
-       L3='3. Session | Kill tmux session'
-       L2='2. Session | Open tmux session'
+       L6='6. Session |   | List Sessions'
+       L5='5. Session |   | Detach Session'
+       L4='4. Session |   | Attach Session'
+       L3='3. Session |   | Kill tmux session'
+       L2='2. Session |   | Open tmux session'
 
        L1='1.  Cancel'
 
       L0="tm-tmux: menu sessions: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L7 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[ $v_list =~ "6. " ]] && f_drya_workspace_1
+      [[ $v_list =~ "7. " ]] && f_drya_workspace_1
+      [[ $v_list =~ "6. " ]] && tmux list-sessions
       [[ $v_list =~ "5. " ]] && tmux detach-client
       [[ $v_list =~ "4. " ]] && tmux a
       [[ $v_list =~ "3. " ]] && tmux kill-server && echo "tm-tmux: all sessions (and server) killed"
