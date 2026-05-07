@@ -1749,7 +1749,8 @@ function f_quick_install_all_upk {
       # uDev: Test if it is windows and install GUI version also
       f_talk; echo "installing: emacs figlet vim"
 
-      yes | bash $trid_pkgm install emacs figlet vim 
+      yes | pk + emacs figlet vim 
+      echo
 
    # Repo: upk
       f_talk; echo "Cloning: upK" && git clone https://github.com/SeivaDArve/upK.git
@@ -1805,7 +1806,7 @@ function f_install_presets {
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz" ]] && echo "$Lz" 
-      [[ $v_list =~ "3. " ]] && echo "uDev"
+      [[ $v_list =~ "3. " ]] && echo "uDev: safe logout" && read
       [[ $v_list =~ "2. " ]] && f_quick_install_all_upk
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz"
       unset v_list
@@ -4121,7 +4122,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_sc="scratch-paper"; v_SC="sc"
       v_om="omni-log"
       v_mo="moedaz"
-      v_dv="upk-diario-Dv"
+      v_dv="upK-diario-Dv"
       v_rc=".netrc"
 
       [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_SC $v_rmd" ) || (f_talk && echo "$v_SC $v_inx" )
