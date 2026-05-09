@@ -135,6 +135,7 @@ function f_usefull {
       http://strudel.cc  # Live coding para padroes de musica em javascript
       htop           # Task manager com hotkeys para `kill`processos
       tmate          # Similar to TeamViewer or AnyDesk (but to CLI interface with tmux)
+      yad            # `apt install yad` para criar system trays com icons e comandos (junto ao relogio)
    '
 }
 
