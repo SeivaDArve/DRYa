@@ -192,6 +192,7 @@ alias all="cd all && ls"
 alias   a="cd all && ls"
 alias   A="cd all && ls"
 
+alias CLEAR='echo -e "\033c"; clear'  # Usually `Ctrl-L` clears the screen without erasing the scrollback, `clear` usually clears the scroolback; `clear -x` cleara the screen without erasing the scollback; this alias is an ANSI code to erase the scrollback but in the end the prompt becomes the second line, so another `clear` is added
 
 
 
