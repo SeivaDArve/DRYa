@@ -4116,8 +4116,10 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    elif [ $2 == "2" ] || [ $2 == "prv" ]; then 
       # Delete all personal-data repos (private + scratch-paper + .netrc)
       
-      v_rmd=" > Removed"
-      v_inx=" > Inexistent"
+      f_greet
+
+      v_rmd=" > Removed:    "
+      v_inx=" > Inexistent: "
 
       v_sc="scratch-paper"; v_SC="sc"
       v_om="omni-log"
@@ -4125,14 +4127,15 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_dv="upK-diario-Dv"
       v_rc=".netrc"
 
-      [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_SC $v_rmd" ) || (f_talk && echo "$v_SC $v_inx" )
-      [ -d $v_repo/$v_om ] && (cd && rm -rf $v_repo/$v_om && f_talk && echo "$v_om $v_rmd" ) || (f_talk && echo "$v_om $v_inx" )
-      [ -d $v_repo/$v_mo ] && (cd && rm -rf $v_repo/$v_mo && f_talk && echo "$v_mo $v_rmd" ) || (f_talk && echo "$v_mo $v_inx" )
-      [ -d $v_repo/$v_dv ] && (cd && rm -rf $v_repo/$v_dv && f_talk && echo "$v_dv $v_rmd" ) || (f_talk && echo "$v_dv $v_inx" )
-      [ -f       ~/$v_rc ] && (      rm           ~/$v_rc && f_talk && echo "$v_rc $v_rmd" ) || (f_talk && echo "$v_rc $v_inx" )
+      [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_rmd $v_SC" ) || (f_talk && echo "$v_inx $v_SC" )
+      [ -d $v_repo/$v_om ] && (cd && rm -rf $v_repo/$v_om && f_talk && echo "$v_rmd $v_om" ) || (f_talk && echo "$v_inx $v_om" )
+      [ -d $v_repo/$v_mo ] && (cd && rm -rf $v_repo/$v_mo && f_talk && echo "$v_rmd $v_mo" ) || (f_talk && echo "$v_inx $v_mo" )
+      [ -d $v_repo/$v_dv ] && (cd && rm -rf $v_repo/$v_dv && f_talk && echo "$v_rmd $v_dv" ) || (f_talk && echo "$v_inx $v_dv" )
+      [ -f       ~/$v_rc ] && (      rm           ~/$v_rc && f_talk && echo "$v_rmd $v_rc" ) || (f_talk && echo "$v_inx $v_rc" )
       # uDev: remove all private repos too
       
-      read -sn1 -p "[Any Key] to Clear screen" && echo 
+      echo
+      read -sn1 -p " > [Any Key] to Clear screen... " && echo 
       clear
 
    elif [ $2 == "3" ]; then 
