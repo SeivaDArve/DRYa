@@ -4118,8 +4118,8 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       
       f_greet
 
-      v_rmd=" > Removed:    "
-      v_inx=" > Inexistent: "
+      v_rmd=" > Removed:   "
+      v_inx=" > Inexistent:"
 
       v_sc="scratch-paper"; v_SC="sc"
       v_om="omni-log"
