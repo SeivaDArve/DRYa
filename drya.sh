@@ -2013,7 +2013,6 @@ function f_drya_fzf_MM_Toolbox {
          # L12='12. Agendar envio SMS && WHATSAPP'
          # L12='12. Comboios CP web-scraping
          # L12='12. Ementas Yummy
-         # L12='12. fzf keyboard (para smartphones partidos)'
          # L12='12. dir to .jpg
          # L12='12. Agendar SMS
          # L12='12. sound record
@@ -2041,38 +2040,40 @@ function f_drya_fzf_MM_Toolbox {
          # L13= ANSI converter: https://dom111.github.io/image-to-ansi/
          # L13= Adicionar software como JSplit que parte ficheiros grandes em ficheiros mais pequenos
          
-         L22='22. Menu   |  pid  | Kill process by PID (process ID)'
-         L21='21. Menu   |  gpg  | gnu-privacy-guard (encrypt and decript files)'
-         L20='20. Menu   |  zip  | zip unzip'
-         L19='19. Script |  `d`  | Datas (menu)'
-         L18='18. Script |   -   | Youtube download (with `yt-dlp`)'
-         L17='17. Menu   |  cln  | Clone Repositories (github)'
-         L16='16. Menu   | mt-ls | Metadata management'
-         L15='15. Menu   |  ip   | Internet / Network / IP'
-         L14='14. Script |  ssh  | drya-ssh-sshfs'
-         L13='13. Menu   |  plr  | Audio (Media Player + Voice Recorder)'  
-         L12='12. Print  |       | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
-         L11='11. Print  |       | `curl` tricks: Online man pages'  
-         L10='10. Print  | morse | morse code diagram'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
-          L9='9.  Menu   |  no   | no-tes '
-          L8='8.  Script | wpwd  | Convert `pwd` from Win to Linux'
-          L7="7.  Script |   -   | xKill + tty + PID (info)" # Ensinar como abrir diferentes tty e como usar o xKill, tambem como fechar processos teimosos
-          L6="6.  Script | noty  | notify"
-          L5="5.  Menu   |  qr   | QR code"
-          L4="4.  Menu   |  clc  | calculos/calculadoras"
-          L3="3.  Menu   | ui  d | dot-files"
-          L2='2.  Script | `. .` | fluNav'
+         L23='23. Guide  | Ctrl-X | Open DRYa Emergency Keyboard (with fzf)' 
+         L22='22. Menu   |  pid   | Kill process by PID (process ID)'
+         L21='21. Menu   |  gpg   | gnu-privacy-guard (encrypt and decript files)'
+         L20='20. Menu   |  zip   | zip unzip'
+         L19='19. Script |  `d`   | Datas (menu)'
+         L18='18. Script |   -    | Youtube download (with `yt-dlp`)'
+         L17='17. Menu   |  cln   | Clone Repositories (github)'
+         L16='16. Menu   | mt-ls  | Metadata management'
+         L15='15. Menu   |  ip    | Internet / Network / IP'
+         L14='14. Script |  ssh   | drya-ssh-sshfs'
+         L13='13. Menu   |  plr   | Audio (Media Player + Voice Recorder)'  
+         L12='12. Print  |        | `curl` tricks: Previsao do Tempo'  # uDev: Adicionar fase da lua 
+         L11='11. Print  |        | `curl` tricks: Online man pages'  
+         L10='10. Print  | morse  | morse code diagram'    # Link: https://www.instagram.com/reel/DEmApyMtMn7/?igsh=MTJqbjl6dWMxd2F1dg==
+          L9='9.  Menu   |  no    | no-tes '
+          L8='8.  Script | wpwd   | Convert `pwd` from Win to Linux'
+          L7="7.  Script |   -    | xKill + tty + PID (info)" # Ensinar como abrir diferentes tty e como usar o xKill, tambem como fechar processos teimosos
+          L6="6.  Script | noty   | notify"
+          L5="5.  Menu   |  qr    | QR code"
+          L4="4.  Menu   |  clc   | calculos/calculadoras"
+          L3="3.  Menu   | ui  d  | dot-files"
+          L2='2.  Script | `. .`  | fluNav'
 
           L1="1.  Cancel" 
 
          L0="DRYA: toolbox fx List: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n$L23 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[   $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
          [[   $v_list =~ "V. " ]] && [[ $v_list =~ "[ ]" ]] && Lv="$LvX" && f_loop
 
+         [[   $v_list =~ "23. " ]] && echo "Press CTRL-X to open Alternative Keyboard (DRYa Emergency Keyboard)"  # uDev: Precisa de 2x failsafe: tem a dependencia FZF para CTRL-X e tambem para este menu que pode nem sequer surgir
          [[   $v_list =~ "22. " ]] && f_kill_process_by_PID
          [[   $v_list =~ "21. " ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
          [[   $v_list =~ "20. " ]] && f_zip_unzip
