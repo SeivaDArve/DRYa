@@ -19,6 +19,8 @@
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
+# uDev: renomear 'config-bash-alias' pra 'dryaRC.centralized'' e '.dryarc' para '.dryaRC.host'
+
 # uDev: fix dependency bugs (in case DRYa is running on a fresh install of some new OS)
 
 
