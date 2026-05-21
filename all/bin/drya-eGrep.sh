@@ -1,9 +1,9 @@
 #!/bin/bash
-# Title: Partial file Reader
-# Description: feed this script with a file name, and A grep search, it will tell the line number
-#              or, feed a .org file name and a header name, this script will print the entire header
+# Title:       | drya-eGrep (drya extended grep)
+# Description: | feed this script with a file name, and A grep search, it will tell the line number
+#              | or, feed a .org file name and a header name, this script will print the entire header
 
-
+__name__=drya-eGrep
 
 
 
@@ -14,7 +14,7 @@
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
-   v_talk="DRYa: "
+   v_talk="DRYa: eGrep: "
 
    # Examples: `db` (an fx to use during debug)
    #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
@@ -28,10 +28,12 @@
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
 
-   
 
+# Sourcing DRYa Lib 8: Reading/Parsing argumentes from the CLI prompt, then testing if they are valid
+   v_lib8=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+   [[ -f $v_lib8 ]] && source $v_lib8 || (read -s -n 1 -p "DRYa: error: drya-lib-8 does not exist " && echo)
 
-
+   # Examples: `D opts -i inFile.txt` and the script will test the input file if it exist or not
 
 
 
@@ -79,67 +81,7 @@
 
 
 
-function f_pfr_welcome {
-
-   # Timer for verbose welcome screen
-      v_secs=10 
-
-   # Testing if args are inexistent / existent == 0 / existent != 0
-
-   if [ -z $1 ]; then
-      Lhc1="[none -z]"
-      Lhc2="[none -z]"
-
-   elif [[ $1 == 0 ]]; then
-      Lhc1="[none 0]"
-
-      if [ -z $2 ]; then
-         Lhc2="[none -z]"
-      elif [[ $2 == "0" ]]; then  
-         Lhc2="[none 0]"
-      else
-         Lhc2="$2"
-      fi
-
-   else
-      Lhc1="$1"
-
-      if [ -z $2 ]; then
-         Lhc2="[none -z]"
-      elif [[ $2 == "0" ]]; then  
-         Lhc2="[none 0]"
-      else
-         Lhc2="$2"
-      fi
-
-   fi
-
-   echo "DRYa: partial-file-reader: (ENTER or wait $v_secs sec):"
-   echo " > All args: $@"
-   echo
-   echo " > Assuming: \$1: Input  File: $Lhc1"
-   echo " > Assuming: \$2: Output File: $Lhc2"
-   read -sn1 -t $v_secs
-      
-   #f_partial_file_reader "$Lhc1" "$Lhc2"
-}
-
-
-
-
-function f_partial_file_reader_get_file_name {
-   Lhc2=$(head -n 1 $v_tmp)
-
-   [[ -z $Lhc2 ]] && Lhc2="[none]"
-
-}
-
-function f_partial_file_reader_choose_file {
-   f_create_tmp_file 
-}
-
 function f_output_org_mode_header_filtered_by_fzf {
-
 
    f_greet
    [[ -z $2 ]] && echo "Esta fx precisa do Arg 2 (ficheiro de entrada)" && exit 1
@@ -150,12 +92,8 @@ function f_output_org_mode_header_filtered_by_fzf {
    unset  v_headr
 }
 
-function f_partial_file_reader {
+function f_fzf_menu {
    # Para ler partes de documentos (com fzf)
-
-   # Buscar variavel `Lhc1` e `Lhc2 para usar em `Lh`
-      f_partial_file_reader_choose_file 
-      f_partial_file_reader_get_file_name 
 
    # Lista de opcoes para o menu `fzf`
       Lz1='Saved '; Lz2='D grep'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
@@ -184,10 +122,8 @@ function f_partial_file_reader {
 
       Lhc1=$1
       Lhc2=$2
-     #Lhc1 existe na fx: ...  (para ficheiro de entrada)
-     #Lhc2 existe na fx: ...  (para ficheiro de saida)
-      Lh=$(echo -e "\nFicheiro de entrada:\n > $Lhc1\n\nFicheiro de saida: ( concat:yes ):\n > $Lhc2\n ")
-      L0="DRYa: Menu grep: "
+      Lh=$(echo -e "\nFicheiro de entrada:\n > $v_input \n\nFicheiro de saida: ( concat:yes ):\n > exemplo 2\n ")
+      L0="DRYa-eGrep: "
       
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18  \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
@@ -214,6 +150,53 @@ function f_partial_file_reader {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
 # -------------------------------------------
@@ -224,10 +207,15 @@ function f_partial_file_reader {
 
 
 
+f_talk; echo "(extended grep)"
 
 
+echo
+read -p "[Enter] para passar ao script $__name__"
+echo
 
-# Re-organizacao dos argumentos passados a esta fx principal: `f_partial_file_reader`
-   #f_pfr_welcome "$@"
-
-   f_partial_file_reader $*  # Inutilizado por causa do tratamentos de dados e de argumentos da fx f_pfr_welcome 
+f_parse_args "$@"
+echo
+read -p "[Enter] para passar ao script $__name__"
+echo
+f_fzf_menu 

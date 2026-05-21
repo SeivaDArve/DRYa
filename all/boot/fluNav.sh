@@ -29,6 +29,7 @@
 # uDev: 
 #       letra F para ABRIR ficheiros File|Find|Fav
 #       letra . para abrir ficheiros sem F
+#       criar um argumento para limpar. exemplos: listas temporarias criadas por V e F em `V ...` e `F ...`
 
 
 # Leters to be used:

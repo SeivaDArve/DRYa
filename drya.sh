@@ -1875,7 +1875,7 @@ function f_menu_install_dot_files {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ "$Lz"  ]] && history -s "$Lz"
       [[ $v_list =~ "12. " ]] && f_dotFiles_install_termux_properties
-      [[ $v_list =~ "11. " ]] && echo "emacs dot-files: uDev"
+      [[ $v_list =~ "11. " ]] && f_manage_init_and_libraries_after_mod 
       [[ $v_list =~ "10. " ]] && f_dotFiles_install_tm_tmux
       [[ $v_list =~ "9.  " ]] && f_dot_files_install_bash_logout 
       [[ $v_list =~ "8.  " ]] && f_dot_files_install_git 
@@ -4312,10 +4312,21 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
    #        `D clp m p`  # Paste using machine clipboard
    #
 
+elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then 
+   # Partial File Reader: Filtrar texto de ficheiros
+
+   v_script=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+
+   f_greet
+   f_talk
+
+   source $v_script
+   f_parse_args "$@"
+
 elif [ $1 == "grep" ] || [ $1 == "gr" ]; then 
    # Partial File Reader: Filtrar texto de ficheiros
 
-   v_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-extended-grep.sh
+   v_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-eGrep.sh
 
    if [ -z $2 ]; then 
       bash $v_script 
@@ -4340,6 +4351,7 @@ elif [ $1 == "dmsg" ] || [ $1 == "ssms" ] || [ $1 == "msg" ]; then
 elif [ $1 == "call" ]; then 
    # Opcoes para chamadas (usa `termux-telephony-call` da Termux:API)
    echo "uDev: Criar reencaminhamento de chamadas e tambem retirar esses reencaminhamentos"
+   echo " > Codigos UUID guardados em 'D wiki'"
 
 elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then 
    # Fornecendo dois nomes de ficheiros, informa se sao iguais ou tem diferencas
