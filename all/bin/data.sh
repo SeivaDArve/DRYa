@@ -626,5 +626,10 @@ elif  [ $1 == "I" ]; then
 elif  [ $1 == "tarifa" ]; then
    # Mencionar em qual estamos: 1.8.1, 1.8.2, 1.8.3
    echo uDev
+
+elif  [ $1 == "eclipse" ]; then
+   # Lista de eclipses uteis
+   echo "12 de Agosto em Braganca 2026: Eclipse total do sol"
+
 fi
 
