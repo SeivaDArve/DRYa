@@ -2423,6 +2423,7 @@ function f_backup_guide {
       f_talk; echo "Ajuda na execucao de Backups"
               echo 
       f_talk; echo "Lista uDev:"
+              echo " > Gravar licenca OEM escrita na BIOS do PC Windows atual (antes de formatar)"
               echo " > Send files from one device to another device using the web (FTP, ssh)"
               echo "   Smartphone > Raspberry Pi (cloud) > External HDD"
               echo " > DRYa will suggest specific files to backup"
