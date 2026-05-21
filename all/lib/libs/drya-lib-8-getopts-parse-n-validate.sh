@@ -121,7 +121,7 @@ function f_help__print_usage {
 
 
 
-function f_parse_args_bug_1 {
+function f_parse_args {
    # Esta fx apenas lê e filtra todos os argumentos do prompt (um a um) e coloca nas suas variaveis. Nao confirma por exemplo se nomes de ficheiros de entrada existe e se esta correto (porque isso será na fx seguinte)
 
    echo  # Espacamento inicial, apoio ao f_talk
@@ -160,6 +160,7 @@ function f_parse_args_bug_1 {
    local initial_argc=$#  # Contar (e guardar) o numero inicial de argumentos
 
    while [[ $# -gt 0 ]]; do
+      # Percorre argumento a argumento
 
       # ============================================================
       # LONG OPTIONS SUPORTADAS
@@ -178,6 +179,13 @@ function f_parse_args_bug_1 {
       #      --input=file.txt
       #      --output=file.txt
       #
+      #   4. uDev
+      #      --in file.txt
+      #      --out file.txt
+      #
+      #      --in=file.txt
+      #      --out=file.txt
+      #
       # ============================================================
 
       if [[ "$1" == "--verbose" ]]; then
@@ -188,81 +196,80 @@ function f_parse_args_bug_1 {
          force=true
          shift
 
-      # -------------------------
-      # LONG OPTION INLINE
-      # -------------------------
-      #
-      # Ex:
-      #   --input=file.txt
-      #
+
+
+      # LONG OPTION INLINE ( --input=file.txt )
+
       elif [[ "$1" == --input=* ]]; then
+         # Exemplo: --input=file.txt
          v_input="${1#*=}"
          shift
 
       elif [[ "$1" == --output=* ]]; then
+         # Exemplo: --output=file.txt
          output="${1#*=}"
          shift
 
-      # -------------------------
+
       # LONG OPTION SEPARADO
-      # -------------------------
-      #
-      # Ex:
-      #   --input file.txt
-      #   --output file.txt
-      #
+
       elif [[ "$1" == "--input" ]]; then
+         # Exemplo: --input file.txt
          v_input="$2"
          shift 2
 
       elif [[ "$1" == "--output" ]]; then
+         # Exemplo: --output file.txt
          output="$2"
          shift 2
 
-      # ============================================================
-      # SHORT OPTIONS
+      #  # ============================================================
+      #  # SHORT OPTIONS
+      #  #
+      #  # ESTE BLOCO DETETA:
+      #  #
+      #  #   - FLAGS:
+      #  #       -v
+      #  #       -f
+      #  #
+      #  #   - AGRUPAMENTO:
+      #  #       -vf
+      #  #       -vfofile.txt
+      #  #
+      #  #   - ARGUMENTOS INLINE:
+      #  #       -iinput.txt
+      #  #       -ooutput.txt
+      #  #
+      #  #   - ARGUMENTOS SEPARADOS:
+      #  #       -i input.txt
+      #  #       -o output.txt
+      #  #
+      #  # REGEX:
+      #  #
+      #  #   -[!-]?*
+      #  #
+      #  # SIGNIFICADO:
+      #  #
+      #  #   -       → começa com hífen
+      #  #   [!-]    → segundo char não pode ser "-"
+      #  #   ?*      → pelo menos mais um char
+      #  #
+      #  # EXCLUI:
+      #  #   --long-options (evita conflito)
+      #  #
+      #  # ============================================================
       #
-      # ESTE BLOCO DETETA:
-      #
-      #   - FLAGS:
-      #       -v
-      #       -f
-      #
-      #   - AGRUPAMENTO:
-      #       -vf
-      #       -vfofile.txt
-      #
-      #   - ARGUMENTOS INLINE:
-      #       -iinput.txt
-      #       -ooutput.txt
-      #
-      #   - ARGUMENTOS SEPARADOS:
-      #       -i input.txt
-      #       -o output.txt
-      #
-      # REGEX:
-      #
-      #   -[!-]?*
-      #
-      # SIGNIFICADO:
-      #
-      #   -       → começa com hífen
-      #   [!-]    → segundo char não pode ser "-"
-      #   ?*      → pelo menos mais um char
-      #
-      # EXCLUI:
-      #   --long-options (evita conflito)
-      #
-      # ============================================================
+      #  elif [[ "$1" == -[!-]?* ]]; then
 
-      elif [[ "$1" == -[!-]?* ]]; then
+
+      elif [[ "$1" == -* ]] && [[ "$1" != --* ]]; then
 
          # remove o "-"
          # "-vfofile" → "vfofile"
          short="${1#-}"
 
-         # percorre caractere a caractere
          while [[ -n "$short" ]]; do
+            # Percorre caractere a caractere
 
             opt="${short:0:1}"
             short="${short:1}"
@@ -293,8 +300,14 @@ function f_parse_args_bug_1 {
                   v_input="$short"
                   short=""
                else
-                  v_input="$1"
                   shift
+
+                  if [[ -z "$1" ]]; then
+                     echo "erro: -i requer nome de ficheiro (nem que seja invalido)"
+                     return 1
+                  fi
+
+                  v_input="$1"
                fi
 
             # ------------------------------------------
@@ -314,6 +327,12 @@ function f_parse_args_bug_1 {
                   short=""
                else
                   shift
+
+                  if [[ -z "$1" ]]; then
+                     echo "erro: -o requer nome de ficheiro (nem que seja invalido)"
+                     return 1
+                  fi
+
                   output="$1"
                fi
 
@@ -323,25 +342,25 @@ function f_parse_args_bug_1 {
             fi
          done
 
-         #shift
+         shift
 
       # ============================================================
-      # FIM EXPLÍCITO DE PARSING
+      # FIM DE PARSING com Args
       # ============================================================
 
       elif [[ "$1" == "--" ]]; then
          shift
          break
 
-      # ============================================================
-      # ARGUMENTOS POSICIONAIS
-      #
-      # SUPORTA:
-      #   .
-      #   ./ficheiro
-      #   qualquer string não-option
-      #
-      # ============================================================
+         # ============================================================
+         # ARGUMENTOS POSICIONAIS
+         #
+         # SUPORTA:
+         #   .
+         #   ./ficheiro
+         #   qualquer string não-option
+         #
+         # ============================================================
 
       else
          positional+=("$1")
@@ -350,10 +369,7 @@ function f_parse_args_bug_1 {
 
    done
 
-   # ============================================================
-   # OUTPUT RAW (SEM VALIDAÇÃO)
-   # ============================================================
-
+   # OUTPUT final (sem confirmar se os argumentos sao validos)
    f_talk; echo "parse CLI arguments"
            echo 
            echo "initial_argc = $initial_argc"
@@ -366,135 +382,12 @@ function f_parse_args_bug_1 {
            echo 
 }
 
-function f_parse_args_bug_2 {
 
-   # -------------------------------------------------
-   # Variáveis iniciais
-   # -------------------------------------------------
-   local v_verbose=false
-   local v_force=false
-   local v_input=""
-   local v_output=""
-   local v_positional=()
 
-   if [[ $# -eq 0 ]]; then
-      echo " > nenhum argumento fornecido. usa -h"
-      v_act=false
-      return 0
-   fi
 
-   if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-      f_help__print_usage
-      v_act=false
-      return 0
-   fi
 
-   v_initial_argc=$#
 
-   # -------------------------------------------------
-   # Loop principal
-   # -------------------------------------------------
-   while [[ $# -gt 0 ]]; do
 
-      # -------------------------------------------------
-      # Long options
-      # -------------------------------------------------
-      if [[ "$1" == "--verbose" ]]; then
-         v_verbose=true
-         shift
-
-      elif [[ "$1" == "--force" ]]; then
-         v_force=true
-         shift
-
-      elif [[ "$1" == --input=* ]]; then
-         v_input="${1#*=}"
-         shift
-
-      elif [[ "$1" == --output=* ]]; then
-         v_output="${1#*=}"
-         shift
-
-      elif [[ "$1" == "--input" ]]; then
-         shift
-         v_input="$1"
-         shift
-
-      elif [[ "$1" == "--output" ]]; then
-         shift
-         v_output="$1"
-         shift
-
-      # -------------------------------------------------
-      # Short options
-      # -------------------------------------------------
-      elif [[ "$1" == -[!-]?* ]]; then
-         v_short="${1#-}"
-
-         while [[ -n "$v_short" ]]; do
-            v_opt="${v_short:0:1}"
-            v_short="${v_short:1}"
-
-            if [[ "$v_opt" == "v" ]]; then
-               v_verbose=true
-
-            elif [[ "$v_opt" == "f" ]]; then
-               v_force=true
-
-            elif [[ "$v_opt" == "i" ]]; then
-               if [[ -n "$v_short" ]]; then
-                  v_input="$v_short"
-                  v_short=""
-               else
-                  shift
-                  v_input="$1"
-               fi
-
-            elif [[ "$v_opt" == "o" ]]; then
-               if [[ -n "$v_short" ]]; then
-                  v_output="$v_short"
-                  v_short=""
-               else
-                  shift
-                  v_output="$1"
-               fi
-
-            else
-               echo "erro: opção inválida -$v_opt"
-               return 1
-            fi
-         done
-
-         shift  # shift apenas depois de processar a flag agrupada
-
-      # -------------------------------------------------
-      # Fim parsing
-      # -------------------------------------------------
-      elif [[ "$1" == "--" ]]; then
-         shift
-         break
-
-      # -------------------------------------------------
-      # Positional arguments
-      # -------------------------------------------------
-      else
-         v_positional+=("$1")
-         shift
-      fi
-   done
-
-   # -------------------------------------------------
-   # Debug
-   # -------------------------------------------------
-   f_talk
-   echo "parse CLI arguments"
-   echo "initial_argc = $v_initial_argc"
-   echo "verbose      = $v_verbose"
-   echo "force        = $v_force"
-   echo "input        = $v_input"
-   echo "output       = $v_output"
-   echo "positionals  = ${v_positional[*]}"
-}
 
 
 function f_validar_args {

@@ -3284,7 +3284,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L12='12. | `D ui b`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
          L11='11. | `D cln`   |  Menu   | Clone Repos         '
          L10='10. | `D iu d`  |  Menu   | dot-files           '
-          L9='9.  | `D ui dp` |  Menu   | 1st (Dependencies )       ' 
+          L9='9.  | `D ui dp` |  Menu   | 1st (Dependencies)       ' 
                                
           L8='8.  | `D ui 1f` |  Edit   | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
           L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
@@ -4027,6 +4027,8 @@ elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo"
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    # Step-by-step guide to create a bootable USB at windows command prompt"
+   # Nota: Este comando é mentmcionado em '1st': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
+   # uDev: Enviar este comando para `D iu`
 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
 
@@ -4089,6 +4091,7 @@ elif [ $1 == "remove" ] || [ $1 == "rm" ]; then
 elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
    # Several ways to exit the terminal
 
+   # uDev: passar esta fx para dryaSRC porque se o prompt estiver em alguma pasta que precise ser removoda, entao ela nao sera removida, porque `cd` nao vai funcionar
 
    # uDev: Fazer um script equivalente a `getopts` para esta fx. Ou fzf com --multiple
    #     exemplo: `D quit -Huc -r`
@@ -4318,7 +4321,7 @@ elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then
    v_script=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
 
    f_greet
-   f_talk
+   f_talk; echo $(basename $v_script)
 
    source $v_script
    f_parse_args "$@"
