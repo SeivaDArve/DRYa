@@ -51,6 +51,15 @@
 #     Exemplo:
 #        diff <(ls dir1) <(ls dir2)
 
+
+#
+#
+# uDev: Agilizar nesta drya-lib uma fx do tipo boilerplate para criar ficheiros temporarios (para no futuro poder criar scripts separados ja com essa fx em vez de ter de chamar esta lib)
+#
+#
+
+
+
 function f_create_tmp_file {
    # Creates a temporary file and returns a variable with it's path $v_tmp
 
