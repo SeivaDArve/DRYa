@@ -2433,20 +2433,23 @@ function f_backup_guide {
               #echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
               echo
       f_talk; echo "Backup Checklist (Smartphone):"
-              echo " > Contacts"
-              echo " > Gmail accounts and passwords"
-              echo " > Social media login credentials"
-              echo " > Snapshot all installed apps (\`cmd package list packages\` to dump list)"
-              echo " > Browser bookmarks"
-              echo " > Update all Repositories from termux to github"
-              echo " > All SD CARD and Internal Storage content"
-              echo " > Confirmar primeiro os dados de acesso ao email de recuperacao de conta (email secundario do google), so depois reset a conta principal (email principal do google)"
-              echo " > Current wallpaper (principal, de bloqueio)"
-              echo " > Alarm custom music"
-              echo " > Dados de aplicacoes (notas, etc)"
-              echo " > Conteudos GPG"
-              echo ' > No Android, $HOME do termux é invisivel no explorador de arquivos normais'
-              echo ' > Transferir Conversas das app: Whatsapp, Telegram, SMS...'
+              echo " - [ ]  Contacts"
+              echo " - [ ]  Gmail accounts and passwords"
+              echo " - [ ]  Credenciais login: Social media, apps, etc"
+              echo " - [ ]  Snapshot all installed apps (\`cmd package list packages\` to dump list)"
+              echo " - [ ]  Browser bookmarks"
+              echo " - [ ]  All SD CARD and Internal Storage content"
+              echo " - [ ]  Confirmar primeiro os dados de acesso ao email de recuperacao de conta (email secundario do google), so depois reset a conta principal (email principal do google)"
+              echo " - [ ]  Current wallpaper (principal, de bloqueio)"
+              echo " - [ ]  Alarm custom music"
+              echo " - [ ]  Dados de aplicacoes (notas, etc)"
+              echo " - [ ]  Conteudos GPG"
+              echo " - [ ]  Centeudos Termux:"
+              echo '        Nota: No Android, $HOME do termux é invisivel no explorador de ficheiros pre-definido do Android'
+              echo "        - Update all Repositories from termux to github"
+              echo '        - Copiar tudo em "$HOME",  "~/.code/*", "~/.tmp/*" '
+              echo '        - Nao esquecer ficheiros ocultos'
+              echo ' - [ ]  Transferir Conversas das app: Whatsapp, Telegram, SMS...'
               echo
       f_talk; echo "Backup Checklist (computer files to external HDD):"
               echo " > ..."
