@@ -146,6 +146,13 @@ function f_one_file_bau {
       fi
 }
 
+function f_ensure_omni_log {
+   # Ensuring omni-log with drya-lib-4
+
+   # uDev: para o verbose output falta: mencionar que vem do script: `no - .` ou outros
+   v_ensure="$v_df_repo" && f_lib4_download_compact
+}
+
 function f_run_notify_script {
    # Runs/Executes external script 'notify.sh'
    bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
@@ -165,8 +172,7 @@ function f_main_menu {
       L8='8. Info   | com het. random   | `no x <txt no terminal>`' 
       L7='7. Nota   | com heteronimos   | `no H`' 
 
-      L6='6. ToDo   | Lista de tarefas  | `no td e`'
-      L5='5. ToDo   | Lista de tarefas  | `no td`'
+      L6='6. ToDo   | Lista de tarefas  | `no td`'
 
       L4='4. Nota   | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
@@ -177,7 +183,7 @@ function f_main_menu {
       Lh=$(echo -e "\nInfo: no-tes.sh\n - É um menu minimalista que permite editar ficheiros favoritos\n - A repo DRYa nao guarda texto em si pripria\n   Guarda texto maioritariamente na repo 'omni-log'\n - Se nao for possivel o download ou utilizacao de 'omni-log' \n   o texto é guardado temporariamente offline em drya-mail-box\n ")
       L0="DRYa: no-tes: main menu: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$L6 \n\n$L7 \n$L8 \n\n$L9 \n\n$Lz3" | fzf --cycle --header="$Lh" --prompt="$L0")
 
       #echo "comando" >> ~/.bash_history && history -n
       #history -s "echo 'Olá, mundo!'"
@@ -187,8 +193,7 @@ function f_main_menu {
       [[ $v_list =~ "9. " ]] && f_run_notify_script 
       [[ $v_list =~ "8. " ]] && f_talk && echo 'You may use text directly on the terminal that goes directly to 'rn' notes using the command `no x <text here>`'
       [[ $v_list =~ "7. " ]] && f_edit_with_heteronimos
-      [[ $v_list =~ "6. " ]] && f_ensure_omni_log && emacs ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
-      [[ $v_list =~ "5. " ]] && f_ensure_omni_log && vim   ${v_REPOS_CENTER}/omni-log/all/ex-pressa/td
+      [[ $v_list =~ "6. " ]] && f_ensure_omni_log && bash e $v_file_td
       [[ $v_list =~ "4. " ]] && f_one_file_bau
       [[ $v_list =~ "3. " ]] && echo
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
@@ -255,12 +260,16 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    # --- File to be edited: $v_file_td (variable set at the top of this script)
    # --- Alias also defined as `td` in 'dryaSRC'
 
-   # uDev: join "toDo" from: moedaz (alias on dryaSRC), omni-log.org (inside file itself), td, from no-tes.sh (that writes on Heteronimos, inside omni-log)
+   # uDev: join "toDo" from: 
+   #           - moedaz (alias on dryaSRC)
+   #           - omni-log.org (inside file itself)
+   #           - td (from expressa/td)
+   #           - from no-tes.sh (that writes on Heteronimos
+   #           - inside omni-log
 
    
    # Ensuring omni-log with drya-lib-4
-      # uDev: para o verbose output falta: mencionar que vem do script: `no - .`
-      v_ensure="$v_df_repo" && f_lib4_download_compact
+      f_ensure_omni_log
 
    if [ -z $2 ]; then
       # If no arg are given
