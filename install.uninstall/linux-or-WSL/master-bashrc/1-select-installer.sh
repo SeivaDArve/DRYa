@@ -23,7 +23,6 @@
 
 
 
-
 # ----------------------------------------------------------------------------------------------
 # -- Below: Provide Visuals at the start 
 # ----------------------------------------------------------------------------------------------
@@ -102,7 +101,7 @@ function f_hzl {
       [[ -z           $v_cols  ]] && v_cols=$(stty size | awk '{print $2}')  2>/dev/null  # Caso `printenv` nao contenha $COLUMNS
       [[ -z           $v_cols  ]] && v_cols=$(stty size | cut -f 2 -d " " )  2>/dev/null  # Caso `awk`      nao esteja instalado
       [[ -z           $v_cols  ]] && v_cols=$(tput cols                   )  2>/dev/null    # Caso `cut`      nao esteja instalado
-      [[ -z           $v_cols  ]] && echo "An error does not allow counting Terminal Columns Size to create f_hzl"
+      [[ -z           $v_cols  ]] && echo "An error does not allow counting Terminal Columns Size to create f_hzl" && read -sn 1
      #echo "Columns = $v_cols"  # Debug
 
    # Subtrair alguns caracteres
@@ -124,9 +123,11 @@ function f_hzl {
       # The result is an horizontal line
          #echo "var is $v_underscoreCount"
          #read -sn1
-         v_line=$v_underscoreCount
+         v_line=$v_underscoreCount  # uDev: substituir para $v_hzl
 
-      echo $v_line
+      v_some_line=------------------------------------------------------------------  # Hard coded line
+
+      # echo $v_line  # Debug
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -308,8 +309,8 @@ function f_initialization_verbose {
    f_history_log  # if already includes f_greet
 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
-      f_talk; echo                "Initialization (1/X)"
-              echo                "---------------------------------------"
+      f_talk; echo                "[1/x] Initialization"
+              echo $v_some_line  #------------------------------------------------------
               echo                " |   | Testing DRYa's installer itself, "
               echo                " |   | "
               echo                " |   | if it can detect relative|absolute paths."
@@ -328,8 +329,11 @@ function f_initialization_verbose {
       [[   -f $v_historyF ]] && echo " |   | - [X] History was created"
       [[ ! -f $v_historyF ]] && echo " |   | - [ ] History was created"
    
-   echo "---------------------------------------"
-   read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
+   # Waiting for user to read
+      echo $v_some_line
+      echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
+      echo $v_some_line
+      read -sn1 -p "   > "
 }
 
 
@@ -353,7 +357,7 @@ function f_history_log {
 
 
    v_hst_br="|" 
-   v_hst_00="| History: Clean (it will grow here)"
+   v_hst_00="| History: [Clean] (it will grow here)"
    v_hst_br="|" 
 
 
@@ -394,13 +398,13 @@ function f_debug_bashrc_existence {
 
    f_greet
    echo "|"   
-   echo "| History: Wizzard tested"
-   echo "| History: Main Menu: Install"
+   echo "| History: [1/x] Wizzard test: Passed"
+   echo "| History: [2/x] Main Menu > Install"
    echo "|" 
    echo
 
 
-   f_talk; echo 
+   f_talk; echo "[3/x] BashRC test"
            echo "-------------------------------"
            echo " |   | "
            echo " |   | Ensuring 'non empty' + 'proper existence' of:"
@@ -419,10 +423,12 @@ function f_debug_bashrc_existence {
       [[ $v_char_count -gt 1 ]] && echo " |   | - [X] Does not need filling, all ok!"
       [[ $v_char_count -lt 1 ]] && echo " |   | - [ ] Does need filling..." && echo " " >> $v_bash && echo " |   | - [X] Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
            echo " |   | "
-      echo "-------------------------------"
 
    # Waiting for user to read
-      read -sn1 -p "   > [ENTER = Continue] or [CTRL-C = Cancel]: "
+      echo $v_some_line
+      echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
+      echo $v_some_line
+      read -sn1 -p "   > "
 }
 
 
@@ -439,7 +445,8 @@ function f_title {
 
 function f_1st {
    # This function belongs to the First Question
-   echo -e "                 (Step 1 of 4)                 \n"
+   echo   "                 (Step 1 of 4)                "
+   echo   
    echo -e "       --- Checklist for instalation --- "
    echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
    echo
@@ -547,8 +554,8 @@ function f_1st_select {
       # This function belongs to the First Question
 
       function f_test_existence_repos_center_default {
-         [[   -d ~/Repositories ]] && echo " |   |       > It already exists"
-         [[ ! -d ~/Repositories ]] && echo " |   |       > It will be created"
+         [[   -d ~/Repositories ]] && echo " |   |     > It already exists [tested]"
+         [[ ! -d ~/Repositories ]] && echo " |   |     > It will be created"
       }
 
       f_greet
@@ -560,41 +567,47 @@ function f_1st_select {
       echo "|" 
       echo
 
-      f_talk; echo "(1/4)"
-              echo 
-              echo ' |   | Defining the path to .../(DRYa-REPOS-CENTER)/'
-              echo " |   | It is DRYa's centralized directory for repositories"
-              echo "-------------------------------------------------------------"
+      f_talk; echo "[4/x] Choose centralized Directory"
+              echo $v_some_line
+              echo " | Choose the path to 'DRYa-REPOS-CENTER/'"
+              echo " | DRYa's will centralize all repositories here."
+              echo $v_some_line
               echo " |   |"
-              echo " | 1 | - [X] ~/Repositories/  (default)"
+              echo " | 1 | >>> ~/Repositories/ "
               f_test_existence_repos_center_default 
               echo " |   |"
-              echo " | 2 | - [ ] '/mnt/c/\$USER/Repositories/'  (at WSL2)"
-              echo " |   |       > It is at the C:\ drive, inside a new directory"
-              echo " |   |         with the same name as the USER "
-              echo " |   |         This way, navigation through explorer.exe is)"
-              echo " |   |         easier. (Not safe only if there are more than"
-              echo " |   |         one user in the current machine)"
+              echo " | 2 | >>> /mnt/c/\$USER/Repositories/"
+              echo " |   |     > Used at WSL2"
+              echo " |   |     > It is at the C:\ drive, inside a new directory"
+              echo " |   |       with the same name as the USER "
+              echo " |   |       This way, navigation through explorer.exe is)"
+              echo " |   |       easier. (Not safe only if there are more than"
+              echo " |   |       one user in the current machine)"
               echo " |   |"
-              echo " | 3 | - [ ] '/mnt/c/\$USER/Repositories/'  (at WSL2)"
-              echo " |   |       > "
+              echo " | 3 | >>> /mnt/c/users/\$USER/Repositories/"
+              echo " |   |     > Used at WSL2"
+              echo " |   |     > "
               echo " |   |"
-              echo " | 4 | - [ ] Current prompt location"
-              echo " |   |       > $v_1"
+              echo " | 4 | >>> Current CLI prompt location"
+              echo " |   |     > $v_1"
               echo " |   |"
-              echo " | 5 | - [ ] Insert location manually"
+              echo " | 5 | >>> Insert 'other location' manually"
               echo " |   |"
-              echo " | 6 | Back to Main Menu"
-              echo " | 7 | Abort everything"
+              echo " | 6 | >>> Back to 'Main Menu'"
               echo " |   |"
-              echo "-------------------------------------------------------------"
-           read -p "   > " v_ans
+              echo " | 7 | >>> 'Abort' everything"
+              echo " |   |"
+      # Waiting for user to read
+         echo $v_some_line
+         echo " [ Default = ~/Repositories ] "
+         echo $v_some_line
+         read -p "   > " v_ans
 
            [[ $v_ans == 6 ]] && f_menu_principal
    }
 
-   f_1st_by_read
-   #f_1st_by_select
+   #f_1st_by_read
+   f_1st_by_select
 
    #read -s -p "finish"
 }
@@ -789,10 +802,10 @@ function f_menu_principal {
 
    f_greet
    echo "|" 
-   echo "| History: Wizzard test: Wworking!"
+   echo "| History: [1/x] Wizzard test: Passed!"
    echo "|" 
            echo
-   f_talk; echo "Menu Principal (Step 2)"
+   f_talk; echo "[2/x] Menu Principal"
 
    echo "$A"
    echo "$a"
@@ -1073,6 +1086,9 @@ function f_delete_previous_DRYa_installation {
 }
 
 function f_DRYa_install_me_at_bashrc {
+   # Print into ~/.bashrc
+
+   # uDev: Esta fx busca as variaveis e imprime texto em ~/.bashrc. Mas pode tambem ser util no inicio deste script manter uma copia literal desse TEXTO literal tal como ele fica escrito apos a instalacao. Por algum motivo que o instalador falhe iria servir para colar diretamente esse texto para ~/.bashrc
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
@@ -1196,6 +1212,7 @@ function f_initialization {
    # Testing the wizzard and setting up History log
 
    f_internal_variables
+   f_hzl
 
    # Defining Libraries
       f_5; #f_5_verbose

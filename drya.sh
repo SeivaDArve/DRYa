@@ -58,7 +58,7 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
+   [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)" && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
@@ -66,7 +66,7 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
    v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
-   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
+   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)" && echo)
 
    # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
    #           f_lib4_stroken
@@ -2802,6 +2802,12 @@ function f_menu_kill_running_process {
 
 }
 
+function f_clone_fzf_like_origina_devs {
+   # Clone fzf properly like the original developers do
+
+   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+   ~/.fzf/install
+}
 
 
 
@@ -3385,8 +3391,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
          v_txt="Install fzf like original developers" && f_anyK
          echo
-         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-         ~/.fzf/install
+
+         f_clone_fzf_like_origina_devs
 
       elif [[ $3 == "bitcoin-core" ]]; then 
          # Install a full Bitcoin node to validade blocks and allow mining
@@ -3447,15 +3453,30 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          # Menu to pick and choose which dependencies will be installed/removed
          f_menu_install_drya_dependencies__1st
 
-      elif [[ $3 == "hard" ]] || [ $3 == "1" ]; then 
+      elif [[ $3 == "hard" ]] || [ $3 == "1" ] || [ $3 == "h" ]; then 
          # Most crutial DRYa dependencies. (But if DRYa bugs are fixed, DRYa can run without dependencies)
-         echo "uDev: installing git, tput, fzf... "
-         echo " > Any Key to proceed (uDev)"
+         echo "DRYa: installing git, vim, figlet, tput, fzf... "
+         read -sn1 -p " > [ENTER] to proceed"
+         echo
 
-      elif [[ $3 == "soft" ]] || [ $3 == "2" ]; then 
-         echo "uDev: installing man, tree, neofetch... "
-         echo " > Any Key to proceed (uDev)"
+         v_pkg=git;           echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=vim;           echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=ncurses-utils; echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=figlet;        echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+
+         echo "Installing fzf"; f_clone_fzf_like_origina_devs
+
+         source ~/.bashrc
+
+      elif [[ $3 == "soft" ]] || [ $3 == "2" ] || [ $3 == "s" ]; then 
+         echo "DRYa: installing: man, tree, neofetch, file ... "
+         read -sn1 -p " > [ENTER] to proceed"
+         echo
       
+         v_pkg=neofetch; echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=man;      echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=tree;     echo; echo "Instaling $v_pkg"; pk + $v_pkg 
+         v_pkg=file;     echo; echo "Instaling $v_pkg"; pk + $v_pkg 
       fi
 
    elif [[ $2 == "backups" ]] || [ $2 == "b" ]; then 
