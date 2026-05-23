@@ -31,13 +31,26 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
-# Comments examples: 
-   # Single comment example
 
+
+
+
+# Comments examples below. (The importance of an Interpreted Programming language is that it can be used as a notepad where every line is either a text note or a functional note (also knows as Code). So these single and multi comment lines will be left here to remind the User/Dev to use Bash by studying it and using it at the same time. Whenever the User/Dev opens this file and scrolls down to all some code, he/she will be reminding himself/herself of those Bash tricks he/she does not use that often and has more trouble remembering.
+      
    : '
-     Multi comment example. Line 1
-     Multi comment example. Line 2
+      Multi line comment example. Line 1
+      Multi line comment example. Line 2
+
+      When writing interpreted code, write code for people, not for machines 
+      
+      (This syntax of multi comments can also be used in the CLI prompt)
    '
+
+   # Single comment example.
+
+
+
+
 
 
 
@@ -1359,18 +1372,18 @@ function f_menu_audio_media_player {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='Audio-Media-Player'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L8='8. Tests  | Right and Left Speakers audio'                                      
-      L7='7. Tests  | Completion Bell sound'                                      
+      L8='8. Tests | Right and Left Speakers audio'                                      
+      L7='7. Tests | Completion Bell sound'                                      
 
       L6='6. Mic Record | Stop'    # When Mic stops, the `history -s` is set to the opposite command (start), to enebla fast start: `history -s start`
       L5='5. Mic Record | Status'
       L4='4. Mic Record | Start'   # When Mic starts, the `history -s` is set to the opposite command (stop), to enebla fast stop: `history -s stop`
       
-      L3='3. Play Music | mpv | Search file at .'                                      
-      L2='2. Play Music | xdg | Search file at .'                                      
+      L3='3. Play Music | mpv | Search file at ./'                                      
+      L2='2. Play Music | xdg | Search file at ./'                                      
       L1='1. Cancel'
 
-      L0="SELECT 1: DRYa: Media Player: "
+      L0="DRYa: Media Player: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
@@ -2939,50 +2952,126 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
          less $v_MSGS
    fi
 
-elif [ $1 == "-4" ] || [ $1 == "edit-how-to-flash-an-OS-on-USB" ]; then 
-   echo uDev
 
-elif [ $1 == "-3" ] || [ $1 == "edit-how-to-partition-HDD-correctly" ]; then 
-   echo "uDev"
 
-elif [ $1 == "-2" ] || [ $1 == "edit-drya-installer-select-menu" ]; then 
-   echo "uDev"
+elif [ $1 == "edit" ] || [ $1 == "e" ]; then 
+   case $2 in
+      stroken | st)
+         # Editing stroken globally
+         vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
+            echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
+            echo
 
-elif [ $1 == "-1" ] || [ $1 == "edit-drya-installer-fzf-menu" ]; then 
-   echo "uDev"
+         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
+            echo "Copied also too: ...DRYa/install.uninstall/stroken"
+            echo
+         
+            # Adding info for the new user:
+               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
 
-elif [ $1 == "-0" ] || [ $1 == "edit-help-populate" ]; then 
-   echo "Display all these numeric arguments on how to populate machines"
+         # Verbose output
+            echo "You may install stroken as ~/.netrc file with the command:"
+            echo " > drya install stroken"
+            # uDev: to be sent to: drya.sh edit stroken
+      ;;
+      news)
+         vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
+      ;;
+      dryarc)
+         echo "edit the file to program this machine without saving inside original DRYa (uDev)"
+      ;;
+      alias | config-bash-alias)
+         ## PERMANENT CHANGES if "git push" is used
+         vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+         
+         # Other ways to open the same file: 
+            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+               # '$ F'
 
-elif [ $1 == "0" ] || [ $1 == "edit-bashrc" ]; then 
-   # Edit the file that starts DRYa's loading sequence
-   vim ~/.bashrc
+            # Using the alias set on 'dryaSRC'
+               # '$ ,.' 
+      ;;
+      src | source | source-drya | dryaSRC) 
+         vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
 
-elif [ $1 == "1" ] || [ $1 == "edit-dryaSRC" ]; then 
-   # Edit first file in DRYa's loading sequence
-   vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
+         # Other ways to open the same file: 
+            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+               # '$ F'
 
-elif [ $1 == "2" ] || [ $1 == "config-bash-alias" ]; then 
-   # Edit second file in DRYa's loading sequence
-   vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+            # Using the alias set on 'dryaSRC'
+               # '$ ,..' 
+      ;;
+      termux)
+         # Will edit termux.properties file at ~/.termux/termux.properties
+         echo "Please reverse the args:"
+         echo " > drya dot edit termux"
+      ;;
+      dot)
+         echo "Please reverse the args:"
+         echo " > drya dot edit"
+      ;;
+      *)
+         echo "drya: What do you want to edit?"
+         echo 
+         echo "Notes:"
+         echo " > you can call '$ M' for the Menu with favourite files for edition"
+         echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
+      ;;
+   esac
 
-elif [ $1 == "3" ] || [ $1 == "dryarc" ]; then 
-   # Edit third file in DRYa's loading sequence
-   echo uDev
+   # uDev: merge Above `case esac` with below `if fi`
 
-elif [ $1 == "4" ] || [ $1 == "fluNav" ]; then 
-   # Edit forth file in DRYa's loading sequence
-   echo uDev
+   if [ $2 == "-4" ] || [ $2 == "edit-how-to-flash-an-OS-on-USB" ]; then 
+      echo uDev
 
-elif [ $1 == "5" ] || [ $1 == "drya.sh" ]; then 
-   # Edit fifth file in DRYa's loading sequence
-   echo uDev
+   elif [ $2 == "-3" ] || [ $2 == "edit-how-to-partition-HDD-correctly" ]; then 
+      echo "uDev"
 
-elif [ $1 == "6" ] || [ $1 == "config-drya-hh" ] || [ $1 == "hh" ]; then 
-   # Instructions on how to navigate to the directory where all D'Arve repos save configs
-   echo 'Navigate to ~/.config/h.h/ with the alias `hh`'
+   elif [ $2 == "-2" ] || [ $2 == "edit-drya-installer-select-menu" ]; then 
+      echo "uDev"
 
-elif [ $1 == "7" ] || [ $1 == "navigate-to-DRYa-Repos-Center" ] || [ $1 == "gg" ]; then 
+   elif [ $2 == "-1" ] || [ $2 == "edit-drya-installer-fzf-menu" ]; then 
+      echo "uDev"
+
+   elif [ $2 == "-0" ] || [ $2 == "edit-help-populate" ]; then 
+      echo "Display all these numeric arguments on how to populate machines"
+
+   elif [ $2 == "0" ] || [ $2 == "edit-bashrc" ]; then 
+      # Edit the file that starts DRYa's loading sequence
+      vim ~/.bashrc
+
+   elif [ $2 == "1" ] || [ $2 == "edit-dryaSRC" ]; then 
+      # Edit 1st file in DRYa's loading sequence
+      vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
+
+   elif [ $2 == "2" ] || [ $2 == "config-bash-alias" ]; then 
+      # Edit 2nd file in DRYa's loading sequence
+      vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+
+   elif [ $2 == "3" ] || [ $2 == "dryarc" ]; then 
+      # Edit 3rd file in DRYa's loading sequence
+      echo uDev
+
+   elif [ $2 == "4" ] || [ $2 == "fluNav" ]; then 
+      # Edit 4th file in DRYa's loading sequence
+      echo uDev
+
+   elif [ $2 == "5" ] || [ $2 == "drya.sh" ]; then 
+      # Edit 5th file in DRYa's loading sequence
+      echo uDev
+
+   elif [ $2 == "6" ] || [ $2 == "config-drya-hh" ] || [ $2 == "hh" ]; then 
+      # Instructions on how to navigate to the directory where all D'Arve repos save configs
+      echo 'Navigate "vim" to ~/.config/h.h/ with the alias like the alias "hh"'
+
+   elif [ $2 == "7" ] || [ $2 == "navigate-to-DRYa-Repos-Center" ] || [ $2 == "gg" ]; then 
+      # Navigating "vim" only to ${v_REPOS_CENTER}/ 
+      echo uDev
+   fi
+
+
+
+elif [ $1 == "GG" ] || [ $1 == "navigate-to-DRYa-Repos-Center" ] || [ $1 == "gg" ]; then 
    # Navigating only to ${v_REPOS_CENTER}/ 
    GG
 
@@ -3479,11 +3568,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          v_pkg=file;     echo; echo "Instaling $v_pkg"; pk + $v_pkg 
       fi
 
-   elif [[ $2 == "backups" ]] || [ $2 == "b" ]; then 
+   elif [[ $2 == "backups" ]] || [ $2 == "backup" ] || [ $2 == "b" ]; then 
       f_backup_guide
-
-   elif [[ $2 == "fig" ]]; then 
-      echo "uDev: testing and installing existence of figlet"
 
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
@@ -3508,14 +3594,11 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Config the correct screen resolution with `xrandr`
 
       # uDev: This is a config to set, not an instalation
-      # uDev: Criar um ficheiro local @host para que DRYa busque e execute
+      # uDev: Criar um ficheiro local .dryarc @host para que DRYa busque e execute
       
 
       # Detetar ambiente grafico  (uDev: passar para o traitsID)
          v_amb=${XDG_SESSION_TYPE:-"<nenhum>"}
-
-      # Resolucao da TV 'Silver'
-         v_tv="1360x768" 
 
       f_greet 
       f_talk; echo "Help for screen Resolution"
@@ -3546,6 +3629,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       if [[ $trid_os == "R" ]]; then
          # Se o OS detetado for RaspberryPi
 
+         v_tv="1360x768"  # Resolucao da TV 'Silver'
+
          f_talk; echo "If detected 'Pi' + 'Silver TV' + 'X11':"
                  echo " > 1360x768 "
                  echo " > exemplo: \`xrandr --output HDMI-1 --mode 1360x768\`"
@@ -3572,76 +3657,9 @@ elif [[ $1 == "dot" ]] || [[ $1 == "dotfiles" ]] || [[ $1 == "dot-files" ]] || [
    fi
 
 
-elif [ $1 == "edit" ]; then 
-   case $2 in
-      stroken)
-         # Editing stroken globally
-         vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
-            echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
-            echo
 
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-            echo "Copied also too: ...DRYa/install.uninstall/stroken"
-            echo
-         
-            # Adding info for the new user:
-               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> ${v_REPOS_CENTER}/DRYa/install.uninstall/stroken
-
-         # Verbose output
-            echo "You may install stroken as ~/.netrc file with the command:"
-            echo " > drya install stroken"
-            # uDev: to be sent to: drya.sh edit stroken
-      ;;
-      news)
-         vim ${v_REPOS_CENTER}/DRYa/all/bin/news-displayer/news-displayer.sh
-      ;;
-      dryarc)
-         echo "edit the file to program this machine without saving inside original DRYa (uDev)"
-      ;;
-      alias | config-bash-alias)
-         ## PERMANENT CHANGES if "git push" is used
-         vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
-         
-         # Other ways to open the same file: 
-            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
-               # '$ F'
-
-            # Using the alias set on 'dryaSRC'
-               # '$ ,.' 
-      ;;
-      src | source | source-drya | dryaSRC) 
-         vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
-
-         # Other ways to open the same file: 
-            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
-               # '$ F'
-
-            # Using the alias set on 'dryaSRC'
-               # '$ ,..' 
-      ;;
-      termux)
-         # Will edit termux.properties file at ~/.termux/termux.properties
-         echo "Please reverse the args:"
-         echo " > drya dot edit termux"
-      ;;
-      dot)
-         echo "Please reverse the args:"
-         echo " > drya dot edit"
-      ;;
-      *)
-         echo "drya: What do you want to edit?"
-         echo 
-         echo "Notes:"
-         echo " > you can call '$ M' for the Menu with favourite files for edition"
-         echo " > Press [M] to open 'M Menu' with favourite files (uDev)"
-
-      ;;
-
-   esac
-
-
-
-elif [ $1 == "remove" ]; then 
+elif [ $1 == "remove" ] || [ $1 == "rm" ]; then 
+   # uDev: Colocar tudo em fx para funcionar em paralo com `D iu p`
    case $2 in
       dot-files)
          echo "drya: drya dot-files remove"
@@ -3665,13 +3683,13 @@ elif [ $1 == "remove" ]; then
          f_greet
          echo "drya: removing the dot file ~/.netrc"
          echo -e "\nAre you sure you want to remove ~/.netrc? \n > [ Ctrl-C ] to Cancel\n > [ Any key ] to accept"
-         read -s -n 1
+         read -sn 1
          echo
          rm ~/.netrc && echo "Done!"
 
       ;;
       *)
-         echo "drya: What do you want to remove? (uDev)"
+         f_talk; echo "What do you want to remove?"
       ;;
    esac
 
@@ -4109,9 +4127,6 @@ elif [ $1 == "omni" ] || [ $1 == "om" ]; then
 
    # uDev: Test fist if repo exists
    cd ${v_REPOS_CENTER}/omni-log/ && emacs omni-log.org
-
-elif [ $1 == "remove" ] || [ $1 == "rm" ]; then 
-   echo "uDev: Remove repos"
 
 elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
    # Several ways to exit the terminal
