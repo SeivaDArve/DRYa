@@ -1289,11 +1289,12 @@ function V {
             f__V_hist__remove_duplicated_lines
 
          # Info adicional durante o menu 
-            Lh=$(pwd); Lh=$(basename $Lh); LH="Searching dirs at: .../$Lh/"
+            Lh=$(pwd); Lh=$(basename $Lh); Lh="Searching for file's directories at: .../$Lh/"
+            Lh=$(echo -e "\n$Lh\n ")
 
          # Menu fzf que procura subpastas 
             L0="fluNav: V: Nevegue o prompt para a pasta selecionada: "
-            v_dir=$(fzf --cycle --header="$LH" --prompt="$L0")
+            v_dir=$(fzf --cycle --header="$Lh" --prompt="$L0")
             #echo " > $_dir"
             #v_dir=$(echo $v_dir | sed 's/ /\ /g')
 
@@ -1478,11 +1479,12 @@ function f_action {
          f__F_hist__remove_duplicated_lines
 
       # Apartir da pasta atual ate todas as subpastas, Pesquisar todos os ficheiros e guardar na variavel $v_file
-         Lh=$(pwd); Lh=$(basename $Lh); LH="Searching files at: .../$Lh/"
+         Lh=$(pwd); Lh=$(basename $Lh); Lh="Searching files at: .../$Lh/"
+         Lh=$(echo -e "\n$Lh\n ")
          L0="fluNav: F: Procure e edite 1 ficheiro: "
 
          unset v_list
-               v_file=$(fzf --prompt="$L0" --header="$LH" --preview 'cat {}' --preview-window=right:40%)
+               v_file=$(fzf --prompt="$L0" --header="$Lh" --preview 'cat {}' --preview-window=right:40%)
 
       # Se o menu fzf NAO vier vazio, envia o resultado para o ficheiro de historico e edita o ficheiro encontrado
          if [[ -n $v_file ]]; then
