@@ -78,35 +78,35 @@ function f_example_ask {
    # Passo 2: Digite LIST DISK, esse comando ira listar is HD's instalados na maquina, preste muita atencao para nao escolher o HD errado
    f_usb_tut_2
 
-            echo    "Passo 2:"
-            echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
-            echo
-      f_c1; echo    '(exemplo)'
-            echo    '|--------------------------------------------------------------|'
-            echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-            echo    '|                                                              |'
-            echo -n '| C:\>'
-      f_c2; echo -n       'diskpart'
-      f_c1; echo                  '                                                 |'
-      f_c1; echo    '|                                                              |'
-            echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-            echo    '|                                                              |'
-            echo    '| Copyright (C) Microsoft Corporation.                         |'
-            echo    '| On computer: YourName                                        |'
-            echo    '|                                                              |'
-            echo -n '| DISKPART>'
-      f_c2; echo -n            'list disk'
-      f_c1; echo    '                                           |'
-            echo    '|                                                              |'
-            echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-            echo    '| --------  -------------  -------  -------  ---  ---          |'
-            echo    '| Disk 0    Online          476 GB      0 B        *           |'
-            echo    '| Disk 1    Online           59 GB    29 MB                    |'
-            echo    '|                                                              |'
-            echo    '| DISKPART>                                                    |'
-            echo    '|--------------------------------------------------------------|'
-      f_rc; echo
+         echo    "Passo 2:"
+         echo    "  Digite LIST DISK, esse comando ira listar os HD's instalados na maquina"
+         echo
+   f_c1; echo    '(exemplo)'
+         echo    '|--------------------------------------------------------------|'
+         echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+         echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+         echo    '|                                                              |'
+         echo -n '| C:\>'
+   f_c2; echo -n       'diskpart'
+   f_c1; echo                  '                                                 |'
+   f_c1; echo    '|                                                              |'
+         echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+         echo    '|                                                              |'
+         echo    '| Copyright (C) Microsoft Corporation.                         |'
+         echo    '| On computer: YourName                                        |'
+         echo    '|                                                              |'
+         echo -n '| DISKPART>'
+   f_c2; echo -n            'list disk'
+   f_c1; echo    '                                           |'
+         echo    '|                                                              |'
+         echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+         echo    '| --------  -------------  -------  -------  ---  ---          |'
+         echo    '| Disk 0    Online          476 GB      0 B        *           |'
+         echo    '| Disk 1    Online           59 GB    29 MB                    |'
+         echo    '|                                                              |'
+         echo    '| DISKPART>                                                    |'
+         echo    '|--------------------------------------------------------------|'
+   f_rc; echo
 
    f_example_ask
 
@@ -116,52 +116,52 @@ function f_example_ask {
 
 
    function f_cwusb_passo_3 {
-           echo    "Passo 3:"
-           echo -n '  Digite "SELECT DISK '
-     f_c2; echo -n                       'X'
-     f_rc; echo                           '", mas no lugar do X colocar o numero'
-           echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
-           echo    "  Preste muita atençao para nao escolher o HD errado"
-           echo
-     f_c1; echo    '(exemplo)'
-           echo    '|--------------------------------------------------------------|'
-           echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
-           echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
-           echo    '|                                                              |'
-           echo -n '| C:\>'
-     f_c2; echo -n       'diskpart'
-     f_c1; echo                  '                                                 |'
-           echo    '|                                                              |'
-           echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
-           echo    '|                                                              |'
-           echo    '| Copyright (C) Microsoft Corporation.                         |'
-           echo    '| On computer: YourName                                        |'
-           echo    '|                                                              |'
-           echo -n '| DISKPART>'
-     f_c2; echo -n            'list disk'
-     f_c1; echo                        '                                           |'
-           echo    '|                                                              |'
-           echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
-           echo    '| --------  -------------  -------  -------  ---  ---          |'
-           echo    '| Disk 0    Online          476 GB      0 B        *           |'
-           echo    '| Disk 1    Online           59 GB    29 MB                    |'
-           echo    '|                                                              |'
+            echo    "Passo 3:"
+            echo -n '  Digite "SELECT DISK '
+      f_c2; echo -n                       'X'
+      f_rc; echo                           '", mas no lugar do X colocar o numero'
+            echo    '  referente ao HD que deseja formatar, colocar sem aspas.'
+            echo    "  Preste muita atençao para nao escolher o HD errado"
+            echo
+      f_c1; echo    '(exemplo)'
+            echo    '|--------------------------------------------------------------|'
+            echo    '| Microsoft Windows [Version 10.0.22631.44.60]                 |'
+            echo    '| (c) Microsoft Corporation. Todos os direitos Reservados.     |'    
+            echo    '|                                                              |'
+            echo -n '| C:\>'
+      f_c2; echo -n       'diskpart'
+      f_c1; echo                  '                                                 |'
+            echo    '|                                                              |'
+            echo    '| Microsoft DiskPart version 10.0.22621.1                      |'
+            echo    '|                                                              |'
+            echo    '| Copyright (C) Microsoft Corporation.                         |'
+            echo    '| On computer: YourName                                        |'
+            echo    '|                                                              |'
+            echo -n '| DISKPART>'
+      f_c2; echo -n            'list disk'
+      f_c1; echo                        '                                           |'
+            echo    '|                                                              |'
+            echo    '| Disk ###  Status         Size     Free     Dyn  Gpt          |'
+            echo    '| --------  -------------  -------  -------  ---  ---          |'
+            echo    '| Disk 0    Online          476 GB      0 B        *           |'
+            echo    '| Disk 1    Online           59 GB    29 MB                    |'
+            echo    '|                                                              |'
    }
 
    f_cwusb_passo_3
-
-           echo    '| DISKPART>                                                    |'
-           echo    '|--------------------------------------------------------------|'
-     f_rc; echo
-     f_c4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
-     f_c1; echo -n '  DISKPART>'
-     f_c2; echo -n            'select disk '
+ 
+            echo    '| DISKPART>                                                    |'
+            echo    '|--------------------------------------------------------------|'
+      f_rc; echo
+      f_c4; echo    ' No seu PC, qual é o numero do disco do HD que vai selecionar?  '
+      f_c1; echo -n '  DISKPART>'
+      f_c2; echo -n            'select disk '
 
 
    function f_cwusb_passo_3_final {
-           echo -n '| DISKPART>'
-     f_c2; echo               "$v_disk"
-     f_c1; echo    '|--------------------------------------------------------------|'
+   ,        echo -n '| DISKPART>'
+   ,  f_c2; echo               "$v_disk"
+   ,  f_c1; echo    '|--------------------------------------------------------------|'
    }
 
          
