@@ -36,7 +36,7 @@
 
 
 
-
+__name__=drya-lib-8-getopts-parse-n-validade.sh
 
 
 
@@ -56,7 +56,7 @@ function f_help__print_usage {
 
       declare -A HELP
       HELP["h"]=" $v_arg_help"
-      HELP["-v"]="ativa modo verbose"
+      HELP["-v"]="desativa modo verbose"
       HELP["-f"]="força operação"
       HELP["-i"]="ficheiro de input"
       HELP["-o"]="ficheiro de output"
@@ -101,7 +101,7 @@ function f_help__print_usage {
       #
       # RESULTADO:
       #
-      #   -v    modo verbose
+      #   -v    alternar modo verbose (default TRUE)
       #   -i    ficheiro de input
       #   -o    ficheiro de output
       #
@@ -117,270 +117,252 @@ function f_help__print_usage {
    echo
 }
 
+function f_special_cases {
 
-
-
-
-function f_parse_args {
-   # Esta fx apenas lê e filtra todos os argumentos do prompt (um a um) e coloca nas suas variaveis. Nao confirma por exemplo se nomes de ficheiros de entrada existe e se esta correto (porque isso será na fx seguinte)
-
-   echo  # Espacamento inicial, apoio ao f_talk
-   
-   local verbose=false
-   local force=false
-   local v_input=""
-   local output=""
-   local positional=()
-
-
-
+   # nenhum argumento
    if [[ $# -eq 0 ]]; then
-      # Testar ausencia de argumento
-     
-      echo ' > nenhum argumento fornecido. usa `-h` para instrucoes'
-      echo 
-      v_act=false
 
-      return 0  # Este 'return' termina TODA a função e devolve sucesso (exit code 0). Ou seja, o proximo 'while' loop nao sera executado
+      f_talk; echo "$__name__"
+      echo ' > nenhum argumento fornecido. usa `-h` para instrucoes'
+      echo
+
+      v_act=false
+      return 1
    fi
 
-
-
+   # help
    if [[ "$1" == "-h" || "$1" == "--help" || "$1" == "h" ]]; then
-      # Deteta que foi pedido 'help' e vai imprimir 'usage' 
 
       f_help__print_usage
-      v_act=false
 
+      v_act=false
+      return 1
+   fi
+
+   return 0
+}
+
+
+
+function f_long_arguments {
+
+   v_shift=0
+
+   # FLAGS
+
+   if [[ "$1" == "--verbose" ]]; then
+      verbose=false
+      v_shift=1
       return 0
    fi
 
+   if [[ "$1" == "--force" ]]; then
+      force=true
+      v_shift=1
+      return 0
+   fi
 
+   # INLINE
 
-   local initial_argc=$#  # Contar (e guardar) o numero inicial de argumentos
+   if [[ "$1" == --input=* ]]; then
+      v_input="${1#*=}"
+      v_shift=1
+      return 0
+   fi
 
-   while [[ $# -gt 0 ]]; do
-      # Percorre argumento a argumento
+   if [[ "$1" == --output=* ]]; then
+      output="${1#*=}"
+      v_shift=1
+      return 0
+   fi
 
-      # ============================================================
-      # LONG OPTIONS SUPORTADAS
-      #
-      # ESTE PARSER ACEITA:
-      #
-      #   1. FLAGS SIMPLES:
-      #      --verbose
-      #      --force
-      #
-      #   2. ARGUMENTO EM PRÓXIMO TOKEN:
-      #      --input file.txt
-      #      --output file.txt
-      #
-      #   3. ARGUMENTO INLINE (GNU STYLE):
-      #      --input=file.txt
-      #      --output=file.txt
-      #
-      #   4. uDev
-      #      --in file.txt
-      #      --out file.txt
-      #
-      #      --in=file.txt
-      #      --out=file.txt
-      #
-      # ============================================================
+   # SEPARADO
 
-      if [[ "$1" == "--verbose" ]]; then
-         verbose=true
-         shift
+   if [[ "$1" == "--input" ]]; then
 
-      elif [[ "$1" == "--force" ]]; then
-         force=true
-         shift
-
-
-
-      # LONG OPTION INLINE ( --input=file.txt )
-
-      elif [[ "$1" == --input=* ]]; then
-         # Exemplo: --input=file.txt
-         v_input="${1#*=}"
-         shift
-
-      elif [[ "$1" == --output=* ]]; then
-         # Exemplo: --output=file.txt
-         output="${1#*=}"
-         shift
-
-
-      # LONG OPTION SEPARADO
-
-      elif [[ "$1" == "--input" ]]; then
-         # Exemplo: --input file.txt
-         v_input="$2"
-         shift 2
-
-      elif [[ "$1" == "--output" ]]; then
-         # Exemplo: --output file.txt
-         output="$2"
-         shift 2
-
-      #  # ============================================================
-      #  # SHORT OPTIONS
-      #  #
-      #  # ESTE BLOCO DETETA:
-      #  #
-      #  #   - FLAGS:
-      #  #       -v
-      #  #       -f
-      #  #
-      #  #   - AGRUPAMENTO:
-      #  #       -vf
-      #  #       -vfofile.txt
-      #  #
-      #  #   - ARGUMENTOS INLINE:
-      #  #       -iinput.txt
-      #  #       -ooutput.txt
-      #  #
-      #  #   - ARGUMENTOS SEPARADOS:
-      #  #       -i input.txt
-      #  #       -o output.txt
-      #  #
-      #  # REGEX:
-      #  #
-      #  #   -[!-]?*
-      #  #
-      #  # SIGNIFICADO:
-      #  #
-      #  #   -       → começa com hífen
-      #  #   [!-]    → segundo char não pode ser "-"
-      #  #   ?*      → pelo menos mais um char
-      #  #
-      #  # EXCLUI:
-      #  #   --long-options (evita conflito)
-      #  #
-      #  # ============================================================
-      #
-      #  elif [[ "$1" == -[!-]?* ]]; then
-
-
-      elif [[ "$1" == -* ]] && [[ "$1" != --* ]]; then
-
-         # remove o "-"
-         # "-vfofile" → "vfofile"
-         short="${1#-}"
-
-         while [[ -n "$short" ]]; do
-            # Percorre caractere a caractere
-
-            opt="${short:0:1}"
-            short="${short:1}"
-
-            # ------------------------------------------
-            # FLAGS SIMPLES
-            # ------------------------------------------
-
-            if [[ "$opt" == "v" ]]; then
-               verbose=true
-
-            elif [[ "$opt" == "f" ]]; then
-               force=true
-
-            # ------------------------------------------
-            # INPUT
-            #
-            # FORMAS ACEITES:
-            #
-            #   -i input.txt
-            #   -iinput.txt
-            #
-            # ------------------------------------------
-
-            elif [[ "$opt" == "i" ]]; then
-
-               if [[ -n "$short" ]]; then
-                  v_input="$short"
-                  short=""
-               else
-                  shift
-
-                  if [[ -z "$1" ]]; then
-                     echo "erro: -i requer nome de ficheiro (nem que seja invalido)"
-                     return 1
-                  fi
-
-                  v_input="$1"
-               fi
-
-            # ------------------------------------------
-            # OUTPUT
-            #
-            # FORMAS ACEITES:
-            #
-            #   -o output.txt
-            #   -ooutput.txt
-            #
-            # ------------------------------------------
-
-            elif [[ "$opt" == "o" ]]; then
-
-               if [[ -n "$short" ]]; then
-                  output="$short"
-                  short=""
-               else
-                  shift
-
-                  if [[ -z "$1" ]]; then
-                     echo "erro: -o requer nome de ficheiro (nem que seja invalido)"
-                     return 1
-                  fi
-
-                  output="$1"
-               fi
-
-            else
-               echo "erro: opção inválida -$opt"
-               return 1
-            fi
-         done
-
-         shift
-
-      # ============================================================
-      # FIM DE PARSING com Args
-      # ============================================================
-
-      elif [[ "$1" == "--" ]]; then
-         shift
-         break
-
-         # ============================================================
-         # ARGUMENTOS POSICIONAIS
-         #
-         # SUPORTA:
-         #   .
-         #   ./ficheiro
-         #   qualquer string não-option
-         #
-         # ============================================================
-
-      else
-         positional+=("$1")
-         shift
+      if [[ -z "$2" ]]; then
+         echo "erro: --input requer ficheiro"
+         return 1
       fi
 
+      v_input="$2"
+      v_shift=2
+      return 0
+   fi
+
+   if [[ "$1" == "--output" ]]; then
+
+      if [[ -z "$2" ]]; then
+         echo "erro: --output requer ficheiro"
+         return 1
+      fi
+
+      output="$2"
+      v_shift=2
+      return 0
+   fi
+
+   return 1
+}
+
+
+
+function f_short_arguments {
+
+   v_shift=0
+
+   # excluir long options
+   [[ "$1" != -* || "$1" == --* ]] && return 1
+
+   local short="${1#-}"
+
+   while [[ -n "$short" ]]; do
+
+      local opt="${short:0:1}"
+      short="${short:1}"
+
+      # FLAGS
+
+      if [[ "$opt" == "v" ]]; then
+         verbose=false
+
+      elif [[ "$opt" == "f" ]]; then
+         force=true
+
+      # INPUT
+
+      elif [[ "$opt" == "i" ]]; then
+
+         if [[ -n "$short" ]]; then
+
+            v_input="$short"
+            short=""
+
+         else
+
+            if [[ -z "$2" ]]; then
+               echo "erro: -i requer ficheiro"
+               return 1
+            fi
+
+            v_input="$2"
+            v_shift=2
+            return 0
+         fi
+
+      # OUTPUT
+
+      elif [[ "$opt" == "o" ]]; then
+
+         if [[ -n "$short" ]]; then
+
+            output="$short"
+            short=""
+
+         else
+
+            if [[ -z "$2" ]]; then
+               echo "erro: -o requer ficheiro"
+               return 1
+            fi
+
+            output="$2"
+            v_shift=2
+            return 0
+         fi
+
+      else
+         echo "erro: opção inválida -$opt"
+         return 1
+      fi
    done
 
-   # OUTPUT final (sem confirmar se os argumentos sao validos)
+   # apenas o argumento atual foi consumido
+   [[ "$v_shift" -eq 0 ]] && v_shift=1
+
+   return 0
+}
+
+function f_parser_output {
+
+   # uDev: Verbose and Concat will be 2 Args to manipute:
+   #        - Terminal verbose Output
+   #        - Temporary file replacement or concatenation 
+
    f_talk; echo "parse CLI arguments"
-           echo 
+           echo
            echo "initial_argc = $initial_argc"
            echo "posicionais  = ${positional[*]}"
-           echo 
+           echo
            echo "verbose      = $verbose"
            echo "force        = $force"
            echo "input file   = $v_input"
            echo "output file  = $output"
-           echo 
+           echo
 }
+
+
+
+function f_parse_args {
+
+   # ============================================================
+   # DEFAULTS
+   # ============================================================
+
+   verbose=true
+   force=false
+   v_input=""
+   output=""
+   positional=()
+
+   # ============================================================
+   # SPECIAL CASES
+   # ============================================================
+
+   f_special_cases "$@" || return
+
+   local initial_argc=$#
+
+   # ============================================================
+   # MAIN LOOP
+   # ============================================================
+
+   while [[ $# -gt 0 ]]; do
+
+      # LONG OPTIONS
+      f_long_arguments "$@" && {
+         shift "$v_shift"
+         continue
+      }
+
+      # SHORT OPTIONS
+      f_short_arguments "$@" && {
+         shift "$v_shift"
+         continue
+      }
+
+      # END OF OPTIONS
+      if [[ "$1" == "--" ]]; then
+         # Exemplos uteis: `mkdir -- --teste`
+         #                 `cd -- --teste`
+
+         shift
+         break
+      fi
+
+      # POSITIONAL
+      positional+=("$1")
+      shift
+
+   done
+
+   # ============================================================
+   # OUTPUT
+   # ============================================================
+
+   [[ $verbose == "true" ]] && f_parser_output 
+}
+
 
 
 
@@ -430,6 +412,7 @@ function f_validar_args {
 
    if [[ ${#POSITIONAL[@]} -eq 0 ]]; then
       echo "  ]"
+
    else
       local i
       for i in "${!POSITIONAL[@]}"; do
@@ -451,6 +434,7 @@ function f_validar_args {
 
 
 
+echo Fim
 
 
 

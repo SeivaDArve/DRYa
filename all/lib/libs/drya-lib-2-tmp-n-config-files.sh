@@ -2,7 +2,7 @@
 # Title: drya-lib-2-tmp-n-config-files.sh
 # Description: Creates and manages temporary and config files to avoid repetition
 
-
+__name__=drya-lib-2-tmp-n-config-files.sh
 
 
 #
@@ -28,7 +28,7 @@
 #     ~/.confif/h.h/drya
 #
 #     `V`
-#     `S`
+#     `F`
 #     bash history
 #     drya-messages
 #     `notify` output messages  # Placed on repo: omni-log
@@ -68,23 +68,44 @@ function f_create_tmp_file {
    #      3. In the next code line, the varibale v_tmp will be a path to a new temporary file 
    #      4. If you want to save multiple tmp files, you can, in another variable names like $var1 $var2 after each f_create_tmp_file call
 
-   # Reset as variaveis que possam vir de outros scripts
-      unset v_dir v_tmp
-
-   # Criar pasta oculta com o nome .tmp  (O ficheiro .bash_logout editado por DRYa apaga essa pasta ao encerrar o terminal)
-      v_dir=~/.tmp  &&  mkdir -p $v_dir
-   
-   # O nome do ficheiro temporario será a data/hora atual
-      v_tmp=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh v)
-      v_tmp="$v_tmp.txt"
 
 
-   # Criar o ficheiro temporario
-      i="$v_dir/$v_tmp"
+   if [ -z $1 ]; then
+      # If no args are given
 
-      touch $i
+      # Reset as variaveis que possam vir de outros scripts
+         unset v_dir v_tmp
 
-      v_tmp=$i
+      # Criar pasta oculta com o nome .tmp  (O ficheiro .bash_logout editado por DRYa apaga essa pasta ao encerrar o terminal)
+         v_dir=~/.tmp  &&  mkdir -p $v_dir
+      
+      # O nome do ficheiro temporario será a data/hora atual
+         v_tmp=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh v)
+         v_tmp="$v_tmp.txt"
+
+
+      # Criar o ficheiro temporario
+         i="$v_dir/$v_tmp"
+
+         touch $i
+
+         v_tmp=$i
+
+   elif [ $1 == "test" ]; then
+      # This is an utility to use during the prompt jist to test if this lib (drya-lib-2) is installed or sourced
+      echo "$__name__ is installed"
+
+   elif [ $1 == "2" ] || [ $1 == "3" ]; then
+      echo "2 or 3" # example
+
+   else
+      for i in $*
+      do
+         echo "uDev: $__name__ usar cada arg como nomes de ficheiros temporarios"
+         echo "       > Criado ficheiro $i" >> $v_ssms
+      done
+   fi
+
 }
 
 function f_loop_01234_tmp_files {

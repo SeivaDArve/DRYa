@@ -355,7 +355,6 @@ function f_lib4_ensure_repo_existence_single {
    #     v_ensure="repoX"          # Repo name we want to ensure its existence
    #     f_lib4_ensure_repo_existence_single   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
 
-
    # Path + Name of the repo
       v_repo=${v_REPOS_CENTER}/$v_ensure
    
