@@ -6,42 +6,47 @@ function f_greet {
    figlet Omni Key
 }
 
-# Escape character para as teclas:
+v_cetralized_termux_p=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
+v_termux_p=~/.termux/termux.properties
+
+# Escape Key para as teclas:
    # F5: \e[15~
    # F6: \e[17~
    # F7: \e[18~
 
+   # Saber mais em: `D wiki` > Informatica > Bssh > Terminal Escape Keys
+   
 # DRYa-termux-omni-key (Bash keyboard bindings)
    # Bind F7 keycode: "\e[18~"
      v_default_omni_key="ॐ"
    
-      # To print "Hi!" (just print)
+      # To print "Hi!" (just print, example) 
          #bind '"\e[18~":"Hi!"'
 
       # To exec 'man cat' 
          #bind -x '"\e[18~":"man cat"'
 
       # To exec 'upk' 
-         function f-set-omni-key-upk {
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-            sed -i "s/ॐ/⏚/g" ~/.termux/termux.properties
+         function f_set_omni_key_upk {
+            cp $v_cetralized_termux_p ~/.termux
+            sed -i "s/ॐ/⏚/g" $v_termux_p
             bind -x '"\e[18~":"upk"'
             termux-reload-settings
          }
 
       # To exec 'luxam' 
-         function f-set-omni-key-luxam {
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-            sed -i "s/ॐ/✡/g" ~/.termux/termux.properties
+         function f_set_omni_key_luxam {
+            cp $v_cetralized_termux_p ~/.termux
+            sed -i "s/ॐ/✡/g" $v_termux_p
             bind -x '"\e[18~":"luxam"'
             termux-reload-settings
          }
 
       # To exec 'trade' 
-         function f-set-omni-key-trade {
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-            #sed -i "s/ॐ/₸/g" ~/.termux/termux.properties
-            sed -i "s/ॐ/ᜎ/g" ~/.termux/termux.properties
+         function f_set_omni_key_trade {
+            cp $v_cetralized_termux_p ~/.termux
+            #sed -i "s/ॐ/₸/g" $v_termux_p
+            sed -i "s/ॐ/ᜎ/g" $v_termux_p
 
             # Mudar a omni-key principal para o 'T' e definir a sua fx
                #bind -x '"\e[18~":"cd ~/sl/trade"'
@@ -54,39 +59,39 @@ function f_greet {
          }
 
       # To exec 'admin' 
-         function f-set-omni-key-admin {
+         function f_set_omni_key_admin {
             echo "Admin Home not ready yet"
          }
 
       # To open/exec the Android App: "Leitor QR"
-         function f-set-omni-key-qr {
-            cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-            sed -i "s/ॐ/⎆/g" ~/.termux/termux.properties
+         function f_set_omni_key_qr {
+            cp $v_cetralized_termux_p ~/.termux
+            sed -i "s/ॐ/⎆/g" $v_termux_p
             bind -x '"\e[18~":"am start --user 0 -a andrppoid.intent.action.MAIN -n com.teacapps.barcodescanner/net.qrbot.ui.main.MainActivity"'
             termux-reload-settings
          }
       
-      #bind -x '"\e[18~":"f-set-omni-key-qr"'
+      #bind -x '"\e[18~":"f_set_omni_key_qr"'
 
 
 
-      function f-reset-omni-key {
+      function f_reset_omni_key {
          # Reset omni-key 
 
-         cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties ~/.termux
-         #sed -i "s/⎆/ॐ/g" ~/.termux/termux.properties  ## Se o ficheiro em .../etc/dot-files/... for copiado diretamente para ~/.termux/termux.properties entao nao é preciso 'sed'
-         termux-reload-settings 2>/dev/null ## Won't work on WSL2
+         cp $v_cetralized_termux_p ~/.termux
+         #sed -i "s/⎆/ॐ/g" $v_termux_p       ## Se o ficheiro em .../etc/dot-files/... for copiado diretamente para ~/.termux/termux.properties entao nao é preciso 'sed'
+         termux-reload-settings 2>/dev/null  ## Won't work on WSL2
          bind -x '"\e[18~": f_my_reset_test'
 
       }
-      #f-reset-omni-key  ## Esta Fx faz reset durante o startup do terminal por engano
+      #f_reset_omni_key  ## Esta Fx faz reset durante o startup do terminal por engano
 
 
 
 
 
 
-####################################
+########################################################################
 # Bug fix to STDIN on interactive drya-omni-key using Bash 'bind -x'
 # source: https://stackoverflow.com/questions/65465973/bind-interactive-command-to-a-key-sequence
 
@@ -106,7 +111,7 @@ function f_my_reset_test {
 bind -x '"\e[18~": f_my_reset_test'
 
 
-#####################################
+##########################################################################
 
 
 
@@ -124,29 +129,30 @@ function f_key {
    # Bug: Quando em bash é usado o "F7 bind -x to key" entao encrava as funcoes bash que tiverem 'read -p "resposta? " v_ans'
 
    clear
-   figlet Omni Key
+   figlet Omni Key  # uDev: criar failsafe
 
-   echo "Opcoes para Omni-Key:"
-   echo " Escreve Num ou Texto em minusculas"
-   echo " > (1) OM"
-   echo " > (2) UPK"
-   echo " > (3) QR"
-   echo " > (4) Luxam File"
-   echo " > (5) Trade Directory"
-   echo " > (6) Jarve (Palacio Manager)"
-   echo " > (7) Messenger"
-   echo " > (8) + Layouts para Termux Keys"
-   #echo " > Reset (leave empty)"
+   echo "Escolha nova funcao para o botao Omni-Key (Termux):"
+   echo "----------------------------------------------------"
+   echo " | 1 | Omni-Key   | (reset)"
+   echo " | 2 | UPK        | "
+   echo " | 3 | QR         | "
+   echo " | 4 | Luxam File | "
+   echo " | 5 | Trade      | " 
+   echo " | 6 | Jarve      | (Domotica)"
+   echo " | 7 | Messenger  | "
+   echo " | 8 | + Layouts  | "
+   echo "----------------------------------------------------"
+   read -n 1 -p "   < " v_ans
 
-   read -n 1 -p "Qual a funcao que quer para omni-key? " v_ans
-
-   if   [ $v_ans == "om"    ] || [ $v_ans == "1" ]; then echo && f-reset-omni-key
-   elif [ $v_ans == "upk"   ] || [ $v_ans == "2" ]; then echo && f-set-omni-key-upk
-   elif [ $v_ans == "qr"    ] || [ $v_ans == "3" ]; then echo && f-set-omni-key-qr
-   elif [ $v_ans == "luxam" ] || [ $v_ans == "4" ]; then echo && f-set-omni-key-luxam
-   elif [ $v_ans == "trade" ] || [ $v_ans == "5" ]; then echo && f-set-omni-key-trade
-   elif [ $v_ans == "admin" ] || [ $v_ans == "6" ]; then echo && f-set-omni-key-admin
+   if   [ $v_ans == "1" ]; then echo && f_reset_omni_key
+   elif [ $v_ans == "2" ]; then echo && f_set_omni_key_upk
+   elif [ $v_ans == "3" ]; then echo && f_set_omni_key_qr
+   elif [ $v_ans == "4" ]; then echo && f_set_omni_key_luxam
+   elif [ $v_ans == "5" ]; then echo && f_set_omni_key_trade
+   elif [ $v_ans == "6" ]; then echo && f_set_omni_key_admin
    fi
+
+   echo
 
 }
 
@@ -175,12 +181,12 @@ function f_key_fzf {
       [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
       [[ $v_list =~ "9. " ]] && echo
       [[ $v_list =~ "8. " ]] && echo
-      [[ $v_list =~ "7. " ]] && f-set-omni-key-admin
-      [[ $v_list =~ "6. " ]] && f-set-omni-key-trade
-      [[ $v_list =~ "5. " ]] && f-set-omni-key-luxam
-      [[ $v_list =~ "4. " ]] && f-set-omni-key-qr
-      [[ $v_list =~ "3. " ]] && f-set-omni-key-upk
-      [[ $v_list =~ "2. " ]] && echo OM; f-reset-omni-key
+      [[ $v_list =~ "7. " ]] && f_set_omni_key_admin
+      [[ $v_list =~ "6. " ]] && f_set_omni_key_trade
+      [[ $v_list =~ "5. " ]] && f_set_omni_key_luxam
+      [[ $v_list =~ "4. " ]] && f_set_omni_key_qr
+      [[ $v_list =~ "3. " ]] && f_set_omni_key_upk
+      [[ $v_list =~ "2. " ]] && echo "OM" && f_reset_omni_key
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
