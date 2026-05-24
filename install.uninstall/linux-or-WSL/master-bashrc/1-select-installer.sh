@@ -17,128 +17,16 @@
 
 
 
-
-
-
-
-
-
 # ----------------------------------------------------------------------------------------------
-# -- Below: Provide Visuals at the start 
+# -- Below: Define Variables 
 # ----------------------------------------------------------------------------------------------
-
-
-
-v_talk="DRYa Instalation Wizzard: "
-
-function f_greet_standard {
-   # If installed, use `figlet`
-
-   # This script could also ensure the standard.flf font is correctly installed.
-	# Command to find the standard PATH for figlet fonts: `figlet -I2`
-	
-   figlet -f standard.flf DRYa 2>/dev/null
-}
-
-function f_greet_failsafe {
-   # Display a nice ascii Title for DRYa
-
-   # Example: `echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"`
-   #          `echo -e "plain \e[0;32m`
-
-   function f_one {
-      echo
-      echo -e " \e[0;32m    ||\`		                   		"
-      echo -e " \e[0;32m    ||				                  "
-      echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
-      echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
-      echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
-      echo -e " \e[0;32m                 ,  |'		         "
-      echo -e " \e[0;32m                   ''		         "
-      echo -e " \e[0m" 
-   }
-
-   function f_two {
-      echo ' ____  ___ __   __    '
-      echo '|  _ \|  _ \ \ / /_ _ '
-      echo '| | | | |_) \ V / _` |'
-      echo '| |_| |  _ < | | (_| |'
-      echo '|____/|_| \_\|_|\__,_|'
-      echo '					   '
-   }
-
-    f_one || f_two
-}
-
-function f_greet {
-   # This fx ensures some correct ASCII greet is used
-   clear
-   f_greet_standard || f_greet_failsafe
-}
-
-function f_talk {
-   echo -n "$v_talk"
-}
-
-function f_hzl {
-   # At every 'select' menu, I want the first 
-      # and last option of the menu to be an
-      # horizontal split.
-      # If there was no nested loops, there was no need
-      # for these. Another reasob to create these horizontal
-      # split lines, is force the menu to be vertical 
-   # I want the last line of the menu to be all dashes
-      # That forces the menu to be vertical always
-      # For that, I will count hoe many lines does the
-      # terminal has, store that into a variable v_cols
-      # and insert it into the menu
-
-   clear
-
-   # Finding ANY way possible to find value $COLUMNS
-      unset           v_cols    # Preventing loading wrong values from past memory
-                      v_cols="$COLUMNS"
-      [[ -z           $v_cols  ]] && v_cols=$(stty size | awk '{print $2}')  2>/dev/null  # Caso `printenv` nao contenha $COLUMNS
-      [[ -z           $v_cols  ]] && v_cols=$(stty size | cut -f 2 -d " " )  2>/dev/null  # Caso `awk`      nao esteja instalado
-      [[ -z           $v_cols  ]] && v_cols=$(tput cols                   )  2>/dev/null    # Caso `cut`      nao esteja instalado
-      [[ -z           $v_cols  ]] && echo "An error does not allow counting Terminal Columns Size to create f_hzl" && read -sn 1
-     #echo "Columns = $v_cols"  # Debug
-
-   # Subtrair alguns caracteres
-      let "v_count = $v_cols - 5"
-      #echo "Count = $v_count"  # debug
-         #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
-         #read -sn1
-
-      # You may choose the apropriate symbol here
-         v_underscore="-"
-
-      # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
-         v_underscoreCount=""
-
-         for i in $(seq $v_count); do 
-            v_underscoreCount="$v_underscoreCount$v_underscore"
-         done
-
-      # The result is an horizontal line
-         #echo "var is $v_underscoreCount"
-         #read -sn1
-         v_line=$v_underscoreCount  # uDev: substituir para $v_hzl
-
-      v_some_line=------------------------------------------------------------------  # Hard coded line
-
-      # echo $v_line  # Debug
-}
-
-# ----------------------------------------------------------------------------------------------
-# -- Above: Provide visuals at the start --+-- Below: Define Variables
-# ----------------------------------------------------------------------------------------------
-
-
 
 
 
 function f_internal_variables {
+
+   v_talk="DRYa Instalation Wizzard: "
+
    # Variables
 
    # After $v_5 is found (abs path), can be complemented with relative paths
@@ -206,12 +94,132 @@ function f_define_env_vars {
 
 
 
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Below: Provide Visuals at the start 
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+function f_greet_standard {
+   # If installed, use `figlet`
+
+   # This script could also ensure the standard.flf font is correctly installed.
+	# Command to find the standard PATH for figlet fonts: `figlet -I2`
+	
+   figlet -f standard.flf DRYa 2>/dev/null
+}
+
+function f_greet_failsafe {
+   # Display a nice ascii Title for DRYa
+
+   # Example: `echo -e "plain \e[0;31mRED MESSAGE \e[0m reset"`
+   #          `echo -e "plain \e[0;32m`
+
+   function f_one {
+      echo
+      echo -e " \e[0;32m    ||\`		                   		"
+      echo -e " \e[0;32m    ||				                  "
+      echo -e " \e[0;32m.|''||  '||''| '||  ||\`  '''|.	   "
+      echo -e " \e[0;32m||  ||   ||     \`|..||  .|''||	   "
+      echo -e " \e[0;32m\`|..||. .||.        ||  \`|..||.	"
+      echo -e " \e[0;32m                 ,  |'		         "
+      echo -e " \e[0;32m                   ''		         "
+      echo -e " \e[0m" 
+   }
+
+   function f_two {
+      echo ' ____  ___ __   __    '
+      echo '|  _ \|  _ \ \ / /_ _ '
+      echo '| | | | |_) \ V / _` |'
+      echo '| |_| |  _ < | | (_| |'
+      echo '|____/|_| \_\|_|\__,_|'
+      echo '					   '
+   }
+
+   f_one || f_two
+}
+
+function f_greet {
+   # This fx ensures some correct ASCII greet is used
+   clear
+   #f_greet_standard || f_greet_failsafe
+   f_greet_failsafe
+}
+
+function f_talk {
+   echo -n "$v_talk"
+}
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Below: Functions copied from drya-lib-1 
+# ----------------------------------------------------------------------------------------------
+   # Functions should remain COPIES from drya-lib-1
+
+
+
+function f_hzl {
+
+   # At every 'select' menu, I want the first 
+      # and last option of the menu to be an
+      # horizontal split.
+      # If there was no nested loops, there was no need
+      # for these. Another reason to create these horizontal
+      # split lines, is force the menu to be vertical 
+   # I want the last line of the menu to be all dashes
+      # That forces the menu to be vertical always
+      # For that, I will count how many lines does the
+      # terminal has, store that into a variable v_cols
+      # and insert it into the menu
+
+   clear
+
+   # Finding ANY way possible to find value $COLUMNS
+      unset           v_cols    # Preventing loading wrong values from past memory
+                      v_cols="$COLUMNS"
+      [[ -z           $v_cols  ]] && v_cols=$(stty size | awk '{print $2}')  2>/dev/null  # Caso `printenv` nao contenha $COLUMNS
+      [[ -z           $v_cols  ]] && v_cols=$(stty size | cut -f 2 -d " " )  2>/dev/null  # Caso `awk`      nao esteja instalado
+      [[ -z           $v_cols  ]] && v_cols=$(tput cols                   )  2>/dev/null    # Caso `cut`      nao esteja instalado
+      [[ -z           $v_cols  ]] && echo "An error does not allow counting Terminal Columns Size to create f_hzl" && read -sn 1
+     #echo "Columns = $v_cols"  # Debug
+
+   # Subtrair alguns caracteres
+      let "v_count = $v_cols - 5"
+      #echo "Count = $v_count"  # debug
+         #echo -e "There are currently $v_cols columns in the screen \n and from that number, $v_count is the\n number of dashes '-' that the menu will have "
+         #read -sn1
+
+      # You may choose the apropriate symbol here
+         v_underscore="-"
+
+      # Store in a var, how many dashes can be replaced by empty spaces (according to the specific amount of available columns)
+         v_underscoreCount=""
+
+         for i in $(seq $v_count); do 
+            v_underscoreCount="$v_underscoreCount$v_underscore"
+         done
+
+      # The result is an horizontal line
+         #echo "var is $v_underscoreCount"
+         #read -sn1
+         v_line=$v_underscoreCount  # uDev: substituir para $v_hzl
+
+      v_some_line=------------------------------------------------------------------  # Hard coded line
+
+      echo $v_line  # If the last line is Printing the result, then __main__ scripts can call `f_hzl` instead of `f_hzl && v_hzl` and it will give the advantage to re-calvulate the columns
+}
+
 # ----------------------------------------------------------------------------------------------
 # -- Above: Define Variables --+-- Below: Functions copied from drya-lib-5 
 # ----------------------------------------------------------------------------------------------
+   # Functions should remain COPIES from drya-lib-5
 
 
-# Functions in this section are just copied from drya-lib-5
 
 
 function f_1 {
