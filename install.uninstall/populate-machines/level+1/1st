@@ -1,13 +1,19 @@
 #!/bin/bash 
-# Title: Dependencies 1st
-# Description: Groups of softwares for each situation: dependencies to DRYa, Linux and Windows text editors, etc...
+# Title:       | Dependencies 1st
+# Description: | Groups of softwares for each situation (presets): DRYa dependencies are one Preset. There are presets for Linux, Windows, Termux, Live USB OS, configs for softwares, etc.
+# Use:         | `D iu presets` and choose from a list. (all lists should be in this file, listed as text to allow manual install also). Also, after a fresh install of DRYa, the 1st preset is also listed as `D iu dp`
+:PROPERTIES:
+#+STARTUP: overview
+#+STARTUP: hidestars
+#+STARTUP: indent
+:END:
 
-# uDev: This file should be sourced `source .../1st`
-#       Then, run the corresponding commands to install this file entirely or just parts
+Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]]
+
+[[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
 
 
-
-function f_opening_instructions {
+* Instructions
    # Help
 
    # Step 1 (Most Basic) :: You may use this command to FULLY INSTALL the most basic DRYa's functionality:
@@ -22,10 +28,11 @@ function f_opening_instructions {
 
    # Step 2 :: After installing the most basic DRYa and restart the terminal
       # uDev: Call this file and execute one group of instalations. Example: f_gr_soft_DRYa_dependencies
-}
+* Presets (P)
 
-
-function f_gr_1_installing_terminal {
+- [ ] Tem script correspondente a todo este texto. Se sim: `D iu exemplo ...`
+  
+** f_gr_1_installing_terminal (1)
    # Para DRYa poder funcionar, primeiro precisa de terminal
 
    # uDev: 
@@ -35,34 +42,30 @@ function f_gr_1_installing_terminal {
    echo "uDev: Instalar terminal Base. Including git"
 
    # Git is needed to install here. in termux if we delete ~/../usr then all termux content is lost while DRYa is at ~/Repositories/ (to fix termux, just restart and ~/../usr will be automatically created. But all pakages previously installed by termux were lost. Git is needed here because DRYa might need an update before installing further 
-}
 
-function f_gr_2_hard_dependencies {
+** f_gr_2_hard_dependencies (2)
    # List of DRYa dependencies (to be installed by DRYa installer)
    
-   # uDev: `pkg` will give an error
-
    pkg install   \  
    figlet        \  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet
    ncurses-utils \  # Instals packages like `tput`
    less          \  # Dependency for ezGIT (example: `git diff --staged` will only list diferences if less is installed. It will claim 'pager' was not found
    vim           \  # Most Powerfull text editor
-  #nvim          \  # neovim suporta melhor o clipboard
+   nvim          \  # neovim suporta melhor o clipboard
    file          \  # Dependency for ezGIT
-  #fzf           \  # Fuzzyfinder (`D iu i fzf` fornece a instalacao oficial dos desenvolvedores do fzf)
+   fzf           \  # Fuzzyfinder (`D iu i fzf` fornece a instalacao oficial dos desenvolvedores do fzf)
    -y
 
    # uDev: Bash deve ter metodos para evitar usar `file` e assim `file` deixava de ser uma dependencia do ezGIT
-}
 
-function f_gr_3_soft_DRYa_dependencies {
+** f_gr_3_soft_DRYa_dependencies (3)
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
 
    # Basic dependencies for Default DRYa usage
       pkg install    \
       git            \
       xdg-utils      \
-      #git-crypt     \ # Pacote externo ao git, que favorece um repositorio com encriptacao
+      git-crypt      \  # Pacote externo ao git, que favorece um repositorio com encriptacao
       vim            \  # Editor de Texto do tipo TUI (Terminal User Interface)
       file           \  # Dependency for ezGIT
       man            \  # Usado para ler manuais de instrucoes dos comandos Linux
@@ -75,7 +78,8 @@ function f_gr_3_soft_DRYa_dependencies {
       jp2a           \  # Convert jpg images yo ascii
       imagemagick    \  # Can use the command `concert img.png img.jpg` and converts images
       emacs          \  # Poderoso editor de texto e itrepretador de eLisp 
-      neofetch
+      neofetch       \  # . . .
+      -y
 
    # Figlet command
       # the APT package manager may not have it,
@@ -85,26 +89,20 @@ function f_gr_3_soft_DRYa_dependencies {
       pkg install figlet || snap install figlet
 
    # Nota: Numa fresh install do OS, podemos por curiosidade, criar um ficheiro com uma variavel (na maquina, host) que informa a idade do OS "OS Age" e depois mencionar as duas variavies "current up-time". Exemplo: comando `trid up-time` que manda o resultado: "OS age: 2 anos"; "Dispositivo ligado ha X dias"
-}
 
+** f_usefull (4)
 
-function f_usefull {
-
-   echo '
    # List of usefull apps 
-      gh         # for arch is `github-cli`. See f_github_cli 
-      dos2unix   # Or DRYa: `dos-2-unix` When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
+      pkg install \
+      gh             # for arch is `github-cli`. See f_github_cli 
+      dos2unix       # Or DRYa: `dos-2-unix` When editing a file with emacs, it got windows new-line formatation \r and vim was not detecting it. So, when running the file that was actually a .sh script it gave the error "bash line 2: $'\r': command not found" Now, we can either run the command "sed -i 's/\r$//' scriptname.sh" or we can install dos2unix and run "dos2unix scriptname.sh"
       exiftool
       tree
       linx
-      tsu \            # To grant sudo permissions, may be needed to enable phone screenshots
-      gnupg \          # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
-      tar \            # Comprimit pastas com gzip para ficheiros .tar.gz
-      ssh \            # Need to connect to raspberry Pi
-         # openssh-client  (debian)
-         # openssh-clients (red-hat)
-         # openssh         (arch)
-         # sshd            (servidor, usado nas 3 distribuicoes)
+      tsu \          # To grant sudo permissions, may be needed to enable phone screenshots
+      gnupg \        # Package "GNU Privacy Guard" that allows command `gpg` for Encryption/Decryption of all kinds of files with the protocol OpenPGP (protocol used first by the proprietary software PGP "Pretty Good Privacy"
+      tar \          # Comprimit pastas com gzip para ficheiros .tar.gz
+      ssh \          # Need to connect to raspberry Pi
       sshfs \          # Mout ssh as a file system 
       whiptail \       # Tool to give GUI menus on Bash
       dialog \         # Tool to give GUI menus on Bash (like whiptail but with more options
@@ -136,10 +134,20 @@ function f_usefull {
       htop           # Task manager com hotkeys para `kill`processos
       tmate          # Similar to TeamViewer or AnyDesk (but to CLI interface with tmux)
       yad            # `apt install yad` para criar system trays com icons e comandos (junto ao relogio)
-   '
-}
+      -y
 
-function f_github_cli {
+** f_ssh
+
+   # List of apps for ssh
+      pkg install \
+      openssh-client  \    # (debian)
+      openssh-clients \    # (red-hat)
+      openssh         \    # (arch)
+      sshd            \    # (servidor, usado nas 3 distribuicoes)
+      -y
+
+
+** f_github_cli (5)
    # Software to use github without opening a browser. 
    # Package name in most repos: `gh`
    # Package name in arch repos: `github-cli`
@@ -161,9 +169,7 @@ function f_github_cli {
    # Creating a new repo (opcao B, `gh` will create everything)
       gh repo create nome-do-repo --public --clone
 
-}
-
-function f_install_mpv {
+** f_install_mpv (6)
    # installing `mpv` on fedora
 
    echo '
@@ -175,13 +181,10 @@ function f_install_mpv {
 
       Depois ja pode instala `mpv` com: `sudo dnf install mpv`
    '
-}
       
-
-function f_mention_usefull_python_apps {
+** f_mention_usefull_python_apps (7)
    # List of usefull 'python' apps
 
-   echo '
    youtube-dl {
       # Software to use at terminal (termux for example) to download from youtube
       # (may need ffmpeg)
@@ -197,25 +200,18 @@ function f_mention_usefull_python_apps {
       #     '$ youtube-dl -f 18 <video-url-here>'
       # }
    }
-   '
-}
 
+** f_help_emacs (7)
 
-
-function f_help_emacs {
-
-   echo '
-   Instalacoes a mao 
+   Instalacoes manual temas
 
    Emacs:
     `M-x package-install` `dracula-theme`
 
    Vim:
-       ...
-   '
-}
+    `...`
 
-function f_list_of_usefull_apps_at_WSL2 {
+** f_list_of_usefull_apps_at_WSL2 (8)
    
    wslview() {
       # Binary to open files directly from WSL (windows terminal) like .jpg or .xlsx
@@ -225,11 +221,8 @@ function f_list_of_usefull_apps_at_WSL2 {
       # Example: 
          wslview /mnt/c/Repositories/Software-resources/all/icon.png 
    }
-}
+** f_termux_help (9)
 
-function f_termux_help {
-
-   echo '
    # For termux, may be needed:
       # uDev: Put these on wikiD
       - termux-info  # Variaveis sobre o termux
@@ -241,10 +234,8 @@ function f_termux_help {
    # May also be very usefull:
       - ROOT smartphone (and create a tutorial)
         > For Samsung A6+ : https://youtu.be/Zm6vh2W4Hxs?si=OHEOzvSZbI0ZxVMU
-   '
-}
 
-# function f_after_fresh_windows_format {
+** f_after_fresh_windows_format (10)
 #    - Depois de formatar o windows:
 #      - window update
 #      - Resolucao
@@ -262,7 +253,10 @@ function f_termux_help {
 #
 # }
 
-function f_exec {
+** f_create_bootable_windows_USB__CMD_tutorial
+- [ ] Tem script correspondente a todo este texto. Se sim: `D create-windows-bootable-USB-cmd`
+uDev
+** f_exec (11)
    echo "DRYa: file: 1st: Running groups of apps to install"
 
    # Before format (before DRYa)
@@ -274,6 +268,6 @@ function f_exec {
 
    # After DRYa
       f_gr_hard_dependencies
-}
-#f_exec
+f_exec
 
+ 
