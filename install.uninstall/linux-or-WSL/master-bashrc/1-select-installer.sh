@@ -4,10 +4,8 @@
 
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no sistema, criar a hipotese de ghost-in ghost-out
-
 # uDev: Redirect zsh and fish to our bashrc
-
-
+# uDev: Change ${v_REPOS_CENTER}/ to $__REPOS_CENTER__/
 
 
 
@@ -561,10 +559,9 @@ function f_1st_select {
    function f_1st_by_read {
       # This function belongs to the First Question
 
-      function f_test_existence_repos_center_default {
-         [[   -d ~/Repositories ]] && echo " |   |     > It already exists [tested]"
-         [[ ! -d ~/Repositories ]] && echo " |   |     > It will be created"
-      }
+      # Testar a existencia de DRYa-Repos-Center
+         [[   -d ~/Repositories ]] && v_rep="It already exists [tested]"
+         [[ ! -d ~/Repositories ]] && v_rep="It will be created"
 
       f_greet
 
@@ -577,12 +574,12 @@ function f_1st_select {
 
       f_talk; echo "[4/x] Choose centralized Directory"
               echo $v_some_line
-              echo " | Choose the path to 'DRYa-REPOS-CENTER/'"
-              echo " | DRYa's will centralize all repositories here."
+              echo " | Choose a path to centralize all repositories"
+              echo " |  > \${v_REPOS_CENTER}/"
               echo $v_some_line
               echo " |   |"
               echo " | 1 | >>> ~/Repositories/ "
-              f_test_existence_repos_center_default 
+              echo " |   |     > $v_rep"
               echo " |   |"
               echo " | 2 | >>> /mnt/c/\$USER/Repositories/"
               echo " |   |     > Used at WSL2"
@@ -614,51 +611,121 @@ function f_1st_select {
            [[ $v_ans == 6 ]] && f_menu_principal
    }
 
-   #f_1st_by_read
-   f_1st_by_select
+   f_1st_by_read
+   #f_1st_by_select
 
-   #read -s -p "finish"
 }
 
 function f_2nd_select {
    # Second question of the instalation process
 
-   f_greet; f_2nd
+   function f_2nd_by_select {
+      f_greet; f_2nd
 
-   select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
-   do
-      case $i in 
-         "(yes) to continue")
+      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
+      do
+         case $i in 
+            "(yes) to continue")
 
-            f_3rd_select;
+               f_3rd_select;
 
-            # Last, allow to script to flow by breaking all 'select loops'
-               f_break_select_loops; eval $_break
+               # Last, allow to script to flow by breaking all 'select loops'
+                  f_break_select_loops; eval $_break
 
 
-       ;;
-       "(no) to abort")
-         echo " Second question answered NO"
-                 exit 1
-       ;;
-       "(help) to explain") 
+          ;;
+          "(no) to abort")
+            echo " Second question answered NO"
+                    exit 1
+          ;;
+          "(help) to explain") 
+               f_greet
+               echo "Explanation for the Second Question"
+               echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
+
+            # Explain what a centralized directory is
+               echo "Move the DRYa repo into the dir you choose"
+               echo " > If you were run this file, you must have a copy of DRYa"
+               echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
+               echo
+         ;;
+         "(back to Q1)")
+            f_greet; f_1st; break
+         ;;
+         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_2nd ;;
+        esac
+      done
+   }   
+   function f_2nd_select_by_read {
+
+      # Second question of the installation process
+
+      while true
+      do
+         f_greet
+         f_2nd
+
+      f_talk; echo "[2/x] Choose centralized Directory"
+              echo $v_some_line
+              echo " | -- d "
+              echo " | -- d"
+              echo $v_some_line
+              echo " |   |"
+              echo " | 1 | >>> Yes, continue "
+              echo " |   |"
+              echo " | 2 | >>> No, abort"
+              echo " |   |"
+              echo " | 3 | >>> Help"
+              echo " |   |"
+              echo " | 4 | >>> Back, to [1/x]"
+              echo "$v_line"
+
+         read -rp "Choose an option: " option
+
+         if [[ "$option" == "1" || "$option" == "yes" ]]; then
+
+            f_3rd_select
+
+            # Allow script to flow
+            f_break_select_loops
+            eval $_break
+
+         elif [[ "$option" == "2" || "$option" == "no" ]]; then
+
+            echo "Second question answered NO"
+            exit 1
+
+         elif [[ "$option" == "3" || "$option" == "help" ]]; then
+
             f_greet
             echo "Explanation for the Second Question"
             echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
 
-         # Explain what a centralized directory is
+            # Explain what a centralized directory is
             echo "Move the DRYa repo into the dir you choose"
-            echo " > If you were run this file, you must have a copy of DRYa"
-            echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
+            echo " > If you run this file, you must have a copy of DRYa"
+            echo "   and that copy (this copy) should be moved into the directory"
+            echo "   you choose to be the holder of all repos"
             echo
-      ;;
-      "(back to Q1)")
-         f_greet; f_1st; break
-      ;;
-      *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_2nd ;;
-     esac
-   done
 
+            read -rp "Press ENTER to continue..."
+
+         elif [[ "$option" == "4" || "$option" == "back" ]]; then
+
+            f_greet
+            f_1st
+            break
+
+         else
+
+            echo "That option is invalid. Press ENTER to clear screen"
+            read
+
+         fi
+      done
+   }
+   f_2nd_select_by_read
+   #f_2nd_select_by_select
 }
 
 function f_3rd_select {
