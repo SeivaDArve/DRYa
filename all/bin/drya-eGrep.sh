@@ -3,7 +3,6 @@
 # Description: | feed this script with a file name, and A grep search, it will tell the line number
 #              | or, feed a .org file name and a header name, this script will print the entire header
 
-__name__=drya-eGrep
 
 
 
@@ -207,15 +206,11 @@ function f_fzf_menu {
 
 
 
-f_talk; echo "(extended grep)"
-
-
-echo
-read -p "[Enter] para passar ao script $__name__"
-echo
-
 f_parse_args "$@"
-echo
-read -p "[Enter] para passar ao script $__name__"
-echo
+
+v_talk="DRYa: eGrep: "
+__name__=drya-eGrep
+f_talk; read -sn1 -p "[Enter = Menu fzf ] ... "
+        echo
+
 f_fzf_menu 

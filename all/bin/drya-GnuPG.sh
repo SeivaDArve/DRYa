@@ -769,6 +769,9 @@ function f_main_menu_text {
    L00=' | Arg | Descricao da fx (+ info  || `v` for no info)'
 
     L0=" |  0  | Status > DRYa default settings"
+   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
+
     L1=" |  1  | Chaves > Listar as públicas / verificar existência"
     L2=" |  2  | Chaves > Listar as privadas / verificar existência"
     L3=" |  3  | Chaves > Gerar nova (interativo)"
@@ -791,12 +794,11 @@ function f_main_menu_text {
 
    L10=" | 10  | Assinaturas > Assinar ficheiro"
    L11=" | 11  | Assinaturas > Verificar assinatura"
-   L16=" | 16  | Mostrar fingerprints"
-   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
-   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
+   L16=" | 16  | Mostrar fingerprints (Testar chaves e seus donos)"
 
-   L22=" | 22  | Tar ball > Create (zip) "
-   L23=" | 23  | Tar ball > Create (unzip) "
+   L22=" | 22  | Compress     (zip) "
+   L23=" | 23  | Decompress   (unzip) "
+   L24=' | 24  | Dependencias (uDev: `D iu dp`)'
 
     Lh=" |  h  | Instucoes Base"
     LQ=" |  Q  | Sair"
@@ -804,6 +806,9 @@ function f_main_menu_text {
    echo "$L00"
    f_hline
    echo "$L0"
+   echo "$L18"
+   echo "$L19"
+   f_hline
    echo "$L1"
    echo "$L2"
    echo "$L3"
@@ -817,19 +822,20 @@ function f_main_menu_text {
    f_hline
    echo "$L20"
    echo "$L21"
+   f_hline
    echo "$L7"
    echo "$L17"
+   f_hline
    echo "$L8"
    echo "$L9"
    f_hline
    echo "$L10"
    echo "$L11"
    echo "$L16"
-   echo "$L18"
-   echo "$L19"
    f_hline
    echo "$L22"
    echo "$L23"
+   echo "$L24"
    f_hline
    echo "$Lh"
    echo "$LQ"

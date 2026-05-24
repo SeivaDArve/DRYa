@@ -4356,23 +4356,39 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
    #
 
 elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then 
-   # Partial File Reader: Filtrar texto de ficheiros
+   # Uso igual ao `getopts` em que apenas le os argumebtos do CLI e guarda em variaveis. Este arg `D opt <args>` pode ser usado como debug e implementado em outras fx tal como `D grep <args>`
 
    v_script=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+   v_base=$(basename $v_script)
+
+   if [[ "$2" == "." || "$1" == "edit-self" ]]; then
+      # Edit this file itself
+
+      f_greet
+      f_talk; echo "getopts: $v_base:"
+              echo " > editing itself"
+              echo
+      bash e $v_script
+
+   else
+
+      f_greet
+      shift
+
+      source $v_script
+      f_parse_args "$@"
+   fi
+
+
+elif [ $1 == "eGrep" ]] || [ $1 == "grep" ] || [ $1 == "gr" ]; then 
+   # Partial File Reader: Filtrar texto de ficheiros
 
    f_greet
-   f_talk; echo $(basename $v_script)
-
-   source $v_script
-   f_parse_args "$@"
-
-elif [ $1 == "grep" ] || [ $1 == "gr" ]; then 
-   # Partial File Reader: Filtrar texto de ficheiros
 
    v_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-eGrep.sh
 
    if [ -z $2 ]; then 
-      bash $v_script 
+      bash $v_script
 
    elif [ $2 == "." ]; then 
       vim $v_script
