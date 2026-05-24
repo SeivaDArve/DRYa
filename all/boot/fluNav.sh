@@ -229,18 +229,10 @@ function f_edit__vimrc {
 
 function f_edit__1st_emacs {
    f_greet
-   echo "Editing the list of 1st apps to install"
-   read -s -t 2
-   EM ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
-   f_greet
-   echo "edited: 1st"
-}
-
-function f_edit__1st_vim {
-   f_greet
-   echo "Editing the list of 1st apps to install"
-   read -s -t 2
-   vim ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
+   echo "Editing the list '1st' (apps to install)"
+   read -sn 1 -t 2
+   echo
+   bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
    f_greet
    echo "edited: 1st"
 }
@@ -677,8 +669,7 @@ function f_menu_fzf_F {
       L12='12. Edit | vim   | .bashrc'
       L11='11. Edit | vim   | source-all-moedaz-files'
       L10='10. Edit | vim   | .vimrc'
-       L9='9.  Edit | emacs | 1st'
-       L8='8.  Edit | vim   | 1st'
+       L9='9.  Edit | e     | 1st'
        L7='7.  Edit | emacs | emacs-init'
        L6='6.  Edit | vim   | emacs-init'
 
@@ -691,7 +682,7 @@ function f_menu_fzf_F {
        Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F c\`: (uDev)  \n   ")
        L0="DRYa fluNav: F: Menu + Ficheiros Fav para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
@@ -702,7 +693,6 @@ function f_menu_fzf_F {
       [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
       [[ $v_list =~ "10. " ]] && f_edit__vimrc
       [[ $v_list =~ "9.  " ]] && f_edit__1st_emacs
-      [[ $v_list =~ "8.  " ]] && f_edit__1st_vim
       [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
       [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
       [[ $v_list =~ "5.  " ]] && f_help
