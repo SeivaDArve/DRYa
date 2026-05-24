@@ -3,7 +3,7 @@
 
 # Description: 
 #     "dryaSRC" = "DRYa Source"
-#     dryaSRc (this file) is the 1st DRYa's file to run. 
+#     dryaSRC (this file) is the 1st DRYa's file to run. 
 #     It is Called/Loaded/Sourced by '~/.bashrc' which is the first file the terminal loads at startup
 #     It Initializes all other apps and initiate persistent functions
 #     dryaSRC is a file meant to work like "On/Off" 
@@ -19,7 +19,7 @@
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
-# uDev: renomear 'config-bash-alias' pra 'dryaRC.centralized'' e '.dryarc' para '.dryaRC.host'
+# uDev: renomear 'config-bash-alias' pra 'dryaRC' e '.dryarc' para '.drya.hostRC'
 
 # uDev: fix dependency bugs (in case DRYa is running on a fresh install of some new OS)
 
@@ -732,8 +732,8 @@ function f__dryaSRC_lib_2__asking_to_clone {
    v_ask="$v_name nao instalado, deseja instalar? [S/n]"
    v_clone="https://github.com/SeivaDArve/$v_name.git"
 
-   f_talk; echo        "$v_ask" 
-           read -p " > " v_ans
+   f_talk; echo    "$v_ask" 
+           read -p " > "    v_ans
 
    # A fx anterior tem de ter respondido a uma pergunta. Caso essa pergunta tenha sido evitada ou nao obteve a respota certa, sera filtrada de seguida: 
       [[ -z $v_ans        ]] && f__dryaSRC_lib_1__after_clonning 
