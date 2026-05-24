@@ -76,6 +76,13 @@ function f_create_tmp_file_with_date_as_name {
    touch $v_tmp
 }
    
+
+function f_ensure_omni_log {
+   unset v_green_light       # var given after drya-lib-4 that tells this main script either to proceed or not
+   v_ensure="omni-log"          # Repo name we want to ensure its existence
+   f_lib4_ensure_repo_existence_single   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
+}
+
 function f_edit_with_heteronimos {
    
    # Menu that allows user to choose an Heteronimo file to edit
@@ -176,8 +183,8 @@ function f_main_menu {
 
       L4='4. Nota   | sync one-file-bau | `no ++ <nr>`';  # Sync 1 file with ezGIT --trigger (only 1 person can edit at a time)
 
-      L3='3. Nota   | Nova COM titulo   | `no +`';  L3c="no +"  # uDev: command not ready
-      L2='2. Nota   | Nova SEM titulo   | `no -`';  L2c="no -"  # uDev: command not ready
+      L3='3. Nota   | Nova COM titulo   | `no +`' ; L3c="no +"  
+      L2='2. Nota   | Nova SEM titulo   | `no -`' ; L2c="no -" 
       L1='1. Cancel'
 
       Lh=$(echo -e "\nInfo: no-tes.sh\n - É um menu minimalista que permite editar ficheiros favoritos\n - A repo DRYa nao guarda texto em si pripria\n   Guarda texto maioritariamente na repo 'omni-log'\n - Se nao for possivel o download ou utilizacao de 'omni-log' \n   o texto é guardado temporariamente offline em drya-mail-box\n ")
@@ -195,14 +202,11 @@ function f_main_menu {
       [[ $v_list =~ "7. " ]] && f_edit_with_heteronimos
       [[ $v_list =~ "6. " ]] && f_ensure_omni_log && bash e $v_file_td
       [[ $v_list =~ "4. " ]] && f_one_file_bau
-      [[ $v_list =~ "3. " ]] && echo
+      [[ $v_list =~ "3. " ]] && echo uDev
       [[ $v_list =~ "2. " ]] && f_edit_random_note_no_title
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
 }
-
-
-
 
 f_define_files_as_vars
 f_greet 
@@ -239,6 +243,7 @@ elif [ $1 == "H" ]; then
    fi
 
 elif [ $1 == "-" ]; then
+
    if [ -z $2 ]; then
       f_edit_random_note_no_title
 
@@ -249,7 +254,7 @@ elif [ $1 == "-" ]; then
          # uDev: para o verbose output falta: mencionar que vem do script: `no - .`
          f_ensure_omni_log
          f_lib4_git_pull
-         vim $v_file_rn
+         bash e $v_file_rn
          f_lib4_git_add_all
          f_lib4_git_commit
          f_lib4_git_push
@@ -342,4 +347,3 @@ elif [ $1 == "notify" ] || [ $1 == "f" ]; then
 else
    f_talk; echo 'Option not recognized. try `no`'
 fi
-
