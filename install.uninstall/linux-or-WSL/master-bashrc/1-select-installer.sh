@@ -5,10 +5,21 @@
 # uDev: at the end of the script, start installing DRYa dependencies (listed on file "1st").
 # uDev: Se DRYa ainda nao existir no sistema, criar a hipotese de ghost-in ghost-out
 # uDev: Redirect zsh and fish to our bashrc
-# uDev: Change ${v_REPOS_CENTER}/ to $__REPOS_CENTER__/
+
+# uDev: Change ${v_REPOS_CENTER}/   to $__REPOS_CENTER__
+# uDev: Change $DRYa_HEART          to $__dryaSRC__
+# uDev: Change '# --hashtag-drya--' to  '#dee:Hashtag-DRYa'  
 
 
-
+# Hashtags dee-pages:
+#     dee:screen_1
+#     dee:screen_2
+#     dee:screen_3
+#     dee:screen_4
+#     dee:screen_5
+#     dee:screen_6
+#     dee:screen_7
+#     dee:screen_8
 
 
 
@@ -207,13 +218,13 @@ function f_hzl {
          #read -sn1
          v_line=$v_underscoreCount  # uDev: substituir para $v_hzl
 
-      v_some_line=------------------------------------------------------------------  # Hard coded line
+      v____________=------------------------------------------------------------------  # Hard coded line
 
       echo $v_line  # If the last line is Printing the result, then __main__ scripts can call `f_hzl` instead of `f_hzl && v_hzl` and it will give the advantage to re-calvulate the columns
 }
 
 # ----------------------------------------------------------------------------------------------
-# -- Above: Define Variables --+-- Below: Functions copied from drya-lib-5 
+# -- Above: Define Variables --+-- Below: Functions copied from drya-lib-5
 # ----------------------------------------------------------------------------------------------
    # Functions should remain COPIES from drya-lib-5
 
@@ -311,12 +322,13 @@ function f_create_tmp_history_file {
 
 
 function f_initialization_verbose {
+#     dee:screen_2
 
    f_history_log  # if already includes f_greet
 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
       f_talk; echo                "[1/x] Initialization"
-              echo $v_some_line  #------------------------------------------------------
+              echo $v____________  
               echo                " |   | Testing DRYa's installer itself, "
               echo                " |   | "
               echo                " |   | if it can detect relative|absolute paths."
@@ -336,9 +348,9 @@ function f_initialization_verbose {
       [[ ! -f $v_historyF ]] && echo " |   | - [ ] History was created"
    
    # Waiting for user to read
-      echo $v_some_line
+      echo $v____________
       echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
-      echo $v_some_line
+      echo $v____________
       read -sn1 -p "   > "
 }
 
@@ -351,13 +363,14 @@ function f_initialization_verbose {
 
 
 function f_history_log {
+#     dee:screen_1
 
    f_greet
 
    # Example of output
    #
    # | 
-   # | History: Clean (it will grow here)
+   # | History: [Clean] (it will grow here)"
    # | 
    # 
 
@@ -403,13 +416,11 @@ function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
 
    f_greet
-   echo "|"   
-   echo "| History: [1/x] Wizzard test: Passed"
-   echo "| History: [2/x] Main Menu > Install"
-   echo "|" 
-   echo
-
-
+           echo "|"   
+           echo "| History: [1/x] Wizzard test: Passed"
+           echo "| History: [2/x] Main Menu > Install"
+           echo "|" 
+           echo
    f_talk; echo "[3/x] BashRC test"
            echo "-------------------------------"
            echo " |   | "
@@ -431,9 +442,9 @@ function f_debug_bashrc_existence {
            echo " |   | "
 
    # Waiting for user to read
-      echo $v_some_line
+      echo $v____________
       echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
-      echo $v_some_line
+      echo $v____________
       read -sn1 -p "   > "
 }
 
@@ -463,14 +474,6 @@ function f_1st {
    echo    "  explorer.exe is easier"
 } 
 
-function f_2nd {
-   # This function belongs to the Second Question
-   echo -e "                 (Step 2 of 4)                 \n"
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [X] Do you have any dedicated dir for  repositories?"
-   echo -e " [ ] Move DRYa repository into that place (or git clone it)\n"
-} 
-
 function f_3rd {
    # This function belongs to the Third Question
    echo -e "                 (Step 3 of 4)                 \n"
@@ -497,179 +500,181 @@ function f_break_select_loops {
       # And returns a value to the user
    
    # If the variable is empty, do nothing, if "no", do nothing, if "yes" then break
-   if [[ -z $v_break_select_loops ]]; then echo -n ""
-      elif [[ $v_break_select_loops == "no" ]]; then echo -n ""
-      elif [[ $v_break_select_loops == "yes" ]]; 
-         then 
-            _break="break"
-            clear
+   if   [[ -z $v_break_select_loops          ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "no"  ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "yes" ]]; then _break="break" && clear
    fi
 }
 
 function f_1st_select {
-   # First question of the instalation process
+   # First question of the installation process
+   #     dee:screen_4
 
-   f_greet; f_1st
-
-   function f_1st_by_select {
-      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Menu)" "exit" "$v_line"
-      do
-         case $i in
-            "(yes) to continue")
-               f_2nd_select;
-               # Last, allow to script to flow by breaking all 'select loops'
-                  f_break_select_loops; eval $_break
-
-            ;;
-            "(no) to abort")
-               echo " For a correct instalation, you should create a directory where all other"
-               echo " Repositories go... (aborting)"
-
-               # The exit command cannot be used while sourcing, otherwise the entire terminal shuts down
-
-                 load_remaining_functions="no"
-                 #export v_unload ## Aparently scripts cannot export variables while being sorced
-                 exit 1
-            ;;
-            "(help) to explain") 
-               f_greet
-               echo " Explanation of the First question"
-                 # Explain what a centralized directory is
-               echo " First Create a dedicated directory for all your repositories like ~/Repositories"
-               echo "   > Does it exist?"
-                 echo "Welcome to DRYa (Don't Repeat Yoursel (app))"
-                 echo 
-                 echo "This script running is meant to install DRYa"
-                 echo " > Please choose one centralized directory"
-                 echo "   where DRYa and all other Seiva's Software"
-                 echo "   can be installed (e.g. /home/Repositories)"
-                 echo
-                 read -sn 1
-                 f_greet ; f_1st
-            ;;
-            "(back to Menu)")
-               f_greet; f_title; break
-            ;;
-            "exit") echo "Bye"; exit 0 ;;
-            *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_1st ;;
-           esac
-      done
-   }
-
-   function f_1st_by_read {
-      # This function belongs to the First Question
-
-      # Testar a existencia de DRYa-Repos-Center
-         [[   -d ~/Repositories ]] && v_rep="It already exists [tested]"
-         [[ ! -d ~/Repositories ]] && v_rep="It will be created"
+   while true
+   do
+      # Test existence of default repositories directory
+         [[   -d ~/Repositories ]] && v_variable_rep="It already exists [tested]"
+         [[ ! -d ~/Repositories ]] && v_variable_rep="It will be created"
 
       f_greet
 
-      echo "|" 
-      echo "| $v_talk (1) Wizzard tested"
-      echo "| $v_talk (2) Main Menu: Install"
-      echo "| $v_talk (3) Existensce of bashrc: tested"
-      echo "|" 
+      echo    "|"
+      echo    "| $v_talk (1) Wizard tested"
+      echo    "| $v_talk (2) Main Menu: Install"
+      echo    "| $v_talk (3) Existence of bashrc: tested"
+      echo    "|"
       echo
 
-      f_talk; echo "[4/x] Choose centralized Directory"
-              echo $v_some_line
-              echo " | Choose a path to centralize all repositories"
-              echo " |  > \${v_REPOS_CENTER}/"
-              echo $v_some_line
-              echo " |   |"
-              echo " | 1 | >>> ~/Repositories/ "
-              echo " |   |     > $v_rep"
-              echo " |   |"
-              echo " | 2 | >>> /mnt/c/\$USER/Repositories/"
-              echo " |   |     > Used at WSL2"
-              echo " |   |     > It is at the C:\ drive, inside a new directory"
-              echo " |   |       with the same name as the USER "
-              echo " |   |       This way, navigation through explorer.exe is)"
-              echo " |   |       easier. (Not safe only if there are more than"
-              echo " |   |       one user in the current machine)"
-              echo " |   |"
-              echo " | 3 | >>> /mnt/c/users/\$USER/Repositories/"
-              echo " |   |     > Used at WSL2"
-              echo " |   |     > "
-              echo " |   |"
-              echo " | 4 | >>> Current CLI prompt location"
-              echo " |   |     > $v_1"
-              echo " |   |"
-              echo " | 5 | >>> Insert 'other location' manually"
-              echo " |   |"
-              echo " | 6 | >>> Back to 'Main Menu'"
-              echo " |   |"
-              echo " | 7 | >>> 'Abort' everything"
-              echo " |   |"
-      # Waiting for user to read
-         echo $v_some_line
-         echo " [ Default = ~/Repositories ] "
-         echo $v_some_line
-         read -p "   > " v_ans
+      f_talk
+      echo    "[4/x] Choose centralized Directory"
 
-           [[ $v_ans == 6 ]] && f_menu_principal
-   }
+      echo "$v____________"
+      echo    " | Choose a path to centralize all repositories"
+      echo    " |  > \${v_REPOS_CENTER}/"
+      echo "$v____________"
+      echo    " |   |"
+      echo    " | 1 | >>> ~/Repositories/"
+      echo    " |   |     > $v_variable_rep"
+      echo    " |   |"
+      echo    " | 2 | >>> /mnt/c/\$USER/Repositories/"
+      echo    " |   |     > Used at WSL2"
+      echo    " |   |     > It is at the C:\\ drive, inside a new directory"
+      echo    " |   |       with the same name as the USER"
+      echo    " |   |       This way, navigation through explorer.exe"
+      echo    " |   |       becomes easier"
+      echo    " |   |       (not safe if there are multiple users)"
+      echo    " |   |"
+      echo    " | 3 | >>> /mnt/c/users/\$USER/Repositories/"
+      echo    " |   |     > Used at WSL2"
+      echo    " |   |"
+      echo    " | 4 | >>> Current CLI prompt location"
+      echo    " |   |     > $v_1"
+      echo    " |   |"
+      echo    " | 5 | >>> Insert 'other location' manually"
+      echo    " |   |"
+      echo    " | h | >>> Help / Explanation"
+      echo    " |   |"
+      echo    " | b | >>> Back to 'Main Menu'"
+      echo    " |   |"
+      echo    " | x | >>> Abort everything"
+      echo "$v____________"
+      echo    " [ Default = ~/Repositories ] "
+      echo "$v____________"
+      read -p "   > " v_variable_ans
 
-   f_1st_by_read
-   #f_1st_by_select
+      # Default option
+         [[ -z $v_variable_ans ]] && v_variable_ans="1"
 
+
+      if [[ $v_variable_ans == 1 ]]; then
+         # Option 1
+         export v_REPOS_CENTER="$HOME/Repositories"
+         f_2nd_select
+         break
+
+
+      elif [[ $v_variable_ans == 2 ]]; then
+         # Option 2
+         export v_REPOS_CENTER="/mnt/c/$USER/Repositories"
+         f_2nd_select 
+         break
+
+
+      elif [[ $v_variable_ans == 3 ]]; then
+         # Option 3
+         export v_REPOS_CENTER="/mnt/c/users/$USER/Repositories"
+         f_2nd_select 
+         break
+
+
+      elif [[ $v_variable_ans == 4 ]]; then
+         # Option 4
+         export v_REPOS_CENTER="$PWD"
+         f_2nd_select 
+         break
+
+      elif [[ $v_variable_ans == 5 ]]; then
+         # Option 5
+         echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
+         [[ -n $v_variable_custom_path ]] && export v_REPOS_CENTER="$v_variable_custom_path"
+         f_2nd_select 
+         break
+
+
+      elif [[ $v_variable_ans == "h" ]]; then
+         # Help
+
+         f_greet
+         echo " Explanation of the First question"
+         echo
+         echo " First create a dedicated directory"
+         echo " for all your repositories like:"
+         echo
+         echo "    ~/Repositories"
+         echo
+         echo " Welcome to DRYa (Don't Repeat Yourself app)"
+         echo
+         echo " This installer is meant to install DRYa"
+         echo " and other Seiva software repositories"
+         echo
+         echo " Choose one centralized directory"
+         echo " where all repositories can be stored"
+         echo
+         echo " Example:"
+         echo
+         echo "    /home/$USER/Repositories"
+         echo
+         read -sn1
+
+
+      elif [[ $v_variable_ans == "b" ]]; then
+         # Back to menu
+
+         f_greet
+         f_title
+         f_menu_principal
+         break
+
+      elif [[ $v_variable_ans == "x" ]]; then
+         # Abort
+
+         echo
+         echo " Aborting/exiting current instalation..."
+
+         load_remaining_functions="no"
+
+         exit 1
+
+      else 
+         # Invalid options
+
+         echo
+         echo " Invalid option."
+         echo " Press ENTER to continue"
+
+         read -r
+      fi
+
+   done
 }
 
 function f_2nd_select {
    # Second question of the instalation process
 
-   function f_2nd_by_select {
-      f_greet; f_2nd
-
-      select i in "$v_line" "(yes) to continue" "(no) to abort" "" "(help) to explain" "(back to Q1)" "$v_line"  
-      do
-         case $i in 
-            "(yes) to continue")
-
-               f_3rd_select;
-
-               # Last, allow to script to flow by breaking all 'select loops'
-                  f_break_select_loops; eval $_break
-
-
-          ;;
-          "(no) to abort")
-            echo " Second question answered NO"
-                    exit 1
-          ;;
-          "(help) to explain") 
-               f_greet
-               echo "Explanation for the Second Question"
-               echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
-
-            # Explain what a centralized directory is
-               echo "Move the DRYa repo into the dir you choose"
-               echo " > If you were run this file, you must have a copy of DRYa"
-               echo "   and that copy (this copy) should be moved into the directory you choose to be the holder of all repos"
-               echo
-         ;;
-         "(back to Q1)")
-            f_greet; f_1st; break
-         ;;
-         *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_2nd ;;
-        esac
-      done
-   }   
-   function f_2nd_select_by_read {
-
-      # Second question of the installation process
-
-      while true
-      do
-         f_greet
-         f_2nd
+   while true
+   do
+      f_greet
+            # This function belongs to the Second Question
+            echo -e "                 (Step 2 of 4)                 \n"
+            echo -e "       --- Checklist for instalation --- "
+            echo -e " [X] Do you have any dedicated dir for  repositories?"
+            echo -e " [ ] Move DRYa repository into that place (or git clone it)\n"
 
       f_talk; echo "[2/x] Choose centralized Directory"
-              echo $v_some_line
+              echo $v____________
               echo " | -- d "
               echo " | -- d"
-              echo $v_some_line
+              echo $v____________
               echo " |   |"
               echo " | 1 | >>> Yes, continue "
               echo " |   |"
@@ -680,52 +685,49 @@ function f_2nd_select {
               echo " | 4 | >>> Back, to [1/x]"
               echo "$v_line"
 
-         read -rp "Choose an option: " option
+      read -rp "Choose an option: " option
 
-         if [[ "$option" == "1" || "$option" == "yes" ]]; then
+      if [[ "$option" == "1" || "$option" == "yes" ]]; then
 
-            f_3rd_select
+         f_3rd_select
 
-            # Allow script to flow
-            f_break_select_loops
-            eval $_break
+         # Allow script to flow
+         f_break_select_loops
+         eval $_break
 
-         elif [[ "$option" == "2" || "$option" == "no" ]]; then
+      elif [[ "$option" == "2" || "$option" == "no" ]]; then
 
-            echo "Second question answered NO"
-            exit 1
+         echo "Second question answered NO"
+         exit 1
 
-         elif [[ "$option" == "3" || "$option" == "help" ]]; then
+      elif [[ "$option" == "3" || "$option" == "help" ]]; then
 
-            f_greet
-            echo "Explanation for the Second Question"
-            echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
+         f_greet
+         echo "Explanation for the Second Question"
+         echo -e " (Step 2 of 4) - Move DRYa repository into that place (or git clone it)"
 
-            # Explain what a centralized directory is
-            echo "Move the DRYa repo into the dir you choose"
-            echo " > If you run this file, you must have a copy of DRYa"
-            echo "   and that copy (this copy) should be moved into the directory"
-            echo "   you choose to be the holder of all repos"
-            echo
+         # Explain what a centralized directory is
+         echo "Move the DRYa repo into the dir you choose"
+         echo " > If you run this file, you must have a copy of DRYa"
+         echo "   and that copy (this copy) should be moved into the directory"
+         echo "   you choose to be the holder of all repos"
+         echo
 
-            read -rp "Press ENTER to continue..."
+         read -rp "Press ENTER to continue..."
 
-         elif [[ "$option" == "4" || "$option" == "back" ]]; then
+      elif [[ "$option" == "4" || "$option" == "back" ]]; then
 
-            f_greet
-            f_1st
-            break
+         f_greet
+         f_1st
+         break
 
-         else
+      else
 
-            echo "That option is invalid. Press ENTER to clear screen"
-            read
+         echo "That option is invalid. Press ENTER to clear screen"
+         read
 
-         fi
-      done
-   }
-   f_2nd_select_by_read
-   #f_2nd_select_by_select
+      fi
+   done
 }
 
 function f_3rd_select {
@@ -766,7 +768,7 @@ function f_3rd_select {
             echo "be sourcing or running this script from anywhere"
             echo "and that would not work)"
        ;;
-       "(back to Q2)") f_greet; f_2nd; break
+       "(back to Q2)") f_greet; f_2nd_select ; break
        ;;
        *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_3rd ;;
       esac
@@ -852,60 +854,92 @@ function f_help {
 }
 
 function f_menu_principal {
+
    # Menu principal, baseado em `read`
 
 
+   while true
+   do
 
-#f_1st_select
+      f_greet
 
-   A="-------------------------------"
-   c=" |   |"
-   a=" | 1 | Install DRYa"
-   b=" | 2 | Uninstall DRYa"
-   c=" |   |"
-   d=" | 3 | Options"
-   e=" | 4 | Instructions 1 - (local readme)"
-   f=" | 5 | Instructions 2 - (internal instructions)"
-   g=" | 6 | Instructions 3 - (main DRYa README.org)"
-   c=" |   |"
-   Z=" |   | Instrucoes: Create Dual Boot" # com o esquema de perticoes
-   Z=" |   | Instrucoes: Create Live Windows USB"
-   Z=" |   | .fishrc to .bashrc" # ~/.config/fish/config.fish 
-   Z=" |   | F2 to BIOS at Lenovo ideapad 330"
-   Z=" |   | drya man pages"
-   h=" | 7 | Exit"
+      echo "|"
+      echo "| History: [1/x] Wizard test: Passed!"
+      echo "|"
+      echo
+      f_talk
+      echo "[2/x] Menu Principal"
+      echo $v____________
+      echo " |   |"
+      echo " | 1 | Install DRYa"
+      echo " | 2 | Uninstall DRYa"
+      echo " |   |"
+      echo " | 3 | Options"
+      echo " |   |"
+      echo " | 4 | Instructions 1 - (local readme)"
+      echo " | 5 | Instructions 2 - (internal instructions)"
+      echo " | 6 | Instructions 3 - (main DRYa README.org)"
+      echo " |   |"
+      echo " | 7 | Exit"
+      echo $v____________
 
-   f_greet
-   echo "|" 
-   echo "| History: [1/x] Wizzard test: Passed!"
-   echo "|" 
-           echo
-   f_talk; echo "[2/x] Menu Principal"
+      v_allow="no"
 
-   echo "$A"
-   echo "$a"
-   echo "$b"
-   echo "$c"
-   echo "$d"
-   echo "$e"
-   echo "$f"
-   echo "$g"
-   echo "$h"
-   echo "$A"
+      read -p "   < " v_ans
 
-   v_allow="no"  # By default, if no valid answer is given from the menu, this variable will not allow to continue the script.
+      if [[ $v_ans == "1" ]]; then
+         # option 1
+         v_allow="yes"
+         f_debug_bashrc_existence
+         f_1st
+         break
 
-   read -p "   < " v_ans
+      elif [[ $v_ans == "2" ]]; then
+         # option 2
+         v_allow="yes"
+         f_uninstall_1st
+         break
 
-   [[ $v_ans == "1" ]] && v_allow="yes" && f_debug_bashrc_existence && f_1st_select 
-   [[ $v_ans == "2" ]] && v_allow="yes" && f_uninstall_1st
-   [[ $v_ans == "3" ]] && v_allow="yes" && f_options_menu
-   [[ $v_ans == "4" ]] && v_allow="yes" && f_explain
-   [[ $v_ans == "5" ]] && v_allow="yes" && f_help 
-   [[ $v_ans == "6" ]] && v_allow="yes" && less $v_5/$v_readme
-   [[ $v_ans == "7" ]] && v_allow="yes" && echo "   > exit" && echo && exit
+      elif [[ $v_ans == "3" ]]; then
+         # option 3
+         v_allow="yes"
+         f_options_menu
+         break
 
-   [[ $v_allow == "no" ]] && echo && echo "   > Invalid option: $v_ans" && echo "     [Any key to reload Menu]" && read -sn1 && f_menu_principal
+      elif [[ $v_ans == "4" ]]; then
+         # option 4
+         v_allow="yes"
+         f_explain
+         break
+
+      elif [[ $v_ans == "5" ]]; then
+         # option 5
+         v_allow="yes"
+         f_help
+         break
+
+      elif [[ $v_ans == "6" ]]; then
+         # option 6
+         v_allow="yes"
+         less "$v_5/$v_readme"
+         break
+
+      elif [[ $v_ans == "7" ]]; then
+         # option 7
+         v_allow="yes"
+         echo "   > exit"
+         echo
+         exit 0
+
+      else
+         # invalid option
+         echo
+         echo "   > Invalid option: $v_ans"
+         echo "     [Any key to reload Menu]"
+         read -sn1
+      fi
+
+   done
 }
 
 function f_discard_every_unused_function {
@@ -1300,7 +1334,13 @@ function f_initialization {
    f_initialization_verbose
 }
 
+
+
+
+
 function f_exec {
+   # Sequence to run after loading all previosu fx
+
    f_initialization  # Step (1/x)
    f_menu_principal  # Step (2/x)
    f_decide_to_run   # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
