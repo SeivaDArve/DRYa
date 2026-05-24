@@ -78,9 +78,12 @@ function f_create_tmp_file_with_date_as_name {
    
 
 function f_ensure_omni_log {
+   # Ensuring omni-log with drya-lib-4
+   # uDev: para o verbose output falta: mencionar que vem do script: `no - .` ou outros
+
    unset v_green_light       # var given after drya-lib-4 that tells this main script either to proceed or not
-   v_ensure="omni-log"          # Repo name we want to ensure its existence
-   f_lib4_ensure_repo_existence_single   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
+   v_ensure="$v_df_repo"
+   f_lib4_download_compact
 }
 
 function f_edit_with_heteronimos {
@@ -153,12 +156,6 @@ function f_one_file_bau {
       fi
 }
 
-function f_ensure_omni_log {
-   # Ensuring omni-log with drya-lib-4
-
-   # uDev: para o verbose output falta: mencionar que vem do script: `no - .` ou outros
-   v_ensure="$v_df_repo" && f_lib4_download_compact
-}
 
 function f_run_notify_script {
    # Runs/Executes external script 'notify.sh'
