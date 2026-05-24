@@ -192,6 +192,12 @@ alias all="cd all && ls"
 alias   a="cd all && ls"
 alias   A="cd all && ls"
 
+alias please="sudo !!"
+alias sff="sudo"
+alias pls="sudo"
+
+#alias printEnv="unset v_file; V tmp; v_file=All-that-the-current-Shell-actually-knows; set > $v_file; vim $v_file; unset v_file "
+
 alias CLEAR='echo -e "\033c"; clear'  # Usually `Ctrl-L` clears the screen without erasing the scrollback, `clear` usually clears the scroolback; `clear -x` cleara the screen without erasing the scollback; this alias is an ANSI code to erase the scrollback but in the end the prompt becomes the second line, so another `clear` is added
 
 
@@ -825,10 +831,20 @@ function arco {
 
    else
       # Se os argumentos forem diferentes do esperado, filtra esse texto do argumento no texto da tabela
-      for i in $@;
-      do
-         f_arco | grep -i "$i"
-      done
+         for i in $@;
+         do
+            f_arco | grep -i "$i"
+         done
+
+
+      # Alem do loop anterior (filtrar texto do quadro), fornecer tambem Documentos de apoio a cada caso
+         echo; echo
+
+         [[ $1 =~ "verm" ]] && {
+            echo "Arco-Iris Vermelho (incendio em Lojas):"
+                     echo " > Passo 1: Corta energia eletrica do quadro principal (isso corta tambem o gas)"
+         }
+
    fi
 }
 
