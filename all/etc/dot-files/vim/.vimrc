@@ -132,3 +132,8 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    set scrolloff=999
    set scrolloff=4
 
+" Dasativar as teclas de Setas do teclado para obrigar a treinar Vim Motion com H J K L
+   nnoremap <Left> <Cmd>echo "Left ARROW disabled at .virmc"<CR>
+   nnoremap <Up> <Cmd>echo "Up ARROW disabled at .virmc"<CR>
+   nnoremap <Right> <Cmd>echo "Right ARROW disabled at .virmc"<CR>
+   nnoremap <Down> <Cmd>echo "Down ARROW disabled at .virmc"<CR>
