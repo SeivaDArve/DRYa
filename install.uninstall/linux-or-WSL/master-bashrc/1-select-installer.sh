@@ -12,14 +12,15 @@
 
 
 # Hashtags dee-pages:
-#     dee:screen_1
-#     dee:screen_2
-#     dee:screen_3
-#     dee:screen_4
-#     dee:screen_5
-#     dee:screen_6
-#     dee:screen_7
-#     dee:screen_8
+   #  dee:screen_0  (refers to the history log)
+   #  dee:screen_1
+   #  dee:screen_2
+   #  dee:screen_3
+   #  dee:screen_4
+   #  dee:screen_5
+   #  dee:screen_6
+   #  dee:screen_7
+   #  dee:screen_8
 
 
 
@@ -27,14 +28,14 @@
 
 
 # ----------------------------------------------------------------------------------------------
-# -- Below: Define Variables 
+# -- Below: Defining default Variables 
 # ----------------------------------------------------------------------------------------------
 
 
 
 function f_internal_variables {
 
-   v_talk="DRYa Instalation Wizzard: "
+   v_talk="DRYa-Installer: "
 
    # Variables
 
@@ -106,7 +107,7 @@ function f_define_env_vars {
 
 
 # ----------------------------------------------------------------------------------------------
-# -- Below: Provide Visuals at the start 
+# -- Below: Providing Visuals at the start 
 # ----------------------------------------------------------------------------------------------
 
 
@@ -161,7 +162,6 @@ function f_greet {
 function f_talk {
    echo -n "$v_talk"
 }
-
 
 
 
@@ -223,8 +223,41 @@ function f_hzl {
       echo $v_line  # If the last line is Printing the result, then __main__ scripts can call `f_hzl` instead of `f_hzl && v_hzl` and it will give the advantage to re-calvulate the columns
 }
 
+
+
+
+
+
+
 # ----------------------------------------------------------------------------------------------
-# -- Above: Define Variables --+-- Below: Functions copied from drya-lib-5
+# Below: Functions copied from drya-lib-2
+# ----------------------------------------------------------------------------------------------
+   # Functions should remain COPIES from drya-lib-2
+
+
+function f_create_tmp_history_file {
+   # Create a temporary file to save all steps taken as history log
+
+   # Creating directory and file
+      v_tmp_dir=~/.tmp/DRYa-instalation-wizzard
+      v_tmp_file="history-log"
+
+   # Merging both in one sinlge variable
+      v_historyF=$v_tmp_dir/$v_tmp_file
+
+   # If there is any file already, remove it. If no file is found, do not mention any error too
+      rm $v_historyF 2>/dev/null 
+
+   # Create the hosting directoru if it does not exist
+      mkdir -p $v_tmp_dir
+
+   # Creating an empty file
+      touch $v_historyF
+}
+
+
+# ----------------------------------------------------------------------------------------------
+# Below: Functions copied from drya-lib-5
 # ----------------------------------------------------------------------------------------------
    # Functions should remain COPIES from drya-lib-5
 
@@ -270,100 +303,15 @@ function f_5_verbose {
 
 
 
-
-
-
-
-# ----------------------------------------------------------------------------------------------
-# -- Above: Functions copied from drya-lib-5 --+-- Below: Testing the wizzard --
-# ----------------------------------------------------------------------------------------------
-
-
-
-
-function f_test_proper_functionality_of_drya_lib_5 {
-
-   function f_tst_target {
-      # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
-      source $v_5/$v_target 2>/dev/null
-   }
-
-   function f_ckY {
-      # Will function properlly if $v_target is `sourced` instead of `bashed`
-      [[ $v_double_check == "code-34y6" ]] && v_chk=" |   | - [X]  Test 2: Success!" 
-   }
-
-   function f_ckN {
-      # If this var does not exist, $v_target was not sourced properly
-      [[ $v_double_check != "code-34y6" ]] && v_chk=" |   | - [ ]  Test 2: Fail!"    
-   }
-}
-
-
-function f_create_tmp_history_file {
-   # Create a temporary file to save all steps taken as history log
-
-   # Creating directory and file
-      v_tmp_dir=~/.tmp/DRYa-instalation-wizzard
-      v_tmp_file="history-log"
-
-   # Merging both in one sinlge variable
-      v_historyF=$v_tmp_dir/$v_tmp_file
-
-   # If there is any file already, remove it. If no file is found, do not mention any error too
-      rm $v_historyF 2>/dev/null 
-
-   # Create the hosting directoru if it does not exist
-      mkdir -p $v_tmp_dir
-
-   # Creating an empty file
-      touch $v_historyF
-}
-
-
-function f_initialization_verbose {
-#     dee:screen_2
-
-   f_history_log  # if already includes f_greet
-
-   # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
-      f_talk; echo                "[1/x] Initialization"
-              echo $v____________  
-              echo                " |   | Testing DRYa's installer itself, "
-              echo                " |   | "
-              echo                " |   | if it can detect relative|absolute paths."
-      f_tst_target 
-      f_ckY && echo "$v_chk"  ### " |   | - [X]  Test 2: Success!" 
-      f_ckN && echo "$v_chk"  ### " |   | - [ ]  Test 2: Fail!"    
-
-              echo                " |   | "
-
-  
-
-   
-   echo " |   | if history file can be created"
-
-   # Testing if file actually exists (debugging process)
-      [[   -f $v_historyF ]] && echo " |   | - [X] History was created"
-      [[ ! -f $v_historyF ]] && echo " |   | - [ ] History was created"
-   
-   # Waiting for user to read
-      echo $v____________
-      echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
-      echo $v____________
-      read -sn1 -p "   > "
-}
-
-
 # --------------------------------------------------------------------------------------------------
-# -- Above: Functions to test the wizzard --+-- Function Below: Installer 1-select-installed.sh  --
+# Below: Creating the History Log on-the-go  --
 # --------------------------------------------------------------------------------------------------
 
 
 
 
 function f_history_log {
-#     dee:screen_1
+   # dee:screen_0
 
    f_greet
 
@@ -404,6 +352,164 @@ function f_history_log {
    [[ -n $v_hst_20 ]] && echo "$v_hst_20"
                          echo  $v_hst_br
                          echo
+   read -p "Enter to return"
+   echo
+}
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Below: Testing the wizzard --
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+function f_initialization_verbose {
+   # dee:screen_1
+
+   function f_trg {
+      # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
+      source $v_5/$v_target 2>/dev/null
+   }
+
+   function f_ckY {
+      # Will this function work properlly if $v_target is `sourced` instead of `bashed`?
+      # If this var does exist, $v_target was sourced properly
+      [[ $v_double_check == "code-34y6" ]] && v_chk=" |   | - [X]  Test 2: Success!" 
+   }
+
+   function f_ckN {
+      # Will this function work properlly if $v_target is `sourced` instead of `bashed`?
+      # If this var does not exist, $v_target was not sourced properly
+      [[ $v_double_check != "code-34y6" ]] && v_chk=" |   | - [ ]  Test 2: Fail!"    
+   }
+
+   function f_ckF {
+      # Testing if file actually exists (debugging process)
+      [[   -f $v_historyF ]] && v_chF=" |   | - [X] History file (was created)"
+   }
+
+   function f_ckf {
+      # Testing if file actually exists (debugging process)
+      [[ ! -f $v_historyF ]] && v_chf=" |   | - [ ] History file (was not created)"
+   }
+
+   # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
+      f_greet
+      f_talk;  echo                "[1/x] Testing installer itself"
+               echo $v____________  
+               echo                " |   | "
+               echo                " |   | Can it can detect relative|absolute paths?"
+      f_trg                      # " |   | - [X]  Test 1: Success!"   # This comes from external file
+      f_ckY && echo "$v_chk"     # " |   | - [X]  Test 2: Success!" 
+      f_ckN && echo "$v_chk"     # " |   | - [ ]  Test 2: Fail!"    
+               echo                " |   | "
+               echo                " |   | Can history file can be created?"
+      f_ckF && echo "$v_chF"     # " |   | - [X] History file (was created)"
+      f_ckf && echo "$v_chf"     # " |   | - [ ] History file (was not created)"
+               echo                " |   | "
+               echo $v____________
+               echo                " [ENTER = Continue] or [CTRL-C = Cancel]: "
+               echo $v____________
+      read -sn1 -p                 "   > "
+}
+
+function f_menu_principal {
+   # Menu principal, baseado em `read`
+   #  dee:screen_2
+
+   while true
+   do
+
+      f_greet
+
+      #  echo "|"
+      #  echo "| History: [1/x] Wizard test: Passed!"
+      #  echo "|"
+      #  echo
+      
+      f_talk
+      echo "[2/x] Menu Principal"
+      echo $v____________
+      echo " |   |"
+      echo " | 1 | Install DRYa"
+      echo " | 2 | Uninstall DRYa"
+      echo " |   |"
+      echo " | 3 | Options"
+      echo " |   |"
+      echo " | 4 | Instructions 1 - (local readme)"
+      echo " | 5 | Instructions 2 - (internal instructions)"
+      echo " | 6 | Instructions 3 - (main DRYa README.org)"
+      echo " |   |"
+      echo " | 7 | History [of past Choises]"
+      echo " |   |"
+      echo " | 8 | Exit"
+      echo $v____________
+
+      v_allow="no"
+
+      read -p "   < " v_ans
+
+      if [[ $v_ans == "1" ]]; then
+         # option 1
+         v_allow="yes"
+         f_debug_bashrc_existence
+         f_1st
+         break
+
+      elif [[ $v_ans == "2" ]]; then
+         # option 2
+         v_allow="yes"
+         f_uninstall_1st
+         break
+
+      elif [[ $v_ans == "3" ]]; then
+         # option 3
+         v_allow="yes"
+         f_options_menu
+         break
+
+      elif [[ $v_ans == "4" ]]; then
+         # option 4
+         v_allow="yes"
+         f_explain
+         break
+
+      elif [[ $v_ans == "5" ]]; then
+         # option 5
+         v_allow="yes"
+         f_help
+         break
+
+      elif [[ $v_ans == "6" ]]; then
+         # option 6
+         v_allow="yes"
+         less "$v_5/$v_readme"
+         break
+
+
+      elif [[ $v_ans == "7" ]]; then
+         f_history_log  # if already includes f_greet
+
+      elif [[ $v_ans == "8" ]]; then
+         # option 7
+         v_allow="yes"
+         echo "   > exit"
+         echo
+         exit 0
+
+      else
+         # invalid option
+         echo
+         echo "   > Invalid option: $v_ans"
+         echo "     [Any key to reload Menu]"
+         read -sn1
+      fi
+
+   done
 }
 
 
@@ -414,29 +520,32 @@ function f_history_log {
 
 function f_debug_bashrc_existence {
    # To avoid some bugs on unexistence of ~/.bashrc
+   #  dee:screen_3
+
+   #   echo "|"   
+   #   echo "| History: [1/x] Wizzard test: Passed"
+   #   echo "| History: [2/x] Main Menu > Install"
+   #   echo "|" 
+   #   echo
+   #
+   
+   # If file ~/.bashrc does not exist, DRYa cannot be installed
+      touch   $v_bash
+      [[   -f $v_bash ]] && v_tested="- [X] File exists"
+      [[ ! -f $v_bash ]] && v_tested="- [ ] File does not exist"
+
+   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors. If there are no characters inside the file, these lines of code will add at least one
+      v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
 
    f_greet
-           echo "|"   
-           echo "| History: [1/x] Wizzard test: Passed"
-           echo "| History: [2/x] Main Menu > Install"
-           echo "|" 
-           echo
-   f_talk; echo "[3/x] BashRC test"
+   f_talk; echo "[3/x] testing file ~/.bashrc"
            echo "-------------------------------"
            echo " |   | "
-           echo " |   | Ensuring 'non empty' + 'proper existence' of:"
-           echo " |   | $v_bash"
-
-	touch $v_bash
-
-   # If file ~/.bashrc does not exist, DRYa cannot be installed
-      [[ -f $v_bash ]] && ((echo " |   | - [X] File exists" || echo " |   | - [ ] File does not exist") || exit 1)
-
-   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors
-      # If there are no characters inside the file, these lines of code will add at least one
-      v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
-      echo " |   | "
-      echo " |   | Number of chars inside .bashrc: $v_char_count"  # Debug
+           echo " |   | Ensuring existence:"
+           echo " |   |  > $v_tested"
+           echo " |   | "
+           echo " |   | Ensuring it is not Empty:"
+           echo " |   | -     Number of chars inside: $v_char_count"  # Debug
       [[ $v_char_count -gt 1 ]] && echo " |   | - [X] Does not need filling, all ok!"
       [[ $v_char_count -lt 1 ]] && echo " |   | - [ ] Does need filling..." && echo " " >> $v_bash && echo " |   | - [X] Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
            echo " |   | "
@@ -853,94 +962,6 @@ function f_help {
    f_menu_principal 
 }
 
-function f_menu_principal {
-
-   # Menu principal, baseado em `read`
-
-
-   while true
-   do
-
-      f_greet
-
-      echo "|"
-      echo "| History: [1/x] Wizard test: Passed!"
-      echo "|"
-      echo
-      f_talk
-      echo "[2/x] Menu Principal"
-      echo $v____________
-      echo " |   |"
-      echo " | 1 | Install DRYa"
-      echo " | 2 | Uninstall DRYa"
-      echo " |   |"
-      echo " | 3 | Options"
-      echo " |   |"
-      echo " | 4 | Instructions 1 - (local readme)"
-      echo " | 5 | Instructions 2 - (internal instructions)"
-      echo " | 6 | Instructions 3 - (main DRYa README.org)"
-      echo " |   |"
-      echo " | 7 | Exit"
-      echo $v____________
-
-      v_allow="no"
-
-      read -p "   < " v_ans
-
-      if [[ $v_ans == "1" ]]; then
-         # option 1
-         v_allow="yes"
-         f_debug_bashrc_existence
-         f_1st
-         break
-
-      elif [[ $v_ans == "2" ]]; then
-         # option 2
-         v_allow="yes"
-         f_uninstall_1st
-         break
-
-      elif [[ $v_ans == "3" ]]; then
-         # option 3
-         v_allow="yes"
-         f_options_menu
-         break
-
-      elif [[ $v_ans == "4" ]]; then
-         # option 4
-         v_allow="yes"
-         f_explain
-         break
-
-      elif [[ $v_ans == "5" ]]; then
-         # option 5
-         v_allow="yes"
-         f_help
-         break
-
-      elif [[ $v_ans == "6" ]]; then
-         # option 6
-         v_allow="yes"
-         less "$v_5/$v_readme"
-         break
-
-      elif [[ $v_ans == "7" ]]; then
-         # option 7
-         v_allow="yes"
-         echo "   > exit"
-         echo
-         exit 0
-
-      else
-         # invalid option
-         echo
-         echo "   > Invalid option: $v_ans"
-         echo "     [Any key to reload Menu]"
-         read -sn1
-      fi
-
-   done
-}
 
 function f_discard_every_unused_function {
 
@@ -1327,7 +1348,6 @@ function f_initialization {
       f_5; #f_5_verbose
       f_1; #f_1_verbose
 
-   f_test_proper_functionality_of_drya_lib_5
    f_create_tmp_history_file
    f_variables_recalculated 
 
