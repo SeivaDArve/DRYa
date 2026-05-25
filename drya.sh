@@ -4380,7 +4380,7 @@ elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then
    fi
 
 
-elif [ $1 == "eGrep" ]] || [ $1 == "grep" ] || [ $1 == "gr" ]; then 
+elif [[ $1 == "eGrep" ]] || [ $1 == "grep" ] || [ $1 == "gr" ]; then 
    # Partial File Reader: Filtrar texto de ficheiros
 
    f_greet
@@ -4531,15 +4531,12 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
 
 elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then 
    if [[ -n $(command -v cal) ]]; then
-      clear 
-      f_talk; echo "Calendario"
+      clear; f_talk; echo "Calendario"
       cal -y
    else 
-      f_talk; echo "cal does not exist. Installing... "
-      echo 
-      pk + ncal
-      clear 
-      f_talk; echo "Calendario"
+      f_tk "Package 'ncal' does not exist. Installing... "
+      pk + ncal || exit
+      clear; f_talk; echo "Calendario"
       cal -y
    fi
 

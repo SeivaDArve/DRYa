@@ -46,7 +46,7 @@
 
 
 
-function F_test_dependencie_tput {
+function F_test_dependency_tput {
    # Testar a existencia de ncurses-utils
 
    #echo "uDev"
@@ -61,14 +61,14 @@ function F_c1 {
    # This function is to be used:
    #  - Output of `git` when something is being cloned, pulled, pushed
 
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 5  #   2>/dev/null  || (or, use ANSI colors) 
 }
 
 function F_c2 { 
    # Fx for color 2
 
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 12
 }
 
@@ -78,7 +78,7 @@ function F_c3 {
    # Mentioning user input or valiable input
    # This function is to be used when something is DECLAIRED
 
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 3
 }
 
@@ -87,7 +87,7 @@ function F_c4 {
 
    # Similar to Bold. Used in: F_talk
    # This function is to be used when something is ASKED
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 4
 }
 
@@ -95,7 +95,7 @@ function F_c5 {
    # Fx for color 5
 
    # Similar to Bold
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 6
 }
 
@@ -103,7 +103,7 @@ function F_c6 {
    # Fx for color 6
 
    # Used for ASCII Drya Logo, centered to the screen
-   F_test_dependencie_tput
+   F_test_dependency_tput
    [[ $V_status == 0 ]] && tput setaf 28
    [[ $V_status == 0 ]] && tput bold
 }
@@ -166,6 +166,10 @@ function F_cOFF {
    [[ $V_status == 0 ]] && tput civis
 }
 
+function F_GR {
+   F_greet
+}
+
 function F_greet {
    # Presents a nice visual ascii name/logo if figlet is installed
    # Presents a text massage with name/logo if figlet is NOT installed
@@ -200,6 +204,14 @@ function F_greet2 {
 }
 
 # uDev: F_greet, F_Greet, F_greet2 ... change to F_g1, F_g2, F_g3 ...
+
+function F_tk {
+   # This fx avoids `f_talk; echo "text"` and behaves more direct like `f_tk "text"`
+
+    [[ -z $V_talk ]] && V_talk="< V_talk > "
+    F_c2; echo -n "$V_talk"
+    F_rc; echo    "$@"
+}
 
 function F_talk {
    # uDev: change to F_tk
