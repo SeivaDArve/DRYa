@@ -6,8 +6,6 @@
 # uDev: Se DRYa ainda nao existir no sistema, criar a hipotese de ghost-in ghost-out
 # uDev: Redirect zsh and fish to our bashrc
 
-# uDev: Change ${v_REPOS_CENTER}/   to $__REPOS_CENTER__
-# uDev: Change $DRYa_HEART          to $__dryaSRC__
 # uDev: Change '# --hashtag-drya--' to  '#dee:Hashtag-DRYa'  
 
 
@@ -86,16 +84,16 @@ function f_define_env_vars {
 
    # Printing Environment variables based on $found_DRYa_at
 	  # List of variables to be created:
-	  #  v_REPOS_CENTER="/home/user/Repositories"
-	  #  DRYa_v_SRC
+	  #  __REPOS_CENTER__="/home/user/Repositories"
+	  #  __dryaSRC__
 	  
    # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
-	  DRYa_v_SRC="all/dryaSRC"
-	  DRYa_v_SRC=$found_DRYa_at/$DRYa_v_SRC
+	  __dryaSRC__="all/dryaSRC"
+	  __dryaSRC__=$found_DRYa_at/$__dryaSRC__
 
      echo
 	  echo "The Heart|Source of DRYa is located at:"
-	  echo " > $DRYa_v_SRC"
+	  echo " > $__dryaSRC__"
      echo
      read -sn1
 }
@@ -367,8 +365,10 @@ function f_history_log {
 
 
 
-function f_initialization_verbose {
+function f_screen_1 {
+   # Check Target.sh (if Relative|Absolute paths are taken care of)
    # dee:screen_1
+   clear; read -p "screen 1"
 
    function f_trg {
       # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
@@ -386,6 +386,8 @@ function f_initialization_verbose {
       # If this var does not exist, $v_target was not sourced properly
       [[ $v_double_check != "code-34y6" ]] && v_chk=" |   | - [ ]  Test 2: Fail!"    
    }
+
+   f_create_tmp_history_file  # Creates a file $v_historyF
 
    function f_ckF {
       # Testing if file actually exists (debugging process)
@@ -407,7 +409,7 @@ function f_initialization_verbose {
       f_ckY && echo "$v_chk"     # " |   | - [X]  Test 2: Success!" 
       f_ckN && echo "$v_chk"     # " |   | - [ ]  Test 2: Fail!"    
                echo                " |   | "
-               echo                " |   | Can history file can be created?"
+               echo                " |   | Can history file be created?"
       f_ckF && echo "$v_chF"     # " |   | - [X] History file (was created)"
       f_ckf && echo "$v_chf"     # " |   | - [ ] History file (was not created)"
                echo                " |   | "
@@ -415,10 +417,13 @@ function f_initialization_verbose {
                echo                " [ENTER = Continue] or [CTRL-C = Cancel]: "
                echo $v____________
       read -sn1 -p                 "   > "
+
+   # Fill the history file here...
 }
 
 function f_menu_principal {
    # Menu principal, baseado em `read`
+   clear; read -p "screen 2"
    #  dee:screen_2
 
    while true
@@ -456,7 +461,8 @@ function f_menu_principal {
       if [[ $v_ans == "1" ]]; then
          # option 1
          v_allow="yes"
-         f_debug_bashrc_existence
+         f_screen_3 
+         f_screen_4 
          f_1st
          break
 
@@ -510,6 +516,8 @@ function f_menu_principal {
       fi
 
    done
+   
+   # Fill the history file here...
 }
 
 
@@ -518,132 +526,67 @@ function f_menu_principal {
 
 
 
-function f_debug_bashrc_existence {
-   # To avoid some bugs on unexistence of ~/.bashrc
+function f_screen_3 {
+   # Avoid bugs on ~/.bashrc
    #  dee:screen_3
+   clear; read -p "screen 3"
 
-   #   echo "|"   
-   #   echo "| History: [1/x] Wizzard test: Passed"
-   #   echo "| History: [2/x] Main Menu > Install"
-   #   echo "|" 
-   #   echo
-   #
-   
    # If file ~/.bashrc does not exist, DRYa cannot be installed
       touch   $v_bash
       [[   -f $v_bash ]] && v_tested="- [X] File exists"
       [[ ! -f $v_bash ]] && v_tested="- [ ] File does not exist"
 
-   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in other to avoid errors. If there are no characters inside the file, these lines of code will add at least one
+   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one
       v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
 
+      [[ $v_char_count -gt 1 ]] && v_char="- [X] Does not need filling, all ok!"
+
+      [[ $v_char_count -lt 1 ]] && echo " " >> $v_bash 
+      [[ $v_char_count -lt 1 ]] && v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
+      [[ $v_char_count -lt 1 ]] && v_char="- [ ] Does need filling..." 
+
+      [[ $v_char_count -gt 1 ]] && v_char="- [X] Fixed, all ok"
+
    f_greet
-   f_talk; echo "[3/x] testing file ~/.bashrc"
-           echo "-------------------------------"
-           echo " |   | "
-           echo " |   | Ensuring existence:"
-           echo " |   |  > $v_tested"
-           echo " |   | "
-           echo " |   | Ensuring it is not Empty:"
-           echo " |   | -     Number of chars inside: $v_char_count"  # Debug
-      [[ $v_char_count -gt 1 ]] && echo " |   | - [X] Does not need filling, all ok!"
-      [[ $v_char_count -lt 1 ]] && echo " |   | - [ ] Does need filling..." && echo " " >> $v_bash && echo " |   | - [X] Done, al ok!"  # uDev: falta repetir `wc -m` e confirmar se ficou mesmo resolvido
-           echo " |   | "
-
-   # Waiting for user to read
-      echo $v____________
-      echo " [ENTER = Continue] or [CTRL-C = Cancel]: "
-      echo $v____________
-      read -sn1 -p "   > "
+   f_talk; echo      "[3/x] testing file ~/.bashrc"
+           echo      "-------------------------------"
+           echo      " |   | "
+           echo      " |   | Ensuring existence:"
+           echo      " |   |  > $v_tested"
+           echo      " |   | "
+           echo      " |   | Ensuring it is not Empty:"
+           echo      " |   | -     Number of chars inside: $v_char_count"  # Debug
+           echo      " |   | $v_char"
+           echo      " |   | "
+           echo      $v____________
+           echo      " [ENTER = Continue] or [CTRL-C = Cancel]: "
+           echo      $v____________
+      read -sn1 -p   "   > "
 }
 
 
-
-
-
-
-
-
-
-function f_title {
-   echo -e " ( Initial Menu )\n"
-} 
-
-function f_1st {
-   # This function belongs to the First Question
-   echo   "                 (Step 1 of 4)                "
-   echo   
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
-   echo
-   echo    "  Note: On WSL2 it is recomended at: '/mnt/c/\$USER'"
-   echo    "  which is the C:\ drive, but with a directory created by hand with"
-   echo    "  the user's account name (or similar) in order to better open files"
-   echo    "  with windows's native software. This way, navigation through"
-   echo    "  explorer.exe is easier"
-} 
-
-function f_3rd {
-   # This function belongs to the Third Question
-   echo -e "                 (Step 3 of 4)                 \n"
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [X] Do you have any dedicated dir for  repositories?"
-   echo -e " [X] Move DRYa repository into that place (or git clone it)"
-   echo -e " [ ] Running this script only side-by-side?\n"
-} 
-
-function f_4th {
-   # This function belongs to the Forth Question
-   echo -e "                 (Step 4 of 4)                 \n"
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [X] Do you have any dedicated dir for  repositories?"
-   echo -e " [X] Move DRYa repository into that place (or git clone it)"
-   echo -e " [X] Running this script only side-by-side?"
-   echo -e "  -  Everything seems ok to start modifications"
-   echo -e " [ ] Shall we stat the magic?\n"
-} 
-
-function f_break_select_loops {
-   # This function f_break_select_loops evals if v_break_select_loops variable
-      # Is defined as either yes or no
-      # And returns a value to the user
-   
-   # If the variable is empty, do nothing, if "no", do nothing, if "yes" then break
-   if   [[ -z $v_break_select_loops          ]]; then echo -n ""
-   elif [[    $v_break_select_loops == "no"  ]]; then echo -n ""
-   elif [[    $v_break_select_loops == "yes" ]]; then _break="break" && clear
-   fi
-}
-
-function f_1st_select {
+function f_screen_4 {
    # First question of the installation process
    #     dee:screen_4
+   clear; read -p "screen 4"
 
    while true
    do
       # Test existence of default repositories directory
-         [[   -d ~/Repositories ]] && v_variable_rep="It already exists [tested]"
-         [[ ! -d ~/Repositories ]] && v_variable_rep="It will be created"
+         [[   -d ~/Repositories ]] && v_rep="It already exists [tested]"
+         [[ ! -d ~/Repositories ]] && v_rep="It will be created"
 
       f_greet
-
-      echo    "|"
-      echo    "| $v_talk (1) Wizard tested"
-      echo    "| $v_talk (2) Main Menu: Install"
-      echo    "| $v_talk (3) Existence of bashrc: tested"
-      echo    "|"
-      echo
-
       f_talk
       echo    "[4/x] Choose centralized Directory"
 
       echo "$v____________"
       echo    " | Choose a path to centralize all repositories"
-      echo    " |  > \${v_REPOS_CENTER}/"
+      echo    " |  > \$__REPOS_CENTER__/"
       echo "$v____________"
       echo    " |   |"
       echo    " | 1 | >>> ~/Repositories/"
-      echo    " |   |     > $v_variable_rep"
+      echo    " |   |     > $v_rep"
       echo    " |   |"
       echo    " | 2 | >>> /mnt/c/\$USER/Repositories/"
       echo    " |   |     > Used at WSL2"
@@ -677,35 +620,35 @@ function f_1st_select {
 
       if [[ $v_variable_ans == 1 ]]; then
          # Option 1
-         export v_REPOS_CENTER="$HOME/Repositories"
+         export __REPOS_CENTER__="$HOME/Repositories"
          f_2nd_select
          break
 
 
       elif [[ $v_variable_ans == 2 ]]; then
          # Option 2
-         export v_REPOS_CENTER="/mnt/c/$USER/Repositories"
+         export __REPOS_CENTER__="/mnt/c/$USER/Repositories"
          f_2nd_select 
          break
 
 
       elif [[ $v_variable_ans == 3 ]]; then
          # Option 3
-         export v_REPOS_CENTER="/mnt/c/users/$USER/Repositories"
+         export __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
          f_2nd_select 
          break
 
 
       elif [[ $v_variable_ans == 4 ]]; then
          # Option 4
-         export v_REPOS_CENTER="$PWD"
+         export __REPOS_CENTER__="$PWD"
          f_2nd_select 
          break
 
       elif [[ $v_variable_ans == 5 ]]; then
          # Option 5
          echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
-         [[ -n $v_variable_custom_path ]] && export v_REPOS_CENTER="$v_variable_custom_path"
+         [[ -n $v_variable_custom_path ]] && export __REPOS_CENTER__="$v_variable_custom_path"
          f_2nd_select 
          break
 
@@ -766,6 +709,63 @@ function f_1st_select {
 
    done
 }
+
+
+
+
+
+
+
+function f_title {
+   echo -e " ( Initial Menu )\n"
+} 
+
+function f_1st {
+   # This function belongs to the First Question
+   echo   "                 (Step 1 of 4)                "
+   echo   
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
+   echo
+   echo    "  Note: On WSL2 it is recomended at: '/mnt/c/\$USER'"
+   echo    "  which is the C:\ drive, but with a directory created by hand with"
+   echo    "  the user's account name (or similar) in order to better open files"
+   echo    "  with windows's native software. This way, navigation through"
+   echo    "  explorer.exe is easier"
+} 
+
+function f_3rd {
+   # This function belongs to the Third Question
+   echo -e "                 (Step 3 of 4)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [X] Do you have any dedicated dir for  repositories?"
+   echo -e " [X] Move DRYa repository into that place (or git clone it)"
+   echo -e " [ ] Running this script only side-by-side?\n"
+} 
+
+function f_4th {
+   # This function belongs to the Forth Question
+   echo -e "                 (Step 4 of 4)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [X] Do you have any dedicated dir for  repositories?"
+   echo -e " [X] Move DRYa repository into that place (or git clone it)"
+   echo -e " [X] Running this script only side-by-side?"
+   echo -e "  -  Everything seems ok to start modifications"
+   echo -e " [ ] Shall we stat the magic?\n"
+} 
+
+function f_break_select_loops {
+   # This function f_break_select_loops evals if v_break_select_loops variable
+      # Is defined as either yes or no
+      # And returns a value to the user
+   
+   # If the variable is empty, do nothing, if "no", do nothing, if "yes" then break
+   if   [[ -z $v_break_select_loops          ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "no"  ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "yes" ]]; then _break="break" && clear
+   fi
+}
+
 
 function f_2nd_select {
    # Second question of the instalation process
@@ -877,7 +877,7 @@ function f_3rd_select {
             echo "be sourcing or running this script from anywhere"
             echo "and that would not work)"
        ;;
-       "(back to Q2)") f_greet; f_2nd_select ; break
+       "(back to Q2)") f_2nd_select ; break
        ;;
        *) echo " That option is invalid. Press ENTER to clear screen"; read -sn1; f_greet; f_3rd ;;
       esac
@@ -1050,7 +1050,7 @@ function f_cut_4_fields_relative_path {
 
    # Retrieving the text from the file into a variable we can use
       # This variable may look like "/home/user/Repositories" and it's purpouse is to mention where every foreign repo will be cloned into
-	   v_REPOS_CENTER=$(cat ~/.tmp/v_pwd3)
+	   __REPOS_CENTER__=$(cat ~/.tmp/v_pwd3)
 
    # An environment variable may be needed (in case all this process is a stand-alone file)
 	  #export found_DRYa_at
@@ -1225,13 +1225,13 @@ function f_DRYa_install_me_at_bashrc {
       #read -sn 1
 	  
    # Defining the environment variable:
-	  DRYa_v_SRC="${found_DRYa_at}/all/dryaSRC"
-	  export DRYa_v_SRC
-	  echo " > DRYa: Initial ramification file, redirects all others is located at: $DRYa_v_SRC"
+	  __dryaSRC__="${found_DRYa_at}/all/dryaSRC"
+	  export __dryaSRC__
+	  echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
    
    # This variable comes from the function that cuts the string
-      echo "You have chosen $v_REPOS_CENTER to be a dedicated directory to receive every kind of repositories"
-	   #$v_REPOS_CENTER
+      echo "You have chosen $__REPOS_CENTER__ to be a dedicated directory to receive every kind of repositories"
+	   #$__REPOS_CENTER__
    
    echo "If you agree with this, press [ANY KEY] to concat this info into ~/.bashrc"
    echo " > Or press Ctrl-c to abort"
@@ -1242,9 +1242,9 @@ function f_DRYa_install_me_at_bashrc {
 
       L1=""
       L2="# Sourcing Seiva's main repo: DRYa"
-      L3="   v_REPOS_CENTER=\"$v_REPOS_CENTER\"; export v_REPOS_CENTER  # Dedicated dir for repos"
-      L4="   DRYa_v_SRC=\"$DRYa_v_SRC\"; export DRYa_v_SRC  # setting one file that wakes all others"
-      L5='   source ${DRYa_v_SRC}'
+      L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated dir for repos"
+      L4="   __dryaSRC__=\"$__dryaSRC__\"; export __dryaSRC__  # setting one file that wakes all others"
+      L5='   source __dryaSRC__'
 
       echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc
@@ -1348,10 +1348,9 @@ function f_initialization {
       f_5; #f_5_verbose
       f_1; #f_1_verbose
 
-   f_create_tmp_history_file
    f_variables_recalculated 
 
-   f_initialization_verbose
+   f_screen_1
 }
 
 
