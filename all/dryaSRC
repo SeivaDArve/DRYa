@@ -1141,7 +1141,8 @@ function f_backdoor {
    # Repo names to delete (Uncomment to activate actions you want to perform in other devices when Terminal starts up with DRYa)
       unset v_rm
 
-      v_rm="$v_rm example-repo"
+      v_rm="$v_rm example-repo-1"
+      v_rm="$v_rm example-repo-2"
       v_rm="$v_rm scratch-paper"
 
    # Take actions for each name in the variable $v_rm
@@ -1151,13 +1152,15 @@ function f_backdoor {
          rm -rf ${v_REPOS_CENTER}/$i    2>/dev/null 
       done
 
-   function f_backdoor_listening {
+   function f_backdoor_RAT_daemon {
       # Keep the terminal in a while loop and only listen to changes on github
       # A file will be used to issue commands from a distance
-      echo uDev
-
+      echo "uDev: Criar repo para este proposito"
    }
 
+   # Ficheiro com lista de tarefas para maquinas/users especificos. O primeiro ficheiro mantem linhas de codigo ate apanhar a maquina pela qual aguarda. depois notifica "Done X na maquina X no dias X" ao segundo ficheiro
+      v__hook_file__logout_exec="uDev"  # File contains commands to run IF the target machine and target user Logs into a Shell which is running DRYa. After it runs sucessfully, that line/task is deleted. Example: When a Repo is cloned to a machine which is not used very often, sometimes it gets so badly outdated that no longer runs os Restart (because restart usually updates DRYa) so, the next update to DRYa brings a file to run on terminal shutdown (or terminal refresh) so that, some changes are done on-the-go. and a notification file should register such changes. One example where this could be usefull is public PC where, by mistake some password stroken was left as true github token
+      v__hook_history="uDev"
 
    # uDev: Ping DRYa server: Ao iniciar o terminal criar um ping. Estimar o numero de utilizadores ativos a usar o software
 }
