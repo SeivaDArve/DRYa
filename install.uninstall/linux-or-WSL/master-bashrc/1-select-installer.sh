@@ -70,6 +70,19 @@ function f_internal_variables {
       unset v_hst_18
       unset v_hst_19
       unset v_hst_20
+
+
+   # Text for informational menus
+      v_enter=" [ENTER = Continue] or [CTRL-C = Cancel]: "
+
+
+   function f_invalid_opt {
+      # Text when Invalid options are given
+      echo
+      echo "   > Invalid option: $v_ans"
+      echo "     [Any key to reload Menu]"
+      read -sn1
+   }
 }
 
 function f_variables_recalculated {
@@ -414,7 +427,7 @@ function f_screen_1 {
       f_ckf && echo "$v_chf"     # " |   | - [ ] History file (was not created)"
                echo                " |   | "
                echo $v____________
-               echo                " [ENTER = Continue] or [CTRL-C = Cancel]: "
+               echo                "$v_enter"
                echo $v____________
       read -sn1 -p                 "   > "
 
@@ -441,7 +454,10 @@ function f_menu_principal {
       echo $v____________
       echo " |   |"
       echo " | 1 | Install DRYa"
+      echo " |   |"
       echo " | 2 | Uninstall DRYa"
+      echo " |   |"
+      echo ' | c | `cat` installer: For Live OS like TAILS'
       echo " |   |"
       echo " | 3 | Options"
       echo " |   |"
@@ -451,7 +467,9 @@ function f_menu_principal {
       echo " |   |"
       echo " | 7 | History [of past Choises]"
       echo " |   |"
-      echo " | 8 | Exit"
+      echo " | 8 | Fix outdated installation"  
+      echo " |   |"
+      echo " | 9 | Exit"
       echo $v____________
 
       v_allow="no"
@@ -478,6 +496,10 @@ function f_menu_principal {
          f_options_menu
          break
 
+      elif [[ $v_ans == "c" ]]; then
+         echo uDev
+         read
+
       elif [[ $v_ans == "4" ]]; then
          # option 4
          v_allow="yes"
@@ -501,6 +523,12 @@ function f_menu_principal {
          f_history_log  # if already includes f_greet
 
       elif [[ $v_ans == "8" ]]; then
+         echo
+         echo 'uDev: Replace variables or other imcompatible stuff like:'
+         echo ' > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
+         read -sn1
+
+      elif [[ $v_ans == "9" ]]; then
          # option 7
          v_allow="yes"
          echo "   > exit"
@@ -508,11 +536,8 @@ function f_menu_principal {
          exit 0
 
       else
-         # invalid option
-         echo
-         echo "   > Invalid option: $v_ans"
-         echo "     [Any key to reload Menu]"
-         read -sn1
+         # Invalid option
+         f_invalid_opt 
       fi
 
    done
@@ -559,7 +584,7 @@ function f_screen_3 {
            echo      " |   | $v_char"
            echo      " |   | "
            echo      $v____________
-           echo      " [ENTER = Continue] or [CTRL-C = Cancel]: "
+           echo      "$v_enter"
            echo      $v____________
       read -sn1 -p   "   > "
 }
@@ -673,9 +698,11 @@ function f_screen_4 {
          echo " where all repositories can be stored"
          echo
          echo " Example:"
-         echo
          echo "    /home/$USER/Repositories"
          echo
+         echo
+         echo
+         echo " What is WSL?  ... uDev"
          read -sn1
 
 
@@ -698,83 +725,23 @@ function f_screen_4 {
          exit 1
 
       else 
-         # Invalid options
-
-         echo
-         echo " Invalid option."
-         echo " Press ENTER to continue"
-
-         read -r
+         # Invalid option
+         f_invalid_opt 
       fi
 
    done
 }
 
-
-
-
-
-
-
-function f_title {
-   echo -e " ( Initial Menu )\n"
-} 
-
-function f_1st {
-   # This function belongs to the First Question
-   echo   "                 (Step 1 of 4)                "
-   echo   
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
-   echo
-   echo    "  Note: On WSL2 it is recomended at: '/mnt/c/\$USER'"
-   echo    "  which is the C:\ drive, but with a directory created by hand with"
-   echo    "  the user's account name (or similar) in order to better open files"
-   echo    "  with windows's native software. This way, navigation through"
-   echo    "  explorer.exe is easier"
-} 
-
-function f_3rd {
-   # This function belongs to the Third Question
-   echo -e "                 (Step 3 of 4)                 \n"
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [X] Do you have any dedicated dir for  repositories?"
-   echo -e " [X] Move DRYa repository into that place (or git clone it)"
-   echo -e " [ ] Running this script only side-by-side?\n"
-} 
-
-function f_4th {
-   # This function belongs to the Forth Question
-   echo -e "                 (Step 4 of 4)                 \n"
-   echo -e "       --- Checklist for instalation --- "
-   echo -e " [X] Do you have any dedicated dir for  repositories?"
-   echo -e " [X] Move DRYa repository into that place (or git clone it)"
-   echo -e " [X] Running this script only side-by-side?"
-   echo -e "  -  Everything seems ok to start modifications"
-   echo -e " [ ] Shall we stat the magic?\n"
-} 
-
-function f_break_select_loops {
-   # This function f_break_select_loops evals if v_break_select_loops variable
-      # Is defined as either yes or no
-      # And returns a value to the user
-   
-   # If the variable is empty, do nothing, if "no", do nothing, if "yes" then break
-   if   [[ -z $v_break_select_loops          ]]; then echo -n ""
-   elif [[    $v_break_select_loops == "no"  ]]; then echo -n ""
-   elif [[    $v_break_select_loops == "yes" ]]; then _break="break" && clear
-   fi
-}
-
-
 function f_2nd_select {
    # Second question of the instalation process
+   #     dee:screen_5
+   clear; read -p "screen 5"
 
    while true
    do
       f_greet
             # This function belongs to the Second Question
-            echo -e "                 (Step 2 of 4)                 \n"
+            echo -e "                 (Step 2 of x)                 \n"
             echo -e "       --- Checklist for instalation --- "
             echo -e " [X] Do you have any dedicated dir for  repositories?"
             echo -e " [ ] Move DRYa repository into that place (or git clone it)\n"
@@ -794,7 +761,7 @@ function f_2nd_select {
               echo " | 4 | >>> Back, to [1/x]"
               echo "$v_line"
 
-      read -rp "Choose an option: " option
+      read -rp " >  " option
 
       if [[ "$option" == "1" || "$option" == "yes" ]]; then
 
@@ -831,12 +798,65 @@ function f_2nd_select {
          break
 
       else
-
-         echo "That option is invalid. Press ENTER to clear screen"
-         read
-
+         # Invalid option
+         f_invalid_opt 
       fi
    done
+}
+
+
+
+
+
+
+function f_title {
+   echo -e " ( Initial Menu )\n"
+} 
+
+function f_1st {
+   # This function belongs to the First Question
+   echo   "                 (Step 1 of x)                "
+   echo   
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [ ] Do you have any dedicated dir for  repositories?\n"
+   echo
+   echo    "  Note: On WSL2 it is recomended at: '/mnt/c/\$USER'"
+   echo    "  which is the C:\ drive, but with a directory created by hand with"
+   echo    "  the user's account name (or similar) in order to better open files"
+   echo    "  with windows's native software. This way, navigation through"
+   echo    "  explorer.exe is easier"
+} 
+
+function f_3rd {
+   # This function belongs to the Third Question
+   echo -e "                 (Step 3 of x)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [X] Do you have any dedicated dir for  repositories?"
+   echo -e " [X] Move DRYa repository into that place (or git clone it)"
+   echo -e " [ ] Running this script only side-by-side?\n"
+} 
+
+function f_4th {
+   # This function belongs to the Forth Question
+   echo -e "                 (Step 4 of x)                 \n"
+   echo -e "       --- Checklist for instalation --- "
+   echo -e " [X] Do you have any dedicated dir for  repositories?"
+   echo -e " [X] Move DRYa repository into that place (or git clone it)"
+   echo -e " [X] Running this script only side-by-side?"
+   echo -e "  -  Everything seems ok to start modifications"
+   echo -e " [ ] Shall we stat the magic?\n"
+} 
+
+function f_break_select_loops {
+   # This function f_break_select_loops evals if v_break_select_loops variable
+      # Is defined as either yes or no
+      # And returns a value to the user
+   
+   # If the variable is empty, do nothing, if "no", do nothing, if "yes" then break
+   if   [[ -z $v_break_select_loops          ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "no"  ]]; then echo -n ""
+   elif [[    $v_break_select_loops == "yes" ]]; then _break="break" && clear
+   fi
 }
 
 function f_3rd_select {
