@@ -134,7 +134,11 @@ Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir T
       htop           # Task manager com hotkeys para `kill`processos
       tmate          # Similar to TeamViewer or AnyDesk (but to CLI interface with tmux)
       yad            # `apt install yad` para criar system trays com icons e comandos (junto ao relogio)
+      iconv          # converte [àáâãä] em [a] nas buscas de texto do `grep` (dependencia de `upk RAL <busca>`)
       -y
+** f_GUI_util
+Discord
+LSL (Linden Scripting Language) > Second Life
 
 ** f_ssh
 
