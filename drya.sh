@@ -4463,7 +4463,7 @@ elif [ $1 == "wam" ]; then
               echo " > g <search> | To grep text directly from the main DWAM file"
 
    elif [ $2 == "." ] || [[ $1 == "edit-dwam-main-file" ]]; then
-      [[ -d ${v_REPOS_CENTER}/omni-log ]] && emacs $v_wam  ## Usa o script `e` que vem com DRYa repo
+      [[ -d ${v_REPOS_CENTER}/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
 
    elif [ $2 == "g" ]; then
 
@@ -4471,7 +4471,7 @@ elif [ $1 == "wam" ]; then
          f_talk; echo "DRYa WAM: How to use grep command:"
                  echo ' > `D wam g <search>`'
       else
-         cat $v_wam | grep --color=auto $3
+         cat $v_wam | grep -i --color=auto $3
       fi
 
 
