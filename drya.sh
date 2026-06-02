@@ -2468,7 +2468,7 @@ function f_backup_guide {
               echo " > ..."
               echo
       f_talk; echo "Backup with "Clonezilla Live OS" (Clone entire computer HDD into image):"
-              echo " > img name: 2026-05-04-10h-DRYa-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
+              echo " > img name: 2026-05-04-10h-dryaSEED-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
               echo '   Also: `rm .netrc trash browser-history browser-passwords private-repos'
               echo
       f_talk; echo 'Backup with `dd` (clone HDD into another HDD, byte by byte):'
@@ -2823,6 +2823,28 @@ function f_clone_fzf_like_origina_devs {
 }
 
 
+function f_create_live_windows_bootable_usb_using_CMD {
+   # Step-by-step guide to create a bootable USB at windows command prompt"
+   # Nota: Este comando é mentmcionado em '1st': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
+   # uDev: Enviar este comando para `D iu`
+
+   bash ${v_REPOS_CENTER}/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
+}
+
+function f_create_live_usb {
+   f_greet
+   echo "uDev: Create Guides to these instalations:"
+   echo " > Live USB: TAILS OS"
+   echo " > Live USB: OS with Persistence"
+   echo " > Live USB: Ventoy with Persistence"
+   echo 
+   echo "Only available now:"
+   echo " > Create Live Windows USB"
+   echo "   [Any Key] to open 'Live Creator of bootable windows USB"
+   read -sn1
+   echo
+   f_create_live_windows_bootable_usb_using_CMD 
+}
 
 
 
@@ -3395,8 +3417,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L4='4.  |           |  Guide  | Install: Termux' 
           L3='3.  |           |  Guide  | Install: WSL'   
 
-         L18='18. |           |  Guide  | Install: Dual|Multiboot HDD'   
-         L19='19. |           |  Guide  | Create:  Live USB' #  Create Live Windows USB; Live TAILS; Live OS with Persistence; USB with Ventoy with Persistence
+         L19='19. |           |  Guide  | Clone:   dryaSEED (Dualboot|Multiboot HDD into an empty HDD)'   
+         L18='18. |           |  Guide  | Create:  Live USB' 
 
           L2='2.  | `D iu ls` | List Status  '
 
@@ -3405,7 +3427,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L0="DRYa: Menu install.uninstall: "
          Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github, 'git' is needed\n - Some options Install directly, others only Guide on How to install\n ")
          
-         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
@@ -3430,8 +3452,12 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "5.  " ]] && echo "uDev"
          [[ $v_list =~ "4.  " ]] && echo "uDev: Guide install termux, guide config termux, then update && upgrade system"
          [[ $v_list =~ "3.  " ]] && f_instalation_guide_to_wsl
-
+   
+         [[ $v_list =~ "19. " ]] && echo uDev 
+         [[ $v_list =~ "18. " ]] && f_create_live_usb 
+   
          [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
+
          [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" 
          unset v_list
 
@@ -4069,11 +4095,7 @@ elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo"
    echo
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
-   # Step-by-step guide to create a bootable USB at windows command prompt"
-   # Nota: Este comando é mentmcionado em '1st': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
-   # uDev: Enviar este comando para `D iu`
-
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
+   f_create_live_usb 
 
 elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
