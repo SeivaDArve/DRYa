@@ -2427,6 +2427,21 @@ function f_zip_unzip {
    bash $__repo__/all/bin/drya-zip-unzip.sh $*
 }
 
+function f_guide_dryaCLONEZILLA {
+   # Text|Guide|Help to use dryaCLONEZILLA which is an offline|stored HDD with a partition table and Multiboot ready to populate another fresh|empty HDD (instead of formating everything)
+
+   f_talk; echo 'Guide: Using "Clonezilla Live OS"'
+           echo " > Backup:  Clone 'entire computer HDD' into 'image'"
+           echo " > Restore: Clone 'image' into 'entire computer HDD')"
+           echo '   (This is like "Creating DRYa Operative System, but Multiboot")'
+           echo 
+           echo "IMG name (example):"
+           echo " > 2026-05-04-10h-dryaCLONEZILLA-img-of-DualBoot-HDD-w-Win10-n-Garuda"
+           echo
+           echo "TRASH to clean (at each partition of the HDD that will be mirrored into img)"
+           echo '   Also: `rm ~/.netrc <trash|Recicle-Bin> <browser-history> <browser-passwords> <private-repos>`'
+           echo
+}
 
 function f_backup_guide {
 
@@ -2467,10 +2482,6 @@ function f_backup_guide {
       f_talk; echo "Backup Checklist (computer files to external HDD):"
               echo " > ..."
               echo
-      f_talk; echo "Backup with "Clonezilla Live OS" (Clone entire computer HDD into image):"
-              echo " > img name: 2026-05-04-10h-dryaSEED-Clonezilla-img-of-DualBoot-HDD-w-Win10-n-Garuda"
-              echo '   Also: `rm .netrc trash browser-history browser-passwords private-repos'
-              echo
       f_talk; echo 'Backup with `dd` (clone HDD into another HDD, byte by byte):'
               echo ' > `sudo dd if=/dev/sda of=/dev/sdb bs=64K status=progress conv=noerror,sync`' 
               echo '   In file: /dev/sda  (example)'
@@ -2481,6 +2492,9 @@ function f_backup_guide {
               echo '   Conv: sync:    means "fill erros blocks with zeros, keep the alignment"'
               echo '   Note: you can use `lsblk` to list discs'
               echo
+
+      f_guide_dryaCLONEZILLA 
+
       f_talk; echo "How to use Ethernet cable to share files between 2 computers:"
               echo " > ..."
 }
@@ -3417,7 +3431,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L4='4.  |           |  Guide  | Install: Termux' 
           L3='3.  |           |  Guide  | Install: WSL'   
 
-         L19='19. |           |  Guide  | Clone:   dryaSEED (Dualboot|Multiboot HDD into an empty HDD)'   
+         L19='19. |           |  Guide  | Using:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
          L18='18. |           |  Guide  | Create:  Live USB' 
 
           L2='2.  | `D iu ls` | List Status  '
@@ -3453,7 +3467,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "4.  " ]] && echo "uDev: Guide install termux, guide config termux, then update && upgrade system"
          [[ $v_list =~ "3.  " ]] && f_instalation_guide_to_wsl
    
-         [[ $v_list =~ "19. " ]] && echo uDev 
+         [[ $v_list =~ "19. " ]] && f_guide_dryaCLONEZILLA 
          [[ $v_list =~ "18. " ]] && f_create_live_usb 
    
          [[ $v_list =~ "2.  " ]] && f_dot_files_list_available
