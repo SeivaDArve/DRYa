@@ -543,12 +543,20 @@ function f_alias_to_enforce {
 
          # Change directory. Byt Not working in a sub-shell (it is using dryaSRC to do it)
          if [ ! -d $v_dryaGPG ]; then
-            # Se a pasta nao existir, criar a pasta, depois navegar la
+            # Se a pasta local nao existir, criar a pasta, depois navegar la
             mkdir -p $v_dryaGPG
             cd       $v_dryaGPG 2>/dev/null
          else 
             # Se a pasta existir, navegar la
             cd $v_dryaGPG 2>/dev/null
+         fi
+
+      elif [[ $1 == "GPG" ]] && [[ $2 == "v" ]]; then
+         if [ ! -d $v_dryaGPG_tesoro ]; then
+            # Se a pasta no repo Tesoro nao existir, informa
+            echo "Repo Tesoro nao existe"
+         else
+            cd       $v_dryaGPG_tesoro 2>/dev/null
          fi
 
       else
@@ -701,9 +709,14 @@ function f_GPG {
    v_DRYa_GnuPG=${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
 
    # Default directory for Decrypted files (unsafe for the web, unsafe on repositories)
-             v_dryaGPG=~/.dryaGPG
+      #uDev: Change to v_dryaGPG_exposed
+      v_dryaGPG=~/.dryaGPG
       export v_dryaGPG
 
+   # Default directory for Encrypted files (safe for the web, safe on repositories)
+      v_dryaGPG_tesoro=${v_REPOS_CENTER}/Tesoro/all/dryaGPG
+      export v_dryaGPG_tesoro
+      
 }
 
 function f_config_pkg_figlet {

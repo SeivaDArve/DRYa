@@ -593,6 +593,18 @@ function f_only_convert_content_from_OpenPGP_no_encription {
    echo "uDev"
 }
 
+function f_inform_about_dryaSRC {
+   f_talk; echo "Info inicial"
+           echo ' > O comando `D gpg` tem 2 funcoes'
+           echo "   uDev: Informar os atalhos que existem em dryaSRC"
+           echo "   uDev: Informar que ENTER entra no proprio script"
+           echo 
+           echo -n "[info]  para Informar os atalhos de dryaSRC (uDev)"
+           echo -n "[ENTER] para entrar no sofrware GPG... "
+   read -sn1
+   f_greet
+}
+
 function f_testing_drya_defaults {
 
    f_gpg_path
@@ -899,6 +911,7 @@ function f_GnuPG_main_menu {
 if [ -z $1 ]; then
 
    f_greet 
+   f_inform_about_dryaSRC 
    f_testing_drya_defaults 
    f_detetar_se_instalado_dependencias_zip_unzip
 
