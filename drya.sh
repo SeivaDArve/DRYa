@@ -560,7 +560,7 @@ function f_clone_repos {
    f_talk 
 
    case $v_arg2 in
-      # uDev: Search for dependencies file if any
+      # uDev: each repo's f should search for dependencies file if any
       # uDev: Print their webpage link
       
       ezGIT | ezgit | ez)         
@@ -569,11 +569,10 @@ function f_clone_repos {
       ;;
 
       ROM | rom | calc-extention)
-         # Clones "Texas Instruments" Emulator for graphic calulators + "TI-84 Plus" ROM, to run as an Android .apk
-         f_clone_calc_extention
+         f_clone_calc_extention # Clones "Texas Instruments" Emulator for graphic calulators + "TI-84 Plus" ROM, to run as an Android .apk
       ;;
 
-      Tesoro | tesoro | T)          
+      Tesoro | tesoro | T | t)          
          f_clone_repos_Tesoro
       ;;
 
@@ -3291,7 +3290,7 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
       # Open fzf to help clone repos by the correct name
       f_clone_by_fzf_list
 
-   elif [ $2 == "try" ] || [ $2 == "t" ]; then
+   elif [ $2 == "try" ]; then
       # To clone repos when we are not exactly sure how it's name is written 
       #                when shortcuts were not already set or predictrd
       v_arg3=$3
