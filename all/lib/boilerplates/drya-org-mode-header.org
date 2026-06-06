@@ -8,11 +8,11 @@
 #+STARTUP: indent
 :END:
 
-Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]]
+Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]] - [[elisp:(org-narrow-to-subtree)][Focus-header]] | [[elisp:(widen)][Unfocus-header]]
 
 [[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
 
-* Titulo 
+* All (Titulo)
    
    Texto de exemplo
 
