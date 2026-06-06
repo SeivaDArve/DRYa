@@ -778,81 +778,88 @@ Serve para Verificação de identidade
 
 
 function f_main_menu_text {
-   L00=" | opc | fx (all with info, except if \$1 is 'v')"
-   L00=' | Arg | Descricao da fx (+ info  || `v` for no info)'
-
-    L0=" |  0  | Status > DRYa default settings"
-   L18=" | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
-   L19=" | 19  | Status > Describing all contents at ~/.gnupg"
-
-    L1=" |  1  | Chaves > Listar as públicas / verificar existência"
-    L2=" |  2  | Chaves > Listar as privadas / verificar existência"
-    L3=" |  3  | Chaves > Gerar nova (interativo)"
-    L4=" |  4  | Chaves > Importar"
-    L5=" |  5  | Chaves > Exportar pública"
-    L6=" |  6  | Chaves > Exportar privada (cuidado)"
-   L12=" | 12  | Chaves > Mudar passphrase"
-   L13=" | 13  | Chaves > Apagar"
-   L14=" | 14  | Chaves > Backup de todas"
-   L15=" | 15  | Chaves > Restaurar"
-
-   L20=" | 20  | Convert > text/file to OpenPGP   (no encription)"
-   L21=" | 21  | Convert > OpenPGP   to text/file (no encription)"
-
-    L7=" |  7  | Encrypt > simétrica (com passphrase)"
-   L17=" | 17  | Decrypt > simétrica (com passphrase)"
-
-    L8=" |  8  | Encrypt > assimetrica para destinatário (chave pública)"
-    L9=" |  9  | Decrypt > ficheiro"
-
-   L10=" | 10  | Assinaturas > Assinar ficheiro"
-   L11=" | 11  | Assinaturas > Verificar assinatura"
-   L16=" | 16  | Mostrar fingerprints (Testar chaves e seus donos)"
-
-   L22=" | 22  | Compress     (zip) "
-   L23=" | 23  | Decompress   (unzip) "
-   L24=' | 24  | Dependencias (uDev: `D iu dp`)'
-
-    Lh=" |  h  | Instucoes Base"
-    LQ=" |  Q  | Sair"
-
-   echo "$L00"
+   echo " | opc | fx (all with info, except if \$1 is 'v')"
+   echo ' | Arg | Descricao da fx (+ info  || `v` for no info)'
    f_hline
-   echo "$L0"
-   echo "$L18"
-   echo "$L19"
+   echo " |  0  | Status > DRYa default settings"
+   echo " | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   echo " | 19  | Status > Describing all contents at ~/.gnupg"
    f_hline
-   echo "$L1"
-   echo "$L2"
-   echo "$L3"
-   echo "$L4"
-   echo "$L5"
-   echo "$L6"
-   echo "$L12"
-   echo "$L13"
-   echo "$L14"
-   echo "$L15"
+   echo " |  1  | Chaves > Listar as públicas / verificar existência"
+   echo " |  2  | Chaves > Listar as privadas / verificar existência"
+   echo " |  3  | Chaves > Gerar nova (interativo)"
+   echo " |  4  | Chaves > Importar"
+   echo " |  5  | Chaves > Exportar pública"
+   echo " |  6  | Chaves > Exportar privada (cuidado)"
+   echo " | 12  | Chaves > Mudar passphrase"
+   echo " | 13  | Chaves > Apagar"
+   echo " | 14  | Chaves > Backup de todas"
+   echo " | 15  | Chaves > Restaurar"
    f_hline
-   echo "$L20"
-   echo "$L21"
+   echo " | 20  | Convert > text/file to OpenPGP   (no encription)"
+   echo " | 21  | Convert > OpenPGP   to text/file (no encription)"
    f_hline
-   echo "$L7"
-   echo "$L17"
+   echo " |  7  | Encrypt > simétrica (com passphrase)"
+   echo " | 17  | Decrypt > simétrica (com passphrase)"
+   echo " | 25  | Encrypt > simétrica (com passphrase, fornecida como arg)"
+   echo " | 26  | Decrypt > simétrica (com passphrase, fornecida como arg)"
    f_hline
-   echo "$L8"
-   echo "$L9"
+   echo " |  8  | Encrypt > assimetrica para destinatário (chave pública)"
+   echo " |  9  | Decrypt > ficheiro"
    f_hline
-   echo "$L10"
-   echo "$L11"
-   echo "$L16"
+   echo " | 10  | Assinaturas > Assinar ficheiro"
+   echo " | 11  | Assinaturas > Verificar assinatura"
+   echo " | 16  | Mostrar fingerprints (Testar chaves e seus donos)"
    f_hline
-   echo "$L22"
-   echo "$L23"
-   echo "$L24"
+   echo " | 22  | Compress     (zip) "
+   echo " | 23  | Decompress   (unzip) "
+   echo ' | 24  | Dependencias (uDev: `D iu dp`)'
    f_hline
-   echo "$Lh"
-   echo "$LQ"
-   echo
+   echo ' | 27  | hjSplit > divide (uDev)'
+   echo ' | 28  | hjSplit > join (uDev)' 
+   f_hline
+   echo " |  h  | Instucoes Base"
+   echo " |  Q  | Sair"
+
+#   echo "$L00"
+#   f_hline
+#   echo "$L0"
+#   echo "$L18"
+#   echo "$L19"
+#   f_hline
+#   echo "$L1"
+#   echo "$L2"
+#   echo "$L3"
+#   echo "$L4"
+#   echo "$L5"
+#   echo "$L6"
+#   echo "$L12"
+#   echo "$L13"
+#   echo "$L14"
+#   echo "$L15"
+#   f_hline
+#   echo "$L20"
+#   echo "$L21"
+#   f_hline
+#   echo "$L7"
+#   echo "$L17"
+#   echo "$L25"
+#   echo "$L26"
+#   f_hline
+#   echo "$L8"
+#   echo "$L9"
+#   f_hline
+#   echo "$L10"
+#   echo "$L11"
+#   echo "$L16"
+#   f_hline
+#   echo "$L22"
+#   echo "$L23"
+#   echo "$L24"
+#   f_hline
+#   echo "$Lh"
+#   echo "$LQ"
+#   echo
 }
 
 
@@ -961,6 +968,23 @@ elif [ $1 == "7" ]; then
 
 elif [ $1 == "17" ]; then
    f_symmetric_decrypt      
+
+elif [ $1 == "25" ]; then
+   #f_symmetric_encrypt__passphrase_given_as_arg
+
+#  Com o gpg podes passar a passphrase diretamente pela linha de comandos, embora isso tenha implicações de segurança (fica visível no histórico do shell e potencialmente em ps).  
+
+   echo "exemplo"
+   echo "gpg --batch --yes --passphrase 'minha_password' -c ficheiro.txt"
+
+#  -c → encriptação simétrica
+#  --batch → modo não interativo
+#  --passphrase → fornece a password inline
+
+elif [ $1 == "26" ]; then
+   #f_symmetric_decrypt__passphrase_given_as_arg
+
+   echo uDev
 
 elif [ $1 == "8" ]; then
    f_encrypt_for_recipient  
