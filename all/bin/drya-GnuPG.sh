@@ -22,6 +22,9 @@
 
 
 function f_some_help {
+   f_talk; echo "Info alias:"
+           echo " > uDev: tell alias among: dryaSRC, drya.sh, drya-GnuPG.sh, fluNav.sh, variables location"
+           echo 
    f_talk; echo "Info"
            echo " > Package 'gnupg' (GnuPG) when installed, provides the command \`gpg\`"
            echo
@@ -818,6 +821,8 @@ function f_main_menu_text {
    echo ' | 27  | hjSplit > divide (uDev)'
    echo ' | 28  | hjSplit > join (uDev)' 
    f_hline
+   echo ' | 29  | Decrypt [Text file] > Open > Edit > Close > Encrypt (uDev)'
+   f_hline
    echo " |  h  | Instucoes Base"
    echo " |  Q  | Sair"
 
@@ -935,7 +940,7 @@ elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh 
 
 elif [ $1 == "h" ]; then
-   f_header; f_talk; f_some_help; pause 
+   f_header; f_some_help; pause 
 
 elif [ $1 == "m" ] || [ $1 == "menu" ]; then
    # Permite ver o menu à mesma, caso gpg nao esteja instalado
