@@ -520,43 +520,72 @@ function f_alias_to_enforce {
 
 
       if [ -z $1 ]; then
-         bash $DRYa/drya.sh $*
+         bash $DRYa/drya.sh $* 
 
-      elif [[ $1 == "gpg" ]] && [[ $2 == "rm" ]]; then
-         # The whole point of this fx is to had `cd $HOME` if these 2 arguments are found together
+      elif [[ $1 == "gpg" ]] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
 
-         cd   $HOME
-         bash $DRYa/drya.sh $*
+         if [ -z $2 ]; then
+            # uDev: redirect to DRYa's GPG script where it informs aboult these overwritting alias `D gpg`
+            shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
+         
+         elif [[ $2 == "rm" ]]; then
+            # The whole point of this fx is to had `cd $HOME` if these 2 arguments are found together
+            cd   $HOME
+            bash $DRYa/drya.sh $*
 
-      elif [[ $1 == "gpg" ]] && [[ $2 == "v" ]]; then
-         # Change directory. Not working in a sub-shell (it is using dryaSRC to do it)
+         elif [[ $2 == "v" ]]; then
+            # Change directory (To $HOME @ Host) - Unsafe places to store secrets
+            # Note: Not working in a sub-shell (it is using this dryaSRC to do it)
 
-         if [ -d $v_dryaGPG ]; then
-            # Se a pasta existir, navegar para la
-            cd $v_dryaGPG 2>/dev/null
-         else 
-            # Se nao existir, mencionar so o erro
-            echo -e "DRYa-GnuPG: Directory does not exist: \n > $v_dryaGPG"
-         fi
+            if [ -d $v_dryaGPG ]; then
+               # Se a pasta existir, navegar para la
+               cd $v_dryaGPG 2>/dev/null
+            else 
+               # Se nao existir, mencionar so o erro
+               echo -e "DRYa-GnuPG: Directory does not exist: \n > $v_dryaGPG"
+            fi
 
-      elif [[ $1 == "gpg" ]] && [[ $2 == "V" ]]; then
+         elif [[ $2 == "V" ]]; then
+            # 1. Change directory (To $HOME @ Host) - Unsafe places to store secrets
+            # 2. Make it, if it does not exist
+            # Note: Not working in a sub-shell (it is using this dryaSRC to do it)
+            if [ ! -d $v_dryaGPG ]; then
+               # Se a pasta local nao existir, criar a pasta, depois navegar la
+               mkdir -p $v_dryaGPG
+               cd       $v_dryaGPG 2>/dev/null
+            else 
+               # Se a pasta existir, navegar la
+               cd $v_dryaGPG 2>/dev/null
+            fi
 
-         # Change directory. Byt Not working in a sub-shell (it is using dryaSRC to do it)
-         if [ ! -d $v_dryaGPG ]; then
-            # Se a pasta local nao existir, criar a pasta, depois navegar la
-            mkdir -p $v_dryaGPG
-            cd       $v_dryaGPG 2>/dev/null
-         else 
-            # Se a pasta existir, navegar la
-            cd $v_dryaGPG 2>/dev/null
-         fi
+         elif [[ $2 == "vv" ]]; then
+            # Change directory (To repo Tesoro) - Safer place to store secrets (if encrypted)
+            # Note: Not working in a sub-shell (it is using this dryaSRC to do it)
 
-      elif [[ $1 == "GPG" ]] && [[ $2 == "v" ]]; then
-         if [ ! -d $v_dryaGPG_tesoro ]; then
-            # Se a pasta no repo Tesoro nao existir, informa
-            echo "Repo Tesoro nao existe"
+            if [ -d $v_dryaGPG_tesoro ]; then
+               # Se a pasta existir, navegar para la
+               cd $v_dryaGPG_tesoro 2>/dev/null
+            else 
+               # Se nao existir, mencionar so o erro
+               echo -e "DRYa-GnuPG: Directory @Tesoro does not exist: \n > $v_dryaGPG_tesoro"
+            fi
+
+         elif [[ $2 == "VV" ]]; then
+            # 1. Change directory (To repo Tesoro) - Safer place to store secrets (if encrypted)
+            # 2. Ask to clone it, if it does not exist
+            # Note: Not working in a sub-shell (it is using this dryaSRC to do it)
+
+            if [ ! -d $v_dryaGPG_tesoro ]; then
+               # Se a pasta local nao existir, criar a pasta, depois navegar la
+               echo "Clone Tesoro? (uDev)"
+               #cd       $v_dryaGPG_tesoro 2>/dev/null
+            else 
+               # Se a pasta existir, navegar la
+               cd $v_dryaGPG_tesoro 2>/dev/null
+            fi
+
          else
-            cd       $v_dryaGPG_tesoro 2>/dev/null
+            shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $@
          fi
 
       else
@@ -714,7 +743,7 @@ function f_GPG {
       export v_dryaGPG
 
    # Default directory for Encrypted files (safe for the web, safe on repositories)
-      v_dryaGPG_tesoro=${v_REPOS_CENTER}/Tesoro/all/dryaGPG
+      v_dryaGPG_tesoro=${v_REPOS_CENTER}/Tesoro/all/dryaGPG_tesoro
       export v_dryaGPG_tesoro
       
 }

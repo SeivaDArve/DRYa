@@ -598,6 +598,7 @@ function f_inform_about_dryaSRC {
            echo ' > O comando `D gpg` tem 2 funcoes'
            echo "   uDev: Informar os atalhos que existem em dryaSRC"
            echo "   uDev: Informar que ENTER entra no proprio script"
+           echo '         also put these infos on `D gpg h`'
            echo 
            echo -n "[info]  para Informar os atalhos de dryaSRC (uDev)"
            echo -n "[ENTER] para entrar no sofrware GPG... "

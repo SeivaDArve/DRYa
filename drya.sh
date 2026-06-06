@@ -4477,10 +4477,16 @@ elif [ $1 == "zp" ] ; then
    shift
    f_zip_unzip $*
 
-elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
-   # Encrypt and Decript personal, private abd sensitive data
-
-   shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
+#
+#
+#  Fx 'gpg' taken care of by dryaSRC
+#
+#  elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
+#     # Encrypt and Decript personal, private abd sensitive data
+#  
+#     shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
+#  
+#
 
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
