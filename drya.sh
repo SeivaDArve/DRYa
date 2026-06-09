@@ -4595,7 +4595,7 @@ elif [ $1 == "tty" ] ; then
    echo "Default usernames and passwords for root users:"
    echo " > 'RetroPi OS' pi:raspberry"
     
-elif [ $1 == "pid" ] || [ $1 == "kill-pid" ] ; then 
+elif [ $1 == "kill-pid" ] || [ $1 == "pid" ] || [ $1 == "kill" ]; then 
    f_kill_process_by_PID 
 
 elif [ $1 == "o" ] || [ $1 == "other" ] ; then 
