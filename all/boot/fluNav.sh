@@ -229,10 +229,11 @@ function f_edit__vimrc {
 
 function f_edit__1st_emacs {
    f_greet
-   echo "Editing the list '1st' (apps to install)"
-   read -sn 1 -t 2
+   echo "Editing the list '1st.org' (guide of apps listed to install)"
+   v_1st_file=${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st.org
+   echo "$v_1st_file" >> $v_fluNav_S_hist_file 
    echo
-   bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
+   bash e $v_1st_file
    f_greet
    echo "edited: 1st"
 }
@@ -669,7 +670,7 @@ function f_menu_fzf_F {
       L12='12. Edit | vim   | .bashrc'
       L11='11. Edit | vim   | source-all-moedaz-files'
       L10='10. Edit | vim   | .vimrc'
-       L9='9.  Edit | e     | 1st'
+       L9='9.  Edit | e     | 1st.org'
        L7='7.  Edit | emacs | emacs-init'
        L6='6.  Edit | vim   | emacs-init'
 

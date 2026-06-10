@@ -2652,7 +2652,7 @@ function f_menu_install_drya_dependencies__1st {
 
       L4='4. Install | Soft dependencies (less important libraries + pkgs)'                                      
       L3='3. Install | Hard dependencies (most important libraries + pkgs)'                                      
-      L2="2. Edit    | '1st' file"
+      L2="2. Edit    | '1st.org' file"
       L1='1. Cancel'
 
       L0="DRYa: Dependencies menu: "
@@ -2838,7 +2838,7 @@ function f_clone_fzf_like_origina_devs {
 
 function f_create_live_windows_bootable_usb_using_CMD {
    # Step-by-step guide to create a bootable USB at windows command prompt"
-   # Nota: Este comando é mentmcionado em '1st': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
+   # Nota: Este comando é mencionado em '1st.org': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
    # uDev: Enviar este comando para `D iu`
 
    bash ${v_REPOS_CENTER}/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
@@ -3400,7 +3400,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
    # Var: file for DRYa dependencies
-      v_1st=${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st
+      v_1st=${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st.org
 
    if [[ -z $2 ]]; then 
       # If there are no args:
@@ -3418,7 +3418,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L12='12. | `D ui b`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
          L11='11. | `D cln`   |  Menu   | Clone Repos         '
          L10='10. | `D iu d`  |  Menu   | dot-files           '
-          L9='9.  | `D ui dp` |  Menu   | 1st (Dependencies)       ' 
+          L9='9.  | `D ui dp` |  Menu   | 1st.org (Dependencies)       ' 
                                
           L8='8.  | `D ui 1f` |  Edit   | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
           L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '

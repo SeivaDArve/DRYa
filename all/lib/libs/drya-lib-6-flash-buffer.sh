@@ -4,8 +4,9 @@
 
 # uDev: Alternativa para buffers com `tput`: Iniciar o terminal sempre com `tmux` e usar os paineis como buffers. Existe sempre a opcao deles serem temporizados para se apagarem automaticamente
 
-# Entra no buffer alternativo
+# Entra no buffer alternativo (em terminais comuns ANSI so costuma haver 2 buffers. O buffer normal e o alternativo, usado por less, vim, tmux, emacs TUI, ...
    tput smcup
+  #tput rmcup  # Volta ao buffer normal
 
 # Move para o canto superior esquerdo
    tput cup 0 0

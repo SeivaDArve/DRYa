@@ -73,7 +73,7 @@ function f_internal_variables {
 
 
    # Text for informational menus
-      v_enter=" [ENTER = Continue] or [CTRL-C = Cancel]: "
+      v_anyK=" [ANY KEY = Continue] or [CTRL-C = Cancel]: "
 
 
    function f_invalid_opt {
@@ -427,7 +427,7 @@ function f_screen_1 {
       f_ckf && echo "$v_chf"     # " |   | - [ ] History file (was not created)"
                echo                " |   | "
                echo $v____________
-               echo                "$v_enter"
+               echo                "$v_anyK"
                echo $v____________
       read -sn1 -p                 "   > "
 
@@ -453,23 +453,25 @@ function f_menu_principal {
       echo "[2/x] Menu Principal"
       echo $v____________
       echo " |   |"
-      echo " | 1 | Install DRYa"
+      echo " | 1 | >>> Install DRYa"
       echo " |   |"
-      echo " | 2 | Uninstall DRYa"
+      echo " | 2 | >>> Uninstall DRYa"
       echo " |   |"
-      echo ' | c | `cat` installer: For Live OS like TAILS'
+      echo ' | c | >>> `cat` installer: For Live OS like TAILS'
       echo " |   |"
-      echo " | 3 | Options"
+      echo " | 3 | >>> Options"
       echo " |   |"
-      echo " | 4 | Instructions 1 - (local readme)"
-      echo " | 5 | Instructions 2 - (internal instructions)"
-      echo " | 6 | Instructions 3 - (main DRYa README.org)"
+      echo " | 4 | >>> Instructions 1 - (local readme)"
       echo " |   |"
-      echo " | 7 | History [of past Choises]"
+      echo " | 5 | >>> Instructions 2 - (internal instructions)"
       echo " |   |"
-      echo " | 8 | Fix outdated installation"  
+      echo " | 6 | >>> Instructions 3 - (main DRYa README.org)"
       echo " |   |"
-      echo " | 9 | Exit"
+      echo " | 7 | >>> History [of past Choises]"
+      echo " |   |"
+      echo " | 8 | >>> Fix outdated installation"  
+      echo " |   |"
+      echo " | q | >>> Exit"
       echo $v____________
 
       v_allow="no"
@@ -528,9 +530,10 @@ function f_menu_principal {
          echo ' > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
          read -sn1
 
-      elif [[ $v_ans == "9" ]]; then
-         # option 7
+      elif [[ $v_ans == "q" ]] || [[ $v_ans == "Q" ]]; then
+         # Option: exit
          v_allow="yes"
+         load_remaining_functions="no"
          echo "   > exit"
          echo
          exit 0
@@ -561,14 +564,15 @@ function f_screen_3 {
       [[   -f $v_bash ]] && v_tested="- [X] File exists"
       [[ ! -f $v_bash ]] && v_tested="- [ ] File does not exist"
 
-   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one
+   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one. "fixing" means "fill with something"
+      unset v_char_count
       v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
 
-      [[ $v_char_count -gt 1 ]] && v_char="- [X] Does not need filling, all ok!"
+      [[ $v_char_count -gt 1 ]] && v_char="- [X] Does not need to be fixed, all ok!"
 
       [[ $v_char_count -lt 1 ]] && echo " " >> $v_bash 
       [[ $v_char_count -lt 1 ]] && v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
-      [[ $v_char_count -lt 1 ]] && v_char="- [ ] Does need filling..." 
+      [[ $v_char_count -lt 1 ]] && v_char="- [ ] Needs to be fixed..." 
 
       [[ $v_char_count -gt 1 ]] && v_char="- [X] Fixed, all ok"
 
@@ -577,14 +581,14 @@ function f_screen_3 {
            echo      "-------------------------------"
            echo      " |   | "
            echo      " |   | Ensuring existence:"
-           echo      " |   |  > $v_tested"
+           echo      " |   | $v_tested"
            echo      " |   | "
            echo      " |   | Ensuring it is not Empty:"
            echo      " |   | -     Number of chars inside: $v_char_count"  # Debug
            echo      " |   | $v_char"
            echo      " |   | "
            echo      $v____________
-           echo      "$v_enter"
+           echo      "$v_anyK"
            echo      $v____________
       read -sn1 -p   "   > "
 }
@@ -633,44 +637,44 @@ function f_screen_4 {
       echo    " |   |"
       echo    " | b | >>> Back to 'Main Menu'"
       echo    " |   |"
-      echo    " | x | >>> Abort everything"
+      echo    " | q | >>> Exit (Abort everything)"
       echo "$v____________"
       echo    " [ Default = ~/Repositories ] "
       echo "$v____________"
-      read -p "   > " v_variable_ans
+      read -p "   > " v_ans
 
       # Default option
-         [[ -z $v_variable_ans ]] && v_variable_ans="1"
+         [[ -z $v_ans ]] && v_ans="1"
 
 
-      if [[ $v_variable_ans == 1 ]]; then
+      if [[ $v_ans == 1 ]]; then
          # Option 1
          export __REPOS_CENTER__="$HOME/Repositories"
          f_2nd_select
          break
 
 
-      elif [[ $v_variable_ans == 2 ]]; then
+      elif [[ $v_ans == 2 ]]; then
          # Option 2
          export __REPOS_CENTER__="/mnt/c/$USER/Repositories"
          f_2nd_select 
          break
 
 
-      elif [[ $v_variable_ans == 3 ]]; then
+      elif [[ $v_ans == 3 ]]; then
          # Option 3
          export __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
          f_2nd_select 
          break
 
 
-      elif [[ $v_variable_ans == 4 ]]; then
+      elif [[ $v_ans == 4 ]]; then
          # Option 4
          export __REPOS_CENTER__="$PWD"
          f_2nd_select 
          break
 
-      elif [[ $v_variable_ans == 5 ]]; then
+      elif [[ $v_ans == 5 ]]; then
          # Option 5
          echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
          [[ -n $v_variable_custom_path ]] && export __REPOS_CENTER__="$v_variable_custom_path"
@@ -678,7 +682,7 @@ function f_screen_4 {
          break
 
 
-      elif [[ $v_variable_ans == "h" ]]; then
+      elif [[ $v_ans == "h" ]]; then
          # Help
 
          f_greet
@@ -706,7 +710,7 @@ function f_screen_4 {
          read -sn1
 
 
-      elif [[ $v_variable_ans == "b" ]]; then
+      elif [[ $v_ans == "b" ]]; then
          # Back to menu
 
          f_greet
@@ -714,15 +718,13 @@ function f_screen_4 {
          f_menu_principal
          break
 
-      elif [[ $v_variable_ans == "x" ]]; then
-         # Abort
-
-         echo
-         echo " Aborting/exiting current instalation..."
-
+      elif [[ $v_ans == "q" ]] || [[ $v_ans == "Q" ]]; then
+         # Option: exit
+         v_allow="yes"
          load_remaining_functions="no"
-
-         exit 1
+         echo "   > exit"
+         echo
+         exit 0
 
       else 
          # Invalid option

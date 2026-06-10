@@ -1,0 +1,25 @@
+# Title: .gitignore
+# Description: Ficheiros mencionados neste documento nao fazem parte do repositorio (nao sao adicionados do working tree para stanging area, nem seram enviados com git push)
+
+# Vim / Neovim
+*.swp
+*.swo
+*.swn
+*.swm
+
+
+# Emacs
+*~
+\#*\#
+
+
+# Linux / Gnome / KDE
+*~
+
+
+# Logs e backups
+#   *.log
+#   *.bak
+#   *.tmp
+#   *.old
+#   *.orig

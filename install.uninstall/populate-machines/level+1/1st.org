@@ -1,4 +1,3 @@
-#!/bin/bash 
 # Title:       | Dependencies 1st
 # Description: | Groups of softwares for each situation (presets): DRYa dependencies are one Preset. There are presets for Linux, Windows, Termux, Live USB OS, configs for softwares, etc.
 # Use:         | `D iu presets` and choose from a list. (all lists should be in this file, listed as text to allow manual install also). Also, after a fresh install of DRYa, the 1st preset is also listed as `D iu dp`
@@ -11,7 +10,6 @@
 Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]]
 
 [[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
-
 
 * Instructions
    # Help
@@ -260,6 +258,7 @@ LSL (Linden Scripting Language) > Second Life
 ** f_create_bootable_windows_USB__CMD_tutorial
 - [ ] Tem script correspondente a todo este texto. Se sim: `D create-windows-bootable-USB-cmd`
 uDev
+
 ** f_exec (11)
    echo "DRYa: file: 1st: Running groups of apps to install"
 
