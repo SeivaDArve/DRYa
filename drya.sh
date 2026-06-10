@@ -3410,6 +3410,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
         #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
 
+        # Extras: Marcar com 1 pinta de corretor branco a tecla 'F2' correspindente a abrir a BIOS
         #L16="16. |           | Install batch files for windows
          L16="16. |           |  Update | View 'once-tasks-list'"
          L15='15. |           |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
@@ -3954,10 +3955,11 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       #     | ç | $c_1 |
       #
 
-         L8='8. |   | DRYa emergency keyboard 2'
-         L7='7. |   | DRYa emergency keyboard 2'
+         L9='9. |   | DRYa emergency keyboard 2'
+         L8='8. |   | DRYa emergency keyboard 1'
 
-         L6='6. |   | Config keyboard layout: RetroPi (tty)'              
+         L7='7. |   | Config keyboard layout: RetroPi (tty)'              
+         L6='6. |   | Config keyboard layout: Garuda Linux (sess atual)'  # Apenas para a sessao atual
          L5='5. |   | Config keyboard layout: Fedora Linux (sess atual)'  # Apenas para a sessao atual
          L4='4. |   | Config keyboard layout: Kali   Linux (sess atual)'
          L3='3. |   | Config keyboard layout: Ubuntu Linux (sess atual)'
@@ -3965,16 +3967,18 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
          L2='2. |   | Verificar teclado atual' 
          L1='1. |   | Cancel + Instructions'
 
+        #Lh=uDev: informar "CTLR - X" abre Emergency kbd
          L0="DRYa: Keyboard: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n\n$L7 \n$L8 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "8. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
-         [[ $v_list =~ "7. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
-         [[ $v_list =~ "6. " ]] && f_kbd_greet && f_set_keyboard_tty_RetroPie
-         [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L4"
+         [[ $v_list =~ "9. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
+         [[ $v_list =~ "8. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+         [[ $v_list =~ "7. " ]] && f_kbd_greet && f_set_keyboard_tty_RetroPie
+         [[ $v_list =~ "6. " ]] && f_kbd_greet && echo "uDev: Mudar o Layout para PT" && echo && echo "Listar todos os kbd layouts:" && echo ' > `localectl list-keymaps | grep pt`'
+         [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L5"
          [[ $v_list =~ "4. " ]] && f_config_kbd_kali
          [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
          [[ $v_list =~ "2. " ]] && f_kbd_greet && localectl status 

@@ -11,6 +11,7 @@
 
 v_talk="DRYa: (pk + $trid_pkgm):"
 
+# uDev: Do not forget to use `yes` command to automate scripts (example `yes | sudo apt update`)
 
 # Notes (Arch) {
 #

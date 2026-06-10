@@ -51,18 +51,26 @@ function f_escape_time_at_terminal_startup {
    read -sn 1 -t 1 v_escape
 
    if [[ -n $v_escape ]]; then 
-      clear
-      echo     "DRYa: escaped main DRYa loader..."
-      echo     " > Press 'Ctrl-C' to stop loading DRYa"
-      echo     " > Press 'ENTER'  to load DRYa normally"
-      read -sp " > " v_escape_code # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
-      echo
+      while true 
+      do
+         clear
+         echo     "DRYa: escaped main DRYa loader..."
+         echo     " > Press 'Ctrl-C'   to stop loading DRYa"
+         echo     " > Press 'l'        to display a table of options"
+         echo     " > Press 'E' or 'e' to load DRYa normally"
+         read -sp " > " v_escape_code # Oportunidade para codigos secretos aqui (carregar DRYa de forma especial)
+         echo
+         echo
 
-      [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
+         [[ $v_escape_code =~ "l"  ]] && f_list_of_escape_codes
+         [[ $v_escape_code =~ "E"  ]] && break
+         [[ $v_escape_code =~ "e"  ]] && break
 
-      echo "DRYa: Options given so far:"
-      echo " > $v_escape_code"
-      read -sn1
+         echo "DRYa: Options given so far:"
+         echo " > $v_escape_code"
+         read -sn1
+
+      done
    fi
 }
 

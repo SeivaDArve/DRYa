@@ -1267,6 +1267,7 @@ function f_DRYa_install_me_at_bashrc {
       L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated dir for repos"
       L4="   __dryaSRC__=\"$__dryaSRC__\"; export __dryaSRC__  # setting one file that wakes all others"
       L5='   source __dryaSRC__'
+      L6='   __dryaCONFIG__=.../.config/h.h/'
 
       echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc

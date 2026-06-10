@@ -38,6 +38,7 @@
 
 __name__=drya-lib-8-getopts-parse-n-validade.sh
 
+v_output=~/.config/h.h/drya/drya-lib-8-getopts/output_file.sh
 
 
 
