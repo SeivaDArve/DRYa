@@ -1193,8 +1193,9 @@ function V {
       elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
          cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
-      elif [ $1 == "subeat" ] || [ $1 == "S" ] || [ $1 == "calendar" ]; then
-         cd ${v_REPOS_CENTER}/Memoo 2>/dev/null && ls -p || f_error_cd
+
+      elif [ $1 == "subeat" ] || [ $1 == "S" ] || [ $1 == "s" ] || [ $1 == "calendar" ]; then
+         cd ${v_REPOS_CENTER}/Subeat 2>/dev/null && ls -p || f_error_cd
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
