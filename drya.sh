@@ -87,6 +87,25 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
+
+
+
+
+
+
+
+# Default variables
+   
+   # DRYa logo: presentation info
+      v_drya_logo_1_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
+      v_drya_logo_2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
+      v_drya_logo_3=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
+
+
+
+
+
+
 function f_instructions_of_usage {
    # Função para exibir como usar o script
 
@@ -3778,8 +3797,8 @@ elif [ $1 == "news" ]; then
 
 elif [ $1 == "todo" ] || [ $1 == "t" ]; then  
    # Lista de tarefas
-   f_talk; echo 'ToDo list belongs to omni-log repo'
-           echo ' > Try: `td`'
+   f_tk 'ToDo list belongs to omni-log repo'
+   echo ' > Try: `td`'
 
 elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ] || [ $1 == "mt-ls" ]; then  # mostra os seu metadados da imagem fornecida
    
@@ -4077,25 +4096,25 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
 
    elif [ $2 == "1" ] ; then 
       # Presenting DRYa with ASCII text
-      ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+      bash $v_drya_logo_1_script || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
 
    elif [ $2 == "2" ] ; then 
-
-      # uDev: Centrar BEM no ecra. Nao apresentar o prompt por alguns segundos com `read -t 5`
+      # Presenting DRYa with ASCII text (with Brain in Bracets)
+   
       clear
-      #${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-      figlet "               DRYa" 
-      cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii
+      figlet "                DRYa"  # uDev: Centrar BEM no ecra. 
+
+      cat $v_drya_logo_2
       echo
 
-      read -t 5
+      read -sn 1 -t 5  # Nao apresentar o prompt por alguns segundos com `read -t 5`
 
    elif [ $2 == "3" ] ; then 
       clear
       figlet DRYa
       f_talk; echo "DRYa: Presentation 3"
               echo
-      cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2
+      cat $v_drya_logo_3
       echo
    else
       f_presentation_info
@@ -4104,11 +4123,11 @@ elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then
 elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo" ]; then 
    # uDev: juntar `D p` com `D P`
 
-   clear
-   figlet DRYa
-   f_talk; echo "DRYa: Presentation 3"
-           echo
-   cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2
+   f_GR
+   f_tk "Presentation 3"
+   echo
+
+   cat $v_drya_logo_3
    echo
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
