@@ -122,7 +122,7 @@ function f_4_verbose {
 }
 
 function f_5 {
-   # Gives working directory where the script is placed (without the name ib the end)
+   # Gives working directory where the script is placed (without the name in the end)
 
    # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
 

@@ -429,7 +429,6 @@ function wsl {
    fi
 }
 
-
 function . {
    # Navigate through the file system stupidly ez
    

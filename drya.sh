@@ -4502,7 +4502,7 @@ elif [ $1 == "zp" ] ; then
 
 #
 #
-#  Fx 'gpg' taken care of by dryaSRC
+#  Argument 'gpg' taken care of by dryaSRC
 #
 #  elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
 #     # Encrypt and Decript personal, private abd sensitive data

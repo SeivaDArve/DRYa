@@ -291,11 +291,11 @@ function f_1_verbose {
 }
 
 function f_5 {
-   # Gives working directory where the script is placed (without the name ib the end)
+   # Gives working directory where the script is placed (without the name in the end)
 
    # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
 
-   v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+    v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
    #v_script_directory="$v_script_directory/"  # Adding sufix /
 
    # For beter verbose (Same line of code as f_6)
@@ -363,6 +363,7 @@ function f_history_log {
    [[ -n $v_hst_20 ]] && echo "$v_hst_20"
                          echo  $v_hst_br
                          echo
+
    read -p "Enter to return"
    echo
 }
@@ -381,7 +382,7 @@ function f_history_log {
 function f_screen_1 {
    # Check Target.sh (if Relative|Absolute paths are taken care of)
    # dee:screen_1
-   clear; read -p "screen 1"
+   clear; read -sn 1 -p "screen 1"
 
    function f_trg {
       # Running a test, to see if the drya-lib-5 is properly configured inside the 1-select-installer wizzard
@@ -434,9 +435,25 @@ function f_screen_1 {
    # Fill the history file here...
 }
 
+
+
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# -- Below: Main Menu --
+# ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 function f_menu_principal {
    # Menu principal, baseado em `read`
-   clear; read -p "screen 2"
+   clear; read -sn 1 -p "screen 2"
    #  dee:screen_2
 
    while true
@@ -453,23 +470,23 @@ function f_menu_principal {
       echo "[2/x] Menu Principal"
       echo $v____________
       echo " |   |"
-      echo " | 1 | >>> Install DRYa"
+      echo " | 1 | >>> Install DRYa"  # Vai para screen_3
       echo " |   |"
-      echo " | 2 | >>> Uninstall DRYa"
+      echo " | 2 | >>> Uninstall DRYa"  # Vai para screen_3_1
       echo " |   |"
-      echo ' | c | >>> `cat` installer: For Live OS like TAILS'
+      echo ' | c | >>> `cat` installer: For Live OS like TAILS'  # Vai para screen_3_2
       echo " |   |"
-      echo " | 3 | >>> Options"
+      echo " | 3 | >>> Options"  # Vai para screen_3_3
       echo " |   |"
-      echo " | 4 | >>> Instructions 1 - (local readme)"
+      echo " | 4 | >>> Instructions 1 - (local readme)"  # Vai para screen_3_4
       echo " |   |"
-      echo " | 5 | >>> Instructions 2 - (internal instructions)"
+      echo " | 5 | >>> Instructions 2 - (internal instructions)"  
       echo " |   |"
       echo " | 6 | >>> Instructions 3 - (main DRYa README.org)"
       echo " |   |"
-      echo " | 7 | >>> History [of past Choises]"
+      echo " | 7 | >>> History [of past Choises]"  # Vai para screen_3_5
       echo " |   |"
-      echo " | 8 | >>> Fix outdated installation"  
+      echo " | 8 | >>> Fix outdated installation"   # Vai para screen_3_6 
       echo " |   |"
       echo " | q | >>> Exit"
       echo $v____________
@@ -520,7 +537,6 @@ function f_menu_principal {
          less "$v_5/$v_readme"
          break
 
-
       elif [[ $v_ans == "7" ]]; then
          f_history_log  # if already includes f_greet
 
@@ -557,7 +573,9 @@ function f_menu_principal {
 function f_screen_3 {
    # Avoid bugs on ~/.bashrc
    #  dee:screen_3
-   clear; read -p "screen 3"
+   clear; read -sn 1 -p "screen 3"
+
+   # uDev: depois de testado e funcionar corretamente, este screen so aparece caso haja erros. se o .bashrc estiver ok, nao vai aparecer
 
    # If file ~/.bashrc does not exist, DRYa cannot be installed
       touch   $v_bash
@@ -597,7 +615,7 @@ function f_screen_3 {
 function f_screen_4 {
    # First question of the installation process
    #     dee:screen_4
-   clear; read -p "screen 4"
+   clear; read -sn 1 -p "screen 4"
 
    while true
    do
@@ -614,7 +632,7 @@ function f_screen_4 {
       echo    " |  > \$__REPOS_CENTER__/"
       echo "$v____________"
       echo    " |   |"
-      echo    " | 1 | >>> ~/Repositories/"
+      echo    " | 1 | >>> ~/Repositories/"  # Vai para screen_5
       echo    " |   |     > $v_rep"
       echo    " |   |"
       echo    " | 2 | >>> /mnt/c/\$USER/Repositories/"
@@ -635,9 +653,10 @@ function f_screen_4 {
       echo    " |   |"
       echo    " | h | >>> Help / Explanation"
       echo    " |   |"
-      echo    " | b | >>> Back to 'Main Menu'"
+      echo    " | b | >>> Back to 'Main Menu'"  # Vai para screen_2
       echo    " |   |"
       echo    " | q | >>> Exit (Abort everything)"
+      echo    " |   |"
       echo "$v____________"
       echo    " [ Default = ~/Repositories ] "
       echo "$v____________"
@@ -710,11 +729,9 @@ function f_screen_4 {
          read -sn1
 
 
-      elif [[ $v_ans == "b" ]]; then
+      elif [[ $v_ans == "b" ]] || [[ $v_ans == "B" ]] ; then
          # Back to menu
 
-         f_greet
-         f_title
          f_menu_principal
          break
 
@@ -737,7 +754,7 @@ function f_screen_4 {
 function f_2nd_select {
    # Second question of the instalation process
    #     dee:screen_5
-   clear; read -p "screen 5"
+   clear; read -sn 1 -p "screen 5"
 
    while true
    do
@@ -756,11 +773,12 @@ function f_2nd_select {
               echo " |   |"
               echo " | 1 | >>> Yes, continue "
               echo " |   |"
-              echo " | 2 | >>> No, abort"
-              echo " |   |"
-              echo " | 3 | >>> Help"
+              echo " | 3 | >>> Help|info|instructions"
               echo " |   |"
               echo " | 4 | >>> Back, to [1/x]"
+              echo " |   |"
+              echo " | 2 | >>> No, abort"
+              echo " |   |"
               echo "$v_line"
 
       read -rp " >  " option
@@ -1264,16 +1282,19 @@ function f_DRYa_install_me_at_bashrc {
 
       L1=""
       L2="# Sourcing Seiva's main repo: DRYa"
-      L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated dir for repos"
+      L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated and directory for repos"
       L4="   __dryaSRC__=\"$__dryaSRC__\"; export __dryaSRC__  # setting one file that wakes all others"
-      L5='   source __dryaSRC__'
-      L6='   __dryaCONFIG__=.../.config/h.h/'
+      L5='   __dryaCONFIG__=~/.config/h.h/; export __dryaCONFIG__  # Loading EXTRA alias and extra variables' 
+      L6='   source __dryaSRC__'
+      L7=""
 
       echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc
       echo "$L3 $v_dee" >> ~/.bashrc
       echo "$L4 $v_dee" >> ~/.bashrc
       echo "$L5 $v_dee" >> ~/.bashrc
+      echo "$L6 $v_dee" >> ~/.bashrc
+      echo "$L7"        >> ~/.bashrc
 
    # Process Finished
 	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
@@ -1283,14 +1304,13 @@ function f_DRYa_install_me_at_bashrc {
 	  #echo " > Type: unset-DRYa-installer"
 }
 
-function f_remove_DRYA_desktop_icon {
-   echo "# uDev: removing drya.desktop is not ready yet"
-}
-
 function f_install_DRYA_desktop_icon {
    echo "# uDev: installing drya.desktop is not ready yet"
 }
 
+function f_remove_DRYA_desktop_icon {
+   echo "# uDev: removing drya.desktop is not ready yet"
+}
 
 function f_source_bashrc {
 
@@ -1359,6 +1379,28 @@ function f_decide_to_run {
 
 	  fi
 
+}
+
+function f_testar_linha_120_se_se_encontra_em_branco {
+
+   if [ -z "$(sed -n '120p' ficheiro.txt)" ]; then
+      # Isto considera também uma linha que contenha apenas espaços ou tabulações como não vazia.
+      echo "Linha 120 vazia"
+   fi
+
+
+   if [[ $(sed -n '120p' ficheiro.txt) =~ ^[[:space:]]*$ ]]; then
+      # considerar linhas com apenas espaços/tabulações como vazias:
+
+      echo "vazia ou só espaços"
+
+      # Faz match com: 
+      #  ""
+      #  " "
+      #  "    "
+      #  "\t"
+      #  " \t  "
+   fi
 }
 
 function f_initialization {

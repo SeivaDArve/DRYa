@@ -34,8 +34,10 @@ __name__="traitsID.sh"  # Change to the name of the script. Example: DRYa.sh, ez
 # uDev: No Pi, para saber o nome da versao de OS atual: `cat /etc/os-release`
 # uDev: `cat /proc/cpuinfo` reveals info about raspberry pi
 
-#udev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
-#udev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
+# uDev: Existem softwares que fornecem bem detalhado em texto as caracteristicas do hardware: 'CPU-Z' pode ser instalado no windows e pode fornecer tudo em texto
+
+# uDev: v_hostname=$(hostname); echo "Hostname is: $v_hostname"
+# uDev: v_whoami=$(whoami); echo "whoami is: $v_whoami"
 
 # Sourcing file with colors 
    v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
