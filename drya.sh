@@ -3430,6 +3430,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
         #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
 
         # Extras: Marcar com 1 pinta de corretor branco a tecla 'F2' correspindente a abrir a BIOS
+        #L16="16. |           | Sugest ninite.com to install Windows Software in bunches
         #L16="16. |           | Install batch files for windows
          L16="16. |           |  Update | View 'once-tasks-list'"
          L15='15. |           |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
