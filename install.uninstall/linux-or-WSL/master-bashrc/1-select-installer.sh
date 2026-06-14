@@ -60,6 +60,10 @@ function f_internal_variables {
       echo "     [Any key to reload Menu]"
       read -sn1
    }
+
+   # Set one hard coded variable to show on all menus
+      v_ttl_screens=8
+
 }
 
 function f_delete_history {
@@ -422,7 +426,8 @@ function f_screen_1__test_installer_habilities {
 
    # After proper update of drya-lib-5, a test will be performed to it. (This gives freedom to the user to place the terminal 'prompt' wherever when installing DRYa
       f_greet
-      f_talk;  echo                "[1/x] Testing installer itself"
+      f_talk;  echo                "[1/$v_ttl_screens] Testing installer itself"
+      
                echo $v____________  
                echo                " |   | "
                echo                " |   | Can it can detect relative and absolute paths?"
@@ -466,15 +471,15 @@ function f_screen_1__test_installer_habilities {
 
 function f_screen_2__main_menu {
    # Menu principal, baseado em `read`
+   # dee:screen_2
    clear; read -sn 1 -p "screen 2"
-   #  dee:screen_2
 
    while true
    do
 
       f_GR
       f_talk
-      echo "[2/x] Menu Principal"
+      echo "[2/$v_ttl_screens] Menu Principal"
       echo $v____________
       echo " |   |"
       echo " | 1 | >>> Install DRYa"  # Vai para screen_3
@@ -483,18 +488,17 @@ function f_screen_2__main_menu {
       echo " |   |"
       echo " | 3 | >>> Options"  # Vai para screen_3_3
       echo " |   |"
-      echo ' | 4 | >>> `cat` installer: For Live OS like TAILS'  # Vai para screen_3_2
-      echo " |   |"
       echo " | h | >>> Help + Instructions + Checklist " 
       echo " |   |"
       echo " | q | >>> Exit"
+      echo " |   |"
       echo $v____________
       read -p "   < " v_ans
 
 
       if [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
          # option 1
-         f_screen_8__instalation_menu 
+         f_screen_3__instalation_menu 
 
       elif [[ $v_ans == "2" ]] || [[ $v_ans == "Uninstall" ]]; then
          # option 2
@@ -504,9 +508,6 @@ function f_screen_2__main_menu {
       elif [[ $v_ans == "3" ]]; then
          # option 3
          f_options_menu
-
-      elif [[ $v_ans == "4" ]]; then
-         read -sn 1 -p "uDev: Print info on how to install manually"
 
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
          # option help
@@ -529,17 +530,16 @@ function f_screen_2__main_menu {
 
 
 
-function f_screen_8__instalation_menu {
-   # Menu principal, baseado em `read`
-   clear; read -sn 1 -p "screen 8"
-   #  dee:screen_8
+function f_screen_3__instalation_menu {
+   # Menu principal, baseado em `while` + `read` + `if` 
+   # dee:screen_3
+   clear; read -sn 1 -p "screen 3"
 
    while true
    do
 
       f_GR
-      f_talk
-      echo "[8/x] Menu Principal"
+      f_talk; echo "[3/$v_ttl_screens] Menu Principal"
       echo $v____________
       echo " |   |"
       echo " | 1 | >>> Install DRYa normally (from scratch)"  
@@ -548,18 +548,21 @@ function f_screen_8__instalation_menu {
       echo " |   |"
       echo ' | 3 | >>> Install using QR Code'
       echo " |   |"
+      echo ' | 4 | >>> Install GUI features' # When DRYa is not sourced at .bashrc unless it it called
+      echo " |   |"
       echo " | h | >>> Help + Instructions + Checklist " 
       echo " |   |"
       echo " | b | >>> Back"
       echo " |   |"
       echo " | q | >>> Exit"
+      echo " |   |"
       echo $v____________
       read -p "   < " v_ans
 
 
       if [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
          # option 1
-         f_screen_3__correcting_empty_bashrc 
+         f_screen_4__correcting_empty_bashrc 
          break
 
       elif [[ $v_ans == "2" ]] || [[ $v_ans == "cat" ]]; then
@@ -568,6 +571,9 @@ function f_screen_8__instalation_menu {
       elif [[ $v_ans == "3" ]] || [[ $v_ans == "qr" ]]; then
          read -sn 1 -p "uDev: On smartphones or devides with camera, it is possible to give them a QR code to clone DRYa Correctly"
          
+      elif [[ $v_ans == "4" ]] || [[ $v_ans == "gui" ]]; then
+         f_install_DRYA_desktop_icon 
+
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
          # option help
          f_help
@@ -593,10 +599,10 @@ function f_screen_8__instalation_menu {
 
 
 
-function f_screen_3__correcting_empty_bashrc {
+function f_screen_4__correcting_empty_bashrc {
    # Avoid bugs on ~/.bashrc by correcting filling it with something. To enable regex
-   #  dee:screen_3
-   clear; read -sn 1 -p "screen 3"
+   # dee:screen_4
+   clear; read -sn 1 -p "screen 4"
 
    # uDev: depois de testado e funcionar corretamente, este screen so aparece caso haja erros. se o .bashrc estiver ok, nao vai aparecer
 
@@ -618,7 +624,7 @@ function f_screen_3__correcting_empty_bashrc {
       [[ $v_char_count -gt 1 ]] && v_char="- [X] Fixed, all ok"
 
    f_greet
-   f_talk; echo      "[3/x] testing file ~/.bashrc"
+   f_talk; echo      "[4/$v_ttl_screens] testing file ~/.bashrc"
            echo      "-------------------------------"
            echo      " |   | "
            echo      " |   | Ensuring existence:"
@@ -633,14 +639,14 @@ function f_screen_3__correcting_empty_bashrc {
            echo       $v____________
       read -sn1 -p   "   > "
 
-   f_screen_4__choose_REPOS_CENTER 
+   f_screen_5__choose_REPOS_CENTER 
 }
 
 
-function f_screen_4__choose_REPOS_CENTER {
+function f_screen_5__choose_REPOS_CENTER {
    # Asking prefered location to place $__REPOS_CENTER__ which is a directory where DRYa will clone all repositories by default
-   #     dee:screen_4
-   clear; read -sn 1 -p "screen 4"
+   # dee:screen_5
+   clear; read -sn 1 -p "screen 5"
 
    while true
    do
@@ -650,13 +656,13 @@ function f_screen_4__choose_REPOS_CENTER {
 
       f_GR
       f_talk
-      echo    "[4/x] Choose centralized Directory"
-      echo "$v____________"
+      echo    "[5/$v_ttl_screens] Choose centralized Directory"
+      echo    "$v____________"
       echo    " | Choose a path to centralize all repositories"
       echo    " |  > \$__REPOS_CENTER__/"
-      echo "$v____________"
+      echo    "$v____________"
       echo    " |   |"
-      echo    " | 1 | >>> ~/Repositories/"  # Vai para screen_5
+      echo    " | 1 | >>> ~/Repositories/"  # Vai para screen_6
       echo    " |   |     > $v_rep"
       echo    " |   |"
       echo    " | 2 | >>> /mnt/c/\$USER/Repositories/"
@@ -681,9 +687,9 @@ function f_screen_4__choose_REPOS_CENTER {
       echo    " |   |"
       echo    " | q | >>> Exit (Abort everything)"
       echo    " |   |"
-      echo "$v____________"
-      echo    " [ Default = ~/Repositories ] "
-      echo "$v____________"
+      echo    "$v____________"
+      echo    " [ Default = ~/Repositories ] "  # uDev: every time this loop is loaded, change this variable to the path choosen
+      echo    "$v____________"
       read -p "   > " v_ans
 
       # Default option
@@ -693,29 +699,25 @@ function f_screen_4__choose_REPOS_CENTER {
       if [[ $v_ans == 1 ]]; then
          # Option 1
          export __REPOS_CENTER__="$HOME/Repositories"
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
-         break
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 2 ]]; then
          # Option 2
          export __REPOS_CENTER__="/mnt/c/$USER/Repositories"
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
-         break
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 3 ]]; then
          # Option 3
          export __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
-         break
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 4 ]]; then
          # Option 4
          export __REPOS_CENTER__="$PWD"
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
-         break
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == 5 ]]; then
          # Option 5: Insert custom path
@@ -724,8 +726,7 @@ function f_screen_4__choose_REPOS_CENTER {
         
          echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
          [[ -n $v_variable_custom_path ]] && export __REPOS_CENTER__="$v_variable_custom_path"
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
-         break
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
@@ -760,7 +761,6 @@ function f_screen_4__choose_REPOS_CENTER {
          # Back to menu
 
          f_screen_2__main_menu
-         break
 
       elif [[ $v_ans == "q" ]] || [[ $v_ans == "Q" ]]; then
          # Option: exit
@@ -778,16 +778,16 @@ function f_screen_4__choose_REPOS_CENTER {
    done
 }
 
-function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
+function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
    # If at __REPOS_CENTER__ there is DRYa already cloned, this step is unecessary
-   #     dee:screen_5
-   clear; read -sn 1 -p "screen 5"
+   # dee:screen_6
+   clear; read -sn 1 -p "screen 6"
 
    while true
    do
       
       f_GR
-      f_talk; echo "[5/x] Clone DRYa properly (or move it)"
+      f_talk; echo "[6/$v_ttl_screens] Clone DRYa properly (or move it)"
               echo $v____________
               echo " uDev: Test her is \$DRYa exist at \$__REPOS_CENTER__"
               echo $v____________
@@ -804,12 +804,7 @@ function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
           read -rp "   >  " v_ans 
 
       if [[ "$v_ans" == "1" || "$v_ans" == "yes" ]]; then
-
-         f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard
-
-         # Allow script to flow
-         f_break_select_loops
-         eval $_break
+         f_screen_7__test_if_prompt_is_side_by_side_with_this_wizzard
 
       elif [[ "$v_ans" == "q" || "$v_ans" == "exit" ]]; then
 
@@ -846,38 +841,30 @@ function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
 
 
 
-function f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard {
+function f_screen_7__test_if_prompt_is_side_by_side_with_this_wizzard {
    # If screen_1 is working properly, this fx is unnecessary
-   #     dee:screen_6
-   clear; read -sn 1 -p "screen 6"
+   # dee:screen_7
+   clear; read -sn 1 -p "screen 7"
 
    while true
    do
 
-      f_greet
+      f_GR
       f_talk
-      echo    "[6/x] Running this script only side-by-side?" 
+      echo    "[7/$v_ttl_screens] Running this script only side-by-side?" 
       echo    "$v____________"
       echo    " |   |"
       echo    " | 1 | >>> (yes) to continue"
       echo    " | 2 | >>> (no) to abort"
       echo    " | 3 | >>> (help) to explain"
       echo    " | 4 | >>> (back)"
+      echo    " |   |"
       echo    "$v____________"
 
       read -p "   < " v_ans
 
       if [[ $v_ans == "1" ]]; then
-
-         echo " Third question answered YES"
-
-         f_screen_7__resume_before_instalation
-
-         # Last, allow to script to flow by breaking all 'select loops'
-         f_break_select_loops
-         eval $_break
-
-         break
+         f_screen_8__resume_before_instalation
 
       elif [[ $v_ans == "2" ]]; then
 
@@ -905,7 +892,7 @@ function f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard {
 
       elif [[ $v_ans == "4" ]]; then
 
-         f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER
          break
 
       else
@@ -918,63 +905,42 @@ function f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard {
    done
 }
 
-function f_screen_7__resume_before_instalation {
+function f_screen_8__resume_before_instalation {
    # Resume of all the choices before, before actually running the instalation
-   #     dee:screen_7
-   clear; read -sn 1 -p "screen 7"
+   # dee:screen_8
+   clear; read -sn 1 -p "screen 8"
 
    while true
    do
 
       f_GR
-      f_talk
-      echo    "[7/x] Resume|History > Eecute|Install"
-      echo    "$v____________"
-      echo    " |   |"
-      echo    " | 0 | >>> Checklist"
-      echo    " |   |"
-      echo    " | 1 | >>> yes  (Start Instalation Sequence)"
-      echo    " |   |"
-      echo    " | 2 | >>> help and Instructions"
-      echo    " |   |"
-      echo    " | b | >>> back"
-      echo    " |   |"
-      echo    " | q | >>> no   (abort)"
-      echo    "$v____________"
-      read -p "   < " v_ans
+      f_talk; echo    "[8/$v_ttl_screens] Resume|History > Eecute|Install"
+              echo    "$v____________"
+              echo    " |   |"
+              echo    " | 0 | >>> Checklist"
+              echo    " |   |"
+              echo    " | 1 | >>> yes  (Start Instalation Sequence)"
+              echo    " |   |"
+              echo    " | 2 | >>> help and Instructions"
+              echo    " |   |"
+              echo    " | b | >>> back"
+              echo    " |   |"
+              echo    " | q | >>> no   (abort)"
+              echo    "$v____________"
+              read -p "   < " v_ans
 
       if [[ $v_ans == "0" ]]; then
          f_history_log 
 
       elif [[ $v_ans == "1" ]]; then
-
-         echo "   > All questions answered... Continuing the script"
-         read -sn1
-
-         # After the loop breaks, it should carry this variable
-         # to indicate the next function
-         # That the process of reaching this line of code
-         # was sucessfull or not
-         # If the user used the script until this line,
-         # it means that the user wants to continue
-         # the installation
-         # This variable enables the remaining
-         # of the instalation
-
-         # export v_unload
-         # Aparently scripts cannot export variables while being sourced
-
-         f_run_every_used_function 
-
+         #f_run_every_used_function 
          break
 
       elif [[ $v_ans == "2" ]]; then
          f_help
 
       elif [[ $v_ans == "b" ]]; then
-
-         f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard
-         break
+         return
 
       elif [[ $v_ans == "q" ]]; then
 
@@ -991,6 +957,12 @@ function f_screen_7__resume_before_instalation {
    done
 }
 
+
+function f_congratulations_finished {
+   f_GR
+   f_talk; echo "Finished"
+   read -sn 1
+}
 
 
 
@@ -1452,6 +1424,7 @@ function f_DRYa_install_me_at_bashrc {
 }
 
 function f_install_DRYA_desktop_icon {
+   # uDev: This will be part of GUI features
    echo "# uDev: installing drya.desktop is not ready yet"
 }
 
@@ -1502,7 +1475,6 @@ function f_run_every_used_function {
 			f_DRYa_install_me_at_bashrc
 			#f_unset_DRYa_installer
 			#f_source_bashrc
-#	fi
 }
 
 
@@ -1553,6 +1525,6 @@ function f_exec {
    f_initialization  
    f_screen_1__test_installer_habilities  # Step (1/x)
    f_screen_2__main_menu                  # Step (from 2 to x)
-   #f_decide_to_run   # The previous function f_initial_statement brings a variable that allows the next function to decide wether to run the remaining of the code or not
+   f_congratulations_finished
 }
 f_exec
