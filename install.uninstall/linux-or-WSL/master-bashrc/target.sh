@@ -5,4 +5,4 @@
 
 # Giving info this script was found and ran perfectly:
    echo " |   | - [X] Test 1: Success!"
-   v_double_check="code-34y6"  # If this file is `sourced` then this var will be available there
+   v_double_check="code_34y6"  # If this file is `sourced` then this var will be available there

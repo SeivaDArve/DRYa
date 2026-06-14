@@ -56,7 +56,6 @@ function f_internal_variables {
 
    function f_invalid_opt {
       # Text when Invalid options are given
-      echo
       echo "   > Invalid option: $v_ans"
       echo "     [Any key to reload Menu]"
       read -sn1
@@ -342,14 +341,15 @@ function f_history_log {
 
 
    v_hst_br="|" 
-   v_hst_00="| History: [Clean] (it will grow here)"
+   v_hst_00="| History:"
    v_hst_br="|" 
 
 
                          echo  $v_hst_br
-   [[ -n $v_hst_00 ]] && echo "$v_hst_00"
-   [[ -n $v_hst_01 ]] && echo "$v_hst_01"
-   [[ -n $v_hst_02 ]] && echo "$v_hst_02"
+   [[ -n $v_hst_00 ]] && echo "$v_hst_00"  # Title 
+                         echo  $v_hst_br
+   [[ -n $v_hst_01 ]] && echo "$v_hst_01"  # Tells about 'target' working or not
+   [[ -n $v_hst_02 ]] && echo "$v_hst_02"  # Tell is .bashrc could be created
    [[ -n $v_hst_03 ]] && echo "$v_hst_03"
    [[ -n $v_hst_04 ]] && echo "$v_hst_04"
    [[ -n $v_hst_05 ]] && echo "$v_hst_05"
@@ -399,13 +399,13 @@ function f_screen_1__test_installer_habilities {
    function f_ckY {
       # Will this function work properlly if $v_target is `sourced` instead of `bashed`?
       # If this var does exist, $v_target was sourced properly
-      [[ $v_double_check == "code-34y6" ]] && v_chk=" |   | - [X] Test 2: Success!" 
+      [[ $v_double_check == "code_34y6" ]] && v_chk=" |   | - [X] Test 2: Success!" 
    }
 
    function f_ckN {
       # Will this function work properlly if $v_target is `sourced` instead of `bashed`?
       # If this var does not exist, $v_target was not sourced properly
-      [[ $v_double_check != "code-34y6" ]] && v_chk=" |   | - [ ] Test 2: Fail!"    
+      [[ $v_double_check != "code_34y6" ]] && v_chk=" |   | - [ ] Test 2: Fail!"    
    }
 
    f_create_tmp_history_file  # Creates a file $v_historyF
@@ -440,6 +440,12 @@ function f_screen_1__test_installer_habilities {
       read -sn1 -p                 "   > "
 
    # Fill the history file here...
+      # "$v_hst_01"  # Tells about 'target' working or not
+      # "$v_hst_02"  # Tell is .bashrc could be created
+
+      [[ $v_double_check == "code_34y6" ]] && v_hst_01="| Wizzard tested 'target' file: success!"
+      [[   -f $v_historyF ]] && v_hst_02="| Wizzard tested '.bashrc' could be created: success!"
+
 }
 
 
@@ -466,13 +472,7 @@ function f_screen_2__main_menu {
    while true
    do
 
-
-      #  echo "|"
-      #  echo "| History: [1/x] Wizard test: Passed!"
-      #  echo "|"
-      #  echo
-      
-      f_greet
+      f_GR
       f_talk
       echo "[2/x] Menu Principal"
       echo $v____________
@@ -485,9 +485,7 @@ function f_screen_2__main_menu {
       echo " |   |"
       echo ' | 4 | >>> `cat` installer: For Live OS like TAILS'  # Vai para screen_3_2
       echo " |   |"
-      echo " | 5 | >>> Help|Instructions" 
-      echo " |   |"
-      echo " | 7 | >>> History|Checklist of past Choises"  # Vai para screen_3_5
+      echo " | h | >>> Help + Instructions + Checklist " 
       echo " |   |"
       echo " | q | >>> Exit"
       echo $v____________
@@ -496,8 +494,7 @@ function f_screen_2__main_menu {
 
       if [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
          # option 1
-         f_screen_3__correcting_empty_bashrc 
-         break
+         f_screen_8__instalation_menu 
 
       elif [[ $v_ans == "2" ]] || [[ $v_ans == "Uninstall" ]]; then
          # option 2
@@ -511,13 +508,9 @@ function f_screen_2__main_menu {
       elif [[ $v_ans == "4" ]]; then
          read -sn 1 -p "uDev: Print info on how to install manually"
 
-      elif [[ $v_ans == "5" ]]; then
-         # option 5
+      elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
+         # option help
          f_help
-
-
-      elif [[ $v_ans == "7" ]]; then
-         f_history_log  # if already includes f_greet
 
       elif [[ $v_ans == "q" ]] || [[ $v_ans == "Q" ]]; then
          # Option: exit
@@ -526,8 +519,7 @@ function f_screen_2__main_menu {
          exit 0
 
       else
-         # Invalid option
-         f_invalid_opt 
+         f_invalid_opt  # Invalid option given
       fi
 
    done
@@ -537,6 +529,66 @@ function f_screen_2__main_menu {
 
 
 
+function f_screen_8__instalation_menu {
+   # Menu principal, baseado em `read`
+   clear; read -sn 1 -p "screen 8"
+   #  dee:screen_8
+
+   while true
+   do
+
+      f_GR
+      f_talk
+      echo "[8/x] Menu Principal"
+      echo $v____________
+      echo " |   |"
+      echo " | 1 | >>> Install DRYa normally (from scratch)"  
+      echo " |   |"
+      echo ' | 2 | >>> Install using `cat` (For Live OS like TAILS)' 
+      echo " |   |"
+      echo ' | 3 | >>> Install using QR Code'
+      echo " |   |"
+      echo " | h | >>> Help + Instructions + Checklist " 
+      echo " |   |"
+      echo " | b | >>> Back"
+      echo " |   |"
+      echo " | q | >>> Exit"
+      echo $v____________
+      read -p "   < " v_ans
+
+
+      if [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
+         # option 1
+         f_screen_3__correcting_empty_bashrc 
+         break
+
+      elif [[ $v_ans == "2" ]] || [[ $v_ans == "cat" ]]; then
+         read -sn 1 -p "uDev: Print info on how to install manually"
+
+      elif [[ $v_ans == "3" ]] || [[ $v_ans == "qr" ]]; then
+         read -sn 1 -p "uDev: On smartphones or devides with camera, it is possible to give them a QR code to clone DRYa Correctly"
+         
+      elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
+         # option help
+         f_help
+
+      elif [[ $v_ans == "b" ]] || [[ $v_ans == "back" ]]; then
+         return
+
+      elif [[ $v_ans == "q" ]] || [[ $v_ans == "Q" ]]; then
+         # Option: exit
+         echo "   > exit"
+         echo
+         exit 0
+
+      else
+         f_invalid_opt  # Invalid option given
+      fi
+
+   done
+   
+   # Fill the history file here...
+}
 
 
 
@@ -676,8 +728,8 @@ function f_screen_4__choose_REPOS_CENTER {
          break
 
 
-      elif [[ $v_ans == "h" ]]; then
-         # Help
+      elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
+         # option help
 
          f_greet
          echo " Explanation of this Menu"
@@ -734,23 +786,24 @@ function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
    while true
    do
       
-      # uDev: Detect if DRYa is right now cloned into __REPOS_CENTER__
-
-      f_talk; echo "[5/x] Move DRYa repository into that place (or git clone it)"
+      f_GR
+      f_talk; echo "[5/x] Clone DRYa properly (or move it)"
+              echo $v____________
+              echo " uDev: Test her is \$DRYa exist at \$__REPOS_CENTER__"
               echo $v____________
               echo " |   |"
               echo " | 1 | >>> Yes, continue "
               echo " |   |"
-              echo " | 3 | >>> Help|info|instructions"
+              echo " | h | >>> Help|info|instructions"
               echo " |   |"
-              echo " | 4 | >>> Back, to [1/x]"
+              echo " | b | >>> Back"
               echo " |   |"
-              echo " | 2 | >>> No, abort"
+              echo " | q | >>> No, abort"
               echo " |   |"
               echo $v____________
-          read -rp " >  " option
+          read -rp "   >  " v_ans 
 
-      if [[ "$option" == "1" || "$option" == "yes" ]]; then
+      if [[ "$v_ans" == "1" || "$v_ans" == "yes" ]]; then
 
          f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard
 
@@ -758,12 +811,12 @@ function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
          f_break_select_loops
          eval $_break
 
-      elif [[ "$option" == "2" || "$option" == "no" ]]; then
+      elif [[ "$v_ans" == "q" || "$v_ans" == "exit" ]]; then
 
          echo "Second question answered NO"
          exit 1
 
-      elif [[ "$option" == "3" || "$option" == "help" ]]; then
+      elif [[ "$v_ans" == "h" || "$v_ans" == "help" ]]; then
 
          f_greet
          echo "Explanation for the Second Question"
@@ -778,10 +831,9 @@ function f_screen_5__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
 
          read -rp "Press ENTER to continue..."
 
-      elif [[ "$option" == "4" || "$option" == "back" ]]; then
+      elif [[ "$v_ans" == "b" || "$v_ans" == "back" ]]; then
          # Move from screen 4 to screen 5 permanently
-         f_screen_4__choose_REPOS_CENTER 
-         break
+         return
 
       else
          # Invalid option
@@ -874,23 +926,29 @@ function f_screen_7__resume_before_instalation {
    while true
    do
 
-
-
-      f_greet
+      f_GR
       f_talk
       echo    "[7/x] Resume|History > Eecute|Install"
       echo    "$v____________"
       echo    " |   |"
-      echo    " | 1 | >>> (yes) to continue"
-      echo    " | 2 | >>> (no) to abort"
-      echo    " | 3 | >>> (help) to explain"
-      echo    " | 4 | >>> (back)"
+      echo    " | 0 | >>> Checklist"
+      echo    " |   |"
+      echo    " | 1 | >>> yes  (Start Instalation Sequence)"
+      echo    " |   |"
+      echo    " | 2 | >>> help and Instructions"
+      echo    " |   |"
+      echo    " | b | >>> back"
+      echo    " |   |"
+      echo    " | q | >>> no   (abort)"
       echo    "$v____________"
       read -p "   < " v_ans
 
-      if [[ $v_ans == "1" ]]; then
+      if [[ $v_ans == "0" ]]; then
+         f_history_log 
 
-         echo " All questions answered... Continuing the script"
+      elif [[ $v_ans == "1" ]]; then
+
+         echo "   > All questions answered... Continuing the script"
          read -sn1
 
          # After the loop breaks, it should carry this variable
@@ -903,36 +961,25 @@ function f_screen_7__resume_before_instalation {
          # This variable enables the remaining
          # of the instalation
 
-         load_remaining_functions="yes"
-
          # export v_unload
          # Aparently scripts cannot export variables while being sourced
 
-         # Last, allow to script to flow by breaking all loops
-         v_break_select_loops="yes"
-         f_break_select_loops
-         eval $_break
+         f_run_every_used_function 
 
          break
 
       elif [[ $v_ans == "2" ]]; then
+         f_help
 
-         echo " Not ready to see magic... I see..."
-         exit 1
-
-      elif [[ $v_ans == "3" ]]; then
-
-         f_greet
-
-         echo "Explanation for the Forth Question"
-
-         # Explanation
-         echo " Magic is the instalation of such usefull software"
-
-      elif [[ $v_ans == "4" ]]; then
+      elif [[ $v_ans == "b" ]]; then
 
          f_screen_6__test_if_prompt_is_side_by_side_with_this_wizzard
          break
+
+      elif [[ $v_ans == "q" ]]; then
+
+         echo " Not ready to see magic... I see..."
+         exit 1
 
       else
 
@@ -949,13 +996,14 @@ function f_screen_7__resume_before_instalation {
 
 function f_options_menu {
    f_greet
-   f_talk; echo
-           echo "Options not ready yet:"
-           echo " |   |" 
-           echo " | 1 | >>> Fix outdated installation"   
-           echo ' |   |     uDev: Replace variables or other imcompatible stuff like:'
-           echo ' |   |      > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
-           echo " |   |" 
+   f_talk; echo "Options (uDev)"
+      echo $v____________
+      echo " |   |" 
+      echo " | 1 | >>> Fix outdated installations"   
+      echo ' |   |     Replace outdated variables:'
+      echo ' |   |      > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
+      echo " |   |" 
+      echo $v____________
            read -sn1
 
 }
@@ -977,26 +1025,34 @@ function f_help {
    
    while true
    do
-      f_greet
+      f_GR
       f_talk
-      echo "Help|Instructions"
-      echo $v____________
-      echo " |   |"
-      echo " | 1 | >>> Instructions 1 - (local readme)"  # Vai para screen_3_4
-      echo " |   |"
-      echo " | 2 | >>> Instructions 2 - (internal instructions)"  
-      echo " |   |"
-      echo " | 3 | >>> Instructions 3 - (main DRYa README.org)"
-      echo " |   |"
-      echo " | b | >>> Back "
-      echo " |   |"
-      echo " | q | >>> Exit"
-      echo " |   |"
-      echo $v____________
+      echo    "Help|Instructions"
+      echo    $v____________
+      echo    " |   |"
+      echo    " | 0 | >>> Checklist (History log) of current instalation process"
+      echo    " |   |"
+      echo    " | 1 | >>> Instructions 1 - (local readme)"  
+      echo    " |   |"
+      echo    " | 2 | >>> Instructions 2 - (internal instructions)"  
+      echo    " |   |"
+      echo    " | 3 | >>> Instructions 3 - (main DRYa README.org)"
+      echo    " |   |"
+      echo    " | r | >>> Report Bugs"
+      echo    " |   |"
+      echo    " | b | >>> Back "
+      echo    " |   |"
+      echo    " | q | >>> Exit"
+      echo    " |   |"
+      echo    $v____________
       read -p "   < " v_ans
 
 
-      if [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
+      if [[ $v_ans == "0" ]] || [[ $v_ans == "checklist" ]]; then
+         f_history_log  
+
+
+      elif [[ $v_ans == "1" ]] || [[ $v_ans == "install" ]]; then
          # option 1
          f_explain
 
@@ -1007,14 +1063,17 @@ function f_help {
          echo " > Will be presented with \`less\` text editor"
          echo "   (It uses 'Q' letter to exit the instructions doc)"
          read -sn1
-
          less $v_5/README.txt
 
       elif [[ $v_ans == "3" ]]; then
          # option 3
-         v_allow="yes"
          less "$v_5/$v_readme"
 
+      elif [[ $v_ans == "r" ]] || [[ $v_ans == "report" ]]; then
+         echo "uDev: email"
+         echo "uDev: github > pull requests"
+         read -sn1
+   
       elif [[ $v_ans == "b" ]] || [[ $v_ans == "B" ]] ; then
          # Back to menu
          return
@@ -1029,6 +1088,7 @@ function f_help {
          # Invalid option
          f_invalid_opt 
       fi
+
    done
 }
 
@@ -1445,28 +1505,6 @@ function f_run_every_used_function {
 #	fi
 }
 
-function f_decide_to_run {
-   # Mention to the user what the previous varible was:
-	  #echo "variable load_remaining_functions = $load_remaining_functions"
-
-   # Making use of that variable:
-	  if [ -z $load_remaining_functions ]; then
-		 echo "Permission to run autom-installer: Invalid"
-		 v=0
-
-	  elif [ $load_remaining_functions == "yes" ]; then
-		 echo "Permission to run autom-installer: Yep"
-		 read -sn1
-		 f_run_every_used_function
-
-	  elif [ $load_remaining_functions == "no" ]; then
-		 echo "Permission to run autom-installer: nope"
-		 read -sn1
-		 #f_discard_every_unused_function
-
-	  fi
-
-}
 
 function f_testar_linha_120_se_se_encontra_em_branco {
 
