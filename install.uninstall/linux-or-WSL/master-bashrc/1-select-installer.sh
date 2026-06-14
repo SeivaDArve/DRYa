@@ -544,11 +544,13 @@ function f_screen_3__instalation_menu {
       echo " |   |"
       echo " | 1 | >>> Install DRYa normally (from scratch)"  
       echo " |   |"
-      echo ' | 2 | >>> Install using `cat` (For Live OS like TAILS)' 
+      echo ' | 2 | >>> [Menu fzf] DRYa install.uninstall ' 
       echo " |   |"
-      echo ' | 3 | >>> Install using QR Code'
+      echo ' | 3 | >>> Install using `cat` (For Live OS like TAILS)' 
       echo " |   |"
-      echo ' | 4 | >>> Install GUI features' # When DRYa is not sourced at .bashrc unless it it called
+      echo ' | 4 | >>> Install using QR Code'
+      echo " |   |"
+      echo ' | 5 | >>> Install GUI features' # When DRYa is not sourced at .bashrc unless it it called
       echo " |   |"
       echo " | h | >>> Help + Instructions + Checklist " 
       echo " |   |"
@@ -565,14 +567,19 @@ function f_screen_3__instalation_menu {
          f_screen_4__correcting_empty_bashrc 
          break
 
-      elif [[ $v_ans == "2" ]] || [[ $v_ans == "cat" ]]; then
+      elif [[ $v_ans == "5" ]] || [[ $v_ans == "fzf" ]]; then
+         #bash $v_5/$v_dryaSH ui i fzf  # uDev: Install fzf if it does not exist
+         bash $v_5/$v_dryaSH ui
+
+      elif [[ $v_ans == "3" ]] || [[ $v_ans == "cat" ]]; then
          read -sn 1 -p "uDev: Print info on how to install manually"
 
-      elif [[ $v_ans == "3" ]] || [[ $v_ans == "qr" ]]; then
+      elif [[ $v_ans == "4" ]] || [[ $v_ans == "qr" ]]; then
          read -sn 1 -p "uDev: On smartphones or devides with camera, it is possible to give them a QR code to clone DRYa Correctly"
          
-      elif [[ $v_ans == "4" ]] || [[ $v_ans == "gui" ]]; then
+      elif [[ $v_ans == "5" ]] || [[ $v_ans == "gui" ]]; then
          f_install_DRYA_desktop_icon 
+
 
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
          # option help
