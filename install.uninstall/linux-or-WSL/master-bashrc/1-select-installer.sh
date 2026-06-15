@@ -486,6 +486,8 @@ function f_screen_2__main_menu {
       echo " |   |"
       echo " | 2 | >>> Uninstall DRYa"  # Vai para screen_3_1
       echo " |   |"
+      echo ' | m | >>> [Menu fzf] DRYa install.uninstall ' 
+      echo " |   |"
       echo " | 3 | >>> Options"  # Vai para screen_3_3
       echo " |   |"
       echo " | h | >>> Help + Instructions + Checklist " 
@@ -504,6 +506,10 @@ function f_screen_2__main_menu {
          # option 2
          f_uninstall_1st
          break
+
+      elif [[ $v_ans == "m" ]] || [[ $v_ans == "fzf" ]]; then
+         #bash $v_5/$v_dryaSH ui i fzf  # uDev: Install fzf if it does not exist
+         bash $v_5/$v_dryaSH ui
 
       elif [[ $v_ans == "3" ]]; then
          # option 3
@@ -544,8 +550,6 @@ function f_screen_3__instalation_menu {
       echo " |   |"
       echo " | 1 | >>> Install DRYa normally (from scratch)"  
       echo " |   |"
-      echo ' | 2 | >>> [Menu fzf] DRYa install.uninstall ' 
-      echo " |   |"
       echo ' | 3 | >>> Install using `cat` (For Live OS like TAILS)' 
       echo " |   |"
       echo ' | 4 | >>> Install using QR Code'
@@ -567,9 +571,6 @@ function f_screen_3__instalation_menu {
          f_screen_4__correcting_empty_bashrc 
          break
 
-      elif [[ $v_ans == "5" ]] || [[ $v_ans == "fzf" ]]; then
-         #bash $v_5/$v_dryaSH ui i fzf  # uDev: Install fzf if it does not exist
-         bash $v_5/$v_dryaSH ui
 
       elif [[ $v_ans == "3" ]] || [[ $v_ans == "cat" ]]; then
          read -sn 1 -p "uDev: Print info on how to install manually"
