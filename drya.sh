@@ -154,7 +154,8 @@ function f_stroken {
 }
 
 function f_install_drya__with_fzf {
-   bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh
+   echo "File was removed:"
+   echo " > ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
 }
 
 function f_install_drya__with_Select {
@@ -3441,9 +3442,8 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L10='10. | `D iu d`  |  Menu   | dot-files           '
           L9='9.  | `D ui dp` |  Menu   | 1st.org (Dependencies)       ' 
                                
-          L8='8.  | `D ui 1f` |  Edit   | `fzf`    DRYa installer    '  # If select installer becomes good enough, this one is deleted
           L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
-         L17='17. | `D ui S ` |  Edit   | `select` DRYa installer    '
+         L17='17. | `D ui s ` |  Edit   | `select` DRYa installer    '
                                   
           L6='6.  | `D cln h` |  Guide  | clone DRYa (for other devices too) '
 
@@ -3461,7 +3461,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L0="DRYa: Menu install.uninstall: "
          Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github, 'git' is needed\n - Some options Install directly, others only Guide on How to install\n ")
          
-         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n$L8 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
@@ -3477,7 +3477,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
-         [[ $v_list =~ "8.  " ]] && f_install_drya__with_fzf
          [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select
          [[ $v_list =~ "17. " ]] && bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
