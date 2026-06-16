@@ -4618,6 +4618,31 @@ elif [ $1 == "tty" ] ; then
    echo "Default usernames and passwords for root users:"
    echo " > 'RetroPi OS' pi:raspberry"
     
+elif [ $1 == "lsblk" ] ; then 
+
+   # uDev: tirar um 'screenshot' a arvore de blocos/dispositivos. Caso o screenshot guardado nao corresponder ao atual, tem de re-definir as variaveis porque ja podem estar erradas
+
+   if [ -z $1 ]; then
+      lsblk
+
+   elif [ $1 == "alias" ] || [ $1 == "vars" ]; then
+      # Adicionar o nomes de dispositivos em variaveis para melhor distincao
+      echo "uDev: filtrar todos os 'sdX' de 'lsblk' e guardar com variaveis" 
+
+   elif [ $1 == "mount" ] || [ $1 == "M" ]; then
+      # Montar um dispositivo
+      echo "uDev: sudo mount </dev/sdX> </caminho/de/destino/>"
+
+   elif [ $1 == "umont" ] || [ $1 == "D" ]; then
+      # Desmontar um dispositivo
+      echo "uDev: sudo umount </dev/sdX>" 
+      echo "uDev: desmontar dispositivos 'busy'"
+
+   else
+      echo "uDev: help"
+
+   fi
+
 elif [ $1 == "kill-pid" ] || [ $1 == "pid" ] || [ $1 == "kill" ]; then 
    f_kill_process_by_PID 
 
