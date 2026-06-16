@@ -2832,6 +2832,26 @@ function f_set_keyboard_tty_RetroPie {
    echo ' > `sudo setupcon` or `sudo reboot`'
 
 }
+function f_set_keyboard_garuda_pt_pt {
+   # uDev: para failsafe (incluindo durante Live OS), o prompt deve estar lado a lado com drya.sh
+   v_config_file=./all/etc/dot-files/keyboards/garuda-linux/config-kbd-PT-PT.txt
+   v_destination=~/.config/kxkbrc
+   echo "Garuda Linux: Mudar o Layout do teclado para PT"
+   echo
+   echo "Vai ser copiado:"
+   echo " > $v_config_file"
+   echo
+   echo "Para:"
+   echo " > $v_destination"
+   echo
+   echo "Pressione [Qualquer Tecla] para iniciar"
+   read -sn1 -p " > "
+   echo
+
+   mkdir -p $(dirname $v_destination)
+   [[ -f $v_config_file ]] && cp $v_config_file $v_destination
+}
+
 
 function f_menu_kill_running_process {
    echo "DRYa: Help killing process"
@@ -3996,7 +4016,7 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
          [[ $v_list =~ "9. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
          [[ $v_list =~ "8. " ]] && f_kbd_greet && cat ${v_REPOS_CENTER}/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
          [[ $v_list =~ "7. " ]] && f_kbd_greet && f_set_keyboard_tty_RetroPie
-         [[ $v_list =~ "6. " ]] && f_kbd_greet && echo "uDev: Mudar o Layout para PT" && echo && echo "Listar todos os kbd layouts:" && echo ' > `localectl list-keymaps | grep pt`'
+         [[ $v_list =~ "6. " ]] && f_kbd_greet && f_set_keyboard_garuda_pt_pt
          [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L5"
          [[ $v_list =~ "4. " ]] && f_config_kbd_kali
          [[ $v_list =~ "3. " ]] && f_kbd_greet && echo && echo "$L3" && echo " > setxkbmap pt" && echo && v_txt="Proceed to set keyboard" && f_anyK && setxkbmap pt
