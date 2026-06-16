@@ -4037,6 +4037,9 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
 
    elif [ $2 == "tty" ]; then 
       f_set_keyboard_tty_RetroPie
+
+   elif [ $2 == "garuda" ] || [ $2 == "garuda-linux" ]; then 
+      f_set_keyboard_garuda_pt_pt
    fi
 
 elif [ $1 == "k" ]; then 
