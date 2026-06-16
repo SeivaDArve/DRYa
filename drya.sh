@@ -2836,6 +2836,9 @@ function f_set_keyboard_garuda_pt_pt {
    # uDev: para failsafe (incluindo durante Live OS), o prompt deve estar lado a lado com drya.sh
    v_config_file=./all/etc/dot-files/keyboards/garuda-linux/config-kbd-PT-PT.txt
    v_destination=~/.config/kxkbrc
+
+   clear
+
    echo "Garuda Linux: Mudar o Layout do teclado para PT"
    echo
    echo "Vai ser copiado:"
@@ -2850,6 +2853,10 @@ function f_set_keyboard_garuda_pt_pt {
 
    mkdir -p $(dirname $v_destination)
    [[ -f $v_config_file ]] && cp $v_config_file $v_destination
+
+   # Refresh/Reload settings
+      kwin_wayland --replace &
+
 }
 
 
