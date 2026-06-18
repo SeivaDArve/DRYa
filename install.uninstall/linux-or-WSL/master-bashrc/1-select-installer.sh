@@ -581,7 +581,6 @@ function f_screen_3__instalation_menu {
       elif [[ $v_ans == "5" ]] || [[ $v_ans == "gui" ]]; then
          f_install_DRYA_desktop_icon 
 
-
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
          # option help
          f_help
@@ -941,7 +940,7 @@ function f_screen_8__resume_before_instalation {
          f_history_log 
 
       elif [[ $v_ans == "1" ]]; then
-         #f_run_every_used_function 
+         f_run_every_used_function 
          break
 
       elif [[ $v_ans == "2" ]]; then
@@ -1392,13 +1391,13 @@ function f_DRYa_install_me_at_bashrc {
       #read -sn 1
 	  
    # Defining the environment variable:
-	  __dryaSRC__="${found_DRYa_at}/all/dryaSRC"
+	  #__dryaSRC__="${found_DRYa_at}/all/dryaSRC"
+	   __dryaSRC__="$__REPOS_CENTER__/DRYa/all/dryaSRC"
 	  export __dryaSRC__
 	  echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
    
    # This variable comes from the function that cuts the string
       echo "You have chosen $__REPOS_CENTER__ to be a dedicated directory to receive every kind of repositories"
-	   #$__REPOS_CENTER__
    
    echo "If you agree with this, press [ANY KEY] to concat this info into ~/.bashrc"
    echo " > Or press Ctrl-c to abort"

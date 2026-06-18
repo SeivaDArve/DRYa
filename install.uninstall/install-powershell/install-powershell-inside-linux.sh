@@ -48,9 +48,54 @@ f_install_pwsh_arch() {
 f_install_pwsh_termux() {
    echo "[info] android termux detectado"
 
-   pkg update -y && pkg upgrade -y
-   pkg install -y tur-repo
-   pkg install -y powershell
+   set -e
+   echo
+
+   echo "[+] Atualizando pacotes..."
+   pkg update -y
+   pkg upgrade -y
+
+   echo "[+] Instalando dependências..."
+   pkg install -y wget tar curl
+
+   ARCH=$(uname -m)
+
+   case "$ARCH" in
+       aarch64)
+           PS_ARCH="linux-arm64"
+           ;;
+       x86_64)
+           PS_ARCH="linux-x64"
+           ;;
+       *)
+           echo "Arquitetura não suportada: $ARCH"
+           exit 1
+           ;;
+   esac
+
+   echo "[+] Obtendo versão mais recente..."
+   LATEST=$(curl -s https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep '"tag_name"' | cut -d '"' -f4)
+
+   FILE="powershell-${LATEST#v}-${PS_ARCH}.tar.gz"
+   URL="https://github.com/PowerShell/PowerShell/releases/download/${LATEST}/${FILE}"
+
+   echo "[+] Baixando $FILE..."
+   mkdir -p $HOME/powershell
+   cd $HOME/powershell
+
+   wget -O powershell.tar.gz "$URL"
+
+   echo "[+] Extraindo..."
+   tar -xzf powershell.tar.gz
+
+   chmod +x pwsh
+
+   echo
+   echo "[+] Tentando iniciar PowerShell..."
+   echo
+
+   ./pwsh
+
 }
 
 # detectar package manager

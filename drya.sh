@@ -58,8 +58,15 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+   v_lib1_failsafe=./all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=${v_REPOS_CENTER}/DRYa/$v_lib1_failsafe
+   v_msg_failsafe="Note: if this msg is used, then failsave is not 'smooth'"
+   v_msg="DRYa libs: $__name__: drya-lib-1 does not exist (error)"
+   #source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   [[ -f $v_lib1 ]]                && source $v_lib1 2>/dev/null \
+      || [[ -f $v_lib1_failsafe ]] && source $v_lib1 2>/dev/null \
+      || (read -s -n 1 -p "$v_msg" && echo)
 
    v_greet="DRYa"
    v_talk="DRYa: "
@@ -84,6 +91,30 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
    # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
    #           f_lib4_stroken
 
+
+
+
+# Failsafe mothods (talvez nao seja preciso se for encontrado as drya-lib no relative path junto a drya.sh)
+
+   unset -f f_talk   # Debug
+
+   if declare -F f_talk >/dev/null; then
+      echo "Função f_talk testada: existe" 1>/dev/null
+
+   else
+      echo "Função f_talk testada: nao existe. A entrar em failsafe mode"
+      read -sn1
+
+      function f_talk {
+         # Colorfull text to preceed any text of any important text line
+            echo -n "DRYa (failsafe): $*"
+            echo
+      }
+      function f_tk {
+         f_talk 
+      }
+
+   fi
 
 
 
@@ -2833,13 +2864,18 @@ function f_set_keyboard_tty_RetroPie {
 
 }
 function f_set_keyboard_garuda_pt_pt {
-   # uDev: para failsafe (incluindo durante Live OS), o prompt deve estar lado a lado com drya.sh
    v_config_file=./all/etc/dot-files/keyboards/garuda-linux/config-kbd-PT-PT.txt
+   v_CONFIG_file=${v_REPOS_CENTER}/DRYa/$v_config_file
    v_destination=~/.config/kxkbrc
 
-   clear
+   # Failsafe:
+      # Se nenhum ficheiro existir (nem caminho relativo nem absoluto) entao informa desse erro, depois termina o script
+      v_failsafe_msg="Para usar failsafe (incluindo durante Live OS), o prompt deve estar lado a lado com drya.sh"
+      ( [[ -f $v_config_file ]] || [[ -f $v_CONFIG_file ]] ) || (echo "$v_failsafe_msg"; read;  exit 1)
 
-   echo "Garuda Linux: Mudar o Layout do teclado para PT"
+   clear
+   f_talk "keyboard: Garuda Linux (Wayland, KDE plasma)"
+   echo " > Mudar o Layout do teclado para PT-PT"
    echo
    echo "Vai ser copiado:"
    echo " > $v_config_file"
