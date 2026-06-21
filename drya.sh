@@ -4670,6 +4670,9 @@ elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then
       cal -y
    fi
 
+elif [ $1 == "torrent" ] || [ $1 == "trr" ] ; then 
+   echo "uDev: Options to create bitTorrent server etc..."
+
 elif [ $1 == "game" ] || [ $1 == "games" ] ; then 
    # Inicia jogos
 
