@@ -234,7 +234,7 @@ function eee {
    echo "uDev: open cheat sheets for current editor"
 }
 
-alias xdg=xdg-open
+alias xdg="xdg-open || explorer.exe"
 
 function op {
    # Function to open all files and directories given as arguments ($*)
@@ -322,7 +322,7 @@ function op {
 
    else
       # Try to find the file opener at each OS (for the given files, given as arguments):
-         if [[ $v_uname =~ "Microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
+         if [[ $v_uname =~ "Microsoft" ]] || [[ $v_uname =~ "microsoft" ]]; then  # Test if this script is a Linux OS running inside windows (WSL (Windows sub-system for Linux):
             /mnt/c/windows/explorer.exe $*  # Original script, without a for loop
       
               # uDev: For links and non_links open accordingly:   
