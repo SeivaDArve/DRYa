@@ -42,7 +42,7 @@ function f_hibernate {
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
    elif [ $trid_OS == "Linux-Microsoft" ]; then
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      cd ${v_REPOS_CENTER}/DRYa/all/win/batch/shut-restart-hibernate-sleep/
       /mnt/c/Windows/System32/cmd.exe /c hibernar.lnk
 
    elif [ $trid_OS == "Linux" ]; then
@@ -57,7 +57,7 @@ function f_restart {
    elif [ $trid_OS == "Linux-Microsoft" ]; then
 
       sleep $v_time
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      cd ${v_REPOS_CENTER}/DRYa/all/win/batch/shut-restart-hibernate-sleep/
       /mnt/c/Windows/System32/cmd.exe /c reiniciar.lnk
 
    elif [ $trid_OS == "Linux" ]; then
@@ -72,7 +72,7 @@ function f_desligar {
       echo 'DRYa: numpad: Tem de especificar OS primeiro (em $trid_OS)'
 
    elif [ $trid_OS == "Linux-Microsoft" ]; then
-      cd ${v_REPOS_CENTER}/DRYa/all/batch/shut-restart-hibernate-sleep/
+      cd ${v_REPOS_CENTER}/DRYa/all/win/batch/shut-restart-hibernate-sleep/
       /mnt/c/Windows/System32/cmd.exe /c desligar.lnk
    
    elif [ $trid_OS == "Linux" ]; then

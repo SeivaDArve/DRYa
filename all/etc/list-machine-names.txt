@@ -8,5 +8,6 @@ Seiva__Lenovo__330
 Seiva__ASUS__15_OLED
 Seiva__pi__RaspberryOS__miau
 Seiva__pi__RetroPi__pi
+Seiva__Dv__NASgul_v2
 seivaDArve
 publicDVC__pi3__raspberryOS__vascogama
