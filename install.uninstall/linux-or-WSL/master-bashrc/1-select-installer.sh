@@ -1407,6 +1407,8 @@ function f_DRYa_install_me_at_bashrc {
 	   # Pasting 1 empty line + 4 lines of code:
 
       L1=""
+      L1_1="# Legacy DRYa"
+      L1_2="   v_REPOS_CENTER="/home/dv/Repositories"; export v_REPOS_CENTER  # Dedicated and directory for repos   # --hashtag-drya-- "
       L2="# Sourcing Seiva's main repo: DRYa"
       L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated and directory for repos"
       L4="   __dryaSRC__=\"$__dryaSRC__\"; export __dryaSRC__  # setting one file that wakes all others"
@@ -1415,6 +1417,8 @@ function f_DRYa_install_me_at_bashrc {
       L7=""
 
       echo "$L1"        >> ~/.bashrc
+      echo "$L1_1"      >> ~/.bashrc
+      echo "$L1_2"      >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc
       echo "$L3 $v_dee" >> ~/.bashrc
       echo "$L4 $v_dee" >> ~/.bashrc
