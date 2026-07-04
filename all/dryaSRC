@@ -505,6 +505,7 @@ function f_alias_to_enforce {
    # To refresh the terminal
       alias src="cd ~ && source ~/.bashrc"
       alias  rs="cd ~ && source ~/.bashrc" 
+      alias  RS="exec $SHELL"               # substitui a shell atual por uma nova, carregando novamente os ficheiros de configuração e descartando todo o estado em memória da shell anterior. Como se fechassemos e abrissemos a janela do terminal
       alias  f5="cd ~ && source ~/.bashrc"
 
 
@@ -631,6 +632,10 @@ function f_internal_drya_files_nr_1 {
    #       v_nm_pre_alias = nil               = drya-pre-alias.sh
    #       v_nm_mid_alias = config-bash-alias = drya-mid-alias.sh
    #       v_nm_pos_alias = .dryarc           = drya-pos-alias.sh
+
+   
+   # Variable to determine where certain config files live on the host system (according to user session)
+      __dryaCONFIG__=~/.config/h.h/; export __dryaCONFIG__  
 
    f_demi_fake_pin 
 

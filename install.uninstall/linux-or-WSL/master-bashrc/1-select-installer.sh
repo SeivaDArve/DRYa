@@ -62,7 +62,7 @@ function f_internal_variables {
    }
 
    # Set one hard coded variable to show on all menus
-      v_ttl_screens=8
+      v_ttl_screens=7
 
 }
 
@@ -505,7 +505,6 @@ function f_screen_2__main_menu {
       elif [[ $v_ans == "2" ]] || [[ $v_ans == "Uninstall" ]]; then
          # option 2
          f_uninstall_1st
-         break
 
       elif [[ $v_ans == "m" ]] || [[ $v_ans == "fzf" ]]; then
          #bash $v_5/$v_dryaSH ui i fzf  # uDev: Install fzf if it does not exist
@@ -655,6 +654,15 @@ function f_screen_5__choose_REPOS_CENTER {
    # dee:screen_5
    clear; read -sn 1 -p "screen 5"
 
+
+   function f_verbose_results__REPOS_CENTER__ {
+      echo  
+      echo         " Defined as \$__REPOS_CENTER__ :"
+      read -sn1 -p "  > $__REPOS_CENTER__"
+      echo 
+      # uDev: Aqui, testar se ja existe
+   }
+
    while true
    do
       # Test existence of default repositories directory
@@ -663,9 +671,9 @@ function f_screen_5__choose_REPOS_CENTER {
 
       f_GR
       f_talk
-      echo    "[5/$v_ttl_screens] Choose centralized Directory"
+      echo    "[5/$v_ttl_screens] Repository centralization directory"
       echo    "$v____________"
-      echo    " | Choose a path to centralize all repositories"
+      echo    " | Choose a path to centralize all repositories into"
       echo    " |  > \$__REPOS_CENTER__/"
       echo    "$v____________"
       echo    " |   |"
@@ -705,25 +713,30 @@ function f_screen_5__choose_REPOS_CENTER {
 
       if [[ $v_ans == 1 ]]; then
          # Option 1
-         export __REPOS_CENTER__="$HOME/Repositories"
-         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
+         __REPOS_CENTER__="$HOME/Repositories"
+         export __REPOS_CENTER__
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == 2 ]]; then
          # Option 2
          export __REPOS_CENTER__="/mnt/c/$USER/Repositories"
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 3 ]]; then
          # Option 3
          export __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 4 ]]; then
          # Option 4
          export __REPOS_CENTER__="$PWD"
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == 5 ]]; then
@@ -733,6 +746,7 @@ function f_screen_5__choose_REPOS_CENTER {
         
          echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
          [[ -n $v_variable_custom_path ]] && export __REPOS_CENTER__="$v_variable_custom_path"
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
@@ -790,16 +804,32 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
    # dee:screen_6
    clear; read -sn 1 -p "screen 6"
 
+   function f_clone_now {
+      # Git clone DRYa immediatly
+      git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa
+   }
+
    while true
    do
       
+      [[   -d $__REPOS_CENTER__/DRYa ]] && v_test_clonage_existence_of_DRYa=yes
+      [[ ! -d $__REPOS_CENTER__/DRYa ]] && v_test_clonage_existence_of_DRYa=no
+
       f_GR
-      f_talk; echo "[6/$v_ttl_screens] Clone DRYa properly (or move it)"
+      f_talk; echo "[6/$v_ttl_screens] Getting DRYa's directory correctly placed"
               echo $v____________
-              echo " uDev: Test her is \$DRYa exist at \$__REPOS_CENTER__"
+              echo " Testing:" 
+              echo
+              echo "  \$DRYa existence at \$__REPOS_CENTER__ "
+              echo "   > $v_test_clonage_existence_of_DRYa."
+              echo
+              echo "  Checking path of \$__REPOS_CENTER__:"
+              echo "   > $__REPOS_CENTER__"
               echo $v____________
               echo " |   |"
-              echo " | 1 | >>> Yes, continue "
+              echo " | 1 | >>> Yes, continue (using __REPOS_CENTER__ with DRYa inside)"
+              echo " |   |"
+              echo " | 2 | >>> Yes, continue (using __REPOS_CENTER__ but clone DRYa into it first)"
               echo " |   |"
               echo " | h | >>> Help|info|instructions"
               echo " |   |"
@@ -810,8 +840,29 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
               echo $v____________
           read -rp "   >  " v_ans 
 
-      if [[ "$v_ans" == "1" || "$v_ans" == "yes" ]]; then
-         f_screen_7__test_if_prompt_is_side_by_side_with_this_wizzard
+      if [[ "$v_ans" == "1" || "$v_ans" == "yes default" ]]; then
+
+         # uDev: Neste passo, se DRYa nao existir em repos center, tem de ser MOVIDO ou CLONADO
+         [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && f_screen_7__resume_before_instalation 
+         [[ $v_test_clonage_existence_of_DRYa == "no"  ]] && echo && read -p " > You need either to CLONE or MOVE repository DRYa into \$__REPOS_CENTER__" && echo
+
+      elif [[ "$v_ans" == "2" || "$v_ans" == "yes clone" ]]; then
+
+         # If it already existe, another attempt to clone Must fail
+            [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && read -p "Directory named DRYa already exists there" && echo && continue
+
+         unset v_ans
+         read -p "Clone DRYa right now? (Y/n)" v_ans
+         echo
+          
+         [[ -z $v_ans        ]] && f_clone_now
+         [[    $v_ans == "y" ]] && f_clone_now
+         [[    $v_ans == "Y" ]] && f_clone_now
+
+         [[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+         [[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+
+         #f_screen_7__resume_before_instalation  # It will not go to another menu from here, instead, the `while` will make another loop
 
       elif [[ "$v_ans" == "q" || "$v_ans" == "exit" ]]; then
 
@@ -848,80 +899,17 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
 
 
 
-function f_screen_7__test_if_prompt_is_side_by_side_with_this_wizzard {
-   # If screen_1 is working properly, this fx is unnecessary
-   # dee:screen_7
+
+function f_screen_7__resume_before_instalation {
+   # Resume of all the choices before, before actually running the instalation
+   # dee:screen_8
    clear; read -sn 1 -p "screen 7"
 
    while true
    do
 
       f_GR
-      f_talk
-      echo    "[7/$v_ttl_screens] Running this script only side-by-side?" 
-      echo    "$v____________"
-      echo    " |   |"
-      echo    " | 1 | >>> (yes) to continue"
-      echo    " | 2 | >>> (no) to abort"
-      echo    " | 3 | >>> (help) to explain"
-      echo    " | 4 | >>> (back)"
-      echo    " |   |"
-      echo    "$v____________"
-
-      read -p "   < " v_ans
-
-      if [[ $v_ans == "1" ]]; then
-         f_screen_8__resume_before_instalation
-
-      elif [[ $v_ans == "2" ]]; then
-
-         echo " Third question answered NO"
-         exit 1
-
-      elif [[ $v_ans == "3" ]]; then
-
-         f_greet
-
-         echo "Explanation for the Third Question"
-         echo -e " (Step 3 of 4) - Navigate to this scripts dir and only then, run tjis script?\n"
-         echo " Asked for help at Third question"
-         echo -ne " > Are you side by side with the script? (y/n) - Help (h) > "
-
-         # Explanation
-         echo "if you are running this script some some other directory, cancel it with Ctrl + C)"
-         echo "In order to properly source this file,"
-         echo "you must navigate to the directory in which"
-         echo "this file is located."
-         echo
-         echo "Are you there? (At the terminal you could "
-         echo "be sourcing or running this script from anywhere"
-         echo "and that would not work)"
-
-      elif [[ $v_ans == "4" ]]; then
-
-         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER
-         break
-
-      else
-
-         echo " That option is invalid. Press ENTER to clear screen"
-         read -sn1
-
-      fi
-
-   done
-}
-
-function f_screen_8__resume_before_instalation {
-   # Resume of all the choices before, before actually running the instalation
-   # dee:screen_8
-   clear; read -sn 1 -p "screen 8"
-
-   while true
-   do
-
-      f_GR
-      f_talk; echo    "[8/$v_ttl_screens] Resume|History > Eecute|Install"
+      f_talk; echo    "[7/$v_ttl_screens] Resume|History > Eecute|Install"
               echo    "$v____________"
               echo    " |   |"
               echo    " | 0 | >>> Checklist"
@@ -995,6 +983,7 @@ function f_uninstall_1st {
    echo "Uninstalling DRYa:"
    sed "/$v_dee/d" $v_bash 1>/dev/null
    echo "Done!"
+   read -sn1 -p " ... "
    # uDev: Confirmation would be good to avoid bugs
 }
 
@@ -1406,25 +1395,29 @@ function f_DRYa_install_me_at_bashrc {
    # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
 	   # Pasting 1 empty line + 4 lines of code:
 
-      L1=""
-      L1_1="# Legacy DRYa"
-      L1_2="   v_REPOS_CENTER="/home/dv/Repositories"; export v_REPOS_CENTER  # Dedicated and directory for repos   # --hashtag-drya-- "
-      L2="# Sourcing Seiva's main repo: DRYa"
-      L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; export __REPOS_CENTER__  # Dedicated and directory for repos"
-      L4="   __dryaSRC__=\"$__dryaSRC__\"; export __dryaSRC__  # setting one file that wakes all others"
-      L5='   __dryaCONFIG__=~/.config/h.h/; export __dryaCONFIG__  # Loading EXTRA alias and extra variables' 
-      L6='   source $__dryaSRC__'
-      L7=""
+      v_hashtag_top=" ##  ( #drya-top-hashtag )"   # This hashtag is placed on the 3rd line. (Not on the empty line, not on the title, but at the end of the third line of code)
+      v_hashtag_bot=" ##  ( #drya-bot-hashtag )"   # This hashtag is placed, not on the last line of the instalation (which is the empty one), but it is place on the line before (which is also the last line of code)
 
-      echo "$L1"        >> ~/.bashrc
+      L_space=""
+         L1_1="# Legacy DRYa"
+         L1_2="   v_REPOS_CENTER="/home/dv/Repositories"; export v_REPOS_CENTER  # Dedicated and directory for repos $v_hashtag_top"
+      L_space=""
+           L2="# STARTING: DRYa (Don't Repeat Yourself, app) $v_hashtag_top"
+           L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; # Directory to centralize Repositories"
+           L4="   __dryaSRC__=\"$__dryaSRC__\"; # First DRYa file to run. It initiates all others"
+           L5="   export __REPOS_CENTER__ __dryaSRC__ ; source \$__dryaSRC__ $v_hastag_bot"
+      L_space=""
+
+      echo "$L_space"   >> ~/.bashrc
       echo "$L1_1"      >> ~/.bashrc
       echo "$L1_2"      >> ~/.bashrc
+      echo "$L_space"   >> ~/.bashrc
+      echo "$L1"        >> ~/.bashrc
       echo "$L2 $v_dee" >> ~/.bashrc
       echo "$L3 $v_dee" >> ~/.bashrc
       echo "$L4 $v_dee" >> ~/.bashrc
       echo "$L5 $v_dee" >> ~/.bashrc
-      echo "$L6 $v_dee" >> ~/.bashrc
-      echo "$L7"        >> ~/.bashrc
+      echo "$L_space"   >> ~/.bashrc
 
    # Process Finished
 	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
