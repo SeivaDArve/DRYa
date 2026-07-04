@@ -1397,8 +1397,8 @@ function f_DRYa_install_me_at_bashrc {
 	  
    # Defining the environment variable:
 	  #__dryaSRC__="${found_DRYa_at}/all/dryaSRC"
-	   __dryaSRC__="$__REPOS_CENTER__/DRYa/all/dryaSRC"
-	  export __dryaSRC__
+	  #__dryaSRC__="$__REPOS_CENTER__/DRYa/all/dryaSRC"
+	  __dryaSRC__=DRYa/all/dryaSRC
 	  echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
    
    # This variable comes from the function that cuts the string
@@ -1419,9 +1419,9 @@ function f_DRYa_install_me_at_bashrc {
          L1_2="   v_REPOS_CENTER="/home/dv/Repositories"; export v_REPOS_CENTER  # Dedicated and directory for repos $v_hashtag_top"
       L_space=""
            L2="# STARTING: DRYa (Don't Repeat Yourself, app) $v_hashtag_top"
-           L3="   __REPOS_CENTER__=\"$__REPOS_CENTER__\"; # Directory to centralize Repositories"
-           L4="   __dryaSRC__=\"$__dryaSRC__\"; # First DRYa file to run. It initiates all others"
-           L5="   export __REPOS_CENTER__ __dryaSRC__ ; source \$__dryaSRC__ $v_hastag_bot"
+           L3="   __REPOS_CENTER__=$__REPOS_CENTER__; # Directory to centralize Repositories"
+           L4="   __dryaSRC__=\$__REPOS_CENTER__/$__dryaSRC__; # First DRYa file to run. It initiates all others"
+           L5="   export __REPOS_CENTER__ __dryaSRC__ ; source \$__dryaSRC__ $v_hashtag_bot"
       L_space=""
 
       echo "$L_space"   >> ~/.bashrc
@@ -1429,10 +1429,10 @@ function f_DRYa_install_me_at_bashrc {
       echo "$L1_2"      >> ~/.bashrc
       echo "$L_space"   >> ~/.bashrc
       echo "$L1"        >> ~/.bashrc
-      echo "$L2 $v_dee" >> ~/.bashrc
-      echo "$L3 $v_dee" >> ~/.bashrc
-      echo "$L4 $v_dee" >> ~/.bashrc
-      echo "$L5 $v_dee" >> ~/.bashrc
+      echo "$L2       " >> ~/.bashrc
+      echo "$L3       " >> ~/.bashrc
+      echo "$L4       " >> ~/.bashrc
+      echo "$L5       " >> ~/.bashrc
       echo "$L_space"   >> ~/.bashrc
 
    # Process Finished
