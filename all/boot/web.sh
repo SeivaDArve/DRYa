@@ -104,10 +104,12 @@ function web {
              L4="4.  |   | Ir | Seiva | Curriculum-Vitae (github)"
              L3='3.  |   | Ir | Seiva | Github.com'
 
-             L2='2.  |   | Abrir | Bookmarks Guardados '
-             L1='1.  Cancel'
+             L2='2.  | b | Abrir | Bookmarks Guardados '
 
-         v_ask=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$L13" | fzf --cycle --prompt="SELECT: como quer aceder à Web: ")
+             L1='1.  Cancel'
+             L0="DRYa: .../boot/web: "
+
+         v_ask=$(echo -e "$L1 \n\n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n\n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$L13" | fzf --cycle --prompt="$L0 ")
 
          [[ $v_ask =~ "13. " ]] && f_web_search_by_keywords 
          [[ $v_ask =~ "12. " ]] && v_URL="https://www.terminaltemple.com"
@@ -145,7 +147,7 @@ function web {
       elif [ $1 == "cv" ]; then 
          v_URL="https://seivadarve.github.io/Curriculum-Vitae"
 
-      elif [ $1 == "bm" ]; then 
+      elif [[ $1 == "b" ]] || [[ $1 == "bm" ]] ; then 
          # Abrir bookmarks guardados
          f_fzf_raw_link_opener
 
