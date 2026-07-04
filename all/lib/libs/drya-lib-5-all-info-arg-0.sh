@@ -122,12 +122,16 @@ function f_4_verbose {
 }
 
 function f_5 {
-   # Gives working directory where the script is placed (without the name in the end)
+   # Fx:
+   # 1. Gives working directory where the current running script is placed (main script $0, not any other library imported)
+   # 2. Does not give name of the script in the end (gives only the working directory)
+   # 3. Without sufix / in the end
+   # 4. Does not matter the prompt location from where this script will be called to execute
+   # 5. $v_scripts_directory_name will indicate the final product of this fx, the correct directory where this script is located/inserted
+   # 6. $v_5 will also indicate the final product of this fx
 
-   # Doesn't matter the prompt location from where this script will be executed, $v_script_directory will indicate the correct directory where this script is located/inserted
-
-   v_script_directory=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-   #v_script_directory="$v_script_directory/"  # Adding sufix /
+   v_scripts_directory_name=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+   #v_scripts_directory_name="$v_scripts_directory_name/"  # Adding sufix /
 
 
    # For beter verbose (Same line of code as f_6)
@@ -135,7 +139,7 @@ function f_5 {
 
    # Finally
       v_5_verbose=$v_basename
-      v_5=$v_script_directory
+      v_5=$v_scripts_directory_name
 }
 function f_5_verbose {
    echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
