@@ -809,6 +809,19 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
       git clone https://github.com/SeivaDArve/DRYa.git ~/Repositories/DRYa
    }
 
+   function f_ask_to_clone_DRYa_right_now {
+      unset v_ans
+      read -p "Clone DRYa right now? (Y/n) " v_ans
+      echo
+       
+      [[ -z $v_ans        ]] && f_clone_now
+      [[    $v_ans == "y" ]] && f_clone_now
+      [[    $v_ans == "Y" ]] && f_clone_now
+
+      [[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+      [[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+   }
+
    while true
    do
       
@@ -827,9 +840,11 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
               echo "   > $__REPOS_CENTER__"
               echo $v____________
               echo " |   |"
-              echo " | 1 | >>> Yes, continue (using __REPOS_CENTER__ with DRYa inside)"
+              echo " | 1 | >>> Yes, (continue using __REPOS_CENTER__ with DRYa inside)"
               echo " |   |"
-              echo " | 2 | >>> Yes, continue (using __REPOS_CENTER__ but clone DRYa into it first)"
+              echo " | 2 | >>> Yes, (continue using __REPOS_CENTER__ but clone DRYa into it first)"
+              echo " |   |"
+              echo " | 3 | >>> Yes, (continue by remove existing DRYa directory and clone again)"
               echo " |   |"
               echo " | h | >>> Help|info|instructions"
               echo " |   |"
@@ -851,19 +866,17 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
          # If it already existe, another attempt to clone Must fail
             [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && read -p "Directory named DRYa already exists there" && echo && continue
 
-         unset v_ans
-         read -p "Clone DRYa right now? (Y/n)" v_ans
-         echo
-          
-         [[ -z $v_ans        ]] && f_clone_now
-         [[    $v_ans == "y" ]] && f_clone_now
-         [[    $v_ans == "Y" ]] && f_clone_now
-
-         [[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
-         [[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+         f_ask_to_clone_DRYa_right_now
 
          #f_screen_7__resume_before_instalation  # It will not go to another menu from here, instead, the `while` will make another loop
 
+      elif [[ "$v_ans" == "3" || "$v_ans" == "yes remove" ]]; then
+         echo "Are you sure? Remove DRYa and Clone again"
+         read -s
+
+         rm -rf $__REPOS_CENTER__/DRYa 2>/dev/null
+         f_ask_to_clone_DRYa_right_now
+       
       elif [[ "$v_ans" == "q" || "$v_ans" == "exit" ]]; then
 
          echo "Second question answered NO"
@@ -914,13 +927,14 @@ function f_screen_7__resume_before_instalation {
               echo    " |   |"
               echo    " | 0 | >>> Checklist"
               echo    " |   |"
-              echo    " | 1 | >>> yes  (Start Instalation Sequence)"
+              echo    " | 1 | >>> yes (Start Instalation Sequence)"
               echo    " |   |"
               echo    " | 2 | >>> help and Instructions"
               echo    " |   |"
               echo    " | b | >>> back"
               echo    " |   |"
-              echo    " | q | >>> no   (abort)"
+              echo    " | q | >>> no (abort)"
+              echo    " |   |"
               echo    "$v____________"
               read -p "   < " v_ans
 
@@ -1157,8 +1171,7 @@ function f_cut_4_fields_relative_path {
 	  rm ~/.tmp/v_pwd3
 
    # Display the entire result of this script:
-	  echo "found DRYa at: $found_DRYa_at"
-     read -sn 1 -t 4
+	  echo " > found DRYa at: $found_DRYa_at"
 }
 
 function f_explain {
@@ -1223,20 +1236,29 @@ function f_explain {
 
 function f_create_backup {
 
-   echo "Press enter to start the backup sequence"
-   read -sn 1
-
    # Search and delete the entry for DRYa inside ~/.bashrc
 
-   # Asking if the user want to create a backup first
+   function f_backup_choice_was_no {
+      echo          "   > You are choosing not to create a backup"
+      echo          "   > [Any Key to Continue...] or [Ctrl + C] to CANCEL"
+      read -sn 1 -p "   > "
+      echo
+   }
+
    while true
    do
 
-      echo -n " > Do you want a backup to be created from your ~/.bashrc? (y/n) "
+      # Asking if the user want to create a backup first
+
+      echo -n " > Do you want a backup to be created from your ~/.bashrc? (y/N) "
       read -sn 1 v_ans
       echo
 
-      if [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then
+      if [[ -z $v_ans ]]; then
+         f_backup_choice_was_no 
+         break
+
+      elif [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then
 
          cp ~/.bashrc ~/.bashrc.bak
 
@@ -1246,13 +1268,7 @@ function f_create_backup {
          break
 
       elif [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]]; then
-
-         echo "   > You are choosing not to create a backup"
-         echo "   > Ctrl + C: to CANCEL, or"
-         echo "   > [Any Key to Continue...]"
-
-         read -sn 1
-
+         f_backup_choice_was_no 
          break
 
       else
@@ -1429,11 +1445,11 @@ function f_DRYa_install_me_at_bashrc {
 
 function f_install_DRYA_desktop_icon {
    # uDev: This will be part of GUI features
-   echo "# uDev: installing drya.desktop is not ready yet"
+   echo " > uDev: installing drya.desktop is not ready yet"
 }
 
 function f_remove_DRYA_desktop_icon {
-   echo "# uDev: removing drya.desktop is not ready yet"
+   echo " > uDev: removing drya.desktop is not ready yet"
 }
 
 function f_source_bashrc {
@@ -1459,15 +1475,16 @@ function f_source_bashrc {
 
 function f_install_figlet_font {
    # Not every instalation of figlet comes with my favourite figlet font, lets correct that
-   echo "# 'figlet' will be install in the first dependencies package"
-   echo "# 'figlet' fonts are automatically installed by dryaSRC (when the terminal reloads)"
+   echo " > Note: 'figlet' will be install in the first dependencies package"
+   echo " > Note: 'figlet' fonts are automatically installed by dryaSRC (when the terminal reloads)"
 }
 
 
 function f_run_every_used_function {
    # Installer sequence
    
-   echo "Any Key to start the installation... "
+   f_GR
+   f_talk; echo "Last installation steps... "
    read -sn 1
 
          f_install_DRYA_desktop_icon
