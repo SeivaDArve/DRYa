@@ -65,6 +65,7 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
+#<<<<<<< Updated upstream
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -253,6 +254,15 @@ function f_failsafe {
    fi
 
    f_failsafe_finishing_tools
+#=======
+#   #echo "Path: $v_lib1"
+#   #source $v_lib1
+#   #read
+#
+#   [[ -f $v_lib1 ]]                && source $v_lib1 2>/dev/null \
+#      || [[ -f $v_lib1_failsafe ]] && source $v_lib1 2>/dev/null \
+#      || (read -s -n 1 -p "$v_msg" && echo)
+#>>>>>>> Stashed changes
 
    v_greet="DRYa"
    v_talk="DRYa: "
@@ -3734,8 +3744,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          # This might be used most likely at in-job phone
          f_quick_install_all_upk
       fi
-
-
 
    elif [[ $2 == "install" ]] || [ $2 == "i" ]; then 
       if [[ -z $3 ]]; then 
