@@ -8,10 +8,16 @@
 
 [[DRYa ASCII icon][./all/etc/dot-files/drya/D-jpg.jpg]]
 
-** DRYa acronym
-Don't Repeat Yourself (app) 
-It is a style of coding (DRY) applied here, terminal based app (TUI) with shortcuts of every day life tasks
+** DRYa acronym (name meaning)
+Don't Repeat Yourself (app)
+
+** Name origin
+"DRY" is a Coding style. And the goal is to be applied here very heavily. 
+
 ** Description
+Portable Operative System
+Executable Database of solutions: for bugs, automatic instalations, automatic configs)
+Terminal based app (TUI) with shortcuts of every day life tasks
 3 in 1: Learning to build software; Software to supress repetitive tasks; Software to become software/hradware agnostic
 
 This repo is the link fand manager for many other repos
