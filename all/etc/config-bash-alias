@@ -878,3 +878,10 @@ function grep-here {
  alias mapa="telnet mapscii.me"
 
  alias pi-config="raspi-config"
+
+function pwsh {
+   # Entrar em Debian (instalado dentro do termux) e entrar em Powershell diretamente (fornecendo logo argumentos)
+   # Uma fx é melhor que um alias porque permite expandir
+
+   proot-distro login debian -- /data/data/com.termux/files/home/powershell/pwsh "$@"
+}
