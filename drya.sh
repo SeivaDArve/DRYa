@@ -35,18 +35,25 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
-# Comments examples below. (The importance of an Interpreted Programming language is that it can be used as a notepad where every line is either a text note or a functional note (also knows as Code). So these single and multi comment lines will be left here to remind the User/Dev to use Bash by studying it and using it at the same time. Whenever the User/Dev opens this file and scrolls down to all some code, he/she will be reminding himself/herself of those Bash tricks he/she does not use that often and has more trouble remembering.
+
+
+
+
+# Comments examples below. 
       
    : '
-      Multi line comment example. Line 1
-      Multi line comment example. Line 2
+      Multi
+      comment
+      line,
+      example
 
-      When writing interpreted code, write code for people, not for machines 
-      
-      (This syntax of multi comments can also be used in the CLI prompt)
+      In-built Notes: 
+         1. The importance of an Interpreted Programming language is that it can be used as a notepad where every line is either a text note or a functional note (also knows as Code). So these single and multi comment lines will be left here to remind the User/Dev to use Bash by studying it and using it at the same time. Whenever the User/Dev opens this file and scrolls down to all some code, he/she will be reminding himself/herself of those Bash tricks he/she does not use that often and has more trouble remembering.
+         2. When writing interpreted code, write code for people, not for machines 
+         3. This syntax of multi comments can also be used in the CLI prompt
    '
 
-   # Single comment example.
+   variable_example="Example Text"  # Single comment line, example.
 
 
 
@@ -57,28 +64,205 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
-# Sourcing DRYa Lib 1: Color schemes
-   v_lib1_failsafe=./all/lib/libs/drya-lib-1-colors-greets.sh
-   v_lib1=${v_REPOS_CENTER}/DRYa/$v_lib1_failsafe
-   v_msg_failsafe="Note: if this msg is used, then failsave is not 'smooth'"
-   v_msg="DRYa libs: $__name__: drya-lib-1 does not exist (error)"
-   #source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
-   [[ -f $v_lib1 ]]                && source $v_lib1 2>/dev/null \
-      || [[ -f $v_lib1_failsafe ]] && source $v_lib1 2>/dev/null \
-      || (read -s -n 1 -p "$v_msg" && echo)
+
+function f_stroken {
+   # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
+   # uDev: Use from drya-lib-4 instead. Make this just a copy like ezGIT
+
+   # If ~/.netrc exists, no need to print the rest
+      if [ -f ~/.netrc ]; then
+         echo ".netrc exists. No github auth needed" 1>/dev/null
+
+      else
+         f_talk; echo    "stroken"
+                 echo    " > Inside the ezGIT app I found this: "
+         f_c4;   echo -n "seivadarve";
+         f_rc;   echo    " and this:";
+         f_c4;   echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
+         f_rc;   echo
+      fi
+}
+
+
+
+
+
+
+
+function f_failsafe_starting_tools {
+
+
+   function f_5 {
+      # Fx:
+      # 1. Gives working directory where the current running script is placed (main script $0, not any other library imported)
+      # 2. Does not give name of the script in the end (gives only the working directory)
+      # 3. Without sufix / in the end
+      # 4. Does not matter the prompt location from where this script will be called to execute
+      # 5. $v_scripts_directory_name will indicate the final product of this fx, the correct directory where this script is located/inserted
+      # 6. $v_5 will also indicate the final product of this fx
+
+      v_scripts_directory_name=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+      #v_scripts_directory_name="$v_scripts_directory_name/"  # Adding sufix /
+
+
+      # For beter verbose (Same line of code as f_6)
+         v_basename=$(basename $0)
+
+      # Finally
+         v_5_verbose=$v_basename
+         v_5=$v_scripts_directory_name
+         __dryaROOT__=$v_5
+   }
+   function f_5_verbose {
+      echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+      echo "  >  $v_5";
+      echo
+      echo "__dryaROOT__ == $__dryaROOT__"
+      read -sn1
+   }
+
+   # Delete or unset this variable here before atempting to load drya-libs. That will allow the loaders to inform errors after the attempts
+      unset v_verbose_failsafe_help  
+
+   # Getting working directory where the script is placed (without the name in the end)
+      f_5
+      f_5_verbose 
+
+}
+
+function f_failsafe_for_missing_hard_dependencies {
+      read -p " > " v_ans
+
+      clear
+      command -v fzf &>/dev/null || echo "fzf missing"
+      command -v figlt &>/dev/null || echo "fzf missing"
+      # uDev: test 'figlet' here
+      # uDev: suggest the user: install Hard Dependencies
+      echo 
+      echo "DRYa: failsafe help"
+      echo " > Some Hard Dependencies mussing:  "
+      echo
+      echo ' Install HARD dependencies NOW with letter Y'
+      read -p " > " v_ans
+      echo
+}
+
+function f_failsafe_finishing_tools {
+   # Fx to run After attemptping to load DRYa libraries 'drya-libs':
+   # Everytime one library cannot load, this fx will be called.
+   
+   if [[ -z $v_verbose_failsafe_help ]] || [[ $v_verbose_failsafe_help == "no" ]]; then
+      # Failsafe unnecessary... continuing normally
+      unset v_verbose_failsafe_help  
+
+
+   elif [[ $v_verbose_failsafe_help == "yes__about_libs" ]]; then
+      # Failsafe functionalities (for everything, nothing was found. DRYa was not installed at ~/.bashrc):
+      read -sn1 -t2
+      clear
+      echo
+      echo "DRYa: failsafe help (missing DRYa + missing dependencies):"
+      echo " To use DRYa libraries without installing them, navigate the prompt to:"
+      echo '  > `cd .../DRYa`' 
+      echo " Because drya.sh can detect relative paths to it like:"
+      echo "  > $v_lib1_failsafe_absolute"
+      echo
+
+      unset v_ans
+      read -s -p "[Any key] to continue"
+      clear
+
+      [[ $v_ans == "" ]] && 
+      exit 1
+   
+   else 
+      echo "Bug found, variable: \$v_verbose_failsafe_help"
+      echo " > Has wrong/unknown values"
+   fi
+}
+
+function f_failsafe {
+   # Failsafe functions:
+
+   # This fx STARTS before attempting to load Libraries and dependencies
+   # and     ENDS   after  attempting to load Libraries and dependencies
+
+   # Both will be called by each drya-lib:
+      #f_failsafe_starting_tools  
+      #f_failsafe_finishing_tools
+
+   # Emcripted passphrase to automatic autentication with github.com 
+      #f_stroken  
+
+   echo &>/dev/null
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Sourcing DRYa Library 1: 
+   # Load Color schemes :: Fx Examples: f_greet, db, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
+   
+   f_failsafe_for_missing_hard_dependencies 
+   f_failsafe_starting_tools  
+
+   v_lib1_msg="DRYa: $__name__: drya-lib-1"           # Title
+   v_lib1=./all/lib/libs/drya-lib-1-colors-greets.sh  # Half of the library's path (shared by all other variables)
+   v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1     # Absolute path of `dirname` of running script '$0'
+   v_lib1_failsafe_relative=$v_lib1                   # Relative path to libs (when prompt is located side-by-side with drya.sh script
+   v_lib1_normal=${v_REPOS_CENTER}/DRYa/$v_lib1       # Custume relative path given during DRYa instalation
+
+   if [[ -f $v_lib1_normal                ]]; then
+      # If DRYa is properly installed, use pre defined relative PATH to load libraries
+      source  $v_lib1_normal   2>/dev/null  ||  echo "$v_lib1_msg failed to load" && read -sn1 -p " > [Any key] to continue" && echo
+      v_verbose_failsafe_help=no
+
+   elif [[ -f $v_lib1_failsafe_absolute              ]]; then
+      # If DRYa is not properly installed, use absolute PATH to load libraries
+      source  $v_lib1_failsafe_absolute 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
+      v_verbose_failsafe_help=yes__about_dependencies
+
+   elif [[ -f $v_lib1_failsafe_relative              ]]; then
+      # If DRYa is not properly installed, use absolute PATH to load libraries
+      source  $v_lib1_failsafe_relative 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
+      v_verbose_failsafe_help=yes__about_dependencies
+   else
+      # If DRYa is not properly installed or files not found
+      echo   "$v_lib1_msg was not found (error)"
+      v_verbose_failsafe_help=yes__about_libs
+
+   fi
+
+   f_failsafe_finishing_tools
 
    v_greet="DRYa"
    v_talk="DRYa: "
 
-   # Examples: `db` (an fx to use during debug)
-   #           f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
 
 
 
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
    v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)" && echo)
+   [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 
@@ -86,7 +270,7 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
    v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
-   [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)" && echo)
+   [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
 
    # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
    #           f_lib4_stroken
@@ -94,33 +278,16 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
-# Failsafe mothods (talvez nao seja preciso se for encontrado as drya-lib no relative path junto a drya.sh)
-
-   unset -f f_talk   # Debug
-
-   if declare -F f_talk >/dev/null; then
-      echo "Função f_talk testada: existe" 1>/dev/null
-
-   else
-      echo "Função f_talk testada: nao existe. A entrar em failsafe mode"
-      read -sn1
-
-      function f_talk {
-         # Colorfull text to preceed any text of any important text line
-            echo -n "DRYa (failsafe): $*"
-            echo
-      }
-      function f_tk {
-         f_talk 
-      }
-
-   fi
 
 
 
 
-
-
+function f_tst {
+   echo
+   read -sp "Finished loading Header"
+   echo
+}
+f_tst 
 
 
 
@@ -137,7 +304,7 @@ v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-b
 
 
 
-function f_instructions_of_usage {
+function f_soft_link_instructions {
    # Função para exibir como usar o script
 
    f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
@@ -166,23 +333,6 @@ function f_instructions_of_usage {
       exit 1
 }
 
-function f_stroken {
-   # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
-   # uDev: Use from drya-lib-4 instead. Make this just a copy like ezGIT
-
-   # If ~/.netrc exists, no need to print the rest
-      if [ -f ~/.netrc ]; then
-         echo ".netrc exists. No github auth needed" 1>/dev/null
-
-      else
-         f_talk; echo    "stroken"
-                 echo    " > Inside the ezGIT app I found this: "
-         f_c4;   echo -n "seivadarve";
-         f_rc;   echo    " and this:";
-         f_c4;   echo    "ghp_JGIFXMcvvzfizn9OwAMdMdGMSPu9E30yVogPk"
-         f_rc;   echo
-      fi
-}
 
 function f_install_drya__with_fzf {
    echo "File was removed:"
@@ -1579,7 +1729,7 @@ function f_win_to_linux_pwd {
 function f_drya_help {
    # Main help function
   
-   f_greet2
+   f_greet2 
 
    f_talk; echo "Help"
            echo
@@ -1845,7 +1995,8 @@ function f_instalation_guide_to_wsl {
            echo '1. Abrir CMD como Admin'
            echo '2. `wsl --install`      # Isso ativa WSL; Instala WSL2; Instala o Ubuntu por defeito'
            echo '3. Reeniciar o Pc'
-           echo '4. Na BIOS ativar: "Intel Virtual Technology"'
+           echo '4. Na BIOS ativar: "Intel Virtual Technology" se a motherboard e CPU suportar'
+           echo '   Reboot > BIOS > Advanced > CPU Configuration > Intel Virtualization Technology > Enabled'
            echo '5. Configurar o Linux (ao abrir Ubuntu pela primeira vez):'
            echo '   5.1. Escolher User + Password'
            echo '   5.2. Confirmar que é WSL2 `wsl -l -v` que deve aparecer "VERSION 2"'
@@ -3494,6 +3645,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
         #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
 
         # Extras: Marcar com 1 pinta de corretor branco a tecla 'F2' correspindente a abrir a BIOS
+        #L16="16. |           | Install encrypted chat peer-to-peer github.com/diorwave/cmd-chat
         #L16="16. |           | Sugest ninite.com to install Windows Software in bunches
         #L16="16. |           | Install batch files for windows
          L16="16. |           |  Update | View 'once-tasks-list'"
@@ -3501,20 +3653,20 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L14='14. |           |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
          L13='13. | `D ui i`  |  Menu   | PRESETS + Packages + Populate Machines ' 
          L12='12. | `D ui b`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
-         L11='11. | `D cln`   |  Menu   | Clone Repos         '
-         L10='10. | `D iu d`  |  Menu   | dot-files           '
-          L9='9.  | `D ui dp` |  Menu   | 1st.org (Dependencies)       ' 
+         L11='11. | `D cln`   |  Menu   | Clone Repositories         '
+         L10='10. | `D iu d`  |  Menu   | Dot files           '
+          L9='9.  | `D ui dp` |  Menu   | About file "1st.org" (Dependencies + Packages listed)       ' 
                                
           L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
          L17='17. | `D ui s ` |  Edit   | `select` DRYa installer    '
                                   
           L6='6.  | `D cln h` |  Guide  | clone DRYa (for other devices too) '
 
-          L5='5.  |           | Install | git'    
-          L4='4.  |           |  Guide  | Install: Termux' 
-          L3='3.  |           |  Guide  | Install: WSL'   
+          L5='5.  |           | Install | [ Linux ] Install git'    
+          L4='4.  |           |  Guide  | [Android] Install Termux' 
+          L3='3.  |           |  Menu   | [Windows] Powershell + WSL'
 
-         L19='19. |           |  Guide  | Using:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
+         L19='19. |           |  Guide  | Usage:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
          L18='18. |           |  Guide  | Create:  Live USB' 
 
           L2='2.  | `D iu ls` | List Status  '
@@ -3943,7 +4095,7 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
 
    # Verificar se o número de argumentos é igual a 2
       if [ "$#" -ne 3 ]; then
-         f_instructions_of_usage
+         f_soft_link_instructions
       fi
 
    origem=$2
@@ -3952,7 +4104,7 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
    # Verificar se o arquivo/diretório de origem existe
       if [ ! -e "$origem" ]; then
           echo "Erro: O arquivo ou diretório de origem '$origem' não existe."
-          f_instructions_of_usage
+          f_soft_link_instructions
           exit 1
       fi
 
@@ -3964,7 +4116,7 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
           echo "Link simbólico criado com sucesso: '$destino' -> '$origem'"
       else
           echo "Erro ao criar o link simbólico."
-          f_instructions_of_usage
+          f_soft_link_instructions
           exit 1
       fi
 
@@ -4684,6 +4836,8 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
 
 elif [ $1 == "tty" ] ; then 
    # Info sobre tty
+   f_greet
+   f_talk
    echo "Default usernames and passwords for root users:"
    echo " > 'RetroPi OS' pi:raspberry"
     
@@ -4711,6 +4865,9 @@ elif [ $1 == "lsblk" ] ; then
       echo "uDev: help"
 
    fi
+
+elif [ $1 == "debian" ] || [ $1 == "start-debian-inside-termux" ]; then
+   proot-distro login debian  
 
 elif [ $1 == "kill-pid" ] || [ $1 == "pid" ] || [ $1 == "kill" ]; then 
    f_kill_process_by_PID 
