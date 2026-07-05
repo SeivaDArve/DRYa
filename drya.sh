@@ -373,7 +373,7 @@ function f_install_drya__with_Select {
    #          echo " ... uDev"
 
    [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh" && read -sn1 && bash $v_installer_v2
-   [[   -f $v_installer_v1 ]] && bash $v_installer_v1
+   [[   -f $v_installer_v1 ]] && bash $v_installer_v1 $@
 }
 
 function f_git_status {
@@ -3702,7 +3702,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
-         [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select
+         [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select $@
          [[ $v_list =~ "17. " ]] && bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
@@ -3728,7 +3728,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    elif [[ $2 == "1-sel" ]] || [ $2 == "1s" ] || [ $2 == "1-select-installer" ]; then 
       # Run 1-select-installer
-      f_install_drya__with_Select
+      f_install_drya__with_Select $@
 
    elif [ $2 == "s" ]; then 
       bash e ${v_REPOS_CENTER}/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh

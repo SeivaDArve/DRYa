@@ -7,6 +7,7 @@
 # uDev: Redirect zsh and fish to our bashrc
 
 # uDev: Change '# --hashtag-drya--' to  '#dee:Hashtag-DRYa'  
+# uDev: add ability to read terminal arguments, this way, it can for example Jump immediatly to certain steps/functions
 
 
 # Hashtags dee-pages:
@@ -47,12 +48,16 @@ function f_internal_variables {
 
    # For better code reading 
       v_bash=~/.bashrc
-
-
+    
+   # Unsetting this variable forces the user to set the variable again through the menus, avoiding broken attempts to install
+      unset __REPOS_CENTER__
 
    # Text for informational menus
       v_anyK=" [ANY KEY = Continue] or [CTRL-C = Cancel]: "
 
+
+   # Variables for the MENUS entries
+      v_button_help=" | h | >>> Help|Instructions|Info|Checklist " 
 
    function f_invalid_opt {
       # Text when Invalid options are given
@@ -96,28 +101,6 @@ function f_variables_recalculated {
    v=uDev
    #'realpath /home/a/../b'
 }
-
-function f_define_env_vars {
-   # AFTER running the function f_cut_4_fields_relative_path and finding $found_DRYa_at, only then 
-	#   The remaining of this script comes. This function is based on that previous function
-
-   # Printing Environment variables based on $found_DRYa_at
-	  # List of variables to be created:
-	  #  __REPOS_CENTER__="/home/user/Repositories"
-	  #  __dryaSRC__
-	  
-   # Finding path to 'dryaSRC' (the file that contains reference for all other seiva's repositories when downloaded
-	  __dryaSRC__="all/dryaSRC"
-	  __dryaSRC__=$found_DRYa_at/$__dryaSRC__
-
-     echo
-	  echo "The Heart|Source of DRYa is located at:"
-	  echo " > $__dryaSRC__"
-     echo
-     read -sn1
-}
-
-
 
 
 
@@ -347,6 +330,8 @@ function f_history_log {
    v_hst_br="|" 
    v_hst_00="| History:"
    v_hst_br="|" 
+   v_hst_05="|  > Repos Center: $__REPOS_CENTER__"
+   v_hst_br="|" 
 
 
                          echo  $v_hst_br
@@ -490,7 +475,8 @@ function f_screen_2__main_menu {
       echo " |   |"
       echo " | 3 | >>> Options"  # Vai para screen_3_3
       echo " |   |"
-      echo " | h | >>> Help + Instructions + Checklist " 
+     #echo " | h | >>> Help + Instructions + Checklist " 
+      echo        "$v_button_help"
       echo " |   |"
       echo " | q | >>> Exit"
       echo " |   |"
@@ -504,7 +490,7 @@ function f_screen_2__main_menu {
 
       elif [[ $v_ans == "2" ]] || [[ $v_ans == "Uninstall" ]]; then
          # option 2
-         f_uninstall_1st
+			f_delete_previous_DRYa_installation
 
       elif [[ $v_ans == "m" ]] || [[ $v_ans == "fzf" ]]; then
          #bash $v_5/$v_dryaSH ui i fzf  # uDev: Install fzf if it does not exist
@@ -617,7 +603,7 @@ function f_screen_4__correcting_empty_bashrc {
       [[   -f $v_bash ]] && v_tested="- [X] File exists"
       [[ ! -f $v_bash ]] && v_tested="- [ ] File does not exist"
 
-   # Avoiding bugs on f_delete_empty_lines, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one. "fixing" means "fill with something"
+   # Avoiding bugs on f_test_the_presence_of_DRYa_hashtags_on_bashrc, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one. "fixing" means "fill with something"
       unset v_char_count
       v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
 
@@ -654,11 +640,10 @@ function f_screen_5__choose_REPOS_CENTER {
    # dee:screen_5
    clear; read -sn 1 -p "screen 5"
 
-
    function f_verbose_results__REPOS_CENTER__ {
       echo  
       echo         " Defined as \$__REPOS_CENTER__ :"
-      read -sn1 -p "  > $__REPOS_CENTER__"
+      read -sn1 -p "   > $__REPOS_CENTER__"
       echo 
       # uDev: Aqui, testar se ja existe
    }
@@ -715,27 +700,26 @@ function f_screen_5__choose_REPOS_CENTER {
          # Option 1
 
          __REPOS_CENTER__="$HOME/Repositories"
-         export __REPOS_CENTER__
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == 2 ]]; then
          # Option 2
-         export __REPOS_CENTER__="/mnt/c/$USER/Repositories"
+         __REPOS_CENTER__="/mnt/c/$USER/Repositories"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 3 ]]; then
          # Option 3
-         export __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
+         __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 4 ]]; then
          # Option 4
-         export __REPOS_CENTER__="$PWD"
+         __REPOS_CENTER__="$PWD"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
@@ -745,7 +729,7 @@ function f_screen_5__choose_REPOS_CENTER {
          # uDev: Create a while loop just for this one
         
          echo; read -p " Insert custom path: " v_variable_custom_path  # Create a loop here until a valid path is given
-         [[ -n $v_variable_custom_path ]] && export __REPOS_CENTER__="$v_variable_custom_path"
+         [[ -n $v_variable_custom_path ]] && __REPOS_CENTER__="$v_variable_custom_path"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
@@ -803,6 +787,7 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
    # If at __REPOS_CENTER__ there is DRYa already cloned, this step is unecessary
    # dee:screen_6
    clear; read -sn 1 -p "screen 6"
+   clear
 
    function f_clone_now {
       # Git clone DRYa immediatly
@@ -968,9 +953,17 @@ function f_screen_7__resume_before_instalation {
 
 
 function f_congratulations_finished {
-   f_GR
-   f_talk; echo "Finished"
-   read -sn 1
+
+   # uDev: Criar um menu while proprio para este menu
+
+           echo
+   f_talk; echo    "Instalation Finished... "
+           echo    " > 'm' to return to initial menu"
+           echo    " > '*' Any to to quit"
+           read -p " > " v_ans
+           echo
+
+   [[ $v_ans != "m" ]] && exit 0 || f_screen_2__main_menu
 }
 
 
@@ -978,26 +971,28 @@ function f_congratulations_finished {
 function f_options_menu {
    f_greet
    f_talk; echo "Options (uDev)"
-      echo $v____________
-      echo " |   |" 
-      echo " | 1 | >>> Fix outdated installations"   
-      echo ' |   |     Replace outdated variables:'
-      echo ' |   |      > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
-      echo " |   |" 
-      echo $v____________
+           echo $v____________
+           echo " |   |" 
+           echo " | 1 | >>> Fix outdated installations"   
+           echo ' |   |     Replace outdated variables:'
+           echo ' |   |      > `sed "s/{v_REPOS_CENTER}/__REPOS_CENTER__/g" ~/.bashrc'
+           echo " |   |" 
+           echo " | 2 | >>> [Test only] if DRYa is already installed at ~/.bashrc"  #f_test_the_presence_of_DRYa_hashtags_on_bashrc 
+           echo " |   |" 
+           echo " | 3 | >>> Unset all functions created by this fx"
+           echo " |   |" 
+           echo $v____________
            read -sn1
+
 
 }
 
 
-function f_uninstall_1st {
+function f_test_the_presence_of_DRYa_hashtags_on_bashrc {
    # First question when uninstalling DRYa
    
-   f_greet
-   echo "Uninstalling DRYa:"
-   sed "/$v_dee/d" $v_bash 1>/dev/null
-   echo "Done!"
-   read -sn1 -p " ... "
+   read -sn1 -p "   > uDev: only test the presence of DRYa's hashtags on ~/.bashrc in order to know in DRYa is already installed"
+   echo
    # uDev: Confirmation would be good to avoid bugs
 }
 
@@ -1078,10 +1073,9 @@ function f_help {
 function f_discard_every_unused_function {
 
    # Discard every function if the instalation is to be aborted
-      unset f_cut_4_fields_relative_path
       unset f_explain
       unset f_create_backup
-      unset f_delete_empty_lines
+      unset f_test_the_presence_of_DRYa_hashtags_on_bashrc
       unset f_delete_previous_DRYa_installation
       unset f_DRYa_install_me_at_bashrc
       unset f_unset_DRYa_installer
@@ -1091,88 +1085,6 @@ function f_discard_every_unused_function {
       f_remove_DRYA_desktop_icon
 }
 
-function f_cut_4_fields_relative_path {
-
-   # Description: to remove last 4 fields of the path of the dir where the DRYa installer is located
-
-   # v_pwd is used to store current dir
-	  v_pwd=$(pwd)
-
-   # v_pwd2 is used to store current dir but reversed by characters
-	  # REV is needed to make sure we find the last fields
-		 v_pwd2=$(echo $v_pwd | rev)
-
-   # Cut everything from the string except selected fields
-	  # Cut last field
-		v_1=$(echo $v_pwd2 | cut -d / -f 1)
-
-	  # Cut second last field
-		v_2=$(echo $v_pwd2 | cut -d / -f 2)
-
-	  # Cut third last field
-		v_3=$(echo $v_pwd2 | cut -d / -f 3)
-
-	  # Cut forth last field
-		v_4=$(echo $v_pwd2 | cut -d / -f 4)
-
-
-   # Last 3 variables, when they were cut, their text was reversed by characters
-	  # Re-reversing (correcting) variable 1:
-		v_1=$(echo $v_1 | rev)
-
-	  # Re-reversing (correcting) variable 2:
-		v_2=$(echo $v_2 | rev)
-
-	  # Re-reversing (correcting) variable 3:
-		v_3=$(echo $v_3 | rev)
-
-	  # Re-reversing (correcting) variable 4:
-		v_4=$(echo $v_4 | rev)
-
-   # Using SED to find our 3 variables inside our saved v_pwd variable
-	  # sed needs to replace the text of our variable with 'nothing' along with a slash '/'
-		 # sed expression is usually: sed 's/pattern/replacement/g'
-		 # To replace the pattern with 'nothing' we use: sed 's/pattern//g'
-		 # But we need to find a '/' and that would create conflicts
-		 # To avoid conflicts, we will use the supported syntax: sed 's,pattern,replacement,g'
-		 # The pattern we need to search is a slash and a variable: '/' + $v_1
-	   # Therefore the pattern for the first field is:	"/$v_1"
-	   # Therefore the pattern for the second field is: "/$v_2"
-	   # Therefore the pattern for the third field is:	"/$v_3"
-	   # sed needs variables to be surrounded like: '"$var"' to be recognized.
-
-	# From the original path, remove the last 3 fields and storing inside a temporary file 
-		# (To avoid conflicts it is stored inside a file instead of a variable)
-
-	# Making the hidden directory where the tmp file will be stored
-	   mkdir -p ~/.tmp/
-
-	# Creating an empty file
-	   touch ~/.tmp/v_pwd3
-
-   # Transporting the text found into the empty file (to remove 3 fields) 
-	   echo $v_pwd | sed 's,'"/$v_1"',,g' | sed 's,'"/$v_2"',,g' | sed 's,'"/$v_3"',,g' > ~/.tmp/v_pwd3
-
-   # Retrieving the text from the file into a variable we can use
-      # This variable may look like "/home/user/Repositories/DRYa" and it's purpose is to mention DRYa specificly
-	   found_DRYa_at=$(cat ~/.tmp/v_pwd3)
-
-   # Transporting the text found into the empty file (to remove 4 fields) 
-	   echo $v_pwd | sed 's,'"/$v_1"',,g' | sed 's,'"/$v_2"',,g' | sed 's,'"/$v_3"',,g' | sed 's,'"/$v_4"',,g' > ~/.tmp/v_pwd3
-
-   # Retrieving the text from the file into a variable we can use
-      # This variable may look like "/home/user/Repositories" and it's purpouse is to mention where every foreign repo will be cloned into
-	   __REPOS_CENTER__=$(cat ~/.tmp/v_pwd3)
-
-   # An environment variable may be needed (in case all this process is a stand-alone file)
-	  #export found_DRYa_at
-
-   # Deleting the unnecessray temporary file (the dir is automaticaaly deleted by DRYa at startup)
-	  rm ~/.tmp/v_pwd3
-
-   # Display the entire result of this script:
-	  echo " > found DRYa at: $found_DRYa_at"
-}
 
 function f_explain {
    # uDev: this explanation is to delete, and the content to absorved by the menu
@@ -1238,13 +1150,6 @@ function f_create_backup {
 
    # Search and delete the entry for DRYa inside ~/.bashrc
 
-   function f_backup_choice_was_no {
-      echo          "   > You are choosing not to create a backup"
-      echo          "   > [Any Key to Continue...] or [Ctrl + C] to CANCEL"
-      read -sn 1 -p "   > "
-      echo
-   }
-
    while true
    do
 
@@ -1255,7 +1160,6 @@ function f_create_backup {
       echo
 
       if [[ -z $v_ans ]]; then
-         f_backup_choice_was_no 
          break
 
       elif [[ $v_ans == "y" ]] || [[ $v_ans == "Y" ]]; then
@@ -1268,7 +1172,6 @@ function f_create_backup {
          break
 
       elif [[ $v_ans == "n" ]] || [[ $v_ans == "N" ]]; then
-         f_backup_choice_was_no 
          break
 
       else
@@ -1311,102 +1214,111 @@ function f_create_backup {
 
 
 
-function f_delete_empty_lines {
-   echo "Press enter to start the backup removal of empty lines sequence"
-   read -sn1
+function f_delete_lines__on_bashrc {
 
-   # Deleting empty lines found only at the bottom of the file 
-      # It deletes one by one with a while loop (while the last line is found empty)
-		 
-	# Using TAIL to print only the last line inside a variable called: last_line
-	   last_line=$(tail -n 1 ~/.bashrc )
+   function f_actually_delete_empty_lines {
+      # Deleting empty lines found only at the bottom of the file 
+         # It deletes one by one with a while loop (while the last line is found empty)
+          
+      # Using TAIL to print only the last line inside a variable called: last_line
+         last_line=$(tail -n 1 ~/.bashrc )
 
-	# Creating an empty dir and an empty file for our process to take place
-	   mkdir -p ~/.tmp/
-	   touch ~/.tmp/tmp_file
-  
-	# If the last function found an empty line, then the next while loop will run until something is found
-	   # The meaning of -z is "empty". Therefore is $last_line = -z (empty), then do something
+      # Creating an empty dir and an empty file for our process to take place
+         mkdir -p ~/.tmp/
+         touch ~/.tmp/tmp_file
+     
+      # If the last function found an empty line, then the next while loop will run until something is found
+         # The meaning of -z is "empty". Therefore is $last_line = -z (empty), then do something
 
-	   if [ ! -z "$last_line" ]; then 
-		  echo "Last line not empty"
+         if [ ! -z "$last_line" ]; then 
+           echo "    > Last line not empty"
 
-	   elif [ -z "$last_line" ]; then
-		  echo "Last line is empty.. proceeding to remove"
+         elif [ -z "$last_line" ]; then
+           echo "    > Last line is empty.. proceeding to remove"
 
-		  while [ -z "$last_line" ]; do 
+           while [ -z "$last_line" ]; do 
 
-			 # Copying the entire file to the file 'tmp' except the last 1 line
-				  head -n -1 ~/.bashrc > ~/.tmp/tmp_file
+             # Copying the entire file to the file 'tmp' except the last 1 line
+                 head -n -1 ~/.bashrc > ~/.tmp/tmp_file
 
-			 # Deleting ~/.bashrc with empty space before restpring it WITHOUT empty space
-             rm ~/.bashrc
+             # Deleting ~/.bashrc with empty space before restpring it WITHOUT empty space
+                rm ~/.bashrc
 
-			 # Renaming tmp file (with .bashrc contents) to it's real name
-             mv ~/.tmp/tmp_file ~/.bashrc
+             # Renaming tmp file (with .bashrc contents) to it's real name
+                mv ~/.tmp/tmp_file ~/.bashrc
 
-			 # Evaluate the file againg to check if there is more empty lines needed to be removed the next loop
-             last_line=$(tail -n 1 ~/.bashrc )
-		  done
+             # Evaluate the file againg to check if there is more empty lines needed to be removed the next loop
+                last_line=$(tail -n 1 ~/.bashrc )
+           done
 
-		  echo "Done removing empty lines. PRESS any key"
-	     read -sn1
+           echo "     > Done"
+         fi
+   }
 
-		fi
+   # Asking first if we actually proceed attempting to remove empty lines
+      unset v_ans
+      read -p " > Delete empty at the bottom of ~/.bashrc? (Y/n) " v_ans
+      echo
+       
+      [[ -z $v_ans        ]] && f_actually_delete_empty_lines 
+      [[    $v_ans == "y" ]] && f_actually_delete_empty_lines 
+      [[    $v_ans == "Y" ]] && f_actually_delete_empty_lines 
+
+      #[[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+      #[[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+
 }
 
 function f_delete_previous_DRYa_installation {
+   
+   function f_actually_delete_previous_DRYa_instalation {
+      # If (Y/n) returns Y and it is to actually search and delete DRYa at bashrc
+
+      # uDev: Find first if there is any line of code or even empty lines at ~/.bashrc to avoid this speach
+        f_test_the_presence_of_DRYa_hashtags_on_bashrc
+
+      # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
+        # and deleting also the next 4 lines which are the actual code
+        sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
+
+		echo "   > DRYa removed from ~/.bashrc"
+   }
+
 
    # Asking if the user wants the previous DRYa instalation to be removed (if any)
-	  # This deletes only the 2 lines of code inside ~/.bashrc
-	  # uDev: Find first if there is any entry at ~/.bashrc to avoid this speach
-	  echo "DRYa: Do you want this script"
-	  echo " > to remove the 4 lines of code maybe present inside"
-	  echo "   ~/.bashrc from a possible previous DRYa instalation?"
-	  echo "   (ignore if you never installed DRYa before)"
-	  read -sn1 -p " > Remove? (y/n)" v_ans
-	  
-	  case $v_ans in
-		 y | Y)
-           read -sn 1 -p " Press ENTER to proceed to delete previous DRYa instalation"
-           # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
-             # and deleting also the next 4 lines which are the actual code
-             sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
+      unset v_ans
+	   read -p " > Delete previous instalation of DRYa (Y/n) " v_ans
+      echo
+       
+      [[ -z $v_ans        ]] && f_actually_delete_previous_DRYa_instalation
+      [[    $v_ans == "y" ]] && f_actually_delete_previous_DRYa_instalation
+      [[    $v_ans == "Y" ]] && f_actually_delete_previous_DRYa_instalation 
 
-
-			echo "DRYa: entry removed from ~/.bashrc"
-		 ;;
-		 n | N)
-			echo
-			echo "DRYa: you choose N"
-			echo " > Continuing..."
-		 ;; 
-	  esac
-
-   
+      #[[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+      #[[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
 }
 
 function f_DRYa_install_me_at_bashrc {
    # Print into ~/.bashrc
 
    # uDev: Esta fx busca as variaveis e imprime texto em ~/.bashrc. Mas pode tambem ser util no inicio deste script manter uma copia literal desse TEXTO literal tal como ele fica escrito apos a instalacao. Por algum motivo que o instalador falhe iria servir para colar diretamente esse texto para ~/.bashrc
+  
+   echo 
+   echo " > Populating ~/.bashrc with:"
+  
 
    # From the previous function, DRYa repo is located at:
 	   #echo $found_DRYa_at
       #read -sn 1
 	  
    # Defining the environment variable:
-	  #__dryaSRC__="${found_DRYa_at}/all/dryaSRC"
-	  #__dryaSRC__="$__REPOS_CENTER__/DRYa/all/dryaSRC"
 	  __dryaSRC__=DRYa/all/dryaSRC
-	  echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
+
+	  #echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
    
    # This variable comes from the function that cuts the string
-      echo "You have chosen $__REPOS_CENTER__ to be a dedicated directory to receive every kind of repositories"
+      #echo "You have chosen $__REPOS_CENTER__ to be a dedicated directory to receive every kind of repositories"
    
-   echo "If you agree with this, press [ANY KEY] to concat this info into ~/.bashrc"
-   echo " > Or press Ctrl-c to abort"
-   read -sn1
 
    # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
 	   # Pasting 1 empty line + 4 lines of code:
@@ -1436,7 +1348,7 @@ function f_DRYa_install_me_at_bashrc {
       echo "$L_space"   >> ~/.bashrc
 
    # Process Finished
-	  echo "DRYa: 1 Empty line + 3 Lines of code where send from DRYa to ~/.bashrc"
+	  echo "    > Done!"
 
    # If the script was sorced instead of run, remember to unset
 	  #echo "You can even unset the installer"
@@ -1485,17 +1397,16 @@ function f_run_every_used_function {
    
    f_GR
    f_talk; echo "Last installation steps... "
-   read -sn 1
 
          f_install_DRYA_desktop_icon
          f_install_figlet_font
-			f_cut_4_fields_relative_path
 			f_create_backup
 			f_delete_previous_DRYa_installation
-			f_delete_empty_lines
+         f_delete_lines__on_bashrc
 			f_DRYa_install_me_at_bashrc
 			#f_unset_DRYa_installer
 			#f_source_bashrc
+         f_congratulations_finished
 }
 
 
@@ -1546,6 +1457,29 @@ function f_exec {
    f_initialization  
    f_screen_1__test_installer_habilities  # Step (1/x)
    f_screen_2__main_menu                  # Step (from 2 to x)
-   f_congratulations_finished
+  #f_congratulations_finished
 }
-f_exec
+
+
+
+
+
+if [ -z "$*" ]; then
+   # Do something if there are no arguments
+   f_exec
+
+elif [ $1 == "teste" ] || [ $1 == "t" ]; then
+   # When 'd' is pressed to open DRYa fzf main menu
+   echo "Teste ok"
+   f_initialization  
+   __REPOS_CENTER__="$HOME/Repositories"
+   #f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER
+   #f_screen_7__resume_before_instalation
+    f_run_every_used_function
+   #f_congratulations_finished
+
+else
+   # If invalid arguments
+   echo "Invalid Argument"
+
+fi
