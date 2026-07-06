@@ -43,11 +43,13 @@ function f_internal_variables {
       v_dryaSH=../../../drya.sh
       v_readme=../../../README.org
 
-   # Text added to the end of each line to allow `sed` or `grep` test their existence, and print then easily. Also allows faster uninstall
-      v_dee="  # --hashtag-drya-- "
+   # Text added to ~/.bashrc along with DRYa's lines of code (to allow uninstalation easier)
+      v_hashtag_top=" ##  ( #drya-top-hashtag )"   # This hashtag is placed on the 3rd line. (Not on the empty line, not on the title, but at the end of the third line of code)
+      v_hashtag_bot=" ##  ( #drya-bot-hashtag )"   # This hashtag is placed, not on the last line of the instalation (which is the empty one), but it is place on the line before (which is also the last line of code)
+
 
    # For better code reading 
-      v_bash=~/.bashrc
+      v_bashrc=~/.bashrc
     
    # Unsetting this variable forces the user to set the variable again through the menus, avoiding broken attempts to install
       unset __REPOS_CENTER__
@@ -599,18 +601,18 @@ function f_screen_4__correcting_empty_bashrc {
    # uDev: depois de testado e funcionar corretamente, este screen so aparece caso haja erros. se o .bashrc estiver ok, nao vai aparecer
 
    # If file ~/.bashrc does not exist, DRYa cannot be installed
-      touch   $v_bash
-      [[   -f $v_bash ]] && v_tested="- [X] File exists"
-      [[ ! -f $v_bash ]] && v_tested="- [ ] File does not exist"
+      touch   $v_bashrc
+      [[   -f $v_bashrc ]] && v_tested="- [X] File exists"
+      [[ ! -f $v_bashrc ]] && v_tested="- [ ] File does not exist"
 
    # Avoiding bugs on f_test_the_presence_of_DRYa_hashtags_on_bashrc, this fx needs at least one empty line in order to avoid errors. If there are no characters inside the file, these lines of code will add at least one. "fixing" means "fill with something"
       unset v_char_count
-      v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
+      v_char_count=$(wc -m $v_bashrc | cut -f 1 -d " ")
 
       [[ $v_char_count -gt 1 ]] && v_char="- [X] Does not need to be fixed, all ok!"
 
-      [[ $v_char_count -lt 1 ]] && echo " " >> $v_bash 
-      [[ $v_char_count -lt 1 ]] && v_char_count=$(wc -m $v_bash | cut -f 1 -d " ")
+      [[ $v_char_count -lt 1 ]] && echo " " >> $v_bashrc 
+      [[ $v_char_count -lt 1 ]] && v_char_count=$(wc -m $v_bashrc | cut -f 1 -d " ")
       [[ $v_char_count -lt 1 ]] && v_char="- [ ] Needs to be fixed..." 
 
       [[ $v_char_count -gt 1 ]] && v_char="- [X] Fixed, all ok"
@@ -1214,7 +1216,7 @@ function f_create_backup {
 
 
 
-function f_delete_lines__on_bashrc {
+function f_delete_empty_bottom_lines_on_bashrc {
 
    function f_actually_delete_empty_lines {
       # Deleting empty lines found only at the bottom of the file 
@@ -1257,7 +1259,7 @@ function f_delete_lines__on_bashrc {
 
    # Asking first if we actually proceed attempting to remove empty lines
       unset v_ans
-      read -p " > Delete empty at the bottom of ~/.bashrc? (Y/n) " v_ans
+      read -p " > Delete empty lines at the bottom of ~/.bashrc? (Y/n) " v_ans
       echo
        
       [[ -z $v_ans        ]] && f_actually_delete_empty_lines 
@@ -1271,17 +1273,51 @@ function f_delete_lines__on_bashrc {
 
 function f_delete_previous_DRYa_installation {
    
+   # Nota de HACK: Esta fx vai procurar A ULTIMA linha de hashtag bottom e PRIMEIRA linha de hashtag top, isso quer dizer que consegue apagar VARIAS corrumpidas instalacoes de DRYa e TAMBEM consegue apagar qualquer outra linha de codigo que se tenha infiltrado ali. Essas linhas de codigo que se encotrarem no meio, serao apagadas, e isso pode ser sem querer ou DE PROPOSITO em PCs publicos. Ou seja, em instalacoes de DRYa em PCs publicos, se quisermos colocar codigo diretamente em ~/.bashrc podemos colocar dentro dos campos de DRYa, assim quando DRYa for removida, leva tudo consigo
+
    function f_actually_delete_previous_DRYa_instalation {
       # If (Y/n) returns Y and it is to actually search and delete DRYa at bashrc
 
       # uDev: Find first if there is any line of code or even empty lines at ~/.bashrc to avoid this speach
         f_test_the_presence_of_DRYa_hashtags_on_bashrc
 
-      # Finding the line containing: "# Load Seiva's main repo (one file that wakes all others)"
-        # and deleting also the next 4 lines which are the actual code
-        sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
+      #
+      # v_hashtag_top=" ##  ( #drya-top-hashtag )"   # This hashtag is placed on the 3rd line. (Not on the empty line, not on the title, but at the end of the third line of code)
+      # v_hashtag_bot=" ##  ( #drya-bot-hashtag )"   # This hashtag is placed, not on the last line of the instalation (which is the empty one), but it is place on the line before (which is also the last line of code)
+      #
+      #
+      # Finding the line containing the TOP most hashtag:
 
-		echo "   > DRYa removed from ~/.bashrc"
+         echo
+         echo -----------------------------------
+         echo "$v_hashtag_top" 
+         echo "$v_hashtag_bot" 
+         echo
+
+         v_line_nr__top=$(grep -Fn "$v_hashtag_top" $v_bashrc | head -n1 | cut -d : -f 1)
+         v_line_nr__bot=$(grep -Fn "$v_hashtag_bot" $v_bashrc | tail -n1 | cut -d : -f 1)
+
+         echo "$v_line_nr__top is the top"
+         echo "$v_line_nr__bot is the bot"
+         echo
+         echo
+
+         if sed -n '220p' $v_bashrc | grep -q '^[[:blank:]]*$'; then
+             echo "A linha 221 contém apenas espaços/tabs (ou está vazia)."
+         else
+             echo "A linha 221 contém outros caracteres."
+         fi
+
+         echo -----------------------------------
+         echo
+      #     udev
+      # Finding the line containing the bottom most hashtag:
+      #     udev
+
+      #sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
+
+		#echo "   > DRYa removed from ~/.bashrc"
+      echo "   > uDev"
    }
 
 
@@ -1294,8 +1330,8 @@ function f_delete_previous_DRYa_installation {
       [[    $v_ans == "y" ]] && f_actually_delete_previous_DRYa_instalation
       [[    $v_ans == "Y" ]] && f_actually_delete_previous_DRYa_instalation 
 
-      #[[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
-      #[[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+     #[[    $v_ans == "n" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
+     #[[    $v_ans == "N" ]] && ...  # estas linhas nem precisam existir porque estamos dentro de um while
 }
 
 function f_DRYa_install_me_at_bashrc {
@@ -1322,9 +1358,6 @@ function f_DRYa_install_me_at_bashrc {
 
    # Pasting a new entry inside ~/.bashrc (these lines are responsible to load every other Seiva's Repositories
 	   # Pasting 1 empty line + 4 lines of code:
-
-      v_hashtag_top=" ##  ( #drya-top-hashtag )"   # This hashtag is placed on the 3rd line. (Not on the empty line, not on the title, but at the end of the third line of code)
-      v_hashtag_bot=" ##  ( #drya-bot-hashtag )"   # This hashtag is placed, not on the last line of the instalation (which is the empty one), but it is place on the line before (which is also the last line of code)
 
       L_space=""
          L1_1="# Legacy DRYa"
@@ -1398,15 +1431,15 @@ function f_run_every_used_function {
    f_GR
    f_talk; echo "Last installation steps... "
 
-         f_install_DRYA_desktop_icon
-         f_install_figlet_font
-			f_create_backup
-			f_delete_previous_DRYa_installation
-         f_delete_lines__on_bashrc
-			f_DRYa_install_me_at_bashrc
-			#f_unset_DRYa_installer
-			#f_source_bashrc
-         f_congratulations_finished
+   f_install_DRYA_desktop_icon
+   f_install_figlet_font
+   f_create_backup
+   f_delete_previous_DRYa_installation
+   f_delete_empty_bottom_lines_on_bashrc
+   f_DRYa_install_me_at_bashrc
+  #f_unset_DRYa_installer
+  #f_source_bashrc
+   f_congratulations_finished
 }
 
 
