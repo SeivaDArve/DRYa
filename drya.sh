@@ -133,11 +133,11 @@ function f_failsafe_starting_tools {
 }
 
 function f_failsafe_for_missing_hard_dependencies {
-      read -p " > " v_ans
 
       clear
-      command -v fzf &>/dev/null || echo "fzf missing"
-      command -v figlt &>/dev/null || echo "fzf missing"
+      command -v fzf    &>/dev/null || echo "fzf missing"
+      command -v figlet &>/dev/null || echo "figlet missing"
+
       # uDev: test 'figlet' here
       # uDev: suggest the user: install Hard Dependencies
       echo 
@@ -223,29 +223,52 @@ function f_failsafe {
 # Sourcing DRYa Library 1: 
    # Load Color schemes :: Fx Examples: f_greet, db, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    
-   f_failsafe_for_missing_hard_dependencies 
-   f_failsafe_starting_tools  
+   # Description of this proceedure:
+   #     1. First, it is usefull if current main script has it's own name written at the top of the document in a variable like $__name__ 
+   #     2. It will define variables:
+   #        - One sentence using $__name__
+   #        - One var describing sufix path to drya-lib-1 (that works with relative paths and absolute paths)
+   #        - One var attempting to describe the Absolute path
+   #        - One var attempting to describe the Relative path (if the prompt is placed at the root of DRYa's repository
+   #
+   #
 
-   v_lib1_msg="DRYa: $__name__: drya-lib-1"           # Title
-   v_lib1=./all/lib/libs/drya-lib-1-colors-greets.sh  # Half of the library's path (shared by all other variables)
-   v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1     # Absolute path of `dirname` of running script '$0'
-   v_lib1_failsafe_relative=$v_lib1                   # Relative path to libs (when prompt is located side-by-side with drya.sh script
-   v_lib1_normal=${v_REPOS_CENTER}/DRYa/$v_lib1       # Custume relative path given during DRYa instalation
 
-   if [[ -f $v_lib1_normal                ]]; then
+   # Variables 
+      v_lib1_msg="DRYa: $__name__: drya-lib-1"           # Title
+
+      v_lib1_sufix=./all/lib/libs/drya-lib-1-colors-greets.sh  # Half of the library's path (shared by all other variables)
+      v_lib1_normal=${v_REPOS_CENTER}/DRYa/$v_lib1             # Custume relative path given during DRYa instalation
+      v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1           # Absolute path of `dirname` of running script '$0'
+      v_lib1_failsafe_relative=$v_lib1                         # Relative path to libs (when prompt is located side-by-side with drya.sh script v_lib1_0=$v_lib1_sufix
+
+      v_lib1_0=$v_lib1_sufix
+      v_lib1_1=$v_lib1_normal
+      v_lib1_2=$v_lib1_failsafe_absolute
+      v_lib1_3=$v_lib1_failsafe_relative
+
+
+   if [[ -f $v_lib1_1                ]]; then
       # If DRYa is properly installed, use pre defined relative PATH to load libraries
       source  $v_lib1_normal   2>/dev/null  ||  echo "$v_lib1_msg failed to load" && read -sn1 -p " > [Any key] to continue" && echo
       v_verbose_failsafe_help=no
 
-   elif [[ -f $v_lib1_failsafe_absolute              ]]; then
+   elif [[ -f $v_lib1_2              ]]; then
       # If DRYa is not properly installed, use absolute PATH to load libraries
       source  $v_lib1_failsafe_absolute 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
       v_verbose_failsafe_help=yes__about_dependencies
+      
+      #f_failsafe_for_missing_hard_dependencies 
+      #f_failsafe_starting_tools  
 
-   elif [[ -f $v_lib1_failsafe_relative              ]]; then
+   elif [[ -f $v_lib1_3              ]]; then
       # If DRYa is not properly installed, use absolute PATH to load libraries
       source  $v_lib1_failsafe_relative 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
       v_verbose_failsafe_help=yes__about_dependencies
+      
+      #f_failsafe_for_missing_hard_dependencies 
+      #f_failsafe_starting_tools  
+
    else
       # If DRYa is not properly installed or files not found
       echo   "$v_lib1_msg was not found (error)"
