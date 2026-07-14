@@ -833,8 +833,8 @@ function f_repository_ezGIT {
       alias     G="ezGIT"
 
 
-      alias   GG="cd ${v_REPOS_CENTER} && ls -p"
-      alias   Gg="GG"
+      alias    R="cd ${v_REPOS_CENTER} && ls -p"
+      alias   .R="rrrr=${v_REPOS_CENTER}/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
    #       `f_async__ezGIT_pull_All__at_startup`
