@@ -1290,33 +1290,68 @@ function f_delete_previous_DRYa_installation {
 
          echo
          echo -----------------------------------
-         echo "$v_hashtag_top" 
-         echo "$v_hashtag_bot" 
-         echo
+         
+         function f_find_out_if_a_ceratain_line_number_actually_contains_only_either_spaces_tabs_or_is_blank {
+            # This function takes arguments. The argument 1 '$1' is the line number to test if it either has only spaces, tabs or it it empty
+               # Arg 1 is: lie number
+               # Arg 2 is: File name
 
-         v_line_nr__top=$(grep -Fn "$v_hashtag_top" $v_bashrc | head -n1 | cut -d : -f 1)
-         v_line_nr__bot=$(grep -Fn "$v_hashtag_bot" $v_bashrc | tail -n1 | cut -d : -f 1)
+            
+            if [ -z $1 ] || [ -z $2 ]; then
+               f_talk; echo "Empty line tester (<line>, <file-name>):"
+                       echo " > No line number was given to test, or"
+                       echo " > No file name was given to test"
 
-         echo "$v_line_nr__top is the top"
-         echo "$v_line_nr__bot is the bot"
-         echo
-         echo
+            else
 
-         if sed -n '220p' $v_bashrc | grep -q '^[[:blank:]]*$'; then
-             echo "A linha 221 contém apenas espaços/tabs (ou está vazia)."
-         else
-             echo "A linha 221 contém outros caracteres."
-         fi
+              #if sed -n '220p' $v_bashrc | grep -q '^[[:blank:]]*$'; then
+               if sed -n "$1p" $2         | grep -q '^[[:blank:]]*$'; then
+                   #echo "A linha 221 contém apenas espaços/tabs (ou está vazia)."
+                   echo "A linha $1 contém apenas espaços/tabs (ou está vazia)."
+               else
+                   #echo "A linha 221 contém outros caracteres."
+                   echo "A linha $1 contém outros caracteres."
+               fi
+            fi
+         }
+
+         function f_find_the_fist_line_containing_text_for_top_most_hashtag {
+            echo "$v_hashtag_top has the top hashtag"  # Debug  
+            v_line_nr__top=$(grep -Fn "$v_hashtag_top" $v_bashrc | head -n1 | cut -d : -f 1)
+            echo "$v_line_nr__top is the top hashtag"  # Debug 
+            
+            # Getting the line before this (it should be empty)
+               v_line_above=$((v_line_nr__top -= 1))
+               echo $v_line_above is the empty line above
+               f_find_out_if_a_ceratain_line_number_actually_contains_only_either_spaces_tabs_or_is_blank $v_line_above $v_bashrc  # This function takes 2 arguments
+            echo
+         }
+
+         function f_find_the_last_line_containing_text_for_bottom_most_hashtag {
+            echo "$v_hashtag_bot has the top hashtag"  # Debug   
+            v_line_nr__bot=$(grep -Fn "$v_hashtag_bot" $v_bashrc | tail -n1 | cut -d : -f 1)
+            echo "$v_line_nr__bot is the bot hashtag"  # Debug
+            echo
+         }
+
+         echo  # Debug 
+         echo  # Debug
+
+
+
+
+         f_find_the_fist_line_containing_text_for_top_most_hashtag 
+         f_find_the_last_line_containing_text_for_bottom_most_hashtag
+
+
+
 
          echo -----------------------------------
          echo
-      #     udev
-      # Finding the line containing the bottom most hashtag:
-      #     udev
+		
 
-      #sed -i "/# Load Seiva's main repo (one file that wakes all others)/,+3d" ~/.bashrc
 
-		#echo "   > DRYa removed from ~/.bashrc"
+     #echo "   > DRYa removed from ~/.bashrc"
       echo "   > uDev"
    }
 
@@ -1360,10 +1395,10 @@ function f_DRYa_install_me_at_bashrc {
 	   # Pasting 1 empty line + 4 lines of code:
 
       L_space=""
-         L1_1="# Legacy DRYa"
-         L1_2="   v_REPOS_CENTER="/home/dv/Repositories"; export v_REPOS_CENTER  # Dedicated and directory for repos $v_hashtag_top"
+         L1_1="# Legacy DRYa"  # Dedicated and directory for repos $v_hashtag_top
+         L1_2="   v_REPOS_CENTER=/home/dv/Repositories; export v_REPOS_CENTER" 
       L_space=""
-           L2="# STARTING: DRYa (Don't Repeat Yourself, app) $v_hashtag_top"
+           L2="# STARTING DRYa: \"Don't Repeat Yourself, app\" $v_hashtag_top"
            L3="   __REPOS_CENTER__=$__REPOS_CENTER__; # Directory to centralize Repositories"
            L4="   __dryaSRC__=\$__REPOS_CENTER__/$__dryaSRC__; # First DRYa file to run. It initiates all others"
            L5="   export __REPOS_CENTER__ __dryaSRC__ ; source \$__dryaSRC__ $v_hashtag_bot"
