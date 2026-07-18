@@ -27,13 +27,13 @@
 
 # Projeto Node.js típico
 # 1. Contém todas as dependências instaladas pelo npm ou yarn, incluindo o Electron, React, Express, etc.
-node_modules/	   
+**/node_modules/**
 
 # 2. Contém a versão compilada ou empacotada da aplicação.	
-dist/	            
+**/dist/**
 
 # 3. Pasta de compilação ou empacotamento. O significado varia consoante o projeto.	
-build/	         
+**/build/**
 
 # 4. Guarda variáveis de ambiente, como chaves de API, passwords ou configurações locais.
-.env	            
+**/.env/**
