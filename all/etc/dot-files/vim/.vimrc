@@ -137,3 +137,15 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap <Up> <Cmd>echo "Up ARROW disabled at .virmc"<CR>
    nnoremap <Right> <Cmd>echo "Right ARROW disabled at .virmc"<CR>
    nnoremap <Down> <Cmd>echo "Down ARROW disabled at .virmc"<CR>
+
+" Usar as teclas de NORMAL mode durante INSERT mode
+   inoremap <C-h> <Left>
+   inoremap <C-l> <Right>
+   inoremap <C-j> <Down>
+   inoremap <C-k> <Up>
+
+" Garantir que a tecla CTRL em NORMAL mode MANTENHA a utilizacao correta das SETAS do teclado
+   nnoremap <C-h> h        " por DEFAULT 'Ctrl-h' Vai para a janela (window/split) à esquerda (:help CTRL-W_h)
+   nnoremap <C-j> j        " por DEFAULT 'Ctrl-j'Mostra a página seguinte da ajuda/digraphs quando aplicável; por si só não é um comando de movimento usado no dia a dia. Para mudar para o split abaixo usa-se Ctrl-w j. 
+   nnoremap <C-k> k        " por DEFAULT 'Ctrl-k'Entra no modo de digraph (para inserir caracteres especiais) em contextos apropriados; no Normal mode não é um movimento comum.
+   nnoremap <C-l> l        " por DEFAULT 'Ctrl-l'Redesenha o ecrã e recentra se necessário (:redraw!). Muito útil quando o terminal fica "sujo". 
