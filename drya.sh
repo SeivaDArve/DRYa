@@ -128,7 +128,7 @@ function f_failsafe_starting_tools {
 
    # Getting working directory where the script is placed (without the name in the end)
       f_5
-      f_5_verbose 
+      #f_5_verbose 
 
 }
 
@@ -233,41 +233,40 @@ function f_failsafe {
    #
    #
 
+   # Loading $v_5
+      f_failsafe_starting_tools  
 
    # Variables 
-      v_lib1_msg="DRYa: $__name__: drya-lib-1"           # Title
+      v_lib1_msg="DRYa: $__name__: drya-lib-1"                       # Title
+      v_lib1_relative=./all/lib/libs/drya-lib-1-colors-greets.sh     # Half of the library's path (shared by all other variables)
+      v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1_relative        # Absolute path of `dirname` of running script '$0'
+      v_lib1_normal=${v_REPOS_CENTER}/DRYa/$v_lib1_relative          # Custume relative path given during DRYa instalation_
 
-      v_lib1_sufix=./all/lib/libs/drya-lib-1-colors-greets.sh  # Half of the library's path (shared by all other variables)
-      v_lib1_normal=${v_REPOS_CENTER}/DRYa/$v_lib1             # Custume relative path given during DRYa instalation
-      v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1           # Absolute path of `dirname` of running script '$0'
-      v_lib1_failsafe_relative=$v_lib1                         # Relative path to libs (when prompt is located side-by-side with drya.sh script v_lib1_0=$v_lib1_sufix
-
-      v_lib1_0=$v_lib1_sufix
-      v_lib1_1=$v_lib1_normal
-      v_lib1_2=$v_lib1_failsafe_absolute
-      v_lib1_3=$v_lib1_failsafe_relative
-
+      #v_lib1_1=$v_lib1_normal              #    ; echo "1 $v_lib1_1"
+      #v_lib1_2=$v_lib1_failsafe_absolute   #    ; echo "2 $v_lib1_2"
+      v_lib1_3=$v_lib1_relative            #    ; echo "3 $v_lib1_3"
+                                           #      read
 
    if [[ -f $v_lib1_1                ]]; then
       # If DRYa is properly installed, use pre defined relative PATH to load libraries
-      source  $v_lib1_normal   2>/dev/null  ||  echo "$v_lib1_msg failed to load" && read -sn1 -p " > [Any key] to continue" && echo
-      v_verbose_failsafe_help=no
+      source "$v_lib1_1" 2>/dev/null || {
+         echo "$v_lib1_msg failed to load"
+         read -sn1 -p " > [Any key] to continue"
+         echo
+      }
 
    elif [[ -f $v_lib1_2              ]]; then
       # If DRYa is not properly installed, use absolute PATH to load libraries
-      source  $v_lib1_failsafe_absolute 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
+      source  $v_lib1_2 2>/dev/null  &&  echo "$v_lib1_msg using failsafe (absolute path to arg \$0)"
       v_verbose_failsafe_help=yes__about_dependencies
       
       #f_failsafe_for_missing_hard_dependencies 
-      #f_failsafe_starting_tools  
 
    elif [[ -f $v_lib1_3              ]]; then
       # If DRYa is not properly installed, use absolute PATH to load libraries
-      source  $v_lib1_failsafe_relative 2>/dev/null  &&  echo "$v_lib1_msg failsafe started"
+      source  $v_lib1_3 2>/dev/null  &&  echo "$v_lib1_msg using failsafe (relative path to prompt)"
       v_verbose_failsafe_help=yes__about_dependencies
       
-      #f_failsafe_for_missing_hard_dependencies 
-      #f_failsafe_starting_tools  
 
    else
       # If DRYa is not properly installed or files not found
@@ -276,7 +275,7 @@ function f_failsafe {
 
    fi
 
-   f_failsafe_finishing_tools
+   #f_failsafe_finishing_tools
 #=======
 #   #echo "Path: $v_lib1"
 #   #source $v_lib1
