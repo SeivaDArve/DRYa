@@ -208,18 +208,6 @@ function f_failsafe {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 # Sourcing DRYa Library 1: 
    # Load Color schemes :: Fx Examples: f_greet, db, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    
