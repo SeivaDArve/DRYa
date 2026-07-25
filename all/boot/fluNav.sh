@@ -1129,12 +1129,12 @@ function V {
 
       elif [ $1 == "trade" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
-         [[ -d ~/lnk/trade ]] && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
+         [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
       
 
       elif [ $1 == "bot" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
-         [[ -d ~/lnk/js-bot ]] && cd ~/lnk/js-bot  # This line will overwrte the last of if not disabled like a comment
+         [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
 
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then

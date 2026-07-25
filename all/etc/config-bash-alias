@@ -187,6 +187,7 @@ alias la="ls -pA"
 alias ll="ls -pl"
 alias lll=f_ls_with_absolute_path
 alias lh="du -ah" # Lists all file's size
+alias l1="ls -pl1"
 alias RM="rm -rf"
 alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
    alias lx="lixo"
