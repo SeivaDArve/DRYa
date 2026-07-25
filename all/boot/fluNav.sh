@@ -1068,17 +1068,28 @@ function V {
          # Lista de opcoes para o menu `fzf`
             Lz1='Save '; Lz2='V'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-            L3='3. Mostrar tamanho (Kb) da pasta atual com `du -h`'                                      
-            L2='2. Apagar historico de pastas apresentadas por `V ...` (uDev)'                                      
+            L5='5. Navegar: "javascript-BTC-bot-v1" directory'
+            L4='4. Navegar: "Trade"              directory'
+
+            L3='3. Detetar tamanho da pasta atual com `du -h` em Kilobytes'                                      
+            L2='2. Limpar historico de pastas em `V ...` (uDev)'                                      
             L1='1. Cancel'
+
+            Lh_5=$(echo -e "\nNotas: \n - Existe \"javascript binance\" em moedaz.git \n ")
+            L0_5="fluNav: V: Buscar e Navegar até 'trade.org': "
+
+            Lh_4=$(echo -e "\nNotas: \n - Existe 'trade.org' em moedaz.git \n ")
+            L0_4="fluNav: V: Buscar e Navegar até 'trade.org': "
 
             L0="fluNav: V: Menu + Pastas Fav para navegar: "
             
          # Ordem de Saida das opcoes durante run-time
-            v_list=$(echo -e "$L1 \n$L2 \n$L3\n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
+            v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$L4 \n\n$Lz3" | fzf --pointer=">" --cycle --prompt="$L0")
 
          # Atuar de acordo com as instrucoes introduzidas pelo utilizador
             [[ $v_list =~ $Lz3  ]] && echo "$Lz2" && history -s "$Lz2"
+            [[ $v_list =~ "5. " ]] && v=$(find . -type f | fzf --exact --query "btc" --prompt="$L0_5" --header="$Lh_5") && [[ -n $v ]] && cd $(dirname $v)
+            [[ $v_list =~ "4. " ]] && v=$(find . -type f | fzf --exact --query "trade.org" --prompt="$L0_4" --header="$Lh_4") && [[ -n $v ]] && cd $(dirname $v)
             [[ $v_list =~ "3. " ]] && du -h
             [[ $v_list =~ "2. " ]] && echo "uDev: $L2" 
             [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" 
@@ -1117,8 +1128,14 @@ function V {
       
 
       elif [ $1 == "trade" ]; then
-         cd ${v_REPOS_CENTER}/moedaz/all/trade/Binance-Bot 2>/dev/null && ls -p || f_error_cd
+         cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
+         [[ -d ~/lnk/trade ]] && cd ~/lnk/trade
       
+
+      elif [ $1 == "bot" ]; then
+         cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/Binance-Bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -d ~/lnk/js-bot ]] && cd ~/lnk/js-bot
+
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
          cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls -p || f_error_cd
@@ -1373,6 +1390,15 @@ function V {
          echo "$v_pwd" >> $v_fluNav_V_hist_file
          f_talk; echo '`pwd` adicionado ao historico'
 
+   # Implementation of Use about 'lnk' (soft-links, hard-links):
+      elif [ $1 == "lnk" ]; then
+
+         L0="fluNav: V: Navigating into soft-links (at ~/lnk/* ): "
+         mkdir -p ~/lnk && cd ~/lnk/
+         cd ~/lnk && v=$(fzf --query="$2" --prompt="$L0") && [[ -n $v ]] && cd $(dirname $v)
+
+         
+   # Else
       else 
          f_talk; echo "arg|file|dir|option|menu|place|history not found."
    fi
