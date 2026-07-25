@@ -1129,12 +1129,12 @@ function V {
 
       elif [ $1 == "trade" ]; then
          cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
-         [[ -d ~/lnk/trade ]] && cd ~/lnk/trade
+         [[ -d ~/lnk/trade ]] && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
       
 
       elif [ $1 == "bot" ]; then
-         cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/Binance-Bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
-         [[ -d ~/lnk/js-bot ]] && cd ~/lnk/js-bot
+         cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -d ~/lnk/js-bot ]] && cd ~/lnk/js-bot  # This line will overwrte the last of if not disabled like a comment
 
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
@@ -1395,7 +1395,7 @@ function V {
 
          L0="fluNav: V: Navigating into soft-links (at ~/lnk/* ): "
          mkdir -p ~/lnk && cd ~/lnk/
-         cd ~/lnk && v=$(fzf --query="$2" --prompt="$L0") && [[ -n $v ]] && cd $(dirname $v)
+         cd ~/lnk && v_lnk=$(fzf --query="$2" --prompt="$L0") && [[ -n $v_lnk ]] && cd $(dirname $v_lnk)
 
          
    # Else
