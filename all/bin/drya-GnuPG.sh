@@ -596,6 +596,10 @@ function f_only_convert_content_from_OpenPGP_no_encription {
    echo "uDev"
 }
 
+function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
+   echo uDev
+}
+
 function f_inform_about_dryaSRC {
    f_talk; echo "Info inicial"
            echo ' > O comando `D gpg` tem 2 funcoes'
@@ -1029,6 +1033,9 @@ elif [ $1 == "20" ]; then
 
 elif [ $1 == "21" ]; then
    f_only_convert_content_from_OpenPGP_no_encription 
+
+elif [ $1 == "29" ]; then
+   f_decrypt_temporarily_into_file_then_edit_then_encrypt
 
 elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
    f_install_now 

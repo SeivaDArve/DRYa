@@ -36,4 +36,7 @@ dist/
 build/	         
 
 # 4. Guarda variáveis de ambiente, como chaves de API, passwords ou configurações locais.
-.env	            
+**/.env/**
+**/env/**
+**/.env
+**/env
