@@ -2,6 +2,7 @@
 # Title: DRYa-GnuPG
 # Description: Menu para operações GnuPG com explicações e confirmacao antes de executar
 
+v_fzf_talk="DRYa-GnuPG"
 
 
 
@@ -306,18 +307,57 @@ function f_symmetric_decrypt {
    read -erp "Ficheiro de entrada (a desencriptar): " infile
    [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
 
-   read -erp "Ficheiro de saída, novo nome. (default: Terminal Output): " outfile
+   read -erp "Ficheiro de saída, novo nome. (default: Terminal Output > enviado para 'less'): " outfile
    
    if [ -z "$outfile" ]; then
       echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
       f_hline
-      $GPG --quiet --batch -d $infile
+      $GPG --quiet --batch -d $infile | less
 
    else
       $GPG -o $outfile -d $infile
    fi
 
    pause
+}
+
+function f_symmetric_decrypt__search_with_fzf_at_REPO_Tesoro {
+   # Criptografia simetrica: desencriptar um ficheiro que esteja presente na repo Tesoro
+   # -d ou --decrypt
+
+   f_vb_symmetric_decrypt 
+
+   f_ls
+
+   #read -erp "Ficheiro de entrada (a desencriptar): " infile
+   cd ${v_REPOS_CENTER}/Tesoro
+
+
+
+
+   Lh=$(echo -e "\nTask:\n 1. Navigate to repo Tesoro \n 2. Choose 1 file with fzf \n 3. Decript that file to current prompt location (current directory) \n ")
+   L0="$v_fzf_talk: Decript: "
+   v_file=$(fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+
+
+   echo
+   echo "debug $v_file"
+   read
+#   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+#
+#   read -erp "Ficheiro de saída, novo nome. (default: Terminal Output > enviado para 'less'): " outfile
+#   
+#   if [ -z "$outfile" ]; then
+#      echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
+#      f_hline
+#      $GPG --quiet --batch -d $infile | less
+#
+#   else
+#      $GPG -o $outfile -d $infile
+#   fi
+#
+#   pause
 }
 
 function f_encrypt_for_recipient {
@@ -781,50 +821,51 @@ Serve para Verificação de identidade
 
 
 function f_main_menu_text {
-   echo " | opc | fx (all with info, except if \$1 is 'v')"
-   echo ' | Arg | Descricao da fx (+ info  || `v` for no info)'
+   echo " |  opc | fx (all with info, except if \$1 is 'v')"
+   echo ' |  Arg | Descricao da fx (+ info  || `v` for no info)'
    f_hline
-   echo " |  0  | Status > DRYa default settings"
-   echo " | 18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
-   echo " | 19  | Status > Describing all contents at ~/.gnupg"
+   echo " |   0  | Status > DRYa default settings"
+   echo " |  18  | Status > Reset package 'gnupg' (MUITO CUIDADO)"
+   echo " |  19  | Status > Describing all contents at ~/.gnupg"
    f_hline
-   echo " |  1  | Chaves > Listar as públicas / verificar existência"
-   echo " |  2  | Chaves > Listar as privadas / verificar existência"
-   echo " |  3  | Chaves > Gerar nova (interativo)"
-   echo " |  4  | Chaves > Importar"
-   echo " |  5  | Chaves > Exportar pública"
-   echo " |  6  | Chaves > Exportar privada (cuidado)"
-   echo " | 12  | Chaves > Mudar passphrase"
-   echo " | 13  | Chaves > Apagar"
-   echo " | 14  | Chaves > Backup de todas"
-   echo " | 15  | Chaves > Restaurar"
+   echo " |   1  | Chaves > Listar as públicas / verificar existência"
+   echo " |   2  | Chaves > Listar as privadas / verificar existência"
+   echo " |   3  | Chaves > Gerar nova (interativo)"
+   echo " |   4  | Chaves > Importar"
+   echo " |   5  | Chaves > Exportar pública"
+   echo " |   6  | Chaves > Exportar privada (cuidado)"
+   echo " |  12  | Chaves > Mudar passphrase"
+   echo " |  13  | Chaves > Apagar"
+   echo " |  14  | Chaves > Backup de todas"
+   echo " |  15  | Chaves > Restaurar"
    f_hline
-   echo " | 20  | Convert > text/file to OpenPGP   (no encription)"
-   echo " | 21  | Convert > OpenPGP   to text/file (no encription)"
+   echo " |  20  | Convert > text/file to OpenPGP   (no encription)"
+   echo " |  21  | Convert > OpenPGP   to text/file (no encription)"
    f_hline
-   echo " |  7  | Encrypt > simétrica (com passphrase)"
-   echo " | 17  | Decrypt > simétrica (com passphrase)"
-   echo " | 25  | Encrypt > simétrica (com passphrase, fornecida como arg)"
-   echo " | 26  | Decrypt > simétrica (com passphrase, fornecida como arg)"
+   echo " |   7  | Encrypt > simétrica (com passphrase)"
+   echo " |  17  | Decrypt > simétrica (com passphrase)"
+   echo " |  25  | Encrypt > simétrica (com passphrase, fornecida como arg)"
+   echo " |  26  | Decrypt > simétrica (com passphrase, fornecida como arg)"
    f_hline
-   echo " |  8  | Encrypt > assimetrica para destinatário (chave pública)"
-   echo " |  9  | Decrypt > ficheiro"
+   echo " |   8  | Encrypt > assimetrica para destinatário (chave pública)"
+   echo " |   9  | Decrypt > ficheiro"
    f_hline
-   echo " | 10  | Assinaturas > Assinar ficheiro"
-   echo " | 11  | Assinaturas > Verificar assinatura"
-   echo " | 16  | Mostrar fingerprints (Testar chaves e seus donos)"
+   echo " |  10  | Assinaturas > Assinar ficheiro"
+   echo " |  11  | Assinaturas > Verificar assinatura"
+   echo " |  16  | Mostrar fingerprints (Testar chaves e seus donos)"
    f_hline
-   echo " | 22  | Compress     (zip) "
-   echo " | 23  | Decompress   (unzip) "
-   echo ' | 24  | Dependencias (uDev: `D iu dp`)'
+   echo " |  22  | Compress     (zip) "
+   echo " |  23  | Decompress   (unzip) "
+   echo ' |  24  | Dependencias (uDev: `D iu dp`)'
    f_hline
-   echo ' | 27  | hjSplit > divide (uDev)'
-   echo ' | 28  | hjSplit > join (uDev)' 
+   echo ' |  27  | hjSplit > divide (uDev)'
+   echo ' |  28  | hjSplit > join (uDev)' 
    f_hline
-   echo ' | 29  | Decrypt [Text file] > Open > Edit > Close > Encrypt (uDev)'
+   echo ' |  29  | Decrypt [Text file] > Open > Edit > Close > Encrypt (uDev)'
+   echo ' | 17 Q | Question/Search with fzf 1 file @Tesoro > Decript to current directory'
    f_hline
-   echo " |  h  | Instucoes Base"
-   echo " |  Q  | Sair"
+   echo " |   h  | Instucoes Base"
+   echo " |   Q  | Sair"
 
 #   echo "$L00"
 #   f_hline
@@ -934,7 +975,7 @@ if [ -z $1 ]; then
       read -sn 1 -t $v_secs -p " ... "
       echo
 
-   f_GnuPG_main_menu 
+   f_GnuPG_main_menu | less
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
    bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh 
@@ -972,7 +1013,17 @@ elif [ $1 == "7" ]; then
    f_symmetric_store        
 
 elif [ $1 == "17" ]; then
-   f_symmetric_decrypt      
+
+   if [ -z $2 ]; then
+      f_symmetric_decrypt      
+
+   elif [ $2 == "Q" ] || [ $2 == "decrypt-one-file-from-Tesoro-to-current-prompt-location" ]; then
+      # This will QUESTION with fzf about what file which is present in Tesoro to Decrypt to current prompt location (current directory)
+      f_header
+      f_talk; echo "decrypt-one-file-from-Tesoro-to-current-prompt-location"
+      f_symmetric_decrypt__search_with_fzf_at_REPO_Tesoro
+   fi
+
 
 elif [ $1 == "25" ]; then
    #f_symmetric_encrypt__passphrase_given_as_arg
@@ -1234,6 +1285,7 @@ elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
    #[[ -n $v_ans ]] && gpg --list-packets --verbose $v_ans || echo " > Nao selecionou nenhum ficheiro"
 
    [[ -n $v_ans ]] && gpg --list-packets --quiet $v_ans || echo " > Nao selecionou nenhum ficheiro"
+
 
 elif [ $1 == "crack" ] || [ $1 == "bruteforce-crack" ]; then
    # Developing a tool to test cracking delays (simetric with passphrase)"
