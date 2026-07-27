@@ -4,11 +4,18 @@
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 
-__name__=drya.sh
-__repo__=${v_REPOS_CENTER}/DRYa
-v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
-
-
+function f_default_variables {
+   # Default variables (default_variables)
+   __name__=drya.sh
+   __repo__=${v_REPOS_CENTER}/DRYa
+   v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
+   
+   # DRYa logo: presentation info
+      v_drya_logo_1_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
+      v_drya_logo_2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
+      v_drya_logo_3=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
+}
+f_default_variables 
 
 
 
@@ -132,22 +139,6 @@ function f_failsafe_starting_tools {
 
 }
 
-function f_failsafe_for_missing_hard_dependencies {
-
-      clear
-      command -v fzf    &>/dev/null || echo "fzf missing"
-      command -v figlet &>/dev/null || echo "figlet missing"
-
-      # uDev: test 'figlet' here
-      # uDev: suggest the user: install Hard Dependencies
-      echo 
-      echo "DRYa: failsafe help"
-      echo " > Some Hard Dependencies mussing:  "
-      echo
-      echo ' Install HARD dependencies NOW with letter Y'
-      read -p " > " v_ans
-      echo
-}
 
 function f_failsafe_finishing_tools {
    # Fx to run After attemptping to load DRYa libraries 'drya-libs':
@@ -208,7 +199,9 @@ function f_failsafe {
 
 
 
-# Sourcing DRYa Library 1: 
+function f_source_drya_lib_1_alt {
+   # Sourcing DRYa Library 1: 
+
    # Load Color schemes :: Fx Examples: f_greet, db, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    
    # Description of this proceedure:
@@ -248,7 +241,6 @@ function f_failsafe {
       source  $v_lib1_2 2>/dev/null  &&  echo "$v_lib1_msg using failsafe (absolute path to arg \$0)"
       v_verbose_failsafe_help=yes__about_dependencies
       
-      #f_failsafe_for_missing_hard_dependencies 
 
    elif [[ -f $v_lib1_3              ]]; then
       # If DRYa is not properly installed, use absolute PATH to load libraries
@@ -264,36 +256,44 @@ function f_failsafe {
    fi
 
    #f_failsafe_finishing_tools
-#=======
-#   #echo "Path: $v_lib1"
-#   #source $v_lib1
-#   #read
-#
-#   [[ -f $v_lib1 ]]                && source $v_lib1 2>/dev/null \
-#      || [[ -f $v_lib1_failsafe ]] && source $v_lib1 2>/dev/null \
-#      || (read -s -n 1 -p "$v_msg" && echo)
-#>>>>>>> Stashed changes
 
    v_greet="DRYa"
    v_talk="DRYa: "
+}
+
+
+function f_source_drya_lib_1 {
+
+   # Sourcing DRYa Lib 1: 
+      #__name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   v_greet="DRYa"
+   v_talk="DRYa: "
+}
 
 
 
 
-# Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
-   [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
+function f_source_drya_lib_2 {
+   # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
+      v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+      [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
 
-   # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+      # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+}
 
 
 
-# Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
-   [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
+function f_source_drya_lib_4 {
+   # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
+      v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+      [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
 
-   # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
-   #           f_lib4_stroken
+      # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
+      #           f_lib4_stroken
+}
 
 
 
@@ -307,17 +307,26 @@ function f_tst {
    read -sp "Finished loading Header"
    echo
 }
-f_tst 
 
 
+function f_failsafe_for_missing_hard_dependencies {
+
+      clear
+      command -v fzf    &>/dev/null || echo "fzf missing"
+      command -v figlet &>/dev/null || echo "figlet missing"
+
+      # uDev: test 'figlet' here
+      # uDev: suggest the user: install Hard Dependencies
+      echo 
+      echo "DRYa: failsafe help"
+      echo " > Some Hard Dependencies mussing:  "
+      echo
+      echo ' Install HARD dependencies NOW with letter Y'
+      read -p " > " v_ans
+      echo
+}
 
 
-# Default variables
-   
-   # DRYa logo: presentation info
-      v_drya_logo_1_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
-      v_drya_logo_2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
-      v_drya_logo_3=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
 
 
 
@@ -3147,6 +3156,14 @@ function f_create_live_usb {
       #  D --help
       #  D +
       # 
+
+#f_failsafe_for_missing_hard_dependencies 
+#f_source_drya_lib_1_alt
+f_source_drya_lib_1
+f_source_drya_lib_2
+f_source_drya_lib_4
+f_tst 
+
 
 if [ -z "$*" ]; then
    # Do something if there are no arguments
