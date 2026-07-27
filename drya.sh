@@ -4829,6 +4829,19 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
            echo " > Navegue para a repo com: \`V cv\`"
            echo " > Visite website com: \`web cv\`"
 
+elif [ $1 == "boilerplate" ] || [ $1 == "boil" ] ; then 
+   # Adiciona no diretorio atual, uma copia de um ficheiro boilerplate da colecao DRYa
+
+   f_greet
+   f_talk
+   clear
+   echo "Boilerplates" && echo
+   v1=${v_REPOS_CENTER}/DRYa/all/lib/boilerplates
+   v=$(cd $v1 && ls | fzf --prompt="DRYa: boilerplates: choose 1 to copy: ")
+   [[ -n $v     ]] && cp $v1/$v . && echo "Pasted: $v1" && read -p "Rename to: " v_ans
+   [[ -n $v_ans ]] && (mv $v $v_ans && echo "Renamed" || echo "Not renamed")
+
+
 elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then 
    if [[ -n $(command -v cal) ]]; then
       clear; f_talk; echo "Calendario"
