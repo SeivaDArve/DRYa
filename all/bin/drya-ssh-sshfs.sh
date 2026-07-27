@@ -625,6 +625,7 @@ function f_check_ssh_daemon_is_on {
    # Verificar se o Daemon do ssh estao ON ou OFF
 
    echo " > Status do Daemon (Servidor a escutar SSH e SSHFS):"
+   echo '   > cmd: `sudo systemctl status ssh | grep Active`'
    
    if [ $trid_pkgm == "pkg" ]; then 
       # Termux encontrado, verifica-se o estado do `ssh` se existir um processo ativo chamado `sshd` verificavel apartir do comando `top`
