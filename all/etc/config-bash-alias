@@ -192,7 +192,9 @@ alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"
    alias lx="lixo"
 
 alias cl="cd; tput cnorm; clear; figlet 'Clear'" # Also resets the blinking cursor if it was hidden
+
 alias sh="bash"
+alias nd="node"
 
 alias all="cd all && ls"
 alias   a="cd all && ls"
