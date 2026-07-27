@@ -78,6 +78,10 @@
 
 
 # Identificar a maquina atual
+
+   echo $traits_OS 
+   read -sn 1
+
    if [[ -z $v_URL ]]; then
       echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
 
