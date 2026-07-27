@@ -597,7 +597,45 @@ function f_only_convert_content_from_OpenPGP_no_encription {
 }
 
 function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
-   echo uDev
+
+   f_greet
+   f_talk; echo "Temporarily open Encrypted files to edit, then encript"
+           echo
+           echo 'Steps the script will take:'
+           echo '------------------------------------------------------------------'
+           echo ' |  1 | File names like "tmp--" must be added to .gitignore'
+           echo " |  2 | Copy file to decrypt "
+           echo ' |    | (rename to "tmp--<name>")'
+           echo ' |  3 | Decrypt "tmp--" file'
+           echo " |  4 | While Loop menu starts (to ask about files to change)"
+           echo " |  5 | Use fzf to choose one file to edit"
+           echo " |  6 | Use fzf to choose one text editor"
+           echo " |  7 | Open..."
+           echo " |  8 | Edit"
+           echo " |  9 | Close..."
+           echo " | 10 | While Loop menu either restarts or ends..."
+           echo ' | 11 | Encrypt (with "tmp--" still written'
+           echo ' | 12 | Ask the user if the proceedure was complete, uncorrupted'
+           echo ' |    | If "yes" then:'
+           echo ' |    |    1. Original file is deleted'
+           echo ' |    |    2. Temporary file is renamed'
+           echo ' |    | If "No" then:'
+           echo ' |    |    1. Temporary file is deleted'
+           echo '------------------------------------------------------------------'
+           echo 
+
+   # Questionar [y/N] se o utilizador quer ou nao quer instalar
+      f_talk; read -rp "Iniciar um processo? [y/N] " resposta
+      case "$resposta" in
+
+         [Yy])
+            echo " > Script runs here... (uDev)"
+         ;;
+
+         *)
+            echo " > Cancelado."
+         ;;
+      esac
 }
 
 function f_inform_about_dryaSRC {
