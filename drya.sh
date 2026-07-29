@@ -4,18 +4,28 @@
 # Use: You can call an fzf main menu that, for each fx in it, there is an equivalent terminal command
 
 
-function f_default_variables {
-   # Default variables (default_variables)
-   __name__=drya.sh
-   __repo__=${v_REPOS_CENTER}/DRYa
-   v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
-   
-   # DRYa logo: presentation info
-      v_drya_logo_1_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
-      v_drya_logo_2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
-      v_drya_logo_3=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
-}
-f_default_variables 
+
+
+
+
+
+
+# Comments examples below. 
+   : '
+      Multi
+      comment
+      line,
+      example
+
+      In-built Notes: 
+         1. The importance of an Interpreted Programming language is that it can be used as a notepad where every line is either a text note or a functional note (also knows as Code). So these single and multi comment lines will be left here to remind the User/Dev to use Bash by studying it and using it at the same time. Whenever the User/Dev opens this file and scrolls down to all some code, he/she will be reminding himself/herself of those Bash tricks he/she does not use that often and has more trouble remembering.
+         2. When writing interpreted code, write code for people, not for machines 
+         3. This syntax of multi comments can also be used in the CLI prompt
+   '
+
+   example_variable="example text"  # Single comment line, example.
+
+
 
 
 
@@ -23,6 +33,7 @@ f_default_variables
 # uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
 # uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS). Tambem chamado 'failsafe'
 # uDev: Addicionar xKill; adicionar OT: confirmar acessos aos tty
+
 
 # uDev: Criar menus 'failsafe' semelhantes a este:
 #
@@ -42,37 +53,17 @@ f_default_variables
 
 
 
-
-
-
-
-# Comments examples below. 
-      
-   : '
-      Multi
-      comment
-      line,
-      example
-
-      In-built Notes: 
-         1. The importance of an Interpreted Programming language is that it can be used as a notepad where every line is either a text note or a functional note (also knows as Code). So these single and multi comment lines will be left here to remind the User/Dev to use Bash by studying it and using it at the same time. Whenever the User/Dev opens this file and scrolls down to all some code, he/she will be reminding himself/herself of those Bash tricks he/she does not use that often and has more trouble remembering.
-         2. When writing interpreted code, write code for people, not for machines 
-         3. This syntax of multi comments can also be used in the CLI prompt
-   '
-
-   variable_example="Example Text"  # Single comment line, example.
-
-
-
-
-
-
-
-
-
-
-
-#<<<<<<< Updated upstream
+function f_default_variables {
+   # Default variables (default_variables)
+   __name__=drya.sh
+   __repo__=${v_REPOS_CENTER}/DRYa
+   v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
+   
+   # DRYa logo: presentation info
+      v_drya_logo_1_script=${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
+      v_drya_logo_2=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
+      v_drya_logo_3=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
+}
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -97,9 +88,46 @@ function f_stroken {
 
 
 
+function f_source_drya_lib_0__missing_hard_dependencies {
 
-function f_failsafe_starting_tools {
+   clear
+   echo "DRYa: List of missing HARD dependencies:"
 
+   # Testar a lista de nomes para ver se o seu comando respetivo existe
+      apps=(fzf figlet jq curla)
+      v_array=()
+
+      for app in "${apps[@]}"; do
+          if ! command -v "$app" >/dev/null 2>&1; then
+              v_array+=("$app")
+          fi
+      done
+
+      echo " > ${v_array[@]}"
+      echo
+
+
+   # Questionar [y/N] se o utilizador quer ou nao quer instalar
+      read -rp "DRYa: Quer instalar as aplicações em falta? [y/N] " resposta
+      case "$resposta" in
+
+         [Yy])
+            echo " > A instalar... (uDev)"
+         ;;
+
+         *)
+            echo " > Instalação cancelada."
+         ;;
+      esac
+
+   read -p "Finished"
+
+}
+
+
+
+function f_source_drya_lib_0__arg_0 {
+   # Loading $v_5
 
    function f_5 {
       # Fx:
@@ -122,6 +150,7 @@ function f_failsafe_starting_tools {
          v_5=$v_scripts_directory_name
          __dryaROOT__=$v_5
    }
+
    function f_5_verbose {
       echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
       echo "  >  $v_5";
@@ -135,12 +164,16 @@ function f_failsafe_starting_tools {
 
    # Getting working directory where the script is placed (without the name in the end)
       f_5
-      #f_5_verbose 
-
+      f_5_verbose 
 }
 
 
-function f_failsafe_finishing_tools {
+
+
+
+
+function f_source_drya_lib_0__verbose_fail {
+
    # Fx to run After attemptping to load DRYa libraries 'drya-libs':
    # Everytime one library cannot load, this fx will be called.
    
@@ -172,24 +205,9 @@ function f_failsafe_finishing_tools {
       echo "Bug found, variable: \$v_verbose_failsafe_help"
       echo " > Has wrong/unknown values"
    fi
+   
+
 }
-
-function f_failsafe {
-   # Failsafe functions:
-
-   # This fx STARTS before attempting to load Libraries and dependencies
-   # and     ENDS   after  attempting to load Libraries and dependencies
-
-   # Both will be called by each drya-lib:
-      #f_failsafe_starting_tools  
-      #f_failsafe_finishing_tools
-
-   # Emcripted passphrase to automatic autentication with github.com 
-      #f_stroken  
-
-   echo &>/dev/null
-}
-
 
 
 
@@ -214,8 +232,6 @@ function f_source_drya_lib_1_alt {
    #
    #
 
-   # Loading $v_5
-      f_failsafe_starting_tools  
 
    # Variables 
       v_lib1_msg="DRYa: $__name__: drya-lib-1"                       # Title
@@ -309,58 +325,12 @@ function f_tst {
 }
 
 
-function f_failsafe_for_missing_hard_dependencies {
-
-      clear
-      command -v fzf    &>/dev/null || echo "fzf missing"
-      command -v figlet &>/dev/null || echo "figlet missing"
-
-      # uDev: test 'figlet' here
-      # uDev: suggest the user: install Hard Dependencies
-      echo 
-      echo "DRYa: failsafe help"
-      echo " > Some Hard Dependencies mussing:  "
-      echo
-      echo ' Install HARD dependencies NOW with letter Y'
-      read -p " > " v_ans
-      echo
-}
 
 
 
 
 
 
-
-
-function f_soft_link_instructions {
-   # Função para exibir como usar o script
-
-   f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
-           echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
-           echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
-           echo "            Para o destino, tem de escolher um nome novo"
-           echo 
-           echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
-           echo
-           echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
-           echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
-           echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
-           echo 
-   f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
-           echo ' > exemplo: `origem=$(pwd)`'
-           echo ' >> `D sl $origem <novo-caminho-com-nome>`'
-           echo
-           echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
-           echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
-           echo 
-           echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
-           echo 
-   f_talk; echo "Remover um link:"
-           echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
-           echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
-      exit 1
-}
 
 
 function f_install_drya__with_fzf {
@@ -421,6 +391,35 @@ function f_trap {
 
 	# Tutorial:
 	https://www.linuxjournal.com/content/bash-trap-command
+}
+
+function f_soft_link_instructions {
+   # Função para exibir como usar o script
+
+   f_talk; echo "Instruções: Criar um link simbólico de <origem> para <destino>."
+           echo " > Origem:  É o arquivo ou diretório existente que se deseja referenciar."
+           echo " > Destino: É o caminho e nome do link simbólico que você está a criar."
+           echo "            Para o destino, tem de escolher um nome novo"
+           echo 
+           echo ' > exemplo: `ln -s         <diretorio-existente> <novo-caminho-com-nome>`'
+           echo
+           echo ' > exemplo: `drya sof-link <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `drya sl       <diretorio-existente> <novo-caminho-com-nome>`'
+           echo ' > exemplo: `D sl          <diretorio-existente> <novo-caminho-com-nome>`'
+           echo 
+   f_talk; echo 'Também pode guardar o <origem> em uma variavel para não ter de escrever manualmente'
+           echo ' > exemplo: `origem=$(pwd)`'
+           echo ' >> `D sl $origem <novo-caminho-com-nome>`'
+           echo
+           echo ' > Com DRYa, pode guardar um caminho na variavel $h usando 5x .'
+           echo ' >> ou seja: Navegar para origem e escrever `.....` para guardar h=$(pwd)'
+           echo 
+           echo ' >>> Resumindo: `D sl $h <nome-ou-caminho-com-nome>` para criar com DRYa um Soft-link de $h para $v'
+           echo 
+   f_talk; echo "Remover um link:"
+           echo ' > Se for um diretorio: `unlink <diretorio-a-remover>`'
+           echo ' > Se for um ficheiro:  `rm     <ficheiro-a-remover>`'
+      exit 1
 }
 
 function f_ascii_icon {
@@ -3157,12 +3156,16 @@ function f_create_live_usb {
       #  D +
       # 
 
-#f_failsafe_for_missing_hard_dependencies 
+ f_default_variables 
+ f_source_drya_lib_0__missing_hard_dependencies 
+ read
+ f_source_drya_lib_0__arg_0 
+ f_source_drya_lib_0__verbose_fail
 #f_source_drya_lib_1_alt
-f_source_drya_lib_1
-f_source_drya_lib_2
-f_source_drya_lib_4
-f_tst 
+ f_source_drya_lib_1
+ f_source_drya_lib_2
+ f_source_drya_lib_4
+ f_tst 
 
 
 if [ -z "$*" ]; then
