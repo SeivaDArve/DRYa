@@ -75,7 +75,8 @@ function f_header {
 
 function f_hline {
    f_permitir_variaveis_vazias
-   f_hzl
+   v_ln=$(f_hzl)
+   echo $v_ln
    f_deny_empty_vars 
 }
 
@@ -283,7 +284,8 @@ function f_symmetric_store {
    # Criptografia simetrica: encriptar
    # -c ou --symetric 
 
-   f_header; f_vb_symmetric_store;  f_ls
+   #f_header
+   f_vb_symmetric_store;  f_ls
    f_talk; echo "Ficheiro a encriptar: "
    read -erp " > " infile
    [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
@@ -597,6 +599,7 @@ function f_only_convert_content_from_OpenPGP_no_encription {
 }
 
 function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
+<<<<<<< Updated upstream
 
    f_greet
    f_talk; echo "Temporarily open Encrypted files to edit, then encript"
@@ -636,6 +639,44 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
             echo " > Cancelado."
          ;;
       esac
+=======
+   f_greet
+   f_talk; echo "Choice from Main Menu:"
+           echo ' | 29  | Decrypt [file.txt.gpg to tmp.file.txt] > Edit > Encrypt'
+           echo
+   f_talk; echo "Processo:" 
+           echo " > Passo 1: Decrypt a file [file.txt.gpg to tmp.file.txt]"
+           echo " > Passo 2: Edit 1 file"
+           echo " > Passo 3: Encrypt"
+           echo " > Passo 4: Delete ORIGINAl + rename the NEW VERSION"
+           echo
+   
+   # Step 1: Decrypt 1 file
+      f_hline
+      f_talk; echo "Passo 1:"
+      f_symmetric_decrypt      
+
+   # Step 2: Choose a file to open and a text editor
+      f_hline
+      f_talk; echo "Passo 2:"
+      f_talk; echo "Info: Choose 1 file to edit. [press ANY KEY to continue]: "
+      read -sn1
+      L0="DRYa: GnuPG: Choose 1 file to edit: "
+      v_file=$(ls -AR | fzf --prompt="$L0")
+      bash e $v_file
+   
+   # Step 3: Encrypt
+      f_hline
+      f_talk; echo "Passo 3:"
+      f_symmetric_store        
+
+   # Step 4: Delete and Rename
+      echo "uDev: Delete and Rename"
+}
+
+function f_stay_annonymous {
+   f_vb_checklist_how_to_stay_annonymous
+>>>>>>> Stashed changes
 }
 
 function f_inform_about_dryaSRC {
@@ -766,7 +807,8 @@ function f_vb_symmetric_store {
 
 function f_vb_symmetric_decrypt {
    # Instrucoes/Verbose curtas, sobre f_symmetric_decrypt 
-   echo  "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."
+   f_talk; echo "Info sobre esta fx: "
+           echo "Desencripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha poderá desencriptar."
 }
 
 function f_vb_encrypt_for_recipient {
@@ -820,6 +862,14 @@ Serve para Verificação de identidade
 }
 
 
+function f_vb_checklist_how_to_stay_annonymous {
+   echo "Checklist on how to stay annonymous:"
+   echo " > Intel Chips (CPU) has hardware spyware 'Intel ME0' with ability to manipulate THE ENTIRE OS, BIOS included"
+   echo " > Chrome Browser: Google is using YOUR PC and RAM to THEIR A.I."
+   echo " > Disable all automatic updates on your device. You should decide whats enters your machine, after reading the source code"
+   echo " > Use as Less windows and more linux"
+}
+
 
 
 function f_main_menu_text {
@@ -863,50 +913,11 @@ function f_main_menu_text {
    echo ' | 27  | hjSplit > divide (uDev)'
    echo ' | 28  | hjSplit > join (uDev)' 
    f_hline
-   echo ' | 29  | Decrypt [Text file] > Open > Edit > Close > Encrypt (uDev)'
+   echo ' | 29  | Decrypt [file.txt.gpg to tmp.file.txt] > Edit > Encrypt'
+   echo ' | 30  | Checklist: How to become annonymous; Avoid Spyware'
    f_hline
    echo " |  h  | Instucoes Base"
    echo " |  Q  | Sair"
-
-#   echo "$L00"
-#   f_hline
-#   echo "$L0"
-#   echo "$L18"
-#   echo "$L19"
-#   f_hline
-#   echo "$L1"
-#   echo "$L2"
-#   echo "$L3"
-#   echo "$L4"
-#   echo "$L5"
-#   echo "$L6"
-#   echo "$L12"
-#   echo "$L13"
-#   echo "$L14"
-#   echo "$L15"
-#   f_hline
-#   echo "$L20"
-#   echo "$L21"
-#   f_hline
-#   echo "$L7"
-#   echo "$L17"
-#   echo "$L25"
-#   echo "$L26"
-#   f_hline
-#   echo "$L8"
-#   echo "$L9"
-#   f_hline
-#   echo "$L10"
-#   echo "$L11"
-#   echo "$L16"
-#   f_hline
-#   echo "$L22"
-#   echo "$L23"
-#   echo "$L24"
-#   f_hline
-#   echo "$Lh"
-#   echo "$LQ"
-#   echo
 }
 
 
@@ -1074,6 +1085,9 @@ elif [ $1 == "21" ]; then
 
 elif [ $1 == "29" ]; then
    f_decrypt_temporarily_into_file_then_edit_then_encrypt
+
+elif [ $1 == "30" ]; then
+   f_stay_annonymous
 
 elif [ $1 == "i" ] || [ $1 == "install" ] || [ $1 == "install-gpg" ]; then
    f_install_now 
@@ -1283,6 +1297,12 @@ elif [ $1 == "24" ] || [ $1 == "List-Metadata" ]; then
 elif [ $1 == "crack" ] || [ $1 == "bruteforce-crack" ]; then
    # Developing a tool to test cracking delays (simetric with passphrase)"
    f_talk; echo "uDev: Bruteforce attack on symmetric"
+
+elif [[ $1 == "f" ]] || [ $1 == "fzf" ] || [ $1 == "force-fzf" ]; then
+   # Opens main menu in fzf mode
+
+   L0="DRYa: GnuPG: Main menu (fzf): "
+   f_main_menu_text | fzf --tac --no-info --prompt="$L0"
 
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
    # Opcao de saisa deste script caso esteja a ser usado um menu com loop
