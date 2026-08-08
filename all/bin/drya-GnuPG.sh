@@ -599,9 +599,11 @@ function f_only_convert_content_from_OpenPGP_no_encription {
 }
 
 function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
-<<<<<<< Updated upstream
 
    f_greet
+   f_talk; echo "Choice from Main Menu:"
+           echo ' | 29  | Decrypt [file.txt.gpg to tmp.file.txt] > Edit > Encrypt'
+           echo
    f_talk; echo "Temporarily open Encrypted files to edit, then encript"
            echo
            echo 'Steps the script will take:'
@@ -609,7 +611,7 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
            echo ' |  1 | File names like "tmp--" must be added to .gitignore'
            echo " |  2 | Copy file to decrypt "
            echo ' |    | (rename to "tmp--<name>")'
-           echo ' |  3 | Decrypt "tmp--" file'
+           echo ' |  3 | Decrypt a file [file.txt.gpg to tmp--file.txt]"'
            echo " |  4 | While Loop menu starts (to ask about files to change)"
            echo " |  5 | Use fzf to choose one file to edit"
            echo " |  6 | Use fzf to choose one text editor"
@@ -624,6 +626,7 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
            echo ' |    |    2. Temporary file is renamed'
            echo ' |    | If "No" then:'
            echo ' |    |    1. Temporary file is deleted'
+           echo ' | 13 | Delete ORIGINAl + rename the NEW VERSION'
            echo '------------------------------------------------------------------'
            echo 
 
@@ -639,18 +642,8 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
             echo " > Cancelado."
          ;;
       esac
-=======
-   f_greet
-   f_talk; echo "Choice from Main Menu:"
-           echo ' | 29  | Decrypt [file.txt.gpg to tmp.file.txt] > Edit > Encrypt'
-           echo
-   f_talk; echo "Processo:" 
-           echo " > Passo 1: Decrypt a file [file.txt.gpg to tmp.file.txt]"
-           echo " > Passo 2: Edit 1 file"
-           echo " > Passo 3: Encrypt"
-           echo " > Passo 4: Delete ORIGINAl + rename the NEW VERSION"
-           echo
-   
+
+
    # Step 1: Decrypt 1 file
       f_hline
       f_talk; echo "Passo 1:"
@@ -676,7 +669,6 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
 
 function f_stay_annonymous {
    f_vb_checklist_how_to_stay_annonymous
->>>>>>> Stashed changes
 }
 
 function f_inform_about_dryaSRC {
