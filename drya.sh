@@ -1657,6 +1657,7 @@ function f_QR_code_fzf_menu {
    # Lista de opcoes para o menu `fzf`
       Lz1='Save '; Lz2='D QR'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+      L7='7. |   | Optic Data Transfer (via QR code)'
       L6='6. |   | Print Info (uDev): Website valido para criar QR codes'
 
       L5='5. |   | 1: "Abrir Android Camera"  2: "Ler QR"  3: "Save on clipboard"'
@@ -1669,10 +1670,11 @@ function f_QR_code_fzf_menu {
 
       L0="DRYa: QR code Menu: "
       
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n\n$Lz3" | fzf --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$L5 \n\n$L6 \n$L7 \n\n$Lz3" | fzf --cycle --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[ $v_list =~ "7. " ]] && f_qr_code__optical_data_transfer
       [[ $v_list =~ "6. " ]] && echo uDev
       [[ $v_list =~ "5. " ]] && bash $v_REPOS_CENTER/DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
       [[ $v_list =~ "4. " ]] && echo uDev
@@ -3121,7 +3123,11 @@ function f_create_live_usb {
    f_create_live_windows_bootable_usb_using_CMD 
 }
 
-
+function f_qr_code__optical_data_transfer {
+   f_talk; echo "QR Code: Optical Data Transfer"
+           echo "App     | F-Droid: 'CameraFileCopy'"
+           echo "Website | cimbar.org"
+}
 
 
 
