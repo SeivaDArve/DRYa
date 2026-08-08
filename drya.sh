@@ -83,11 +83,6 @@ function f_stroken {
       fi
 }
 
-
-
-
-
-
 function f_source_drya_lib_0__missing_hard_dependencies {
 
    clear
@@ -123,8 +118,6 @@ function f_source_drya_lib_0__missing_hard_dependencies {
    read -p "Finished"
 
 }
-
-
 
 function f_source_drya_lib_0__arg_0 {
    # Loading $v_5
@@ -167,11 +160,6 @@ function f_source_drya_lib_0__arg_0 {
       f_5_verbose 
 }
 
-
-
-
-
-
 function f_source_drya_lib_0__verbose_fail {
 
    # Fx to run After attemptping to load DRYa libraries 'drya-libs':
@@ -208,14 +196,6 @@ function f_source_drya_lib_0__verbose_fail {
    
 
 }
-
-
-
-
-
-
-
-
 
 function f_source_drya_lib_1_alt {
    # Sourcing DRYa Library 1: 
@@ -277,7 +257,6 @@ function f_source_drya_lib_1_alt {
    v_talk="DRYa: "
 }
 
-
 function f_source_drya_lib_1 {
 
    # Sourcing DRYa Lib 1: 
@@ -289,9 +268,6 @@ function f_source_drya_lib_1 {
    v_talk="DRYa: "
 }
 
-
-
-
 function f_source_drya_lib_2 {
    # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
       v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
@@ -299,8 +275,6 @@ function f_source_drya_lib_2 {
 
       # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
 }
-
-
 
 function f_source_drya_lib_4 {
    # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
@@ -311,27 +285,11 @@ function f_source_drya_lib_4 {
       #           f_lib4_stroken
 }
 
-
-
-
-
-
-
-
 function f_tst {
    echo
    read -sp "Finished loading Header"
    echo
 }
-
-
-
-
-
-
-
-
-
 
 function f_install_drya__with_fzf {
    echo "File was removed:"
@@ -494,7 +452,6 @@ function f_ascii_icon {
    f_Hline
 }
 
-
 function f_recicle_line {
    # Example on how to write 2x or more on the same line
    # uDev: create better explanation on this tput examples
@@ -577,7 +534,6 @@ function f_output_drya_welcome_screen_msg_with_vimscript {
    # Para o proposito de apresentar/executar o welcome screen, no final de executado, sao apagados todos os ficheiros temporarios (Serve tambem para debug)
       #rm ~/.tmp/*
 }
-
 
 function f_clone_info {
    # Info given:
@@ -2356,7 +2312,6 @@ function f_drya_fzf_MM_Toolbox {
       f_loop
 
    unset v_list
-
 }
 
 function f_drya_fzf_MM {
@@ -2397,8 +2352,6 @@ function f_drya_fzf_MM {
       [[ $v_list =~ "2. " ]] && f_drya_fzf_MM_Toolbox
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       #unset v_list
-
-
 }
 
 function f_exec {
@@ -2419,7 +2372,6 @@ function f_exec {
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
       cd ${v_REPOS_CENTER}/DRYa
 }
-
 
 function f_seiva_up_time {
    f_greet
@@ -2491,8 +2443,6 @@ function f_toggle_termux_hushlogin {
    [[   -f ~/$v_hush ]] && rm    ~/$v_hush && f_talk && echo "$v_msgA" && exit
    [[ ! -f ~/$v_hush ]] && touch ~/$v_hush && f_talk && echo "$v_msgB" && exit
 }
-
-
 
 function f_remove_duplicated_lines_drya_fzf_history_file {
    # Removes duplicated lines from the history files using a temporary file
@@ -2730,9 +2680,6 @@ function f_backup_guide {
               echo " > ..."
 }
 
-
-
-
 function f_ghost {
    # Creating/Deleting a place-holder for DRYa
    echo "Instructions: ghost in.out:"
@@ -2745,7 +2692,6 @@ function f_ghost {
    # (- ghost-out.sh): At any installation, the original default file should be stored in dryarc. So now this fx is possible. remove DRYa files and give back the dot-file that the system was fresh formated with.
    # (+ ghost-out.sh): When setting factory reset, leave a file to clone drya ENTIRELY
 }
-
 
 function f_clone_by_fzf_list {
    # Open fzf to help clone repos by the correct name
@@ -2836,13 +2782,10 @@ function f_clone_by_inserting_correct_name {
       f_clone_repos 
 }
 
-
 function f_morse {
    # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
    less ${v_REPOS_CENTER}/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 }
-
-
 
 function f_clone_main_menu {
    # Main menu para clonar repositorios do github (de SeivaDArve)
@@ -2871,8 +2814,6 @@ function f_clone_main_menu {
       [[ $v_list =~ "1. " ]] && echo "Canceled" 
       unset v_list
 }
-
-
 
 function f_menu_install_drya_dependencies__1st {
    # Menu para a detecao e instalacao de dependencias, com PRESETS
@@ -2923,7 +2864,6 @@ function f_config_kbd_kali {
    echo "Attempting to set ..."
    setxkbmap -layout pt
 }
-
 
 function f_kill_process_by_PID {
    # Kill process by Process ID (PID)
@@ -3006,9 +2946,7 @@ function f_visitar_sbv {
    echo
 
    less $v_file 2>/dev/null || echo 'O comando `less` nao funcionou'
-
 }
-
 
 function f_set_keyboard_tty_RetroPie {
    # Instructions to set keyboard on tty
@@ -3042,8 +2980,8 @@ function f_set_keyboard_tty_RetroPie {
    echo
    echo "Refresh all setings in the end with:"
    echo ' > `sudo setupcon` or `sudo reboot`'
-
 }
+
 function f_set_keyboard_garuda_pt_pt {
    v_config_file=./all/etc/dot-files/keyboards/garuda-linux/config-kbd-PT-PT.txt
    v_CONFIG_file=${v_REPOS_CENTER}/DRYa/$v_config_file
@@ -3073,9 +3011,7 @@ function f_set_keyboard_garuda_pt_pt {
 
    # Refresh/Reload settings
       kwin_wayland --replace &
-
 }
-
 
 function f_menu_kill_running_process {
    echo "DRYa: Help killing process"
@@ -3089,7 +3025,6 @@ function f_menu_kill_running_process {
    echo 
    echo 'xKill: '
    echo ' > This software does not exist in most OS'
-
 }
 
 function f_clone_fzf_like_origina_devs {
@@ -3132,6 +3067,15 @@ function f_qr_code__optical_data_transfer {
 
 
 
+
+
+
+
+
+
+
+
+
 # -------------------------------------------
 # -- Functions above --+-- Arguments Below --
 # -------------------------------------------
@@ -3164,7 +3108,6 @@ function f_qr_code__optical_data_transfer {
 
  f_default_variables 
  f_source_drya_lib_0__missing_hard_dependencies 
- read
  f_source_drya_lib_0__arg_0 
  f_source_drya_lib_0__verbose_fail
 #f_source_drya_lib_1_alt
