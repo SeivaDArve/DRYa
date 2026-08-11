@@ -632,7 +632,9 @@ function f_check_ssh_daemon_is_on {
 
       v_started=$(top -o PID,USER,ARGS -n 1 | grep ssh | grep -v "data" | grep -v "grep" )
 
+      echo
       echo "   Detetado Termux, buscando processo 'sshd'..." 
+      echo '   > cmd: `top -o PID,USER,ARGS -n 1 | grep ssh` '  
 
    elif [ $trid_pkgm == "apt" ]; then 
       if [ $trid_OS == "Windows" ]; then

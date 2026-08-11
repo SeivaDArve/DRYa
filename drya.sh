@@ -103,7 +103,7 @@ function f_source_drya_lib_0__missing_hard_dependencies {
 
 
    # Questionar [y/N] se o utilizador quer ou nao quer instalar
-      read -rp "DRYa: Quer instalar as aplicações em falta? [y/N] " resposta
+      read -t 3 -rp "DRYa: Quer instalar as aplicações em falta? [y/N] " resposta
       case "$resposta" in
 
          [Yy])
@@ -115,7 +115,8 @@ function f_source_drya_lib_0__missing_hard_dependencies {
          ;;
       esac
 
-   read -p "Finished"
+   read -p " " -t 1
+   echo
 
 }
 
@@ -145,11 +146,11 @@ function f_source_drya_lib_0__arg_0 {
    }
 
    function f_5_verbose {
+      echo "DRYa: drya-lib-5: "; 
       echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
       echo "  >  $v_5";
-      echo
-      echo "__dryaROOT__ == $__dryaROOT__"
-      read -sn1
+      echo "  > __dryaROOT__ == $__dryaROOT__"
+      read -sn1 -t 1
    }
 
    # Delete or unset this variable here before atempting to load drya-libs. That will allow the loaders to inform errors after the attempts
@@ -287,7 +288,7 @@ function f_source_drya_lib_4 {
 
 function f_tst {
    echo
-   read -sp "Finished loading Header"
+   read -t 1 -sp "DRYa: Finished loading Header "
    echo
 }
 
