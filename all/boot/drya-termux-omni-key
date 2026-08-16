@@ -6,7 +6,7 @@ function f_greet {
    figlet Omni Key
 }
 
-v_cetralized_termux_p=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/termux/termux.properties
+v_cetralized_termux_p=$__REPOS_CENTER__/DRYa/all/etc/dot-files/termux/termux.properties
 v_termux_p=~/.termux/termux.properties
 
 # Escape Key para as teclas:

@@ -19,7 +19,7 @@ __name__="ca-lculadoras.sh"
 
 # Sourcing DRYa Lib 1: Color schemes
    __name__="ca-lculadoras.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
    
    v_greet="DRYa"
@@ -47,11 +47,11 @@ function f_set_history_reg {
    # Variaveis para os ficheiros de historico/registo da calculadora
       v_file=drya-calc-history.org
       v_dir=drya-calc-history
-      v_reg_om=${v_REPOS_CENTER}/omni-log/all
+      v_reg_om=$__REPOS_CENTER__/omni-log/all
       v_reg_dmb_om=~/.config/h.h/drya/drya-mail-box/omni-log
 
 
-   if [ -d ${v_REPOS_CENTER}/omni-log ]; then
+   if [ -d $__REPOS_CENTER__/omni-log ]; then
       # 1. Se existir a repo "omni-log" 
       #    entao o ficheiro onde sao guardados os 
       #    registos da calculadora é $v_reg_om

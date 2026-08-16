@@ -8,7 +8,7 @@
 #
 #
 #     # Sourcing DRYa Lib 7: Bash support to implement sqlite3
-#        v_lib7=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-7-bash-calling-for-sqlite3.sh
+#        v_lib7=$__REPOS_CENTER__/DRYa/all/lib/drya-lib-7-bash-calling-for-sqlite3.sh
 #        [[ -f $v_lib7 ]] && source $v_lib7 || read -s -n 1 -p "DRYa: drya-lib-7 does not exist (error)"
 #
 #        # Examples: uDev

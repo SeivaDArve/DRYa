@@ -23,7 +23,7 @@ alias drya-ansi='echo "
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && (source $v_lib1 || read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)")
 
    v_greet="DRYa"
@@ -47,19 +47,19 @@ alias hi="echo hello!"  # Used as test
 
 
 # For .../bin scripts
-   alias clc="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
-   alias  ca="bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh"
+   alias clc="bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh"
+   alias  ca="bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh"
 
-   alias notes="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
-   alias  note="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
-   alias    no="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh"
-   alias    td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
-   alias    Td="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh td"
-   alias    sv="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh sv"
-   alias    Sv="bash ${v_REPOS_CENTER}/DRYa/all/bin/no-tes.sh sv"
+   alias notes="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh"
+   alias  note="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh"
+   alias    no="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh"
+   alias    td="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh td"
+   alias    Td="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh td"
+   alias    sv="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh sv"
+   alias    Sv="bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh sv"
 
-   alias data="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
-   alias    d="bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
+   alias data="bash $__REPOS_CENTER__/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
+   alias    d="bash $__REPOS_CENTER__/DRYa/all/bin/data.sh"  # Fx `data` already exists at .../DRYa/bin/data.sh and this is an abreviation
 
 alias cam="am start -a android.media.action.IMAGE_CAPTURE"
 
@@ -340,7 +340,7 @@ function f_ls_with_absolute_path {
 
 # Options for SQLite
    # Path to the init file
-      v_init_sql=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/sqlite/init.sql
+      v_init_sql=$__REPOS_CENTER__/DRYa/all/etc/dot-files/sqlite/init.sql
 
    # Open any database file with the init file configurations
       alias sql="sqlite3"
@@ -361,7 +361,7 @@ function f_ls_with_absolute_path {
 alias en-fr="shift; v="$*"; trans -b en:fr $v"
 
 
-alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tree ."
+alias vb="cd $__REPOS_CENTER__/verbose-lines && echo 'Verbose-lines: tree' && tree ."
 
 
 # 'Calc' and 'bc' are 2 Bash calculators
@@ -381,18 +381,18 @@ alias vb="cd ${v_REPOS_CENTER}/verbose-lines && echo 'Verbose-lines: tree' && tr
 
 
 # Ask the terminal to print the stroken
-   alias stroken="cat ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken"
+   alias stroken="cat $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken"
    # Notes:
-      # At ${v_REPOS_CENTER}/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
+      # At $__REPOS_CENTER__/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
       # We can install stroken automatically with: '$ drya install stroken'
 
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"
 
 
-alias notify="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
-alias nt="bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh"
+alias notify="bash $__REPOS_CENTER__/DRYa/all/bin/notify.sh"
+alias nt="bash $__REPOS_CENTER__/DRYa/all/bin/notify.sh"
 
-alias slither="clear; cat ${v_REPOS_CENTER}/wikiD/all/slither; echo; echo"
+alias slither="clear; cat $__REPOS_CENTER__/wikiD/all/slither; echo; echo"
 
 function nfc {
    # Read and write NFC on termux
@@ -459,8 +459,8 @@ function nfc {
    alias       t-pause="termux-media-player pause"
    alias        t-stop="termux-media-player stop"
    alias        t-info="termux-media-player info"
-   alias  t-sound-test="termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
-   alias t-sound-test1="mpv ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
+   alias  t-sound-test="termux-media-player play $__REPOS_CENTER__/DRYa/all/etc/sounds/example-sound-completion-bell.wav" ## example sound
+   alias t-sound-test1="mpv $__REPOS_CENTER__/DRYa/all/etc/sounds/example-sound-completion-bell.wav > /dev/null 2>&1 & pid=$!" ## example sound
 
 # DRYa clipboard will be set on drya.sh
    alias t-paste="termux-clipboard-get"  # `paste` ja existe e é util, nao pode ser usado. 
@@ -505,7 +505,7 @@ function shebang {
    # Creating all file names given as arguments and placing bash boilerplate into them
    # 'shebang' is the name given to the first line of code of each bash script file, so this fx applies only to bash
    
-   v_bash_boilerplate=${v_REPOS_CENTER}/DRYa/all/lib/boilerplates/drya-shebang-boilerplate.sh
+   v_bash_boilerplate=$__REPOS_CENTER__/DRYa/all/lib/boilerplates/drya-shebang-boilerplate.sh
 
    if [ -z $1 ]; then
       # Prompt for a filename
@@ -666,14 +666,14 @@ function shebang2 {
 alias ipconfig="ifconfig"  # Imitating windows
 
 # uDev: to put under menuFAV F
-alias hind="vim ${v_REPOS_CENTER}/yogaBashApp/all/about-hinduism/about-hinduism.txt"
+alias hind="vim $__REPOS_CENTER__/yogaBashApp/all/about-hinduism/about-hinduism.txt"
 
 
 # Pandoc app to create man pages
 
 
 # Acessing emacs-wiki.org
-   alias emacs-wiki="emacs ${v_REPOS_CENTER}/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
+   alias emacs-wiki="emacs $__REPOS_CENTER__/dWiki/emacs/gnu-emacs/emacs-wiki.org" #Add message "file: ~/Repos.../x.../y.../z... was opened" >> ~/.tmp/messages.txt
 
 # Acessing emacs init.el file
    alias emacs-init="emacs ~/.emacs.d/init.el"
@@ -874,8 +874,8 @@ function grep-here {
 
 
 # Horarios dos barcos softlusa
- alias barco="bash ${v_REPOS_CENTER}/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
- alias barcos="bash ${v_REPOS_CENTER}/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
+ alias barco="bash $__REPOS_CENTER__/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
+ alias barcos="bash $__REPOS_CENTER__/upK/all/bin/bash/webscraper-Barcos-e-CP/barcos.sh"
 
 
  alias mapa="telnet mapscii.me"

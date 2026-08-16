@@ -9,5 +9,5 @@
 #     read  
 
 # O script drya-text-editor encontra-se em .../all/boot para ser carregado no startup do terminal, logo, para que um sub-processo utilize os seus recursos, temos nesse sub-processo de o chamar enviando-lhe os argumentos do processo principal
-   source  ${v_REPOS_CENTER}/DRYa/all/boot/drya-text-editor.sh
+   source  $__REPOS_CENTER__/DRYa/all/boot/drya-text-editor.sh
    e $@

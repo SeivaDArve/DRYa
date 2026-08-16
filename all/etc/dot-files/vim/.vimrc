@@ -78,6 +78,22 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
         \   exe "normal! g`\"" |
         \ endif
 
+" Config para que o nome do ficheiro se mantenha visivel
+   " Help command (in vim): `:help laststatus` or `:help statusline`
+   set laststatus=2
+   "set statusline+=%F  "Para ver o caminho inteiro
+
+
+" Centralizar Horizontalmente o cursor (permanentemente)
+   " Manter o cursor do rato sempre na linha central do ecra. O valor introduzido
+   " define quantas linhas acima e abaixo vao ficar do curso. Se o valor for
+   " muito alto, o cursor fica centrado no meio do ecra
+   set scrolloff=4
+   set scrolloff=999
+
+
+" Key mappings
+ 
 " F5 for termux-omni-key ((A)):  When using `f{char}` and `F{char}` and `t{char}` and `T{char}` this f6 is used as `next search` (to use with f F t T , ;)
    nnoremap <F5> ;  
 
@@ -100,8 +116,8 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap ZX :q!<CR>
    " (O `vim` ja tem uma tecla de atalho para esta fx: `ZQ`, mas esta continua a ser util)
 
-" Inserir texto que equivale a variavel: ${v_REPOS_CENTER}
-   nnoremap ZR i ${v_REPOS_CENTER}/<Esc>
+" Inserir texto que equivale a variavel: $__REPOS_CENTER__
+   nnoremap ZR i $__REPOS_CENTER__/<Esc>
 
 " Inserir o texto que estiver no ficheiro 'drya-date-now'
    nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
@@ -109,28 +125,18 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 " Inserir o texto que estiver no ficheiro 'drya-autocomplete-if-then-else-fi
    nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/autocomplete/drya/drya-autocomplete-if-then-else-fi.txt'<CR>
 
+" Inserir Nova Linha Acima
+   map <M-O> O<ESC>0dd
+
+" Inserir Nova Linha Abaixo
+   map <M-o> o<ESC>0dd
+
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
    nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/boilerplates/drya-fzf-boilerplate-1.sh'<CR>
 " uDev: bug fix para esta fx. Introduzir no local do ponteiro, o texto equivalente a data e hora
    nnoremap ZH :r!date +"%Y-%m-%d"<CR>          
    "nnoremap ZH :put =strftime("%Y-%m-%d")<CR>
-
-" Mapear `CTRL-o` e `CTRL-O` para que abram novas linhas de texto (abaixo do cursor e acima do cursor, respetivamente) sem entrar em INSERT mode
-   " uDev
-
-" Config para que o nome do ficheiro se mantenha visivel
-   " Help command (in vim): `:help laststatus` or `:help statusline`
-   set laststatus=2
-   "set statusline+=%F  "Para ver o caminho inteiro
-
-
-" Centralizar Horizontalmente o cursor (permanentemente)
-   " Manter o cursor do rato sempre na linha central do ecra. O valor introduzido
-   " define quantas linhas acima e abaixo vao ficar do curso. Se o valor for
-   " muito alto, o cursor fica centrado no meio do ecra
-   set scrolloff=999
-   set scrolloff=4
 
 " Dasativar as teclas de Setas do teclado para obrigar a treinar Vim Motion com H J K L
    nnoremap <Left> <Cmd>echo "Left ARROW disabled at .virmc"<CR>

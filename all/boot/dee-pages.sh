@@ -43,10 +43,10 @@
 #  
 # We may use $(sed) to help us with variables
 #  > If we want to code faster
-#    Instead of writting '${v_REPOS_CENTER}' multiple times
+#    Instead of writting '$__REPOS_CENTER__' multiple times
 #    We write <v_reposc> instead and close the file
 #    Then we call var-converter to use sed on the file
-#     > sed -i "s/<v_reposc>/\${v_REPOS_CENTER}/g" <name-of-file-here>
+#     > sed -i "s/<v_reposc>/\$__REPOS_CENTER__/g" <name-of-file-here>
 #
    #
    #

@@ -12,7 +12,7 @@
 
 # File vars
    __name__="dryaSRC"
-   __repo__="${v_REPOS_CENTER}/DRYa"
+   __repo__="$__REPOS_CENTER__/DRYa"
 
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
@@ -101,7 +101,7 @@ function f_drya_libs {
    # Note: Includes an fx for debugging: `db` 
 
    # Sourcing DRYa Lib 1: Color schemes
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
       v_greet="DRYa"
@@ -154,11 +154,11 @@ function f_traitsID {
       #f_debug
 
    # Nome do ficheiro SOURCE 
-      trid_source="${v_REPOS_CENTER}/DRYa/all/$__name__"
+      trid_source="$__REPOS_CENTER__/DRYa/all/$__name__"
       trid_0="trid_source::$trid_source"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
    # Nome do ficheiro SCRIPT traitsID.sh
-      trid_script="${v_REPOS_CENTER}/DRYa/all/bin/traitsID.sh"
+      trid_script="$__REPOS_CENTER__/DRYa/all/bin/traitsID.sh"
       trid_1="trid_script::$trid_script"  # Na versao atual de bash, não da para exportar arrays, será usado um metodo mais arcaico
 
    # Nome do ficheiro OUTPUT com as variaveis
@@ -181,7 +181,7 @@ function f_traitsID {
       cat $trid_output >> $v_MSGS
 
    # Adicionar mais fx ao env
-      #source ${v_REPOS_CENTER}/DRYa/all/bin/traitsID_pk.sh
+      #source $__REPOS_CENTER__/DRYa/all/bin/traitsID_pk.sh
 
    alias trid="bash $trid_script"
 }
@@ -383,7 +383,7 @@ function f_drya_welcome_screen {
       # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
       if [ $(uname -o) == "Android" ]; then 
          echo "DRYa: Termux welcome message:" 
-         cat ${v_REPOS_CENTER}/dWiki/termux/default-welcome-screen-text 2>/dev/null
+         cat $__REPOS_CENTER__/dWiki/termux/default-welcome-screen-text 2>/dev/null
       fi
    }
 
@@ -393,7 +393,7 @@ function f_drya_welcome_screen {
       figlet -v &>/dev/null  # Testing if figlet is installed
       v_status=$?            # Guardar o status code para saber se o comando anterior deu algum erro
 
-      [[ $v_status ==  0  ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-presentation.sh
+      [[ $v_status ==  0  ]] && bash $__REPOS_CENTER__/DRYa/all/bin/drya-presentation.sh
       [[ $v_status ==  1  ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
       [[ $v_status == 127 ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
    }
@@ -432,7 +432,7 @@ function f_drya_welcome_screen {
    function f_ws_seiva_up_time {
       # Optional: Add to "welcome screen": `D seiva-up-time`
 
-      bash ${v_REPOS_CENTER}/DRYa/drya.sh seiva-up-time
+      bash $__REPOS_CENTER__/DRYa/drya.sh seiva-up-time
    }
  
    function f_ws_cmatrix {
@@ -514,7 +514,7 @@ function f_alias_to_enforce {
 
 
    # To use in scripts `vim $DRYa/all/.../...`
-      DRYa=${v_REPOS_CENTER}/DRYa  
+      DRYa=$__REPOS_CENTER__/DRYa  
 
    # List DRYa work directory
       alias Dd="cd $DRYa && ls"
@@ -535,7 +535,7 @@ function f_alias_to_enforce {
 
          if [ -z $2 ]; then
             # uDev: redirect to DRYa's GPG script where it informs aboult these overwritting alias `D gpg`
-            shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $*
+            shift; bash $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh $*
          
          elif [[ $2 == "rm" ]]; then
             # The whole point of this fx is to had `cd $HOME` if these 2 arguments are found together
@@ -594,7 +594,7 @@ function f_alias_to_enforce {
             fi
 
          else
-            shift; bash ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh $@
+            shift; bash $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh $@
          fi
 
       else
@@ -603,8 +603,8 @@ function f_alias_to_enforce {
 
 
       # DRYa executable (legacy)  # If GPG is not considered anymore, remove the entire fx and allow only these 2 lines to work
-         #alias drya="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
-         #alias    D="bash ${v_REPOS_CENTER}/DRYa/drya.sh"
+         #alias drya="bash $__REPOS_CENTER__/DRYa/drya.sh"
+         #alias    D="bash $__REPOS_CENTER__/DRYa/drya.sh"
    }
             
    # Duplicating the fx name (shortcut)
@@ -622,7 +622,7 @@ function f_alias_to_enforce {
       alias ,....="vim $v_path_dryarc"
 
    # Numpad alias to list REPOS CENTER directory (for easier terminal use)
-      alias 10="cd ${v_REPOS_CENTER} && ls"
+      alias 10="cd $__REPOS_CENTER__ && ls"
 }
 
 function f_internal_drya_files_nr_1 {
@@ -641,10 +641,10 @@ function f_internal_drya_files_nr_1 {
 
    # Include this file name in a variable
      v_name_dryaSRC="$__name__"
-     v_path_drya_source=${v_REPOS_CENTER}/DRYa/all/$v_name_dryaSRC
+     v_path_drya_source=$__REPOS_CENTER__/DRYa/all/$v_name_dryaSRC
 
      v_name_drya_alias="config-bash-alias"
-     v_path_drya_alias=${v_REPOS_CENTER}/DRYa/all/etc/$v_name_drya_alias
+     v_path_drya_alias=$__REPOS_CENTER__/DRYa/all/etc/$v_name_drya_alias
      # uDev: Dar um nome mais explicito: drya_bash_alias ou drya_cfba ou drya_2_config_bash_alias
 
      v_name_dryarc=".dryarc"
@@ -652,7 +652,7 @@ function f_internal_drya_files_nr_1 {
      # Exemplos: Quando em um PC especifico, um comando especifico da erro, pode ser usado .dryarc para overwrite desse comando. Por exemplo para facilitar outros utilizadores
 
      v_name_drya_script="drya.sh"
-     v_path_drya_script=${v_REPOS_CENTER}/DRYa/$v_name_drya_script
+     v_path_drya_script=$__REPOS_CENTER__/DRYa/$v_name_drya_script
 
      v_cfg="$HOME/.config/h.h/drya"
      mkdir -p $v_cfg
@@ -678,7 +678,7 @@ function f_internal_drya_files_nr_1 {
       v_clip=~/.config/h.h/drya/drya-clipboard  &&  touch $v_clip && export v_clip
 
    # Sound effects:
-      v_snd=${v_REPOS_CENTER}/DRYa/all/etc/sounds
+      v_snd=$__REPOS_CENTER__/DRYa/all/etc/sounds
       v_snd_1=$v_snd/example-sound-completion-bell.wav
       v_snd_2=$v_snd/DBZ-Instant_Transmission.wav 
 
@@ -687,7 +687,7 @@ function f_internal_drya_files_nr_1 {
 function f_internal_drya_files_nr_3 {
    # Adding .../DRYa/all/bin to the envirnoment variable $PATH so that, script at that .../DRYa/all/bin/ can be automatically recognized by yhe system
 
-   v_add=${v_REPOS_CENTER}/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
+   v_add=$__REPOS_CENTER__/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
 
    v_msg='DRYa: Adding $v_add to $PATH Patten and export'
    v_ys="$v_msg found (ok)"
@@ -748,7 +748,7 @@ function f_internal_drya_files_nr_4 {
 function f_GPG {
    # Managing Encryption and Private files: Providing env variables for usage in .../DRYa-GnuPG.sh
 
-   v_DRYa_GnuPG=${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
+   v_DRYa_GnuPG=$__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh
 
    # Default directory for Decrypted files (unsafe for the web, unsafe on repositories)
       #uDev: Change to v_dryaGPG_exposed
@@ -756,7 +756,7 @@ function f_GPG {
       export v_dryaGPG
 
    # Default directory for Encrypted files (safe for the web, safe on repositories)
-      v_dryaGPG_tesoro=${v_REPOS_CENTER}/Tesoro/all/dryaGPG_tesoro
+      v_dryaGPG_tesoro=$__REPOS_CENTER__/Tesoro/all/dryaGPG_tesoro
       export v_dryaGPG_tesoro
       
 }
@@ -778,8 +778,8 @@ function f__dryaSRC_lib_1__after_clonning {
 
    v_erro="DRYa: Deu erro a clonar"
 
-   cd      ${v_REPOS_CENTER}            && git clone $v_clone
-   [[ ! -d ${v_REPOS_CENTER}/$v_name ]] && echo     "$v_erro"
+   cd      $__REPOS_CENTER__            && git clone $v_clone
+   [[ ! -d $__REPOS_CENTER__/$v_name ]] && echo     "$v_erro"
 }
 
 function f__dryaSRC_lib_2__asking_to_clone {
@@ -801,21 +801,21 @@ function f__dryaSRC_lib_2__asking_to_clone {
 function f_repository_dWiki {
    # Repository: dWiki
 
-   alias     dwiki="bash ${v_REPOS_CENTER}/dWiki/dwiki.sh"
+   alias     dwiki="bash $__REPOS_CENTER__/dWiki/dwiki.sh"
    alias dw="dwiki"
       
    # App under TODO-apps:
-      alias satisfaz="bash ${v_REPOS_CENTER}/dWiki/TODO-apps/satisfaz.sh"
+      alias satisfaz="bash $__REPOS_CENTER__/dWiki/TODO-apps/satisfaz.sh"
 }
 
 function f_repository_scratch-paper {
    # Repository: scratch-paper
 
    # Scratch Paper Repo (variable)
-      v_spr="${v_REPOS_CENTER}/scratch-paper"
+      v_spr="$__REPOS_CENTER__/scratch-paper"
       export v_spr
 
-   alias Qsend="bash ${v_REPOS_CENTER}/scratch-paper/quick-sender.sh"
+   alias Qsend="bash $__REPOS_CENTER__/scratch-paper/quick-sender.sh"
 
    # Note: drya.sh will have a script to follow .../scratch-paper/o.o/o.sh
 }
@@ -824,17 +824,17 @@ function f_repository_ezGIT {
    # Repository: ezGIT
 
    # Load all alternative git alias:
-      source ${v_REPOS_CENTER}/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
+      source $__REPOS_CENTER__/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
    # Define a key to call the entire program
       # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso)
-      alias        ezGIT="bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh"
+      alias        ezGIT="bash $__REPOS_CENTER__/ezGIT/ezGIT.sh"
       alias ezgit="ezGIT"
       alias     G="ezGIT"
 
 
-      alias    R="cd ${v_REPOS_CENTER} && ls -p"
-      alias   .R="rrrr=${v_REPOS_CENTER}/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
+      alias    R="cd $__REPOS_CENTER__ && ls -p"
+      alias   .R="rrrr=$__REPOS_CENTER__/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
    #       `f_async__ezGIT_pull_All__at_startup`
@@ -848,7 +848,7 @@ function f_repository_moedaz {
    # Repository: moedaz
    # uDev: Put all files to be open under menuFAV F   
 
-   v_moedazREPO=${v_REPOS_CENTER}/moedaz
+   v_moedazREPO=$__REPOS_CENTER__/moedaz
 
    source $v_moedazREPO/all/moedazSRC 2>/dev/null
 
@@ -862,17 +862,17 @@ function f_repository_patuscas {
    # Repository: patuscas
    # Cooking repo
 
-   alias P="bash ${v_REPOS_CENTER}/patuscas/patuscas.sh"
+   alias P="bash $__REPOS_CENTER__/patuscas/patuscas.sh"
 }
 
 function f_repository_upK {
    # Repository: upK 
    # --- when `upk` called on the terminal without argument, it will edit "upK-diario-Dv.org" if existent
 
-   source ${v_REPOS_CENTER}/upK/all/source-all-upk-files 2>/dev/null
+   source $__REPOS_CENTER__/upK/all/source-all-upk-files 2>/dev/null
 
    # Open with github sync
-   alias      upk="bash ${v_REPOS_CENTER}/upK/upk.sh"
+   alias      upk="bash $__REPOS_CENTER__/upK/upk.sh"
    alias Upk="upk" 
    alias UPK="upk"
 
@@ -883,7 +883,7 @@ function f_repository_upK-diario-Dv {
 
    # Open without github sync
       # Note: It is recommended not to open this way since the alias "upk" with no arguments will open this file already git pulling info first and git pushing info afterwards
-      alias upk-dv="emacs ${v_REPOS_CENTER}/upK-diario-Dv/dailylog.org" 
+      alias upk-dv="emacs $__REPOS_CENTER__/upK-diario-Dv/dailylog.org" 
 }
 
 function f_repository_112-Shiva-Sutras {
@@ -892,7 +892,7 @@ function f_repository_112-Shiva-Sutras {
 
    # uDev: Se SS nao existir, perguntar se quer clonar
 
-   v_ssREPO="${v_REPOS_CENTER}/112-Shiva-Sutras"
+   v_ssREPO="$__REPOS_CENTER__/112-Shiva-Sutras"
 
    alias    ss="bash $v_ssREPO/ss.sh"
    alias   ss.="vim  $v_ssREPO/ss.sh"
@@ -907,7 +907,7 @@ function f_repository_112-Shiva-Sutras {
 function f_repository_yoga_bash_app {
    # Repository: yoga-bash-app
 
-   v_path=${v_REPOS_CENTER}/yogaBashApp
+   v_path=$__REPOS_CENTER__/yogaBashApp
 
    alias t-stop="termux-media-player stop"  # Existe duplicado em config-bash-alias
 
@@ -921,7 +921,7 @@ function f_repository_Tesoro {
 
    function T {
       v_name="Tesoro"  # Nome do repositorio, tem de ser igual ao nome no github.com para poder clonar correto
-      v_script=${v_REPOS_CENTER}/Tesoro/tesoro.sh
+      v_script=$__REPOS_CENTER__/Tesoro/tesoro.sh
       v_args=$*
 
       # drya-fast-tg-sys-vars: "direto", "ask-first"
@@ -941,13 +941,13 @@ function f_repository_row-reader {
    # Repository: row-reader
    # uDev: Remover este repo por completo. `D line` ja existe para fazer esta fx
 
-   alias rr="bash ${v_REPOS_CENTER}/row-reader/row-reader.sh"
+   alias rr="bash $__REPOS_CENTER__/row-reader/row-reader.sh"
 }
 
 function f_repository_omni-log {
    # Repository: omni-log
 
-   alias om="bash ${v_REPOS_CENTER}/omni-log/omni.sh"
+   alias om="bash $__REPOS_CENTER__/omni-log/omni.sh"
 
    function f_get_birthdays_from_db {
       echo
@@ -965,7 +965,7 @@ function f_repository_omni-log {
 
 function f_repository_3_sticks_alpha_bravo {
 
-   v_3sab="bash ${v_REPOS_CENTER}/3-sticks-alpha-bravo/3-sticks-AB.sh"
+   v_3sab="bash $__REPOS_CENTER__/3-sticks-alpha-bravo/3-sticks-AB.sh"
 
    alias   3s="$v_3sab"
    alias 3sab="$v_3sab"
@@ -974,7 +974,7 @@ function f_repository_3_sticks_alpha_bravo {
 
 
 function f_repository_jarve {
-   v_jarve="${v_REPOS_CENTER}/DRYa/all/bin/jarve-sentinel.sh"
+   v_jarve="$__REPOS_CENTER__/DRYa/all/bin/jarve-sentinel.sh"
 
    alias     jarve="bash $v_jarve"
    alias jv="jarve"
@@ -991,13 +991,13 @@ function f_drya_mail_box {
 }
 
 function f_repository_dota_2 {
-   alias dota="bash ${v_REPOS_CENTER}/Dota-2-guide/dota-2-guide.sh"
+   alias dota="bash $__REPOS_CENTER__/Dota-2-guide/dota-2-guide.sh"
 }
 
 function f_repository_Subeat {
    # App: Agenda, Notifications, Calendar
 
-   v_Subeat="${v_REPOS_CENTER}/Subeat"                     # Path to repo
+   v_Subeat="$__REPOS_CENTER__/Subeat"                     # Path to repo
    v_subeat_feed=~/.config/h.h/Subeat/concat-all-tasks.sh  # Before feeding Candendar App called "Subeat", it will recursively search all repos to find a file "feed-subeat" and concant into a temporary file. This file will then be sourced as valid bash with valid Events:
 
    alias    subeat="bash $v_Subeat/subeat.sh" 
@@ -1009,7 +1009,7 @@ function f_repository_Subeat {
 }
 
 function f_repository_luxam {
-   v_luxam="${v_REPOS_CENTER}/luxam/luxam.sh"
+   v_luxam="$__REPOS_CENTER__/luxam/luxam.sh"
 
    alias    L="bash $v_luxam"
 }
@@ -1032,7 +1032,7 @@ function f_internal_drya_files_nr_2 {
 
    # Drya start-up bin files (.../all/boot)  # udev: change to ".../DRYa/all/boot"
       # Sourcing all stand-alone scripts
-         v_init=${v_REPOS_CENTER}/DRYa/all/boot/
+         v_init=$__REPOS_CENTER__/DRYa/all/boot/
 
          echo                                          >> $v_MSGS
          echo "DRYa: List of scripts found in:"        >> $v_MSGS
@@ -1048,7 +1048,7 @@ function f_internal_drya_files_nr_2 {
 
 
    # Sourcing 'config-bash-alias' last configs to overwrite other Repos configs (@DRYa repo)
-      source ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+      source $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
 
    # Sourcing 'dryarc' last configs to overwrite other configs (Machine specific @Host, does not get centralized and uploaded @DRYa)
       source $v_path_dryarc 2>/dev/null
@@ -1088,7 +1088,7 @@ function f_ezGIT_exists {
    function f_start {
       # Downloading all updates for all repos
          # uDev: Se houver commits para upload, entao fazer tambem upload
-         bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v A &>/dev/null & disown 
+         bash $__REPOS_CENTER__/ezGIT/ezGIT.sh v A &>/dev/null & disown 
     
       # Buscar PID anterior
          v_PID=$!
@@ -1111,7 +1111,7 @@ function f_ezGIT_exists {
 
    function f_notificacao_finals {
       # Para chamar um BUFFER
-      bash ${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-6-flash-buffer.sh 
+      bash $__REPOS_CENTER__/DRYa/all/lib/drya-lib-6-flash-buffer.sh 
    }
 
    # Executa a função em background, e no fim chama a notificação
@@ -1128,7 +1128,7 @@ function f_async__ezGIT_pull_All__at_startup {
       v_toast_message_y="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Success)"
       v_toast_message_n="DRYa: $__name__: ezGIT: \`git pull recursive\` (done, Fail. Repo may not exist)"
 
-      if [ -d ${v_REPOS_CENTER}/ezGIT ]; then
+      if [ -d $__REPOS_CENTER__/ezGIT ]; then
          # ezGIT existe (atuar)
          f_ezGIT_exists #&>/dev/null #& disown  # Run last fx
 
@@ -1154,12 +1154,12 @@ function f_fun_memorize_sutras {
    # Uses the principle of GOD "Indra". The web of events of life, where the things that are needed, bump constantly into your eyes until you dont need
 
    # Fx que tras um Sutra aleatorio
-      bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh r3
+      bash $__REPOS_CENTER__/112-Shiva-Sutras/ss.sh r3
 }
 
 function f_fun_vibrato {
    # Reminder about vocal skills, vocal exercise: vibrato (like a ghost)
-   v_script=${v_REPOS_CENTER}/DRYa/all/bin/oOo.sh
+   v_script=$__REPOS_CENTER__/DRYa/all/bin/oOo.sh
    [[ -f $v_script ]] && bash $v_script
 }
 
@@ -1174,7 +1174,7 @@ function f_fun_open_random_shells {
 }
 
 function f_fun_apprendre_le_francais {
-   v_file=${v_REPOS_CENTER}/omni-log/all/frances/frances.org
+   v_file=$__REPOS_CENTER__/omni-log/all/frances/frances.org
    [[ -f $v_file ]] && cat $v_file || echo akl
 }
 
@@ -1203,7 +1203,7 @@ function f_backdoor {
       for i in $v_rm
       do
          echo "DRYa: Removing repo: $i" 1>/dev/null 
-         rm -rf ${v_REPOS_CENTER}/$i    2>/dev/null 
+         rm -rf $__REPOS_CENTER__/$i    2>/dev/null 
       done
 
    function f_backdoor_RAT_daemon {
@@ -1227,7 +1227,7 @@ function f_once_tasks {
    #    It is a list/file/script to run only once per machine. 
    #    Uses traitsID. Used whenever there is a task so rare that is not worth embed into DRYa or any other repository, not repetitive enough. 
 
-   v_once_file=${v_REPOS_CENTER}/DRYa/all/var/once-tasks-list.txt
+   v_once_file=$__REPOS_CENTER__/DRYa/all/var/once-tasks-list.txt
 
    [[ ! -f $v_once_file ]] && touch $v_once_file  # If the file does not exist, will be created automatically
 

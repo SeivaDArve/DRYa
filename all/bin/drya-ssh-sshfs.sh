@@ -1,11 +1,11 @@
 #!/bin/bash
 # Title: drya-ssh-sshfs.sh
 __name__="drya-ssh-sshfs.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-__repo__="${v_REPOS_CENTER}/DRYa"
+__repo__="$__REPOS_CENTER__/DRYa"
 v_fzf="DRYa: SSH:"
 
 # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet=DRYa-SSH
@@ -36,7 +36,7 @@ function f_declare_variables {
 
       v_output_1=~/.config/h.h/drya/drya-ssh_last-output.txt
 
-      v_output_2_dir=${v_REPOS_CENTER}/verbose-lines  # uDev: usar omni-log
+      v_output_2_dir=$__REPOS_CENTER__/verbose-lines  # uDev: usar omni-log
       v_output_2=$v_output_2_dir/all/ssh.txt
 
       v_tmp_dir=~/.config/h.h/drya/ssh && mkdir -p $v_tmp_dir

@@ -62,7 +62,7 @@ function web {
    function f_fzf_raw_link_opener {
       # Navegar para a pasta que contem o backup de bookmarks, depois FILTRA esses bookmarks. "Raw" significa "Extrair so texto dos links, sem os <div> do HTML"
 
-      v_dir=${v_REPOS_CENTER}/omni-log/all/browser-bookmarks
+      v_dir=$__REPOS_CENTER__/omni-log/all/browser-bookmarks
 
       if [[ -d $v_dir ]]; then
          cd $v_dir

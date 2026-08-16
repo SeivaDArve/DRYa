@@ -4,15 +4,15 @@
 # Use: Para usar este script: faz source para o $ENV e no emacs (ou outros) podes terntar abrir qualquer imagem apartir do termux. Este script é necessario quando é preciso descobrir quel é o OS em vigor (WSL, Linux, Android) e apartir desse OS abrir a nossa imagem
 
    function f_attempt_WSL2 {
-     wslview ${v_REPOS_CENTER}/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
+     wslview $__REPOS_CENTER__/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
    }
    
    function f_attermpt_termux {
-     termux-open ${v_REPOS_CENTER}/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
+     termux-open $__REPOS_CENTER__/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
    }
    
    function f_attempt_linux {
-     xdg-open ${v_REPOS_CENTER}/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
+     xdg-open $__REPOS_CENTER__/moedaz/all/real-documents/cartoes-supermercado/$v_name 2>/dev/null
    }
    
    function f_op {

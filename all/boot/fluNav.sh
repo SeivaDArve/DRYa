@@ -9,7 +9,7 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
@@ -77,7 +77,7 @@ function f__F_hist__refresh_file_name {
 
 
    # Variaveis para diminuir o texto (do 'absolute path' para 'relative path' e vice-versa)
-      v_A=${v_REPOS_CENTER}               # Original text found in the original fzf history file (absolute path of a file)
+      v_A=$__REPOS_CENTER__               # Original text found in the original fzf history file (absolute path of a file)
       v_B="(DRYa-REPOS-CENTER)"           # Text to be presented to the user temporarily instead of the absolute path
 
       v_A=$(f_escape_sed_characters "$v_A")  # Ajuda o `sed` com o seu regex interno  
@@ -143,7 +143,7 @@ function f_escape_sed_characters {
 
 function f__F_hist__change_abs_path__to__relative_path {
    # Taking file $v_fluNav_S_hist_file and replace text:
-   #  from: ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
+   #  from: $__REPOS_CENTER__   (example: /data/data/com.termux/files/home/Repositories/)
    #  to:   (DRYa-REPOS-CENTER)
 
    # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
@@ -155,7 +155,7 @@ function f__F_hist__change_abs_path__to__relative_path {
 function f__F_hist__change_relative_path__to__abs_path {
    # Taking file $v_fluNav_S_hist_file and replace text:
    #  from: (DRYa-REPOS-CENTER)
-   #  to:   ${v_REPOS_CENTER}   (example: /data/data/com.termux/files/home/Repositories/)
+   #  to:   $__REPOS_CENTER__   (example: /data/data/com.termux/files/home/Repositories/)
 
    # Note: This fx is meant to run only after history file's name was refreshed with f__F_hist__refresh_file_name
 
@@ -190,7 +190,7 @@ function f__V_hist__remove_duplicated_lines {
 
 
 function f_edit__config_bash_alias {
-   vim ${v_REPOS_CENTER}/DRYa/all/etc/config-bash-alias
+   vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
    f_greet
    echo "edited: config-bash-alias"
 }
@@ -201,7 +201,7 @@ function f_edit__notes {
 }
 
 function f_edit__dryaSRC {
-   vim ${v_REPOS_CENTER}/DRYa/all/dryaSRC
+   vim $__REPOS_CENTER__/DRYa/all/dryaSRC
    f_greet
    echo "edited: dryaSRC"
 }
@@ -215,22 +215,22 @@ function f_edit__bashrc {
 
 function f_edit__source_all_moedaz_files {
    f_greet
-   vim ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+   vim $__REPOS_CENTER__/moedaz/all/source-all-moedaz-files
    echo "edited: source-all-moedaz-files"
 }
 
 function f_edit__vimrc {
-   vim ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc
+   vim $__REPOS_CENTER__/DRYa/all/etc/dot-files/vim/.vimrc
    f_greet
    echo "edited: .vimrc on DRYa"
-   cp ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/vim/.vimrc ~
+   cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/vim/.vimrc ~
    echo "copied: from DRYa to ~"
 }
 
 function f_edit__1st_emacs {
    f_greet
    echo "Editing the list '1st.org' (guide of apps listed to install)"
-   v_1st_file=${v_REPOS_CENTER}/DRYa/install.uninstall/populate-machines/level+1/1st.org
+   v_1st_file=$__REPOS_CENTER__/DRYa/install.uninstall/populate-machines/level+1/1st.org
    echo "$v_1st_file" >> $v_fluNav_S_hist_file 
    echo
    bash e $v_1st_file
@@ -239,7 +239,7 @@ function f_edit__1st_emacs {
 }
 
 function f_edit_dryaGPG {
-   vim ${v_REPOS_CENTER}/DRYa/all/bin/drya-GnuPG.sh
+   vim $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh
 }
 
 function f_edit__init_file_emacs__with_emacs {
@@ -247,7 +247,7 @@ function f_edit__init_file_emacs__with_emacs {
    # This way we know we can easily upload the file
       
    # First we edit the original/centralized file with our favourite text editor
-      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+      v_init_file="$__REPOS_CENTER__/DRYa/all/etc/dot-files/emacs/init.el"
       emacs $v_init_file 
 
    # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
@@ -265,7 +265,7 @@ function f_edit__init_file_emacs__with_vim {
    # This way we know we can easily upload the file
 
    # First we edit the original/centralized file with our favourite text editor
-      v_init_file="${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/init.el"
+      v_init_file="$__REPOS_CENTER__/DRYa/all/etc/dot-files/emacs/init.el"
       vim $v_init_file 
 
    # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
@@ -299,7 +299,7 @@ function f_applying_changes_init {
       # Copy recursively all files about emacs to the localized machine-specific directory:
          f_talk; echo "copying recursively: "
          echo -n " > Sending \"centralized emacs files\" to \"~/.emacs.d\"" && \
-            cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/  && f_done
+            cp -r $__REPOS_CENTER__/DRYa/all/etc/dot-files/emacs/* ~/.emacs.d/  && f_done
       
       # We want to use "~/.emacs.d" instead of "~/.emacs". Because it can create initialization bugs, we remove the first one.
          echo -n " > Removing: \"~/.emacs\" (avoiding bugs)" && \
@@ -316,7 +316,7 @@ function f_applying_changes_init {
 
          # Copy files and directories recursively for the directory that emacs prefers on windows
             echo " > %AppData% exists, copying emacs files there too recursively"
-               cp -r ${v_REPOS_CENTER}/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
+               cp -r $__REPOS_CENTER__/DRYa/all/etc/dot-files/emacs/* $v_correct_win_dir
             echo -n "   > copied to: \"$v_correct_win_dir\"" && f_done
          
          # Removing the extra file/directory that can create initialization issues
@@ -376,7 +376,7 @@ function f_edit_self {
               echo 
 
    # Verbose: Actually opening the file
-      bash e ${v_REPOS_CENTER}/DRYa/all/boot/fluNav.sh
+      bash e $__REPOS_CENTER__/DRYa/all/boot/fluNav.sh
 
    # Verbose: After opening the file
       f_talk; echo "Closed: fluNav original file"
@@ -386,7 +386,7 @@ function f_edit_self {
 function f_sync_ez_b4_after {
    # Sync with ezGIT Before and After the file is opened
 
-   cd ${v_REPOS_CENTER}/$v_parent && \
+   cd $__REPOS_CENTER__/$v_parent && \
 
    echo 
    echo "Will be syncronized only with ezGIT"
@@ -471,7 +471,7 @@ function . {
       #       And if argument is .jpg on termux, open accordingly 
 
       # Create a file with the current date on it
-         bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh f
+         bash $__REPOS_CENTER__/DRYa/all/bin/data.sh f
 
       PWD=$(pwd) \
       && BASENAME=$(basename $PWD) \
@@ -598,7 +598,7 @@ function h {
    L4='~/Persistent/HOME/'   # Used on TAIL (Persistence is set on OS instalation; HOME is manually created after OS instalations)
    L5='termux-bridge-android'
    L6='shared-HDD-home-partition'
-   L7="${v_REPOS_CENTER}/"
+   L7="$__REPOS_CENTER__/"
 
    if [ -z $1 ]; then
       # 1. Se nao for dado nenhum arg, navega para HOME definido por DRYa (se essa config existir)
@@ -1103,7 +1103,7 @@ function V {
       # uDev: If correspondent repo does not exist, ask to clone intead of the error message
 
       elif [ $1 == "drya" ] || [ $1 == "dry" ] || [ $1 == "d" ] || [ $1 == "dd" ] || [ $1 == "D" ]; then
-         cd ${v_REPOS_CENTER}/DRYa 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/DRYa 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "moedaz" ] || [ $1 == "mo" ] || [ $1 == "m" ]; then
@@ -1113,105 +1113,105 @@ function V {
          #       3. Pedir um pin, depois clonar
          #       4. Verificar a existencia de algum dot-file (uDev) que faca o bypass as perguntas e que clone logo (uso direto)
 
-         if   [ -z $2         ]; then cd ${v_REPOS_CENTER}/moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
-         elif [    $2 == "cv" ]; then cd ${v_REPOS_CENTER}/moedaz/all/real-documents/CV 2>/dev/null && ls -p
+         if   [ -z $2         ]; then cd $__REPOS_CENTER__/moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
+         elif [    $2 == "cv" ]; then cd $__REPOS_CENTER__/moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
 
 
       elif [ $1 == "tesoro" ] || [ $1 == "T" ] || [ $1 == "t" ]; then
-         cd ${v_REPOS_CENTER}/Tesoro 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/Tesoro 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
-         cd ${v_REPOS_CENTER}/jarve 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/jarve 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "trade" ]; then
-         [[ -z $2 ]]                   && cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
+         [[ -z $2 ]]                   && cd $__REPOS_CENTER__/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
       
 
       elif [ $1 == "bot" ]; then
-         [[ -z $2 ]] && cd ${v_REPOS_CENTER}/moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -z $2 ]] && cd $__REPOS_CENTER__/moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
 
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
-         cd ${v_REPOS_CENTER}/ezGIT 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/ezGIT 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
-         cd ${v_REPOS_CENTER}/dWiki 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/dWiki 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "wiki" ] || [ $1 == "wikid" ] || [ $1 == "wikiD" ] || [ $1 = "wd" ] || [ $1 == "w" ]; then
-         cd ${v_REPOS_CENTER}/wikiD 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/wikiD 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "upk" ]; then
-         cd ${v_REPOS_CENTER}/upK 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/upK 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd ${v_REPOS_CENTER}/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
-         cd ${v_REPOS_CENTER}/112-Shiva-Sutras 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/112-Shiva-Sutras 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-         cd ${v_REPOS_CENTER}/omni-log 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/omni-log 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "gps" ]]; then
-         cd ${v_REPOS_CENTER}/mastering-GPS 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/mastering-GPS 2>/dev/null && ls -p || f_error_cd
 
 
       elif [[ $1 == "yoga" ]] || [ $1 == "Y" ] || [ $1 == "yg" ] || [ $1 == "y" ]; then
-         cd ${v_REPOS_CENTER}/yoga-bash-app 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/yoga-bash-app 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "shamb" ]]; then
-         cd ${v_REPOS_CENTER}/yogaBashApp/all/all-shambavi/ 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/yogaBashApp/all/all-shambavi/ 2>/dev/null && ls -p || f_error_cd
       
 
       elif [[ $1 == "3sab" ]] || [[ $1 == "3s" ]] || [[ $1 == "3" ]]; then
-         cd ${v_REPOS_CENTER}/3-sticks-alpha-bravo 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/3-sticks-alpha-bravo 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "one" ]] || [[ $1 == "1" ]]; then
-         cd ${v_REPOS_CENTER}/oneFile-bau 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/oneFile-bau 2>/dev/null && ls -p || f_error_cd
 
 
       elif [[ $1 == "scratch" ]] || [ $1 == "paper" ] || [ $1 = "sc" ]; then
          # uDev: `D q 1` to remove the repo
-         cd ${v_REPOS_CENTER}/scratch-paper 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/scratch-paper 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "game" ]; then
-         cd ${v_REPOS_CENTER}/DRYa-game 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/DRYa-game 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "luxam" ]; then
-         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/luxam 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "patuscas" ] || [ $1 == "p" ] || [ $1 == "P" ]; then
-         cd ${v_REPOS_CENTER}/patuscas 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/patuscas 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "ts" ] || [ $1 == "typescript" ] || [ $1 == "typescript-berg-house" ]; then
-         cd ${v_REPOS_CENTER}/typescript-berg-house 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/typescript-berg-house 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then
-         cd ${v_REPOS_CENTER}/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/Curriculum-Vitae 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "subeat" ] || [ $1 == "S" ] || [ $1 == "s" ] || [ $1 == "calendar" ]; then
-         cd ${v_REPOS_CENTER}/Subeat 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/Subeat 2>/dev/null && ls -p || f_error_cd
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
@@ -1224,11 +1224,11 @@ function V {
 
 
       elif [ $1 == "center" ]; then
-         cd ${v_REPOS_CENTER} && ls -p
+         cd $__REPOS_CENTER__ && ls -p
 
 
       elif [ $1 == "l" ] || [ $1 == "L" ] || [ $1 == "luxam" ]; then
-         cd ${v_REPOS_CENTER}/luxam 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/luxam 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "wsl" ] || [ $1 == "win" ] || [ $1 == "W" ]; then
@@ -1259,7 +1259,7 @@ function V {
          v_file="$v_dir/listing-repos-fluNav.txt"
 
          echo "(DRYa-REPOS-CENTER)" >  $v_file
-         ls $v_REPOS_CENTER         >> $v_file
+         ls $__REPOS_CENTER__        >> $v_file
 
          L0="DRYa: fluNav: V: Navigate to Repos: "
          v_repo=$(cat $v_file | fzf --prompt="$L0")
@@ -1267,16 +1267,16 @@ function V {
          if [[ -n $v_repo ]]; then
 
             if [[ $v_repo == "(DRYa-REPOS-CENTER)" ]]; then
-               cd ${v_REPOS_CENTER}
+               cd $__REPOS_CENTER__
             else
-               cd ${v_REPOS_CENTER}/$v_repo
+               cd $__REPOS_CENTER__/$v_repo
             fi
          fi
 
    # Implementation of Use 4:
       elif [ $1 == "R" ]; then
          # Navigates to repos center
-         cd ${v_REPOS_CENTER}
+         cd $__REPOS_CENTER__
 
 
    # Implementation of Use 5:
@@ -1425,8 +1425,8 @@ function f_action {
       f_greet
 
       # Variables for this task
-         v_respective_repo=${v_REPOS_CENTER}/moedaz 
-         v_respective_file_dir=${v_REPOS_CENTER}/moedaz/all/viatura/ 
+         v_respective_repo=$__REPOS_CENTER__/moedaz 
+         v_respective_file_dir=$__REPOS_CENTER__/moedaz/all/viatura/ 
          v_respective_file=viatura-all-info.org
 
 
@@ -1466,8 +1466,8 @@ function f_action {
 
       f_greet
 
-      cd  ${v_REPOS_CENTER}/DRYa/all/boot/
-      vim ${v_REPOS_CENTER}/DRYa/all/boot/tm-tmux
+      cd  $__REPOS_CENTER__/DRYa/all/boot/
+      vim $__REPOS_CENTER__/DRYa/all/boot/tm-tmux
 
 
    elif [ $v_nm == "search_history_files" ]; then
@@ -1601,7 +1601,7 @@ function f_action {
       f_greet
 
       echo "$v_nm being edited"
-      cd ${v_REPOS_CENTER}/moedaz/trade && \
+      cd $__REPOS_CENTER__/moedaz/trade && \
       G v && \
       EM all/trade/trade.org && \
       G ++ b
@@ -1655,7 +1655,7 @@ function F {
    v_talk="DRYa: fluNav: "
 
    # Reload the amount of '-' are needed to create an horizontal line
-      v_file=${v_REPOS_CENTER}/DRYa/all/boot/f_horizontal_line.sh
+      v_file=$__REPOS_CENTER__/DRYa/all/boot/f_horizontal_line.sh
       [[ -f $v_file ]] && source $v_file 1>/dev/null
 
    # If there are no arguments, present the fluNav
@@ -1683,16 +1683,16 @@ function F {
       elif [ $1 == "-1"       ]; then v_nm="fx_test";                f_action; ## Just test if this file is working
       elif [ $1 == "F"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
       elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; source ~/.bashrc
-      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim ${v_REPOS_CENTER}/DRYa/drya.sh; #f_up
-      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  ${v_REPOS_CENTER}/DRYa && EM drya.sh; f_up
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim $__REPOS_CENTER__/DRYa/drya.sh; #f_up
+      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  $__REPOS_CENTER__/DRYa && EM drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="dryaGPG";                f_action; f_edit_dryaGPG
-      elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd ${v_REPOS_CENTER}/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
-      elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd ${v_REPOS_CENTER}/DRYa/all/boot && vim traitsID.sh; f_up
+      elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd $__REPOS_CENTER__/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
+      elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd $__REPOS_CENTER__/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
-      elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd ${v_REPOS_CENTER}/wikiD && EM wikiD.org; f_up
+      elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd $__REPOS_CENTER__/wikiD && EM wikiD.org; f_up
       elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
       elif [ $1 == "links"    ]; then v_nm="ss_links";               f_action; echo "uDev: open shiva sutra links"; f_up
-      elif [ $1 == "luxam"    ]; then v_nm="luxam";                  f_action; cd ${v_REPOS_CENTER}/luxam/ && EM grelhas-de-avaliacao.org; f_up
+      elif [ $1 == "luxam"    ]; then v_nm="luxam";                  f_action; cd $__REPOS_CENTER__/luxam/ && EM grelhas-de-avaliacao.org; f_up
       elif [ $1 == "trade"    ]; then v_nm="trade";                  f_action; # Sync the trade.org wikipedia
       elif [ $1 == "om"       ]; then v_nm="om";                     f_action; # Sync the omni-log.org file 
       elif [ $1 == "note"     ]; then v_nm="note";                   f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)

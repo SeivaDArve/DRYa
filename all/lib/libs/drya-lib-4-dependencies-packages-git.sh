@@ -30,7 +30,7 @@
 #  INSTALLING (this library on main scripts):
 #
 #     # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-#        v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
+#        v_lib4=$__REPOS_CENTER__/DRYa/all/lib/drya-lib-4-dependencies-packages-git.sh
 #        [[ -f $v_lib4 ]] && source $v_lib4 || (read -s -n 1 -p "DRYa: error: drya-lib-4 does not exist " && echo)
 #
 #        # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
@@ -94,8 +94,8 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-   v_lib1_copy=${v_REPOS_CENTER}/DRYa/all/lib/libs/copies-for-libs/drya-lib-1--for--drya-lib-4
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1_copy=$__REPOS_CENTER__/DRYa/all/lib/libs/copies-for-libs/drya-lib-1--for--drya-lib-4
 
    # Original Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    #  v_greet="DRYa"
@@ -239,7 +239,7 @@ function f_git_commit {
 function f_get_stroken {
    # This fx gets the current acess token from a file. (When a new acess token is configured at github, the user has to modify only the file ...DRYa/all/etc/dot-files/git-github/current-stroken)
 
-   v_current_stroken=${v_REPOS_CENTER}/DRYa/all/etc/dot-files/git-github/current-stroken
+   v_current_stroken=$__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken
 
    v_user=$(head -n 1 $v_current_stroken)
    v_tokn=$(tail -n 1 $v_current_stroken)
@@ -356,7 +356,7 @@ function f_lib4_ensure_repo_existence_single {
    #     f_lib4_ensure_repo_existence_single   # fx that searches for $v_ensure existance and presents a menu in each kind of error 
 
    # Path + Name of the repo
-      v_repo=${v_REPOS_CENTER}/$v_ensure
+      v_repo=$__REPOS_CENTER__/$v_ensure
    
    # When using this script as a Lib, the variable $v_ensure must exist, an error will be mentioned if not set
       if [ -z $v_ensure ]; then
@@ -382,7 +382,7 @@ function f_lib4_ensure_repo_existence_single {
       else
          F_talk; echo "Directory does not exist"
 
-         cd ${v_REPOS_CENTER}/ 
+         cd $__REPOS_CENTER__/ 
          v_cloned="https://github.com/SeivaDArve/$v_ensure.git"
          git clone $v_cloned
       fi
@@ -533,7 +533,7 @@ function f_lib4_ensure_repo_existence_compact {
       fi
 
    # Path + Name of the repo
-      v_repo=${v_REPOS_CENTER}/$v_ensure
+      v_repo=$__REPOS_CENTER__/$v_ensure
    
    # Varible that corresponds to github repo name
       v_cloned="https://github.com/SeivaDArve/$v_ensure.git"
@@ -573,7 +573,7 @@ function f_lib4_ensure_repo_existence_compact {
          echo "$v_dir_nok"
          echo "$v_clone_inf"
 
-         cd ${v_REPOS_CENTER}  &&   git clone $v_cloned
+         cd $__REPOS_CENTER__  &&   git clone $v_cloned
 
          # If last command worked, a sucess message is sent, otherwise, app closes
             [[ $? == 0 ]] && echo "$v_clone__ok" || (echo "$v_clone_nok" && exit 1)
@@ -616,7 +616,7 @@ function f_lib4_git_pull_compact {
    # uDev: perguntar char GPT: testar `git pull` so por 10 secs, e editar à mesma se Offline.
 
    # Get current hour in nanoseconds only
-      v_date=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh n)
+      v_date=$(bash $__REPOS_CENTER__/DRYa/all/bin/data.sh n)
 
          echo -n ' > Downloading: '
    F_c3; echo                    '`git pull --no-edit`'
@@ -686,7 +686,7 @@ function f_lib4_git_commit_compact {
    function f_cmt_msg {
 
       # Get current hour in nanoseconds only
-         v_date=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh n)
+         v_date=$(bash $__REPOS_CENTER__/DRYa/all/bin/data.sh n)
 
             echo -n ' > Commiting: '
       F_c3; echo                    "\"$v_msg\""
@@ -755,7 +755,7 @@ function f_lib4_git_push_compact {
    if [[ $v_push == "yes" ]]; then
 
       # Get current hour in nanoseconds only
-         v_date=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh n)
+         v_date=$(bash $__REPOS_CENTER__/DRYa/all/bin/data.sh n)
 
             echo -n ' > Uploading: '
       F_c3; echo                    "\"$v_msg\""

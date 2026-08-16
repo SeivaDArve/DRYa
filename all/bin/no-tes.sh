@@ -5,7 +5,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 
 # Sourcing DRYa Lib 1: Color schemes, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
@@ -14,7 +14,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 
 # Sourcing DRYa Lib 2: Create temporary files
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+   v_lib2=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
    source $v_lib2 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)" && echo )
 
    # Example: f_create_tmp_file will create a temporary file stored at $v_tmp (with abs path, at ~/.tmp/...)
@@ -22,7 +22,7 @@ __name__="no-tes.sh"  # Change to the name of the script. Example: DRYa.sh, ezGI
 
 
 # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-   v_lib4=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+   v_lib4=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
    source $v_lib4 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)" && echo )
 
    # Examples: v_ensure="<example-name-of-repo-to-ensure-existence>" && f_lib4_ensure_repo_existence
@@ -37,7 +37,7 @@ function f_define_files_as_vars {
 
    # Default Storage Repository (for log files)
       v_df_repo="omni-log"
-      v_df_repo_pwd=${v_REPOS_CENTER}/$v_df_repo
+      v_df_repo_pwd=$__REPOS_CENTER__/$v_df_repo
 
    # Default text editor (Using traitsID.sh to define the default text editor)
       v_default_editor=vim  
@@ -49,10 +49,10 @@ function f_define_files_as_vars {
       v_file_rn=$v_dir_expressa/rn
 
    # File 'ToDo'
-      v_file_td=${v_REPOS_CENTER}/omni-log/all/ex-pressa/td.org
+      v_file_td=$__REPOS_CENTER__/omni-log/all/ex-pressa/td.org
    
    # File 'Seiva'
-      v_file_sv=${v_REPOS_CENTER}/omni-log/all/ex-pressa/sv.org
+      v_file_sv=$__REPOS_CENTER__/omni-log/all/ex-pressa/sv.org
 
 }
 
@@ -135,15 +135,15 @@ function f_one_file_bau {
    v_file3=nota_3/nota  # Dentro da repo, existe 1 pasta para cada ficheiro
 
    # Test repo existence
-      if [[ ! -d $v_REPOS_CENTER/$v_repo ]]; then
+      if [[ ! -d $__REPOS_CENTER__$v_repo ]]; then
          echo "Sync ono-file-bau: repo does not exist" \
             && v_err=1
 
-         bash ${v_REPOS_CENTER}/DRYa/drya.sh clone try $v_repo \
+         bash $__REPOS_CENTER__/DRYa/drya.sh clone try $v_repo \
             && v_err=0
       fi
 
-      if [[ -d $v_REPOS_CENTER/$v_repo ]]; then
+      if [[ -d $__REPOS_CENTER__$v_repo ]]; then
          echo "Sync ono-file-bau: repo exists"
          v_err=0
       fi
@@ -159,7 +159,7 @@ function f_one_file_bau {
 
 function f_run_notify_script {
    # Runs/Executes external script 'notify.sh'
-   bash ${v_REPOS_CENTER}/DRYa/all/bin/notify.sh
+   bash $__REPOS_CENTER__/DRYa/all/bin/notify.sh
 }
 
 function f_main_menu {
@@ -335,7 +335,7 @@ elif [ $1 == "^" ]; then
    echo "uDev: Upload to omni-log"
 
 elif [ $1 == "rn" ]; then
-   vim ${v_REPOS_CENTER}/omni-log/all/ex-pressa/rn
+   vim $__REPOS_CENTER__/omni-log/all/ex-pressa/rn
 
 elif [ $1 == "notify" ] || [ $1 == "f" ]; then
    # Runs/Executes external script 'notify.sh'

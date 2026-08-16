@@ -114,7 +114,7 @@ function f_horizontal_line {
 # Ficheiro tmp em pasta tmp
 
 # Sound Samples
-   termux-media-player play ${v_REPOS_CENTER}/DRYa/all/etc/sounds/example-sound-completion-bell.wav
+   termux-media-player play $__REPOS_CENTER__/DRYa/all/etc/sounds/example-sound-completion-bell.wav
 
 
 # uDev: fx para testar se pastas (ou repo) existem. (igual para ficheiros).
@@ -237,8 +237,8 @@ function f_horizontal_line {
 
          [[ $v_list =~ "4. " ]] && echo "uDev"
 
-         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[ ]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh 
-         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[X]" ]] && bash ${v_REPOS_CENTER}/DRYa/all/bin/ca-lculadoras.sh h
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[ ]" ]] && bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh 
+         [[ $v_list =~ "3. " ]] && [[ $L5 =~ "[X]" ]] && bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh h
 
          [[ $v_list =~ "2. " ]] && f_dot_files_menu
          [[ $v_list =~ "1. " ]] && sleep 0.1

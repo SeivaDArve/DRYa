@@ -21,7 +21,7 @@ function e {
    # uDev: As vezes ao abrir os ficheiros, o editor de texto nao esta instalado. Necessario correr `D ui i <editor-em-falta>`
 
    # Sourcing DRYa Lib 1: Color schemes
-      v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa: drya-lib-1 does not exist (error)" && echo)
 
       # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
@@ -44,7 +44,7 @@ function e {
    elif [ $1 == "." ]; then
 
       # Variable to edit self (this script)
-         v_self=${v_REPOS_CENTER}/DRYa/all/boot/drya-text-editor.sh
+         v_self=$__REPOS_CENTER__/DRYa/all/boot/drya-text-editor.sh
 
       if [ -z $2 ]; then
          vim $v_self

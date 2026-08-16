@@ -9,7 +9,7 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
@@ -21,7 +21,7 @@
 
 
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-   v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+   v_lib2=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
@@ -29,7 +29,7 @@
 
 
 # Sourcing DRYa Lib 8: Reading/Parsing argumentes from the CLI prompt, then testing if they are valid
-   v_lib8=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+   v_lib8=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
    [[ -f $v_lib8 ]] && source $v_lib8 || (read -s -n 1 -p "DRYa: error: drya-lib-8 does not exist " && echo)
 
    # Examples: `D opts -i inFile.txt` and the script will test the input file if it exist or not

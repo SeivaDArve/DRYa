@@ -50,7 +50,7 @@ function f_refresh_hist_file {
 
 
    # Variables for dirs and files
-      v_dir=${v_REPOS_CENTER}/omni-log/all/notify
+      v_dir=$__REPOS_CENTER__/omni-log/all/notify
       v_file="termux-notify-output-history.txt"
       mkdir -p $v_dir
       v_hist_file="$v_dir/$v_file"
@@ -59,7 +59,7 @@ function f_refresh_hist_file {
 
    # Testing if saving on .../omni-log/ or .config/h.h/
       # uDev: Assim, faz do omni-log um repositorio magbetico, se existir recebe fucheiros, se nao exiatir, nao recebe
-      if [[ -d ${v_REPOS_CENTER}/omni-log ]]; then
+      if [[ -d $__REPOS_CENTER__/omni-log ]]; then
          # Se a repo "omni-log" existir, criar la o ficheiro de historico
 
          echo " > File is going to be created at omni-log"

@@ -644,7 +644,7 @@ function f_screen_5__choose_REPOS_CENTER {
 
    function f_verbose_results__REPOS_CENTER__ {
       echo  
-      echo         " Defined as \$__REPOS_CENTER__ :"
+      echo         ' Value given to "$__REPOS_CENTER__" was:'
       read -sn1 -p "   > $__REPOS_CENTER__"
       echo 
       # uDev: Aqui, testar se ja existe
@@ -676,14 +676,16 @@ function f_screen_5__choose_REPOS_CENTER {
       echo    " |   |       (not safe if there are multiple users)"
       echo    " |   |"
       echo    " | 3 | >>> /mnt/c/users/\$USER/Repositories/"
-      echo    " |   |     > Used at WSL2"
+      echo    " |   |     > Usually used @ WSL2"
+      echo    " |   |"
+      echo    " | 6 | >>> ~/Persistent/Repositories/"
       echo    " |   |"
       echo    " | 4 | >>> Current CLI prompt location"
       echo    " |   |     > $v_1"
       echo    " |   |"
       echo    " | 5 | >>> Insert 'other location' manually"
       echo    " |   |"
-      echo    " | h | >>> Help / Explanation"
+      echo    " | h | >>> Help|Explanation"
       echo    " |   |"
       echo    " | b | >>> Back to 'Main Menu'"  # Vai para screen_2
       echo    " |   |"
@@ -694,6 +696,8 @@ function f_screen_5__choose_REPOS_CENTER {
       echo    "$v____________"
       read -p "   > " v_ans
 
+      # uDev Note: Check in all values set to $v_ans if there is any sufix. Remove it if needed. Example: remove '/' from '~/Pictures/' to become '~/Pictures'. It is usefull for example on top of the option 'Insert path manuyally'
+      
       # Default option
          [[ -z $v_ans ]] && v_ans="1"
 
@@ -720,7 +724,9 @@ function f_screen_5__choose_REPOS_CENTER {
 
 
       elif [[ $v_ans == 4 ]]; then
-         # Option 4
+         # Option 4: Insert manually
+         
+         # uDev Note: Check in all values set to $v_ans if there is any sufix. Remove it if needed. Example: remove '/' from '~/Pictures/' to become '~/Pictures'. It is usefull for example on top of the option 'Insert path manuyally'
          __REPOS_CENTER__="$PWD"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
@@ -735,6 +741,11 @@ function f_screen_5__choose_REPOS_CENTER {
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
+      elif [[ $v_ans == 6 ]]; then
+         # Option 6
+         __REPOS_CENTER__="~/Persistent/Repositories"
+         f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
+         f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == "h" ]] || [[ $v_ans == "H" ]]; then
          # option help
@@ -823,15 +834,17 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
               echo "  \$DRYa existence at \$__REPOS_CENTER__ "
               echo "   > $v_test_clonage_existence_of_DRYa."
               echo
-              echo "  Checking path of \$__REPOS_CENTER__:"
+              echo "  Value of \$__REPOS_CENTER__:"
               echo "   > $__REPOS_CENTER__"
               echo $v____________
               echo " |   |"
-              echo " | 1 | >>> Yes, (continue using __REPOS_CENTER__ with DRYa inside)"
+              echo ' | 1 | >>> Yes, (later `cp` or `mv` DRYa into "__REPOS_CENTER__" with DRYa inside)'
               echo " |   |"
               echo " | 2 | >>> Yes, (continue using __REPOS_CENTER__ but clone DRYa into it first)"
               echo " |   |"
               echo " | 3 | >>> Yes, (continue by remove existing DRYa directory and clone again)"
+              echo " |   |"
+              echo ' | 4 | >>> Yes, (detect if current prompt is @ DRYa and `mv` automatically)'
               echo " |   |"
               echo " | h | >>> Help|info|instructions"
               echo " |   |"
@@ -844,26 +857,30 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
 
       if [[ "$v_ans" == "1" || "$v_ans" == "yes default" ]]; then
 
-         # uDev: Neste passo, se DRYa nao existir em repos center, tem de ser MOVIDO ou CLONADO
+         # uDev: Neste passo, se DRYa nao existir em repos center, tem de ser MOVIDO ou CLONADO manualmente, posteriormente
+         v_msg=" > Later you need either to CLONE or MOVE repository DRYa manually into \$__REPOS_CENTER__"
          [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && f_screen_7__resume_before_instalation 
-         [[ $v_test_clonage_existence_of_DRYa == "no"  ]] && echo && read -p " > You need either to CLONE or MOVE repository DRYa into \$__REPOS_CENTER__" && echo
+         [[ $v_test_clonage_existence_of_DRYa == "no"  ]] && echo && read -p "$v_msg" && echo && f_screen_7__resume_before_instalation 
 
-      elif [[ "$v_ans" == "2" || "$v_ans" == "yes clone" ]]; then
+      elif [[ "$v_ans" == "2" || "$v_ans" == "yes-clone" ]]; then
 
          # If it already existe, another attempt to clone Must fail
-            [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && read -p "Directory named DRYa already exists there" && echo && continue
+            [[ $v_test_clonage_existence_of_DRYa == "yes" ]] && read -p "One directory named 'DRYa' already exists there" && echo && continue
 
          f_ask_to_clone_DRYa_right_now
 
          #f_screen_7__resume_before_instalation  # It will not go to another menu from here, instead, the `while` will make another loop
 
-      elif [[ "$v_ans" == "3" || "$v_ans" == "yes remove" ]]; then
+      elif [[ "$v_ans" == "3" || "$v_ans" == "yes-remove" ]]; then
          echo "Are you sure? Remove DRYa and Clone again"
          read -s
 
          rm -rf $__REPOS_CENTER__/DRYa 2>/dev/null
          f_ask_to_clone_DRYa_right_now
        
+      elif [[ "$v_ans" == "4" || "$v_ans" == "yes-detect" ]]; then
+         echo "After instalation, one last step is taken: Detect if current prompt is inside DRYa repository and attempt to move it into 'Repositories' directory"
+
       elif [[ "$v_ans" == "q" || "$v_ans" == "exit" ]]; then
 
          echo "Second question answered NO"

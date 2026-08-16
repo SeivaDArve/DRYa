@@ -5,13 +5,13 @@
 
 # Usefull variables:
    __name__="drya-zip-unzip.sh"                     # Used to describe the name of current file with extention. Example: .exe .jpg .mp3
-   __repo__="${v_REPOS_CENTER}/DRYa"  # Used to describe the name of current repo, the repository that contains __name__
+   __repo__="$__REPOS_CENTER__/DRYa"  # Used to describe the name of current repo, the repository that contains __name__
    v_ftf_talk="drya-zp: "                 # Used to better present text at `fzf` menus in the prompt area
 
 
 # Sourcing DRYa Lib 1: Color schemes
    __name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-   v_lib1=${v_REPOS_CENTER}/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    # Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
@@ -333,7 +333,7 @@ if [ -z $* ]; then
    f_talk; echo "uDev: Menu + Info se ZIP esta instalado"
 
 elif [ $1 == "." ] || [ $1 == "edit-self" ]; then
-   bash e ${v_REPOS_CENTER}/DRYa/all/bin/drya-zip-unzip.sh
+   bash e $__REPOS_CENTER__/DRYa/all/bin/drya-zip-unzip.sh
 
 elif [ $1 == "h" ] || [ $1 == "help" ]; then
    f_help

@@ -6,7 +6,7 @@
    
 # Update a tudo ## QUANDO O USER CARREGA 'J'
 
-   cd ${v_REPOS_CENTER}/DRYa
+   cd $__REPOS_CENTER__/DRYa
    clear
    figlet Jarve
    echo "Jarve: You can suspend your laptop now"
@@ -56,7 +56,7 @@ do
 
    # A cada 5 minutos
       echo "Starting ezGIT pull all (exemplo)"
-      #bash ${v_REPOS_CENTER}/ezGIT/ezGIT.sh v all &>/dev/null
+      #bash $__REPOS_CENTER__/ezGIT/ezGIT.sh v all &>/dev/null
       echo "ended at <date> (waiting 5 min to restart)"
       # uDev: sound at the end
       sleep 60*5

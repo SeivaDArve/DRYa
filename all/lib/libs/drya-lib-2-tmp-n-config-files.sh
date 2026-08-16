@@ -11,7 +11,7 @@ __name__=drya-lib-2-tmp-n-config-files.sh
 #     At the top of every script file in which this script needed, place these lines below:
 #
 #     # Sourcing DRYa Lib 2
-#        v_lib2=${v_REPOS_CENTER}/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
+#        v_lib2=$__REPOS_CENTER__/DRYa/all/lib/drya-lib-2-tmp-n-config-files.sh
 #        [[ -f $v_lib2 ]] && source $v_lib2 || read -s -n 1 -p "Error: drya-lib-2 does not exist"
 #
 #        # Example: f_create_tmp_file will create a temporary file stored at $v_tmp (with abs path, at ~/.tmp/...)
@@ -80,7 +80,7 @@ function f_create_tmp_file {
          v_dir=~/.tmp  &&  mkdir -p $v_dir
       
       # O nome do ficheiro temporario será a data/hora atual
-         v_tmp=$(bash ${v_REPOS_CENTER}/DRYa/all/bin/data.sh v)
+         v_tmp=$(bash $__REPOS_CENTER__/DRYa/all/bin/data.sh v)
          v_tmp="$v_tmp.txt"
 
 

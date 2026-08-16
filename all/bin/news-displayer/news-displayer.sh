@@ -99,7 +99,7 @@ while true
    # Lists:
    # moedaz: burocratic toDos; 
    #         shopping list
-   # source ${v_REPOS_CENTER}/moedaz/all/source-all-moedaz-files
+   # source $__REPOS_CENTER__/moedaz/all/source-all-moedaz-files
 
    # Standard message
       clear
@@ -116,9 +116,9 @@ while true
    # Alternation between frames
       v_frame_n=$(($v_frame_n+1))
       echo "######### $v_frame_n (number of v_frame_n)"
-      #[ $v_frame_n == "1" ]; cat ${v_REPOS_CENTER}/moedaz/all/var/com.todo-lista-de-tarefas.org
+      #[ $v_frame_n == "1" ]; cat $__REPOS_CENTER__/moedaz/all/var/com.todo-lista-de-tarefas.org
       echo "######### $v_frame_n (number of v_frame_n)"
-      [ $v_frame_n == "2" ]; bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh -R
+      [ $v_frame_n == "2" ]; bash $__REPOS_CENTER__/112-Shiva-Sutras/ss.sh -R
       #echo "######### $v_frame_n (number of v_frame_n)"
       [ $v_frame_n == "3" ]; v_frame_n=0 
 
@@ -144,10 +144,10 @@ done
 
 
 # Frame 1: moedaz --toDo-list ----------------------
-   cat ${v_REPOS_CENTER}/moedaz/all/var/com.todo-lista-de-tarefas.org
+   cat $__REPOS_CENTER__/moedaz/all/var/com.todo-lista-de-tarefas.org
 
 # Frame 2: moedaz --current-fixed-pay ----------------------
 
 # Frame 3: shiva-sutras --random ----------------------
-   bash ${v_REPOS_CENTER}/112-Shiva-Sutras/ss.sh -R
+   bash $__REPOS_CENTER__/112-Shiva-Sutras/ss.sh -R
 
