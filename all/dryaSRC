@@ -36,6 +36,7 @@ function f_list_of_escape_codes {
     L7='| k   | Load, but without f_backend                        |'
     L8='| n   | Load, but delete ~/.netrc                          |' 
     L9='| t   | Load, do not delete ~/.tmp nor temporary-private repos (configured to be deleted at startup or logout     |'  
+   L12='| p   | cp persistent dot-files from "~/Persistent/etc" to "~"'
    L10='|-----+----------------------------------------------------|'
    L11='--Example-- `gd` to set option "g" + "d"'
 
