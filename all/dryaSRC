@@ -193,6 +193,8 @@ function f_dv_PS1 {
    # uDev: whenever a mew PS1 variable is defined, send the old one to ~/.config/h.h/drya/...
    # uDev: Usar a variavel de ambiente $PRMPT_COMMAND para coisas uteis. Normalmente o valor dessa var é o nome de uma fx. Exemplo: `PROMPT_COMMAND=starship_precmd`
 
+   unset PROMPT_COMMAND  # This line disables 'startship' used in 'fish' shell and some 'bash' shells
+
    # Introcucing 
       echo "DRYa: PS1 will now be defined as per the user Seiva"
       echo -n " > Previous PS1: "
