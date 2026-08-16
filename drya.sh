@@ -3219,6 +3219,10 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
    fi
 
 
+elif [ $1 == "stroken" ]; then 
+   # Dumps text "stroken" into the terminal
+   clear
+   f_stroken
 
 elif [ $1 == "edit" ] || [ $1 == "e" ]; then 
    case $2 in
@@ -4514,8 +4518,8 @@ elif [ $1 == "lib" ]; then
       source $v_lib4 2>/dev/null || (read -sn 1 -p "DRYa: drya-lib-1 does not exist (error)" && echo)
       # uDev: este source nao sera valido, ira abrir num sub-processo
 
-      v_greet="DRYa"
-      v_talk="DRYa-lib-4: "
+      #v_greet="DRYa"
+      #v_talk="DRYa-lib-4: "
 
       f_greet
       f_talk; echo "uDev: Use drya-lib-4 to sync a file given as second arg"
