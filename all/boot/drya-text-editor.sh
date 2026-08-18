@@ -3,6 +3,8 @@
 # uDev: Coordenar com `op`, em, Em, EM (emacs)
 # uDev: sempre que abre o vim ou outros, atualizar drya-date-now
 
+v_fluNav__search_file_button_letter=F	# Bringing this variable to the top of the document to remember the dev that it was in the past subject to change. If the letter is changed inside fluNav, this script must update it. Otherwise it gives bad information to the end user not very savy with teck
+
 function e {
    # Title: e
    # Description: Este script `e` busca num ficheiro X qual é o editor de texto pre-definido (segundo o user de DRYa, nao do user do OS). O nome do editor de texto que for encontrado nesse ficheiro sera usado para abrir quaisquer ficheiros que sejam fornecido como argumentos no prompt 
@@ -39,7 +41,7 @@ function e {
    if [ -z $1 ]; then
       v_editor=$(f_c1; echo -n $trid_editor_name; f_rc)
       f_talk; echo "Qual o ficheiro que quer editar? (com $v_editor)" 
-      f_talk; echo "Nota: \`S .\` Para editar ficheiros, procurando recursivamente"
+      f_talk; echo "Nota: \`$v_fluNav__search_file_button_letter .\` Para editar ficheiros, procurando recursivamente"
 
    elif [ $1 == "." ]; then
 
@@ -158,6 +160,7 @@ function ee {
       # Lista de opcoes para o menu `fzf`
          Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
+	 L12='12. emacs --daemon  ::  emacsclient -c  (uDev)'
          L11='11. less --wordwrap'
          L10='10. vim in easy mode `vim -y`' 
 
@@ -176,13 +179,14 @@ function ee {
          Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
          L0="fluNav: ee: Set/Toggle/Swap text editor: "
          
-         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 \n$L11 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente (deste menu)
          echo "$Lz2" >> $Lz4
    
       # Perceber qual foi a escolha da lista
          [[   $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+         [[   $v_list =~ "12. " ]] && echo "uDev"            > $trid_editor_file
          [[   $v_list =~ "11. " ]] && echo "less --wordwrap" > $trid_editor_file
          [[   $v_list =~ "10. " ]] && echo "vim -y"          > $trid_editor_file
          [[   $v_list =~ "9.  " ]] && echo "nvim"            > $trid_editor_file

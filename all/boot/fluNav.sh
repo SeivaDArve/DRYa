@@ -336,10 +336,8 @@ function f_manage_init_and_libraries_after_mod {
            echo " > $v_init_file"
            echo
    f_talk; echo "Do you want to apply these changes imediatly?"
-
-   read -s -n 1 -p " > Please enter [y/N]: " v_apply
-   echo 
-   echo 
+   read -s -p 	" > Please enter (y/N): " v_apply
+   	   echo 
 
 
    if [ -z $v_apply ]; then 

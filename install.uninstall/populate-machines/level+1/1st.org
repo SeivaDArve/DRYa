@@ -55,6 +55,7 @@ Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir T
    -y
 
    # uDev: Bash deve ter metodos para evitar usar `file` e assim `file` deixava de ser uma dependencia do ezGIT
+   # uDev: Install all the dot-files like .vimrc and init.el
 
 ** f_gr_3_soft_DRYa_dependencies (3)
    # Quando DRYa é instalado pela primeira vez, este grupo de dependencias é recomendado instalar
