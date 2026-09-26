@@ -19,8 +19,7 @@
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
 
-# uDev: renomear 'config-bash-alias' para 'dryaRC'  (done)
-# uDev: renomear '.dryarc'           para '.dryaRC_host'
+# uDev: renomear 'config-bash-alias' pra 'dryaRC' e '.dryarc' para '.drya.hostRC'
 
 # uDev: fix dependency bugs (in case DRYa is running on a fresh install of some new OS)
 
@@ -203,7 +202,7 @@ function f_dv_PS1 {
 
    # Configuring
       PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-      PS1='[\t] \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+      PS1='\t \u \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
 
    # Confirming
       echo -n " > New PS1: "
@@ -635,7 +634,7 @@ function f_internal_drya_files_nr_1 {
 
    # uDev: v_nm_src_bash  = dryaSRC           = drya-src-frm-bashrc
    #       v_nm_pre_alias = nil               = drya-pre-alias.sh
-   #       v_nm_mid_alias = dryaRC            = drya-mid-alias.sh
+   #       v_nm_mid_alias = config-bash-alias = drya-mid-alias.sh
    #       v_nm_pos_alias = .dryarc           = drya-pos-alias.sh
 
    
@@ -646,9 +645,9 @@ function f_internal_drya_files_nr_1 {
 
    # Include this file name in a variable
      v_name_dryaSRC="$__name__"
-     v_path_drya_source=$__REPOS_CENTER__/DRYa/all/src/$v_name_dryaSRC
+     v_path_drya_source=$__REPOS_CENTER__/DRYa/all/$v_name_dryaSRC
 
-     v_name_drya_alias="dryaRC"
+     v_name_drya_alias="config-bash-alias"
      v_path_drya_alias=$__REPOS_CENTER__/DRYa/all/etc/$v_name_drya_alias
      # uDev: Dar um nome mais explicito: drya_bash_alias ou drya_cfba ou drya_2_config_bash_alias
 
@@ -914,7 +913,7 @@ function f_repository_yoga_bash_app {
 
    v_path=$__REPOS_CENTER__/yogaBashApp
 
-   alias t-stop="termux-media-player stop"  # Existe duplicado em dryaRC
+   alias t-stop="termux-media-player stop"  # Existe duplicado em config-bash-alias
 
    alias sadhguru-presence="$v_path/sadhguru-presence.sh"
    alias                 Y="$v_path/yoga.sh"
@@ -1052,8 +1051,8 @@ function f_internal_drya_files_nr_2 {
          echo                                          >> $v_MSGS
 
 
-   # Sourcing 'dryaRC' last configs to overwrite other Repos configs (@DRYa repo)
-      source $__REPOS_CENTER__/DRYa/all/src/dryaRC
+   # Sourcing 'config-bash-alias' last configs to overwrite other Repos configs (@DRYa repo)
+      source $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
 
    # Sourcing 'dryarc' last configs to overwrite other configs (Machine specific @Host, does not get centralized and uploaded @DRYa)
       source $v_path_dryarc 2>/dev/null
@@ -1172,7 +1171,7 @@ function f_fun_open_random_shells {
    # Forçar a aprendizagemnde Javascript ou Python ou SQLite
    v_opt=$(shuf -i 1-4 -n 1)
 
-   [[ $v_opt == "1" ]] && node    # Foi criado um alias em 'dryaRC'
+   [[ $v_opt == "1" ]] && node    # Foi criado um alias em 'config-bash-alias'
    [[ $v_opt == "2" ]] && python
    [[ $v_opt == "3" ]] && sqlite3
    [[ $v_opt == "4" ]] && echo "bash" 1>/dev/null
