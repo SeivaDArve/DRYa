@@ -425,8 +425,15 @@ function f_drya_welcome_screen {
    function f_ws_neofetch {
       # Apresentar apenas o icon ASCII do `neofetch`
 
-      echo
       neofetch -L 2>/dev/null
+   }
+
+   function f_ws_htop {
+      # Apresentar todos os processos da maquina atual (tal como um VERDADEIRO user de ARCH faria. (Um user de Arch Linux sao é aquele que quer manipular tudinho na sua maquina)
+      f_talk; echo "Process LIST"
+      top -b -n1 | grep -E 'load average|^[[:space:]]*(PID|[0-9]+[[:space:]])' | sed '1s/^top -/ > top -/'
+
+      #htop 2>/dev/null || top 2>/dev/null
    }
 
    function f_ws_seiva_up_time {
@@ -448,6 +455,7 @@ function f_drya_welcome_screen {
    f_ws_drya_startup_instructions
    f_ws_drya_about_decrypted_gpg_dir
    f_ws_neofetch
+   f_ws_htop
   #f_ws_seiva_up_time 
    f_ws_cmatrix
 
