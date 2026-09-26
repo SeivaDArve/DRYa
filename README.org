@@ -1,9 +1,12 @@
+#+TITLE: README.org for repository DRYa
+
 * DRYa - Don't Repeat Yourself (app)
 
 :PROPERTIES:
 #+STARTUP: overview
 #+STARTUP: hidestars
 #+STARTUP: indent
+#+STARTUP: bash-mode-for-1st-day-new-fresh-unrecognized-students-on
 :END:
 
 [[DRYa ASCII icon][./all/etc/dot-files/drya/D-jpg.jpg]]
