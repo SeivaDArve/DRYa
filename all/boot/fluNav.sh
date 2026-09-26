@@ -1136,7 +1136,7 @@ function V {
       
 
       elif [ $1 == "trade" ]; then
-         [[ -z $2 ]]                   && cd $__REPOS_CENTER__/moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
+         [[ -z $2 ]]                   && cd $__REPOS_CENTER__/DRYa-moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
       
 
@@ -1146,7 +1146,7 @@ function V {
 
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
-         cd $__REPOS_CENTER__/ezGIT 2>/dev/null && ls -p || f_error_cd
+         cd $__REPOS_CENTER__/DRYa-ezGIT 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then

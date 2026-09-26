@@ -187,7 +187,6 @@ alias la="ls -pA"
 alias ll="ls -pl"
 alias lll=f_ls_with_absolute_path
 alias lh="du -ah" # Lists all file's size
-alias l1='ls -1lp --color=always | grep -v "/$"; ls -1lp --color=always | grep "/$"'
 alias l1='ls -1lp --color=always | grep -v '/$'; ls -l1p --color=always | grep '/$''
 alias RM="rm -rf"
 alias lixo="mkdir -p ~/trash/ && mv $* ~/trash/"

@@ -201,8 +201,8 @@ function f_dv_PS1 {
       echo    "$PS1"
 
    # Configuring
+      PS1='\t \u \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '  # Testing with date
       PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
-      PS1='\t \u \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
 
    # Confirming
       echo -n " > New PS1: "
@@ -645,13 +645,13 @@ function f_internal_drya_files_nr_1 {
 
    # Include this file name in a variable
      v_name_dryaSRC="$__name__"
-     v_path_drya_source=$__REPOS_CENTER__/DRYa/all/$v_name_dryaSRC
+     v_path_drya_source=$__REPOS_CENTER__/DRYa/all/src/$v_name_dryaSRC
 
-     v_name_drya_alias="config-bash-alias"
-     v_path_drya_alias=$__REPOS_CENTER__/DRYa/all/etc/$v_name_drya_alias
+     v_name_drya_alias="dryaRC"
+     v_path_drya_alias=$__REPOS_CENTER__/DRYa/all/src/$v_name_drya_alias
      # uDev: Dar um nome mais explicito: drya_bash_alias ou drya_cfba ou drya_2_config_bash_alias
 
-     v_name_dryarc=".dryarc"
+     v_name_dryarc=".dryaRC_host"
      v_path_dryarc=~/.config/h.h/drya/$v_name_dryarc
      # Exemplos: Quando em um PC especifico, um comando especifico da erro, pode ser usado .dryarc para overwrite desse comando. Por exemplo para facilitar outros utilizadores
 
@@ -832,7 +832,7 @@ function f_repository_ezGIT {
 
    # Define a key to call the entire program
       # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso)
-      alias        ezGIT="bash $__REPOS_CENTER__/ezGIT/ezGIT.sh"
+      alias        ezGIT="bash $__REPOS_CENTER__/DRYa-ezGIT/ezGIT.sh"
       alias ezgit="ezGIT"
       alias     G="ezGIT"
 
@@ -1052,7 +1052,7 @@ function f_internal_drya_files_nr_2 {
 
 
    # Sourcing 'config-bash-alias' last configs to overwrite other Repos configs (@DRYa repo)
-      source $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+      source $__REPOS_CENTER__/DRYa/all/src/dryaRC
 
    # Sourcing 'dryarc' last configs to overwrite other configs (Machine specific @Host, does not get centralized and uploaded @DRYa)
       source $v_path_dryarc 2>/dev/null
