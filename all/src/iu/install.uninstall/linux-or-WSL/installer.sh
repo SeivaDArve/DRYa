@@ -48,7 +48,7 @@ function f_find_dryaSRC
 	
 	# hard coded version of the search for the file: "dryaSRC":
 		v_file="dryaSRC"
-		v_file_relative="../../all/dryaSRC"
+		v_file_relative="../../all/src/dryaSRC"
 		echo "DRYa: Linux Installer: My script name is: ./$0"
 		echo "DRYa: Linux Installer: My relative dir path is: ./$(dirname $0)"
 
@@ -149,7 +149,7 @@ f_exec
 # 2. Creates a file .dryarc ~/.config/h.h/drya (for temporary DRYa configs
 # 3. Reads the file ~/.bashrc to see it it has a shebang
 #	3.1. If if doesn't than adds it
-# 4. Reads the file ~/.bashrc again to see if it recognizes ~/Repositories/DRYa/all/dryaSRC
+# 4. Reads the file ~/.bashrc again to see if it recognizes ~/Repositories/DRYa/all/src/dryaSRC
 # 	4.1 If it doesn't than adds it
 # 5. Sources ~/.bashrc to apply the changes done manually
 # 6. Ask if user want to add the GUI layer to DRYa

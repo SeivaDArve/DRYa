@@ -32,6 +32,16 @@
 #       criar um argumento para limpar. exemplos: listas temporarias criadas por V e F em `V ...` e `F ...`
 
 
+
+
+# Variables
+   v_dryaSRC=$__REPOS_CENTER__/DRYa/all/src/dryaSRC
+
+
+
+
+
+
 # Leters to be used:
 #     function F     (can sync files before/after editing at DRYa@host or DRYa@github)
 #     function V     (NaVigate to dirs)
@@ -190,18 +200,18 @@ function f__V_hist__remove_duplicated_lines {
 
 
 function f_edit__config_bash_alias {
-   vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+   vim $__REPOS_CENTER__/DRYa/all/src/dryaRC
    f_greet
-   echo "edited: config-bash-alias"
+   echo "edited: dryaRC"
 }
 
 function f_edit__notes {
    f_greet
-   note  # This is an alias set on config-bash-alias file
+   note  # This is an alias set on dryaRC file
 }
 
 function f_edit__dryaSRC {
-   vim $__REPOS_CENTER__/DRYa/all/dryaSRC
+   vim $v_dryaSRC
    f_greet
    echo "edited: dryaSRC"
 }
@@ -230,7 +240,7 @@ function f_edit__vimrc {
 function f_edit__1st_emacs {
    f_greet
    echo "Editing the list '1st.org' (guide of apps listed to install)"
-   v_1st_file=$__REPOS_CENTER__/DRYa/install.uninstall/populate-machines/level+1/1st.org
+   v_1st_file=$__REPOS_CENTER__/DRYa/all/iu/install.uninstall/populate-machines/level+1/1st.org
    echo "$v_1st_file" >> $v_fluNav_S_hist_file 
    echo
    bash e $v_1st_file
@@ -661,7 +671,7 @@ function f_menu_fzf_F {
          v_editor3="less --wordwrap"
          L65="65. Edit | $traits_editor   | Example"
 
-      L15='15. Edit | vim   | config-bash-alias'
+      L15='15. Edit | vim   | dryaRC'
       L14='14. Edit | vim   | notes'
       L13='13. Edit | vim   | dryaSRC'
       L12='12. Edit | vim   | .bashrc'
@@ -1373,7 +1383,7 @@ function V {
 
    # Implementation of Use 10:
       elif [ $1 == "pwd" ]; then
-         eval lll  # Function usually at config-bash-alias
+         eval lll  # Function usually at dryaRC 
       
    # Implementation of Use 11:
       elif [ $1 == "gpg" ]; then

@@ -10,7 +10,7 @@
 # About the file: current-stroken
   > A file that contains a github's access token but with a bug for safety, only the user know how to correct it. The token should not be written in plain text
   > You can edit this file manually or with the command '$ drya edit stroken' (edits the file: .../DRYa/all/dot-files/git-github/current-stroken)
-    > The new edition should be copied to .../DRYa/install.uninstall/stroken for new users who are not aware of the directory tree
+    > The new edition should be copied to .../DRYa/all/iu/install.uninstall/stroken for new users who are not aware of the directory tree
 
 # About the file: .gitconfig
   > A file you can edit manually and make it to use by copyung it to ~

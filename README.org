@@ -12,8 +12,9 @@
 Don't Repeat Yourself (app)
 
 ** Name origin
-"DRY" is a Coding style. And the goal is to be applied here very heavily. 
-
+"DRY" is a Coding style.
+My intention is to apply it on the projetc ONCE and use it on any hardware with any OS
+Attempting to find ONE config/script which adapts to any machine
 ** Description
 Portable Operative System
 Executable Database of solutions: for bugs, automatic instalations, automatic configs)
@@ -30,7 +31,7 @@ This project is a natural tendency for any entusiastic programmer, it is like a 
 
 Manages my Public and Private software. 
 
-** Why Bash?
+** Why written in Bash?
 Bash allows my Repo and Programming to achieve: Holy trinity
    - Cross-Platform (and stardard in most machines (Omnipresent))
    - Fully featured (all I needed was already there (Omnipotent))
@@ -51,13 +52,12 @@ Some examples are:
 This script is a personal software 'configurator', whenever the author finds dificulty in life and a solution is found, it gets centralized in this repository in some way
 This repository fits perfectly to it's owner at least. 
  
-** Termux (terminal for Android and iPhone)
+** Termux (terminal for Android and iPhone smartphones)
 This repository is written in Bash and Pyhton
 Both programming languages can run on Linux, Windows, Mac, Android (Using Termux) and iPhone (Using Termux)
 That means that this software is cross-platform just like any personal assistant should be
 
 For the enthusiastic programmer: Iron man (from the Marvel comics) was a programmer. Where the Iron Suit was like Termux (a dedicated command line, programmed to recognize voice and user input to extend the user habilities)
-
 
 ** Brainstorming
 Do you have config files that you keep installing/removing/installing/removing?
@@ -92,12 +92,15 @@ But this app/script does something better. This app IS NOT COMPILED, therefore t
 
 DRYa has it's own style and organization for best read and fast understanding
 ** Coding style (syntax)
-*** #uDev
+
+Examples of syntax which are very specific of this project
+
+*** Notes about code to write in the future: '# uDev'
 Something "under develpment" where work is in progress. Lists something to be done soon in the future: List... List... List
 If you read the source code you will find many many comments of my own code (Learning bash by practice)
 And you will also find another kind of comment "# uDev: Under Development" which are a message to my future self, some idea to remember
 If you wish to co-op then you may find these comments and try to script yourself
-*** drya-fast-tg-sys-vars
+*** Commented lines describing how to toggle variables in the lines below: ' # drya-fast-tg-sys-vars'
    This text is something you can find on DRYa scripts (Fast Toggle System for Variables from DRYa)
 
    Some software options are ready to use only in the backend. When frontend menus are not ready to use and to toggle settings, then the fastest way to toggle configs is to set the varible of a specific config in several lines (as many lines as the options there are for such variable). The last line is again the same variable beeing set and overwritting all previous lines of the same variable beeing set.
@@ -110,13 +113,12 @@ If you wish to co-op then you may find these comments and try to script yourself
        echo "Variable contains: $v_variable"
 
        Result: "Variable contains: Cat"
-*** f_function v_variable c_variables_ascii
+*** Protocol on how to name or rename code elements: 'f_function', 'v_variable', 'c_variables_ascii'
 
    f_function_names                       (Helps A LOT to read code. gives the starting common pattern f_ and helps distinguish from v_ variables)
    v_variable_names                       (instead all Caps variables, as default for $BASH)
    c_variables_of_text_but_for_ansi_codes (usually containing backspaces already)
    
-
 ** Modular software (list of apps under DRYa)
 *** Jarve
 DRYa attempts to be cross platform first, grows from inside-out. Starts small and swallows bug on it's current OS. In the end we get a menu called DRYa where we command "install me this software" and this menu recognizes the system and accordingly pleases the user. If uses software first

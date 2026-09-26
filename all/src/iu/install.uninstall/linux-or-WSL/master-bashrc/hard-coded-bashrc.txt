@@ -1,4 +1,4 @@
 # Sourcing Seiva's main repo: DRYa   # --hashtag-drya-- 
    __REPOS_CENTER__"/home/dv/Repositories"; export __REPOS_CENTER__ # Dedicated dir for repos   # --hashtag-drya-- 
-   DRYa_HEART="/home/dv/Repositories/DRYa/all/dryaSRC"; export DRYa_HEART  # setting one file that wakes all others   # --hashtag-drya-- 
+   DRYa_HEART="/home/dv/Repositories/DRYa/all/src/dryaSRC"; export DRYa_HEART  # setting one file that wakes all others   # --hashtag-drya-- 
    source ${DRYa_HEART}   # --hashtag-drya-- 

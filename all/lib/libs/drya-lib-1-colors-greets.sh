@@ -597,7 +597,7 @@ function f_debug {
 function f_pin {
    # Adicionar pin aos pedidos de certas fx
    # v_pin is defined at dryaSRC 
-   # v_pin=$(grep "v_pin" $__REPOS_CENTER__/DRYa/all/dryaSRC)
+   # v_pin=$(grep "v_pin" $__REPOS_CENTER__/DRYa/all/src/dryaSRC)
    v_pin=0000
 
    # Se no 'main' script o user definiu texto para apresentar no ecra, entao esse texto é apresentado

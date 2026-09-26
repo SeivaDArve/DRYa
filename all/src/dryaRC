@@ -1,9 +1,9 @@
 #!bin/bash
-# Title:       | config-bash-alias  # uDev: Rename to dryaRC
+# Title:       | dryaRC # uDev: Rename to dryaRC
 # Description: | Dv List of all alias and Functions (for Linux terminal)
 # Use:         | This file is meant to be sourced from "~/Repositories/DRYa/all/dryaSRC"
 
-__name__="config-bash-alias.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+__name__="dryaRC.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
 
 alias drya-ansi='echo "
 ███▀▀██▄ ███▀▀███▄ ███   ███
@@ -13,7 +13,7 @@ alias drya-ansi='echo "
 "'
 
 # Verbose file (variables and outputs)
-   v_title="config-bash-alias"  # Name of this file you are reading
+   v_title="dryaRC"  # Name of this file you are reading
    v_message="DRYa: File Started loading: $v_title"
    v_message="$v_message (for extra alias and configs not belonging to any app yet)"
 
@@ -383,7 +383,7 @@ alias vb="cd $__REPOS_CENTER__/verbose-lines && echo 'Verbose-lines: tree' && tr
 # Ask the terminal to print the stroken
    alias stroken="cat $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken"
    # Notes:
-      # At $__REPOS_CENTER__/DRYa/all/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
+      # At $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
       # We can install stroken automatically with: '$ drya install stroken'
 
 alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op https://seiva.yolasite.com/"

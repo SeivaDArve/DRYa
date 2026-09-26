@@ -303,7 +303,7 @@ function f_tst {
 
 function f_install_drya__with_fzf {
    echo "File was removed:"
-   echo " > $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
+   echo " > $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
 }
 
 function f_install_drya__with_Select {
@@ -311,10 +311,10 @@ function f_install_drya__with_Select {
 
    # Variables to the same file
       # Used also to Uninstall DRYa
-         v_installer_v1=$__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+         v_installer_v1=$__REPOS_CENTER__/DRYa/all/iu/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
       # Used if DRYa is not yet installed
-         v_installer_v2=./install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
+         v_installer_v2=./all/iu/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
 
 
    f_greet
@@ -324,7 +324,7 @@ function f_install_drya__with_Select {
    #          echo "uDev: Are you sure you want to install DRYa?"; 
    #          echo "If you want to install drya itself, 3 ways:"
    #          echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
-   #          echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+   #          echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/all/iu/install.uninstall/install.sh"
    #          echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
    #          echo 
    #          echo " ... uDev"
@@ -3232,12 +3232,12 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
             echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
             echo
 
-         cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken $__REPOS_CENTER__/DRYa/install.uninstall/stroken
-            echo "Copied also too: ...DRYa/install.uninstall/stroken"
+         cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/stroken
+            echo "Copied also too: ...DRYa/all/iu/install.uninstall/stroken"
             echo
          
             # Adding info for the new user:
-               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> $__REPOS_CENTER__/DRYa/install.uninstall/stroken
+               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/stroken
 
          # Verbose output
             echo "You may install stroken as ~/.netrc file with the command:"
@@ -3247,15 +3247,15 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
       news)
          vim $__REPOS_CENTER__/DRYa/all/bin/news-displayer/news-displayer.sh
       ;;
-      dryarc)
+      dryaRC_host)
          echo "edit the file to program this machine without saving inside original DRYa (uDev)"
       ;;
-      alias | config-bash-alias)
+      alias | dryaRC)
          ## PERMANENT CHANGES if "git push" is used
-         vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+         vim $__REPOS_CENTER__/DRYa/all/src/dryaSRC
          
          # Other ways to open the same file: 
-            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+            # Using menu F (from D.F) defined/programed at dryaRC (the same file we are opening)
                # '$ F'
 
             # Using the alias set on 'dryaSRC'
@@ -3265,7 +3265,7 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
          vim $__REPOS_CENTER__/DRYa/all/dryaSRC
 
          # Other ways to open the same file: 
-            # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
+            # Using menu F (from D.F) defined/programed at dryaRC (the same file we are opening)
                # '$ F'
 
             # Using the alias set on 'dryaSRC'
@@ -3314,9 +3314,9 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
       # Edit 1st file in DRYa's loading sequence
       vim $__REPOS_CENTER__/DRYa/all/dryaSRC
 
-   elif [ $2 == "2" ] || [ $2 == "config-bash-alias" ]; then 
+   elif [ $2 == "2" ] || [ $2 == "dryaRC" ]; then 
       # Edit 2nd file in DRYa's loading sequence
-      vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+      vim $__REPOS_CENTER__/DRYa/all/src/dryaRC
 
    elif [ $2 == "3" ] || [ $2 == "dryarc" ]; then 
       # Edit 3rd file in DRYa's loading sequence
@@ -3628,14 +3628,14 @@ elif [ $1 == "mac" ]; then
 
 elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall" ] || [ $1 == "iu" ] || [[ $1 == "ui" ]];  then 
    # Install DRYa and more stuff
-   # Note: even when DRYa is not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already works for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
+   # Note: in the past, even when DRYa was not yet installed into ~/.bashrc but it is cloned to the machine, autocompletion already worked for this command only `bash drya.sh install.uninstall` because the command name for the `fzf` menu is the same as the existent directory. But remember that `fzf` is a dependency and should be installed first
    
    # failsafe: este menu tem de ter alternativa ao fzf
 
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
    # Var: file for DRYa dependencies
-      v_1st=$__REPOS_CENTER__/DRYa/install.uninstall/populate-machines/level+1/1st.org
+      v_1st=$__REPOS_CENTER__/DRYa/all/iu/install.uninstall/populate-machines/level+1/1st.org
 
    if [[ -z $2 ]]; then 
       # If there are no args:
@@ -3694,7 +3694,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
          [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select $@
-         [[ $v_list =~ "17. " ]] && bash e $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+         [[ $v_list =~ "17. " ]] && bash e $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
 
@@ -3722,7 +3722,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       f_install_drya__with_Select $@
 
    elif [ $2 == "s" ]; then 
-      bash e $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+      bash e $__REPOS_CENTER__/DRYa/all/iu/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
    elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things

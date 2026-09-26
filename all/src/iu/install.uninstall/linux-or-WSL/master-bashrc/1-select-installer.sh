@@ -1400,7 +1400,7 @@ function f_DRYa_install_me_at_bashrc {
       #read -sn 1
 	  
    # Defining the environment variable:
-	  __dryaSRC__=DRYa/all/dryaSRC
+	  __dryaSRC__=DRYa/all/src/dryaSRC
 
 	  #echo " > DRYa: Initial ramification file, redirects all others is located at: $__dryaSRC__"
    

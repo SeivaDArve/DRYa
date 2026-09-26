@@ -1,6 +1,6 @@
 // Title: .drya.node.rc
 // Instalar em: ~/.config/.drya.node.rc
-// Existe alias em: config-bash-alias `alias node="[[ -f ~/.config/.drya.node.rc ]] && node -r ~/.config/.drya.node.rc || node"`
+// Existe alias em: dryaRC `alias node="[[ -f ~/.config/.drya.node.rc ]] && node -r ~/.config/.drya.node.rc || node"`
 
 const repl = require('repl');
 repl.start({ prompt: '> ' });

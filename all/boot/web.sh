@@ -3,7 +3,7 @@
 # Description: Make web options easier to Seiva
  
 
-# Note: Alias related to web were kept in .../DRYa/etc/config-bash-alias
+# Note: Alias related to web were kept in .../DRYa/all/src/dryaRC
 #
 #       Example: 
 #
