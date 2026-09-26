@@ -472,7 +472,7 @@ function . {
    else
       # If argument is given, do the following:
       #  1. If arg is a directory: `cd`  into it
-      #  2. If arg is a file:      `vim` to edit the file
+      #  2. If arg is a file:      `vim` to edit the file. BUT, PLACE HERE the best text editor possible, one that you know that opens the file for sure. 'vim' and 'nano' are usually pre-installed on the system and it is recommended.
       #  3. Also runs a script that fills a file $v_date_now = ~/.config/h.h/drya/drya_date_now that `vim` with '.vimrc' can use to paste into files with the command `Z..`
 
       # uDev: instead of using `vim` detect which text editor is selected by `E` and `e` and use it instead. If they are not clear only then use vim for sure
