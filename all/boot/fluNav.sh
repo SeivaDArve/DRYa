@@ -1690,8 +1690,8 @@ function F {
       elif [ $1 == "-2"       ]; then v_nm="test";                   f_action; echo "Test is working for 19"; f_up
       elif [ $1 == "-1"       ]; then v_nm="fx_test";                f_action; ## Just test if this file is working
       elif [ $1 == "F"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
-      elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; source ~/.bashrc
-      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim $__REPOS_CENTER__/DRYa/drya.sh; #f_up
+      elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; v_rdmOS=$__REPOS_CENTER__/README-SeivaOS.org ; bash e $v_rdmOS #f_up
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim $__REPOS_CENTER__/DRYa/DRYa.sh; #f_up
       elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  $__REPOS_CENTER__/DRYa && EM drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="dryaGPG";                f_action; f_edit_dryaGPG
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd $__REPOS_CENTER__/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up

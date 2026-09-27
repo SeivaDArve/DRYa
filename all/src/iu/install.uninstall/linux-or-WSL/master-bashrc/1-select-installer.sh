@@ -705,20 +705,20 @@ function f_screen_5__choose_REPOS_CENTER {
       if [[ $v_ans == 1 ]]; then
          # Option 1
 
-         __REPOS_CENTER__="$HOME/Repositories"
+         __REPOS_CENTER__="$HOME/Repositories/SeivaOS"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
       elif [[ $v_ans == 2 ]]; then
          # Option 2
-         __REPOS_CENTER__="/mnt/c/$USER/Repositories"
+         __REPOS_CENTER__="/mnt/c/$USER/Repositories/SeivaOS"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
 
       elif [[ $v_ans == 3 ]]; then
          # Option 3
-         __REPOS_CENTER__="/mnt/c/users/$USER/Repositories"
+         __REPOS_CENTER__="/mnt/c/users/$USER/Repositories/SeivaOS"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 
@@ -743,7 +743,7 @@ function f_screen_5__choose_REPOS_CENTER {
 
       elif [[ $v_ans == 6 ]]; then
          # Option 6
-         __REPOS_CENTER__="~/Persistent/Repositories"
+         __REPOS_CENTER__="~/Persistent/Repositories/SeivaOS"
          f_verbose_results__REPOS_CENTER__  # Before leaving the screen, mention the results
          f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER 
 

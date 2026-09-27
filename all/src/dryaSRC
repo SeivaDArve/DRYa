@@ -524,6 +524,9 @@ function f_alias_to_enforce {
       alias Dd="cd $DRYa && ls"
       alias DD="cd $DRYa && ls"
 
+      alias DDD="cd $__REPOS_CENTER__ && clear && figlet SeivaOS && l1"
+      alias DDD="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
+
 
 
 
@@ -533,7 +536,7 @@ function f_alias_to_enforce {
 
 
       if [ -z $1 ]; then
-         bash $DRYa/drya.sh $* 
+         bash $DRYa/DRYa.sh $* 
 
       elif [[ $1 == "gpg" ]] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
 
@@ -602,7 +605,7 @@ function f_alias_to_enforce {
          fi
 
       else
-         bash $DRYa/drya.sh $*
+         bash $DRYa/DRYa.sh $*
       fi
 
 

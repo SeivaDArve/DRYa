@@ -4881,6 +4881,9 @@ elif [ $1 == "lsblk" ] ; then
 elif [ $1 == "debian" ] || [ $1 == "start-debian-inside-termux" ]; then
    proot-distro login debian  
 
+elif [[ $1 == "arg0" ]]; then  
+   echo "uDev: Info about DRYa.sh arg 0"
+
 elif [ $1 == "kill-pid" ] || [ $1 == "pid" ] || [ $1 == "kill" ]; then 
    f_kill_process_by_PID 
 
