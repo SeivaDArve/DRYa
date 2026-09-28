@@ -906,7 +906,10 @@ function f_main_menu_text {
    echo ' | 28  | hjSplit > join (uDev)' 
    f_hline
    echo ' | 29  | Decrypt [file.txt.gpg to tmp.file.txt] > Edit > Encrypt'
+   echo ' | td  | Decrypt [repo:omnilog:<td.org.gpg>] > Edit > Encrypt'
    echo ' | 30  | Checklist: How to become annonymous; Avoid Spyware'
+   f_hline
+   echo ' | led | Ledger: Software the REGISTO de dividas (moeda alt)'
    f_hline
    echo " |  h  | Instucoes Base"
    echo " |  Q  | Sair"
