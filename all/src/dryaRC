@@ -889,6 +889,5 @@ function pwsh {
    proot-distro login debian -- /data/data/com.termux/files/home/powershell/pwsh "$@"
 }
 
-alias cd="."
 alias conv="magick"
 alias desc="type"  # Describes the command given as arg 1
