@@ -2616,6 +2616,18 @@ function f_zip_unzip {
    bash $__repo__/all/bin/drya-zip-unzip.sh $*
 }
 
+function f_guide_install_garudaOS {
+   # Guia ppr texto do que o Garuda pede durante a instalacao
+
+   f_greet
+   f_talk; echo 'Guide: Install GarudaOS'                                                                                     
+           echo " > Procure em 'wikiD.org':"
+           echo '   `** Guia: Como instalar Garuda Linux`'
+           echo
+   f_talk; echo "Atalho"   
+           echo ' > `D wiki .`'
+}
+
 function f_guide_dryaCLONEZILLA {
    # Text|Guide|Help to use dryaCLONEZILLA which is an offline|stored HDD with a partition table and Multiboot ready to populate another fresh|empty HDD (instead of formating everything)
 
@@ -2648,6 +2660,9 @@ function f_backup_guide {
               echo " > criar um NAS"
               #echo "uDev: criar .dotfile que guarde uma lista de enderecos de pastas que um dia podem precisar serv revistos (para backup)"
               #echo "      exemplo: Pasta com printscreen de recidos de pagamentos online. Pode estar guardado na pasta X, mas DRYa relembra no .dotfile que a pasta X pode ser importante para backup"
+              echo
+      f_talk; echo "Backup Checklist (github.com):"
+              echo " - [ ]  Clone all Repositories into backup HDD"
               echo
       f_talk; echo "Backup Checklist (Smartphone):"
               echo " - [ ]  Contacts"
@@ -3653,7 +3668,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L15='15. |           |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
          L14='14. |           |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
          L13='13. | `D ui i`  |  Menu   | PRESETS + Packages + Populate Machines ' 
-         L12='12. | `D ui b`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
+         L12='12. | `D ui bk` |  Menu   | Backups (Clonezilla, dd, checklists)' 
          L11='11. | `D cln`   |  Menu   | Clone Repositories         '
          L10='10. | `D iu d`  |  Menu   | Dot files           '
           L9='9.  | `D ui dp` |  Menu   | About file "1st.org" (Dependencies + Packages listed)       ' 
@@ -3661,6 +3676,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
           L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
          L17='17. | `D ui s ` |  Edit   | `select` DRYa installer    '
                                   
+         L20='20. |           |  Guide  | Install GarudaOS (list of requirements)'
           L6='6.  | `D cln h` |  Guide  | clone DRYa (for other devices too) '
 
           L5='5.  |           | Install | [ Linux ] Install git'    
@@ -3677,7 +3693,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L0="DRYa: Menu install.uninstall: "
          Lh=$(echo -e "\nInformation:\n - In order to clone DRYa from Github, 'git' is needed\n - Some options Install directly, others only Guide on How to install\n ")
          
-         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n\n$L17 \n$L7 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L20 \n\n$L17 \n$L7 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
          echo "$Lz2" >> $Lz4
@@ -3697,6 +3713,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "17. " ]] && bash e $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
+         [[ $v_list =~ "20. " ]] && f_guide_install_garudaOS
 
          [[ $v_list =~ "5.  " ]] && echo "uDev"
          [[ $v_list =~ "4.  " ]] && echo "uDev: Guide install termux, guide config termux, then update && upgrade system"
@@ -3841,7 +3858,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          v_pkg=file;     echo; echo "Instaling $v_pkg"; pk + $v_pkg 
       fi
 
-   elif [[ $2 == "backups" ]] || [ $2 == "backup" ] || [ $2 == "b" ]; then 
+   elif [[ $2 == "backups" ]] || [ $2 == "backup" ] || [ $2 == "bk" ]; then 
       f_backup_guide
 
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
@@ -4423,6 +4440,9 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_repo=$__REPOS_CENTER__
 
    if [ -z $2 ]; then 
+      echo "uDev: Info about options"
+
+   elif [ $2 == "0" ]; then 
       # File to run as last script before exit terminal
       source $v_quit
 
