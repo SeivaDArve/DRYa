@@ -2,12 +2,12 @@ Indratena_TAB_TB132FU
 Seiva__Android__A26
 Seiva__Android__A6_plus
 Seiva__Android__OPPO_A16s_Mike_2
-Seiva___Android__J5
+Seiva__Android__J5
 Seiva__MSI__Leopard_pro
 Seiva__Lenovo__330
 Seiva__ASUS__15_OLED
+Seiva__NASgul_v2
 Seiva__pi__RaspberryOS__miau
 Seiva__pi__RetroPi__pi
-Seiva__Dv__NASgul_v2
 seivaDArve
 publicDVC__pi3__raspberryOS__vascogama
