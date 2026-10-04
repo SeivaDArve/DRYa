@@ -360,16 +360,15 @@ function f_drya_welcome_screen {
    function f_seiva_greetings_private {
       # When DRYa was installed on personal and private PC/device, use this fx
       
-      f_talk; echo "Seiva greetings: Haux haux!"
-              echo "      ( Verbal expression of Joy and Hapiness! )" 
-              echo "      ( From Brazil tribe Huni Kuin - AKA kaxinawá )" 
+      f_talk; echo "Seiva greetings: Mékié pá?"
+              echo "      Verbal expression when meeting a close friend!" 
               echo
    }
    
    function f_seiva_greetings_public {
       # When DRYa was installed on public PC/device, use this fx
       
-      f_talk; echo "Seiva greetings: Haux haux!"
+      f_talk; echo "Seiva greetings: Mékié pá?"
               echo
    }
 
@@ -412,12 +411,27 @@ function f_drya_welcome_screen {
    function f_ws_drya_startup_instructions {
       # Verbose Initial DRYa Message
 
+      v_save=$v_talk  # Temporary use 'f_talk' with some other text
+      v_talk="Help: "
+
       f_talk; echo          "Startup Instructions"
               echo -n "      Menu 'Main'         : "
         f_c4; echo -e                             "D ."
         f_rc; echo -n "      Menu 'Instructions' : "
         f_c4; echo                                "D help"
         f_rc; echo
+
+      v_talk=$v_save
+   }
+
+   function f_ws_drya_arg0 {
+      v_save=$v_talk  # Temporary use 'f_talk' with some other text
+      v_talk="Arg0: "
+
+      f_talk; echo "Info about the Arg 0 (uDev)"
+              echo
+
+      v_talk=$v_save
    }
 
    function f_ws_drya_about_decrypted_gpg_dir {
@@ -450,6 +464,7 @@ function f_drya_welcome_screen {
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
    f_ws_drya_startup_instructions
+   f_ws_drya_arg0
    f_ws_drya_about_decrypted_gpg_dir
    f_ws_neofetch
   #f_ws_seiva_up_time 
