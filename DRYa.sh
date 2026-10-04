@@ -59,6 +59,9 @@
 
 
 
+
+
+
 function f_default_variables {
    # Default variables (default_variables)
    __name__=drya.sh
@@ -74,6 +77,10 @@ function f_default_variables {
       v_drya_logo_2=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
       v_drya_logo_3=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
 }
+
+
+
+
 
 
 
@@ -102,6 +109,9 @@ function f_stroken {
          f_rc;   echo
       fi
 }
+
+
+
 
 
 
@@ -159,6 +169,20 @@ function f_source_drya_lib_0__missing_hard_dependencies {
    echo
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function f_source_drya_lib_0__arg_0 {
    # Loading $v_5
@@ -238,6 +262,20 @@ function f_source_drya_lib_0__verbose_fail {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function f_source_drya_lib_1_alt {
    # Sourcing DRYa Library 1: 
 
@@ -312,7 +350,6 @@ function f_source_drya_lib_1_alt {
 
 
 
-
 function f_source_drya_lib_1 {
 
    # Sourcing DRYa Lib 1: 
@@ -355,47 +392,25 @@ function f_source_drya_lib_4 {
 
 
 
-
-
-
-
 function f_tst {
    echo
    read -t 1 -sp "DRYa: Finished loading Header "
    echo
 }
 
-function f_install_drya__with_fzf {
-   echo "File was removed:"
-   echo " > $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
-}
-
-function f_install_drya__with_Select {
-   # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
-
-   # Variables to the same file
-      # Used also to Uninstall DRYa
-         v_installer_v1=$v_official_DRYa_installer
-
-      # Used if DRYa is not yet installed
-         v_installer_v2=$v_official_DRYa_installer_failsafe
 
 
-   f_greet
 
-   #  f_talk; echo "For this one, your prompt must be next to the file drya.sh"
-   #          echo
-   #          echo "uDev: Are you sure you want to install DRYa?"; 
-   #          echo "If you want to install drya itself, 3 ways:"
-   #          echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
-   #          echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
-   #          echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
-   #          echo 
-   #          echo " ... uDev"
 
-   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh" && read -sn1 && bash $v_installer_v2
-   [[   -f $v_installer_v1 ]] && bash $v_installer_v1 $@
-}
+
+
+
+
+
+
+
+
+
 
 function f_git_status {
    f_talk; echo
@@ -535,6 +550,39 @@ function f_recicle_line {
    tput el
 	echo "Second line. read replaced."
 }
+
+function f_install_drya__with_fzf {
+   echo "File was removed:"
+   echo " > $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
+}
+
+function f_install_drya__with_Select {
+   # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
+
+   # Variables to the same file
+      # Used also to Uninstall DRYa
+         v_installer_v1=$v_official_DRYa_installer
+
+      # Used if DRYa is not yet installed
+         v_installer_v2=$v_official_DRYa_installer_failsafe
+
+
+   f_greet
+
+   #  f_talk; echo "For this one, your prompt must be next to the file drya.sh"
+   #          echo
+   #          echo "uDev: Are you sure you want to install DRYa?"; 
+   #          echo "If you want to install drya itself, 3 ways:"
+   #          echo "  1. Download and run:  github.com/DRYa/ghost-in.sh"
+   #          echo "  2. Git Clone and Run: github.com/DRYa; bash Drya/install.uninstall/install.sh"
+   #          echo "  3. Git Clone and Run: github.com/DRYa; bash drya.sh install --me"
+   #          echo 
+   #          echo " ... uDev"
+
+   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh" && read -sn1 && bash $v_installer_v2
+   [[   -f $v_installer_v1 ]] && bash $v_installer_v1 $@
+}
+
 
 function f_calcular_tempo_decorrido_apos_data {
    # Data de aniversário no formato YYYY-MM-DD
