@@ -1,0 +1,11 @@
+ 
+
+# Legacy DRYa
+   v_REPOS_CENTER=/home/dv/Repositories; export v_REPOS_CENTER
+
+# STARTING DRYa: "Don't Repeat Yourself, app"  ##  ( #drya-top-hashtag )       
+   __REPOS_CENTER__=~/Repositories/SeivaOS; # Directory to centralize Repositories       
+   __dryaSRC__=$__REPOS_CENTER__/DRYa/all/src/dryaSRC; # First DRYa file to run. It initiates all others       
+   export __REPOS_CENTER__ __dryaSRC__ ; source $__dryaSRC__  ##  ( #drya-bot-hashtag )       
+
+

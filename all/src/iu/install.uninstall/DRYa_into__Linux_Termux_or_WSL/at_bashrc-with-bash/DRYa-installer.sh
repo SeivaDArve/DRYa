@@ -837,6 +837,8 @@ function f_screen_6__detect_if_DRYa_is_correctly_placed_into_REPOS_CENTER {
               echo "  Value of \$__REPOS_CENTER__:"
               echo "   > $__REPOS_CENTER__"
               echo $v____________
+              echo " Install?"
+              echo $v____________
               echo " |   |"
               echo ' | 1 | >>> Yes, (later `cp` or `mv` DRYa into "__REPOS_CENTER__" with DRYa inside)'
               echo " |   |"

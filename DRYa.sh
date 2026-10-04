@@ -30,10 +30,12 @@
 
 
 
+
+
+
 # uDev: Ao rever o codigo (na busca de bugs) adicionar `else` nos blocos de codigo `if` para nao dar espaco a comportamentos inesperados no codigo
 # uDev: Criar um `elif` para todas as opcoes que usem a dependencia fzf (para usarem fresh install de OS). Tambem chamado 'failsafe'
 # uDev: Addicionar xKill; adicionar OT: confirmar acessos aos tty
-
 
 # uDev: Criar menus 'failsafe' semelhantes a este:
 #
@@ -53,17 +55,35 @@
 
 
 
+
+
+
+
 function f_default_variables {
    # Default variables (default_variables)
    __name__=drya.sh
    __repo__=$__REPOS_CENTER__/DRYa
    v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
    
+   # Official DRYa bash installer (with a version for failsafe)
+      v_official_DRYa_installer=$__REPOS_CENTER__/DRYa/all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
+      v_official_DRYa_installer_failsafe=./all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
+
    # DRYa logo: presentation info
       v_drya_logo_1_script=$__REPOS_CENTER__/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
       v_drya_logo_2=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
       v_drya_logo_3=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
 }
+
+
+
+
+
+
+
+
+
+
 
 function f_stroken {
    # When automatic github.com authentication is not set, an alternative (as text based credential, but salted) is printed on the screen. This is usefull until the app remains as Beta.
@@ -82,6 +102,17 @@ function f_stroken {
          f_rc;   echo
       fi
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function f_source_drya_lib_0__missing_hard_dependencies {
 
@@ -267,6 +298,21 @@ function f_source_drya_lib_1_alt {
    v_talk="DRYa: "
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function f_source_drya_lib_1 {
 
    # Sourcing DRYa Lib 1: 
@@ -295,6 +341,24 @@ function f_source_drya_lib_4 {
       #           f_lib4_stroken
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function f_tst {
    echo
    read -t 1 -sp "DRYa: Finished loading Header "
@@ -311,10 +375,10 @@ function f_install_drya__with_Select {
 
    # Variables to the same file
       # Used also to Uninstall DRYa
-         v_installer_v1=$__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+         v_installer_v1=$v_official_DRYa_installer
 
       # Used if DRYa is not yet installed
-         v_installer_v2=./install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh  
+         v_installer_v2=$v_official_DRYa_installer_failsafe
 
 
    f_greet
@@ -391,7 +455,6 @@ function f_soft_link_instructions {
 }
 
 function f_ascii_icon {
-
 
 	function f_center_to_screen_verbose {
       # Fx to verbosely study the process of creating this logo
@@ -3710,7 +3773,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
          [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select $@
-         [[ $v_list =~ "17. " ]] && bash e $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+         [[ $v_list =~ "17. " ]] && bash e $v_official_DRYa_installer
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
          [[ $v_list =~ "20. " ]] && f_guide_install_garudaOS
@@ -3739,7 +3802,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       f_install_drya__with_Select $@
 
    elif [ $2 == "s" ]; then 
-      bash e $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-select-installer.sh
+      bash e $v_official_DRYa_installer
 
    elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
