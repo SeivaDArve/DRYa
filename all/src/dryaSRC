@@ -424,16 +424,6 @@ function f_drya_welcome_screen {
       v_talk=$v_save
    }
 
-   function f_ws_drya_arg0 {
-      v_save=$v_talk  # Temporary use 'f_talk' with some other text
-      v_talk="Arg0: "
-
-      f_talk; echo "Info about the Arg 0 (uDev)"
-              echo
-
-      v_talk=$v_save
-   }
-
    function f_ws_drya_about_decrypted_gpg_dir {
       # Verbose DRYa Message about the existence of directories where there may be DECRYPTED documents
 
@@ -464,7 +454,6 @@ function f_drya_welcome_screen {
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
    f_ws_drya_startup_instructions
-   f_ws_drya_arg0
    f_ws_drya_about_decrypted_gpg_dir
    f_ws_neofetch
   #f_ws_seiva_up_time 

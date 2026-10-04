@@ -3259,24 +3259,43 @@ if [ -z "$*" ]; then
    # Set Available time (in seconds) for Temporized quick menu
       v_secs=2
 
-   # Info: nome do dispositivo atual
+   # Info as basic as possible + Name given to current device to use on git
+      f_talk; echo "is installed!"
+
       v_user=$(git config --get user.name)
 
-      f_talk; echo -n "Custom Device Name: "
-        f_c3; echo $v_user
-        f_rc; echo 
+      echo -n "      Current custom Device Name: "
+      f_c3; echo $v_user
+      f_rc; echo 
 
    # Info when no args are given
-      f_talk; echo "is installed!"
-              echo ' > Command: `D --help` (for `fzf` help menu)'
-              echo ' > Command: `D .`      (for `fzf` main menu)'
+      v_save=$v_talk  # Temporary use 'f_talk' with some other text
+      v_talk="Help: "
+      f_talk; echo "Some helpfull commands:"
+              echo ' > `D --help` (for `fzf` help menu)'
+              echo ' > `D .`      (for `fzf` main menu)'
               echo
+      v_talk=$v_save
+
+   # Info about the Argument zero given at the prompt (DRYa's actuall script)
+      function f_ws_drya_arg0 {
+         v_save=$v_talk  # Temporary use 'f_talk' with some other text
+         v_talk="Arg0: "
+
+         f_talk; echo "Info about the Arg 0 (uDev)"
+                 echo
+
+         v_talk=$v_save
+      }; f_ws_drya_arg0 
 
    # Temporized Quick menu
       f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
               echo    "       |"
               echo -n "       |_ To open MAIN fzf menu, press NOW : '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
-              echo -n '          Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
+              echo -n '       |  Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
+              echo    '       |'
+              echo -n '       |- Toggle ON/OFF DRYa-TUI (uDev)'
+              echo
 
    
    # Options available during only few seconds
