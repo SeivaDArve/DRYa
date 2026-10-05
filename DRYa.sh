@@ -3789,32 +3789,32 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
         #L16="16. |           | "Create|Configure" DRYa Home Server + 'N.A.S.'
 
         # Extras: Marcar com 1 pinta de corretor branco a tecla 'F2' correspindente a abrir a BIOS
-        #L16="16. |           | Install encrypted chat peer-to-peer github.com/diorwave/cmd-chat
-        #L16="16. |           | Sugest ninite.com to install Windows Software in bunches
-        #L16="16. |           | Install batch files for windows
-         L16="16. |           |  Update | View 'once-tasks-list'"
-         L15='15. |           |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
-         L14='14. |           |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
-         L13='13. | `D ui i`  |  Menu   | PRESETS + Packages + Populate Machines ' 
-         L12='12. | `D ui bk` |  Menu   | Backups (Clonezilla, dd, checklists)' 
-         L11='11. | `D cln`   |  Menu   | Clone Repositories         '
-         L10='10. | `D iu d`  |  Menu   | Dot files           '
-          L9='9.  | `D ui dp` |  Menu   | About file "1st.org" (Dependencies + Packages listed)       ' 
+        #L16="16. |            | Install encrypted chat peer-to-peer github.com/diorwave/cmd-chat
+        #L16="16. |            | Sugest ninite.com to install Windows Software in bunches
+        #L16="16. |            | Install batch files for windows
+         L16="16. |            |  Update | View 'once-tasks-list'"
+         L15='15. |            |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
+         L14='14. |            |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
+         L13='13. | `D iu i`   |  Menu   | PRESETS + Packages + Populate Machines ' 
+         L12='12. | `D iu bk`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
+         L11='11. | `D cln`    |  Menu   | Clone Repositories         '
+         L10='10. | `D iu d`   |  Menu   | Dot files           '
+          L9='9.  | `D iu dp`  |  Menu   | About file "1st.org" (Dependencies + Packages listed)       ' 
                                
-          L7='7.  | `D ui 1s` |  Menu   | `select` DRYa installer    '
-         L17='17. | `D ui s ` |  Edit   | `select` DRYa installer    '
+          L7='7.  | `D iu s  ` |  Exec   | DRYa-installer.sh    '
+         L17='17. | `D iu s .` |  Edit   | DRYa-installer.sh    '
                                   
-         L20='20. |           |  Guide  | Install GarudaOS (list of requirements)'
-          L6='6.  | `D cln h` |  Guide  | clone DRYa (for other devices too) '
+         L20='20. |            |  Guide  | Install GarudaOS (list of requirements)'
+          L6='6.  | `D cln h`  |  Guide  | clone DRYa (for other devices too) '
 
-          L5='5.  |           | Install | [ Linux ] Install git'    
-          L4='4.  |           |  Guide  | [Android] Install Termux' 
-          L3='3.  |           |  Menu   | [Windows] Powershell + WSL'
+          L5='5.  |            | Install | [ Linux ] Install git'    
+          L4='4.  |            |  Guide  | [Android] Install Termux' 
+          L3='3.  |            |  Menu   | [Windows] Powershell + WSL'
 
-         L19='19. |           |  Guide  | Usage:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
-         L18='18. |           |  Guide  | Create:  Live USB' 
+         L19='19. |            |  Guide  | Usage:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
+         L18='18. |            |  Guide  | Create:  Live USB' 
 
-          L2='2.  | `D iu ls` | List Status  '
+          L2='2.  | `D iu ls`  | List Status  '
 
           L1='1.  Cancel'
 
@@ -3837,7 +3837,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
-         [[ $v_list =~ "7.  " ]] && f_install_drya__with_Select $@
+         [[ $v_list =~ "7.  " ]] && bash   $v_official_DRYa_installer
          [[ $v_list =~ "17. " ]] && bash e $v_official_DRYa_installer
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
@@ -3862,12 +3862,16 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Edit script "DRYa fzf installer"
       f_install_drya__with_fzf
 
-   elif [[ $2 == "1-sel" ]] || [ $2 == "1s" ] || [ $2 == "1-select-installer" ]; then 
-      # Run 1-select-installer
-      f_install_drya__with_Select $@
-
    elif [ $2 == "s" ]; then 
-      bash e $v_official_DRYa_installer
+
+      if [ -z "$3" ]; then
+         # Run the installer script
+         bash $v_official_DRYa_installer
+
+      elif [ $3 == "." ]; then 
+         # Edit the installer script
+         bash e $v_official_DRYa_installer
+      fi
 
    elif [[ $2 == "presets" ]] || [ $2 == "p" ]; then 
       # Instaling PRESETS. Each option may install a package os dependencies + dot-files + custum things
