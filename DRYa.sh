@@ -168,9 +168,10 @@ function f_source_drya_lib_0__arg_0 {
       #echo "DRYa: drya-lib-5: "; 
       echo 
       #echo "      -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
-      echo "      Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+      echo "      Abs Path: working dir of running script \"$v_5_verbose\":"; 
       #echo "       >  $v_5";
-      echo "       > __dryaROOT__ == $__dryaROOT__"
+      echo "       > Variable '__dryaROOT__' contains:"
+      echo "       > '$__dryaROOT__'"
       read -sn1 -t 1
    }
 
@@ -525,6 +526,7 @@ function f_install_drya__with_Select {
 
 
    f_greet
+
 
    #  f_talk; echo "For this one, your prompt must be next to the file drya.sh"
    #          echo
