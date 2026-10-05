@@ -43,6 +43,7 @@ Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir T
 
 ** f_gr_2_hard_dependencies (2)
    # List of DRYa dependencies (to be installed by DRYa installer)
+   # dee:hrd_dp: figlet ncurses-utils less vim file fzf
    
    pkg install   \  
    figlet        \  # APT package manager may not have it, but SNAP package manager may have it: sudo snap install figlet

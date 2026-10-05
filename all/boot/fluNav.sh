@@ -240,7 +240,7 @@ function f_edit__vimrc {
 function f_edit__1st_emacs {
    f_greet
    echo "Editing the list '1st.org' (guide of apps listed to install)"
-   v_1st_file=$__REPOS_CENTER__/DRYa/all/iu/install.uninstall/populate-machines/level+1/1st.org
+   v_1st_file=$__REPOS_CENTER__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
    echo "$v_1st_file" >> $v_fluNav_S_hist_file 
    echo
    bash e $v_1st_file

@@ -208,9 +208,23 @@ function f_greet2 {
 function f_tk {
    # This fx avoids `f_talk; echo "text"` and behaves more direct like `f_tk "text"`
 
-    [[ -z $v_talk ]] && v_talk="< v_talk > "
-    f_c2; echo -n "$v_talk"
-    f_rc; echo    "$@"
+   # If previously no script gave the variable $v_tk, then, assign "DRYa-lib-1" to it
+      [[ -z $v_tk ]] && v_tk="< v_tk > "
+
+   f_c2; echo -n "$v_tk"
+   f_rc
+}
+
+
+function f_tk_x2 {
+   # Colorfull text to preceed any text of any important text line
+   # (IT IS A COPY of f_tk and is used for secindary headers that can change more often (Primary header could be this way called only once at the begginign of the file)
+
+   # If previously no script gave the variable $v_talk, then, assign "DRYa-lib-1" to it
+      [[ -z $v_tk_x2 ]] && v_tk_x2="< v_tk_x2 > "
+
+   f_c2; echo -n "$v_tk_x2"
+   f_rc
 }
 
 function f_talk {

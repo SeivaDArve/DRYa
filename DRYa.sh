@@ -124,51 +124,6 @@ function f_stroken {
 
 
 
-function f_source_drya_lib_0__missing_hard_dependencies {
-
-   clear
-   echo "DRYa: List of missing HARD dependencies:"
-
-   # Testar a lista de nomes para ver se o seu comando respetivo existe
-      apps=(fzf figlet jq curla ezGIT)  # debug
-      apps=(figlet)
-      v_array=()
-
-      for app in "${apps[@]}"; do
-          if ! command -v "$app" >/dev/null 2>&1; then
-              v_array+=("$app")
-          fi
-      done
-
-      echo " > ${v_array[@]}"
-      echo
-
-
-   # Questionar [y/N] se o utilizador quer ou nao quer instalar
-      read -t 3 -rp "DRYa: Quer instalar as aplicações em falta? [y/N] " v_ans
-      case "$v_ans" in
-
-         [Yy])
-            echo " > A instalar... (uDev)"
-            echo 
-
-            for i in "${v_array[@]}"
-            do
-               echo "Installing: $i" 
-               sudo apt install $i
-               echo 
-            done
-         ;;
-
-         *)
-            echo " > Instalação cancelada."
-         ;;
-      esac
-
-   read -p " " -t 1
-   echo
-
-}
 
 
 
@@ -210,10 +165,12 @@ function f_source_drya_lib_0__arg_0 {
    }
 
    function f_5_verbose {
-      echo "DRYa: drya-lib-5: "; 
-      echo " -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
-      echo "  >  $v_5";
-      echo "  > __dryaROOT__ == $__dryaROOT__"
+      #echo "DRYa: drya-lib-5: "; 
+      echo 
+      #echo "      -5- Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+      echo "      Abs Path: working dir of running script \"$v_5_verbose\" (without sufix '/'):"; 
+      #echo "       >  $v_5";
+      echo "       > __dryaROOT__ == $__dryaROOT__"
       read -sn1 -t 1
    }
 
@@ -222,7 +179,7 @@ function f_source_drya_lib_0__arg_0 {
 
    # Getting working directory where the script is placed (without the name in the end)
       f_5
-      f_5_verbose 
+     #f_5_verbose  # It will mentioned at `D` when called without arguments
 }
 
 function f_source_drya_lib_0__verbose_fail {
@@ -3241,95 +3198,134 @@ function f_qr_code__optical_data_transfer {
       # 
 
  f_default_variables 
- f_source_drya_lib_0__missing_hard_dependencies 
  f_source_drya_lib_0__arg_0 
  f_source_drya_lib_0__verbose_fail
 #f_source_drya_lib_1_alt
  f_source_drya_lib_1
  f_source_drya_lib_2
  f_source_drya_lib_4
- f_tst 
+#f_tst 
 
 
 if [ -z "$*" ]; then
    # Do something if there are no arguments
 
    f_greet
+   v_secs=2  # Set Available time (in seconds) for Temporized quick menu 
 
-   # Set Available time (in seconds) for Temporized quick menu
-      v_secs=2
+   function f_noARG__hello {
+      # Info as basic as possible + Name given to current device to use on git
+         f_talk; echo "is installed!"
 
-   # Info as basic as possible + Name given to current device to use on git
-      f_talk; echo "is installed!"
+         v_user=$(git config --get user.name)
 
-      v_user=$(git config --get user.name)
+         echo -n "      Current custom Device Name: "
+         f_c3; echo $v_user
+         f_rc; echo 
+   }
 
-      echo -n "      Current custom Device Name: "
-      f_c3; echo $v_user
-      f_rc; echo 
+   function f_noARG__help {
+      # Info when no args are given
 
-   # Info when no args are given
-      v_save=$v_talk  # Temporary use 'f_talk' with some other text
-      v_talk="Help: "
-      f_talk; echo "Some helpfull commands:"
-              echo ' > `D --help` (for `fzf` help menu)'
-              echo ' > `D .`      (for `fzf` main menu)'
-              echo
-      v_talk=$v_save
+      v_tk_x2="Help: "
+      f_tk_x2; echo "Some helpfull commands:"
+               echo "      'fzf help menu' : \`D --help\`"
+               echo "      'fzf main menu' : \`D .\`"
+               echo
+   }
 
-   # Info about the Argument zero given at the prompt (DRYa's actuall script)
-      function f_ws_drya_arg0 {
-         v_save=$v_talk  # Temporary use 'f_talk' with some other text
-         v_talk="Arg0: "
+   function f_noARG_drya__arg0 {
+      # Info about the Argument zero given at the prompt (DRYa's actuall script)
+      v_tk_x2="Arg0: "
 
-         f_talk; echo "Info about the Arg 0 (uDev)"
+      f_tk_x2; echo "Info about the Arg 0 (uDev)"
+      f_5_verbose 
+      echo
+      echo "      Ready for failsafe with 'relative' path?"
+      echo "       > (uDev)"
+      echo
+
+   } 
+
+   function f_noARG_drya__missing_hard_dependencies {
+      # Search for missing HARD dependencies, those most usefull (Toggle On or Off when using `D` without arguments) 
+
+      f_talk; echo "List of HARD dependencies:"
+
+      # Testar a lista de nomes para ver se o seu comando respetivo existe
+
+         # This list should reject repetition. It will DRY and scrape a file instead that contains the list in the Title 'dee:hrd_dp' at $v_1st_file
+         v_1st_file=$__REPOS_CENTER__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
+
+         v_scrape_1=$(cat $v_1st_file | grep dee:hrd_dp)
+         v_scrape_2=$(echo $v_scrape_1 | cut -f 3 -d ":")
+         echo "      > $v_scrape_2"
+
+         for i in $v_scrape_2; do
+              if ! command -v "$i" >/dev/null 2>&1; then
+                  v_array+=("$i")
+              fi
+         done
+
+         echo
+         echo "      (Toggle ON DRYa-TUI-autoFix to always try to shortcut fixes)"
+         echo
+   }
+
+   function f_noARG_drya__temporized_menu {
+      # Temporized Quick menu
+         f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
+                 echo    "       |"
+                 echo -n "       |-> To open MAIN fzf menu, press NOW : '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
+                 echo -n '       |   Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
+                 echo    '       |'
+                 echo    '       |-> Toggle ON/OFF DRYa-TUI (uDev)'
                  echo
-
-         v_talk=$v_save
-      }; f_ws_drya_arg0 
-
-   # Temporized Quick menu
-      f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
-              echo    "       |"
-              echo -n "       |_ To open MAIN fzf menu, press NOW : '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
-              echo -n '       |  Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
-              echo    '       |'
-              echo -n '       |- Toggle ON/OFF DRYa-TUI (uDev)'
-              echo
+   }
 
    
-   # Options available during only few seconds
-                    echo
-      f_talk; f_c5; echo -en "listening... "; f_rc
+   function f_noARG_drya__listening {
+      # Options available during only few seconds
+                       echo
+         f_talk; f_c5; echo -en "listening... "; f_rc
 
-      read -sn1 -t $v_secs v_ans
-      
-      if [ -z $v_ans ]; then
-         sleep 0.1
-   
-         # ANSII to go to beggining of line and clear endire line after cursor
-            echo -ne "\r\033[K"
-
-      elif [ $v_ans == "d" ] || [ $v_ans == "D" ] || [ $v_ans == "." ] || [ $v_ans == "+" ]; then
-         # When 'd' is pressed to open DRYa fzf main menu
-
-         # ANSII to go to beggining of line and clear endire line after cursor
-            echo -ne "\r\033[K"
-
-         # Calling the actual menu
-            f_drya_fzf_MM
-
-      else
-         # If there is a variable, delete and tell which was
+         read -sn1 -t $v_secs v_ans
          
-         # ANSII to go to beggining of line and clear endire line after cursor
-            echo -ne "\r\033[K"
+         if [ -z $v_ans ]; then
+            sleep 0.1
+      
+            # ANSII to go to beggining of line and clear endire line after cursor
+               echo -ne "\r\033[K"
 
-         f_talk; echo "Argument '$v_ans' not recognized here"
+         elif [ $v_ans == "d" ] || [ $v_ans == "D" ] || [ $v_ans == "." ] || [ $v_ans == "+" ]; then
+            # When 'd' is pressed to open DRYa fzf main menu
 
-      fi
+            # ANSII to go to beggining of line and clear endire line after cursor
+               echo -ne "\r\033[K"
 
-      unset v_ans
+            # Calling the actual menu
+               f_drya_fzf_MM
+
+         else
+            # If there is a variable, delete and tell which was
+            
+            # ANSII to go to beggining of line and clear endire line after cursor
+               echo -ne "\r\033[K"
+
+            f_talk; echo "Argument '$v_ans' not recognized here"
+
+         fi
+
+         unset v_ans
+   }
+
+   # Calling each function in their correct order
+      f_noARG__hello
+      f_noARG__help 
+      f_noARG_drya__arg0 
+      f_noARG_drya__missing_hard_dependencies 
+      f_noARG_drya__temporized_menu 
+      f_noARG_drya__listening
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu. [rtfm: "Read the Fucking Manual"]
