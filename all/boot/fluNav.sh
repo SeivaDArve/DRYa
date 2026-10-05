@@ -225,7 +225,7 @@ function f_edit__bashrc {
 
 function f_edit__source_all_moedaz_files {
    f_greet
-   vim $__REPOS_CENTER__/moedaz/all/source-all-moedaz-files
+   vim $__REPOS_CENTER__/DRYa-moedaz/all/source-all-moedaz-files
    echo "edited: source-all-moedaz-files"
 }
 
@@ -1121,8 +1121,8 @@ function V {
          #       3. Pedir um pin, depois clonar
          #       4. Verificar a existencia de algum dot-file (uDev) que faca o bypass as perguntas e que clone logo (uso direto)
 
-         if   [ -z $2         ]; then cd $__REPOS_CENTER__/moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
-         elif [    $2 == "cv" ]; then cd $__REPOS_CENTER__/moedaz/all/real-documents/CV 2>/dev/null && ls -p
+         if   [ -z $2         ]; then cd $__REPOS_CENTER__/DRYa-moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
+         elif [    $2 == "cv" ]; then cd $__REPOS_CENTER__/DRYa-moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
 
@@ -1141,7 +1141,7 @@ function V {
       
 
       elif [ $1 == "bot" ]; then
-         [[ -z $2 ]] && cd $__REPOS_CENTER__/moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -z $2 ]] && cd $__REPOS_CENTER__/DRYa-moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
 
 
@@ -1433,8 +1433,8 @@ function f_action {
       f_greet
 
       # Variables for this task
-         v_respective_repo=$__REPOS_CENTER__/moedaz 
-         v_respective_file_dir=$__REPOS_CENTER__/moedaz/all/viatura/ 
+         v_respective_repo=$__REPOS_CENTER__/DRYa-moedaz 
+         v_respective_file_dir=$__REPOS_CENTER__/DRYa-moedaz/all/viatura/ 
          v_respective_file=viatura-all-info.org
 
 
@@ -1442,10 +1442,10 @@ function f_action {
          # Inform "error" if correspondant repo does not exist and then quit
 
          # Lista de opÃ§Ãµes para o menu `fzf`
-         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'moedaz' does not exist")
+         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'DRYa-moedaz' does not exist")
 
          # Perceber qual foi a escolha da lista
-            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'moedaz' and did not open 'car' file"
+            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'DRYa-moedaz' and did not open 'car' file"
             [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
             unset v_list
       }
@@ -1459,7 +1459,7 @@ function f_action {
       function f_edit {
          # Editing the file
          
-         echo "$v_nm: Editing one or more files from .../moedaz/viatura/..."
+         echo "$v_nm: Editing one or more files from .../DRYa-moedaz/viatura/..."
          cd $v_respective_file_dir && EM $v_respective_file 
       }
 
@@ -1609,18 +1609,18 @@ function f_action {
       f_greet
 
       echo "$v_nm being edited"
-      cd $__REPOS_CENTER__/moedaz/trade && \
+      cd $__REPOS_CENTER__/DRYa-moedaz/trade && \
       G v && \
       EM all/trade/trade.org && \
       G ++ b
 
       v_file="all/trade/trade.org"
-      v_parent="moedaz"
+      v_parent="DRYa-moedaz"
 
       echo " > Alias: 'F trade'"
       echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
       echo 
-      echo "Parent repo: moedaz"
+      echo "Parent repo: DRYa-moedaz"
       echo "Other alias: 'trade' (no sync)"
       echo 
 
@@ -1698,7 +1698,7 @@ function F {
       elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd $__REPOS_CENTER__/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
       elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd $__REPOS_CENTER__/wikiD && EM wikiD.org; f_up
-      elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+      elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/DRYa-moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
       elif [ $1 == "links"    ]; then v_nm="ss_links";               f_action; echo "uDev: open shiva sutra links"; f_up
       elif [ $1 == "luxam"    ]; then v_nm="luxam";                  f_action; cd $__REPOS_CENTER__/luxam/ && EM grelhas-de-avaliacao.org; f_up
       elif [ $1 == "trade"    ]; then v_nm="trade";                  f_action; # Sync the trade.org wikipedia

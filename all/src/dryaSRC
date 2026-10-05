@@ -859,7 +859,7 @@ function f_repository_moedaz {
    # Repository: moedaz
    # uDev: Put all files to be open under menuFAV F   
 
-   v_moedazREPO=$__REPOS_CENTER__/moedaz
+   v_moedazREPO=$__REPOS_CENTER__/DRYa-moedaz
 
    source $v_moedazREPO/all/moedazSRC 2>/dev/null
 
