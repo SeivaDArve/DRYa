@@ -844,7 +844,7 @@ function f_clone_repos {
          f_clone_repos_moedaz
       ;;
 
-      yoga | yg)                   
+      yoga | yg | Y | y)                   
          f_clone_repos_yoga
       ;;
 
