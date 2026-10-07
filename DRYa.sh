@@ -172,7 +172,6 @@ function f_source_drya_lib_0__arg_0 {
       #echo "       >  $v_5";
       echo "       > Variable '__dryaROOT__' contains:"
       echo "       > '$__dryaROOT__'"
-      read -sn1 -t 1
    }
 
    # Delete or unset this variable here before atempting to load drya-libs. That will allow the loaders to inform errors after the attempts
