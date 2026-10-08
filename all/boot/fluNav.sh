@@ -578,7 +578,9 @@ function ,,, {
 function ,,,, {
    clear
    f_greet
-   ls
+   f_talk; echo "List storage (ls):"
+   echo
+   ls -1
 }
 
 function ., {

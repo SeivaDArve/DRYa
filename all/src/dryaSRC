@@ -525,12 +525,12 @@ function f_alias_to_enforce {
       DRYa=$__REPOS_CENTER__/DRYa  
 
    # List DRYa work directory
-      alias Dd="cd $DRYa && ls"
-      alias DD="cd $DRYa && ls"
-
-      alias DDD="cd $__REPOS_CENTER__ && clear && figlet SeivaOS && l1"
-      alias DDD="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
-
+      #alias Dd="cd $DRYa && ls"
+      #alias DD="cd $DRYa && ls"
+      #alias DDD="cd $__REPOS_CENTER__ && clear && figlet SeivaOS && l1"
+      #alias DDD="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
+      alias D.="cd $DRYa && ls"
+      alias D..="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
 
 
 
@@ -1008,7 +1008,7 @@ function f_repository_dota_2 {
 function f_repository_Subeat {
    # App: Agenda, Notifications, Calendar
 
-   v_Subeat="$__REPOS_CENTER__/Subeat"                     # Path to repo
+   v_Subeat="$__REPOS_CENTER__/DRYa-subeat"                     # Path to repo
    v_subeat_feed=~/.config/h.h/Subeat/concat-all-tasks.sh  # Before feeding Candendar App called "Subeat", it will recursively search all repos to find a file "feed-subeat" and concant into a temporary file. This file will then be sourced as valid bash with valid Events:
 
    alias    subeat="bash $v_Subeat/subeat.sh" 
