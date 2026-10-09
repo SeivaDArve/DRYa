@@ -40,7 +40,8 @@
    #    f_example_busca_L6b; echo "$Lb6"
 
    # Lista de opcoes para o menu `fzf`
-      Lz1='CMD used: '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Alt Abrv CMD: \nExemplo 1\n \n"  # This $Lz5 is "Alternative abreviated Commands" which are alternative to the longest command $Lz2
+      Lz1="SAVE this MENU as HISTORY and VISIT: "; Lz2='[D .]'; Lz3="${Lz1}${Lz2}"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
+     #Lz1='CMD used: '; Lz2='<menu-terminal-command-here>'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Alt Abrv CMD: \nExemplo 1\n \n"  # This $Lz5 is "Alternative abreviated Commands" which are alternative to the longest command $Lz2
 
       L6="6. Opcao com variavel externa | $L6b" # Variable L6b may be set and may be empty to give more info to the user
       L5='5. Opcao com Pin'                                       
@@ -52,6 +53,7 @@
 
       Lh=$(echo -e "\nInstrucoes multi texto:\n -apagar texto introduzido da busca: \`Ctrl-U\` \n ")
       L0="$v_fzf_talk: SELECT 1: Menu X: "
+     #L0="DRYa [.]: drya-main-of-main-menus: " 
       
    # Ordem de Saida das opcoes durante run-time
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")

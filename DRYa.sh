@@ -2342,9 +2342,10 @@ function f_drya_fzf_MM_Toolbox {
 
           L1="1.  Cancel" 
 
-         L0="DRYA: toolbox fx List: " 
+         Lh=$(echo -e "\nNotes|Instructions:\n - Menu of SOME of DRYa's Sub-Apps \n ")
+         L0="DRYa [,]: drya-fzf-toolbox: " 
 
-         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n$L23 \n\n$Lv" | fzf --no-info --cycle --prompt="$L0")
+         v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n$L17 \n$L18 \n$L19 \n$L20 \n$L21 \n$L22 \n$L23 \n\n$Lv" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Perceber qual foi a escolha da lista
          [[   $v_list =~ "V. " ]] && [[ $v_list =~ "[X]" ]] && Lv="$Lvx" && f_loop
@@ -2393,10 +2394,11 @@ function f_drya_fzf_MM_Toolbox {
 
 function f_drya_fzf_MM {
    # FZF Main Menu (for DRYa)
+   #dee: drya-main-of-main-menus
 
    # Lista de opcoes para o menu `fzf`
       #Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-      Lz1='Menu Shortcut: '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
+      Lz1="SAVE this MENU as HISTORY and VISIT: "; Lz2='[D .]'; Lz3="${Lz1}${Lz2}"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
 
       L4="4. | Help Menu";                    L4c="drya help"
       L3="3. | DRYa: Greet & Present itself"; L3c="D p"
@@ -2404,7 +2406,8 @@ function f_drya_fzf_MM {
 
       L1="1. Cancel" 
 
-      L0='DRYa: Main Menu: '
+      Lh=$(echo -e "\nDescription|Notes|Instructions:\n - Menu of ALL DRYa's menus (uDev)\n - While underDev, many sub-menus are not connected here\n - Note: For future DRYa Devs: all menus have their own name\n   to enable fast search inside source code files\n   Such as THIS ONE running\n ")
+      L0="DRYa [.]: drya-main-of-main-menus: " 
 
       Lm1=$(f_talk)
       Lm2="Info about last Menu:\n > Usa \`$Lz2\`"
@@ -2415,7 +2418,7 @@ function f_drya_fzf_MM {
 
       #Lm1="Info about last Menu:\n > Usa \`$Lz2\` \n   (ultimo 'Shortcut' para aceder ao ultimo menu visitado) \n\n > Usa \`D ..\` para Aceder a todos os historicos\n > Usa \`ssms\` para Ver atalhos alternativos a \`$Lz2\`" && echo -e "$Lz5" >> $v_ssms
 
-      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n\n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
    # Atualizar historico fzf automaticamente
       echo "$Lz2" >> $Lz4
@@ -3157,6 +3160,24 @@ function f_qr_code__optical_data_transfer {
 }
 
 
+function f_all_info_about_arg0 {
+   # Info about the Argument zero given at the prompt (DRYa's actuall script)
+   v_tk_x2="arg0: "
+
+   f_tk_x2; echo "Info about the Arg 0 (uDev)"
+   f_5_verbose 
+   echo
+   echo "      Ready for failsafe with 'relative' path?"
+   echo "       > (uDev)"
+   echo
+
+} 
+
+function f_output_drya_welcome_screen {
+   # Note: `D W` or `D h w` is the same
+   echo "D help welcome" >> $v_drya_fzf_menu_hist
+   f_output_drya_welcome_screen_msg_with_vimscript
+}
 
 
 
@@ -3209,7 +3230,8 @@ function f_qr_code__optical_data_transfer {
 
 
 if [ -z "$*" ]; then
-   # Do something if there are no arguments
+   # Do something if no argument is given at the CLI prompt when this script|file|bash is executed
+   # dee:arg0 
 
    f_greet
    v_secs=2  # Set Available time (in seconds) for Temporized quick menu 
@@ -3235,18 +3257,16 @@ if [ -z "$*" ]; then
                echo
    }
 
-   function f_noARG_drya__arg0 {
-      # Info about the Argument zero given at the prompt (DRYa's actuall script)
-      v_tk_x2="Arg0: "
+   function f_noARG_drya__postBox {
+      # Some devices using DRYa may send msgs between one another. This ex will mention in 1 line if there are ANY entry msg|message|update from other device using DRYa 
 
-      f_tk_x2; echo "Info about the Arg 0 (uDev)"
-      f_5_verbose 
-      echo
-      echo "      Ready for failsafe with 'relative' path?"
-      echo "       > (uDev)"
-      echo
+      f_talk; f_c5; echo 'postBox: lastUpdateFile:"10:32:45--10/10/2026"'
+                    echo "      updats:  NONE"
+                    echo "      msgs:    0, Dvc-1, Mb2, Tlm-3, Pc-4, Smt-5,"
+                    echo '      help:usage: `D pstb menu`'
+              f_rc; echo
 
-   } 
+   }
 
    function f_noARG_drya__missing_hard_dependencies {
       # Search for missing HARD dependencies, those most usefull (Toggle On or Off when using `D` without arguments) 
@@ -3277,10 +3297,15 @@ if [ -z "$*" ]; then
       # Temporized Quick menu
          f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
                  echo    "       |"
-                 echo -n "       |-> To open MAIN fzf menu, press NOW : '";     f_c5; echo -n "d";       f_rc; echo -n "' or '";  f_c5; echo -n "."; f_rc; echo "'"
-                 echo -n '       |   Equivalent Terminal commands     : `';     f_c5; echo -n 'D .';     f_rc; echo '`' 
-                 echo    '       |'
-                 echo    '       |-> Toggle ON/OFF DRYa-TUI (uDev)'
+                 echo    '       |-> [W] show again Terminal DRYa Welcome Message'
+                 echo    "       |-> [d] Or Type|Enter \`D menu\` to open DRYa's main menu"
+                 echo    "       |-> [,] Open TUI softaware for menu drya-fzf-toolbox"
+                 echo    '       |-> [0] All info: Arg0'
+                 echo    '       |-> [b] PostBox (open menu)'
+                 echo    '       |-> [t] Toggle ON/OFF DRYa-TUI (uDev)'
+                 echo    '       |-> [S] Toggle ON/OFF DRYa-subeat-welcome (uDev)'
+                 echo    '       |-> [m] Toggle ON/OFF DRYa-moedaz-welcome (uDev)'
+                 echo    '       |-> [T] Toggle ON     HTOP (watch running processes) (uDev)'
                  echo
    }
 
@@ -3323,7 +3348,7 @@ if [ -z "$*" ]; then
    # Calling each function in their correct order
       f_noARG__hello
       f_noARG__help 
-      f_noARG_drya__arg0 
+      f_noARG_drya__postBox
       f_noARG_drya__missing_hard_dependencies 
       f_noARG_drya__temporized_menu 
       f_noARG_drya__listening
@@ -3350,9 +3375,8 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
       f_drya_help
 
    elif [ $2 == "welcome" ] || [ $2 == "w" ] ; then 
-      # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)
-      echo "D help welcome" >> $v_drya_fzf_menu_hist
-      f_output_drya_welcome_screen_msg_with_vimscript
+      # This function is used to uncluter the welcome screen of a terminal when DRYa is installed (because DRYa outputs a lot of text)      
+      f_output_drya_welcome_screen
 
    elif [ $2 == "status-messages" ] || [ $2 == "msgs" ] || [ $2 == "ssms" ]; then 
       # Option to read the $DRYa_MESSAGES file
@@ -3360,6 +3384,9 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
          less $v_MSGS
    fi
 
+
+elif [ $1 == "welcome" ] || [ $1 == "W" ] ; then 
+   f_output_drya_welcome_screen
 
 elif [ $1 == "stroken" ]; then 
    # Dumps text "stroken" into the terminal
@@ -5032,8 +5059,9 @@ elif [ $1 == "lsblk" ] ; then
 elif [ $1 == "debian" ] || [ $1 == "start-debian-inside-termux" ]; then
    proot-distro login debian  
 
-elif [[ $1 == "arg0" ]]; then  
+elif [[ $1 == "arg0" ]] || [[ $1 == "0" ]]; then  
    echo "uDev: Info about DRYa.sh arg 0"
+   f_all_info_about_arg0 
 
 elif [ $1 == "kill-pid" ] || [ $1 == "pid" ] || [ $1 == "kill" ]; then 
    f_kill_process_by_PID 
@@ -5099,15 +5127,17 @@ elif [ $1 == ".." ]; then
          [[ -f ${v_drya_fzf_menu_hist}.copia ]] && vim ${v_drya_fzf_menu_hist}.copia || echo " > Nao existe ficheiro nenhum"
       fi
 
-elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]]; then  
+elif [[ $1 == "." ]] || [[ $1 == "+" ]] || [[ $1 == "d" ]] || [[ $1 == "D" ]] || [[ $1 == "menu" ]]; then  
    # Open DRYa fzf Main Menu
+   # Example: Enter `D menu` or `D .` at the CLI prompt
    # uDev: If fzf is not installed, imediatly do it, no questions!
 
    f_drya_fzf_MM
 
 elif [[ $1 == "," ]]; then  
-   # Open DRYa fzf toolbox directly
-
+   # Open one menu made out the software 'fzf' to list a few other softwares
+   # dee:drya-fzf-toolbox
+   
    f_drya_fzf_MM_Toolbox
 
 else 

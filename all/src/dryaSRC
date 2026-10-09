@@ -880,10 +880,10 @@ function f_repository_upK {
    # Repository: upK 
    # --- when `upk` called on the terminal without argument, it will edit "upK-diario-Dv.org" if existent
 
-   source $__REPOS_CENTER__/upK/all/source-all-upk-files 2>/dev/null
+   source $__REPOS_CENTER__/DRTa-upK/all/source-all-upk-files 2>/dev/null
 
    # Open with github sync
-   alias      upk="bash $__REPOS_CENTER__/upK/upk.sh"
+   alias      upk="bash $__REPOS_CENTER__/DRYa-upK/upk.sh"
    alias Upk="upk" 
    alias UPK="upk"
 
