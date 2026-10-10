@@ -3238,13 +3238,16 @@ if [ -z "$*" ]; then
 
    function f_noARG__hello {
       # Info as basic as possible + Name given to current device to use on git
-         f_talk; echo "is installed!"
+        #f_talk; echo "is installed at '~/.bashrc'"  # uDev: Test "instalation" only by checking file ~/.bashrc
+         f_talk; echo "drya-welcoMsg"
 
          v_user=$(git config --get user.name)
 
-         echo -n "      Current custom Device Name: "
+               echo    "      | Welcome to CLI and FOSS: DRYa !!!" 
+               echo -n "      | Current custom Device Name: "
          f_c3; echo $v_user
-         f_rc; echo 
+         f_rc; echo    "      | Instalation type: [full]"
+               echo
    }
 
    function f_noARG__help {
@@ -3260,10 +3263,11 @@ if [ -z "$*" ]; then
    function f_noARG_drya__postBox {
       # Some devices using DRYa may send msgs between one another. This ex will mention in 1 line if there are ANY entry msg|message|update from other device using DRYa 
 
-      f_talk; f_c5; echo 'postBox: lastUpdateFile:"10:32:45--10/10/2026"'
-                    echo "      updats:  NONE"
-                    echo "      msgs:    0, Dvc-1, Mb2, Tlm-3, Pc-4, Smt-5,"
-                    echo '      help:usage: `D pstb menu`'
+      f_talk; f_c5; echo 'drya-welcoMsg-postBox:'
+                    echo '      | lastUpdateFile:"10:32:45--10/10/2026"'
+                    echo "      | updats:  NONE"
+                    echo "      | msgs:    0, Dvc-1, Mb2, Tlm-3, Pc-4, Smt-5,"
+                    echo '      | help:usage: `D pstb menu`'
               f_rc; echo
 
    }
@@ -3271,7 +3275,7 @@ if [ -z "$*" ]; then
    function f_noARG_drya__missing_hard_dependencies {
       # Search for missing HARD dependencies, those most usefull (Toggle On or Off when using `D` without arguments) 
 
-      f_talk; echo "List of HARD dependencies:"
+      f_talk; echo "drya-welcoMsg-hard-dependencies:"
 
       # Testar a lista de nomes para ver se o seu comando respetivo existe
 
@@ -3280,7 +3284,7 @@ if [ -z "$*" ]; then
 
          v_scrape_1=$(cat $v_1st_file | grep dee:hrd_dp)
          v_scrape_2=$(echo $v_scrape_1 | cut -f 3 -d ":")
-         echo "      > $v_scrape_2"
+         echo "      | List of missing:$v_scrape_2"
 
          for i in $v_scrape_2; do
               if ! command -v "$i" >/dev/null 2>&1; then
@@ -3289,23 +3293,31 @@ if [ -z "$*" ]; then
          done
 
          echo
-         echo "      (Toggle ON DRYa-TUI-autoFix to always try to shortcut fixes)"
-         echo
    }
 
    function f_noARG_drya__temporized_menu {
       # Temporized Quick menu
-         f_talk; echo -n "Temporized Menu"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
-                 echo    "       |"
-                 echo    '       |-> [W] show again Terminal DRYa Welcome Message'
-                 echo    "       |-> [d] Or Type|Enter \`D menu\` to open DRYa's main menu"
-                 echo    "       |-> [,] Open TUI softaware for menu drya-fzf-toolbox"
-                 echo    '       |-> [0] All info: Arg0'
-                 echo    '       |-> [b] PostBox (open menu)'
-                 echo    '       |-> [t] Toggle ON/OFF DRYa-TUI (uDev)'
-                 echo    '       |-> [S] Toggle ON/OFF DRYa-subeat-welcome (uDev)'
-                 echo    '       |-> [m] Toggle ON/OFF DRYa-moedaz-welcome (uDev)'
-                 echo    '       |-> [T] Toggle ON     HTOP (watch running processes) (uDev)'
+         f_talk; echo -n "drya-welcoMsg-jarve"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
+                 echo    "      | Used to initialize Foreground and Background proc loops"
+                 echo    "      |"
+                 echo    '      |-> [j] Toggle drya-welcoMsg-jarve: [Temp] [Loop]'
+                 echo    "      |"
+                 echo    '      |-> [W] Show again Terminal DRYa Welcome Message'
+                 echo    "      |-> [h] Open:  Help menu"
+                 echo    "      |-> [.] Open:  DRYa's main menu (Or Enter \`D menu\`)"
+                 echo    "      |-> [,] Open:  drya-fzf-toolbox (TUI menu)"
+                 echo    '      |-> [0] Open:  Print all info about: Arg0'
+                 echo    '      |-> [b] Open:  PostBox  (uDev)'
+                 echo    '      |-> [t] Open:  DRYa-TUI (uDev)'
+                 echo    '      |-> [T] Open:  HTOP     (watch running processes) (uDev)'
+                 echo    '      |-> [1] Toggle ON     All togglable options'
+                 echo    '      |-> [l] Toggle ON/OFF Loop this drya-noArg-temporized-menu'
+                 echo    '      |-> [l] Toggle ON/OFF drya-autofix-hard-dependencies'
+                 echo    '      |-> [S] Toggle ON/OFF drya-welcoMsg-subeat (uDev)'
+                 echo    '      |-> [m] Toggle ON/OFF drya-welcoMsg-hard-dependencies'
+                 echo    '      |-> [M] Toggle ON/OFF drya-welcoMsg-postBox'
+                 echo    '      |-> [g] Toggle ON/OFF drya-welcoMsg-gpg'
+                 echo    '      |-> [2] Toggle    OFF All togglable options'
                  echo
    }
 
@@ -3347,7 +3359,7 @@ if [ -z "$*" ]; then
 
    # Calling each function in their correct order
       f_noARG__hello
-      f_noARG__help 
+     #f_noARG__help 
       f_noARG_drya__postBox
       f_noARG_drya__missing_hard_dependencies 
       f_noARG_drya__temporized_menu 
