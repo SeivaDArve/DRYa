@@ -3,6 +3,7 @@
 # Description: | This lib, when sourced, collects all CLI prompt arguments, tests if they are valid and then feeds then
 #              | into the script that used it as a lib
 
+__name__=drya-lib-8-getopts-parse-n-validade.sh
 
 #     
 #     How to install
@@ -36,19 +37,13 @@
 
 
 
-__name__=drya-lib-8-getopts-parse-n-validade.sh
 
-v_output=~/.config/h.h/drya/drya-lib-8-getopts/output_file.sh
 
 
 
 
    
-# Variables
-
-   # Internal variable. Some fx will read this var, and decide weather or not to act (run the fx or not)  
-      unset v_act  
-
+# Parse (start) ------------------------------------------------------------------------------------------------
 
 function f_help__parse_args__print_usage {
 
@@ -118,95 +113,65 @@ function f_help__parse_args__print_usage {
    echo
 }
 
-function f_parse_special_cases {
+function f_parse_args {
 
-   # nenhum argumento
-   if [[ $# -eq 0 ]]; then
+   # ============================================================
+   # DEFAULTS
+   # ============================================================
 
-      f_talk; echo "$__name__"
-      echo ' > nenhum argumento fornecido. usa `-h` para instrucoes'
-      echo
+   verbose=true
+   force=false
+   v_input=""
+   output=""
+   positional=()
 
-      v_act=false
-      return 1
-   fi
+   # ============================================================
+   # SPECIAL CASES
+   # ============================================================
 
-   # help
-   if [[ "$1" == "-h" || "$1" == "--help" || "$1" == "h" ]]; then
+   f_parse_special_cases "$@" || return
 
-      f_help__parse_args__print_usage
+   local initial_argc=$#
 
-      v_act=false
-      return 1
-   fi
+   # ============================================================
+   # MAIN LOOP
+   # ============================================================
 
-   return 0
-}
+   while [[ $# -gt 0 ]]; do
 
+      # LONG OPTIONS
+      f_parse_long_arguments "$@" && {
+         shift "$v_shift"
+         continue
+      }
 
+      # SHORT OPTIONS
+      f_parse_short_arguments "$@" && {
+         shift "$v_shift"
+         continue
+      }
 
-function f_parse_long_arguments {
+      # END OF OPTIONS
+      if [[ "$1" == "--" ]]; then
+         # Exemplos uteis: `mkdir -- --teste`
+         #                 `cd -- --teste`
 
-   v_shift=0
-
-   # FLAGS
-
-   if [[ "$1" == "--verbose" ]]; then
-      verbose=false
-      v_shift=1
-      return 0
-   fi
-
-   if [[ "$1" == "--force" ]]; then
-      force=true
-      v_shift=1
-      return 0
-   fi
-
-   # INLINE
-
-   if [[ "$1" == --input=* ]]; then
-      v_input="${1#*=}"
-      v_shift=1
-      return 0
-   fi
-
-   if [[ "$1" == --output=* ]]; then
-      output="${1#*=}"
-      v_shift=1
-      return 0
-   fi
-
-   # SEPARADO
-
-   if [[ "$1" == "--input" ]]; then
-
-      if [[ -z "$2" ]]; then
-         echo "erro: --input requer ficheiro"
-         return 1
+         shift
+         break
       fi
 
-      v_input="$2"
-      v_shift=2
-      return 0
-   fi
+      # POSITIONAL
+      positional+=("$1")
+      shift
 
-   if [[ "$1" == "--output" ]]; then
+   done
 
-      if [[ -z "$2" ]]; then
-         echo "erro: --output requer ficheiro"
-         return 1
-      fi
+   # ============================================================
+   # OUTPUT
+   # ============================================================
 
-      output="$2"
-      v_shift=2
-      return 0
-   fi
-
-   return 1
+   [[ $verbose == "true" ]] && f_parser_output 
 }
-
-
 
 function f_parse_short_arguments {
 
@@ -284,6 +249,92 @@ function f_parse_short_arguments {
    return 0
 }
 
+function f_parse_long_arguments {
+
+   v_shift=0
+
+   # FLAGS
+
+   if [[ "$1" == "--verbose" ]]; then
+      verbose=false
+      v_shift=1
+      return 0
+   fi
+
+   if [[ "$1" == "--force" ]]; then
+      force=true
+      v_shift=1
+      return 0
+   fi
+
+   # INLINE
+
+   if [[ "$1" == --input=* ]]; then
+      v_input="${1#*=}"
+      v_shift=1
+      return 0
+   fi
+
+   if [[ "$1" == --output=* ]]; then
+      output="${1#*=}"
+      v_shift=1
+      return 0
+   fi
+
+   # SEPARADO
+
+   if [[ "$1" == "--input" ]]; then
+
+      if [[ -z "$2" ]]; then
+         echo "erro: --input requer ficheiro"
+         return 1
+      fi
+
+      v_input="$2"
+      v_shift=2
+      return 0
+   fi
+
+   if [[ "$1" == "--output" ]]; then
+
+      if [[ -z "$2" ]]; then
+         echo "erro: --output requer ficheiro"
+         return 1
+      fi
+
+      output="$2"
+      v_shift=2
+      return 0
+   fi
+
+   return 1
+}
+
+function f_parse_special_cases {
+
+   # nenhum argumento
+   if [[ $# -eq 0 ]]; then
+
+      f_talk; echo "$__name__"
+      echo ' > nenhum argumento fornecido. usa `-h` para instrucoes'
+      echo
+
+      v_act=false
+      return 1
+   fi
+
+   # help
+   if [[ "$1" == "-h" || "$1" == "--help" || "$1" == "h" ]]; then
+
+      f_help__parse_args__print_usage
+
+      v_act=false
+      return 1
+   fi
+
+   return 0
+}
+
 function f_parser_output {
 
    # uDev: Verbose and Concat will be 2 Args to manipute:
@@ -301,77 +352,6 @@ function f_parser_output {
            echo "output file  = $output"
            echo
 }
-
-
-
-function f_parse_args {
-
-   # ============================================================
-   # DEFAULTS
-   # ============================================================
-
-   verbose=true
-   force=false
-   v_input=""
-   output=""
-   positional=()
-
-   # ============================================================
-   # SPECIAL CASES
-   # ============================================================
-
-   f_parse_special_cases "$@" || return
-
-   local initial_argc=$#
-
-   # ============================================================
-   # MAIN LOOP
-   # ============================================================
-
-   while [[ $# -gt 0 ]]; do
-
-      # LONG OPTIONS
-      f_parse_long_arguments "$@" && {
-         shift "$v_shift"
-         continue
-      }
-
-      # SHORT OPTIONS
-      f_parse_short_arguments "$@" && {
-         shift "$v_shift"
-         continue
-      }
-
-      # END OF OPTIONS
-      if [[ "$1" == "--" ]]; then
-         # Exemplos uteis: `mkdir -- --teste`
-         #                 `cd -- --teste`
-
-         shift
-         break
-      fi
-
-      # POSITIONAL
-      positional+=("$1")
-      shift
-
-   done
-
-   # ============================================================
-   # OUTPUT
-   # ============================================================
-
-   [[ $verbose == "true" ]] && f_parser_output 
-}
-
-
-
-
-
-
-
-
-
 
 function f_validar_args {
 
@@ -433,6 +413,11 @@ function f_validar_args {
 }
 
 function f_start_parsing_all_arguments {
+
+   # Variables
+      unset v_act  
+      v_output=~/.config/h.h/drya/drya-lib-8-getopts/output_file.sh
+
    #f_greet
    #f_talk; echo "(extended grep)"
    #f_parse_args "$@" 
@@ -440,18 +425,6 @@ function f_start_parsing_all_arguments {
    
    echo "Parser of Prompted arguments ended"
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -466,4 +439,6 @@ function f_start_parsing_all_arguments {
 
 
 # Depois, os scripts externos tem de executar: 
-   f_start_parsing_all_arguments
+   #f_start_parsing_all_arguments
+
+# Parse (end) ------------------------------------------------------------------------------------------------
