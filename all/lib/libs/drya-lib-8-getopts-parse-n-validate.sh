@@ -5,7 +5,7 @@
 
 
 #     
-#     How to instal
+#     How to install
 #
 #     # Sourcing DRYa Lib 8: Reading/Parsing argumentes from the CLI prompt, then testing if they are valid
 #        v_lib8=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
