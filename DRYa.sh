@@ -2434,7 +2434,7 @@ function f_drya_fzf_MM {
       #unset v_list
 }
 
-function f_exec {
+function f_invalid_args {
    # When invalid args are given at the teminal: 
       #f_greet
 
@@ -5154,5 +5154,5 @@ elif [[ $1 == "," ]]; then
 
 else 
    # When invalid arguments are given. (May also be used to debug functions)
-   f_exec
+   f_invalid_args
 fi
