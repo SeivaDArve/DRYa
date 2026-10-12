@@ -50,7 +50,7 @@ v_output=~/.config/h.h/drya/drya-lib-8-getopts/output_file.sh
       unset v_act  
 
 
-function f_help__print_usage {
+function f_help__parse_args__print_usage {
 
    # Define the variables in an array so that they can be explained in order
       v_arg_help="Mostra esta ajuda (tem de ser arg 1)"  # There are 3 args with this same text
@@ -118,7 +118,7 @@ function f_help__print_usage {
    echo
 }
 
-function f_special_cases {
+function f_parse_special_cases {
 
    # nenhum argumento
    if [[ $# -eq 0 ]]; then
@@ -134,7 +134,7 @@ function f_special_cases {
    # help
    if [[ "$1" == "-h" || "$1" == "--help" || "$1" == "h" ]]; then
 
-      f_help__print_usage
+      f_help__parse_args__print_usage
 
       v_act=false
       return 1
@@ -145,7 +145,7 @@ function f_special_cases {
 
 
 
-function f_long_arguments {
+function f_parse_long_arguments {
 
    v_shift=0
 
@@ -208,7 +208,7 @@ function f_long_arguments {
 
 
 
-function f_short_arguments {
+function f_parse_short_arguments {
 
    v_shift=0
 
@@ -320,7 +320,7 @@ function f_parse_args {
    # SPECIAL CASES
    # ============================================================
 
-   f_special_cases "$@" || return
+   f_parse_special_cases "$@" || return
 
    local initial_argc=$#
 
@@ -331,13 +331,13 @@ function f_parse_args {
    while [[ $# -gt 0 ]]; do
 
       # LONG OPTIONS
-      f_long_arguments "$@" && {
+      f_parse_long_arguments "$@" && {
          shift "$v_shift"
          continue
       }
 
       # SHORT OPTIONS
-      f_short_arguments "$@" && {
+      f_parse_short_arguments "$@" && {
          shift "$v_shift"
          continue
       }
@@ -432,10 +432,16 @@ function f_validar_args {
    echo "}"
 }
 
+function f_start_parsing_all_arguments {
+   #f_greet
+   #f_talk; echo "(extended grep)"
+   #f_parse_args "$@" 
+   #f_validar_args 
+   
+   echo "Parser of Prompted arguments ended"
+}
 
 
-
-echo Fim
 
 
 
@@ -456,8 +462,8 @@ echo Fim
 # -------------------------------------------
 
 
+
+
+
 # Depois, os scripts externos tem de executar: 
-#     f_greet
-#     f_talk; echo "(extended grep)"
-#     f_parse_args "$@" 
-#     f_validar_args 
+   f_start_parsing_all_arguments
