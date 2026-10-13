@@ -439,6 +439,6 @@ function f_start_parsing_all_arguments {
 
 
 # Depois, os scripts externos tem de executar: 
-   #f_start_parsing_all_arguments
+   #f_start_parsing_all_arguments "$@" 
 
 # Parse (end) ------------------------------------------------------------------------------------------------

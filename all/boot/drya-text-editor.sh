@@ -160,7 +160,7 @@ function ee {
       # Lista de opcoes para o menu `fzf`
          Lz1='Saving '; Lz2='ee'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-	 L12='12. emacs --daemon  ::  emacsclient -c  (uDev)'
+	      L12='12. emacs --daemon  ::  emacsclient -c  (uDev)'
          L11='11. less --wordwrap'
          L10='10. vim in easy mode `vim -y`' 
 
@@ -177,7 +177,7 @@ function ee {
           L1='1.  Cancel'
          
          Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
-         L0="fluNav: ee: Set/Toggle/Swap text editor: "
+         L0="fluNav: ee: Set|Toggle|Swap text editor: "
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 

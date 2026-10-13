@@ -76,6 +76,12 @@ function f_default_variables {
       v_drya_logo_1_script=$__REPOS_CENTER__/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
       v_drya_logo_2=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
       v_drya_logo_3=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
+
+   # Omni-log repo
+      v_file_omni=$__REPOS_CENTER__/omni-log/legacy-omni-log.org
+
+   # wikiD repo
+      v_file_wikiD=$__REPOS_CENTER__/wikiD/wikiD.org
 }
 
 
@@ -335,7 +341,8 @@ function f_source_drya_lib_4 {
       #           f_lib4_stroken
 }
 
-
+# drya-lib-8:
+   v_lib8=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
 
 
 
@@ -695,6 +702,7 @@ function f_drya_mail_box__append_mail {
 }
 
 function f_clone_repos {
+   # uDev: all variables should be centralized on the top of this file
 
    function f_improve_readability {
       # These next functions are to improve the reading of `case-esac` below them
@@ -702,7 +710,7 @@ function f_clone_repos {
       function f_refresh_terminal_after_clone {
          # Some repositories have files to be sourced (like: source-all-moedaz-files) so, after cloning, DRYa must reload everything sourcing ~/.bashrc
          echo
-         v_txt="Refreshing Entire Terminal?"; f_anyK
+         v_txt="Refresh entire Terminal?"; f_anyK
          source ~/.bashrc
       }
 
@@ -730,7 +738,7 @@ function f_clone_repos {
       }
 
       function f_clone_repos_wikiD {
-         echo "cloning: dWiki"; git clone https://github.com/SeivaDArve/wikiD.git
+         echo "cloning: wikiD"; git clone https://github.com/SeivaDArve/wikiD.git
       }
 
       function f_clone_repos_yoga {
@@ -3179,6 +3187,34 @@ function f_output_drya_welcome_screen {
    f_output_drya_welcome_screen_msg_with_vimscript
 }
 
+function f_wikiD_main_menu {
+
+   v_repo=$(dirname  $v_file_wikiD)
+   v_file=$(basename $v_file_wikiD)
+
+   # Lista de opcoes para o menu `fzf`
+      Lz1='Saved '; Lz2='D wiki'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
+
+      L3="3. | w | $v_file | Abrir no browser"
+      L2="2. | . | $v_file | Abrir no $v_editor" 
+      L1='1. Cancel'
+
+      Lh=$(echo -e "\nInstrucoes sobre editor de texto:\n - Altere o editor com a fx \`ee\`\n ")
+      L0="$v_fzf: wikiD: "
+      
+   # Ordem de Saida das opcoes durante run-time
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
+
+   # Atuar de acordo com as instrucoes introduzidas pelo utilizador
+      [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
+      [[    $v_list =~ "3. " ]] && echo "$v_udev"
+      [[    $v_list =~ "2. " ]] && ( ( [[ -f $v_file_wikiD ]] && cd $v_repo && bash e $v_file ) || echo " > Error opening file $v_file")
+      [[    $v_list =~ "1. " ]] && echo " > Canceled: Menu: $Lz2" 
+      [[ -z $v_list          ]] && echo " > ESC key used, aborted." && exit 1
+      unset  v_list
+
+}
+   
 
 
 
@@ -3404,6 +3440,51 @@ elif [ $1 == "stroken" ]; then
    # Dumps text "stroken" into the terminal
    clear
    f_stroken
+
+elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
+
+   function f_presentation_info {
+      echo ' > `D p 1`  # DRYa presentation'
+      echo ' > `D p 2`  # DRYa ascii logo legacy'
+      echo ' > `D p 3`  # DRYa ascii logo'
+   }
+
+   if [ -z $2 ]; then
+      f_presentation_info
+
+   elif [[ $2 == "0" ]] || [[ $2 == "default" ]] ; then 
+      f_GR
+      f_tk "Presentation 3"
+      echo
+
+      cat $v_drya_logo_3
+      echo
+
+   elif [ $2 == "1" ] ; then 
+      # Presenting DRYa with ASCII text
+      bash $v_drya_logo_1_script || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   elif [ $2 == "2" ] ; then 
+      # Presenting DRYa with ASCII text (with Brain in Bracets)
+   
+      clear
+      figlet "                DRYa"  # uDev: Centrar BEM no ecra. 
+
+      cat $v_drya_logo_2
+      echo
+
+      read -sn 1 -t 5  # Nao apresentar o prompt por alguns segundos com `read -t 5`
+
+   elif [ $2 == "3" ] ; then 
+      clear
+      figlet DRYa
+      f_talk; echo "DRYa: Presentation 3"
+              echo
+      cat $v_drya_logo_3
+      echo
+   else
+      f_presentation_info
+   fi
 
 elif [ $1 == "edit" ] || [ $1 == "e" ]; then 
    case $2 in
@@ -4270,10 +4351,6 @@ elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "meta-p
       done
 
 
-elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
-   echo "uDev: Idenfiticação de photos criando um nome com ID"
-   # uDev: criar fx que busca em TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
-
 elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
    # uDev: criar também hard links para ficheiros e pastas
    
@@ -4435,22 +4512,6 @@ elif [ $1 == "k" ]; then
 elif [ $1 == "set-timezone" ] || [ $1 == "timez" ]; then 
    f_talk; echo "uDev: Options to set timezone"
     
-elif [ $1 == "vlm" ]; then 
-   # Works on termux only
-      # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
-
-      echo "uDev: Send to Termux menu (that manipulates the entire termux.properties file)"
-      f_dot_files_menu_edit_host_files_termux_properties
-
-   #echo "volume keys on Termux toggled. Now they act as X instead of Y"
-   # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
-   # volume-keys = volume
-   # volume-keys = virtual
-   # Default is virtual
-
-   # As per termux instructions, we can reload the configs: 
-      #termux-reload-settings
-
 elif [ $1 == "no" ] || [ $1 == "note" ] || [ $1 == "notes" ]; then 
    bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh
    
@@ -4487,92 +4548,22 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
       fi
    fi
 
-elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
-
-   function f_presentation_info {
-      echo ' > `D p 1`  # DRYa presentation'
-      echo ' > `D p 2`  # DRYa ascii logo legacy'
-      echo ' > `D p 3`  # DRYa ascii logo'
-   }
-
-   if [ -z $2 ]; then
-      f_presentation_info
-
-   elif [ $2 == "1" ] ; then 
-      # Presenting DRYa with ASCII text
-      bash $v_drya_logo_1_script || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
-
-   elif [ $2 == "2" ] ; then 
-      # Presenting DRYa with ASCII text (with Brain in Bracets)
-   
-      clear
-      figlet "                DRYa"  # uDev: Centrar BEM no ecra. 
-
-      cat $v_drya_logo_2
-      echo
-
-      read -sn 1 -t 5  # Nao apresentar o prompt por alguns segundos com `read -t 5`
-
-   elif [ $2 == "3" ] ; then 
-      clear
-      figlet DRYa
-      f_talk; echo "DRYa: Presentation 3"
-              echo
-      cat $v_drya_logo_3
-      echo
-   else
-      f_presentation_info
-   fi
-
-elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo" ]; then 
-   # uDev: juntar `D p` com `D P`
-
-   f_GR
-   f_tk "Presentation 3"
-   echo
-
-   cat $v_drya_logo_3
-   echo
-
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    f_create_live_usb 
 
 elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
+   # File used: $v_file_wikiD, wikiD.org
 
-   v_repo=$__REPOS_CENTER__/wikiD/
-   v_file="$v_repo/wikiD.org"
-   v_editor=$(cat $trid_editor_file)
-   v_editor="'$v_editor'"
-   
-   v_udev=' > uDev: usar `sed` para substituir ";; #+SETUPFILE" por "#+SETUPFILE"'
+   # Variables
+      v_repo=$(dirname  $v_file_wikiD)
+      v_file=$(basename $v_file_wikiD)
+      v_editor=$(cat $trid_editor_file)
+      v_editor="'$v_editor'"
+      v_udev=' > uDev: usar `sed` para substituir ";; #+SETUPFILE" por "#+SETUPFILE"'
 
-   f_talk; echo "Opening: wikiD.org"
+   f_talk; echo "Options for: $v_file"
 
-   function f_wikiD_main_menu {
-      # Lista de opcoes para o menu `fzf`
-         Lz1='Saved '; Lz2='D wiki'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-
-         L3='3. | w | wikiD.org | Abrir no browser'
-         L2="2. | . | wikiD.org | Abrir no $v_editor" 
-         L1='1. Cancel'
-
-         Lh=$(echo -e "\nInstrucoes sobre editor de texto:\n - Altere o editor com a fx \`ee\`\n ")
-         L0="$v_fzf: SELECT 1: Menu X: "
-         
-      # Ordem de Saida das opcoes durante run-time
-         v_list=$(echo -e "$L1 \n$L2 \n$L3 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --header="$Lh" --prompt="$L0")
-
-      # Atuar de acordo com as instrucoes introduzidas pelo utilizador
-         [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[    $v_list =~ "3. " ]] && echo "$v_udev"
-         [[    $v_list =~ "2. " ]] && ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
-         [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
-         [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
-         unset  v_list
-
-   }
-   
    if [ -z $2 ]; then
       f_wikiD_main_menu 
 
@@ -4580,15 +4571,17 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
       echo "$v_udev"
 
    elif [ $2 == "edit" ] || [ $2 == "." ]; then 
-      ( [[ -d $v_repo ]] && cd $v_repo && bash e $v_file ) || echo "Nao deu para abrir wikiD.org"
+      ( [[ -f $v_file ]] && cd $v_repo && bash e $v_file ) || echo " > Error opening file $v_file"
 
+   else
+      echo " > Invalid argument"
    fi
 
 elif [ $1 == "omni" ] || [ $1 == "om" ]; then 
-   f_talk; echo "Opening: omni-log.org"
 
-   # uDev: Test fist if repo exists
-   cd $__REPOS_CENTER__/omni-log/ && emacs omni-log.org
+   f_talk; echo "Opening: $(basename $v_file_omni)"
+   [[ ! -f $v_file_omni ]] && echo "File does not exist" && exit
+   cd $(dirname $v_file_omni) && emacs $(basename $v_file_omni)
 
 elif [ $1 == "quit" ] || [ $1 == "q" ]; then 
    # Several ways to exit the terminal
@@ -4671,6 +4664,22 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 elif [ $1 == "player" ] || [ $1 == "plr" ]; then 
    f_menu_audio_media_player 
 
+elif [ $1 == "vlm" ]; then 
+   # Works on termux only
+      # Toggles the value volume-key from =virtual to =volume (inside termux. more info at: man termux)
+
+      echo "uDev: Send to Termux menu (that manipulates the entire termux.properties file)"
+      f_dot_files_menu_edit_host_files_termux_properties
+
+   #echo "volume keys on Termux toggled. Now they act as X instead of Y"
+   # DO NOT CHANGE VOLUME ON DRYa REPO, CHANGE ONLY AT ~/.termux/ (no need to continuously git push such changes
+   # volume-keys = volume
+   # volume-keys = virtual
+   # Default is virtual
+
+   # As per termux instructions, we can reload the configs: 
+      #termux-reload-settings
+
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
@@ -4730,65 +4739,11 @@ elif [ $1 == "lib" ]; then
       fi
    fi
    
-elif [ $1 == "copy" ]; then 
-   #Using fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
-
-   # uDev: Options to addd to `D copy`:
-   #        > `Copy + to clip`: Add more items to clipboard (do not overwrite current clipboard items)
-   #        > `Steath Copy`:    Call repo 'scratch-paper' if it does not exist, then paste all the items in the clioboard, then delete the repo again
-
-   if [ -z $2 ]; then 
-      # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
-
-      v_files=$(ls -1F | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
-      v_pwd=$(pwd)
- 
-      echo > $v_clip   # Variable already set on file: 'dryaSRC'
-
-      if [[ -n $v_files ]]; then
-         for i in $v_files
-         do
-            echo "$v_pwd/$i" >> $v_clip
-         done
-      fi
-
-      # Verbose info: Show what was sent to .../drya-clipboard file
-         f_talk; echo "Clipboard content: "
-         cat $v_clip
-
-   elif [ $2 == "." ]; then 
-      # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
-
-      less $v_clip
-      read
-      
-      [[ -f $v_clip ]] && rm $v_clip && touch $v_clip
-
-      v_files=$(find . -maxdepth 1 | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
-
-      if [[ -n $v_files ]]; then
-
-         for i in $v_files
-         do
-            [[ -f $i ]] && echo "file: $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
-            [[ -d $i ]] && echo "dir:  $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
-
-         done
-      fi
-   fi
-
-elif [ $1 == "paste" ]; then 
-   #Using fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
-
-   for i in $(cat $v_clip)
-   do
-      cp $i .
-   done
+elif [ $1 == "generate-photo-ID" ] || [ $1 == "gpID" ]; then  # Busca a data/hora atual de forma inconfundivel e adiciona o texto "Img-ID-xxxxxxxxxxxxxxxxx.jpg"
+   echo "uDev: Idenfiticação de photos criando um nome com ID"
+   # uDev: criar fx que busca em TODO o sistema de pastas no Android apartir do termux para encontrar todos esses ID espalhados e enviar para a pasta desejada (local atual do cursor)
 
 elif [ $1 == "clip" ] || [ $1 == "clp" ]; then 
-   f_talk; echo "Opcoes de clipboard (@DRYa + @host)"
-
-   less $v_clip
 
    # uDev: integrar: 
    #       termux-clipboard-get
@@ -4820,11 +4775,75 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
    #        `D clp m p`  # Paste using machine clipboard
    #
 
+   if [ -z $2 ]; then
+      f_talk; echo "Opcoes de clipboard (@DRYa + @host)"
+      less $v_clip
+
+   elif [ $2 == "copy" ]; then
+
+      #Using fzf to copy multiple files at ./ to ~/.config/h.h/drya/drya-clipboard"
+
+      # uDev: Options to addd to `D copy`:
+      #        > `Copy + to clip`: Add more items to clipboard (do not overwrite current clipboard items)
+      #        > `Steath Copy`:    Call repo 'scratch-paper' if it does not exist, then paste all the items in the clioboard, then delete the repo again
+
+      if [ -z $2 ]; then 
+         # Se o arg $2 nao invocar `.` entao, a pesquisa inclui todas as subpastas
+
+         v_files=$(ls -1F | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+         v_pwd=$(pwd)
+    
+         echo > $v_clip   # Variable already set on file: 'dryaSRC'
+
+         if [[ -n $v_files ]]; then
+            for i in $v_files
+            do
+               echo "$v_pwd/$i" >> $v_clip
+            done
+         fi
+
+         # Verbose info: Show what was sent to .../drya-clipboard file
+            f_talk; echo "Clipboard content: "
+            cat $v_clip
+
+      elif [ $2 == "." ]; then 
+         # Se o arg $2 invocar `.` entao, a pesquisa exclui todas as subpastas
+
+         less $v_clip
+         read
+         
+         [[ -f $v_clip ]] && rm $v_clip && touch $v_clip
+
+         v_files=$(find . -maxdepth 1 | fzf --pointer=">" -m --prompt="DRYa: Copy to clipboard multiple: " --preview 'cat {}' --preview-window=right:40%)
+
+         if [[ -n $v_files ]]; then
+
+            for i in $v_files
+            do
+               [[ -f $i ]] && echo "file: $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+               [[ -d $i ]] && echo "dir:  $i" && echo "$(pwd)/$i" >> $v_clip 2>/dev/null
+
+            done
+         fi
+      fi
+
+   elif [ $2 == "paste" ]; then
+      #Using fzf to paste multiple files from ~/.config/h.h/drya/drya-clipboard to ./"
+
+      for i in $(cat $v_clip)
+      do
+         cp $i .
+      done
+
+   else
+      echo "uDev: help"
+
+   fi
+
 elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then 
    # Uso igual ao `getopts` em que apenas le os argumebtos do CLI e guarda em variaveis. Este arg `D opt <args>` pode ser usado como debug e implementado em outras fx tal como `D grep <args>`
 
-   v_script=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
-   v_base=$(basename $v_script)
+   v_base=$(basename $v_lib8)
 
    if [[ "$2" == "." || "$1" == "edit-self" ]]; then
       # Edit this file itself
@@ -4833,14 +4852,14 @@ elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then
       f_talk; echo "getopts: $v_base:"
               echo " > editing itself"
               echo
-      bash e $v_script
+      bash e $v_lib8
 
    else
 
       f_greet
       shift
 
-      source $v_script
+      source $v_lib8
       f_parse_args "$@"
    fi
 
@@ -4872,11 +4891,6 @@ elif [ $1 == "dmsg" ] || [ $1 == "ssms" ] || [ $1 == "msg" ]; then
    f_talk; echo 'Showing `ssms` entire file'
    less $v_MSGS
    
-elif [ $1 == "call" ]; then 
-   # Opcoes para chamadas (usa `termux-telephony-call` da Termux:API)
-   echo "uDev: Criar reencaminhamento de chamadas e tambem retirar esses reencaminhamentos"
-   echo " > Codigos UUID guardados em 'D wiki'"
-
 elif [ $1 == "cmp" ] || [ $1 == "compare" ] || [ $1 == "comparar" ]; then 
    # Fornecendo dois nomes de ficheiros, informa se sao iguais ou tem diferencas
 
@@ -4917,6 +4931,11 @@ elif [ $1 == "zp" ] ; then
 #     shift; bash $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh $*
 #  
 #
+
+elif [ $1 == "call" ]; then 
+   # Opcoes para chamadas (usa `termux-telephony-call` da Termux:API)
+   echo "uDev: Criar reencaminhamento de chamadas e tambem retirar esses reencaminhamentos"
+   echo " > Codigos UUID guardados em 'D wiki'"
 
 elif [ $1 == "wam" ]; then 
    # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
@@ -5046,6 +5065,7 @@ elif [ $1 == "tty" ] ; then
 elif [ $1 == "lsblk" ] ; then 
 
    # uDev: tirar um 'screenshot' a arvore de blocos/dispositivos. Caso o screenshot guardado nao corresponder ao atual, tem de re-definir as variaveis porque ja podem estar erradas
+   # uDev: criar um getopts para esta fx
 
    if [ -z $1 ]; then
       lsblk
