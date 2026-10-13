@@ -94,8 +94,8 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-   v_lib1_copy=$__REPOS_CENTER__/DRYa/all/lib/libs/copies-for-libs/drya-lib-1--for--drya-lib-4
+   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1_copy=$__RC_OS__/DRYa/all/lib/libs/copies-for-libs/drya-lib-1--for--drya-lib-4
 
    # Original Examples: f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
    #  v_greet="DRYa"

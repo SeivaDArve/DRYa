@@ -10,6 +10,8 @@
 
 
 
+
+
 # Comments examples below. 
    : '
       Multi
@@ -261,10 +263,10 @@ function f_source_drya_lib_1_alt {
       v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1_relative        # Absolute path of `dirname` of running script '$0'
       v_lib1_normal=$__REPOS_CENTER__/DRYa/$v_lib1_relative          # Custume relative path given during DRYa instalation_
 
-      #v_lib1_1=$v_lib1_normal              #    ; echo "1 $v_lib1_1"
-      #v_lib1_2=$v_lib1_failsafe_absolute   #    ; echo "2 $v_lib1_2"
-      v_lib1_3=$v_lib1_relative            #    ; echo "3 $v_lib1_3"
-                                           #      read
+      #v_lib1_1=$v_lib1_normal               #    ; echo "1 $v_lib1_1"
+      #v_lib1_2=$v_lib1_failsafe_absolute    #    ; echo "2 $v_lib1_2"
+      v_lib1_3=$v_lib1_relative              #    ; echo "3 $v_lib1_3"
+                                             #      read
 
    if [[ -f $v_lib1_1                ]]; then
       # If DRYa is properly installed, use pre defined relative PATH to load libraries
@@ -317,7 +319,7 @@ function f_source_drya_lib_1 {
 
    # Sourcing DRYa Lib 1: 
       #__name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-      v_lib1=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+      v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
       source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
@@ -326,7 +328,7 @@ function f_source_drya_lib_1 {
 
 function f_source_drya_lib_2 {
    # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-      v_lib2=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+      v_lib2=$__RC_OS__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
       [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
 
       # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
@@ -334,7 +336,7 @@ function f_source_drya_lib_2 {
 
 function f_source_drya_lib_4 {
    # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-      v_lib4=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
+      v_lib4=$__RC_OS__/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
       [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
 
       # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
@@ -358,7 +360,7 @@ function f_source_drya_lib_4 {
 
 function f_tst {
    echo
-   read -t 1 -sp "DRYa: Finished loading Header "
+   read -sp "DRYa: Finished loading Header "
    echo
 }
 
@@ -3215,6 +3217,125 @@ function f_wikiD_main_menu {
 
 }
    
+function f_drya_welcome_screen {
+   # Unclutering the welcome screen. (Turn verbose output welcome screen ON/OFF. 
+   # Nota: O comando `D help welcome` usa vimscript para executar copiar todo este ficheiro, filtrar so esta fx, e executar esta fx. 
+
+   # uDev: send to drya-messages too
+   # uDev: Ask if the user want to see more than just the OS that is running
+      
+   function f_seiva_greetings_private {
+      # When DRYa was installed on personal and private PC/device, use this fx
+      
+      f_talk; echo "Seiva greetings: Mékié pá?"
+              echo "      Verbal expression when meeting a close friend!" 
+              echo
+   }
+   
+   function f_seiva_greetings_public {
+      # When DRYa was installed on public PC/device, use this fx
+      
+      f_talk; echo "Seiva greetings: Mékié pá?"
+              echo
+   }
+
+   function f_seiva_greetings {
+      # This fx only detects which fx (Public vs. Private) to run
+      
+      [[ $trid_gmn =~ "publicDVC" ]] && f_seiva_greetings_public || f_seiva_greetings_private
+   }
+
+   function f_ws_termux {
+      # Display the standard welcome termux message
+
+      # uDev: WSL2 also has a welcome message that runs only once a day. Let's capture it too
+      # Testing with the command 'uname -o' where the output should be "Android" to see if the termux is the terminal running
+      # Also sending the error message to /dev/null in case dWiki repository is not yet downloaded side-by-side with DRYa
+      if [ $(uname -o) == "Android" ]; then 
+         echo "DRYa: Termux welcome message:" 
+         cat $__RC_OS__/dWiki/termux/default-welcome-screen-text 2>/dev/null
+      fi
+   }
+
+   function f_ws_drya_ascii_presentation {
+      # Display info about DRYa at the screen with `figlet` when DRYa is first loaded by the terminal. Figlet is a depependency. If it does not exist, text will be echoed to inform (as a failsafe system)
+
+      figlet -v &>/dev/null  # Testing if figlet is installed
+      v_status=$?            # Guardar o status code para saber se o comando anterior deu algum erro
+
+      [[ $v_status ==  0  ]] && bash $__RC_OS__/DRYa/all/bin/drya-presentation.sh
+      [[ $v_status ==  1  ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
+      [[ $v_status == 127 ]] && clear && echo -e "<< DRYa >>  Don't Repeat Yourself (app) \n"  
+   }
+
+   function f_ws_trid {
+      # Using traitsID startup message
+
+      bash $trid_script startup-message
+      echo
+   }
+
+   function f_ws_drya_startup_instructions {
+      # Verbose Initial DRYa Message
+
+      v_save=$v_talk  # Temporary use 'f_talk' with some other text
+      v_talk="Help: "
+
+      f_talk; echo          "Startup Instructions"
+              echo -n "      Menu 'Main'         : "
+        f_c4; echo -e                             "D ."
+        f_rc; echo -n "      Menu 'Instructions' : "
+        f_c4; echo                                "D help"
+        f_rc; echo
+
+      v_talk=$v_save
+   }
+
+   function f_ws_drya_about_decrypted_gpg_dir {
+      # Verbose DRYa Message about the existence of directories where there may be DECRYPTED documents
+
+      bash $v_DRYa_GnuPG ws
+   }
+
+   function f_ws_neofetch {
+      # Apresentar apenas o icon ASCII do `neofetch`
+
+      echo
+      neofetch -L 2>/dev/null
+   }
+
+   function f_ws_seiva_up_time {
+      # Optional: Add to "welcome screen": `D seiva-up-time`
+
+      bash $__RC_OS__/DRYa/drya.sh seiva-up-time
+   }
+ 
+   function f_ws_cmatrix {
+      # If we detect that current PC/device is a public one, after Terminal startup, most likely nobody will know how to use the terminal, so nobody need DRYa's welcome message. In that case, cmatrix will fill the screen
+      
+      [[ $trid_gmn =~ "publicDVC" ]] && sleep 2 && cmatrix
+   }
+
+
+   # uDev: Move all these fx out of dryaSRC and place them in DRYa.sh at `D ws`. Also, in the end of this script (dryaSRC) Call for it
+   f_ws_drya_ascii_presentation
+   f_seiva_greetings
+  #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
+   f_ws_trid
+   f_ws_drya_startup_instructions
+   f_ws_drya_about_decrypted_gpg_dir
+   f_ws_neofetch
+  #f_ws_seiva_up_time 
+   f_ws_cmatrix
+
+}
+
+function f_welcome_screen_help {
+   echo "'DRYa welcome-screen' has these arguments:"
+   echo "   > standard"
+   echo "   > vimscript"
+   echo 
+} 
 
 
 
@@ -3311,12 +3432,12 @@ if [ -z "$*" ]; then
    function f_noARG_drya__missing_hard_dependencies {
       # Search for missing HARD dependencies, those most usefull (Toggle On or Off when using `D` without arguments) 
 
-      f_talk; echo "drya-welcoMsg-hard-dependencies:"
+      f_talk; echo 'drya-welcoMsg-hard-dependencies `iu dp`:'
 
       # Testar a lista de nomes para ver se o seu comando respetivo existe
 
          # This list should reject repetition. It will DRY and scrape a file instead that contains the list in the Title 'dee:hrd_dp' at $v_1st_file
-         v_1st_file=$__REPOS_CENTER__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
+         v_1st_file=$__RC_OS__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
 
          v_scrape_1=$(cat $v_1st_file | grep dee:hrd_dp)
          v_scrape_2=$(echo $v_scrape_1 | cut -f 3 -d ":")
@@ -3333,7 +3454,7 @@ if [ -z "$*" ]; then
 
    function f_noARG_drya__temporized_menu {
       # Temporized Quick menu
-         f_talk; echo -n "drya-welcoMsg-jarve"; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
+         f_talk; echo -n 'drya-welcoMsg-jarve `jarve`:'; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
                  echo    "      | Used to initialize Foreground and Background proc loops"
                  echo    "      |"
                  echo    '      |-> [j] Toggle drya-welcoMsg-jarve: [Temp] [Loop]'
@@ -3432,9 +3553,6 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
          less $v_MSGS
    fi
 
-
-elif [ $1 == "welcome" ] || [ $1 == "W" ] ; then 
-   f_output_drya_welcome_screen
 
 elif [ $1 == "stroken" ]; then 
    # Dumps text "stroken" into the terminal
@@ -3805,6 +3923,8 @@ elif [ $1 == "clone" ] || [ $1 == "cln" ]; then
 
 
 elif [[ $1 == "wpwd" ]] || [[ $1 == "wPWD" ]]; then 
+   # uDev: send to fluNav: V
+
    # Convert text Windows Path into text Linux Path
    
    # Getting variables from the arguments, from the input
@@ -3918,17 +4038,17 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L12='12. | `D iu bk`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
          L11='11. | `D cln`    |  Menu   | Clone Repositories         '
          L10='10. | `D iu d`   |  Menu   | Dot files           '
-          L9='9.  | `D iu dp`  |  Menu   | About file "1st.org" (Dependencies + Packages listed)       ' 
+          L9='9.  | `D iu dp`  |  Menu   | Dependencies: File "1st.org"' 
                                
           L7='7.  | `D iu s  ` |  Exec   | DRYa-installer.sh    '
          L17='17. | `D iu s .` |  Edit   | DRYa-installer.sh    '
                                   
          L20='20. |            |  Guide  | Install GarudaOS (list of requirements)'
-          L6='6.  | `D cln h`  |  Guide  | clone DRYa (for other devices too) '
+          L6='6.  | `D cln h`  |  Guide  | clone DRYa (Current device + other devices) '
 
           L5='5.  |            | Install | [ Linux ] Install git'    
           L4='4.  |            |  Guide  | [Android] Install Termux' 
-          L3='3.  |            |  Menu   | [Windows] Powershell + WSL'
+          L3='3.  |            |  Menu   | [Windows] Install Powershell + WSL'
 
          L19='19. |            |  Guide  | Usage:   dryaCLONEZILLA (Dualboot|Multiboot HDD into an empty HDD)'   
          L18='18. |            |  Guide  | Create:  Live USB' 
@@ -4547,6 +4667,72 @@ elif [ $1 == "QR" ] || [ $1 == "qr" ]; then
          done
       fi
    fi
+
+elif [ $1 == "ws" ] || [ $1 == "welcome-screen" ]; then 
+   # While Terminal is starting, if dryaSRC is loaded sucessfully, it will call `D welcome-screen standard` which is this function to print a welcome message
+
+   if [ -z $2 ]; then
+      f_welcome_screen_help 
+
+   elif [ $2 == "standard" ] || [ $2 == "s" ]; then
+      # Print an entire Welcome Screen (this fx came out of dryaSRC)
+      f_drya_welcome_screen 
+
+   elif [ $2 == "vimscript" ] || [ $2 == "v" ]; then
+      # Print a scraped version of welcome screen using vimscript
+      f_output_drya_welcome_screen
+
+   else
+      f_welcome_screen_help 
+      echo "  > Argument not valid"
+   fi
+
+elif [ $1 == "p" ] || [ $1 == "presentation" ] || [ $1 == "logo" ]; then 
+
+   function f_presentation_info {
+      echo ' > `D p 1`  # DRYa presentation'
+      echo ' > `D p 2`  # DRYa ascii logo legacy'
+      echo ' > `D p 3`  # DRYa ascii logo'
+   }
+
+   if [ -z $2 ]; then
+      f_presentation_info
+
+   elif [ $2 == "1" ] ; then 
+      # Presenting DRYa with ASCII text
+      bash $v_drya_logo_1_script || echo -e "DRYa: app availablei \n > (For a pretty logo, install figlet)"  # In case figlet or tput are not installed, echo only "DRYa" instead
+
+   elif [ $2 == "2" ] ; then 
+      # Presenting DRYa with ASCII text (with Brain in Bracets)
+   
+      clear
+      figlet "                DRYa"  # uDev: Centrar BEM no ecra. 
+
+      cat $v_drya_logo_2
+      echo
+
+      read -sn 1 -t 5  # Nao apresentar o prompt por alguns segundos com `read -t 5`
+
+   elif [ $2 == "3" ] ; then 
+      clear
+      figlet DRYa
+      f_talk; echo "DRYa: Presentation 3"
+              echo
+      cat $v_drya_logo_3
+      echo
+   else
+      f_presentation_info
+   fi
+
+elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo" ]; then 
+   # uDev: juntar `D p` com `D P`
+
+   f_GR
+   f_tk "Presentation 3"
+   echo
+
+   cat $v_drya_logo_3
+   echo
 
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    f_create_live_usb 

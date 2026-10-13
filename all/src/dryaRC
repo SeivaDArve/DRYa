@@ -182,7 +182,7 @@ function f_drya-messages {
 
 
 alias tc="touch"
-alias ls="ls -p --color=auto"
+#alias ls="ls -p --color=auto"  # Already set at dryaSRC
 alias la="ls -pA"
 alias ll="ls -pl"
 alias lll=f_ls_with_absolute_path
