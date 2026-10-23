@@ -500,9 +500,7 @@ function .. {
    cd ..
 }
 
-function ... {
-   cd -
-}
+alias ...="cd -"   # On 'omarchy' linux for some reason it did not accept this as a function
 
 function .... {
    f_talk; echo 'Info: Current location `pwd`'

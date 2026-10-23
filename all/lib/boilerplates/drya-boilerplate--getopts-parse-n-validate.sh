@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# uDev: This file was moved from 'libs' to 'boilerplates'. So it has to be renamed and rearranged to match more a boilerplate than a library
+
 # Title:       | drya-lib-8-getopts-parse-n-validate.sh
 # Description: | This lib, when sourced, collects all CLI prompt arguments, tests if they are valid and then feeds then
 #              | into the script that used it as a lib
@@ -341,7 +344,7 @@ function f_parser_output {
    #        - Terminal verbose Output
    #        - Temporary file replacement or concatenation 
 
-   f_talk; echo "parse CLI arguments"
+   f_talk; echo "parse CLI arguments (disable this 'verbose' with '-v')"
            echo
            echo "initial_argc = $initial_argc"
            echo "posicionais  = ${positional[*]}"
@@ -418,9 +421,9 @@ function f_start_parsing_all_arguments {
       unset v_act  
       v_output=~/.config/h.h/drya/drya-lib-8-getopts/output_file.sh
 
-   #f_greet
-   #f_talk; echo "(extended grep)"
-   #f_parse_args "$@" 
+   f_greet
+   f_talk; echo "(extended grep)"
+   f_parse_args "$@" 
    #f_validar_args 
    
    echo "Parser of Prompted arguments ended"
@@ -439,6 +442,6 @@ function f_start_parsing_all_arguments {
 
 
 # Depois, os scripts externos tem de executar: 
-   #f_start_parsing_all_arguments "$@" 
+    f_start_parsing_all_arguments "$@" 
 
 # Parse (end) ------------------------------------------------------------------------------------------------
