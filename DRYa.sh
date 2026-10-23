@@ -2411,16 +2411,18 @@ function f_drya_fzf_MM {
 
    # Lista de opcoes para o menu `fzf`
       #Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-      Lz1="SAVE this MENU as HISTORY and VISIT: "; Lz2='[D .]'; Lz3="${Lz1}${Lz2}"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
+      Lz1="Save menu "; Lz2='D ..'; Lz3="${Lz1}\`${Lz2}\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
 
       L4="4. | Help Menu";                    L4c="drya help"
       L3="3. | DRYa: Greet & Present itself"; L3c="D p"
       L2="2. | Toolbox"
 
       L1="1. Cancel" 
-
-      Lh=$(echo -e "\nDescription|Notes|Instructions:\n - Menu of ALL DRYa's menus (uDev)\n - While underDev, many sub-menus are not connected here\n - Note: For future DRYa Devs: all menus have their own name\n   to enable fast search inside source code files\n   Such as THIS ONE running\n ")
-      L0="DRYa [.]: drya-main-of-main-menus: " 
+      
+      Lh1='[Come back to this menu with:   `D .`  ]'
+      Lh2='[Come back to saved menus with: `D ..` ]'
+      Lh=$(echo -e "\nDescription|Notes|Instructions:\n - Menu of ALL DRYa's menus (uDev)\n - While underDev, many sub-menus are not connected here\n - Note: For future DRYa Devs: all menus have their own name\n   to enable fast search inside source code files\n   Such as THIS ONE running\n\n$Lh1\n$Lh2\n ")
+      L0="DRYa: drya-main-of-main-menus: " 
 
       Lm1=$(f_talk)
       Lm2="Info about last Menu:\n > Usa \`$Lz2\`"
@@ -3492,8 +3494,8 @@ if [ -z "$*" ]; then
       f_talk; echo -n 'drya-welcoMsg--jarve-listen:'; f_c3; echo -n " (listening keys for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
               echo    "      | Used to initialize Foreground and Background proc loops"
               echo    "      |"
-              echo    '      |-> [j] Toggle ON/OFF Loop this drya-noArg-temporized-menu'  # This is for the TEXT
-              echo    '      |-> [J] Toggle drya-welcoMsg--jarve-listen: [Temp] [Loop]'   # This is for the WAITING and LISTENING
+              echo    '      |-> [J] Toggle ON/OFF drya-welcoMsg--jarve-listen [Text]'                # This is for the TEXT
+              echo    '      |-> [j] Toggle    OFF f_noARG_drya__jarve_listen  [Enable ON manually]'  # This is for the WAITING and LISTENING
               echo    "      |"
               echo    '      |-> [W] Show again Terminal DRYa Welcome Message'
               echo    "      |-> [h] Open:  Help menu"
@@ -3515,7 +3517,7 @@ if [ -z "$*" ]; then
    }
 
    
-   function f_noARG_drya__listening {
+   function f_noARG__jarve_listen {
       # Options available during only few seconds
                        echo
          f_tk "Jarve-listen: "; f_c5; echo -en "listening... "; f_rc
@@ -3543,7 +3545,7 @@ if [ -z "$*" ]; then
             # ANSII to go to beggining of line and clear endire line after cursor
                echo -ne "\r\033[K"
 
-            f_talk; echo "Argument '$v_ans' not recognized here"
+            f_tk "Jarve-listen: "; echo "Argument '$v_ans' not recognized here"
 
          fi
 
@@ -3557,7 +3559,7 @@ if [ -z "$*" ]; then
       f_noARG_drya__postBox
       f_noARG_drya__missing_hard_dependencies 
       f_noARG_drya__jarve_listen 
-      f_noARG_drya__listening
+      f_noARG__jarve_listen
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
    # Help menu. [rtfm: "Read the Fucking Manual"]
