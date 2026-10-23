@@ -89,6 +89,9 @@ v_talk="DRYa: (pk + $trid_pkgm):"
 # Testing if any command was given first
    [[ -z $1        ]] && echo 'Help: `pk --help`'
 
+# Just telling what is the pakage manager
+   [[    $1 == "pkgm" ]] && echo "DRYa: pk: Current package manager is: \"$trid_pkgm\""
+
 # Adding packages
    [[    $1 == "+" ]] && [[ -z $trid_pkgm             ]] && echo "Variable not set: \$trid_pkgm" 
    [[    $1 == "+" ]] && [[    $trid_pkgm == "apt"    ]] && shift && sudo $pkgm install $*

@@ -112,13 +112,13 @@ function f_trid_4 {
    # Verificar o package manager atual (pkg, apt, brew, pacman)
 
    if [ -f /etc/os-release ]; then
-      source /etc/os-release
+      source /etc/os-release  # This file usually contains valid bash with variables about the system, where "ID" describes the name to the current operative system in all lowercase letters
 
-      if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ] || [ $ID = "raspbian" ]; then
+      if [ "$ID" == "ubuntu" ] || [ "$ID" == "debian" ] || [ $ID == "raspbian" ]; then
          # Encontrada a familia Debian
          trid_pkgm="apt"
 
-      elif [ "$ID" = "arch" ] || [ "$ID" = "manjaro" ]; then
+      elif [ "$ID" == "arch" ] || [ "$ID" == "manjaro" ] || [ "$ID" == "omarchy" ]; then
          # Encontrada a familia Arch
          trid_pkgm="pacman"
 

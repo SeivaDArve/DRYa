@@ -4,4 +4,4 @@
 #      This file is to be placed under ~/.config/h.h/ezGIT/ to be read multiple times by ezGIT
 
 # List of repos to encrypt/decript every time:
-$__REPOS_CENTER__/omni-log/all/private-stuff/.git-ewcrypt
+$__RC_OS__/omni-log/all/private-stuff/.git-ewcrypt

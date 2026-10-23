@@ -67,23 +67,23 @@
 function f_default_variables {
    # Default variables (default_variables)
    __name__=drya.sh
-   __repo__=$__REPOS_CENTER__/DRYa
+   __repo__=$__RC_OS__/DRYa
    v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
    
    # Official DRYa bash installer (with a version for failsafe)
-      v_official_DRYa_installer=$__REPOS_CENTER__/DRYa/all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
+      v_official_DRYa_installer=$__RC_OS__/DRYa/all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
       v_official_DRYa_installer_failsafe=./all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
 
    # DRYa logo: presentation info
-      v_drya_logo_1_script=$__REPOS_CENTER__/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
-      v_drya_logo_2=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
-      v_drya_logo_3=$__REPOS_CENTER__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
+      v_drya_logo_1_script=$__RC_OS__/DRYa/all/bin/drya-presentation.sh  # DRYa presentation
+      v_drya_logo_2=$__RC_OS__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
+      v_drya_logo_3=$__RC_OS__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
 
    # Omni-log repo
-      v_file_omni=$__REPOS_CENTER__/omni-log/legacy-omni-log.org
+      v_file_omni=$__RC_OS__/omni-log/legacy-omni-log.org
 
    # wikiD repo
-      v_file_wikiD=$__REPOS_CENTER__/wikiD/wikiD.org
+      v_file_wikiD=$__RC_OS__/wikiD/wikiD.org
 }
 
 
@@ -261,7 +261,7 @@ function f_source_drya_lib_1_alt {
       v_lib1_msg="DRYa: $__name__: drya-lib-1"                       # Title
       v_lib1_relative=./all/lib/libs/drya-lib-1-colors-greets.sh     # Half of the library's path (shared by all other variables)
       v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1_relative        # Absolute path of `dirname` of running script '$0'
-      v_lib1_normal=$__REPOS_CENTER__/DRYa/$v_lib1_relative          # Custume relative path given during DRYa instalation_
+      v_lib1_normal=$__RC_OS__/DRYa/$v_lib1_relative          # Custume relative path given during DRYa instalation_
 
       #v_lib1_1=$v_lib1_normal               #    ; echo "1 $v_lib1_1"
       #v_lib1_2=$v_lib1_failsafe_absolute    #    ; echo "2 $v_lib1_2"
@@ -344,7 +344,7 @@ function f_source_drya_lib_4 {
 }
 
 # drya-lib-8:
-   v_lib8=$__REPOS_CENTER__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+   v_lib8=$__RC_OS__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
 
 
 
@@ -519,7 +519,7 @@ function f_recicle_line {
 
 function f_install_drya__with_fzf {
    echo "File was removed:"
-   echo " > $__REPOS_CENTER__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
+   echo " > $__RC_OS__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
 }
 
 function f_install_drya__with_Select {
@@ -585,16 +585,16 @@ function f_output_drya_welcome_screen_msg_with_vimscript {
    # (Esta sequencia de comandos ja existem em .../DRYa/all/dryaSRC
 
    # Ficheiro vimscript.vim (que vai servir de modelo para a proxima busca)
-      v_scr=$__REPOS_CENTER__/DRYa/all/etc/dot-files/vim/vimscript_1_*
+      v_scr=$__RC_OS__/DRYa/all/etc/dot-files/vim/vimscript_1_*
       v_copy=~/.tmp/vimscript-1-copy.vim
    
    # Ficheiro que queremos depois pesquisar funcoes
-      v_file=$__REPOS_CENTER__/DRYa/all/dryaSRC
+      v_file=$__RC_OS__/DRYa/all/dryaSRC
       v_out=~/.tmp/vimscript-1-output.txt
       rm $v_out 2>/dev/null  # Remove o ficheoiro temporario caso ja haja algum com esse nome
 
    # Ficheiro que tem apenas o cabecalho da drya-lib-1 para se concatenar ao ficheiro de output
-      v_lib_1=$__REPOS_CENTER__/DRYa/all/lib/libs/cat/cat-drya-lib-1-colors-greets.sh
+      v_lib_1=$__RC_OS__/DRYa/all/lib/libs/cat/cat-drya-lib-1-colors-greets.sh
 
    # Fazer uma copia desse script. Para que possamos alterar o contudo daquilo que buscamos
       mkdir -p ~/.tmp
@@ -675,7 +675,7 @@ function f_init_clone_repos {
       v_pwd=$(pwd)  ## After cloning any repo, we will come back to this place
 
    # Before doing any cloning, change to the correct place for cloning
-      cd $__REPOS_CENTER__
+      cd $__RC_OS__
       f_stroken
 }
 
@@ -930,7 +930,7 @@ function f_dotFiles_install_git_set_machine_name {
    function f_about_centralized_gitconfig {
       # About centralized .gitconfig file @ DRYa
          # Path to file
-            v_gitconfig="$__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/.gitconfig"
+            v_gitconfig="$__RC_OS__/DRYa/all/etc/dot-files/git-github/.gitconfig"
             #less $v_gitconfig # debug
 
          # Inform the user about default git name:
@@ -987,7 +987,7 @@ function f_dotFiles_install_git_set_machine_name {
          echo
 
       # Path to the list of preset possible machine names
-         v_list_of_machines="$__REPOS_CENTER__/DRYa/all/etc/list-machine-names.txt"
+         v_list_of_machines="$__RC_OS__/DRYa/all/etc/list-machine-names.txt"
 
       # Creating fzf menu
          v_prompt="DRYa: Git: Qual é o nome que quer dar a maquina atual: "
@@ -1143,13 +1143,13 @@ function f_dot_files_install_git {
       # uDev: Ask if user wants to install
 
    # Testing if 'ezGIT' is cloned
-      [[ ! -d $__REPOS_CENTER__/ezGIT  ]] && echo " > Repo ezGIT does not exist (not cloned)" && read -s
+      [[ ! -d $__RC_OS__/ezGIT  ]] && echo " > Repo ezGIT does not exist (not cloned)" && read -s
 
    # Testing if 'machine name' exists in 'drya-registry' (uDev)
       # uDev: create a file at host to save some persistent configs on local machine
 
    # Starting dot-files instalation
-      v_file=$__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/.gitconfig 
+      v_file=$__RC_OS__/DRYa/all/etc/dot-files/git-github/.gitconfig 
       v_place=~
 
       f_greet
@@ -1208,10 +1208,10 @@ function f_dot_files_install_vimrc {
    # Atualizar historico fzf (inserir esta fx):
       echo "D ui d i vimrc" >> $Lz4
 
-   v_file=$__REPOS_CENTER__/DRYa/all/etc/dot-files/vim/.vimrc
+   v_file=$__RC_OS__/DRYa/all/etc/dot-files/vim/.vimrc
    v_place=~
 
-   v_v1=$__REPOS_CENTER__   v_v2="let g:dryaREPOS = '$v_v1' "
+   v_v1=$__RC_OS__   v_v2="let g:dryaREPOS = '$v_v1' "
    #echo "Final: $v_v2"; read   # Debug
 
    f_greet
@@ -1262,9 +1262,9 @@ function f_dotFiles_install_termux_properties {
 
    # uDev: Test if it is termux and still allow the user to use both ways
 
-   v_orig1=$__REPOS_CENTER__/DRYa/all/etc/dot-files/termux/
-   v_file1=$__REPOS_CENTER__/DRYa/all/etc/dot-files/termux/colors.properties.1
-   v_file2=$__REPOS_CENTER__/DRYa/all/etc/dot-files/termux/termux.properties
+   v_orig1=$__RC_OS__/DRYa/all/etc/dot-files/termux/
+   v_file1=$__RC_OS__/DRYa/all/etc/dot-files/termux/colors.properties.1
+   v_file2=$__RC_OS__/DRYa/all/etc/dot-files/termux/termux.properties
    v_place=~/.termux/
 
    f_greet
@@ -1304,7 +1304,7 @@ function f_dotFiles_install_termux_properties {
 function f_dotFiles_install_tm_tmux {
    # Install .tmux.conf on the system
 
-   v_file1=$__REPOS_CENTER__/DRYa/all/etc/dot-files/tmux/.tmux.conf
+   v_file1=$__RC_OS__/DRYa/all/etc/dot-files/tmux/.tmux.conf
    v_place=~
 
    f_greet
@@ -1353,7 +1353,7 @@ function f_dot_files_install_netrc {
 
 
       # We need that stroken message in these 2 variables, username and token: 
-         v__file="$__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken"
+         v__file="$__RC_OS__/DRYa/all/etc/dot-files/git-github/current-stroken"
 
          v_uName=$(cat $v__file | head -n 1)
          v_token=$(cat $v__file | tail -n 1)
@@ -1630,9 +1630,9 @@ function f_menu_internet_network_ip_options {
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "6. " ]] && echo "uDev: copiar/scrape do wikiD.org para aqui"
-      [[ $v_list =~ "5. " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/web.sh
+      [[ $v_list =~ "5. " ]] && bash $__RC_OS__/DRYa/all/bin/web.sh
       [[ $v_list =~ "4. " ]] && echo "uDev: Ver palavras pass guardadas no sistema"
-      [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash $__REPOS_CENTER__/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
+      [[ $v_list =~ "3. " ]] && f_greet && f_list_ip_public_n_local && echo && bash $__RC_OS__/DRYa/all/bin/generate-new-random-ip.sh && f_list_ip_public_n_local
       [[ $v_list =~ "2. " ]] && f_list_ip_public_n_local
       [[ $v_list =~ "1. " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
@@ -1719,7 +1719,7 @@ function f_QR_code_fzf_menu {
       [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "7. " ]] && f_qr_code__optical_data_transfer
       [[ $v_list =~ "6. " ]] && echo uDev
-      [[ $v_list =~ "5. " ]] && bash $__REPOS_CENTER__DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
+      [[ $v_list =~ "5. " ]] && bash $__RC_OS__DRYa/all/bin/launch-QRcodeApp-for-clipboard.sh
       [[ $v_list =~ "4. " ]] && echo uDev
       [[ $v_list =~ "3. " ]] && f_create_qr_from_file
       [[ $v_list =~ "2. " ]] && f_create_qr_from_text
@@ -2029,7 +2029,7 @@ function f_quick_install_all_upk {
       f_dot_files_install_netrc
 
    # Change dir, to avoid changing at every command
-      cd $__REPOS_CENTER__
+      cd $__RC_OS__
 
    # Install dependencies (and automatically answering YES to all questions)
       # uDev: Test if it is windows and install GUI version also
@@ -2119,7 +2119,7 @@ function f_menu_edit_centralized_then_install {
    
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-      [[    $v_list =~ "2. " ]] && bash $__REPOS_CENTER__/DRYa/all/boot/fluNav.sh 2
+      [[    $v_list =~ "2. " ]] && bash $__RC_OS__/DRYa/all/boot/fluNav.sh 2
       [[    $v_list =~ "1. " ]] && echo "Canceled" 
       unset  v_list
 
@@ -2363,26 +2363,26 @@ function f_drya_fzf_MM_Toolbox {
 
          [[   $v_list =~ "23. " ]] && echo "Press CTRL-X to open Alternative Keyboard (DRYa Emergency Keyboard)"  # uDev: Precisa de 2x failsafe: tem a dependencia FZF para CTRL-X e tambem para este menu que pode nem sequer surgir
          [[   $v_list =~ "22. " ]] && f_kill_process_by_PID
-         [[   $v_list =~ "21. " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh
+         [[   $v_list =~ "21. " ]] && bash $__RC_OS__/DRYa/all/bin/drya-GnuPG.sh
          [[   $v_list =~ "20. " ]] && f_zip_unzip
-         [[   $v_list =~ "19. " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/data.sh .
+         [[   $v_list =~ "19. " ]] && bash $__RC_OS__/DRYa/all/bin/data.sh .
          [[   $v_list =~ "18. " ]] && read -p 'Enter youtube link to download: ' v_ans && yt-dlp $v_ans
          [[   $v_list =~ "17. " ]] && echo "uDev"
          [[   $v_list =~ "16. " ]] && echo "uDev"
          [[   $v_list =~ "15. " ]] && f_menu_internet_network_ip_options
-         [[   $v_list =~ "14. " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/drya-ssh-sshfs.sh
+         [[   $v_list =~ "14. " ]] && bash $__RC_OS__/DRYa/all/bin/drya-ssh-sshfs.sh
          [[   $v_list =~ "13. " ]] && f_menu_audio_media_player
          [[   $v_list =~ "12. " ]] && f_greet && f_talk && echo "Previsao do Tempo" && curl wttr.in 
          [[   $v_list =~ "11. " ]] && f_greet && f_talk && read -p "Ask for a man page (curl will get it): " v_ans && curl cheat.sh/$v_ans
          [[   $v_list =~ "10. " ]] && f_morse
-         [[   $v_list =~ "9.  " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh 
+         [[   $v_list =~ "9.  " ]] && bash $__RC_OS__/DRYa/all/bin/no-tes.sh 
          [[   $v_list =~ "8.  " ]] && f_win_to_linux_pwd
          [[   $v_list =~ "7.  " ]] && f_menu_kill_running_process 
-         [[   $v_list =~ "6.  " ]] && bash $__REPOS_CENTER__/DRYa/all/bin/notify.sh
+         [[   $v_list =~ "6.  " ]] && bash $__RC_OS__/DRYa/all/bin/notify.sh
          [[   $v_list =~ "5.  " ]] && f_QR_code_fzf_menu
 
-         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh 
-         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh h
+         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[ ]" ]] && bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh 
+         [[   $v_list =~ "4.  " ]] && [[ $Lv =~ "[X]" ]] && bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh h
 
          [[   $v_list =~ "3.  " ]] && f_dot_files_menu
          [[   $v_list =~ "2.  " ]] && echo "uDev"
@@ -2460,7 +2460,7 @@ function f_invalid_args {
 
    # If no arg was given, also navigate do DRYa's repo directory
       # udev: in a script it is going there, but after the script finishes, the prompt comes back. (so, not working, it will not navigate in the end, needs to be fixed)
-      cd $__REPOS_CENTER__/DRYa
+      cd $__RC_OS__/DRYa
 }
 
 function f_seiva_up_time {
@@ -2613,12 +2613,12 @@ function f__D_hist__recall_one_command {
       v_line=$(tac $v_drya_fzf_menu_hist | fzf --cycle --prompt "DRYa: Choose a command to repeat (menu fzf history): ")
 
    # Dessa linha que foi buscada, antes de tentar executar `eval` vamos substituir todos os "comandos" pelos "caminhos absolutos" (para nao dar erro)
-      v_line=$(sed    "s#^D #$__REPOS_CENTER__/DRYa/drya.sh #g" <(echo $v_line))
-      v_line=$(sed "s#^drya #$__REPOS_CENTER__/DRYa/drya.sh #g" <(echo $v_line))
+      v_line=$(sed    "s#^D #$__RC_OS__/DRYa/drya.sh #g" <(echo $v_line))
+      v_line=$(sed "s#^drya #$__RC_OS__/DRYa/drya.sh #g" <(echo $v_line))
 
-      v_line=$(sed "s#^3sab #$__REPOS_CENTER__/3-sticks-alpha-bravo/3-sticks-AB.sh #g" <(echo $v_line))
+      v_line=$(sed "s#^3sab #$__RC_OS__/3-sticks-alpha-bravo/3-sticks-AB.sh #g" <(echo $v_line))
 
-      v_line=$(sed "s#^P #$__REPOS_CENTER__/patuscas/patuscas.sh #g" <(echo $v_line))
+      v_line=$(sed "s#^P #$__RC_OS__/patuscas/patuscas.sh #g" <(echo $v_line))
 
    # Se tiverem sido filtrados os comandos todos e substituidos pelos seus caminhos absolutos, entao podemos executar diretamente
       [[ -n $v_line ]] && bash $v_line 
@@ -2627,7 +2627,7 @@ function f__D_hist__recall_one_command {
 function f_clone_selected_from_list_no_invertion {
    # Clonar exatamente as repos que o user escolheu
 
-   cd $__REPOS_CENTER__/ 
+   cd $__RC_OS__/ 
 
    f_talk; echo "Lista de Repos que vai ser clonada:"
    for i in $v_multiple
@@ -2889,7 +2889,7 @@ function f_clone_by_inserting_correct_name {
 
 function f_morse {
    # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
-   less $__REPOS_CENTER__/wikiD/all/morse-diagrams/morse-letters-diagram.txt
+   less $__RC_OS__/wikiD/all/morse-diagrams/morse-letters-diagram.txt
 }
 
 function f_clone_main_menu {
@@ -3089,7 +3089,7 @@ function f_set_keyboard_tty_RetroPie {
 
 function f_set_keyboard_garuda_pt_pt {
    v_config_file=./all/etc/dot-files/keyboards/garuda-linux/config-kbd-PT-PT.txt
-   v_CONFIG_file=$__REPOS_CENTER__/DRYa/$v_config_file
+   v_CONFIG_file=$__RC_OS__/DRYa/$v_config_file
    v_destination=~/.config/kxkbrc
 
    # Failsafe:
@@ -3145,7 +3145,7 @@ function f_create_live_windows_bootable_usb_using_CMD {
    # Nota: Este comando é mencionado em '1st.org': `D create-windows-bootable-USB-cmd`  (se atualizar aqui, tem que atualizar la)
    # uDev: Enviar este comando para `D iu`
 
-   bash $__REPOS_CENTER__/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
+   bash $__RC_OS__/DRYa/all/bin/create-windows-bootable-USB-cmd.sh
 }
 
 function f_create_live_usb {
@@ -3608,16 +3608,16 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
    case $2 in
       stroken | st)
          # Editing stroken globally
-         vim $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken
+         vim $__RC_OS__/DRYa/all/etc/dot-files/git-github/current-stroken
             echo "File edited at: ...DRYa/all/etc/dot-files/git-github/current-stroken"
             echo
 
-         cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/current-stroken $__REPOS_CENTER__/DRYa/install.uninstall/stroken
+         cp $__RC_OS__/DRYa/all/etc/dot-files/git-github/current-stroken $__RC_OS__/DRYa/install.uninstall/stroken
             echo "Copied also too: ...DRYa/install.uninstall/stroken"
             echo
          
             # Adding info for the new user:
-               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> $__REPOS_CENTER__/DRYa/install.uninstall/stroken
+               echo -e "\n(note \"info exists also at: .../DRYa/all/etc/dot-files/git-git-hub/current-stroken\")" >> $__RC_OS__/DRYa/install.uninstall/stroken
 
          # Verbose output
             echo "You may install stroken as ~/.netrc file with the command:"
@@ -3625,14 +3625,14 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
             # uDev: to be sent to: drya.sh edit stroken
       ;;
       news)
-         vim $__REPOS_CENTER__/DRYa/all/bin/news-displayer/news-displayer.sh
+         vim $__RC_OS__/DRYa/all/bin/news-displayer/news-displayer.sh
       ;;
       dryarc)
          echo "edit the file to program this machine without saving inside original DRYa (uDev)"
       ;;
       alias | config-bash-alias)
          ## PERMANENT CHANGES if "git push" is used
-         vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+         vim $__RC_OS__/DRYa/all/etc/config-bash-alias
          
          # Other ways to open the same file: 
             # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
@@ -3642,7 +3642,7 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
                # '$ ,.' 
       ;;
       src | source | source-drya | dryaSRC) 
-         vim $__REPOS_CENTER__/DRYa/all/dryaSRC
+         vim $__RC_OS__/DRYa/all/dryaSRC
 
          # Other ways to open the same file: 
             # Using menu F (from D.F) defined/programed at config-bash-alias (the same file we are opening)
@@ -3692,11 +3692,11 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
 
    elif [ $2 == "1" ] || [ $2 == "edit-dryaSRC" ]; then 
       # Edit 1st file in DRYa's loading sequence
-      vim $__REPOS_CENTER__/DRYa/all/dryaSRC
+      vim $__RC_OS__/DRYa/all/dryaSRC
 
    elif [ $2 == "2" ] || [ $2 == "config-bash-alias" ]; then 
       # Edit 2nd file in DRYa's loading sequence
-      vim $__REPOS_CENTER__/DRYa/all/etc/config-bash-alias
+      vim $__RC_OS__/DRYa/all/etc/config-bash-alias
 
    elif [ $2 == "3" ] || [ $2 == "dryarc" ]; then 
       # Edit 3rd file in DRYa's loading sequence
@@ -3715,14 +3715,14 @@ elif [ $1 == "edit" ] || [ $1 == "e" ]; then
       echo 'Navigate "vim" to ~/.config/h.h/ with the alias like the alias "hh"'
 
    elif [ $2 == "7" ] || [ $2 == "navigate-to-DRYa-Repos-Center" ] || [ $2 == "gg" ]; then 
-      # Navigating "vim" only to $__REPOS_CENTER__/ 
+      # Navigating "vim" only to $__RC_OS__/ 
       echo uDev
    fi
 
 
 
 elif [ $1 == "GG" ] || [ $1 == "navigate-to-DRYa-Repos-Center" ] || [ $1 == "gg" ]; then 
-   # Navigating only to $__REPOS_CENTER__/ 
+   # Navigating only to $__RC_OS__/ 
    GG
 
 elif [ $1 == "activate" ] || [ $1 == "placeholder-off" ] || [ $1 == "ghost.in" ]; then  # Usado em aparelhos/dispositivos publicos
@@ -3771,7 +3771,7 @@ elif [ $1 == "gps" ]; then
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
 
-   v_file=$__REPOS_CENTER__/omni-log/all/parts/headers/GPS-notes.org
+   v_file=$__RC_OS__/omni-log/all/parts/headers/GPS-notes.org
 
    if [ -z "$2" ]; then
       f_talk; echo "Opcoes para GPS"
@@ -3805,7 +3805,7 @@ elif [ $1 == "update" ]; then
    f_greet
    f_c4; echo -n "DRYa: "
    f_rc; echo "Downloading updates and applying them"
-         cd $__REPOS_CENTER__/DRYa
+         cd $__RC_OS__/DRYa
    
    f_git_status
    f_git_pull
@@ -3814,9 +3814,9 @@ elif [ $1 == "update" ]; then
 
    # Aplly each dot-file in their correct places across the system
       f_talk; echo "applying dot-files:"
-              echo " > .vimrc" && cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/vim/.vimrc ~
+              echo " > .vimrc" && cp $__RC_OS__/DRYa/all/etc/dot-files/vim/.vimrc ~
               echo " > termux: colors + properties (uDev)"
-              echo " > .gitconfig" && cp $__REPOS_CENTER__/DRYa/all/etc/dot-files/git-github/.gitconfig ~
+              echo " > .gitconfig" && cp $__RC_OS__/DRYa/all/etc/dot-files/git-github/.gitconfig ~
               echo " > init.el (uDev)"
               echo " > drya: .bash_logout file"
               echo
@@ -3837,8 +3837,8 @@ elif [ $1 == "logout" ] || [ $1 == "out" ]; then
    f_greet
 
    v_original=~/.bash_logout
-   v_dryaLOGOUT=$__REPOS_CENTER__/DRYa/all/etc/dot-files/bashrc/bash-logout/.dryaLOGOUT
-   v_2install=$__REPOS_CENTER__/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout
+   v_dryaLOGOUT=$__RC_OS__/DRYa/all/etc/dot-files/bashrc/bash-logout/.dryaLOGOUT
+   v_2install=$__RC_OS__/DRYa/all/etc/dot-files/bashrc/bash-logout/.bash_logout
 
 
    if [[ -z $2 ]]; then
@@ -4017,7 +4017,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
    # Var: file for DRYa dependencies
-      v_1st=$__REPOS_CENTER__/DRYa/install.uninstall/populate-machines/level+1/1st.org
+      v_1st=$__RC_OS__/DRYa/install.uninstall/populate-machines/level+1/1st.org
 
    if [[ -z $2 ]]; then 
       # If there are no args:
@@ -4067,7 +4067,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
-         [[ $v_list =~ "16. " ]] && bash e $__REPOS_CENTER__/DRYa/all/var/once-tasks-list.txt
+         [[ $v_list =~ "16. " ]] && bash e $__RC_OS__/DRYa/all/var/once-tasks-list.txt
          [[ $v_list =~ "15. " ]] && echo "uDev"
          [[ $v_list =~ "14. " ]] && f_ghost
          [[ $v_list =~ "13. " ]] && f_install_presets
@@ -4134,7 +4134,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       elif [[ $3 == "ps1" ]] || [ $2 == "PS1" ]; then 
          # uDev: This is a config to set, not an instalation
-         cd $__REPOS_CENTER__/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
+         cd $__RC_OS__/DRYa/all/etc/dot-files/termux/ && source ./termux-PS1
 
       elif [[ $3 == "fzf" ]]; then 
          # Instalar fzf como foi recomendado pelos desenvolvedores
@@ -4366,7 +4366,7 @@ elif [ $1 == "save-backup" ]; then
 elif [ $1 == "ssh" ]; then 
    # Options for SSH File System
 
-   v_script=$__REPOS_CENTER__/DRYa/all/bin/drya-ssh-sshfs.sh
+   v_script=$__RC_OS__/DRYa/all/bin/drya-ssh-sshfs.sh
 
    #     # (legacy. errado. Este erro nao sera apagado para info no futuro):
    #        Para transportar os argumento de script para script, exportamos para o env 
@@ -4395,7 +4395,7 @@ elif [ $1 == "ssh" ]; then
 
 elif [ $1 == "news" ]; then 
    # Runs a script inside DRYa directories that continuously rolls information
-   bash $__REPOS_CENTER__/DRYa/all/bin/news-displayer/news-displayer.sh
+   bash $__RC_OS__/DRYa/all/bin/news-displayer/news-displayer.sh
 
 elif [ $1 == "todo" ] || [ $1 == "t" ]; then  
    # Lista de tarefas
@@ -4506,7 +4506,7 @@ elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then
 elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calculator" ] || [ $1 == "clc" ] || [ $1 == "calculadora" ]; then
    # List of calculatores (some modified for Trading)
 
-   v_calc="$__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh"
+   v_calc="$__RC_OS__/DRYa/all/bin/ca-lculadoras.sh"
    shift; bash $v_calc $*
 
    function f_off {
@@ -4521,11 +4521,11 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
 
       elif [ $2 == "," ]; then 
          # Opens calculadora registadora
-         bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh ,
+         bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh ,
 
       elif [ $2 == "3" ]; then
          # Entrar na Calculadora da Regra de 3 Simples
-         bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh 3
+         bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh 3
 
       elif [ $2 == "p" ]; then
          # Entrar na Calculadora de Percentagens
@@ -4534,11 +4534,11 @@ elif [ $1 == "calculo" ] || [ $1 == "calc" ] || [ $1 == "ca" ] || [ $1 == "calcu
             v_ask=no
 
          if [ -z $3 ]; then
-            bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh p
+            bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh p
 
          elif [ $3 == "d" ]; then
             v_ask=yes
-            bash $__REPOS_CENTER__/DRYa/all/bin/ca-lculadoras.sh p d
+            bash $__RC_OS__/DRYa/all/bin/ca-lculadoras.sh p d
          fi
 
       elif [ $2 == "x" ]; then 
@@ -4592,7 +4592,7 @@ elif [ $1 == "set-keyboard" ] || [ $1 == "kbd" ]; then
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
          [[ $v_list =~ "9. " ]] && f_kbd_greet && echo 'Use hotkeys `Ctrl-x` to open drya-emergency-keyboard'
-         [[ $v_list =~ "8. " ]] && f_kbd_greet && cat $__REPOS_CENTER__/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
+         [[ $v_list =~ "8. " ]] && f_kbd_greet && cat $__RC_OS__/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf
          [[ $v_list =~ "7. " ]] && f_kbd_greet && f_set_keyboard_tty_RetroPie
          [[ $v_list =~ "6. " ]] && f_kbd_greet && f_set_keyboard_garuda_pt_pt
          [[ $v_list =~ "5. " ]] && f_kbd_greet && echo "uDev: $L5"
@@ -4625,7 +4625,7 @@ elif [ $1 == "k" ]; then
    echo '      Used when keyboard configs are unsolved'
    read -sn1 -p " > Press enter "
    clear
-   cat $__REPOS_CENTER__/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
+   cat $__RC_OS__/DRYa/all/bin/fzf-keyboard-alterbative/keys-list.txt | fzf --header "Live text here: ..."
 
    # uDev: Set a keybing like Ctrl-... to open this fzf file while writting text to allow adding some special charter like: ? _ " + ) -
 
@@ -4633,10 +4633,10 @@ elif [ $1 == "set-timezone" ] || [ $1 == "timez" ]; then
    f_talk; echo "uDev: Options to set timezone"
     
 elif [ $1 == "no" ] || [ $1 == "note" ] || [ $1 == "notes" ]; then 
-   bash $__REPOS_CENTER__/DRYa/all/bin/no-tes.sh
+   bash $__RC_OS__/DRYa/all/bin/no-tes.sh
    
 elif [ $1 == "noty" ] || [ $1 == "notify" ]; then 
-   bash $__REPOS_CENTER__/DRYa/all/bin/notify.sh
+   bash $__RC_OS__/DRYa/all/bin/notify.sh
 
 elif [ $1 == "QR" ] || [ $1 == "qr" ]; then 
    # Options for QR codes
@@ -4783,10 +4783,10 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
 
 
    # File to run as last script before exit terminal
-      v_quit=$__REPOS_CENTER__/DRYa/all/etc/logout-all-drya-files
+      v_quit=$__RC_OS__/DRYa/all/etc/logout-all-drya-files
 
    # Specific repos to delete
-      v_repo=$__REPOS_CENTER__
+      v_repo=$__RC_OS__
 
    if [ -z $2 ]; then 
       echo "uDev: Info about options"
@@ -4869,7 +4869,7 @@ elif [ $1 == "vlm" ]; then
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
-   v_libs=$__REPOS_CENTER__/DRYa/all/lib/libs
+   v_libs=$__RC_OS__/DRYa/all/lib/libs
 
    if [ -z $2 ]; then 
       f_greet
@@ -5055,7 +5055,7 @@ elif [[ $1 == "eGrep" ]] || [ $1 == "grep" ] || [ $1 == "gr" ]; then
 
    f_greet
 
-   v_script=$__REPOS_CENTER__/DRYa/all/bin/drya-eGrep.sh
+   v_script=$__RC_OS__/DRYa/all/bin/drya-eGrep.sh
 
    if [ -z $2 ]; then 
       bash $v_script
@@ -5114,7 +5114,7 @@ elif [ $1 == "zp" ] ; then
 #  elif [ $1 == "gpg" ] || [ $1 == "gnu-privacy-guard" ] || [ $1 == "pgp" ] || [ $1 == "G" ] || [ $1 == "g" ]; then 
 #     # Encrypt and Decript personal, private abd sensitive data
 #  
-#     shift; bash $__REPOS_CENTER__/DRYa/all/bin/drya-GnuPG.sh $*
+#     shift; bash $__RC_OS__/DRYa/all/bin/drya-GnuPG.sh $*
 #  
 #
 
@@ -5128,8 +5128,8 @@ elif [ $1 == "wam" ]; then
    # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
    
    # Ficheiro que é editado
-      v_wam=$__REPOS_CENTER__/omni-log/all/wam/wam.org
-      v_example="$__REPOS_CENTER__/omni-log/all/wam/example-wam-qrcode/run-example.sh"
+      v_wam=$__RC_OS__/omni-log/all/wam/wam.org
+      v_example="$__RC_OS__/omni-log/all/wam/example-wam-qrcode/run-example.sh"
 
    if [ -z $2 ]; then
       # Se nao for dado nenhum arg extra, da instrucoes
@@ -5139,7 +5139,7 @@ elif [ $1 == "wam" ]; then
               echo " > g <search> | To grep text directly from the main DWAM file"
 
    elif [ $2 == "." ] || [[ $1 == "edit-dwam-main-file" ]]; then
-      [[ -d $__REPOS_CENTER__/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
+      [[ -d $__RC_OS__/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
 
    elif [ $2 == "g" ]; then
 
@@ -5212,7 +5212,7 @@ elif [ $1 == "boilerplate" ] || [ $1 == "boil" ] ; then
    f_talk
    clear
    echo "Boilerplates" && echo
-   v1=$__REPOS_CENTER__/DRYa/all/lib/boilerplates
+   v1=$__RC_OS__/DRYa/all/lib/boilerplates
    v=$(cd $v1 && ls | fzf --prompt="DRYa: boilerplates: choose 1 to copy: ")
    [[ -n $v     ]] && cp $v1/$v . && echo "Pasted: $v1" && read -p "Rename to: " v_ans
    [[ -n $v_ans ]] && (mv $v $v_ans && echo "Renamed" || echo "Not renamed")
@@ -5236,7 +5236,7 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
    # Inicia jogos
 
    # Path to the dedicated lib/script for all the games
-      v_game_script=$__REPOS_CENTER__/DRYa/all/bin/games-RetroPi.sh 
+      v_game_script=$__RC_OS__/DRYa/all/bin/games-RetroPi.sh 
    
    shift   # To remove the arg 'game'
    bash $v_game_script $*

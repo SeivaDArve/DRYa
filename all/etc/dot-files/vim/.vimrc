@@ -116,8 +116,8 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap ZX :q!<CR>
    " (O `vim` ja tem uma tecla de atalho para esta fx: `ZQ`, mas esta continua a ser util)
 
-" Inserir texto que equivale a variavel: $__REPOS_CENTER__
-   nnoremap ZR i $__REPOS_CENTER__/<Esc>
+" Inserir texto que equivale a variavel: $__RC_OS__
+   nnoremap ZR i $__RC_OS__/<Esc>
 
 " Inserir o texto que estiver no ficheiro 'drya-date-now'
    nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>

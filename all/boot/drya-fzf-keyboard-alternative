@@ -29,7 +29,7 @@
    #
 
    # Ficheiro BASH que CONTEM as letras
-     drya_fzf_kbd_alternative=$__REPOS_CENTER__/DRYa/all/bin/fzf-keyboard-alterbative/run-fzf-keyboard.sh
+     drya_fzf_kbd_alternative=$__RC_OS__/DRYa/all/bin/fzf-keyboard-alterbative/run-fzf-keyboard.sh
 
 # -------------------------------------------------------------------------------------------------------------
 

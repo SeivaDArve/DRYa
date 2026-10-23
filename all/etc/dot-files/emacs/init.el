@@ -119,7 +119,7 @@
 
 
    ;; Defining variable inside emacs es per variables on bash
-      ;;(setq v-repos-center (shell-command-to-string "echo $__REPOS_CENTER__"))
+      ;;(setq v-repos-center (shell-command-to-string "echo $__RC_OS__"))
         (setq v-home (file-name-directory (or load-file-name user-init-file)))
         (setq v-repos-center (concat v-home "Repositories/"))
          
@@ -1197,7 +1197,7 @@ uDev:
 
 (defun init ()
   (interactive)
-  (switch-to-buffer (find-file-text $__REPOS_CENTER__/DRYa/all/dot-files/emacs/init.el)))
+  (switch-to-buffer (find-file-text $__RC_OS__/DRYa/all/dot-files/emacs/init.el)))
 ;; (when (get-buffer "*scratch*")
 ;;   (kill-buffer "*scratch*")
 ;;  ;; This checks for the buffer scratch. If there's such a thing, kill it. If not, do nothing at all.
