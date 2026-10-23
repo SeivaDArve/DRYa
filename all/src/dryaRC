@@ -505,7 +505,7 @@ function shebang {
    # Creating all file names given as arguments and placing bash boilerplate into them
    # 'shebang' is the name given to the first line of code of each bash script file, so this fx applies only to bash
    
-   v_bash_boilerplate=$__RC_OS__/DRYa/all/lib/boilerplates/drya-shebang-boilerplate.sh
+   v_bash_boilerplate=$__RC_OS__/DRYa/all/lib/boilerplates/drya-boilerplate--shebang.sh
 
    if [ -z $1 ]; then
       # Prompt for a filename

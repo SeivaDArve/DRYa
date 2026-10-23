@@ -133,7 +133,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
-   nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/boilerplates/drya-fzf-boilerplate-1.sh'<CR>
+   nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/boilerplates/drya-boilerplate--fzf-1.sh'<CR>
 " uDev: bug fix para esta fx. Introduzir no local do ponteiro, o texto equivalente a data e hora
    nnoremap ZH :r!date +"%Y-%m-%d"<CR>          
    "nnoremap ZH :put =strftime("%Y-%m-%d")<CR>
