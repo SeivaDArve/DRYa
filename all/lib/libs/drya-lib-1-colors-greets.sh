@@ -208,11 +208,21 @@ function f_greet2 {
 function f_tk {
    # This fx avoids `f_talk; echo "text"` and behaves more direct like `f_tk "text"`
 
-   # If previously no script gave the variable $v_tk, then, assign "DRYa-lib-1" to it
-      [[ -z $v_tk ]] && v_tk="< v_tk > "
+   if [ -z $1 ]; then
+      # If previously no script gave the variable $v_tk, then, assign "DRYa-lib-1" to it
+         [[ -z $v_tk ]] && v_tk="< v_tk > "
 
-   f_c2; echo -n "$v_tk"
-   f_rc
+      f_c2; echo -n "$v_tk"
+      f_rc
+
+   else
+      # If some argument was given, use it as the 'text'
+         [[ -z $v_tk ]] && v_tk="< v_tk > "
+
+      f_c2; echo -n "$@"
+      f_rc
+
+   fi
 }
 
 

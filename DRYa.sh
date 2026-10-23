@@ -1931,7 +1931,7 @@ function f_drya_help {
            echo " 2. DRYa (Terminal printed instructions)"
            echo " 3. DRYa README.md file "
            echo " 4. DRYa cheat sheets and alias for terminal commands"
-           echo " 5. DRYa cheat sheets for 'Temporized Menu' "
+           echo " 5. DRYa cheat sheets for 'jarve-listen' "
            echo " 6. DRYa environment variables and .dryarc"
            echo ' 6. DRYa file where `notify` saves history'
            echo " 6. traitsID: Print specs of current device"
@@ -3420,7 +3420,7 @@ if [ -z "$*" ]; then
    # dee:arg0 
 
    f_greet
-   v_secs=2  # Set Available time (in seconds) for Temporized quick menu 
+   v_secs=2  # Set Available time (in seconds) for Temporized quick menu for jarve-listen
 
    function f_noARG__hello {
       # Info as basic as possible + Name given to current device to use on git
@@ -3434,6 +3434,11 @@ if [ -z "$*" ]; then
          f_c3; echo $v_user
          f_rc; echo    "      | Instalation type: [full]"
                echo
+   }
+
+   function f_noARG__date {
+      bash /home/dv/Repositories/SeivaOS/DRYa/all/bin/data.sh
+      echo
    }
 
    function f_noARG__help {
@@ -3481,37 +3486,39 @@ if [ -z "$*" ]; then
          echo
    }
 
-   function f_noARG_drya__temporized_menu {
-      # Temporized Quick menu
-         f_talk; echo -n 'drya-welcoMsg-jarve `jarve`:'; f_c3; echo -n " (available for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
-                 echo    "      | Used to initialize Foreground and Background proc loops"
-                 echo    "      |"
-                 echo    '      |-> [j] Toggle drya-welcoMsg-jarve: [Temp] [Loop]'
-                 echo    "      |"
-                 echo    '      |-> [W] Show again Terminal DRYa Welcome Message'
-                 echo    "      |-> [h] Open:  Help menu"
-                 echo    "      |-> [.] Open:  DRYa's main menu (Or Enter \`D menu\`)"
-                 echo    "      |-> [,] Open:  drya-fzf-toolbox (TUI menu)"
-                 echo    '      |-> [0] Open:  Print all info about: Arg0'
-                 echo    '      |-> [b] Open:  PostBox  (uDev)'
-                 echo    '      |-> [t] Open:  DRYa-TUI (uDev)'
-                 echo    '      |-> [T] Open:  HTOP     (watch running processes) (uDev)'
-                 echo    '      |-> [1] Toggle ON     All togglable options'
-                 echo    '      |-> [l] Toggle ON/OFF Loop this drya-noArg-temporized-menu'
-                 echo    '      |-> [l] Toggle ON/OFF drya-autofix-hard-dependencies'
-                 echo    '      |-> [S] Toggle ON/OFF drya-welcoMsg-subeat (uDev)'
-                 echo    '      |-> [m] Toggle ON/OFF drya-welcoMsg-hard-dependencies'
-                 echo    '      |-> [M] Toggle ON/OFF drya-welcoMsg-postBox'
-                 echo    '      |-> [g] Toggle ON/OFF drya-welcoMsg-gpg'
-                 echo    '      |-> [2] Toggle    OFF All togglable options'
-                 echo
+   function f_noARG_drya__jarve_listen {
+      # Temporized Quick menu available for AT LEAST 2 seconds, unless some key is pressed, resizing and restarting that time
+
+      f_talk; echo -n 'drya-welcoMsg--jarve-listen:'; f_c3; echo -n " (listening keys for "; f_c5; echo -n "$v_secs"; f_c3; echo    " secs):"; f_rc
+              echo    "      | Used to initialize Foreground and Background proc loops"
+              echo    "      |"
+              echo    '      |-> [j] Toggle ON/OFF Loop this drya-noArg-temporized-menu'  # This is for the TEXT
+              echo    '      |-> [J] Toggle drya-welcoMsg--jarve-listen: [Temp] [Loop]'   # This is for the WAITING and LISTENING
+              echo    "      |"
+              echo    '      |-> [W] Show again Terminal DRYa Welcome Message'
+              echo    "      |-> [h] Open:  Help menu"
+              echo    "      |-> [.] Open:  DRYa's main menu (Or Enter \`D menu\`)"
+              echo    "      |-> [,] Open:  drya-fzf-toolbox (TUI menu)"
+              echo    '      |-> [0] Open:  Print all info about: Arg0'
+              echo    '      |-> [b] Open:  PostBox  (uDev)'
+              echo    '      |-> [t] Open:  DRYa-TUI (uDev)'
+              echo    '      |-> [T] Open:  HTOP     (watch running processes) (uDev)'
+              echo    '      |-> [1] Toggle ON     All togglable options'
+              echo    '      |-> [l] Toggle ON/OFF drya-autofix-hard-dependencies'
+              echo    '      |-> [S] Toggle ON/OFF drya-welcoMsg-subeat (uDev)'
+              echo    '      |-> [m] Toggle ON/OFF drya-welcoMsg-hard-dependencies'
+              echo    '      |-> [M] Toggle ON/OFF drya-welcoMsg-postBox'
+              echo    '      |-> [g] Toggle ON/OFF drya-welcoMsg-gpg'
+              echo    '      |-> [d] Toggle ON/OFF drya-welcoMsg-data'  # f_noARG__date 
+              echo    '      |-> [2] Toggle    OFF All togglable options'
+              echo
    }
 
    
    function f_noARG_drya__listening {
       # Options available during only few seconds
                        echo
-         f_talk; f_c5; echo -en "listening... "; f_rc
+         f_tk "Jarve-listen: "; f_c5; echo -en "listening... "; f_rc
 
          read -sn1 -t $v_secs v_ans
          
@@ -3545,10 +3552,11 @@ if [ -z "$*" ]; then
 
    # Calling each function in their correct order
       f_noARG__hello
+      f_noARG__date
      #f_noARG__help 
       f_noARG_drya__postBox
       f_noARG_drya__missing_hard_dependencies 
-      f_noARG_drya__temporized_menu 
+      f_noARG_drya__jarve_listen 
       f_noARG_drya__listening
 
 elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
