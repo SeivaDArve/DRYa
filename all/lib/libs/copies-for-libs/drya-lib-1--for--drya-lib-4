@@ -385,43 +385,50 @@ function F_anyK {
    # Press Any key to continue
    # Or wait X seconds
 
-
-
-
-   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
-      # EXEMPLO:
-      #
-      # V_txt="Editado X"
-      # F_anyK
-      #
-      # EFEITO: 
-      # DRYa: Are you sure: "Editar X"
-      #  > Are you sure? (Press ANY key to confirm) 
-
-
-
    # Set how many seconds to wait before automatically continue
       V_secs=5
 
    # Message
       V_msg=" ... (Continue: ANY KEY | Cancel: Ctrl-C ) "
 
-   # Set $V_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
-      [[ -z $V_txt ]] && V_txt=" ... "
+   if [ -z $1 ]; then
+      # A variavel $V_txt tem de ser definida antes desta fx ser chamada
+         # EXEMPLO:
+         #
+         # V_txt="Editado X"
+         # F_anyK
+         #
+         # EFEITO: 
+         # DRYa: Are you sure: "Editar X"
+         #  > Are you sure? (Press ANY key to confirm) 
 
-   # Text to print
-         #echo
-   F_talk; echo -n 'Are you sure? `'
-     F_c5; echo -n "$V_txt"   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
-     F_rc; echo '`'
-           echo -n "$V_msg"
-           read -sn1
-     F_rc; echo -e "\r\033[K > A Continuar..."
 
-   # Removing variables before the fx finished
-      unset V_txt
+
+      # Set $V_txt to " ... " in case the user forgets to set it (must be unset before this fx finishes
+         [[ -z $V_txt ]] && V_txt=" ... "
+
+      # Text to print
+         F_talk; echo -n 'Are you sure? `'
+           F_c5; echo -n "$V_txt"   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
+           F_rc; echo '`'
+                 echo -n "$V_msg"
+                 read -sn1
+           F_rc; echo -e "\r\033[K > A Continuar..."
+
+      # Removing variables before the fx finished
+         unset V_txt
+
+   else
+      # Text to print
+         F_talk; echo -n 'Are you sure? `'
+           F_c5; echo -n "$@"   # A variavel $V_txt tem de ser definida antes desta fx ser chamada
+           F_rc; echo '`'
+                 echo -n "$V_msg"
+                 read -sn1
+           F_rc; echo -e "\r\033[K > A Continuar..."
+
+   fi
 }
-
 
 function F_prsD {
    # Press key 'D' or 'd' to continue

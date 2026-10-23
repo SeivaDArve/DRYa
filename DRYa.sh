@@ -84,6 +84,9 @@ function f_default_variables {
 
    # wikiD repo
       v_file_wikiD=$__RC_OS__/wikiD/wikiD.org
+
+   # File for DRYa dependencies (readable format in org-mode)
+      v_dependencies_1st=$__RC_OS__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
 }
 
 
@@ -2928,15 +2931,16 @@ function f_menu_install_drya_dependencies__1st {
    # Lista de opcoes para o menu `fzf`
       Lz1='Saved '; Lz2='D iu dp'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
 
-      L4='4. Install | Soft dependencies (less important libraries + pkgs)'                                      
-      L3='3. Install | Hard dependencies (most important libraries + pkgs)'                                      
-      L2="2. Edit    | '1st.org' file"
+      L4='4. |   | Install | Soft dependencies'                                      
+      L3='3. |   | Install | Hard dependencies (asking confirmation)'                                      
+      L2="2. |   | Edit    | '1st.org' file"
       L1='1. Cancel'
 
+      Lh=$(echo -e "\nInstructions for this 'Dependencies' Menu:\n - Dependencies are software (libraries or packages)\n   that one software may need to run\n\n - Hard dependencies: most important\n - Soft dependencies: less important\n ")
       L0="DRYa: Dependencies menu: "
       
    # Ordem de Saida das opcoes durante run-time
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n\n$Lz3" | fzf --no-info --pointer=">" --cycle --prompt="$L0" --header="$Lh")
 
    # Atualizar historico fzf automaticamente (deste menu)
       echo "$Lz2" >> $Lz4
@@ -2944,8 +2948,8 @@ function f_menu_install_drya_dependencies__1st {
    # Atuar de acordo com as instrucoes introduzidas pelo utilizador
       [[    $v_list =~ $Lz3  ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[    $v_list =~ "4. " ]] && echo "uDev: $L4" 
-      [[    $v_list =~ "3. " ]] && source $v_1st && f_gr_hard_dependencies 
-      [[    $v_list =~ "2. " ]] && vim $v_1st
+      [[    $v_list =~ "3. " ]] && f_gr_hard_dependencies 
+      [[    $v_list =~ "2. " ]] && vim $v_dependencies_1st
       [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
       [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
       unset  v_list
@@ -3337,6 +3341,31 @@ function f_welcome_screen_help {
    echo 
 } 
 
+function f_gr_hard_dependencies {
+   v_tk=$v_talk
+   f_GR
+   f_tk; echo "Hard dependencies (for DRYa)"
+         echo " > File: $v_dependencies_1st"
+         echo
+   f_tk; echo "List extracted manually from '1st.org' file:"
+         echo " > figlet"
+         echo " > vim"
+         echo " > nvim"
+         echo " > ncurses-utils"
+         echo " > file"
+         echo " > fzf"
+         echo
+   f_anyK Install this list 1 by 1?
+
+   for i in figlet vim nvim ncurses-utils file; do
+      f_hzl
+      f_tk; echo "Installing '$i'"
+      pk + $i
+   done
+   
+   f_hzl
+   f_clone_fzf_like_origina_devs
+}  
 
 
 
@@ -4016,9 +4045,6 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
    # uDev: testar aqui se existe a dependencia `fzf` para continuar a instalacao. Se o utilizador nao quiser instalar fzf, tem de instalar com a alternativa `select`
 
-   # Var: file for DRYa dependencies
-      v_1st=$__RC_OS__/DRYa/install.uninstall/populate-machines/level+1/1st.org
-
    if [[ -z $2 ]]; then 
       # If there are no args:
 
@@ -4036,9 +4062,9 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L14='14. |            |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
          L13='13. | `D iu i`   |  Menu   | PRESETS + Packages + Populate Machines ' 
          L12='12. | `D iu bk`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
-         L11='11. | `D cln`    |  Menu   | Clone Repositories         '
-         L10='10. | `D iu d`   |  Menu   | Dot files           '
-          L9='9.  | `D iu dp`  |  Menu   | Dependencies: File "1st.org"' 
+         L11='11. | `D cln`    |  Menu   | Clone Repositories'
+         L10='10. | `D iu cf`  |  Menu   | Config files (dot-files)'
+          L9='9.  | `D iu dp`  |  Menu   | Dependencies' 
                                
           L7='7.  | `D iu s  ` |  Exec   | DRYa-installer.sh    '
          L17='17. | `D iu s .` |  Edit   | DRYa-installer.sh    '
@@ -4235,7 +4261,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
 
-   elif [[ $2 == "dot-file" ]] || [ $2 == "dot" ] || [ $2 == "d" ] || [ $2 == "." ]; then 
+   elif [[ $2 == "config-files" ]] || [[ $2 == "dot-files" ]] || [ $2 == "dot" ] || [ $2 == "cf" ] || [ $2 == "." ]; then 
 
       if [ -z $3 ]; then
          # Menu principal: dot-files
