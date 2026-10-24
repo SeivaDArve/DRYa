@@ -3439,7 +3439,7 @@ if [ -z "$*" ]; then
    }
 
    function f_noARG__date {
-      bash /home/dv/Repositories/SeivaOS/DRYa/all/bin/data.sh
+      bash $__RC_OS__/DRYa/all/bin/data.sh
       echo
    }
 
