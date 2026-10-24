@@ -123,7 +123,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
 
 " Inserir o texto que estiver no ficheiro 'drya-autocomplete-if-then-else-fi
-   nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/autocomplete/drya/drya-autocomplete-if-then-else-fi.txt'<CR>
+   nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/autocomplete/drya-autocomplete-1-if-then-else.txt'<CR>
 
 " Inserir Nova Linha Acima
    map <M-O> O<ESC>0dd
@@ -133,7 +133,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
 
 " Mapeamento da combinaçao de teclas ZF para copiar e colar conteúdo de um ficheiro externo (menu fzf exemplo 1)
 " --- usa a variavel global 'g:dryaREPOS'
-   nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/boilerplates/drya-boilerplate--fzf-1.sh'<CR>
+   nnoremap ZF :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/boilerplates/drya-boilerplate-3-fzf--menu.sh'<CR>
 " uDev: bug fix para esta fx. Introduzir no local do ponteiro, o texto equivalente a data e hora
    nnoremap ZH :r!date +"%Y-%m-%d"<CR>          
    "nnoremap ZH :put =strftime("%Y-%m-%d")<CR>

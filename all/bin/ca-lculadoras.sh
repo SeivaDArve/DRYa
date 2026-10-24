@@ -19,7 +19,7 @@ __name__="ca-lculadoras.sh"
 
 # Sourcing DRYa Lib 1: Color schemes
    __name__="ca-lculadoras.sh"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
    
    v_greet="DRYa"

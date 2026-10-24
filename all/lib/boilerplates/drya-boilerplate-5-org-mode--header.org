@@ -13,7 +13,6 @@ Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir T
 [[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
 
 * All (Titulo)
-   
    Texto de exemplo
 
 ** Sub-titulo-1

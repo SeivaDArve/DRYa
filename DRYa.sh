@@ -65,7 +65,7 @@
 
 
 function f_default_variables {
-   # Default variables (default_variables)
+   # Default variables 
    __name__=drya.sh
    __repo__=$__RC_OS__/DRYa
    v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
@@ -87,8 +87,17 @@ function f_default_variables {
 
    # File for DRYa dependencies (readable format in org-mode)
       v_dependencies_1st=$__RC_OS__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
-}
 
+   # drya-boilerplate-4:
+      v_boil4=$__RC_OS__/DRYa/all/lib/boilerplates/drya-boilerplate-4-getopts--parse-n-validate.sh
+
+   # emergency files at $__repo__/all/usr/share/emergency/
+      f_share_extintortes=$__RC_OS__/DRYa/all/usr/share/emergency/FOGO-extintores-info.txt
+      f_share_SBV=$__RC_OS__/DRYa/all/usr/share/emergency/SBV-suporte-basico-de-vida.txt
+
+   # Libraries
+      v_libs=$__RC_OS__/DRYa/all/lib/libraries
+}
 
 
 
@@ -262,7 +271,7 @@ function f_source_drya_lib_1_alt {
 
    # Variables 
       v_lib1_msg="DRYa: $__name__: drya-lib-1"                       # Title
-      v_lib1_relative=./all/lib/libs/drya-lib-1-colors-greets.sh     # Half of the library's path (shared by all other variables)
+      v_lib1_relative=./all/lib/libraries/drya-lib-1-colors-greets.sh     # Half of the library's path (shared by all other variables)
       v_lib1_failsafe_absolute=$__dryaROOT__/$v_lib1_relative        # Absolute path of `dirname` of running script '$0'
       v_lib1_normal=$__RC_OS__/DRYa/$v_lib1_relative          # Custume relative path given during DRYa instalation_
 
@@ -319,11 +328,12 @@ function f_source_drya_lib_1_alt {
 
 
 function f_source_drya_lib_1 {
-
    # Sourcing DRYa Lib 1: 
-      #__name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
-      v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
-      source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
+
+   #__name__="example-to-change"  # Change to the name of the script. Example: DRYa.sh, ezGIT.sh, Patuscas.sh (Set this variable at the head of the file, next to title)
+
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
+   source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
    v_talk="DRYa: "
@@ -331,23 +341,23 @@ function f_source_drya_lib_1 {
 
 function f_source_drya_lib_2 {
    # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-      v_lib2=$__RC_OS__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
-      [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
 
-      # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+   # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)
+
+   v_lib2=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-2-tmp-n-config-files.sh
+   [[ -f $v_lib2 ]] && source $v_lib2 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-2 does not exist (error)"; echo)
 }
 
 function f_source_drya_lib_4 {
    # Sourcing DRYa Lib 4: Ensure package, updates, downloads, uploads
-      v_lib4=$__RC_OS__/DRYa/all/lib/libs/drya-lib-4-dependencies-packages-git.sh
-      [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
 
-      # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
-      #           f_lib4_stroken
+   # Examples: v_ensure="$v_df_repo" && f_lib4_download_compact && [edit some local file] && f_lib4_upload_compact 
+   #           f_lib4_stroken
+
+   v_lib4=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-4-dependencies-packages-git.sh
+   [[ -f $v_lib4 ]] && source $v_lib4 || (read -sn 1 -t 1 -p "DRYa libs: $__name__: drya-lib-4 does not exist (error)"; echo)
 }
 
-# drya-lib-8:
-   v_lib8=$__RC_OS__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
 
 
 
@@ -597,7 +607,7 @@ function f_output_drya_welcome_screen_msg_with_vimscript {
       rm $v_out 2>/dev/null  # Remove o ficheoiro temporario caso ja haja algum com esse nome
 
    # Ficheiro que tem apenas o cabecalho da drya-lib-1 para se concatenar ao ficheiro de output
-      v_lib_1=$__RC_OS__/DRYa/all/lib/libs/cat/cat-drya-lib-1-colors-greets.sh
+      v_lib_1=$__RC_OS__/DRYa/all/lib/libraries/cat/cat-drya-lib-1-colors-greets.sh
 
    # Fazer uma copia desse script. Para que possamos alterar o contudo daquilo que buscamos
       mkdir -p ~/.tmp
@@ -2514,7 +2524,7 @@ function f_drya_help_menu {
       [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
       [[ $v_list =~ "10. " ]] && f_visitar_extintores
       [[ $v_list =~ "9.  " ]] && f_visitar_sbv 
-      [[ $v_list =~ "8.  " ]] && echo "uDev"
+      [[ $v_list =~ "8.  " ]] && source $__RC_OS__/DRYa/all/src/dryaRC && arco
       [[ $v_list =~ "7.  " ]] && echo "uDev"
       [[ $v_list =~ "6.  " ]] && f_seiva_up_time
       [[ $v_list =~ "5.  " ]] && echo "uDev"
@@ -3028,8 +3038,18 @@ function f_kill_process_by_PID {
 }
    
 function f_visitar_extintores {
-   echo "uDev: Escrever formula de extintores"
-   echo '      ficheiro: $__repo__/all/lib/emergencia/FOGO-extintores-info.txt'
+   f_greet
+   f_talk; echo "Info sobre Extintores"
+           echo " > uDev: Adicionar formula"
+           echo
+   f_talk; echo "Localizacao do ficheiro:"
+           echo " > $f_share_extintortes"
+           echo
+   
+   read -sn1 -p "Enter para ler com Less... "
+   echo
+
+   less --wordwrap $f_share_extintortes 2>/dev/null || echo 'O comando `less` nao funcionou'
 }
 
 function f_visitar_sbv {
@@ -3037,26 +3057,20 @@ function f_visitar_sbv {
 
    # uDev: se o comando less nao existir, tentar instalar em background
       v_test=$(command -v less)
-      [[ -z $v_test ]] && echo "Comando less nao existe. Sera instalado em background" && read -sn1 -t 3
+      [[ -z $f_share_SBV ]] && echo "Comando less nao existe. Sera instalado em background" && read -sn1 -t 3
 
-
-
-   # Localiacao do ficheiro
-      v_file=$__repo__/all/lib/emergencia/SBV-suporte-basico-de-vida.txt
-      
    f_greet
    f_talk; echo "Suporte Basico de Vida"
            echo " > uDev: Melhorar a formula"
            echo
    f_talk; echo "Localizacao do ficheiro:"
-           echo ' > $__repo__/all/lib/emergencia/SBV-suporte-basico-de-vida.txt'
-           echo " > $v_file"
+           echo " > $f_share_SBV"
            echo
 
    read -sn1 -p "Enter para ler com Less... "
    echo
 
-   less $v_file 2>/dev/null || echo 'O comando `less` nao funcionou'
+   less --wordwrap $f_share_SBV 2>/dev/null || echo 'O comando `less` nao funcionou'
 }
 
 function f_set_keyboard_tty_RetroPie {
@@ -3241,14 +3255,15 @@ function f_drya_welcome_screen {
    function f_seiva_greetings_public {
       # When DRYa was installed on public PC/device, use this fx
       
-      f_talk; echo "Seiva greetings: Mékié pá?"
+      f_talk; echo "Seiva (developer): Greetings and Welcome!"
               echo
    }
 
    function f_seiva_greetings {
       # This fx only detects which fx (Public vs. Private) to run
       
-      [[ $trid_gmn =~ "publicDVC" ]] && f_seiva_greetings_public || f_seiva_greetings_private
+      #[[ $trid_gmn =~ "publicDVC" ]] && f_seiva_greetings_public || f_seiva_greetings_private
+      f_seiva_greetings_public
    }
 
    function f_ws_termux {
@@ -3287,8 +3302,10 @@ function f_drya_welcome_screen {
       v_save=$v_talk  # Temporary use 'f_talk' with some other text
       v_talk="Help: "
 
-      f_talk; echo          "Startup Instructions"
-              echo -n "      Menu 'Main'         : "
+      f_talk; echo          "Fast Instructions"
+              echo -n "      Menu 'jarve-listen' : "
+        f_c4; echo -e                             "D"
+        f_rc; echo -n "      Menu 'Main'         : "
         f_c4; echo -e                             "D ."
         f_rc; echo -n "      Menu 'Instructions' : "
         f_c4; echo                                "D help"
@@ -3306,8 +3323,7 @@ function f_drya_welcome_screen {
    function f_ws_neofetch {
       # Apresentar apenas o icon ASCII do `neofetch`
 
-      echo
-      neofetch -L 2>/dev/null
+      command -v neofetch && echo && neofetch -L 2>/dev/null
    }
 
    function f_ws_seiva_up_time {
@@ -3319,9 +3335,10 @@ function f_drya_welcome_screen {
    function f_ws_cmatrix {
       # If we detect that current PC/device is a public one, after Terminal startup, most likely nobody will know how to use the terminal, so nobody need DRYa's welcome message. In that case, cmatrix will fill the screen
       
-      [[ $trid_gmn =~ "publicDVC" ]] && sleep 2 && cmatrix
+      command -v cmatrix && [[ $trid_gmn =~ "publicDVC" ]] && sleep 2 && cmatrix
    }
 
+      
 
    # uDev: Move all these fx out of dryaSRC and place them in DRYa.sh at `D ws`. Also, in the end of this script (dryaSRC) Call for it
    f_ws_drya_ascii_presentation
@@ -3333,7 +3350,6 @@ function f_drya_welcome_screen {
    f_ws_neofetch
   #f_ws_seiva_up_time 
    f_ws_cmatrix
-
 }
 
 function f_welcome_screen_help {
@@ -3520,7 +3536,7 @@ if [ -z "$*" ]; then
    function f_noARG__jarve_listen {
       # Options available during only few seconds
                        echo
-         f_tk "Jarve-listen: "; f_c5; echo -en "listening... "; f_rc
+         f_tk "Jarve-listen: "; echo -en "(mode: standard). "; f_c5; echo -en "listening... "; f_rc
 
          read -sn1 -t $v_secs v_ans
          
@@ -3590,6 +3606,12 @@ elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] ||
       # Option to read the $DRYa_MESSAGES file
          # They are stored at: ~/.config/h.h/drya/.dryaMessages
          less $v_MSGS
+
+   elif [ $2 == "suporte" ] || [ $2 == "sbv" ] || [ $2 == "SBV" ] ; then 
+      f_visitar_sbv 
+
+   elif [ $2 == "exitintor" ] || [ $2 == "extintores" ] || [ $2 == "ex" ] ; then 
+      f_visitar_extintores 
    fi
 
 
@@ -4271,7 +4293,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
    elif [[ $2 == "ls" ]] || [ $2 == "list-ready-and-udev" ]; then 
       f_dot_files_list_available
 
-   elif [[ $2 == "config-files" ]] || [[ $2 == "dot-files" ]] || [ $2 == "dot" ] || [ $2 == "cf" ] || [ $2 == "." ]; then 
+   elif [[ $2 == "config-files" ]] || [[ $2 == "dot-files" ]] || [ $2 == "dot" ] || [ $2 == "cf" ] || [ $2 == "." ] || [[ $2 == "d" ]]; then 
 
       if [ -z $3 ]; then
          # Menu principal: dot-files
@@ -4905,8 +4927,6 @@ elif [ $1 == "vlm" ]; then
 elif [ $1 == "lib" ]; then 
    # Print with `ls` all the drya-lib file names
 
-   v_libs=$__RC_OS__/DRYa/all/lib/libs
-
    if [ -z $2 ]; then 
       f_greet
       f_talk; echo "Info about libraries file at:"
@@ -5065,7 +5085,7 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
 elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then 
    # Uso igual ao `getopts` em que apenas le os argumebtos do CLI e guarda em variaveis. Este arg `D opt <args>` pode ser usado como debug e implementado em outras fx tal como `D grep <args>`
 
-   v_base=$(basename $v_lib8)
+   v_base=$(basename $v_boil4)
 
    if [[ "$2" == "." || "$1" == "edit-self" ]]; then
       # Edit this file itself
@@ -5074,14 +5094,14 @@ elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then
       f_talk; echo "getopts: $v_base:"
               echo " > editing itself"
               echo
-      bash e $v_lib8
+      bash e $v_boil4
 
    else
 
       f_greet
       shift
 
-      source $v_lib8
+      source $v_boil4
       f_parse_args "$@"
    fi
 
@@ -5219,6 +5239,9 @@ elif [ $1 == "morse" ]; then
 
 # uDev: Fazer um menu so para SOS
 #elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
+
+elif [ $1 == "extintores" ]; then 
+   f_visitar_extintores 
 
 elif [ $1 == "sbv" ]; then 
    f_visitar_sbv

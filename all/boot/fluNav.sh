@@ -9,7 +9,7 @@
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet="DRYa"
@@ -1678,6 +1678,9 @@ function F {
       elif [ $1 == "."        ]; then 
          if   [ -z $2 ]; then v_nm="search_files";                     f_action; # Search Files with fzf, then open
          elif [ -n $2 ]; then unset e; shift; for i in $@; do e="$e$i"; done; v=$(fzf --prompt="Automatic query: " --query="$e" --select-1 --exit-0); echo "Result: $v";fi  # For each argument given after first argument, filter with grep as if it is a fuzzy finder like fzf
+         
+         #uDev: 
+         # elif [ -n $3 ]; then  `fzf --filter="$3" --exact`
 
       elif [ $1 == ".."       ]; then v_nm="edit_last_h_file";       f_action;     # Asks i
          # uDev: `S .. a` to save last file in fast-acess key 'a'

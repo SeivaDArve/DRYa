@@ -2,46 +2,47 @@
 # Descricao: Documento que decreve como proceder em caso de emergencia
 # Use: Usa `D 112` para aceder rapidamente a este documento + Ativar localizacao GPS automaticamente e buscar as coordenadas
 
-SBV -> Vivo? -> Estímulos 
+[SBV] -> Vivo? -> Estímulos!
 
 INFO: Quem atende as chamadas do '112' é A PSP (Policia de Seguranca Publica) que pode emcaminhar chamadas
 INFO: Antes de ligar ao 112 existe muuito trabalho para fazer, poque na chamada eles vao perguntar coisas
       - Tirar nabos da pucara (escrito mais a frente neste documento)
       - Morada, onde se encontra?
 
-• É proibido dar estaladinhas na cara paravo reanimar, pode piorar um traumatismo ou um avc. Porque isso provoca dor e aumenta a circulação sanguinea e por isso, perdas de sangue mais rapidas. Bater na cara aumenta a lesão.
-• Bater no peito também não 
+> É proibido dar estaladinhas na cara paravo reanimar, pode piorar um traumatismo ou um avc. Porque isso provoca dor e aumenta a circulação sanguinea e por isso, perdas de sangue mais rapidas. Bater na cara aumenta a lesão.
+> Bater no peito também não 
+> Bater sim nos ombros ao mesmo tempo que pergunto se ouve
 
-Bater sim nos ombros ao mesmo tempo que pergunto se ouve
-1. Ou ela reage (consciente) - se reage, está consciente
-2. Ou não reage (inconsciente)
-Nao existe:
-- Consciente e orientado (É redundante: "Está a chover na rua e o chão está molhado")
-Mas existe:
-- Consciente e desorientado
+Consciencia vs. Inconsciencia
+   1. Ou ela reage (consciente) - se reage, está consciente
+   2. Ou não reage (inconsciente)
+
+   Nao existe: 'Consciente e orientado' porque é redundante: "Está a chover na rua e o chão está molhado")
+   Mas existe: 'Consciente e desorientado'
 
 A vitima pode reagir de 5 formas:
-1. consciente
-2. consciente e desorientado
-3. consciente e bebedo/maxilar partido? (consciente e nao consegue articular)
-4. Consciente que emite sons
-5. Consciente (com movimentos expontaneo de olhos e braços)
-São os estados de consciencia que definem os meios que vão para o local. Pode ir só os bombeiros ou pode logo ir a SIV
+   1. consciente
+   2. consciente e desorientado
+   3. consciente e bebedo/maxilar partido? (consciente e nao consegue articular)
+   4. Consciente que emite sons
+   5. Consciente (com movimentos expontaneo de olhos e braços)
+
+   São os estados de consciencia que definem os meios que vão para o local. Pode ir só os bombeiros ou pode logo ir a SIV
 
 Depois vou tirar os nabos da pucara (triagem)
-1. O que lhe aconteceu (um vaso na cabeça)
-2. Toma medicamentos
-3. Tem doenças? (É diabético? Comeu?)
+   1. O que lhe aconteceu (um vaso na cabeça)
+   2. Toma medicamentos
+   3. Tem doenças? (É diabético? Comeu?)
 
 Depois ligar 112
--Bom dia, tenho aqui um s
+   -Bom dia, tenho aqui um Sr.
 
 Depois temos de permanecer ao pé da vitima (se formos nós a chamar o socorro)
 1. Se for preciso abandonar a vitima para ter aceso ao telefone, tudo bem
 2. Bebés são os unicos que podem vir connosco
-3. Se houver 2 pessas, 1 delas não abandona a vitima
-Se ela acordar, tranquilizar a vitima.
-4.      de tempos a tempos ir estimulando a vitima para saber se o estado de consciencia piora, mantém ou melhora.
+3. Se houver 2 pessoas, 1 delas não abandona a vitima
+4. De tempos a tempos ir estimulando a vitima para saber se o estado de consciencia piora, mantém ou melhora.
+Se a vitima acordar, tranquilizar a vitima.
 
 Às vezes ha vitimas que o CODU mantém ao telefone por causa dessas vitimas não terem grande suporte (por exemplo os velhinhos)
 1. Ja aconteceu um pai reanimar um filho no local por aprender reanimação ao vivo pelo telefone com o CODU a ensinar (tai teve descerenhimento)
@@ -53,6 +54,7 @@ Daí a menemonica
 A- air way
 B- breathing
 C- circulation
+
 A avaliação eletrica da pulsação no ECG não diz se o doente está vivo. Porque a parte eletrica do coração pode estar a trabalhar, mas a parte mecanica não. 
 • Se o coração está a trabalhar, ha frequencia cardiaca + tensão arterial. 
 • Se houve frequência cardiaca sem tensão arterial. Temos impulsos eletricos mas não temos trabalho mecanico 

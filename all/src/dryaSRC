@@ -102,10 +102,10 @@ function f_drya_libs {
    # Note: Includes an fx for debugging: `db` 
    
    # uDev: Rename better
-   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1*    # Sourcing DRYa Library nr 1
-   v_lib2=$__RC_OS__/DRYa/all/lib/libs/drya-lib-2*    # Sourcing DRYa Library nr 2
-   v_lib3=$__RC_OS__/DRYa/all/lib/libs/drya-lib-3*    # Sourcing DRYa Library nr 3
-   v_lib4=$__RC_OS__/DRYa/all/lib/libs/drya-lib-4*    # Sourcing DRYa Library nr 4
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1*    # Sourcing DRYa Library nr 1
+   v_lib2=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-2*    # Sourcing DRYa Library nr 2
+   v_lib3=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-3*    # Sourcing DRYa Library nr 3
+   v_lib4=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-4*    # Sourcing DRYa Library nr 4
    export v_lib1 v_lib2 v_lib3 v_lib4
 }
 

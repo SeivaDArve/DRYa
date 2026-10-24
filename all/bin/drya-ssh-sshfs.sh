@@ -5,7 +5,7 @@ __repo__="$__RC_OS__/DRYa"
 v_fzf="DRYa: SSH:"
 
 # Sourcing library with: Colors, f_greet, f_greet2, f_talk, f_done, f_anyK, f_Hline, f_horizlina, f_verticline, etc... [From the repo at: "https://github.com/SeivaDArve/DRYa.git"]
-   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
    source $v_lib1 2>/dev/null || (read -s -n 1 -p "DRYa libs: $__name__: drya-lib-1 does not exist (error)" && echo )
 
    v_greet=DRYa-SSH
