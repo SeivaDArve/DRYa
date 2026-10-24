@@ -2288,9 +2288,9 @@ function f_drya_fzf_MM_Toolbox {
 
    function f_void {
       # Runs only once at the beginning
-       Lv="V. [ ] Verbose help"
-      Lvx="V. [ ] Verbose help"
-      LvX="V. [X] Verbose help"
+       Lv="V. [ ] Enable Verbose help"
+      Lvx="V. [ ] Enable Verbose help"
+      LvX="V. [X] Enable Verbose help"
    }
  
    function f_loop {
@@ -2421,7 +2421,7 @@ function f_drya_fzf_MM {
       
       Lh1='[Come back to this menu with:   `D .`  ]'
       Lh2='[Come back to saved menus with: `D ..` ]'
-      Lh=$(echo -e "\nDescription|Notes|Instructions:\n - Menu of ALL DRYa's menus (uDev)\n - While underDev, many sub-menus are not connected here\n - Note: For future DRYa Devs: all menus have their own name\n   to enable fast search inside source code files\n   Such as THIS ONE running\n\n$Lh1\n$Lh2\n ")
+      Lh=$(echo -e "\nDescription|Notes|Instructions:\n - Menu of ALL DRYa's menus (uDev)\n - While underDev, many sub-menus are not connected here\n - Note: For future DRYa Devs: all menus have their own name\n   to enable fast search inside source code files\n   Such as THIS ONE running 'DRYa.sh'\n\n$Lh1\n$Lh2\n ")
       L0="DRYa: drya-main-of-main-menus: " 
 
       Lm1=$(f_talk)

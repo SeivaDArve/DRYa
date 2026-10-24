@@ -367,6 +367,7 @@ function f_fun_after_welcome_screen {
       #f_fun_vibrato                
    }
 
+   # uDev: mention to ssms if it is a public device
    [[ ! $trid_gmn =~ "publicDVC" ]] && f_exec_fun 
  }
 
@@ -757,6 +758,7 @@ function f_repository_moedaz {
 
    v_moedazREPO=$__RC_OS__/DRYa-moedaz
 
+   echo $v_hzl
    source $v_moedazREPO/all/moedazSRC 2>/dev/null
 
    alias    mo="bash $v_moedazREPO/moedaz.sh" ## Alias also exists inside 'source-all-moedaz-files'
