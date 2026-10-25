@@ -2421,7 +2421,7 @@ function f_drya_fzf_MM {
 
    # Lista de opcoes para o menu `fzf`
       #Lz1='Saving '; Lz2='D .'; Lz3="$Lz1\`$Lz2\`"; Lz4=$v_drya_fzf_menu_hist
-      Lz1="Save menu "; Lz2='D ..'; Lz3="${Lz1}\`${Lz2}\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
+      Lz1="Save menu "; Lz2='D .'; Lz3="${Lz1}\`${Lz2}\`"; Lz4=$v_drya_fzf_menu_hist; Lz5="Comandos alternativos ao comando \`$Lz2\`: \n > nil"
 
       L4="4. | Help Menu";                    L4c="drya help"
       L3="3. | DRYa: Greet & Present itself"; L3c="D p"
@@ -3320,10 +3320,19 @@ function f_drya_welcome_screen {
       bash $v_DRYa_GnuPG ws
    }
 
+   function f_ws_nothingRunning {
+      f_talk; echo       'Nothing running...'
+              echo '      Input `D` to start something'
+
+   }
+
    function f_ws_neofetch {
       # Apresentar apenas o icon ASCII do `neofetch`
 
-      command -v neofetch && echo && neofetch -L 2>/dev/null
+      if [[ $(command -v neofetch) ]]; then
+         echo
+         neofetch -L 2>/dev/null
+      fi
    }
 
    function f_ws_seiva_up_time {
@@ -3345,8 +3354,9 @@ function f_drya_welcome_screen {
    f_seiva_greetings
   #f_ws_termux               # uDev: creating/removing ~/.hushlogin will disable/enable termux verbose startup
    f_ws_trid
-   f_ws_drya_startup_instructions
+  #f_ws_drya_startup_instructions
    f_ws_drya_about_decrypted_gpg_dir
+   f_ws_nothingRunning
    f_ws_neofetch
   #f_ws_seiva_up_time 
    f_ws_cmatrix

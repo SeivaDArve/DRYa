@@ -364,7 +364,7 @@ function f_startup {
    f_talk; echo    "Running on OS  : $trid_OS"
           #echo "$e Git name    : $trid_gmn"
            [[ $trid_gmn == "seivaDArve" ]] && f_coloring_variable_git_name__red || f_coloring_variable_git_name__normal 
-           echo "$e Text editor    : $v_ed"
+          #echo "$e Text editor    : $v_ed"
 }
 
 function f_printenv {

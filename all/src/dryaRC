@@ -891,3 +891,31 @@ function pwsh {
 
 alias conv="magick"
 alias desc="type"  # Describes the command given as arg 1
+
+function Sp {
+   # Function 'SP' mentions "sudo" + "<package manager>". The package manager of the current linux disto is found by the script "traitsID.sh"
+
+   if [[ -z $trid_pkgm ]]; then
+      echo "DRYa: Package manager not detected to perform 'sudo pkg-manager'"
+
+   elif [[ $trid_pkgm == "pkg" ]]; then
+      eval pkg $*
+
+   else
+      sudo $trid_pkgm
+   fi
+}
+
+
+# uDev: Testing for unicode characters
+#  437  : ໑
+#  438  : ࿂
+#  439  : ᎒
+#  440  : ᑔ
+#  441  : ⨕
+#  442  : ꀖ
+#  443  : ꕁ
+#  444  : ︙
+#  445  : 𑱰
+#  447  : 𝈀
+#  448  : 𝔇

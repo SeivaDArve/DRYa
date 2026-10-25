@@ -215,6 +215,14 @@ function F_tk {
       F_c2; echo -n "$V_tk"
       F_rc
 
+   elif [ -n $1 ]; then 
+      # If any argument is given, use that text instead of V_tk
+
+      F_c2; echo -n "$1"
+      F_rc
+
+   #elif [ -n $2 ]; then  # uDev: if another arg is given, use it to describe the 'number' of the color
+
    else
       # If some argument was given, use it as the 'text'
          [[ -z $V_tk ]] && V_tk="< V_tk > "
