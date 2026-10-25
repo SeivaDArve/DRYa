@@ -2682,24 +2682,61 @@ function f_clone_selected_from_list_with_invertion {
 }
 
 function f_drya_get_all_repo_names_private_public {
-   # dee:DclnPv
+   # This function gathers a list of 'public' and 'private' repos from the github.com Seiva's account
+
+   # Asking for a 'pin' to include 'private' repositories in the fzf list
+      
+      # Variables for the prompted text:
+         v_msg_askin=" > PIN to include the list of Private repos: " 
+         v_msg_empty=" > Pin EMPTY, hot including... "
+         v_msg_corre=" > Pin CORRECT, will include... "
+         v_msg_incor=" > Pin INCORRECT, will not include"...  
+
+      # Ask
+         unset                    v_ans
+         read -sp "$v_msg_askin"  v_ans
+         echo
+
+      # Repetitive process of verbose output
+         function f_verbose {
+            echo 
+            read -sn1 -p "... [Enter] "
+            echo
+         }
+         
+      # Process the info
+         if [[ -z $v_ans ]]; then
+            echo "$v_msg_empty" 
+            f_verbose 
+
+         elif [[ $v_ans == $v_pin ]]; then
+            echo "$v_msg_corre"
+            v_list_private="DRYa--GUPTa-yoga dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena Subeat"  # dee:D_cln_Pv_list  
+            f_verbose 
+
+         else
+            echo "$v_msg_incor"
+            f_verbose 
+         fi
+
+
 
    # Juntar a lista de repos publicas + privadas 
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
       v_list_options="---Invert-Selection---"
-      v_list_private="DRYa--GUPTa-yoga dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena Subeat"
 
       # will give a $v_tmp with a new file with abs path
          f_create_tmp_file  # Vai criar o ficheiro $v_tmp
 
       # Juntar todos os textos
-         echo "$v_list_options" >  $v_tmp
+         echo "$v_list_options"  >  $v_tmp
+
          for i in $v_list_private
          do
-            echo $i >> $v_tmp
+            echo $i              >> $v_tmp
          done
 
-         echo "$v_list_public"  >> $v_tmp
+         echo "$v_list_public"   >> $v_tmp
 
       # Get the new file created
          #echo "$v_combine" > $v_tmp
@@ -2831,7 +2868,7 @@ function f_clone_by_fzf_list {
            echo " > Listing all public repos (by web search)"
            echo " > Listing private repos    (from offline file)"
            echo
-           echo " ... a buscar repos publicas (diretamente da web)"
+           echo " ... searching public repos (diretamently from the web)"
            echo
 
    # Combinar em 1 ficheiro: todas as repos publicas + privadas para usar no fzf
@@ -3951,6 +3988,7 @@ elif [ $1 == "cl" ]; then
 elif [ $1 == "clone" ] || [ $1 == "cln" ]; then 
    # Gets repositories from Github.com and tells how to clone DRYa itself
    # Any repo from Seiva's github.com is cloned to the default directory ~/Repositories
+   # dee:D_cln_Pv_list    # Follow this dee|hashtag to faster finding the variable that lists the private repositories
 
    # uDev: Test if Repos Center is set. If is not, just mention the command to mimic on the prompt
 
