@@ -120,7 +120,7 @@ let g:dryaREPOS = '<DRYa-variable-for-Repository-Center>'
    nnoremap ZR i $__RC_OS__/<Esc>
 
 " Inserir o texto que estiver no ficheiro 'drya-date-now'
-   nnoremap ZD :r <C-r>='~/.config/h.h/drya/drya-date-now'<CR>
+   nnoremap ZD :r <C-r>='~/.config/h.h/drya/date/drya-date-now'<CR>
 
 " Inserir o texto que estiver no ficheiro 'drya-autocomplete-if-then-else-fi
    nnoremap ZAI :r <C-r>=g:dryaREPOS . '/DRYa/all/lib/autocomplete/drya-autocomplete-1-if-then-else.txt'<CR>

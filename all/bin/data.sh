@@ -1,7 +1,9 @@
 #!/bin/bash
 # Title: data.sh
+
 __name__="data.sh"
 v_fzf="DRYa-data:"
+v_drya_date_output_dir=$__dryaCONFIG__/drya/date  # Variable already set and exported at $__dryaSRC__
 
 
 
@@ -43,27 +45,57 @@ function f_background_process {
    echo "PID is: $v_pid"
 }
 
-function f_complete_date {
+function f_break_output_of_complete_date_according_to_terminal_columns_size {
 
+   # udev: Criar quebras de linha caso a janela do terminal seja demasiado estreita. Para contar o numero de caracteres que uma variavel de texto contem: `echo ${#v_var}`
    
-   f_complete_date_variable 
-   f_talk; echo "Horas (neste momento):"  # Se esta linha for ativada, cria bug
+   # Adjusting text to terminal size. (2 outputs will be created. One that can break and another unbroken)
+      f_GR
+      f_talk; echo "$v_title_verbose" 
+      echo
+      echo "Columns at the terminal: $COLUMNS (debug)"
+      echo
+      echo "output file 1: $v_drya_date_output_dir/drya-complete-date-1--horizontal"
+      echo "output file 2: $v_drya_date_output_dir/drya-complete-date-2--vertical"
+      echo
+      
+      echo "Debug: 1: $v_vert_1"
+      echo "Debug: 2: $v_vert_2"
+      echo "Debug: 3: $v_vert_3"
+      echo "Debug: 4: $v_vert_4"
+      echo "Debug: 5: $v_vert_5"
+      echo "Debug: 6: $v_vert_6"
+   
+      function f_test_col_size {
+        # This fx will create a file with the list of broken parts of text contained the broken 'date'. It accept 1 text argument (to calculate size again). If already existed previously some line of text in that file, this fx will criate another var|line
+         # example: `v_col_size=${#v_TIT}; echo "Debug: Col: $v_col_size"`
+         
+         echo "test: $1"
+      }
+}
 
+function f_complete_date {
+   # Montrar o resultado da data|hora atual no terminal (completa)
 
+   # Instrucoes ao desenvolvedor:
+      # echo -ne "\r"      ## Move o cursor para o inicio da linha
+      # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
 
-   # Montrar o resultado no terminal
-      # Mostrar em apenas 1 linha a data completa
+   # Verbose Title as Output
+      v_title_verbose="Horas (neste momento):" 
+      f_talk; echo "$v_title_verbose" 
 
-      # Instrucoes ao desenvolvedor:
-         # echo -ne "\r"      ## Move o cursor para o inicio da linha
-         # echo -ne "\033[K"  ## Sequência de escape ANSI para limpar do cursor até o fim da linha.
+   # Get|Process the math of the actuall current time and date. Only gets variables without output
+      f_complete_date_variable   
 
-     #echo             " > $v_GDH"
-      echo -ne "\r\033[K $v_final "  
+   # Output of the actual time and date
+      # Note: from both kinds of outputs below, choose only one, they are not compatible because they will provide the same duplicated output in 2 different styles
 
+      # Output [in only one continuous string], do not break even if the terminal is thin in columns size
+         echo -ne "\r\033[K $v_final "    
 
-
-
+      # Output [according to terminal size]
+         #f_break_output_of_complete_date_according_to_terminal_columns_size   
 }
 
 function f_complete_date_variable {
@@ -73,45 +105,63 @@ function f_complete_date_variable {
 
    # Montagem da data
       # Display: Titulo em linha com o restante
-         v_TIT="(Data atual) -"  # Versao anterior, antes de usar drya-lib-1
+         v_TIT="(Data atual)"  # Versao anterior, antes de usar drya-lib-1
 
       # Display: Grupo data hora
-         v_nom="GDH"
-         v_dia=$(date +'%d')
-         v_hor=$(date +'%H')
-         # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
+         # Titulo do GDH
+            v_nom="GDH"
 
-         # drya-fst-tg-sys-for-vars  (define $v_fuso in many diferent ways. BUT only the last line will count. This is a fast toggle system for variables)
-              v_fuso=$(date +'%Z')
-        unset v_fuso
+         # Dia  (uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz)
+            v_dia=$(date +'%d')
 
-         v_min=$(date +'%M')
-         v_mes=$(date +'%b')
-         v_ano=$(date +'%Y')
-         v_GDH="($v_nom ${v_dia}${v_hor}${v_min}${v_fuso}${v_mes}${v_ano}) -"
+         # Hora
+            v_hor=$(date +'%H')
+
+         # Minutos
+            v_min=$(date +'%M')
+
+         # Adicionar|Remover fuso horario
+            # drya-fst-tg-sys-for-vars  (define $v_fuso in many diferent ways. BUT only the last line will count. This is a fast toggle system for variables)
+                     v_fuso=$(date +'%Z')
+               unset v_fuso
+
+         # Mes
+            v_mes=$(date +'%b')
+
+         # Ano
+            v_ano=$(date +'%Y')
+
+         # Montagem final do GDH
+            v_GDH="($v_nom ${v_dia}${v_hor}${v_min}${v_fuso}${v_mes}${v_ano})"
    
       # Display: Ano sozinho
          v_ano=$(date +'%Y')
-         v_ANO="(Ano $v_ano) -"
+         v_ANO="(Ano $v_ano)"
 
       # Display: Mes sozinho
          v_mes=$(date +'%m %b')
-         v_MES="(Mês $v_mes) -"
+         v_MES="(Mês $v_mes)"
          # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
 
       # Display: Dia sozinho
          v_dia=$(date +'%d %a')
-         v_DIA="(Dia $v_dia) -"
+         v_DIA="(Dia $v_dia)"
          # uDev: Traduzir para PT-PT. Se v_tradutor=0 entao traduz; Se v_tradutor=1 entao nao traduz; 
 
       # Display: Hora + minutos + segundos
          v_hora=$(date +'%H:%M:%S')
          v_HORA="(Hora $v_hora)"
 
-      # Concatnar Todas as variaveis anterires
-         v_final="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
+      # Concatnar Todas as variaveis anteriores (in one single line)
+         v_final="$v_TIT - $v_GDH - $v_ANO - $v_MES - $v_DIA - $v_HORA"
    
-
+      # Concatnar Todas as variaveis anteriores (get them ready to resize according to the terminal)
+         v_vert_1=$v_TIT
+         v_vert_2=$v_GDH
+         v_vert_3=$v_ANO
+         v_vert_4=$v_MES
+         v_vert_5=$v_DIA
+         v_vert_6=$v_HORA
 
    function f_detect_terminal_size {
       # Criar data/hora responsiva ao tamanho do terminal
@@ -130,36 +180,36 @@ function f_complete_date_variable {
       #   v_cols=$COLUMNS
       #   echo $v_cols
 
-      # Calcular e atuar de acordo com o numero de caracteres e numero de colunas do termial
+      # Calcular e atuar de acordo com o numero de caracteres e numero de colunas do terminal
          
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_TIT_siz=${#v_TIT}  # Calculo do numero de caracteres
       #       echo "Tamanho v_TIT: $v_TIT_siz"
 
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_GDH_siz=${#v_GDH}
       #       echo "Tamanho v_GDH: $v_GDH_siz"
 
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_ANO_siz=${#v_ANO}
       #       echo "Tamanho v_ANO: $v_ANO_siz"
 
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_MES_siz=${#v_MES}
       #       echo "Tamanho v_MES: $v_MES_siz"
 
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_DIA_siz=${#v_DIA}
       #       echo "Tamanho v_DIA: $v_DIA_siz"
 
-      #    # Calculo do numero de caracteres (media )
+      #    # Calculo do numero de caracteres (media)
       #       v_HORA_siz=${#v_HORA}
       #       echo "Tamanho v_HORA: $v_HORA_siz"
 
 
 
 
-      # Calculo do numero de caracteres (media )
+      # Calculo do numero de caracteres (media)
          v_tam_0_txt="$v_TIT $v_GDH $v_ANO $v_MES $v_DIA $v_HORA"
          v_tam_0=${#v_tam_0_txt}
          #echo "Tamanho v_tam_0: $v_tam_0"  # Debug
@@ -282,7 +332,8 @@ function f_variables_date_to_file {
    # (Durante o uso de `vim` pode despejar a data existente nesse ficheiro com as teclas de atalho `ZD` (confirmar teclas em .vimrc))
    # Exemplo: "<2024-06-07>"
 
-   v_date_now=~/.config/h.h/drya/drya-date-now
+   v_date_now=$v_drya_date_output_dir/drya-date-now
+   mkdir -p $(dirname $v_date_now)
 
    v_data=$(date +'<%Y-%m-%d>')
    echo "$v_data" >  $v_date_now
@@ -483,7 +534,7 @@ if [ -z $1 ]; then
       echo
 
 
-elif  [ $1 == "." ]; then
+elif  [ $1 == "menu" ] || [ $1 == "." ]; then
    # Menu with all the options
 
 
