@@ -76,7 +76,7 @@
       [[    $v_list =~ "4. " ]] && f_example
       [[    $v_list =~ "3. " ]] && echo "$L3c" >> $Lz4 && echo "uDev" 
       [[    $v_list =~ "2. " ]] && echo "uDev: $L2" 
-      [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2" 
+      [[    $v_list =~ "1. " ]] && echo "Canceled: Menu: $Lz2"    # uDev: Send ALL the menus to a second history file, shorter. It might be usefull
       [[ -z $v_list          ]] && echo "ESC key used, aborting..." && exit 1
       unset  v_list
 
