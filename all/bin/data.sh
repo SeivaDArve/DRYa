@@ -65,7 +65,26 @@ function f_break_output_of_complete_date_according_to_terminal_columns_size {
       echo "Debug: 4: $v_vert_4"
       echo "Debug: 5: $v_vert_5"
       echo "Debug: 6: $v_vert_6"
+
+      v_vert_d=3
+      echo "Debug: -: $v_vert_d"
+
    
+   
+      # example: `v_col_size=${#v_TIT}; echo "Debug: Col: $v_col_size"`
+      if [ -z $1 ]; then
+         echo "none"
+
+      elif [ $1 == "1" ]; then
+         echo "1"
+
+      elif [ $1 == "2" ] || [ $1 == "3" ]; then
+         echo "2 or 3"
+
+      else
+         echo "uDev: help"
+
+      fi
       function f_test_col_size {
         # This fx will create a file with the list of broken parts of text contained the broken 'date'. It accept 1 text argument (to calculate size again). If already existed previously some line of text in that file, this fx will criate another var|line
          # example: `v_col_size=${#v_TIT}; echo "Debug: Col: $v_col_size"`
