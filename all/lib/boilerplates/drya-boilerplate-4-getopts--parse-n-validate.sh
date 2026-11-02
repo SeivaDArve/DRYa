@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # uDev: This file was moved from 'libs' to 'boilerplates'. So it has to be renamed and rearranged to match more a boilerplate than a library
+# uDev: Find out the other allowed symbols like '-' and '--' used for arguments, to have --argument, ++argument, ==argument or other variation of syntax
 
 # Title:       | drya-lib-8-getopts-parse-n-validate.sh
 # Description: | This lib, when sourced, collects all CLI prompt arguments, tests if they are valid and then feeds then
@@ -12,7 +13,7 @@ __name__=drya-lib-8-getopts-parse-n-validade.sh
 #     How to install
 #
 #     # Sourcing DRYa Lib 8: Reading/Parsing argumentes from the CLI prompt, then testing if they are valid
-#        v_lib8=$__RC_OS__/DRYa/all/lib/libs/drya-lib-8-getopts-parse-n-validate.sh
+#        v_lib8=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-8-getopts-parse-n-validate.sh
 #        [[ -f $v_lib8 ]] && source $v_lib8 || (read -s -n 1 -p "DRYa: error: drya-lib-8 does not exist " && echo)
 #     
 #        # Examples: `D opts -i inFile.txt` and the script will test the input file if it exist or not
@@ -21,7 +22,7 @@ __name__=drya-lib-8-getopts-parse-n-validade.sh
 
 
 # Sourcing DRYa Lib 1: Color schemes
-   v_lib1=$__RC_OS__/DRYa/all/lib/libs/drya-lib-1-colors-greets.sh
+   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1-colors-greets.sh
    [[ -f $v_lib1 ]] && source $v_lib1 || (read -s -n 1 -p "DRYa: error: drya-lib-1 does not exist " && echo)
 
    v_greet="DRYa"
@@ -33,7 +34,7 @@ __name__=drya-lib-8-getopts-parse-n-validade.sh
 
 
 # Sourcing DRYa Lib 2: Creating temporary files for support on scripts
-   v_lib2=$__RC_OS__/DRYa/all/lib/libs/drya-lib-2-tmp-n-config-files.sh
+   v_lib2=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-2-tmp-n-config-files.sh
    [[ -f $v_lib2 ]] && source $v_lib2 || (read -s -n 1 -p "DRYa: error: drya-lib-2 does not exist " && echo)
 
    # Examples: `f_create_tmp_file` (will give a $v_tmp with a new file with abs path)

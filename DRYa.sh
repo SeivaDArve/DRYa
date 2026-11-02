@@ -5289,9 +5289,11 @@ elif [ $1 == "morse" ]; then
 #elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
 
 elif [ $1 == "extintores" ]; then 
+   # Info sobre extincao de incendio
    f_visitar_extintores 
 
 elif [ $1 == "sbv" ]; then 
+   # Suporte basico de vida
    f_visitar_sbv
 
 elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; then 
@@ -5315,14 +5317,48 @@ elif [ $1 == "cv" ] || [ $1 == "curriculum" ] || [ $1 == "curriculum-vitae" ]; t
 elif [ $1 == "boilerplate" ] || [ $1 == "boil" ] ; then 
    # Adiciona no diretorio atual, uma copia de um ficheiro boilerplate da colecao DRYa
 
+   unset v_ans
+   v_dir=$__RC_OS__/DRYa/all/lib/boilerplates
+   v_file=$(cd $v_dir && ls | fzf --prompt="DRYa: boilerplates: choose 1 to copy: ")
+
    f_greet
-   f_talk
-   clear
-   echo "Boilerplates" && echo
-   v1=$__RC_OS__/DRYa/all/lib/boilerplates
-   v=$(cd $v1 && ls | fzf --prompt="DRYa: boilerplates: choose 1 to copy: ")
-   [[ -n $v     ]] && cp $v1/$v . && echo "Pasted: $v1" && read -p "Rename to: " v_ans
-   [[ -n $v_ans ]] && (mv $v $v_ans && echo "Renamed" || echo "Not renamed")
+   f_talk; echo "Boilerplates" && echo
+
+   if [[ -n $v_file ]]; then
+      # If file exists, it can be copied. If it can be copied, copy to current location. After ask if renaming is needed.
+
+      # Moving + Verbose (from @DRYa to @host)
+         f_talk; echo "Copying 1 boilerplate to current prompt location:"
+                 echo
+
+                 cp $v_dir/$v_file . 
+
+                 echo "From:"
+                 echo " > $v_dir"
+                 echo "Pasted: "
+                 echo " > $v_file"
+                 echo   
+   
+      # Rename file @host
+         f_talk; echo "Type new name if needed:"
+         read -p      " > " v_ans
+
+      # If text was given as an answer, rename file @host
+         if [[ -n $v_ans  ]]; then
+            
+            mv $v_file $v_ans  
+            [[ -f $v_ans ]] && echo " > Renamed" 
+         fi
+      
+      # If text was not given as an answer
+         if [[ -z $v_ans  ]]; then
+            
+            echo " > Not Renamed" 
+            [[ -f $v_ans ]] && echo "File already existed before" 
+         fi
+   fi
+
+   echo 
 
 
 elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then 
