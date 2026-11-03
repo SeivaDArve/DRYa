@@ -1267,10 +1267,10 @@ elif [ $1 == "rm" ] || [ $1 == "remove-dryaGPG-dir" ]; then
    f_remove-dryaGPG-dir 
 
 elif [ $1 == "22" ] || [ $1 == "zip" ]; then
-   bash $v_script_zp zip
+   bash $v_script_zp compac
 
 elif [ $1 == "23" ] || [ $1 == "unzip" ]; then
-   bash $v_script_zp unzip
+   bash $v_script_zp decompac
 
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
    bash $v_script_zp zip-info

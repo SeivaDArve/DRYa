@@ -226,59 +226,111 @@ function f_ls {
    f_hzl
 }
 
-function f_zip {
-   # tar é o nome do pacote a instalar
+function f_compac {
+   # tar é o nome do pacote a instalar (`sudo apt install tar gzip`)
 
    #tar -czf arquivo.tar.gz nome_da_pasta/
    #     `-c` create  (cria um novo arquivo tar)
    #     `-z` gzip    (comprime usando gzip, gerando .tar.gz)
    #     `-f` file    (indica o nome do arquivo de saída)
-   #     `-v` verbose (mostra cada ficheiro extraido)
+   #     `-v` verbose (mostra cada ficheiro manipulado)
 
    f_greet
-   f_talk; echo "uDev: zip"   
+   f_talk; echo "Comprimir"   
    f_hzl
    f_test_existent_compression_dependencies 
 
    # Escolha do formato
       f_hzl
       f_talk; echo "Escolha qual formato para 'Compactar'"
-              echo "            (dependencias serao instaladas)"
-              echo "            (default: \`5\` \`zip\`)"
+              echo "         (dependencias serao instaladas)"
+              echo "         (default: \`1\` \`tar\`)"
 
       read -p " > " v_formt
-      v_formt=${v_formt:-"zip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+      v_formt=${v_formt:-"tar"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
 
       echo " > Selecionado: $v_formt"
-      echo " > Sera usado : 'zip' (outros formatos: uDev)"
+      echo " > Sera usado : 'tar' (outros formatos: uDev)"
 
 
-   # Testar se 'zip' existe no sistema
+   # Testar se 'tar' existe no sistema. Instalar se nao existir
       f_hzl
+      v_cmd=tar
               echo
-      f_talk; echo "Testar se 'zip' existe"
+      f_talk; echo "Testar se '$v_cmd' existe"
 
-      if [[ -n $(command -v zip) ]]; then
-         echo " > zip existe no sistema"
+      if [[ -n $(command -v $v_cmd) ]]; then
+         echo " > $v_cmd existe no sistema"
       else
-         echo " > zip nao existe no sistema" 
+         echo " > $v_cmd nao existe no sistema" 
          echo
-         v_txt="Instalar 'zip'"
-         f_anyK && pk + zip
+         v_txt="Instalar '$v_cmd'"
+         f_anyK && pk + $v_cmd 
+      fi
+
+   # Testar se 'gzip' existe no sistema. Instalar se nao existir
+      f_hzl
+      v_cmd=gzip
+              echo
+      f_talk; echo "Testar se '$v_cmd' existe"
+
+      if [[ -n $(command -v $v_cmd) ]]; then
+         echo " > $v_cmd existe no sistema"
+      else
+         echo " > $v_cmd nao existe no sistema" 
+         echo
+         v_txt="Instalar '$v_cmd'"
+         f_anyK && pk + $v_cmd 
       fi
 
    f_ls
    f_talk; echo "Escolha uma pasta para compactar"   
    read -ep " > " v_dir
 
-   [[ -d $v_dir ]] && echo " > Confirmado, é pasta" || echo " > Rejeitado, Nao é pasta"
+   if [[ -d $v_dir ]]; then
+      # Se o nome correspondente existir no formato 'pasta'
+      
+      v_saida=$(basename $v_dir).tar.gz  # Nome default de saida do ficheiro zipado
+
+              echo " > Confirmado, é pasta" 
+      f_hzl
+      f_talk; echo "Info: como Compactar:" 
+              echo ' > `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
+      f_hzl
+              unset v_ans
+              echo    "Novo nome para ficheiro zipado de saida"
+              echo    " > Default: $v_saida"
+              read -p " > " v_ans
+     
+      if [[ -z $v_ans ]]; then
+         # Se nao foi dado nenhum nome para renomear
+
+                 echo " > (a manter nome original)"
+                 echo 
+         f_talk; echo "A compactar..."
+
+         tar -czvf $v_saida $v_dir
+      else
+         # Se foi dado algum nome para renomear
+         # uDev: o nome pode ja existir, é necessario criar aqui um 'while' loop
+         v_saida="${v_ans}.tar.gz"
+                 echo " > Renomeado: $v_saida"
+                 echo 
+         f_talk; echo "A compactar..."
+         tar -czvf $v_saida $v_dir
+      fi
+      f_talk; echo "Concluido"
+ 
+
+   else 
+      echo " > Rejeitado, Nao é pasta"
+   fi
 
    echo
-   echo 'uDev: Compactar: `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
 }
 
 
-function f_unzip {
+function f_decompac {
    # tar é o nome do pacote a instalar
 
    # Ver conteudo sem extrair
@@ -288,7 +340,7 @@ function f_unzip {
    #     tar -xzf arquivo.tar.gz
 
    f_greet
-   f_talk; echo "uDev: unzip"   
+   f_talk; echo "Decompress"   
 
    # Testar quais as dependencias de descompacatmento que existem instaladas
       f_hzl
@@ -341,16 +393,16 @@ elif [ $1 == "h" ] || [ $1 == "help" ]; then
 elif [ $1 == "compression-help" ] || [ $1 == "zip-info" ]; then
    f_about_possible_compression_dependencies
 
-elif [ $1 == "test" ] || [ $1 == "test-dependencies" ]; then
+elif [ $1 == "test-dp" ] || [ $1 == "test-dependencies" ]; then
    # Testar se as dependencias para zipara + deszipar existem e estao instaladas
 
    f_test_existent_compression_dependencies 
 
-elif [ $1 == "zip" ]; then
-   f_zip
+elif [ $1 == "compac" ]; then
+   f_compac
 
-elif [ $1 == "unzip" ]; then
-   f_unzip
+elif [ $1 == "decompac" ]; then
+   f_decompac
 
 else
    echo "Argument not recognized"
