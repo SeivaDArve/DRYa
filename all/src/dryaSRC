@@ -418,10 +418,7 @@ function f_alias_to_enforce {
    # List DRYa work directory
        alias Dd="cd $__RC_OS__/DRYa/ && bash DRYa.sh ."
        alias DD="cd $__dryaROOT__ && ls"
-      #alias DDD="cd $__RC_OS__ && clear && figlet SeivaOS && l1"
-      #alias DDD="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
-      alias D.="cd $DRYa && ls"
-      alias D..="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
+       alias D.="cd $DRYa && ls"
 
 
 
@@ -743,6 +740,7 @@ function f_repository_ezGIT {
 
 
       alias    R="cd $__RC_OS__ && ls -p"
+      alias   RR="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
       alias   .R="rrrr=$__RC_OS__/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
