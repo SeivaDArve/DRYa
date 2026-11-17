@@ -284,40 +284,68 @@ function f_symmetric_store {
    # Criptografia simetrica: encriptar
    # -c ou --symetric 
 
-   #f_header
-   f_vb_symmetric_store;  f_ls
-   f_talk; echo "Ficheiro a encriptar: "
-   read -erp " > " infile
-   [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
-                           echo
+   f_header
+   f_talk; echo "D gpg 7"
+   f_hline
 
-   f_talk; echo "Novo nome do ficheiro de saída: "
-           echo " > Default: $infile.gpg" 
-   read -erp    " > " outfile
-   outfile=${outfile:-"${infile}.gpg"}
-   $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile"
+   # Verbose help
+      f_vb_symmetric_store
+
+   # List storage
+      f_ls
+
+   # Input file (for encryption)
+      f_talk; echo "Ficheiro a encriptar: "
+      read -erp " > " infile
+      [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
+                              echo
+
+   # Rename file (if needed)
+      f_talk; echo "Novo nome do ficheiro de saída: "
+              echo " > Default: $infile.gpg" 
+      read -erp    " > " outfile
+
+   # Take action
+      outfile=${outfile:-"${infile}.gpg"}
+      $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile" ||  " ... Encryption not successfull"
 }
 
 function f_symmetric_decrypt {
    # Criptografia simetrica: desencriptar
    # -d ou --decrypt
 
-   f_vb_symmetric_decrypt 
+   f_header
+   f_talk; echo "D gpg 17"
+   f_hline
 
-   f_ls
-   read -erp "Ficheiro de entrada (a desencriptar): " infile
-   [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
-
-   read -erp "Ficheiro de saída, novo nome. (default: Terminal Output): " outfile
+   # Verbose help
+      f_vb_symmetric_decrypt 
    
-   if [ -z "$outfile" ]; then
-      echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
-      f_hline
-      $GPG --quiet --batch -d $infile
+   # List storage
+      f_ls
 
-   else
-      $GPG -o $outfile -d $infile
-   fi
+   # Input file (for decryption)
+      f_talk; read -erp "Ficheiro de entrada (a desencriptar): " infile
+      [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+
+      f_hline
+
+   # Rename file (if needed)
+      f_talk; echo "Novo nome do ficheiro de saída: "
+              echo " > Default: $infile.gpg" 
+      read -erp    " > " outfile
+
+
+   
+   # Take action
+      if [ -z "$outfile" ]; then
+         echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
+         f_hline
+         $GPG --quiet --batch -d $infile
+
+      else
+         $GPG -o $outfile -d $infile  &&  echo " ... Decryption Sucessfull"  ||  " ... Decryption not successfull"
+      fi
 
    pause
 }
@@ -894,6 +922,11 @@ function f_main_menu_text {
    echo " | 17  | Decrypt > simétrica (com passphrase)"
    echo " | 25  | Encrypt > simétrica (com passphrase, fornecida como arg)"
    echo " | 26  | Decrypt > simétrica (com passphrase, fornecida como arg)"
+   f_hline
+   echo " |  7- | Same as '7'  but also deletes original file (uDev)"
+   echo " | 17- | Same as '17' but also deletes original file (uDev)"
+   echo " | 25- | Same as '25' but also deletes original file (uDev)"
+   echo " | 26- | Same as '26' but also deletes original file (uDev)"
    f_hline
    echo " |  8  | Encrypt > assimetrica para destinatário (chave pública)"
    echo " |  9  | Decrypt > ficheiro"
