@@ -678,9 +678,13 @@ function f_inform_about_dryaSRC {
            echo "   uDev: Informar que ENTER entra no proprio script"
            echo '         also put these infos on `D gpg h`'
            echo 
-           echo -n "[info]  para Informar os atalhos de dryaSRC (uDev)"
-           echo -n "[ENTER] para entrar no sofrware GPG... "
+           echo "uDev: Informar os atalhos definidos em dryaSRC"
+           echo 
+           echo " ... (Any key to continue to GPG sofrware)"
+           echo 
+   
    read -sn1
+
    f_greet
 }
 
@@ -924,10 +928,19 @@ function f_GnuPG_main_menu {
 
    # Apresentacao do menu: ASCII, mencionar vars relevantes, corpo/texto do menu
       f_header
-      f_talk; echo "Menu GPG: Encriptacao/Desencriptacao"
+      f_talk; echo "Opening Menu GPG"
+              echo " (for encryption and decription ops)"
               echo
+              echo ' Note: Print menu to std output: `D gpg m`'
+              echo '       Open menu with `fzf`:     `D gpg fzf'
+              echo
+              echo " ... (Any key to open Menu"
+              echo "      in 'Less' text editor)"
+              echo
+      read -sn1 
+
       #f_vb_testing_drya_defaults
-      f_main_menu_text
+      f_main_menu_text | less
 
    # Perguntar ao user: qual o numero da opcao que quer? (depois essa opcao, se tiver maiusculas, é convertido para minusculas)
       #f_talk; echo -n "Escolha uma opção: "
@@ -977,9 +990,8 @@ if [ -z $1 ]; then
    f_detetar_se_instalado_dependencias_zip_unzip
 
    # Tempo de espera, para que o utilizador possa ler o ecra
-      v_secs=4
       echo
-      read -sn 1 -t $v_secs -p " ... "
+      read -sn 1 -p " ... (Any key to continue)"
       echo
 
    f_GnuPG_main_menu 
