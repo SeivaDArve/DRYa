@@ -956,6 +956,8 @@ function f_hist_2_fzf {
 function H {
    # Funcao para 2 coisas: Abrir historico Bash com `fzf` e Abrir historico dos ultimos ficheiros editados que queremos editar de novo
 
+   # udev: criar um arg que imite o comando `fc` para editar em texto o ultimo comando
+
    #   # Criar um ficheiro que gere o historico de Ultimos ficheiros (se nao existir)
    #      # Nome do ficheiro
    #         v_file=~/.config/h.h/drya/H-fzf 
@@ -997,7 +999,8 @@ function H {
    # podemos usar o comando `history -s "comando"`
    # para enviar texto para o ficheiro de historico do bash
 
-   cat ~/.bash_history | fzf --tac --prompt "RUN 1 command from HISTORY: " 
+   cat ~/.bash_history | fzf --tac --prompt "fluNav: H: run 1 command from HISTORY: "   # uDev: antes de executar o comando, colocar no prompt para ser editado. 
+
 }
 
 
