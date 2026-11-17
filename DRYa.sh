@@ -3284,7 +3284,7 @@ function f_drya_welcome_screen {
    function f_seiva_greetings_private {
       # When DRYa was installed on personal and private PC/device, use this fx
       
-      f_talk; echo "Seiva greetings: Mékié pá?"
+      f_talk; echo "Seiva greetings: Hoʻoponopono"
               echo "      Verbal expression when meeting a close friend!" 
               echo
    }
@@ -5280,13 +5280,14 @@ elif [ $1 == "wam" ]; then
       done
    fi
 
+#elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
+# uDev: Fazer um menu so para SOS
+
 elif [ $1 == "morse" ]; then 
    # uDev: trazer pelo menos este ficheiro para .../all/var/ por motivos de emergencia
    # uDev: Passar video/menemonica para Imagem: https://www.facebook.com/share/v/19uVyHMg1P/
    f_morse
 
-# uDev: Fazer um menu so para SOS
-#elif [ $1 == "emergencia" ] || [ $1 == "112" ] || [ $1 == "sbv" ] || [ $1 == "sos" ]; then 
 
 elif [ $1 == "extintores" ]; then 
    # Info sobre extincao de incendio
