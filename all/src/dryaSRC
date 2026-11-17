@@ -734,7 +734,7 @@ function f_repository_ezGIT {
 
    # Define a key to call the entire program
       # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso)
-      alias        ezGIT="bash $__RC_OS__/DRYa-ezGIT/ezGIT.sh"
+      alias        ezGIT="bash $__RC_OS__/ezGIT/ezGIT.sh"
       alias ezgit="ezGIT"
       alias     G="ezGIT"
 
