@@ -1222,7 +1222,7 @@ function V {
 
 
       elif [ $1 == "subeat" ] || [ $1 == "S" ] || [ $1 == "s" ] || [ $1 == "calendar" ]; then
-         cd $__RC_OS__/DRYa-subeat 2>/dev/null && ls || f_error_cd
+         cd $__RC_OS__/subeat 2>/dev/null && ls || f_error_cd
 
       elif [ $1 == "tmp" ]; then
          mkdir -p ~/.tmp
@@ -1370,7 +1370,8 @@ function V {
 
          # Criar um menu apartir do historico  
             # uDev: apagar linhas repetidas
-            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")  # Bug: fzf no WSL2 nao suporta --wrap
+            Lh=$(echo -e "\nNote: History file location:\n > $v_fluNav_V_hist_file \n ")
+            v_hist=$(cat $v_fluNav_V_hist_file | tac | fzf --header="$Lh" --prompt "fluNav: V: Historico, para NAVEGAR de novo: ")  # Bug: fzf no WSL2 nao suporta --wrap
       
          # Se a variavel nao vier vazia do menu fzf (e o utilizador escolheu um ficheiro para editar), entao abrir com o vim
             [[ -n $v_hist ]] && cd $v_hist && ls -p && unset $v_hist
@@ -1556,8 +1557,9 @@ function f_action {
          f__F_hist__change_abs_path__to__relative_path
 
       # Buscar uma das linhas
+         Lh=$(echo -e "\nNote: History file location:\n > $v_fluNav_S_hist_file \n ")
          L0="fluNav: F: edite 1 ficheiro (do historico): "
-         v_hist=$(cat $v_temporary | fzf --tac --prompt "$L0")
+         v_hist=$(cat $v_temporary | fzf --tac --header="$Lh" --prompt "$L0")
    
       # Toggle Abs path vs Relative path
          f__F_hist__change_relative_path__to__abs_path
