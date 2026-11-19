@@ -300,14 +300,26 @@ function f_symmetric_store {
       [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
                               echo
 
-   # Rename file (if needed)
+   # Rename output file (if needed)
       f_talk; echo "Novo nome do ficheiro de saída: "
               echo " > Default: $infile.gpg" 
-      read -erp    " > " outfile
+      read    -erp " > " outfile
+              echo
+
+      outfile=${outfile:-"${infile}.gpg"}
+
+   # uDev: Confirm if user wrote the extentions or not ( .tar.gz.gpg )
 
    # Take action
-      outfile=${outfile:-"${infile}.gpg"}
-      $GPG --symmetric --cipher-algo AES256 --output "$outfile" "$infile" && echo "Encriptado com passphrase para $outfile" ||  " ... Encryption not successfull"
+      f_talk; echo -n "Encrypting... "
+              echo 
+
+      $GPG --enable-progress-filter \
+           --symmetric \
+           --cipher-algo AES256 \
+           --output "$outfile" \
+           "$infile" \
+           && echo " > Encription with passphrase to $outfile" ||  " > Encryption not successfull"
 }
 
 function f_symmetric_decrypt {
@@ -341,10 +353,16 @@ function f_symmetric_decrypt {
       if [ -z "$outfile" ]; then
          echo "Nenhum nome introduzido. Vai ser so imprimido no terminal" 
          f_hline
-         $GPG --quiet --batch -d $infile
+         $GPG --quiet --batch -d $infile  # --batch indica que o programa deve funcionar em modo não interativo (batch mode) 
 
       else
-         $GPG -o $outfile -d $infile  &&  echo " ... Decryption Sucessfull"  ||  " ... Decryption not successfull"
+
+         f_talk; echo -n "Decrypting... "
+                 echo 
+
+         $GPG -o $outfile \
+              -d $infile  \
+              && echo " > Decryption Sucessfull"  ||  " > Decryption not successfull"
       fi
 
    pause
