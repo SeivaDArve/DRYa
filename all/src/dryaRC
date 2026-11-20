@@ -69,22 +69,83 @@ alias stop-termux-gui="vncserver -kill :1"        # Termina o servidor VNC no ec
 alias inventar-notas="bash /home/indratena/Repositories/scratch-paper/shuf"  # temporary alias
 
 
-# Function for web options. (Sent to .../DRYa/boot/web.sh
-#  function web { ... } 
-#
-#  Shortcuts for fx `web`
-   alias whatsapp="xdg-open https://web.whatsapp.com"
-   alias    siigo="eval web siigo"
-   alias      gpt="eval web gpt & disown"
-   alias    lojas="eval web lojas"
-   alias       yt="eval web yt"
-   alias      ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
 
 # Para Javascript
    alias node="[[ -f ~/.config/.drya.node.rc ]] && node -r ~/.config/.drya.node.rc || node"
 
+function py {
+   # For 'python'
 
-alias py="python3"
+
+
+
+   # Notes for arguments "+" and "-"
+      #
+      # The purpose of this script is to have this workflow:
+      #
+      #     mkdir meu-browser
+      #     cd meu-browser
+      #
+      #     python +
+      #     pip install PyQt6 PyQt6-WebEngine
+      #     python -
+
+
+
+
+   if [[ -z $1 ]]; then
+      command python3 "$@"
+
+   elif [[ $1 == "+" ]]; then
+      # Criar venv caso não exista
+
+      f_greet
+      f_talk; echo "python: "
+              echo 
+              echo "Confirma que o nome do seu projeto é este?"
+              echo " > $(basename $(pwd))"
+              echo 
+              echo "Confirma que quer criar 'venv' nesta \`pwd\`?"
+              echo " > $(pwd)/"
+              echo 
+             
+      v_txt="Create virtual environment 'venv' HERE"; f_anyK 
+ 
+      if [[ ! -d "venv" ]]; then
+         echo "Pasta nao existe, vai ser criada"
+         command python3 -m venv venv || return 1
+         echo "Venv criado!"
+
+      else
+         echo "Pasta ja existia"
+      fi 
+
+      # Entrar na pasta do projeto se necessário (já estás nela)
+
+      # Ativar venv
+         source venv/bin/activate
+         echo
+
+      # Add .gitignore
+         echo "uDev: Create a .gitignore to add modules"
+         echo "uDev: Install packages for now (ccording to project)"
+         echo
+
+   elif [[ $1 == "-" ]]; then
+      # Deactivate the virtual environment
+      
+      if [[ -n "$VIRTUAL_ENV" ]]; then
+          deactivate
+          echo "Venv desativado!"
+      else
+          echo "Nenhum venv ativo."
+      fi
+
+   else
+      command python3 "$@"
+   fi
+}
+
 alias pip="pip3"
 alias cm="cmatrix"  #alias cm="cmatrix || $traits_pkg install cmatrix && cmatrix"
 alias timg="termimage"  # App to print any img on the terminal in an ascii style
@@ -367,21 +428,34 @@ alias vb="cd $__RC_OS__/verbose-lines && echo 'Verbose-lines: tree' && tree ."
 # 'Calc' and 'bc' are 2 Bash calculators
 # 'split -n 5' is a command that splits a text file into 5 parts
 
-# Media tools:
-   alias untangle="termux-open-url https://youtube.com/shorts/0wobqw589l0?si=h4D_6LNBeid77Bq_"
-   alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
-   alias capitain="termux-open-url https://youtube.com/shorts/lquMb_8j38w?si=awBQ0gxdoQYxW8TJ"
-   alias eclipse="termux-open-url https://youtube.com/shorts/X87ZTOhkbf0?si=cKQGVXz4bZWySIXx"
-   alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
-   alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
-   alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
-   alias madagascar="termux-open-url https://youtu.be/bYxt96GAf4g?feature=shared"
-   alias monstro="termux-open-url https://youtu.be/I5e6ftNpGsU?feature=shared"
-   alias cafe="termux-open-url https://youtube.com/shorts/wzxhaXdwJn4?si=Ddui-f4C7mizwKI2"
+
+
+# For the WEB (Sent to .../DRYa/boot/web.sh
+
+   #  Shortcuts for fx `web`
+      alias whatsapp="xdg-open https://web.whatsapp.com"
+      alias    siigo="eval web siigo"
+      alias      gpt="eval web gpt & disown"
+      alias    lojas="eval web lojas"
+      alias       yt="eval web yt"
+      alias      ytd="read -p 'Enter youtube link to download: ' v_ans; yt-dlp $v_ans"
+
+   # Media tools:
+      alias untangle="termux-open-url https://youtube.com/shorts/0wobqw589l0?si=h4D_6LNBeid77Bq_"
+      alias miau="termux-open-url https://www.instagram.com/reel/CinlDmBO0tO/?igshid=YmMyMTA2M2Y="
+      alias capitain="termux-open-url https://youtube.com/shorts/lquMb_8j38w?si=awBQ0gxdoQYxW8TJ"
+      alias eclipse="termux-open-url https://youtube.com/shorts/X87ZTOhkbf0?si=cKQGVXz4bZWySIXx"
+      alias miau2="termux-open-url https://www.instagram.com/reel/C22n2C3iB_-/?igsh=MWM0bjlxN3E2aG5sNQ=="
+      alias preta="termux-open-url https://www.instagram.com/reel/Cnol075KSIU/?igshid=YmMyMTA2M2Y="
+      alias vibrato="termux-open-url https://www.youtube.com/watch?v=OLfwxzY-l7o"
+      alias madagascar="termux-open-url https://youtu.be/bYxt96GAf4g?feature=shared"
+      alias monstro="termux-open-url https://youtu.be/I5e6ftNpGsU?feature=shared"
+      alias cafe="termux-open-url https://youtube.com/shorts/wzxhaXdwJn4?si=Ddui-f4C7mizwKI2"
 
 
 # Ask the terminal to print the stroken
    alias stroken="cat $__RC_OS__/DRYa/all/etc/dot-files/git-github/current-stroken"
+
    # Notes:
       # At $__RC_OS__/DRYa/all/iu/install.uninstall/stroken there is a copy of this file but with kore info to help new app users
       # We can install stroken automatically with: '$ drya install stroken'
@@ -390,9 +464,9 @@ alias website="termux-open-url https://seiva.yolasite.com/ 2>/dev/null || op htt
 
 
 alias notify="bash $__RC_OS__/DRYa/all/bin/notify.sh"
-alias nt="bash $__RC_OS__/DRYa/all/bin/notify.sh"
+alias     nt="bash $__RC_OS__/DRYa/all/bin/notify.sh"
 
-alias slither="clear; cat $__RC_OS__/wikiD/all/slither; echo; echo"
+alias slither="clear; cat $__RC_OS__/wikiD/all/slither; echo; echo"  # Help for a game
 
 function nfc {
    # Read and write NFC on termux
@@ -907,6 +981,10 @@ function Sp {
 }
 
 
+alias gparted="sudo -E gparted"  # a flag '-E' preserva as variáveis de ambiente atuais, em vez de as substituir pelas do root.
+
+
+
 # uDev: Testing for unicode characters
 #  437  : ໑
 #  438  : ࿂
@@ -919,3 +997,10 @@ function Sp {
 #  445  : 𑱰
 #  447  : 𝈀
 #  448  : 𝔇
+
+
+
+
+# Omarchy + hyperland
+#     # uDev: IMPORTANT: sync this info with repo:omniLog/all/omarchy-n-hyprland/uDev-4-omarchy.sh
+#     # Note: Cheat Sheets on wikiD

@@ -1,7 +1,8 @@
 #!/bin/bash
 # Title: web
 # Description: Make web options easier to Seiva
- 
+
+__name__="web.sh" 
 
 # Note: Alias related to web were kept in .../DRYa/all/src/dryaRC
 #
@@ -174,27 +175,25 @@ function web {
 
    # Identificar a maquina atual
       if [[ -z $v_URL ]]; then
-         echo "Link Aberto pelo script: raw-link-opener.sh" 1>/dev/null
+         f_talk; echo "Link Aberto pelo script: $__name__" 1>/dev/null
 
       elif [[ $trid_OS == "Android" ]]; then     # When using Termux
-         echo "DRYa: A abrir com Termux: "
+         f_talk; echo "A abrir com Termux: "
          echo " > $v_URL"
 
-         cd ~/.tmp
-
-         #termux-open-url "$v_URL" &
-         nohup termux-open-url "$v_URL" & disown
-         cd -
+         #termux-open-url "$v_URL" & 
+         nohup termux-open-url "$v_URL" & disown  || nohup xdg-open $v_URL & disown
       
       elif [[ $trid_OS == "Linux" ]]; then      # When using Linux 
-         echo "DRYa: A abrir com Linux: $v_URL"
+         f_talk; echo "A abrir com Linux: $v_URL"
 
-         # Pode ser escolhida qualquer 1 das opcoes
-         termux-open-url $v_URL & disown  
-         #xdg-open $v_URL & disown
+         # Searching the best command to avoid inwanted trash verbose output
+            #nohup xdg-open  $v_URL  & disown 
+            #nohup xdg-open "$v_URL" >/dev/null 2>&1 & disown
+             nohup xdg-open "$v_URL" >/dev/null 2>&1 &>/dev/null
 
       elif [[ $trid_OS == "Windows" ]]; then    # Maybe using windows 
-         echo "DRYa: A abrir com Windows: $v_URL"
+         f_talk; echo "A abrir com Windows: $v_URL"
          "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" "$v_URL" & disown
 
       else

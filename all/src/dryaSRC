@@ -217,6 +217,24 @@ function f_dv_PS1 {
 
 }  >> $v_MSGS
 
+function f_history_size {
+   #  History file (size)
+   #
+   #     | Comando / Configuração | Descrição                                                     |
+   #     |------------------------+---------------------------------------------------------------|
+   #     | HISTFILESIZE=-1        | Remove o limite de linhas guardadas no ficheiro de histórico  |
+   #     | HISTSIZE=-1            | Remove o limite de comandos mantidos na memória do Bash       |
+   #     | shopt -s histappend    | Acrescenta o histórico ao ficheiro, sem substituir o conteúdo |
+   #     | source ~/.bashrc       | Recarrega as configurações do Bash na sessão atual            |
+   #     | echo "$HISTFILESIZE"   | Mostra o limite de linhas do ficheiro de histórico            |
+   #     | echo "$HISTSIZE"       | Mostra o limite de comandos em memória                        |
+   #     | ~/.bash_history        | Ficheiro onde o Bash guarda o histórico de comandos           |
+   #     | ~/.bashrc              | Ficheiro de configuração pessoal do Bash                      |
+     
+   echo uDev: control HISTSIZE to infinite
+
+}
+
 function f_drya_msgs_welcome {
       echo
       echo "DRYa: Note about verbose outputs (welcome screen helper):"
@@ -515,26 +533,21 @@ function f_alias_to_enforce {
 
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
-      alias    ,.="vim ~/.bashrc"
-      alias   ,..="vim $v_path_drya_source"
-      alias  ,...="vim $v_path_drya_alias"
-      alias ,....="vim $v_path_dryarc"
+      alias    ,.="bash e ~/.bashrc"
+      alias   ,..="bash e $v_path_drya_source"
+      alias  ,...="bash e $v_path_drya_alias"
+      alias ,....="bash e $v_path_dryarc"
 
    # Numpad alias to list REPOS CENTER directory (for easier terminal use)
       alias 10="cd $__RC_OS__ && ls"
 }
 
-function f_internal_drya_files_nr_1 {
+function f_DRYa_config_01__variables {
    # Repository: DRYa (internal files - (1/2) )
 
-   # uDev: v_nm_src_bash  = dryaSRC           = drya-src-frm-bashrc
-   #       v_nm_pre_alias = nil               = drya-pre-alias.sh
-   #       v_nm_mid_alias = config-bash-alias = drya-mid-alias.sh
-   #       v_nm_pos_alias = .dryarc           = drya-pos-alias.sh
-
-   
-   # Variable to determine where certain config files live on the host system (according to user session)
-      __dryaCONFIG__=~/.config/h.h/; export __dryaCONFIG__  
+   __dryaROOT__=$__RC_OS__/DRYa                       export __dryaROOT__     # Variable pointing to a directory. The root directory of the main Script DRYa
+   __dryaHOOKS__=$__RC_OS__/DRYa/all/src/dryaHOOKS;   export __dryaHOOKS__    # Variable pointing to a file to re-read before starting specific tasks like automatically clone Repositories (for automation) in case we are working on a trusted device or working on limited time
+   __dryaCONFIG__=~/.config/h.h/;                     export __dryaCONFIG__   # Variable pointing to a directory. To determine where certain config files live on the host system (according to user session) 
 
    f_demi_fake_pin 
 
@@ -730,7 +743,7 @@ function f_repository_ezGIT {
    # Repository: ezGIT
 
    # Load all alternative git alias:
-      source $__RC_OS__/ezGIT/all/etc/config-bash-alias 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
+      source $__RC_OS__/ezGIT/all/src/ezGIT_src 2>/dev/null  # Sending to dev null because ezGIT may not be installed yet
 
    # Define a key to call the entire program
       # Nota: Foi definido anteriormente em .../ezGIT/all/etc/config-bash-alias (e repetido neste ficheiro para assegurar o acesso)
@@ -740,7 +753,8 @@ function f_repository_ezGIT {
 
 
       alias    R="cd $__RC_OS__ && ls -p"
-      alias   RR="clear; figlet SeivaOS; tree ~/Repositories/ -aL 2 --dirsfirst"
+      alias   RR="clear; figlet SvP-OS; echo -n 'Parent directory: '; tree ~/Repositories/ -aL 2 --dirsfirst"
+         # uDev: try: `RR | sed   -e 's/drya/\x1b[1;31m&\x1b[0m/g'   -e 's/moedaz/\x1b[1;33m&\x1b[0m/g' to change colors in the output
       alias   .R="rrrr=$__RC_OS__/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
 
    # Nota: No startup do terminal, ja existe uma fx que em background procura updates vindos do github
@@ -773,7 +787,7 @@ function f_repository_patuscas {
    alias P="bash $__RC_OS__/patuscas/patuscas.sh"
 }
 
-function f_repository_upK {
+function f_repository_upk {
    # Repository: upK 
    # --- when `upk` called on the terminal without argument, it will edit "upK-diario-Dv.org" if existent
 
@@ -786,7 +800,7 @@ function f_repository_upK {
 
 }
 
-function f_repository_upK-diario-Dv {
+function f_repository_upk_diario_Dv {
    # Repository: upK-diario-Dv
 
    # Open without github sync
@@ -794,7 +808,7 @@ function f_repository_upK-diario-Dv {
       alias upk-dv="emacs $__RC_OS__/upK-diario-Dv/dailylog.org" 
 }
 
-function f_repository_112-Shiva-Sutras {
+function f_repository_112_Shiva_Sutras {
    # Repository: 112-Shiva-Sutras
    # uDev: Enviar a maipr parte destes alias para `if elif fi` dentro de ss.sh
 
@@ -812,7 +826,7 @@ function f_repository_112-Shiva-Sutras {
    alias links="cd   $v_ssREPO/all/internal-docs/ && EM Nithyananda-links-compilation.org; echo 'Shiva Sutras links file edited'" # To temporarily help the developer of this file acessing it
 }
 
-function f_repository_DRYa--GUPTa-yoga {
+function f_repository_yoga {
    # Repository: DRYa--GUPTa-yoga
 
    v_path=$__RC_OS__/DRYa--GUPTa-yoga
@@ -845,21 +859,21 @@ function f_repository_Tesoro {
    }
 }
 
-function f_repository_row-reader {
+function f_repository_row_reader {
    # Repository: row-reader
    # uDev: Remover este repo por completo. `D line` ja existe para fazer esta fx
 
    alias rr="bash $__RC_OS__/row-reader/row-reader.sh"
 }
 
-function f_repository_omni-log {
-   # Repository: omni-log
+function f_repository_omniLOG {
+   # Repository: omniLOG
 
-   alias om="bash $__RC_OS__/omni-log/omni.sh"
+   alias om="bash $__RC_OS__/omniLOG/omni.sh"
 
    function f_get_birthdays_from_db {
       echo
-      echo "Omni-log: Datas de aniversario"
+      echo "OmniLOG: Datas de aniversario"
       echo " > "
       echo
    }
@@ -1081,7 +1095,7 @@ function f_fun_open_random_shells {
 }
 
 function f_fun_apprendre_le_francais {
-   v_file=$__RC_OS__/omni-log/all/frances/frances.org
+   v_file=$__RC_OS__/omniLOG/all/frances/frances.org
    [[ -f $v_file ]] && cat $v_file || echo akl
 }
 
@@ -1146,7 +1160,7 @@ function f_exec {
    # Config Internal scripts and settings
       f_escape_time_at_terminal_startup
      #f_startup_lock_DRYa
-      f_internal_drya_files_nr_1
+      f_DRYa_config_01__variables
      #f_check_missing_dependencies
       f_drya_libs  
       f_drya_ssms_start
@@ -1155,6 +1169,7 @@ function f_exec {
       f_traitsID           
       f_GPG    
       f_dv_PS1    
+      f_history_size
       f_config_pkg_figlet  
       f_drya_welcome_screen  
       f_test  # Can be deleted, literally a test
@@ -1170,13 +1185,13 @@ function f_exec {
       f_repository_wikiD
       f_repository_moedaz  
       f_repository_patuscas
-      f_repository_upK  
-      f_repository_upK-diario-Dv 
-      f_repository_112-Shiva-Sutras
-      f_repository_DRYa--GUPTa-yoga
+      f_repository_upk
+      f_repository_upk_diario_Dv 
+      f_repository_112_Shiva_Sutras
+      f_repository_yoga  # WARNING: GUPTA
       f_repository_Tesoro
-      f_repository_row-reader
-      f_repository_omni-log
+      f_repository_row_reader
+      f_repository_omniLOG
       f_repository_3_sticks_alpha_bravo
       f_repository_jarve  
       f_repository_dota_2
@@ -1198,7 +1213,7 @@ function f_exec {
       #   - f_notes_toDo
       #   - jarve-once-bug-fixer-script (lista + script para bugs que tem de ser corrijidos noutras maquinas apenas 1x)
       #   - IRC automatic comunications, tipo sms, com e sem encriptacao, com e sem 3sab. (deve ser em jarve, nao em ezGIT)
-      #   - #bash ezGIT/all/bin/automatic uploader for repos like "omni-log-Dv" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
+      #   - #bash ezGIT/all/bin/automatic uploader for repos like "omniLOG" that are meant to be ALWAYS in the "cloud" uDev: this script will run at terminal startup and will upload+download a list of file always.
       #
       # Calendario com scripts (OTs e Rotinas pessoais)
       #   - rotinas de saude (Checkup anual, rotina anual dentista, desparazitantes)

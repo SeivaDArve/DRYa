@@ -49,7 +49,7 @@
       v_URL="https://seiva.yolasite.com"
       
    elif [ $1 == "siigo" ]; then 
-      v_URL="https://siigo-maintenance.com/#/calendar"
+      v_URL="https://siigo-maintenance.com/#/calendar&fgdfxf"
 
    elif [ $1 == "gpt" ]; then 
       v_URL="https://chatgpt.com/?oai-dm=1"

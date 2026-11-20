@@ -1,0 +1,20 @@
+# Title: Example of file used to create a daemon
+
+# Files for the same project
+#     drya-daemon-1-get-online-time.service.sh
+#     drya-daemon-1-get-online-time.sh
+
+[Unit]
+# Descrição do serviço
+Description=Monitor da hora de Portugal
+
+[Service]
+# Script que será executado
+ExecStart=/bin/bash /opt/hora/drya-daemon-1-get-online-time.service
+
+# Reiniciar automaticamente se terminar
+Restart=always
+
+[Install]
+# Iniciar automaticamente no arranque
+WantedBy=multi-user.target

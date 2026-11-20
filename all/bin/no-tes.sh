@@ -276,15 +276,30 @@ elif [ $1 == "td" ] || [ $1 == "t" ]; then
    if [ -z $2 ]; then
       # If no arg are given
 
-      # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e` 
-         #eval "$v_default_editor $v_file_td" 
-         bash e $v_file_td 
+      # If file does not exist
+         echo "uDev: Take actions if file does not exist. This one is supposed to sync"
+         read -s -t 0.5
+
+      # Choose either DEFAULT text editor (usually vim) or the text editor choosen by `e`. It also has failsafe
+         bash e $v_file_td  ||  (echo "Trying failsafe (\`e\` does not exist"  &&  eval "$v_default_editor $v_file_td")
 
    elif [ $2 == "emacs" ] || [ $2 == "e" ]; then
-      emacs $v_file_td
+
+      # If file does not exist
+         echo "uDev: Take actions if file does not exist. This one is supposed to sync"
+         read -sn1 -t 3
+   
+      # Open file
+         emacs $v_file_td
 
    elif [ $2 == "vim" ] || [ $2 == "v" ]; then
-      emacs $v_file_td
+
+      # If file does not exist
+         echo "uDev: Take actions if file does not exist. This one is supposed to sync"
+         read -sn1 -t 3
+   
+      # Open file
+         emacs $v_file_td
    fi
       
    f_lib4_upload_compact

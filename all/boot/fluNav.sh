@@ -35,7 +35,10 @@
 
 
 # Variables
-   v_dryaSRC=$__RC_OS__/DRYa/all/src/dryaSRC
+       v_dryaSRC=$__RC_OS__/DRYa/all/src/dryaSRC
+   v_REPO_moedaz=$__RC_OS__/moedaz
+    v_REPO_ezGIT=$__RC_OS__/ezGIT
+     v_REPO_upkd=$__RC_OS__/upK-diario-Dv
 
 
 
@@ -68,7 +71,7 @@
 
 
 function f__omni_log__push_hist_file_only {
-   echo "uDev: Will be used drya-lib-4 here to work with omni-log"
+   echo "uDev: Will be used drya-lib-4 here to work with omniLOG"
 }
 
 function f__F_hist__refresh_file_name {
@@ -517,6 +520,7 @@ function ..... {
    # Verbose
       f_talk; echo 'Current location `pwd` saved as var $h'
               echo " > $h"
+   #uDev: send to history file too
 }
 
 function ...... {
@@ -1130,6 +1134,11 @@ function V {
          fi
 
 
+      elif [ $1 == "bot" ]; then
+         [[ -z $2 ]] && cd $__RC_OS__/DRYa-moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
+
+
       elif [ $1 == "tesoro" ] || [ $1 == "T" ] || [ $1 == "t" ]; then
          cd $__RC_OS__/Tesoro 2>/dev/null && ls -p || f_error_cd
 
@@ -1143,13 +1152,8 @@ function V {
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
       
 
-      elif [ $1 == "bot" ]; then
-         [[ -z $2 ]] && cd $__RC_OS__/DRYa-moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
-         [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
-
-
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
-         cd $__RC_OS__/DRYa-ezGIT 2>/dev/null && ls -p || f_error_cd
+         cd $v_REPO_ezGIT 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "dwiki" ] || [ $1 = "dw" ]; then
@@ -1161,11 +1165,11 @@ function V {
          
 
       elif [ $1 == "upk" ]; then
-         cd $__RC_OS__/upK 2>/dev/null && ls -p || f_error_cd
+         cd $__RC_OS__/$v_REPO_moedaz 2>/dev/null && ls -p || f_error_cd
          
 
-      elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ] || [ $1 == "upk-" ]; then
-         cd $__RC_OS__/upK-diario-Dv && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
+      elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ]; then
+         cd $__RC_OS__/$v_REPO_upkd && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -1173,7 +1177,7 @@ function V {
          
 
       elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-         cd $__RC_OS__/omni-log 2>/dev/null && ls -p || f_error_cd
+         cd $__RC_OS__/omniLOG 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "gps" ]]; then
@@ -1634,16 +1638,16 @@ function f_action {
    elif [ $v_nm == "om" ]; then
 
       # Variables to use on next function (to sync)
-         v_file="omni-log.org"
-         v_parent="omni-log"
+         v_file="omniLOG.org"
+         v_parent="omniLOG"
          #v_editor= Em || Vim
 
       f_greet
 
-      echo "$v_nm being edited (file: omni-log.org)"
+      echo "$v_nm being edited (file: omniLOG.org)"
       echo " > Alias: 'F om' (sync)"
       echo
-      echo "Parent repo: omni-log"
+      echo "Parent repo: omniLOG"
       echo "Other alias: 'om' (no sync)"
       echo 
       echo " > Syncronization available: "
@@ -1692,15 +1696,15 @@ function F {
          # uDev: `S .. b` to save last file in fast-acess key 'b'
          # uDev: `S .. c` to save last file in fast-acess key 'c'
 
-      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";      f_action;     # Asks i
-      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";         f_action;     # Asks i
-      elif [ $1 == ","        ]; then v_nm="search_history_files";   f_action;     # Asks i
+      elif [ $1 == "..."      ]; then v_nm="fzf_one_hist_file";      f_action; # Asks i
+      elif [ $1 == "...."     ]; then v_nm="edit_hist_file";         f_action; # Asks i
+      elif [ $1 == ","        ]; then v_nm="search_history_files";   f_action; # Asks i
       elif [ $1 == "-2"       ]; then v_nm="test";                   f_action; echo "Test is working for 19"; f_up
       elif [ $1 == "-1"       ]; then v_nm="fx_test";                f_action; ## Just test if this file is working
       elif [ $1 == "F"        ]; then v_nm="self";                   f_action; ## Edit this file itself 
       elif [ $1 == "0"        ]; then v_nm="unalias";                f_action; v_rdmOS=$__RC_OS__/README-SeivaOS.org ; bash e $v_rdmOS #f_up
-      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; vim $__RC_OS__/DRYa/DRYa.sh; #f_up
-      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  $__RC_OS__/DRYa && EM drya.sh; f_up
+      elif [ $1 == "1"        ]; then v_nm="dryaSH";                 f_action; bash e $__RC_OS__/DRYa/DRYa.sh; #f_up
+      elif [ $1 == "1."       ]; then v_nm="dryaSH_op_1";            f_action; cd  $__RC_OS__/DRYa && bash e drya.sh; f_up
       elif [ $1 == "2"        ]; then v_nm="dryaGPG";                f_action; f_edit_dryaGPG
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd $__RC_OS__/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
       elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd $__RC_OS__/DRYa/all/boot && vim traitsID.sh; f_up
@@ -1710,7 +1714,7 @@ function F {
       elif [ $1 == "links"    ]; then v_nm="ss_links";               f_action; echo "uDev: open shiva sutra links"; f_up
       elif [ $1 == "luxam"    ]; then v_nm="luxam";                  f_action; cd $__RC_OS__/luxam/ && EM grelhas-de-avaliacao.org; f_up
       elif [ $1 == "trade"    ]; then v_nm="trade";                  f_action; # Sync the trade.org wikipedia
-      elif [ $1 == "om"       ]; then v_nm="om";                     f_action; # Sync the omni-log.org file 
+      elif [ $1 == "om"       ]; then v_nm="om";                     f_action; # Sync the omniLOG.org file 
       elif [ $1 == "note"     ]; then v_nm="note";                   f_action; # Sync one Scratch File. Number of file is to be given as $2 (second argument)
       elif [ $1 == "car"      ]; then v_nm="car";                    f_action; # Sync a file with Everything about the car
       elif [ $1 == "upk"      ]; then v_nm="upk";                    f_action; # Asks in a menu, which file is meant to be sync

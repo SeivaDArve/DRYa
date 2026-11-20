@@ -79,11 +79,11 @@ function f_default_variables {
       v_drya_logo_2=$__RC_OS__/DRYa/all/etc/dot-files/drya/logo.ascii    # DRYa ascii logo legacy
       v_drya_logo_3=$__RC_OS__/DRYa/all/etc/dot-files/drya/logo.ascii.2  # DRYa ascii logo
 
-   # Omni-log repo
-      v_file_omni=$__RC_OS__/omni-log/legacy-omni-log.org
+   # OmniLOG repo
+      v_file_omni=$__RC_OS__/omniLOG/legacy-omniLOG.org
 
    # wikiD repo
-      v_file_wikiD=$__RC_OS__/wikiD/wikiD.org
+      v_file_wikiD=$__RC_OS__/drya-wikiD/wikiD.org
 
    # File for DRYa dependencies (readable format in org-mode)
       v_dependencies_1st=$__RC_OS__/DRYa/all/src/iu/install.uninstall/populate-machines/level+1/1st.org
@@ -129,7 +129,6 @@ function f_stroken {
          f_rc;   echo
       fi
 }
-
 
 
 
@@ -696,9 +695,9 @@ function f_drya_mail_box__check_mail {
 
    # uDev: drya-mail-box
    #       Alguns scripts podem criar ficheiros offline em .../h.h/ por inexistencia de internet ou inexistencia deste repo
-   #       Se esta repo omni-log existisse ao mesmo tempo que nao existisse internet, o output desses scripts (exemplo: calculadora-registadora) seriam dentro dest Repo omni-log em vez do local pre-definido dessa calculadora
+   #       Se esta repo omniLOG existisse ao mesmo tempo que nao existisse internet, o output desses scripts (exemplo: calculadora-registadora) seriam dentro dest Repo omniLOG em vez do local pre-definido dessa calculadora
    #
-   #       Antes de iniciar a clonagem, verificar se existe o diretorio .../h.h/drya-mail-box/omni-log/<some-file> ao qual haja a intencao de aplicar `append`
+   #       Antes de iniciar a clonagem, verificar se existe o diretorio .../h.h/drya-mail-box/omniLOG/<some-file> ao qual haja a intencao de aplicar `append`
    #       Ou seja, udev: criar um menu antes de clonar que:
    #       1. Verifica se ha correio em h.h para esta repo que vai ser clonada
    #       2. Se houver, a peguntar: 
@@ -744,7 +743,7 @@ function f_clone_repos {
 
       function f_clone_repos_omni {
          #f_drya_mail_box__check_mail
-         echo "cloning: omni-log"; git clone https://github.com/SeivaDArve/omni-log.git
+         echo "cloning: omniLOG"; git clone https://github.com/SeivaDArve/omniLOG.git
          #f_drya_mail_box__append_mail
       }
 
@@ -878,7 +877,7 @@ function f_clone_repos {
          f_clone_repos_wikiD
       ;;
 
-      omni-log | omni | log | om)   
+      omniLOG | omni | log | om)   
          f_clone_repos_omni
       ;;
 
@@ -1980,7 +1979,7 @@ function f_dot_files_list_available {
          "emacs:init.el"               \
          "emacs:lib"                   \
          "emacs:lib:upk"               \
-         "emacs:lib:omni-log"          \
+         "emacs:lib:omniLOG"          \
          ".gitconfig"                  \
          "xrandr"                      \
          "keyboard:layout"             \
@@ -2029,17 +2028,38 @@ function f_quick_install_all_upk {
    
    f_greet
 
-   # Echo a list of things that are going to be installed:
+   # Print a list of things that are going to be installed:
       f_talk; echo "This preset will:"
-              echo " > (+) Install: .netrc"
+              echo " > (+) Install configs: .netrc"
+              echo "                        .vimrc"
+              echo "                        init.el"
               echo
-              echo " > (+) Clone repo: upk"
-              echo " > (+) Clone repo: upkd"
+              echo " > (+) Clone repos: upk"
+              echo "                    upkd"
               echo
-              echo " > (+) Install: emacs (terminal)"
-              echo " > (+) Install: init.el"
+              echo " > (+) Install: Dependencies:"
+              echo "                - emacs (terminal)"
+              echo "                - emacs (GUI, windows) - (deactivated)"
+              echo "                - vim" 
+              echo "                - figlet" 
               echo
 
+   # Check if it not already fully installed
+      f_talk; echo "Checking to see if it not already instaled" 
+     
+      unset v_a v_b v_c v_d v_f v_g v_h  # These variables are goig to be used to calculate if all tools are instaled or not. If their sum is higher than 0 then contiue instalaton because some is missing
+      [[ -f ~/.netrc             ]] && v_a=1 && echo " > netrc   exists" || echo " > .netrc  does not exist"  
+      [[ -f ~/.vimrc             ]] && v_h=1 && echo " > .vimrc  exists" || echo " > .vimrc  does not exist"  
+      [[ -f ~/.emacs.d/init.el   ]] && v_g=1 && echo " > init.el exists" || echo " > init.el does not exist" 
+      [[ -d $__RC_OS__/drya-upk  ]] && v_b=1 && echo " > upk     exists" || echo " > upk     does not exist" 
+      [[ -d $__RC_OS__/drya-upkd ]] && v_c=1 && echo " > upkd    exists" || echo " > upkd    does not exist" 
+      [[ -n $(command -v emacs)  ]] && v_d=1 && echo " > emacs   exists" || echo " > emacs   does not exist" 
+      [[ -n $(command -v figlet) ]] && v_e=1 && echo " > figlet  exists" || echo " > figlet  does not exist" 
+      [[ -n $(command -v vim)    ]] && v_f=1 && echo " > vim     exists" || echo " > vim     does not exist" 
+      echo
+      # uDev: terminar calculo das variaveis anteriores
+      
+   # If there is some missing piece, start the ful instalation
       v_txt="Continue installing"; f_anyK
       echo
       
@@ -2051,26 +2071,57 @@ function f_quick_install_all_upk {
 
    # Install dependencies (and automatically answering YES to all questions)
       # uDev: Test if it is windows and install GUI version also
-      f_talk; echo "installing: emacs figlet vim"
 
-      yes | pk + emacs figlet vim 
+
+      function f_check_dependency_existence_before_instalation {
+         echo "Arguments given: $@"
+
+         for i in $@;
+         do
+            echo $i
+            #  v_test=$(command -v $i 1>/dev/null)
+            #  [[ -z $v_test ]] && f_talk && echo "Pakage $i: does not exist: installing with \`pk\`" && yes | pk + $i
+            #  [[ -n $v_test ]] && f_talk && echo "Pakage $i: Already exits, skiping"
+         done
+      }
+
+
+
+      #f_talk; echo "installing: emacs figlet vim"
+      #yes | pk + emacs figlet vim 
+
+      f_check_dependency_existence_before_instalation emacs figlet vim
+
+      read -sn1 -t 1
       echo
 
-   # Repo: upk
-      f_talk; echo "Cloning: upK" && git clone https://github.com/SeivaDArve/upK.git
-              echo 
-   # Repo: upk-diario-dv
-      f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
-              echo 
 
+   # Clone repos
+      # Repo: upk
+         function f_clone_upk {
+            f_talk; echo "Cloning: upK" && git clone https://github.com/SeivaDArve/upK.git
+                    echo 
+         } 
+      # Repo: upk-diario-dv
+         function f_clone_upkd {
+            f_talk; echo "cloning: upk-diario-dv" && git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+                    echo 
+         }
+
+      # Run them only if needed
+         [[ ! -d $__RC_OS__/upK-diario-Dv ]] && f_clone_upkd || echo "Repo upkd already exists"
+         [[ ! -d $__RC_OS__/upK ]]           && f_clone_upk  || echo "Repo upk already exists"
+
+
+
+   function f_install_dotfile_initEL {
+      echo "uDev: install init.el"
+   }
+
+   f_install_dotfile_initEL 
 
    # Refresh the terminal
       #source ~/.bashrc
-
-   #    install: 
-   #             emacs for windows
-   #             instal init.el
-   f_talk; echo "udev: install all dependencies for upk repo to run"
 }
 
 function f_instalation_guide_to_wsl {
@@ -2644,12 +2695,13 @@ function f__D_hist__recall_one_command {
       [[ -n $v_line ]] && bash $v_line 
 }
 
-function f_clone_selected_from_list_no_invertion {
+function f_clone_selected_from_list {
    # Clonar exatamente as repos que o user escolheu
 
    cd $__RC_OS__/ 
 
    f_talk; echo "Lista de Repos que vai ser clonada:"
+
    for i in $v_multiple
    do
       echo " > $i"
@@ -2667,22 +2719,6 @@ function f_clone_selected_from_list_no_invertion {
       echo " > $i"
       git clone https://github.com/SeivaDArve/$i.git
       echo
-   done
-}
-
-function f_clone_selected_from_list_with_invertion {
-   # Clonar exatamente as repos oposta ao que o user escolheu. O user escolheu clonar todas repos excepto as que selecionou
-
-   # Retirar o texto "---Invert-Selection---" da variavel 
-      v_multiple=$(sed 's/---Invert-Selection---//g' <(echo $v_multiple))
-
-   f_talk; echo "Clonar todas, excepto: "
-   for i in $v_multiple
-   do
-      echo " > $i"
-
-      # Quando o comando anterior é executado com sucesso, informa drya-messages
-         #[[ $? == 0 ]] && echo -e "DRYa: repo $i clonada com sucesso" >> $drya-status-messages  
    done
 }
 
@@ -2707,6 +2743,7 @@ function f_drya_get_all_repo_names_private_public {
             echo 
             read -sn1 -p "... [Enter] "
             echo
+            echo
          }
          
       # Process the info
@@ -2716,7 +2753,7 @@ function f_drya_get_all_repo_names_private_public {
 
          elif [[ $v_ans == $v_pin ]]; then
             echo "$v_msg_corre"
-            v_list_private="DRYa--GUPTa-yoga dv-cv-private moedaz omni-log luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena Subeat"  # dee:D_cln_Pv_list  
+            v_list_private="DRYa--GUPTa-yoga dv-cv-private moedaz omniLOG luxam scratch-paper upK-diario-Dv wikiD 3-sticks-alpha-bravo verbose-lines one-file-bau dandarez dWiki Tesoro dial-mono yoga-bash-app-private autoPay Dv-Indratena Subeat"  # dee:D_cln_Pv_list  
             f_verbose 
 
          else
@@ -2728,14 +2765,12 @@ function f_drya_get_all_repo_names_private_public {
 
    # Juntar a lista de repos publicas + privadas 
       v_list_public=$(curl -s "https://api.github.com/users/SeivadArve/repos?per_page=100" | grep '"html_url"' | cut -d '"' -f 4 | grep -v "https://github.com/SeivaDArve$" | sed 's#https://github.com/SeivaDArve/##g')
-      v_list_options="---Invert-Selection---"
 
       # will give a $v_tmp with a new file with abs path
+         [[ -f $v_tmp ]] && rm $v_tmp
          f_create_tmp_file  # Vai criar o ficheiro $v_tmp
 
       # Juntar todos os textos
-         echo "$v_list_options"  >  $v_tmp
-
          for i in $v_list_private
          do
             echo $i              >> $v_tmp
@@ -2880,21 +2915,13 @@ function f_clone_by_fzf_list {
       f_drya_get_all_repo_names_private_public
 
    # Perguntar ao user quais repos quer
-      L0="DRYa: cln: Public + Private Repos (to clone/install): "
-      Lh=$(echo -e "\nPara apagar texto introduzido da busca:\n  CTRL-U\n ")
-      v_multiple=$(cat $v_tmp | fzf --cycle --header="$Lh" --pointer=">" -m --prompt="$L0")
-
+      L0="DRYa: cln: Public + Private Repos (to clone/install): "  # udev: Mention here if Private repos were included or not
+      Lh=$(echo -e "\nPara apagar texto introduzido da busca:\n  CTRL-U\n\nPara inverter a selecao:\n  CTRL-R\n ")  
+      v_multiple=$(cat $v_tmp | fzf --bind 'ctrl-r:toggle-all' --cycle --header="$Lh" --pointer=">" -m --prompt="$L0")
 
    if [[ -n $v_multiple ]]; then
       # Se o utilizador selecionou nem se seja uma repo, executar:
-
-      if [[ $v_multiple =~ "---Invert-Selection---" ]]; then
-         #echo "inversao detetada"
-         f_clone_selected_from_list_with_invertion
-      else
-         #echo "inversao nao detetada"
-         f_clone_selected_from_list_no_invertion
-      fi
+      f_clone_selected_from_list
 
    else
       # Se o utilizador nao selecionou nem sequer uma repo
@@ -3126,7 +3153,7 @@ function f_set_keyboard_tty_RetroPie {
    echo " > Solution: set a bigger font size with:"
    echo '   `sudo vim /etc/default/console-setup`'
    echo  
-   echo " > Content of the file:"
+   echo " > Content to add to the file:"
    echo '   FONTFACE="TerminusBold"'
    echo '   FONTFACE="16x32"'
    echo "}"
@@ -3370,6 +3397,7 @@ function f_drya_welcome_screen {
 
    function f_ws_neofetch {
       # Apresentar apenas o icon ASCII do `neofetch`
+      # Nota: `neofetch` foi descontinuado, mas outros OS tal como Omarchy usam `fastfetch`
 
       if [[ $(command -v neofetch) ]]; then
          echo
@@ -3884,18 +3912,18 @@ elif [ $1 == "gps" ]; then
    # Save GPS locations
    # uDev: this function needs to go to the repo: master-GPS
 
-   v_file=$__RC_OS__/omni-log/all/parts/headers/GPS-notes.org
+   v_file=$__RC_OS__/omniLOG/all/parts/headers/GPS-notes.org
 
    if [ -z "$2" ]; then
       f_talk; echo "Opcoes para GPS"
               echo " | -z  | Mostrar esta info                             |"
               echo " |  v  | Buscar coordenadas GPS termux-API \"gps\"       |"
               echo " |  n  | Buscar coordenadas GPS termux-API \"network\"   |"
-              echo " |  f  | editar notas GPS em omni-log                  |"
+              echo " |  f  | editar notas GPS em omniLOG                  |"
               echo " |  F  | Buscar coordenadas + Concat em GPS-notes.sh   |"
 
    elif [ $2 == "r" ] || [ $2 == "grep" ]; then 
-      echo "uDev: filtra texto do ficheiro em omni-log sobre coordenadas de GPS"
+      echo "uDev: filtra texto do ficheiro em omniLOG sobre coordenadas de GPS"
 
    elif [ $2 == "v" ]; then 
       # Displays current GPS location using GPS as provider
@@ -3909,7 +3937,7 @@ elif [ $1 == "gps" ]; then
       bash e $v_file
    fi
 
-   # uDev: now ask the user if he wants to save to omni-log
+   # uDev: now ask the user if he wants to save to omniLOG
 
 elif [ $1 == "update" ]; then 
    echo "uDev: Similar to: G v; source ~/.bashrc; apply all dot-files across the system"
@@ -4145,7 +4173,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          L16="16. |            |  Update | View 'once-tasks-list'"
          L15='15. |            |  Guide  | Install Linux on Android with x11 GUI'  # to run actuall Linux software there
          L14='14. |            |  Guide  | Factory-Reset--Terminal + Ghost-Mode--in-out'
-         L13='13. | `D iu i`   |  Menu   | PRESETS + Packages + Populate Machines ' 
+         L13='13. | `D iu p`   |  Menu   | PRESETS + Packages + Populate Machines ' 
          L12='12. | `D iu bk`  |  Menu   | Backups (Clonezilla, dd, checklists)' 
          L11='11. | `D cln`    |  Menu   | Clone Repositories'
          L10='10. | `D iu cf`  |  Menu   | Config files (dot-files)'
@@ -4469,7 +4497,7 @@ elif [ $1 == "save-backup" ]; then
 
    if [ $2 == "dot-files" ]; then 
          echo "drya: drya dot-files save"
-         echo " > copy from default locations to omni-log repo"
+         echo " > copy from default locations to omniLOG repo"
    else
          echo "drya: What do you want to save? (uDev)"
    fi
@@ -4510,7 +4538,7 @@ elif [ $1 == "news" ]; then
 
 elif [ $1 == "todo" ] || [ $1 == "t" ]; then  
    # Lista de tarefas
-   f_tk 'ToDo list belongs to omni-log repo'
+   f_tk 'ToDo list belongs to omniLOG repo'
    echo ' > Try: `td`'
 
 elif [ $1 == "list-all-file-metadata" ] || [ $1 == "meta-ls" ] || [ $1 == "mt-ls" ]; then  # mostra os seu metadados da imagem fornecida
@@ -4848,7 +4876,7 @@ elif [ $1 == "P" ] || [ $1 == "default-presentation" ] || [ $1 == "default-logo"
 elif [ $1 == "create-windows-bootable-USB-cmd" ] || [ $1 == "cwusb" ]; then 
    f_create_live_usb 
 
-elif [ $1 == "wiki" ] || [ $1 == "w" ]; then 
+elif [ $1 == "wiki" ] || [ $1 == "wd" ]; then 
    # Menu to edit locally, visualize in the browser, etc...
    # File used: $v_file_wikiD, wikiD.org
 
@@ -4868,7 +4896,7 @@ elif [ $1 == "wiki" ] || [ $1 == "w" ]; then
       echo "$v_udev"
 
    elif [ $2 == "edit" ] || [ $2 == "." ]; then 
-      ( [[ -f $v_file ]] && cd $v_repo && bash e $v_file ) || echo " > Error opening file $v_file"
+      ( cd $v_repo && [[ -f $v_file ]] && bash e $v_file ) || echo " > Error opening file $v_file"
 
    else
       echo " > Invalid argument"
@@ -4921,7 +4949,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_inx=" > Inexistent:"
 
       v_sc="scratch-paper"; v_SC="sc"
-      v_om="omni-log"
+      v_om="omniLOG"
       v_mo="moedaz"
       v_dv="upK-diario-Dv"
       v_rc=".netrc"
@@ -5233,12 +5261,12 @@ elif [ $1 == "call" ]; then
    echo " > Codigos UUID guardados em 'D wiki'"
 
 elif [ $1 == "wam" ]; then 
-   # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omni-log
-   # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omni-log
+   # Editar ficheiro 'wam' com `D wam` (worldlly abreviated messages). Mensagens que sao manualemte escritas em qualquer parte do mundo (por exemplo "drya::wam:01" cujo significado esta apenas guardado online em omniLOG
+   # Ficheiro gerido e usado por repos e scripts: drya.sh; no-tes.sh; 3sab; omniLOG
    
    # Ficheiro que é editado
-      v_wam=$__RC_OS__/omni-log/all/wam/wam.org
-      v_example="$__RC_OS__/omni-log/all/wam/example-wam-qrcode/run-example.sh"
+      v_wam=$__RC_OS__/omniLOG/all/wam/wam.org
+      v_example="$__RC_OS__/omniLOG/all/wam/example-wam-qrcode/run-example.sh"
 
    if [ -z $2 ]; then
       # Se nao for dado nenhum arg extra, da instrucoes
@@ -5248,7 +5276,7 @@ elif [ $1 == "wam" ]; then
               echo " > g <search> | To grep text directly from the main DWAM file"
 
    elif [ $2 == "." ] || [[ $1 == "edit-dwam-main-file" ]]; then
-      [[ -d $__RC_OS__/omni-log ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
+      [[ -d $__RC_OS__/omniLOG ]] && bash e $v_wam  ## Usa o script `e` que vem com DRYa repo
 
    elif [ $2 == "g" ]; then
 
@@ -5346,7 +5374,9 @@ elif [ $1 == "boilerplate" ] || [ $1 == "boil" ] ; then
                  echo   
    
       # Rename file @host
+         # uDev: create a while loop  if file already exists, to preent beeing overwriten
          f_talk; echo "Type new name if needed:"
+                 echo " > Defaut: $v_file"
          read -p      " > " v_ans
 
       # If text was given as an answer, rename file @host
@@ -5365,7 +5395,6 @@ elif [ $1 == "boilerplate" ] || [ $1 == "boil" ] ; then
    fi
 
    echo 
-
 
 elif [ $1 == "cal" ] || [ $1 == "calendar" ] ; then 
    if [[ -n $(command -v cal) ]]; then
@@ -5425,6 +5454,10 @@ elif [ $1 == "lsblk" ] ; then
 
 elif [ $1 == "debian" ] || [ $1 == "start-debian-inside-termux" ]; then
    proot-distro login debian  
+
+elif [ $1 == "sys" ] || [ $1 == "systemD" ]; then
+   f_talk; echo "systemD options"
+           echo "sudo nano /etc/systemd/system/clean-user-tmp.service"
 
 elif [[ $1 == "arg0" ]] || [[ $1 == "0" ]]; then  
    echo "uDev: Info about DRYa.sh arg 0"

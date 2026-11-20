@@ -1428,8 +1428,7 @@ function f_DRYa_install_me_at_bashrc {
       #        __REPOS_CENTER__=~/Repositories                       # Directory of all System's Repositories
       #        __OS__=SeivaOS                                        # Seiva's Main project (All arounf DRYa)
       #        __RC_OS__=$__REPOS_CENTER__/$__OS__                   # Combining 2 variables for cleaner and faster reading
-      #        __dryaROOT__=$__RC_OS__/DRYa                          # Root directory of DRYa
-      #        __dryaSRC__=$__dryaROOT__/all/src/dryaSRC;            # First DRYa script to run. It initiates all secondary scripts
+      #        __dryaSRC__=$__RC_OS__/DRYa/all/src/dryaSRC;          # First DRYa script to run. It initiates all secondary scripts
       #        export __REPOS_CENTER__ __OS__ __RC_OS__ __dryaSRC__  # Sending all these main variables to the Terminal Environment
       #        source $__dryaSRC__                                   # ( #drya-hashtag-botLine )
 
