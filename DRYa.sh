@@ -4612,6 +4612,7 @@ elif [ $1 == "clear-photoshop-editor-from-metadata-of-imgs" ] || [ $1 == "meta-p
 
 elif [ $1 == "soft-link" ] || [ $1 == "sl" ]; then 
    # uDev: criar também hard links para ficheiros e pastas
+   # uDev: "lnk" || "link" || "ln"
    
    f_greet
 
@@ -4945,6 +4946,8 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       
       f_greet
 
+      read -p "Start removing?"
+
       v_rmd=" > Removed:   "
       v_inx=" > Inexistent:"
 
@@ -4986,7 +4989,7 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    # Independent of the activity before closing, it still closes in the end
       exit 0
 
-elif [ $1 == "player" ] || [ $1 == "plr" ]; then 
+elif [ $1 == "media" ] || [ $1 == "player" ] || [ $1 == "mp" ]; then 
    f_menu_audio_media_player 
 
 elif [ $1 == "vlm" ]; then 
@@ -5166,6 +5169,13 @@ elif [ $1 == "clip" ] || [ $1 == "clp" ]; then
 elif [ $1 == "drya-getopts" ] || [ $1 == "opts" ] || [ $1 == "opt" ]; then 
    # Uso igual ao `getopts` em que apenas le os argumebtos do CLI e guarda em variaveis. Este arg `D opt <args>` pode ser usado como debug e implementado em outras fx tal como `D grep <args>`
 
+   # uDev: Criar um while loop aqui com getopts recolhendo argumentos e variaveis para depois enviar a um script escolhido com `-s <validate-n-run--FileNameHere.sh>`
+   #    arg `-s .` opens fzf to ask to what script all the remaining collected arguments are to be sent. Because this stage only collects data, then the -s will bring all script with validators already inside (to tell if the arguments are enough for specific tasks)
+   #    arg `-n`   means new|"not new" output file where arguments are concat|"not concat" at h.h before sending to validators. It means a file has to be written with variables instead of keeping them in RAM
+   #
+   #    If the entire prompt is just `D opts -s validator-1.sh` then the validator was not fed any argument and should output a list of possible variables to feed in order to do a list of tasks 
+   #
+
    v_base=$(basename $v_boil4)
 
    if [[ "$2" == "." || "$1" == "edit-self" ]]; then
@@ -5267,6 +5277,8 @@ elif [ $1 == "wam" ]; then
    # Ficheiro que é editado
       v_wam=$__RC_OS__/omniLOG/all/wam/wam.org
       v_example="$__RC_OS__/omniLOG/all/wam/example-wam-qrcode/run-example.sh"
+
+   [[ ! -f $v_wam ]] && echo "DRYa: File not found" && exit
 
    if [ -z $2 ]; then
       # Se nao for dado nenhum arg extra, da instrucoes

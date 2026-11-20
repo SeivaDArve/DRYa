@@ -762,7 +762,10 @@ function f_repository_ezGIT {
 }
    
 function f_repository_wikiD {
-  alias wikiD="echo 'wikiD will open in a browser (uDev)'; echo ' > To edit the file, use: F wd'"
+
+  v_repo_wikiD=$__RC_OS__/wikiD
+
+  source $v_repo_wikiD/all/src/wikiD_src.sh 2>/dev/null
 }
 
 function f_repository_moedaz {
@@ -800,7 +803,7 @@ function f_repository_upk {
 
 }
 
-function f_repository_upk_diario_Dv {
+function f_repository_upk_dv {
    # Repository: upK-diario-Dv
 
    # Open without github sync
@@ -861,7 +864,7 @@ function f_repository_Tesoro {
 
 function f_repository_row_reader {
    # Repository: row-reader
-   # uDev: Remover este repo por completo. `D line` ja existe para fazer esta fx
+   # uDev: Remover este repo por completo. `D line` ou `D grep --line` existira para fazer esta fx
 
    alias rr="bash $__RC_OS__/row-reader/row-reader.sh"
 }
@@ -1186,7 +1189,7 @@ function f_exec {
       f_repository_moedaz  
       f_repository_patuscas
       f_repository_upk
-      f_repository_upk_diario_Dv 
+      f_repository_upk_dv 
       f_repository_112_Shiva_Sutras
       f_repository_yoga  # WARNING: GUPTA
       f_repository_Tesoro

@@ -119,62 +119,56 @@ function f_help__parse_args__print_usage {
 
 function f_parse_args {
 
-   # ============================================================
    # DEFAULTS
-   # ============================================================
+      verbose=true
+      force=false
+      v_input=""
+      output=""
+      positional=()
 
-   verbose=true
-   force=false
-   v_input=""
-   output=""
-   positional=()
 
-   # ============================================================
+
    # SPECIAL CASES
-   # ============================================================
+      f_parse_special_cases "$@" || return
 
-   f_parse_special_cases "$@" || return
 
-   local initial_argc=$#
 
-   # ============================================================
    # MAIN LOOP
-   # ============================================================
+      local initial_argc=$#
 
-   while [[ $# -gt 0 ]]; do
+      while [[ $# -gt 0 ]]; do
 
-      # LONG OPTIONS
-      f_parse_long_arguments "$@" && {
-         shift "$v_shift"
-         continue
-      }
+         # LONG OPTIONS
+         f_parse_long_arguments "$@" && {
+            shift "$v_shift"
+            continue
+         }
 
-      # SHORT OPTIONS
-      f_parse_short_arguments "$@" && {
-         shift "$v_shift"
-         continue
-      }
+         # SHORT OPTIONS
+         f_parse_short_arguments "$@" && {
+            shift "$v_shift"
+            continue
+         }
 
-      # END OF OPTIONS
-      if [[ "$1" == "--" ]]; then
-         # Exemplos uteis: `mkdir -- --teste`
-         #                 `cd -- --teste`
+         # END OF OPTIONS
+         if [[ "$1" == "--" ]]; then
+            # Exemplos uteis: `mkdir -- --teste`
+            #                 `cd -- --teste`
 
+            shift
+            break
+         fi
+
+         # POSITIONAL
+         positional+=("$1")
          shift
-         break
-      fi
 
-      # POSITIONAL
-      positional+=("$1")
-      shift
+      done
 
-   done
 
-   # ============================================================
+
    # OUTPUT
-   # ============================================================
-
-   [[ $verbose == "true" ]] && f_parser_output 
+      [[ $verbose == "true" ]] && f_parser_output 
 }
 
 function f_parse_short_arguments {
@@ -182,7 +176,7 @@ function f_parse_short_arguments {
    v_shift=0
 
    # excluir long options
-   [[ "$1" != -* || "$1" == --* ]] && return 1
+      [[ "$1" != -* || "$1" == --* ]] && return 1
 
    local short="${1#-}"
 
@@ -200,7 +194,6 @@ function f_parse_short_arguments {
          force=true
 
       # INPUT
-
       elif [[ "$opt" == "i" ]]; then
 
          if [[ -n "$short" ]]; then
@@ -221,7 +214,6 @@ function f_parse_short_arguments {
          fi
 
       # OUTPUT
-
       elif [[ "$opt" == "o" ]]; then
 
          if [[ -n "$short" ]]; then
@@ -248,7 +240,7 @@ function f_parse_short_arguments {
    done
 
    # apenas o argumento atual foi consumido
-   [[ "$v_shift" -eq 0 ]] && v_shift=1
+      [[ "$v_shift" -eq 0 ]] && v_shift=1
 
    return 0
 }

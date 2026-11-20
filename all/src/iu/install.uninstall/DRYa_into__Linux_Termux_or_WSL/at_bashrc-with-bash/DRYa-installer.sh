@@ -1423,6 +1423,7 @@ function f_DRYa_install_me_at_bashrc {
            L5="   export __REPOS_CENTER__ __dryaSRC__ ; source \$__dryaSRC__ $v_hashtag_bot"
 
 
+      # uDev: __OS__=Sv_Portable_OS
 
       #     # STARTING DRYa: "Don't Repeat Yourself, app"            # ( #drya-hashtag-topLine )
       #        __REPOS_CENTER__=~/Repositories                       # Directory of all System's Repositories

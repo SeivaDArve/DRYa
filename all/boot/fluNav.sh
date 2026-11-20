@@ -349,8 +349,7 @@ function f_manage_init_and_libraries_after_mod {
            echo " > $v_init_file"
            echo
    f_talk; echo "Do you want to apply these changes imediatly?"
-   read -s -p 	" > Please enter (y/N): " v_apply
-   	   echo 
+   read -p 	" > Please enter (y/N): " v_apply
 
 
    if [ -z $v_apply ]; then 
@@ -691,7 +690,7 @@ function f_menu_fzf_F {
        L2='2.  Reload  | Terminal | `F 0` or `rs`'
        L1='1.  Cancel'
 
-       Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F c\`: (uDev)  \n   ")
+       Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F i\`: edit init.el (uDev)  \n   ")
        L0="DRYa fluNav: F: Menu + Ficheiros Fav para editar: "
       
       v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")

@@ -24,9 +24,10 @@
 function mk {
 
    if [[ -z $* ]]; then
-      f_talk; echo "mk: Instructions"
+      f_talk; echo "mk: Instructions (some functions are uDev)"
               echo ' > `mk`                   : Show these instructions'
-              echo ' > `mk <dir>`             : Automatically create <dir> && cd <dir>'
+              echo ' > `mk <dir>`             : Automatically create <dir>'
+              echo ' > `mk <dir> .`           : Automatically create <dir> && cd to last <dir> before "."'
               echo ' > `mk <dir> <dir> <...>` : Automatically create all dirs'
               echo ' > If `fzf` is installed, will ask to which dir to navigate'
 

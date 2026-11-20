@@ -199,6 +199,20 @@
       ;; #+STARTUP: showstars
       ;; #+STARTUP: hidestars
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ;; Attempting to config org-agenda
    (when (eq system-type' windows-nt)  ;; If OS type is Windows, then echo out a message
          (setq org-agenda-files '("c:/Repositories/moedaz/all/")))
@@ -206,6 +220,52 @@
 
    ;;(when (not (eq system-type' windows-nt))  ;; If OS is Linux or Android
    ;;      (setq org-agenda-files '(concat v-repos-center "/moedaz/all/")))
+
+
+   ;; Config org-agenda according to youtube video: https://m.youtube.com/watch?v=L0EJeN1fCYw&t=978s
+      ;; These are the defaults we want to change.  We do so in the
+      ;; following `use-package' declaration.
+      ;; And will improve the behaviour of the keybinding inside org-mode
+      ;; That when placing the cursor on an org heading and pressing Super-ENTER (S-RET)
+      ;; It will create a new org heading on the same level but not on
+      ;; the immediate new line, instead it will respect the contentents
+      ;; and paragraphs of the current heading and jump above them to
+      ;; create the new empty heading
+      ;; The keybidnding is S-RET
+      (setq org-M-RET-may-split-line '((default . t)))
+      (setq org-insert-heading-respect-content nil)
+      (setq org-log-done nil)
+      (setq org-log-into-drawer nil)
+      
+      
+      (use-package org
+        ;; Improving `C-c C-t` (same as `org-todo`) to keep a :logbook: of when the task was changed when Done
+        :ensure nil ; do not try to install it as it is built-in
+        :config
+        (setq org-M-RET-may-split-line '((default . nil)))
+        (setq org-insert-heading-respect-content t)
+        (setq org-log-done 'time)
+        (setq org-log-into-drawer t)
+      
+        (setq org-directory "~/.code")
+        (setq org-agenda-files (list org-directory))
+      
+        ;; Learn about the ! and more by reading the relevant section of the
+        ;; Org manual.  Evaluate: (info "(org) Tracking TODO state changes")
+        (setq org-todo-keywords
+              '((sequence "TODO(t)" "WAIT(w!)" "|" "CANCEL(c!)" "DONE(d!)"))))
+      
+
+
+
+
+
+
+
+
+
+
+
 
 
 
