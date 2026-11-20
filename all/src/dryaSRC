@@ -79,19 +79,23 @@ function f_escape_time_at_terminal_startup {
 
 
 function f_demi_fake_pin {
-   # Demi-fake pin for fzf menus (scare away curious people). Used for example at: `D cln .` to list private repositories
-      v_pin=0000
-      export v_pin
+   # Demi-fake pin (to complicate function that do not need much safety)
+   # Used during some menus (scare away curious people). 
+   # Used for example at: `D cln .` to list private repositories. (If they are encrypted, no problem is found if their superficial name is revealed)
+
+   v_pin=0000; export v_pin
 }
 
 function f_startup_lock_DRYa {
+   # On public local devices, one configuration may be kept by the user to temporarilly lock the hability to use DRYa, almost like a Lock Screen but just for one app
     
    # uDev: grep em .dryarc se existe alguma definicao para que esta fx seja ou nao execurada (apesar de que .dryarc vai ser executado por inteiro mais à frente neste script)
 
    f_demi_fake_pin
-   echo "DRYa: Qual é o pin para usar DRYa?"
-   read -s -p " > " v_ans
+   echo        "DRYa: What is the password to unlock DRYa?"
+   read -s -p  " > " v_ans
    echo
+
    [[ $v_pin == $v_ans ]] || exit # echo "errado: uDev: descobrir como se cancela o source sem encerrar o terminal"
 }
 
