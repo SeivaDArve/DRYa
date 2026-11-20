@@ -1,0 +1,1 @@
+* TODO create a script to use the power of the Bash Shell to compile all rtfm.org files into only one file. It is then copied to README.org in order for the web (github.com) be able to read and present. README.org is for the public (displayed in one page only), and RTFM.org is for the developer navigating inside the directory tree of files
