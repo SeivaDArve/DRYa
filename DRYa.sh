@@ -1379,7 +1379,7 @@ function f_dot_files_install_netrc {
 
       # Opening the file to edit
          v_txt="(Step 3): Edit file ~/.netrc to fix bugs"; f_anyK
-         vim ~/.netrc && f_suc1 || f_suc2
+         bash e ~/.netrc && f_suc1 || f_suc2
 
       # Finished 
          echo; f_done
