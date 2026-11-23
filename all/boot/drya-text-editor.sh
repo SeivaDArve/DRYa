@@ -176,7 +176,7 @@ function ee {
           L2='2.  Print editor atual | `ee .` ou `e ..`'
           L1='1.  Cancel'
          
-         Lh=$(echo -e "\nNote: Current default text editor: $Lhc \n > Alias e=\"$Lhc\" \n ")
+    Lh=$(echo -e "\n- Text editor set as Favourite: $Lhc \n- Usage: e=\"$Lhc\" (at Prompt: \`e <file.txt>\`)\n- If \"$Lhc\" not installed, will use: <uDev>\n ")
          L0="fluNav: ee: Set|Toggle|Swap text editor: "
          
          v_list=$(echo -e "$L1 \n$L2 \n\n$L3 \n$L4 \n$L5 \n$L6 \n$L7 \n$L8 \n$L9 \n\n$L10 \n$L11 \n$L12 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
