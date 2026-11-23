@@ -70,7 +70,7 @@ function f_default_variables {
    __repo__=$__RC_OS__/DRYa
    v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
    
-   # Official DRYa bash installer (with a version for failsafe)
+   # Official DRYa bash installer (with a version for failsafe, to work even if it not yet installed)
       v_official_DRYa_installer=$__RC_OS__/DRYa/all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
       v_official_DRYa_installer_failsafe=./all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
 
@@ -534,19 +534,10 @@ function f_install_drya__with_fzf {
    echo " > $__RC_OS__/DRYa/install.uninstall/linux-or-WSL/master-bashrc/1-fzf-installer.sh"
 }
 
-function f_install_drya__with_Select {
+function f_install_DRYa_normally_or_with_failsafe {
    # Install DRYa itself + dependencies + 1st + termux-setup-storage + termux-API
 
-   # Variables to the same file
-      # Used also to Uninstall DRYa
-         v_installer_v1=$v_official_DRYa_installer
-
-      # Used if DRYa is not yet installed
-         v_installer_v2=$v_official_DRYa_installer_failsafe
-
-
    f_greet
-
 
    #  f_talk; echo "For this one, your prompt must be next to the file drya.sh"
    #          echo
@@ -558,8 +549,13 @@ function f_install_drya__with_Select {
    #          echo 
    #          echo " ... uDev"
 
-   [[ ! -f $v_installer_v1 ]] && echo "In order to use DRYa installer RAW, your prompt must be next to drya.sh" && read -sn1 && bash $v_installer_v2
-   [[   -f $v_installer_v1 ]] && bash $v_installer_v1 $@
+   echo
+
+   [[ ! -f $v_official_DRYa_installer           ]] && v_enable_failsafe=true  && echo "DRYa is not installed, failsafe method will be attempted ..." 
+   [[   -f $v_official_DRYa_installer           ]] && v_enable_failsafe=false && bash $v_official_DRYa_installer $@        
+
+   [[   -f $v_official_DRYa_installer_failsafe  ]] && [[ $v_enable_failsafe == "true"  ]] && bash $v_official_DRYa_installer_failsafe $@
+   [[ ! -f $v_official_DRYa_installer_failsafe  ]] && [[ $v_enable_failsafe == "true"  ]] && echo "... It seems your prompt is not close to DRYa.sh, navigate to Repository 'DRYa' first"
 }
 
 
@@ -4202,7 +4198,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          v_list=$(echo -e "$L1 \n\n$L2 \n\n$L18 \n$L19 \n\n$L3 \n$L4 \n$L5 \n\n$L6 \n$L20 \n\n$L17 \n$L7 \n\n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n$L16 \n\n$Lz3" | fzf --no-info --cycle --header="$Lh" --prompt="$L0")
 
       # Atualizar historico fzf automaticamente
-         echo "$Lz2" >> $Lz4
+         echo "$Lz2" >> $Lz4  2>/dev/null
 
       # Perceber qual foi a escolha da lista
          [[ $v_list =~ $Lz3   ]] && echo -e "Acede ao historico com \`D ..\` e encontra: \n > $Lz2"
@@ -4215,7 +4211,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          [[ $v_list =~ "10. " ]] && f_dot_files_menu  
          [[ $v_list =~ "9.  " ]] && f_menu_install_drya_dependencies__1st
 
-         [[ $v_list =~ "7.  " ]] && bash   $v_official_DRYa_installer
+         [[ $v_list =~ "7.  " ]] && f_install_DRYa_normally_or_with_failsafe  # It has a failsafe method, use `bash DRYa.sh install itself`
          [[ $v_list =~ "17. " ]] && bash e $v_official_DRYa_installer
 
          [[ $v_list =~ "6.  " ]] && f_clone_info
@@ -4240,11 +4236,11 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
       # Edit script "DRYa fzf installer"
       f_install_drya__with_fzf
 
-   elif [ $2 == "s" ]; then 
+   elif [ $2 == "s" ] || [ $2 == "itself" ]; then 
 
       if [ -z "$3" ]; then
          # Run the installer script
-         bash $v_official_DRYa_installer
+         f_install_DRYa_normally_or_with_failsafe
 
       elif [ $3 == "." ]; then 
          # Edit the installer script
