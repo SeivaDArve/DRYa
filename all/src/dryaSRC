@@ -205,9 +205,16 @@ function f_dv_PS1 {
       echo -n " > Previous PS1: "
       echo    "$PS1"
 
+   # Adding info about current branch
+      function f_parse_git_branch {
+         v=$(git branch --show-current 2>/dev/null)
+         [[ -n $v ]] && echo " ($v)"
+      }
+
    # Configuring
-      PS1='\t \u \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '  # Testing with date
-      PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+      PS1='\t \u \[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '                  # Testing with date
+      PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '                        # Default
+      PS1='\[\e[0;32m\]\w\[$(f_parse_git_branch)\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '   # Default + Info about git branch
 
    # Confirming
       echo -n " > New PS1: "
