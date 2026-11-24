@@ -544,10 +544,11 @@ function f_alias_to_enforce {
 
 
    # Acessos a ficheiros (mesmo que um bug impeca este ficheiro de ser completamente lido, estas alias permitem aceder aos ficheiros)
-      alias    ,.="bash e ~/.bashrc"
-      alias   ,..="bash e $v_path_drya_source"
-      alias  ,...="bash e $v_path_drya_alias"
-      alias ,....="bash e $v_path_dryarc"
+      alias     ,.="bash e ~/.bashrc"
+      alias    ,..="bash e $v_path_drya_source"
+      alias   ,...="bash e $v_path_drya_alias"
+      alias  ,....="bash e $v_path_dryarc"
+      alias ,.....="bash e $__dryaHOOKS__"
 
    # Numpad alias to list REPOS CENTER directory (for easier terminal use)
       alias 10="cd $__RC_OS__ && ls"
@@ -764,7 +765,7 @@ function f_repository_ezGIT {
 
 
       alias    R="cd $__RC_OS__ && ls -p"
-      alias   RR="clear; figlet SvP-OS; echo -n 'Parent directory: '; tree ~/Repositories/ -aL 2 --dirsfirst"
+      alias   RR="clear; figlet SvP-OS; echo -n 'Parent directory: '; tree ~/Repositories/ -aL 2 --dirsfirst; echo; echo 'uDev: use \`watch\` here to help track changes to files'"
          # uDev: try: `RR | sed   -e 's/drya/\x1b[1;31m&\x1b[0m/g'   -e 's/moedaz/\x1b[1;33m&\x1b[0m/g' to change colors in the output
       alias   .R="rrrr=$__RC_OS__/../.Repositories/ ; [[ -n $rrrr ]] && mkdir -p $rrrr && cd $rrrr && ls -p "
 
