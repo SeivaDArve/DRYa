@@ -34,11 +34,15 @@
 
 
 
-# Variables
-       v_dryaSRC=$__RC_OS__/DRYa/all/src/dryaSRC
-   v_REPO_moedaz=$__RC_OS__/moedaz
-    v_REPO_ezGIT=$__RC_OS__/ezGIT
-     v_REPO_upkd=$__RC_OS__/upK-diario-Dv
+# Variables (All to be sent to $__dryaSRC__ and exported to env)
+   #   v_REPO_moedaz=$__RC_OS__/moedaz
+   #   v_REPO_Tesoro=$__RC_OS__/Tesoro
+   #    v_REPO_jarve=$__RC_OS__/jarve
+   #    v_REPO_ezGIT=$__RC_OS__/ezGIT
+   #     v_REPO_upkd=$__RC_OS__/upk-dv
+   #      v_REPO_upk=$__RC_OS__/upk
+         v_REPO_112="$__RC_OS__/112-Shiva-Sutras" 
+     v_REPO_omniLOG="$__RC_OS__/omniLOG"
 
 
 
@@ -214,7 +218,7 @@ function f_edit__notes {
 }
 
 function f_edit__dryaSRC {
-   vim $v_dryaSRC
+   vim $__dryaSRC__
    f_greet
    echo "edited: dryaSRC"
 }
@@ -228,7 +232,7 @@ function f_edit__bashrc {
 
 function f_edit__source_all_moedaz_files {
    f_greet
-   vim $__RC_OS__/DRYa-moedaz/all/source-all-moedaz-files
+   vim $v_REPO_moedaz/all/source-all-moedaz-files
    echo "edited: source-all-moedaz-files"
 }
 
@@ -1127,28 +1131,28 @@ function V {
          #       3. Pedir um pin, depois clonar
          #       4. Verificar a existencia de algum dot-file (uDev) que faca o bypass as perguntas e que clone logo (uso direto)
 
-         if   [ -z $2         ]; then cd $__RC_OS__/DRYa-moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
-         elif [    $2 == "cv" ]; then cd $__RC_OS__/DRYa-moedaz/all/real-documents/CV 2>/dev/null && ls -p
+         if   [ -z $2         ]; then cd $v_REPO_moedaz 2>/dev/null && ls -p || echo "fluNav: repo moedaz nao clonado"
+         elif [    $2 == "cv" ]; then cd $v_REPO_moedaz/all/real-documents/CV 2>/dev/null && ls -p
          else f_error_cd
          fi
 
 
       elif [ $1 == "bot" ]; then
-         [[ -z $2 ]] && cd $__RC_OS__/DRYa-moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
+         [[ -z $2 ]] && cd $v_REPO_moedaz/all/Negocios/trade/Binance-bots/js-Binance-bot-v1 2>/dev/null && ls -p || f_error_cd
          [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/js-bot ]] && clear && cd ~/lnk/js-bot && ls -pl1  # This line will overwrte the last of if not disabled like a comment
 
 
+      elif [ $1 == "trade" ]; then
+         [[ -z $2 ]]                   && cd $v_REPO_moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
+         [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
+
+
       elif [ $1 == "tesoro" ] || [ $1 == "T" ] || [ $1 == "t" ]; then
-         cd $__RC_OS__/Tesoro 2>/dev/null && ls -p || f_error_cd
+         cd $v_REPO_Tesoro 2>/dev/null && ls -p || f_error_cd
 
 
       elif [ $1 == "jarve" ] || [ $1 == "jv" ] || [ $1 == "j" ] || [ $1 == "J" ]; then
-         cd $__RC_OS__/jarve 2>/dev/null && ls -p || f_error_cd
-      
-
-      elif [ $1 == "trade" ]; then
-         [[ -z $2 ]]                   && cd $__RC_OS__/DRYa-moedaz/all/Negocios/trade/ 2>/dev/null && ls -p || f_error_cd
-         [[ -n $2 ]] && [[ $2 = "." ]] && [[ -d ~/lnk/trade ]] && clear && cd ~/lnk/trade  # This line will overwrte the last of if not disabled like a comment
+         cd $v_REPO_jarve 2>/dev/null && ls -p || f_error_cd
       
 
       elif [ $1 == "ezGIT" ] || [ $1 == "G" ] || [ $1 == "g" ] || [ $1 == "ez" ] || [ $1 == "e" ]; then
@@ -1164,11 +1168,11 @@ function V {
          
 
       elif [ $1 == "upk" ]; then
-         cd $__RC_OS__/$v_REPO_moedaz 2>/dev/null && ls -p || f_error_cd
+         cd $v_REPO_upk 2>/dev/null && ls -p || f_error_cd
          
 
       elif [ $1 == "upk-dv" ] || [ $1 == "upkd" ]; then
-         cd $__RC_OS__/$v_REPO_upkd && f_greet && f_talk; echo -e "\`V upk-dv\`\n" 2>/dev/null && ls -p || f_error_cd
+         cd $v_REPO_upkd 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "ss" ]] || [ $1 == "112" ]; then
@@ -1176,7 +1180,7 @@ function V {
          
 
       elif [[ $1 == "omni" ]] || [[ $1 == "log" ]] || [[ $1 == "om" ]]; then
-         cd $__RC_OS__/omniLOG 2>/dev/null && ls -p || f_error_cd
+         cd $v_REPO_omniLOG 2>/dev/null && ls -p || f_error_cd
          
 
       elif [[ $1 == "gps" ]]; then
@@ -1440,8 +1444,8 @@ function f_action {
       f_greet
 
       # Variables for this task
-         v_respective_repo=$__RC_OS__/DRYa-moedaz 
-         v_respective_file_dir=$__RC_OS__/DRYa-moedaz/all/viatura/ 
+         v_respective_repo=$v_REPO_moedaz
+         v_respective_file_dir=$v_REPO_moedaz/all/viatura/ 
          v_respective_file=viatura-all-info.org
 
 
@@ -1449,10 +1453,10 @@ function f_action {
          # Inform "error" if correspondant repo does not exist and then quit
 
          # Lista de opÃ§Ãµes para o menu `fzf`
-         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo 'DRYa-moedaz' does not exist")
+         v_list=$(echo -e "1. Do not Clone (do nothing) \n2. Clone from github (and edit the file)" | fzf --prompt="fluNav: repo '$v_REPO_moedaz' does not exist")
 
          # Perceber qual foi a escolha da lista
-            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone 'DRYa-moedaz' and did not open 'car' file"
+            [[ $v_list =~ "1" ]] && echo "fluNav: did not clone '$v_REPO_moedaz' and did not open 'car' file"
             [[ $v_list =~ "2" ]] && echo "Detetado 2 (debug)" && sleep 1
             unset v_list
       }
@@ -1466,7 +1470,7 @@ function f_action {
       function f_edit {
          # Editing the file
          
-         echo "$v_nm: Editing one or more files from .../DRYa-moedaz/viatura/..."
+         echo "$v_nm: Editing one or more files from .../$v_REPO_moedaz/viatura/..."
          cd $v_respective_file_dir && EM $v_respective_file 
       }
 
@@ -1617,18 +1621,18 @@ function f_action {
       f_greet
 
       echo "$v_nm being edited"
-      cd $__RC_OS__/DRYa-moedaz/trade && \
+      cd $v_REPO_moedaz/trade && \
       G v && \
       EM all/trade/trade.org && \
       G ++ b
 
       v_file="all/trade/trade.org"
-      v_parent="DRYa-moedaz"
+      v_parent="$v_REPO_moedaz"
 
       echo " > Alias: 'F trade'"
       echo " > Syncronization available: ezGIT (pull + Push all with random comment)"
       echo 
-      echo "Parent repo: DRYa-moedaz"
+      echo "Parent repo: $v_REPO_moedaz"
       echo "Other alias: 'trade' (no sync)"
       echo 
 
@@ -1709,7 +1713,7 @@ function F {
       elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd $__RC_OS__/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
       elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd $__RC_OS__/wikiD && EM wikiD.org; f_up
-      elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/DRYa-moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
+      elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs $v_REPO_moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
       elif [ $1 == "links"    ]; then v_nm="ss_links";               f_action; echo "uDev: open shiva sutra links"; f_up
       elif [ $1 == "luxam"    ]; then v_nm="luxam";                  f_action; cd $__RC_OS__/luxam/ && EM grelhas-de-avaliacao.org; f_up
       elif [ $1 == "trade"    ]; then v_nm="trade";                  f_action; # Sync the trade.org wikipedia

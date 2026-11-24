@@ -19,7 +19,6 @@
 
 
 # uDev: $HOME on WSL2 must go to $HOME on windows
-# uDev: renomear 'config-bash-alias' pra 'dryaRC' e '.dryarc' para '.dryaRC_host'
 # uDev: fix dependency bugs (in case DRYa is running on a fresh install of some new OS)
 # uDev: if doom emacs is installed, export it's PATH
         # Paste "w32tm /resync" inside a cmd with admin privileges to sync time and date
@@ -46,9 +45,9 @@ function f_list_of_escape_codes {
    echo
 }
 
-function f_escape_time_at_terminal_startup {
-   # Allowing the user to escape DRYa for 1 second
-   # It is best to use any key to 'escape' rather than 'Ctrl-C' directly, because 'Ctrl-C' are 2 keys, and 'Ctrl' key might not be enabled on termux "extra keys" at all
+function f_DRYa_config_01__window_of_time_to_escape_loading_at_the_terminal_startup {
+   # This FISRT INTERACTIVE function is meant to give a window of time of 1 second to avoid loading DRYa at terminal startup
+   # It is best to use ANY KEY to ESCAPE, rather than 'Ctrl-C' because 'Ctrl-C' are 2 keys. Also 'Ctrl' key might not be enabled on termux "extra keys" at all
 
    unset v_escape v_escape_code
    read -sn 1 -t 1 v_escape
@@ -77,7 +76,6 @@ function f_escape_time_at_terminal_startup {
    fi
 }
 
-
 function f_demi_fake_pin {
    # Demi-fake pin (to complicate function that do not need much safety)
    # Used during some menus (scare away curious people). 
@@ -92,6 +90,7 @@ function f_startup_lock_DRYa {
    # uDev: grep em .dryarc se existe alguma definicao para que esta fx seja ou nao execurada (apesar de que .dryarc vai ser executado por inteiro mais à frente neste script)
 
    f_demi_fake_pin
+
    echo        "DRYa: What is the password to unlock DRYa?"
    read -s -p  " > " v_ans
    echo
@@ -103,14 +102,16 @@ function f_test {
    alias test-alias='echo "Testing sourcing alias inside functions, result: also works!"'
 }
 
-function f_drya_libs {
+function f_DRYa_config_03__libraries {
    # Note: Includes an fx for debugging: `db` 
    
-   # uDev: Rename better
-   v_lib1=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-1*    # Sourcing DRYa Library nr 1
-   v_lib2=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-2*    # Sourcing DRYa Library nr 2
-   v_lib3=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-3*    # Sourcing DRYa Library nr 3
-   v_lib4=$__RC_OS__/DRYa/all/lib/libraries/drya-lib-4*    # Sourcing DRYa Library nr 4
+   v_libs_path="DRYa/all/lib/libraries"
+
+   v_lib1=$__RC_OS__/$v_libs_path/drya-lib-1*    # Sourcing DRYa Library nr 1
+   v_lib2=$__RC_OS__/$v_libs_path/drya-lib-2*    # Sourcing DRYa Library nr 2
+   v_lib3=$__RC_OS__/$v_libs_path/drya-lib-3*    # Sourcing DRYa Library nr 3
+   v_lib4=$__RC_OS__/$v_libs_path/drya-lib-4*    # Sourcing DRYa Library nr 4
+
    export v_lib1 v_lib2 v_lib3 v_lib4
 }
 
@@ -254,9 +255,11 @@ function f_drya_msgs_welcome {
       echo
 }  >> $v_MSGS 2>/dev/null
 
-function f_drya_ssms_start {
+function f_DRYa_config_04__ssms_start {
    # File to dump/redirect verbobe output (from 'standard in' to file 'drya-messages')
    # uDev: renomear v_MSGS para v_ssms
+
+   #uDev: f_drya_perm_ssms_config: config a file on the host to info/register significant changes
 
    # Configuring variable for DRYa messages
       v_name="drya-msgs"
@@ -365,12 +368,6 @@ function f_drya_ssms_start {
          fi
       fi
    }
-}
-
-function f_drya_fzf_history {
-   # Set an history file to be used in all `fzf` menus who need
-   # uDev: Eliminar esta fx, ja foi definido o ficheiro $v_drya_fzf_menu_hist antes
-   echo  1>/dev/null
 }
 
 function f_fun_after_welcome_screen {
@@ -546,7 +543,7 @@ function f_alias_to_enforce {
       alias 10="cd $__RC_OS__ && ls"
 }
 
-function f_DRYa_config_01__variables {
+function f_DRYa_config_02__variables {
    # Repository: DRYa (internal files - (1/2) )
 
    __dryaROOT__=$__RC_OS__/DRYa                       export __dryaROOT__     # Variable pointing to a directory. The root directory of the main Script DRYa
@@ -608,8 +605,8 @@ function f_internal_drya_files_nr_3 {
    v_add=$__RC_OS__/DRYa/all/bin  # Directory DRYa wants to be recognized/added to $PATH
 
    v_msg='DRYa: Adding $v_add to $PATH Patten and export'
-   v_ys="$v_msg found (ok)"
-   v_no="$v_msg not found (not ok)"
+   v_yes="$v_msg found (ok)"
+   v_noo="$v_msg not found (not ok)"
 
    function f_test_pattern_path {
       # Testing without changing, if our $v_add is already mentioned in $PATH variable
@@ -634,8 +631,8 @@ function f_internal_drya_files_nr_3 {
 
       f_test_pattern_path  
 
-      [[ $v_status == "1" ]] && echo "$v_no" && read -sn 1 -t 3
-      [[ $v_status == "0" ]] && echo "$v_ys" >> $v_ssms
+      [[ $v_status == "1" ]] && echo "$v_noo" && read -sn 1 -t 3
+      [[ $v_status == "0" ]] && echo "$v_yes" >> $v_ssms
    }
 
    f_solve_PATH_befor_test
@@ -719,6 +716,16 @@ function f__dryaSRC_lib_2__asking_to_clone {
       [[    $v_ans == "S" ]] && f__dryaSRC_lib_1__after_clonning 
       unset  v_ans
 
+}
+
+function f_variables_for_repositories {
+   v_REPO_omniLOG=$__RC_OS__/omniLOG; v_REPO_omniLOG_name="omniLOG";   export v_REPO_omniLOG
+    v_REPO_moedaz=$__RC_OS__/moedaz;        v_REPO_moedaz="moedaz";    export v_REPO_moedaz   
+    v_REPO_Tesoro=$__RC_OS__/Tesoro;        v_REPO_Tesoro="Tesoro";    export v_REPO_Tesoro    
+     v_REPO_jarve=$__RC_OS__/jarve;          v_REPO_jarve="jarve";     export v_REPO_jarve   
+     v_REPO_ezGIT=$__RC_OS__/ezGIT;          v_REPO_ezGIT="ezGIT";     export v_REPO_ezGIT    
+      v_REPO_upkd=$__RC_OS__/upk-dv;          v_REPO_upkd="upkd";      export v_REPO_upkd     
+       v_REPO_upk=$__RC_OS__/upk;              v_REPO_upk="upk";       export v_REPO_upk  
 }
 
 function f_repository_dWiki {
@@ -1165,14 +1172,10 @@ function f_exec {
    # Running all functions by sequence 
 
    # Config Internal scripts and settings
-      f_escape_time_at_terminal_startup
-     #f_startup_lock_DRYa
-      f_DRYa_config_01__variables
-     #f_check_missing_dependencies
-      f_drya_libs  
-      f_drya_ssms_start
-     #f_drya_perm_ssms_config  # uDev: config a file on the host to info/register significant changes
-      f_drya_fzf_history
+      f_DRYa_config_01__window_of_time_to_escape_loading_at_the_terminal_startup
+      f_DRYa_config_02__variables
+      f_DRYa_config_03__libraries
+      f_DRYa_config_04__ssms_start
       f_traitsID           
       f_GPG    
       f_dv_PS1    
@@ -1186,6 +1189,7 @@ function f_exec {
      #f__dryaSRC_lib_2__asking_to_clone
 
    # Loading repositories (some have their .../source.../ files)
+      f_variables_for_repositories
       f_repository_dWiki   
       f_repository_scratch-paper 
       f_repository_ezGIT   

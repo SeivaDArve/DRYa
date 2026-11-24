@@ -729,12 +729,12 @@ function f_clone_repos {
       }
 
       function f_clone_repos_upk {
-         echo "cloning: upK"
-         git clone https://github.com/SeivaDArve/upK.git
+         echo "cloning: upk"
+         git clone https://github.com/SeivaDArve/upk.git
       }
 
       function f_clone_repos_upk-dv {
-         echo "Cloning: upK-diario-Dv"; git clone https://github.com/SeivaDArve/upK-diario-Dv.git
+         echo "Cloning: upk-dv"; git clone https://github.com/SeivaDArve/upK-diario-Dv.git
       }
 
       function f_clone_repos_shiva {
@@ -787,9 +787,8 @@ function f_clone_repos {
 
       function f_clone_scratch_paper {
          v_git=https://github.com/SeivaDArve/scratch-paper.git
-         #v_cwd="<custom-working-directory>"  # If this variable is set, then the repo will be cloned into that custom working directory
-         #v_cwd=~/.tmp/scratch_paper
-         #mkdir -p $v_cwd
+         #v_cwd="<custom-working-directory>"    && mkdir -p $v_cwd    # If this variable is set, then the repo will be cloned into that custom working directory
+         #v_cwd=~/.tmp/scratch_paper            && mkdir -p $v_cwd
          echo -e "cloning: scratch-paper \n > $v_git"
          git clone $v_git $v_cwd
       }
@@ -3503,6 +3502,7 @@ function f_gr_hard_dependencies {
       #  D +
       # 
 
+# uDev: f_check_missing_dependencies  # uDev: Hardest dependencies must be cheked at Instalation, than soft dependencies at DRYa.sh in order to repeat the task
  f_default_variables 
  f_source_drya_lib_0__arg_0 
  f_source_drya_lib_0__verbose_fail
@@ -3530,7 +3530,8 @@ if [ -z "$*" ]; then
                echo    "      | Welcome to CLI and FOSS: DRYa !!!" 
                echo -n "      | Current custom Device Name: "
          f_c3; echo $v_user
-         f_rc; echo    "      | Instalation type: [full]"
+         f_rc; echo    "      | Installation type: [full]"
+               echo    "      | Update type: Rolling Release"
                echo
    }
 
@@ -4952,9 +4953,9 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
       v_inx=" > Inexistent:"
 
       v_sc="scratch-paper"; v_SC="sc"
-      v_om="omniLOG"
-      v_mo="moedaz"
-      v_dv="upK-diario-Dv"
+      v_om="$v_REPO_omniLOG"  # Variable set at $__dryaSRC__ 
+      v_mo="$v_REPO_moedaz"   # Variable set at $__dryaSRC__ 
+      v_dv="$v_REPO_upkd"     # Variable set at $__dryaSRC__ 
       v_rc=".netrc"
 
       [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_rmd $v_SC" ) || (f_talk && echo "$v_inx $v_SC" )
