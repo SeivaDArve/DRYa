@@ -853,6 +853,7 @@ function f_repository_Tesoro {
       v_script=$__RC_OS__/Tesoro/tesoro.sh
       v_args=$*
 
+      # uDev: Send this to __dryaHOOKS__
       # drya-fast-tg-sys-vars: "direto", "ask-first"
          v_execut="direto"     # Clonar a repo diretamente, sem pedir opiniao ao utilizador
          v_execut="ask-first"  # Clonar a repo so com permissao do utilizador
