@@ -50,7 +50,7 @@
 #    6 | shared-HDD-home-partition"
 #    7 | /data/data/com.termux/files/home/Repositories/
 
-
+# uDev: 'dee:elif-tree' when finished it will be a way to filter the main 'if then else fi' tree from this script DRYa.sh
 
 
 
@@ -3217,10 +3217,15 @@ function f_menu_kill_running_process {
    echo ' > This software does not exist in most OS'
 }
 
-function f_clone_fzf_like_origina_devs {
+function f_clone_fzf_like_original_devs {
    # Clone fzf properly like the original developers do
 
-   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+   v_orig="https://github.com/junegunn/fzf.git"  # Exactly like the Devs
+   v_dest="~/.fzf"                               # Exactly like the Devs
+
+   v_txt="Download + instalation fzf"; f_anyK
+
+   git clone --depth 1 $v_orig $v_dest
    ~/.fzf/install
 }
 
@@ -3245,6 +3250,7 @@ function f_create_live_usb {
    echo "   [Any Key] to open 'Live Creator of bootable windows USB"
    read -sn1
    echo
+
    f_create_live_windows_bootable_usb_using_CMD 
 }
 
@@ -3458,7 +3464,7 @@ function f_gr_hard_dependencies {
    done
    
    f_hzl
-   f_clone_fzf_like_origina_devs
+   f_clone_fzf_like_original_devs
 }  
 
 
@@ -3509,7 +3515,7 @@ function f_gr_hard_dependencies {
 #f_tst 
 
 
-if [ -z "$*" ]; then
+if [ -z "$*" ]; then    # dee:elif-tree
    # Do something if no argument is given at the CLI prompt when this script|file|bash is executed
    # dee:arg0 
 
@@ -3653,7 +3659,7 @@ if [ -z "$*" ]; then
       f_noARG_drya__jarve_listen 
       f_noARG__jarve_listen
 
-elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then
+elif [ $1 == "help" ] || [ $1 == "h" ] || [ $1 == "?" ] || [ $1 == "--help" ] || [ $1 == "-h" ] || [ $1 == "-?" ] || [ $1 == "rtfm" ]; then    # dee:elif-tree
    # Help menu. [rtfm: "Read the Fucking Manual"]
 
    # uDev: Tem de passar a ser TUDO texto do README.md senao esse ficheiro nunca é trabalhado.
@@ -4273,11 +4279,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
 
       elif [[ $3 == "fzf" ]]; then 
          # Instalar fzf como foi recomendado pelos desenvolvedores
-
-         v_txt="Install fzf like original developers" && f_anyK
-         echo
-
-         f_clone_fzf_like_origina_devs
+         f_clone_fzf_like_original_devs
 
       elif [[ $3 == "bitcoin-core" ]]; then 
          # Install a full Bitcoin node to validade blocks and allow mining
@@ -4349,7 +4351,7 @@ elif [ $1 == "install.uninstall" ] || [ $1 == "install" ] || [ $1 == "uninstall"
          v_pkg=ncurses-utils; echo; echo "Instaling $v_pkg"; pk + $v_pkg 
          v_pkg=figlet;        echo; echo "Instaling $v_pkg"; pk + $v_pkg 
 
-         echo "Installing fzf"; f_clone_fzf_like_origina_devs
+         f_clone_fzf_like_original_devs
 
          source ~/.bashrc
 
@@ -5483,7 +5485,7 @@ elif [ $1 == "..." ]; then
    # Editar manualmente o ficheiro de historico usado por DRYa durante os menus fzf
    # uDev: Remover linhas duplicadas
 
-   vim $v_drya_fzf_menu_hist
+   bash e $v_drya_fzf_menu_hist
 
 elif [ $1 == ".." ]; then  
    # Se existir ficheiro de historico drya-fzf-menu, o utilizador pode:
@@ -5548,7 +5550,7 @@ elif [[ $1 == "," ]]; then
    
    f_drya_fzf_MM_Toolbox
 
-else 
+else     # dee:elif-tree
    # When invalid arguments are given. (May also be used to debug functions)
    f_invalid_args
-fi
+fi    # dee:elif-tree
