@@ -5441,18 +5441,21 @@ elif [ $1 == "lsblk" ] ; then
    # uDev: tirar um 'screenshot' a arvore de blocos/dispositivos. Caso o screenshot guardado nao corresponder ao atual, tem de re-definir as variaveis porque ja podem estar erradas
    # uDev: criar um getopts para esta fx
 
-   if [ -z $1 ]; then
+   if [ -z $2 ]; then
       lsblk
 
-   elif [ $1 == "alias" ] || [ $1 == "vars" ]; then
+   elif [ $2 == "alias" ] || [ $2 == "vars" ]; then
       # Adicionar o nomes de dispositivos em variaveis para melhor distincao
       echo "uDev: filtrar todos os 'sdX' de 'lsblk' e guardar com variaveis" 
 
-   elif [ $1 == "mount" ] || [ $1 == "M" ]; then
+   elif [ $2 == "mount" ] || [ $2 == "M" ]; then
       # Montar um dispositivo
       echo "uDev: sudo mount </dev/sdX> </caminho/de/destino/>"
+      echo
+      echo "uDev: Mount NTFS with rw permissions: "
+      echo " > sudo mount -t ntfs3 -o rw,uid=1000,gid=1000,umask=022 </dev/sdX> </caminho/de/destino/>"
 
-   elif [ $1 == "umont" ] || [ $1 == "D" ]; then
+   elif [ $2 == "umont" ] || [ $2 == "D" ]; then
       # Desmontar um dispositivo
       echo "uDev: sudo umount </dev/sdX>" 
       echo "uDev: desmontar dispositivos 'busy'"

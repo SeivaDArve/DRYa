@@ -297,7 +297,7 @@ function f_symmetric_store {
    # Input file (for encryption)
       f_talk; echo "Ficheiro a encriptar: "
       read -erp " > " infile
-      [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return
+      [[ ! -f "$infile" ]] && echo " > Ficheiro não existe." && return  # uDev: Quando o ficheiro nao existe, sugerir comprimir primeiro
                               echo
 
    # Rename output file (if needed)
@@ -338,7 +338,7 @@ function f_symmetric_decrypt {
 
    # Input file (for decryption)
       f_talk; read -erp "Ficheiro de entrada (a desencriptar): " infile
-      [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return
+      [[ ! -f "$infile" ]] && echo "Ficheiro não existe." && return  # uDev: Quando o ficheiro nao existe, sugerir comprimir primeiro
 
       f_hline
 
@@ -1360,7 +1360,8 @@ elif [[ $1 == "f" ]] || [ $1 == "fzf" ] || [ $1 == "force-fzf" ]; then
    # Opens main menu in fzf mode
 
    L0="DRYa: GnuPG: Main menu (fzf): "
-   f_main_menu_text | fzf --tac --no-info --prompt="$L0"
+   f_main_menu_text | fzf --cycle --tac --no-info --prompt="$L0"
+   # uDev: If a valid line is Entered, execute it too
 
 elif [ $1 == "q" ] || [ $1 == "Q" ]; then
    # Opcao de saisa deste script caso esteja a ser usado um menu com loop

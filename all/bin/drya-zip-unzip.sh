@@ -294,7 +294,7 @@ function f_compac {
 
               echo " > Confirmado, é pasta" 
       f_hzl
-      f_talk; echo "Info: como Compactar:" 
+      f_talk; echo "Info: como Compactar manualmente:" 
               echo ' > `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
       f_hzl
               unset v_ans
