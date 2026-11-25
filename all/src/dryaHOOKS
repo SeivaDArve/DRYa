@@ -1,3 +1,4 @@
 autoCloneRepo=false
 autoCloneRepo_confirmation=yes
 alwayes_check_and_allways_verbose_testing_missing_hard_dependencies=yes
+alwayes_check_and_allways_verbose_testing_presence_of_Private_repos_on_Public_devices=yes
