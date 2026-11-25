@@ -1,2 +1,3 @@
 autoCloneRepo=false
 autoCloneRepo_confirmation=yes
+alwayes_check_and_allways_verbose_testing_missing_hard_dependencies=yes

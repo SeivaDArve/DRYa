@@ -548,7 +548,7 @@ function f_alias_to_enforce {
       alias    ,..="bash e $v_path_drya_source"
       alias   ,...="bash e $v_path_drya_alias"
       alias  ,....="bash e $v_path_dryarc"
-      alias ,.....="bash e $__dryaHOOKS__"
+      alias ,.....="bash e $__dryaHOOKS__"  # uDev: after editing the file @DRYa, ask to copy to @Host
 
    # Numpad alias to list REPOS CENTER directory (for easier terminal use)
       alias 10="cd $__RC_OS__ && ls"
