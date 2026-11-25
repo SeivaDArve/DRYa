@@ -1,16 +1,26 @@
-#+Title: example-boilerplate-org-mode-header.org
-#+Description: 
+#+Title: drya-boilerplate-5-org-mode--header.org
+#+Description: When starting to write any org-mode file, start with a fresh copy of this "empty" file. It has a ready structure ans is ready to be filled with values.
 
 - Settings
 :PROPERTIES:
 #+STARTUP: overview
 #+STARTUP: hidestars
 #+STARTUP: indent
+
+#+TABLE: elisp usefull examples
+|--------------------------------+---------------------------|
+| [[elisp:(org-overview)][Headers: Close all]]             | [[elisp:(org-show-all)][Headers: Open all]]         |
+|--------------------------------+---------------------------|
+| [[elisp:(end-of-buffer)][Buffer: Navigate bottom: M->]]   | [[elisp:(beginning-of-buffer)][Buffer: Navigate top: M-<]] |
+|--------------------------------+---------------------------|
+| [[elisp:(org-narrow-to-subtree)][Headers: Narrow to subtree]]     | [[elisp:(widen)][Headers: Widen]]            |
+|--------------------------------+---------------------------|
+| [[Texto de exemplo usado como Target de um link][Internal Link: to text]]         | [[* Sub-titulo-1][Internal Link: to header]]  |
+|--------------------------------+---------------------------|
+| Tutorial org-agenda: wikiD.org |                           |
+|--------------------------------+---------------------------|
+
 :END:
-
-Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir Tudo]] - [[elisp:(org-narrow-to-subtree)][Focus-header]] | [[elisp:(widen)][Unfocus-header]]
-
-[[elisp:(end-of-buffer)][>> Navegar para: Fim do Buffer]]  
 
 * All (Titulo)
    Texto de exemplo
@@ -19,4 +29,4 @@ Headers: [[elisp:(org-overview)][Fechar Tudo]] - [[elisp:(org-show-all)][Abrir T
    Texto de exemplo
 
 ** Sub-titulo-2
-   Texto de exemplo
+   <<Texto de exemplo usado como Target de um link>>
