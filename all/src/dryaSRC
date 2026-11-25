@@ -885,7 +885,7 @@ function f_repository_row_reader {
 function f_repository_omniLOG {
    # Repository: omniLOG
 
-   alias om="bash $__RC_OS__/omniLOG/omni.sh"
+   alias om="bash $__RC_OS__/omniLOG/omniLOG-commands.sh"
 
    function f_get_birthdays_from_db {
       echo
