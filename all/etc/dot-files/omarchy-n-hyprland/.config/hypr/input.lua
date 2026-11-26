@@ -6,9 +6,9 @@
 hl.config({
    input = {
 --     -- Use multiple keyboard layouts and switch between them with Left Alt + Right Alt.
---     kb_layout = "us,dk,eu",
+       kb_layout = "pt",
 --     kb_options = "compose:caps,shift:both_capslock_cancel,grp:alts_toggle",
-       kb_options = "omarchy:shift_caps_compose"
+       kb_options = "omarchy:shift_caps_compose",
 --     kb_options = "caps:capslock"
 --
 --     -- Use a specific keyboard variant if needed (e.g. intl for international keyboards).
@@ -22,7 +22,7 @@ hl.config({
 --     numlock_by_default = true,
 --
 --     -- Increase sensitivity for mouse/trackpad (default: 0).
---     sensitivity = 0.35,
+       sensitivity = 0.35,
 --
 --     -- Turn off mouse acceleration (default: adaptive).
 --     accel_profile = "flat",

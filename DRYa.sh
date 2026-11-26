@@ -4943,18 +4943,27 @@ elif [ $1 == "quit" ] || [ $1 == "q" ]; then
    elif [ $2 == "2" ] || [ $2 == "prv" ]; then 
       # Delete all personal-data repos (private + scratch-paper + .netrc)
       
+      v_sc="scratch-paper"; v_SC="sc"
+      v_om="omniLOG"
+      v_mo="moedaz"
+      v_dv="upK-diario-Dv"
+      v_rc=".netrc"
+
       f_greet
+
+      f_talk; echo "List of things to remove immediatly:"
+              echo " > $v_sc"
+              echo " > $v_om"
+              echo " > $v_mo"
+              echo " > $v_dv"
+              echo " > $v_rc"
+              echo 
 
       read -p "Start removing?"
 
       v_rmd=" > Removed:   "
       v_inx=" > Inexistent:"
 
-      v_sc="scratch-paper"; v_SC="sc"
-      v_om="omniLOG"
-      v_mo="moedaz"
-      v_dv="upK-diario-Dv"
-      v_rc=".netrc"
 
       [ -d $v_repo/$v_sc ] && (cd && rm -rf $v_repo/$v_sc && f_talk && echo "$v_rmd $v_SC" ) || (f_talk && echo "$v_inx $v_SC" )
       [ -d $v_repo/$v_om ] && (cd && rm -rf $v_repo/$v_om && f_talk && echo "$v_rmd $v_om" ) || (f_talk && echo "$v_inx $v_om" )
