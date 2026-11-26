@@ -247,9 +247,18 @@
         (setq org-log-done 'time)
         (setq org-log-into-drawer t)
       
+
+
+
+
         (setq org-directory "~/.code")
         (setq org-agenda-files (list org-directory))
-      
+        ;;    (setq org-agenda-files
+        ;;          '("~/.code"
+        ;;            "~/org"
+        ;;            "~/notes/todo.org"
+        ;;            "~/.code/project.org"))
+               
         ;; Learn about the ! and more by reading the relevant section of the
         ;; Org manual.  Evaluate: (info "(org) Tracking TODO state changes")
         (setq org-todo-keywords
