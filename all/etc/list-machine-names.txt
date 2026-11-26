@@ -9,5 +9,6 @@ Seiva__ASUS__15_OLED
 Seiva__NASgul_v2
 Seiva__pi__RaspberryOS__miau
 Seiva__pi__RetroPi__pi
-seivaDArve
 publicDVC__pi3__raspberryOS__vascogama
+publicDVC__CVG_omarchy
+seivaDArve
