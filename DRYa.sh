@@ -1388,9 +1388,9 @@ function f_dot_files_install_netrc {
    # After defining how to install .netrc check if it is not installed alreDY
       if [ -f ~/.netrc ]; then
          # If file is already installed:
-         echo "File ~/.netrc already exists"
-         echo " > Repeat instalation? (y/N)? "
-         read v_ans
+         f_talk; echo "File ~/.netrc already exists"
+                 echo " > Repeat instalation? (y/N)? "
+                 read v_ans
 
          [[ $v_ans == "y" ]] && f_install_netrc
          [[ $v_ans == "Y" ]] && f_install_netrc
@@ -2070,11 +2070,11 @@ function f_quick_install_all_upk {
 
 
       function f_check_dependency_existence_before_instalation {
-         echo "Arguments given: $@"
+         f_talk; echo "Arguments given: "
 
          for i in $@;
          do
-            echo $i
+            echo " > $i"
             #  v_test=$(command -v $i 1>/dev/null)
             #  [[ -z $v_test ]] && f_talk && echo "Pakage $i: does not exist: installing with \`pk\`" && yes | pk + $i
             #  [[ -n $v_test ]] && f_talk && echo "Pakage $i: Already exits, skiping"
@@ -3530,8 +3530,9 @@ if [ -z "$*" ]; then    # dee:elif-tree
          v_user=$(git config --get user.name)
 
                echo    "      | Welcome to CLI and FOSS: DRYa !!!" 
-               echo -n "      | Current custom Device Name: "
+               echo -n "      | Custom Device Name: "
          f_c3; echo $v_user
+         f_rc; echo    "      | Device type: [Public|Private]: uDev"
          f_rc; echo    "      | Instalation type: [full]"
                echo
    }
