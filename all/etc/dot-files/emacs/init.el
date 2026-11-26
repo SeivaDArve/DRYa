@@ -12,6 +12,15 @@
 
 ;; uDev: quando "C-c ." é utilizado no pc e no android, um deles mensciona os dias da semana em portugue e outro em ingles. Convem colocar ambos em unisono, em yoga, em sync
 
+;;; Get environment variables from Bash
+    (defvar __RC_OS__ (getenv "__RC_OS__"))  ;; Guardar numa variavel elisp
+    ;; Nota: Como concatenar com mais info: `(concat (getenv "__R__") "/ficheiro.txt")`
+    ;;
+    ;;                                  ou: (setq minha-var "ola")
+    ;;                                      (concat minha-var "/mundo")
+
+    ;; Atenção: se iniciamos o Emacs pelo ambiente gráfico (GUI), normalmente o Bash não executa o ~/.bashrc. Nesse caso, a variável pode não estar disponível.
+
 
 ;;; Disable Dialog box when executing elisp code:
     (setq org-confirm-elisp-link-function nil)
@@ -249,10 +258,11 @@
       
 
 
+        ;; (setq org-directory "~/directory-X")          ;; ORIGINAL CONFIG
+        ;; (setq org-agenda-files (list org-directory))  ;; ORIGINAL CONFIG
 
 
-        (setq org-directory "~/.code")
-        (setq org-agenda-files (list org-directory))
+        (setq org-directory (concat __RC_OS__ "/all/org-agenda"))
         ;;    (setq org-agenda-files
         ;;          '("~/.code"
         ;;            "~/org"
