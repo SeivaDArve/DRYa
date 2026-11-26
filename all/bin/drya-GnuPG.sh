@@ -280,7 +280,7 @@ function f_export_private_key {
    fi
 }
 
-function f_symmetric_store {
+function f_symmetric_encrypt {
    # Criptografia simetrica: encriptar
    # -c ou --symetric 
 
@@ -360,8 +360,8 @@ function f_symmetric_decrypt {
          f_talk; echo -n "Decrypting... "
                  echo 
 
-         $GPG -o $outfile \
-              -d $infile  \
+         $GPG -o $outfile     \
+              -d $infile      \
               && echo " > Decryption Sucessfull"  ||  " > Decryption not successfull"
       fi
 
@@ -707,7 +707,7 @@ function f_decrypt_temporarily_into_file_then_edit_then_encrypt {
    # Step 3: Encrypt
       f_hline
       f_talk; echo "Passo 3:"
-      f_symmetric_store        
+      f_symmetric_encrypt        
 
    # Step 4: Delete and Rename
       echo "uDev: Delete and Rename"
@@ -840,7 +840,7 @@ function f_vb_export_private_key {
 }
 
 function f_vb_symmetric_store {
-   # Instrucoes/Verbose curtas, sobre f_symmetric_store 
+   # Instrucoes/Verbose curtas, sobre f_symmetric_encrypt 
 
    f_talk; echo "Info sobre esta fx: "
            echo  "  Encripta um ficheiro localmente utilizando apenas uma passphrase (sem chaves públicas). Apenas quem souber a senha vai poder desencriptar."
@@ -1080,7 +1080,7 @@ elif [ $1 == "6" ]; then
    f_export_private_key     
 
 elif [ $1 == "7" ]; then
-   f_symmetric_store        
+   f_symmetric_encrypt        
 
 elif [ $1 == "17" ]; then
    f_symmetric_decrypt      

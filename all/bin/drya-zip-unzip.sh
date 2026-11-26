@@ -244,13 +244,12 @@ function f_compac {
       f_hzl
       f_talk; echo "Escolha qual formato para 'Compactar'"
               echo "         (dependencias serao instaladas)"
-              echo "         (default: \`1\` \`tar\`)"
+              echo "         (default: \`1\` \`tar.gz\`)"
 
       read -p " > " v_formt
       v_formt=${v_formt:-"tar"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
 
-      echo " > Selecionado: $v_formt"
-      echo " > Sera usado : 'tar' (outros formatos: uDev)"
+      echo " > Selecionado: $v_formt (outros formatos: uDev)"
 
 
    # Testar se 'tar' existe no sistema. Instalar se nao existir
@@ -283,50 +282,56 @@ function f_compac {
          f_anyK && pk + $v_cmd 
       fi
 
-   f_ls
-   f_talk; echo "Escolha uma pasta para compactar"   
-   read -ep " > " v_dir
+   # Listar `ls` os ficheiros a introduzir para descompactar
+      f_ls
+      f_talk; echo "Escolha uma pasta para compactar"   
+      read -ep " > " v_dir
 
-   if [[ -d $v_dir ]]; then
-      # Se o nome correspondente existir no formato 'pasta'
-      
-      v_saida=$(basename $v_dir).tar.gz  # Nome default de saida do ficheiro zipado
+   # Testar se foi dada uma pasta valida
+      if [[ -d $v_dir ]]; then
+         # Se o nome correspondente existir no formato 'pasta'
+         
+         v_saida=$(basename $v_dir).tar.gz  # Nome default de saida do ficheiro zipado
 
-              echo " > Confirmado, é pasta" 
-      f_hzl
-      f_talk; echo "Info: como Compactar manualmente:" 
-              echo ' > `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
-      f_hzl
-              unset v_ans
-              echo    "Novo nome para ficheiro zipado de saida"
-              echo    " > Default: $v_saida"
-              read -p " > " v_ans
-     
-      if [[ -z $v_ans ]]; then
-         # Se nao foi dado nenhum nome para renomear
+                 echo " > Confirmado, é pasta" 
+         f_hzl
+         f_talk; echo "Info: como Compactar manualmente:" 
+                 echo ' > `tar -czvf <novo-arquivo-de-saida.tar.gz> <pasta-de-entrada>`'
+         f_hzl
+                 unset v_ans
+                 echo    "Novo nome para ficheiro zipado de saida"
+                 echo    " > Default: $v_saida"
+                 read -p " > " v_ans
+        
+         if [[ -z $v_ans ]]; then
+            # Se nao foi dado nenhum nome para renomear
 
-                 echo " > (a manter nome original)"
-                 echo 
-         f_talk; echo "A compactar..."
+                    echo " > (a manter nome original)"
+                    echo 
+            f_talk; echo "A compactar..."
 
-         tar -czvf $v_saida $v_dir
-      else
-         # Se foi dado algum nome para renomear
-         # uDev: o nome pode ja existir, é necessario criar aqui um 'while' loop
-         v_saida="${v_ans}.tar.gz"
-                 echo " > Renomeado: $v_saida"
-                 echo 
-         f_talk; echo "A compactar..."
-         tar -czvf $v_saida $v_dir
+            tar -czvf $v_saida $v_dir
+
+         else
+            # Se foi dado algum nome para renomear
+            # uDev: o nome pode ja existir, é necessario criar aqui um 'while' loop
+            v_saida="${v_ans}.tar.gz"
+                    echo " > Renomeado: $v_saida"
+                    echo 
+            f_talk; echo "A compactar..."
+            tar -czvf $v_saida $v_dir
+         fi
+
+      else 
+         echo " > Rejeitado, Nao é pasta"
       fi
+
+   # Last Verbose
+      echo
       f_talk; echo "Concluido"
- 
-
-   else 
-      echo " > Rejeitado, Nao é pasta"
-   fi
-
-   echo
+      echo
+   
+   # uDev: ask to Remove Original
 }
 
 
@@ -338,6 +343,11 @@ function f_decompac {
    #
    # Extrair
    #     tar -xzf arquivo.tar.gz
+   #     -x: extrair.
+   #     -v: mostrar os ficheiros extraídos.
+   #     -z: descompactar com gzip.
+   #     -f: indicar o ficheiro.
+   #     -C: indicar uma pasta de destino diferente
 
    f_greet
    f_talk; echo "Decompress"   
@@ -348,20 +358,93 @@ function f_decompac {
 
    # Escolher o formato para descompactar
       f_hzl
-      f_talk; echo "Escolha qual formato para 'descompactar' (default: \`6\` \`unzip\`)"
-              echo "         (dependencias serao instaladas, uDev)"
-              #echo "         (default: \`6\` \`unzip\`)"
-
+      f_talk; echo    "Escolha qual formato para 'descompactar' (default: \`6\` \`unzip\`)"
+              echo    "         (dependencias serao instaladas, uDev)"
+              echo    "         (default: \`6\` \`tar.gz\`)"
               read -p " > " v_formt
-      v_formt=${v_formt:-"unzip"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+
+      v_formt=${v_formt:-"tar"}  # Se nada for introduzido no `read`, pre-definir a a variavel com um valor fixo
+
       echo " > Escolhido: $v_formt (outros formatos: uDev)"
 
 
+   # Testar se 'tar' existe no sistema. Instalar se nao existir
+      f_hzl
+      v_cmd=tar
+              echo
+      f_talk; echo "Testar se '$v_cmd' existe"
+
+      if [[ -n $(command -v $v_cmd) ]]; then
+         echo " > $v_cmd existe no sistema"
+      else
+         echo " > $v_cmd nao existe no sistema" 
+         echo
+         v_txt="Instalar '$v_cmd'"
+         f_anyK && pk + $v_cmd 
+      fi
+
+   # Testar se 'gzip' existe no sistema. Instalar se nao existir
+      f_hzl
+      v_cmd=gzip
+              echo
+      f_talk; echo "Testar se '$v_cmd' existe"
+
+      if [[ -n $(command -v $v_cmd) ]]; then
+         echo " > $v_cmd existe no sistema"
+      else
+         echo " > $v_cmd nao existe no sistema" 
+         echo
+         v_txt="Instalar '$v_cmd'"
+         f_anyK && pk + $v_cmd 
+      fi
+
    # Listar `ls` os ficheiros a introduzir para descompactar
       f_ls
+      f_talk; echo "Escolha uma um ficheiro para descompactar"   
+      read -ep " > " v_file
 
-   echo
-   echo 'uDev: Descompactar: `tar -xzvf <arquivo-a-extrair.tar.gz>`'
+   # Testar se foi dada uma ficheiro valido
+      if [[ -f $v_file ]]; then
+         # Se o nome correspondente existir no formato 'ficheiro'
+         echo " > Confirmado, é ficheiro" 
+
+         f_hzl
+         f_talk; echo "Info: como Descompactar manualmente:" 
+                 echo ' > `tar -xzvf <arquivo-a-extrair.tar.gz>`'
+         f_hzl
+
+   # Questionar se quer mudar o destino do ficheiro extraido
+      unset   v_ans
+      echo    "Nova pasta de saida"
+      echo    " > (default: ./ )"
+      read -p " > " v_ans
+
+      if [[ -z $v_ans ]]; then
+         # Se nao foi dado nenhum destino diferente, extrair AQUI
+                 echo " > (a manter nome original)"
+                 echo 
+         f_talk; echo "A descompactar para AQUI..."
+
+         tar -xzvf $v_file
+
+      else
+         # Se foi dado algum destino diferente
+         # uDev: o nome pode ja existir, é necessario criar aqui um 'while' loop
+
+         f_talk; echo "A descompactar..."
+         tar -xzvf $v_file -C $v_ans
+      fi
+
+   else 
+      echo " > Rejeitado, Nao é ficheiro"
+   fi
+
+   # Last Verbose
+      echo
+      f_talk; echo "Concluido"
+      echo
+   
+   # uDev: ask to Remove Original
 }
 
 
@@ -398,10 +481,10 @@ elif [ $1 == "test-dp" ] || [ $1 == "test-dependencies" ]; then
 
    f_test_existent_compression_dependencies 
 
-elif [ $1 == "compac" ]; then
+elif [ $1 == "compac" ] || [ $1 == "zip" ]; then
    f_compac
 
-elif [ $1 == "decompac" ]; then
+elif [ $1 == "decompac" ] || [ $1 == "unzip" ]; then
    f_decompac
 
 else
