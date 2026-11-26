@@ -5439,6 +5439,40 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
    shift   # To remove the arg 'game'
    bash $v_game_script $*
 
+elif [ $1 == "DCIM-capture-changes-from-point-A-to-point-B" ] || [ $1 == "DCIM-A-B" ] ; then 
+   # 1. Quando este script inicia, é criada uma lista de texto de todos os ficheiros existentes em DCIM
+   # 2. O passo 2 é tirar novas fotografias, que aparecem por pre-definicao nesta pasta
+   # 3. No fim de tirar as fotos, pressinoar [ENTER] neste script para terminar a espera.
+   # 4. No ecra vai aparecer a descricao dos nomes de fotos que foram adicionadas
+   # 5. Esses nomes novos detetados podem ser automaticamente copiados desse ficheirobtemporario criado para um outro ficheiro de texto permanente com titulo, descricao, etc. Pode ainda adicionar um prefixo ou sufixo a todas as fotos (renomear de acordo com o tema)
+
+   a=~/.tmp/A.txt
+   b=~/.tmp/B.txt
+   c=~/.tmp/C.txt
+   d=/sdcard/DCIM/Camera
+
+   f_greet 
+   f_talk; echo "DCIM-capture-changes-from-point-A-to-point-B"
+           echo
+
+   v_txt="Start a new capture"; f_anyK
+
+   mkdir -p $(dirname $a) 
+   rm    $a $b $c 2>/dev/null
+   touch $a $b $c
+   
+   ls $d > $a
+   
+   v_txt="Finish capturing"; f_anyK
+
+   ls $d > $b
+
+   f_talk; echo "Finished. Showing diferences:"
+           echo
+
+   diff $a $b > $c
+
+   cat $c
 elif [ $1 == "tty" ] ; then 
    # Info sobre tty
    f_greet
