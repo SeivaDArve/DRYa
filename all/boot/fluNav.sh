@@ -36,10 +36,12 @@
 
 # Variables
        v_dryaSRC=$__RC_OS__/DRYa/all/src/dryaSRC
+        v_dryaRC=$__RC_OS__/DRYa/all/src/dryaRC
    v_REPO_moedaz=$__RC_OS__/moedaz
     v_REPO_ezGIT=$__RC_OS__/ezGIT
      v_REPO_upkd=$__RC_OS__/upK-diario-Dv
 
+     v_init_file="$__RC_OS__/DRYa/all/etc/dot-files/emacs/init.el"
 
 
 
@@ -202,10 +204,13 @@ function f__V_hist__remove_duplicated_lines {
 }
 
 
-function f_edit__config_bash_alias {
-   vim $__RC_OS__/DRYa/all/src/dryaRC
+function f_edit__dryaRC {
    f_greet
-   echo "edited: dryaRC"
+   f_talk; echo "Opening: dryaRC"
+   echo 
+   bash e $v_dryaRC
+   echo 
+   f_talk; echo "edited: dryaRC"
 }
 
 function f_edit__notes {
@@ -255,31 +260,13 @@ function f_edit_dryaGPG {
    vim $__RC_OS__/DRYa/all/bin/drya-GnuPG.sh
 }
 
-function f_edit__init_file_emacs__with_emacs {
-   # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
-   # This way we know we can easily upload the file
-      
-   # First we edit the original/centralized file with our favourite text editor
-      v_init_file="$__RC_OS__/DRYa/all/etc/dot-files/emacs/init.el"
-      emacs $v_init_file 
-
-   # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
-   # avoid duplication, we create a function to keep it simple and avoid spaghetti code
-      f_manage_init_and_libraries_after_mod
-
-      # Note*1: In this fluNav there are 2 options that choose 2 text editors (vim and emacs) 
-      #         to call the same function "f_manage_init_and_libraries_after_mod"
-
-}
-
-function f_edit__init_file_emacs__with_vim {
+function f_edit__init_file_emacs {
    # Important: fluNav depends on this function
    # This edits the init file ALWAYS on the repo 'drya' first and THEN copies to ~
    # This way we know we can easily upload the file
 
    # First we edit the original/centralized file with our favourite text editor
-      v_init_file="$__RC_OS__/DRYa/all/etc/dot-files/emacs/init.el"
-      vim $v_init_file 
+      bash e $v_init_file 
 
    # After edition, independently of the text editor (read Note*1), some changes are same. Therefore, to
    # avoid duplication, we create a function to keep it simple and avoid spaghetti code
@@ -674,42 +661,39 @@ function f_menu_fzf_F {
          v_editor3="less --wordwrap"
          L65="65. Edit | $traits_editor   | Example"
 
-      L15='15. Edit | vim   | dryaRC'
-      L14='14. Edit | vim   | notes'
-      L13='13. Edit | vim   | dryaSRC'
-      L12='12. Edit | vim   | .bashrc'
-      L11='11. Edit | vim   | source-all-moedaz-files'
-      L10='10. Edit | vim   | .vimrc'
-       L9='9.  Edit | e     | 1st.org'
-       L7='7.  Edit | emacs | emacs-init'
-       L6='6.  Edit | vim   | emacs-init'
+      L15='15. |      | Edit (e)     | dryaRC'
+      L14='14. |      | Edit (vim)   | notes'
+      L13='13. |      | Edit (vim)   | dryaSRC'
+      L12='12. |      | Edit (vim)   | .bashrc'
+      L11='11. |      | Edit (vim)   | source-all-moedaz-files'
+      L10='10. |      | Edit (vim)   | .vimrc'
+       L9='9.  |      | Edit (e)     | 1st.org'
+       L6='6.  |  6   | Edit (e)     | emacs-init'
+
+       L4='4.  | `ee` | Toggle text editor'
+       L2='2.  | `rs` | Reload Terminal | `F 0` or `rs`'
 
        L5='5.  Help'
-       L4='4.  Toggle file editor'
-       L3='3.  Reload  | dot-files + DRYa + Terminal'
-       L2='2.  Reload  | Terminal | `F 0` or `rs`'
        L1='1.  Cancel'
 
        Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F i\`: edit init.el (uDev)  \n   ")
        L0="DRYa fluNav: F: Menu + Ficheiros Fav para editar: "
       
-      v_list=$(echo -e "$L1 \n$L2 \n$L3 \n$L4 \n$L5 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L5 \n\n$L2 \n$L3 \n$L4 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
-      [[ $v_list =~ "15. " ]] && f_edit__config_bash_alias
+      [[ $v_list =~ "15. " ]] && f_edit__dryaRC
       [[ $v_list =~ "14. " ]] && f_edit__notes
       [[ $v_list =~ "13. " ]] && f_edit__dryaSRC 
       [[ $v_list =~ "12. " ]] && f_edit__bashrc
       [[ $v_list =~ "11. " ]] && f_edit__source_all_moedaz_files
       [[ $v_list =~ "10. " ]] && f_edit__vimrc
       [[ $v_list =~ "9.  " ]] && f_edit__1st_emacs
-      [[ $v_list =~ "7.  " ]] && f_edit__init_file_emacs__with_emacs
-      [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs__with_vim
-      [[ $v_list =~ "5.  " ]] && f_help
-      [[ $v_list =~ "4.  " ]] && echo "uDev: toggle file editor" && eval ee
-      [[ $v_list =~ "3.  " ]] && echo 'uDev: Same as `D update`'
+      [[ $v_list =~ "6.  " ]] && f_edit__init_file_emacs
+      [[ $v_list =~ "4.  " ]] && eval ee
       [[ $v_list =~ "2.  " ]] && source ~/.bashrc
+      [[ $v_list =~ "5.  " ]] && f_help
       [[ $v_list =~ "1.  " ]] && echo "Canceled: $Lz2" && history -s "$Lz2"
       unset v_list
     
@@ -1477,6 +1461,12 @@ function f_action {
       # Uploading changes to github
          # f_up
    
+   elif [ $v_nm == "init" ]; then
+      f_greet
+      f_talk; echo "Opening init.el @DRYa with text editor \`e\`"
+      bash e $v_init_file 
+      f_manage_init_and_libraries_after_mod 
+
    elif [ $v_nm == "tmux" ]; then
 
       f_greet
@@ -1708,6 +1698,7 @@ function F {
       elif [ $1 == "3"        ]; then v_nm="jarve-sentinel";         f_action; cd $__RC_OS__/DRYa/all/bin/ && vim jarve-sentinel.sh; f_up
       elif [ $1 == "4"        ]; then v_nm="traitsID";               f_action; cd $__RC_OS__/DRYa/all/boot && vim traitsID.sh; f_up
       elif [ $1 == "5"        ]; then v_nm="F5";                     f_action; # Refresh the entire terminal 
+      elif [ $1 == "6"        ]; then v_nm="init";                   f_action; # Open init.el from emacs configs
       elif [ $1 == "wd"       ]; then v_nm="wikiD";                  f_action; cd $__RC_OS__/wikiD && EM wikiD.org; f_up
       elif [ $1 == "cv"       ]; then v_nm="curriculum";             f_action; echo "Opening curriculum vitae"; emacs /data/data/com.termux/files/home/Repositories/DRYa-moedaz/all/real-documents/CC/currriculo-vitae-Dv.org; f_up
       elif [ $1 == "links"    ]; then v_nm="ss_links";               f_action; echo "uDev: open shiva sutra links"; f_up
