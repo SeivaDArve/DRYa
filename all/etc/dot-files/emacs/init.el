@@ -72,6 +72,8 @@
    ;; (global-set-key (kbd "S-<up>")   #'scroll-down-command)   
       (global-set-key (kbd "S-<up>") (lambda () (interactive) (scroll-up-command)))
 
+;;;; Teclas de atalho: 'end-of-line' + 'new line' com Ctrl+Alt+J
+      (global-set-key (kbd "C-M-j") (lambda () (interactive) (progn ((end-of-line)(insert "\n")))
 
 ;;;; Tecla de atalho para demote Headers: Tree + Sub-tree
    ;; Usar Alt-Shift-<Left>/<Right>
