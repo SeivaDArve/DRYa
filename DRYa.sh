@@ -68,7 +68,7 @@ function f_default_variables {
    # Default variables 
    __name__=drya.sh
    __repo__=$__RC_OS__/DRYa
-   v_fzf=DRYa  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
+   v_fzf="DRYa:"  # Name of current script, used on fzf menus. Helps when using 'fzf-boilerplate-1' from DRYa to create new menus already with the script name on it
    
    # Official DRYa bash installer (with a version for failsafe, to work even if it not yet installed)
       v_official_DRYa_installer=$__RC_OS__/DRYa/all/src/iu/install.uninstall/DRYa_into__Linux_Termux_or_WSL/at_bashrc-with-bash/DRYa-installer.sh
@@ -5439,6 +5439,13 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
    shift   # To remove the arg 'game'
    bash $v_game_script $*
 
+elif [ $1 == "alpha" ] || [ $1 == "alphabet" ] ; then 
+  # Filtro de alfabeto fonetico
+  v_file=$__RC_OS__/DRYa/all/usr/share/emergency/NATO-fonetic-alphabet.txt
+
+  cat $v_file | fzf --tac --no-info -m --cycle --prompt="$v_fzf Filtro de alfabeto fonetico da NATO: "
+
+
 elif [ $1 == "DCIM-capture-changes-from-point-A-to-point-B" ] || [ $1 == "DCIM-A-B" ] ; then 
    # 1. Quando este script inicia, é criada uma lista de texto de todos os ficheiros existentes em DCIM
    # 2. O passo 2 é tirar novas fotografias, que aparecem por pre-definicao nesta pasta
@@ -5473,6 +5480,7 @@ elif [ $1 == "DCIM-capture-changes-from-point-A-to-point-B" ] || [ $1 == "DCIM-A
    diff $a $b > $c
 
    cat $c
+
 elif [ $1 == "tty" ] ; then 
    # Info sobre tty
    f_greet
