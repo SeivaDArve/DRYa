@@ -5439,7 +5439,7 @@ elif [ $1 == "game" ] || [ $1 == "games" ] ; then
    shift   # To remove the arg 'game'
    bash $v_game_script $*
 
-elif [ $1 == "alpha" ] || [ $1 == "alphabet" ] ; then 
+elif [ $1 == "alpha" ] || [ $1 == "nato" ] || [ $1 == "alphabet" ] ; then 
   # Filtro de alfabeto fonetico
   v_file=$__RC_OS__/DRYa/all/usr/share/emergency/NATO-fonetic-alphabet.txt
 
