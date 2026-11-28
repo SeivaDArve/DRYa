@@ -679,7 +679,7 @@ function f_menu_fzf_F {
        Lh=$(echo -e "\nFicheiros de acesso rapido (Definido com \`F .. a\`):\n - \`F a\`: (uDev)  \n - \`F b\`: (uDev)  \n - \`F i\`: edit init.el (uDev)  \n   ")
        L0="DRYa fluNav: F: Menu + Ficheiros Fav para editar: "
       
-      v_list=$(echo -e "$L1 \n$L5 \n\n$L2 \n$L3 \n$L4 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
+      v_list=$(echo -e "$L1 \n$L5 \n\n$L2 \n$L3 \n$L4 \n\n$L6 \n$L7 \n$L9 \n$L10 \n$L11 \n$L12 \n$L13 \n$L14 \n$L15 \n\n$Lz3" | fzf --no-info --cycle -m --pointer=">" --header="$Lh" --prompt="$L0")
 
    # Perceber qual foi a escolha da lista
       [[ $v_list =~ $Lz3   ]] && echo "$Lz2" && history -s "$Lz2"
